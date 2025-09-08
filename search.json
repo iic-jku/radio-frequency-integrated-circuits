@@ -1,16 +1,16 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Radio-Frequency Integrated Circuits",
-    "section": "",
-    "text": "Radio-Frequency Integrated Circuits\n\n\n\nQuarto Publish\n\n\n(c) 2025 Harald Pretl and co-authors, Department for Integrated Circuits (ICD), Johannes Kepler University, Linz (JKU)\nThis is the material for a graduate-level radio-frequency integrated circuit course, held at JKU under course number 336.023 (“VO Integrierte Hochfrequenz-Schaltungstechnik”). Follow this link to access the material.\nAll course material is made publicly available and shared under the Apache-2.0 license.\nWe happily accept pull requests to fix typos or add content! If you want to discuss something that is not clear, please open an issue!"
-  },
-  {
     "objectID": "rfic.html",
     "href": "rfic.html",
     "title": "Radio-Frequency Integrated Circuits",
     "section": "",
     "text": "1 Introduction\nThis is the material for an introductory radio-frequency integrated circuits course. The contents are derived from (Razavi 2011) and (Darabi 2020); these two books are an excellent introduction into this topic and are highly recommended!\nIt is assumed that readers are familiar with the contents of this Analog Circuit Design course.\n\n\n\n\n\n\nImportant\n\n\n\nAll course material (source code of this document, Jupyter notebooks for calculations, Xschem circuits, etc.) is made publicly available on GitHub (follow this link) and shared under the Apache-2.0 license.\nPlease feel free to submit pull requests to fix typos or add content! If you want to discuss something that is not clear, please open an issue.\nThe production of this document would be impossible without these (and many more) great open-source software products: VS Code, Quarto, Pandoc, TexLive, Jupyter Notebook, Python, Xschem, ngspice, CACE, pygmid, schemdraw, Numpy, Scipy, Matplotlib, Pandas, Git, Docker, Ubuntu, Linux, …\n\n\n\n\n\n\n\nReferences\n\nDarabi, Hooman. 2020. Radio Frequency Integrated Circuits and Systems. 2nd edition. Cambridge University Press.\n\n\nRazavi, Behzad. 2011. RF Microelectronics. 2nd edition. Pearson.\n\nReuseApache-2.0 license"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Radio-Frequency Integrated Circuits",
+    "section": "",
+    "text": "Radio-Frequency Integrated Circuits\n\n\n\nQuarto Publish\n\n\n(c) 2025 Harald Pretl and co-authors, Department for Integrated Circuits (ICD), Johannes Kepler University, Linz (JKU)\nThis is the material for a graduate-level radio-frequency integrated circuit course, held at JKU under course number 336.023 (“VO Integrierte Hochfrequenz-Schaltungstechnik”). Follow this link to access the material.\nAll course material is made publicly available and shared under the Apache-2.0 license.\nWe happily accept pull requests to fix typos or add content! If you want to discuss something that is not clear, please open an issue!"
   }
 ]
