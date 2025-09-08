@@ -1,0 +1,41 @@
+project:
+   type: website
+
+var:
+  url-repo: https://github.com/iic-jku/radio-frequency-integrated-circuits   # to call this value : {{< meta var.url-repo >}}
+
+website:
+  title: "Radio-Frequency Integrated Circuits"
+  navbar:
+    background: "#447099"
+    search: true
+    left:
+      - icon: house
+        href: index.qmd
+        text: "About"
+      - href: rfic.qmd
+        text: "Course Material"
+      - icon: bi-filetype-pdf
+        text: PDF
+        href: rfic.pdf
+    right:
+      - icon: github
+        href: "{{< meta var.url-repo >}}"
+        target: "_blank"
+
+  page-footer:
+    right: | 
+      Website built with [Quarto](https://quarto.org/){.external target="_blank"}
+    left: |
+      [Source code]({{< meta var.url-repo >}}){.external target="_blank"}
+execute:
+  freeze: auto
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: solar
+    fig-align: center
+    lang: en-US
+    lightbox: true

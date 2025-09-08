@@ -1,0 +1,29 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+# Introduction {#sec-intro}
+
+This is the material for an introductory radio-frequency integrated circuits course. The contents are derived from [@Razavi_RFIC] and [@Darabi_RFIC]; these two books are an excellent introduction into this topic and are highly recommended!
+
+It is assumed that readers are familiar with the contents of this [Analog Circuit Design](https://iic-jku.github.io/analog-circuit-design/analog_circuit_design.html) course.
+
+::: {.callout-important}
+All course material (source code of this document, Jupyter notebooks for calculations, Xschem circuits, etc.) is made publicly available on GitHub ([follow this link](https://github.com/iic-jku/radio-frequency-integrated-circuits)) and shared under the Apache-2.0 license.
+
+Please feel free to submit [pull requests](https://github.com/iic-jku/radio-frequency-integrated-circuits/pulls) to fix typos or add content! If you want to discuss something that is not clear, please [open an issue](https://github.com/iic-jku/radio-frequency-integrated-circuits/issues/new).
+
+The production of this document would be impossible without these (and many more) great open-source software products: `VS Code`, `Quarto`, `Pandoc`, `TexLive`, `Jupyter Notebook`, `Python`, `Xschem`, `ngspice`, `CACE`, `pygmid`, `schemdraw`, `Numpy`, `Scipy`, `Matplotlib`, `Pandas`, `Git`, `Docker`, `Ubuntu`, `Linux`, ...
+:::

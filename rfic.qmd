@@ -1,0 +1,37 @@
+---
+title: Radio-Frequency Integrated Circuits
+author:
+    - name: Harald Pretl
+      orcid: 0000-0003-1519-076X
+      email: harald.pretl@jku.at
+      corresponding: true
+      roles: "Lead author"
+      affiliation:
+        - name: Johannes Kepler University
+          city: Linz
+          state: Austria
+          url: https://www.jku.at/en/institute-for-integrated-circuits-and-quantum-computing
+date: last-modified
+license: "Apache-2.0 license"
+copyright:
+  holder: "Harald Pretl and co-authors, Johannes Kepler University."
+  year: 2025
+bibliography: references.bib
+format:
+  html:
+    number-sections: true
+    toc: true
+    toc-expand: 2
+  pdf:
+    toc: true
+    fig-align: center
+    lang: en-US
+    number-sections: true
+    papersize: A4
+    pdf-engine: xelatex
+    keep-tex: true
+
+---
+
+{{< include /content/_macros.qmd >}}
+{{< include /content/_sec_intro.qmd >}}
