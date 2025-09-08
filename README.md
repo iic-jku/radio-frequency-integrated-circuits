@@ -4,7 +4,7 @@
 
 **(c) 2025 Harald Pretl and co-authors, Department for Integrated Circuits (ICD), Johannes Kepler University, Linz (JKU)**
 
-This is the material for a graduate-level radio-frequency integrated circuit course, held at JKU under course number 336.023 ("VO Integrierte Hochfrequenz-Schaltungstechnik"). Follow this [link to access the material](https://iic-jku.github.io/radio-frequency-integrated-circuits/rf_circuit_design.html).
+This is the material for a graduate-level radio-frequency integrated circuit course, held at JKU under course number 336.023 ("VO Integrierte Hochfrequenz-Schaltungstechnik"). Follow this [link to access the material](https://iic-jku.github.io/radio-frequency-integrated-circuits/rfic.html).
 
 All course material is made publicly available and shared under the Apache-2.0 license.
 
