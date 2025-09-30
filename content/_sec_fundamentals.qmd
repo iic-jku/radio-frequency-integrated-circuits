@@ -50,7 +50,7 @@ $$
 and insert it into @eq-nonlinear-model. After some simple trigonometric manipulations we are at
 
 $$
-\begin{align}
+\begin{split}
 y(t) &= 
 \underbrace{ \frac{1}{2} \alpha_2 A^2 }_\text{dc component}
 +
@@ -59,7 +59,7 @@ y(t) &=
 \underbrace{ \frac{1}{2} \alpha_2 A^2 \cos(2 \omega t) }_\text{2nd harmonic}
 +
 \underbrace{ \frac{1}{4} \alpha_3 A^3 \cos(3 \omega t) }_\text{3rd harmonic}
-\end{align}
+\end{split}
 $$ {#eq-linearity-single}
 
 Looking at @eq-linearity-single we can make a few interesting observations:
@@ -105,10 +105,10 @@ As many different frequency components are created by this simple two-tone test 
 First, we start with the fundamental tones:
 
 $$
-\begin{aligned}
+\begin{split}
     y'(t) &= \left( \underbrace{\alpha_1 A_1 + \frac{3}{4} \alpha_3 A_1^3}_\text{compression/expansion} + \underbrace{\frac{3}{2} \alpha_3 A_1 A_2^2}_\text{cross-modulation/desens} \right) \cos(\omega_1 t) \\
     &+ \left( \underbrace{\alpha_1 A_2 + \frac{3}{4} \alpha_3 A_2^3}_\text{compression/expansion} + \underbrace{\frac{3}{2} \alpha_3 A_2 A_1^2}_\text{cross-modulation/desens} \right) \cos(\omega_2 t)
-\end{aligned}
+\end{split}
 $$ {#eq-linearity-double-a}
 
 As shown in @eq-linearity-double-a, interesting things happen:
@@ -120,11 +120,11 @@ As shown in @eq-linearity-double-a, interesting things happen:
 We now look at the next class of generated tones:
 
 $$
-\begin{aligned}
+\begin{split}
     y''(t) &= \frac{1}{2} \alpha_2 A_1^2 + \frac{1}{2} \alpha_2 A_2^2 \\
     &+ \alpha_2 A_1 A_2 \cos[ (\omega_1 - \omega_2) t] \\
     &+ \alpha_2 A_1 A_2 \cos[ (\omega_1 + \omega_2) t]
-\end{aligned}
+\end{split}
 $$ {#eq-linearity-double-b}
 
 As we can see in @eq-linearity-double-b new tones are created (besides the low frequency components we already know from the single-tone test) at the sum and difference of $\omega_1$ and $\omega_2$. These new frequency components are called "**intermodulation products of second order**" (IM2). These tones are created by the even-order nonlinearity ($\alpha_2$). These IM2 products are far away from the wanted tones, so are often not very problematic in amplifiers (but there can be exceptions!). However, they can be very problematic in frequency conversion blocks like mixers. We will come back to this point when discussing zero-IF receivers.
@@ -132,12 +132,12 @@ As we can see in @eq-linearity-double-b new tones are created (besides the low f
 We now investigate the next couple of tones:
 
 $$
-\begin{aligned}
+\begin{split}
     y'''(t) &= \frac{3}{4} \alpha_3 A_1^2 A_2 \cos[(2 \omega_1 + \omega_2) t] \\
     &+ \frac{3}{4} \alpha_3 A_1^2 A_2 \cos[(2 \omega_1 - \omega_2) t] \\
     &+ \frac{3}{4} \alpha_3 A_1 A_2^2 \cos[(2 \omega_2 + \omega_1) t] \\
     &+ \frac{3}{4} \alpha_3 A_1 A_2^2 \cos[(2 \omega_2 - \omega_1) t]
-\end{aligned}
+\end{split}
 $$ {#eq-linearity-double-c}
 
 The tones shown in @eq-linearity-double-c are called "i**ntermodulation products of third order**" (IM3), and are caused by the odd nonlinearities (like $\alpha_3$). While the IM3 tones located at $2 \omega_1 + \omega_2$ and $\omega_1 + 2 \omega_2$ are similar to the sum IM2 tone and far away from $\omega_1$ and $\omega_2$, the other two tones are concerning.

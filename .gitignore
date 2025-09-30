@@ -17,3 +17,4 @@ _site
 *.toc
 *.tex
 **/*.quarto_ipynb
+/rfic_files
