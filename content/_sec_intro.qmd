@@ -30,13 +30,13 @@ The production of this document would be impossible without these (and many more
 
 ## Wireless Transmission {#sec-intro-wireless}
 
-In wireless transmission, we usually want to transmit data via a transmitter (TX) and a connected antenna to a receiver (RX). This arrangement is shown in [@fig-simple-wireless-system].
+In wireless transmission, we usually want to transmit data via a transmitter (TX) and a connected antenna to a receiver (RX) using an electromagnetic (EM) wave. This arrangement is shown in [@fig-simple-wireless-system].
 
 {{< include ./figures/_fig_wireless_system.qmd >}}
 
-Unfortunately, wireless transmission is hard. The wireless channel, i.e., the usage of electromagnetic waves to transmit information from a transmitter to a receiver, is hard. The wireless channel, while tremendously useful, unfortunately has quite a few undesired features:
+Unfortunately, wireless transmission is hard. The wireless channel, i.e., the usage of electromagnetic waves to transmit information from a transmitter to a receiver, while tremendously useful, unfortunately has quite a few undesired features:
 
-- The wireless channels is shared between all users.
+- The wireless channel is shared between all users.
 - As a consequence, the available bandwidth is shared; this means that bandwidth is a scarce resource.
 - The wireless channel has significant losses.
 - The channel is time variant, as usually the transmitter and/or the receiver move, and/or the environment changes.
@@ -44,12 +44,10 @@ Unfortunately, wireless transmission is hard. The wireless channel, i.e., the us
 In order to estimate the power $P_\mathrm{R}$ of the wireless transmission at the receiver we can use Friis' transmission formula [@Pozar_RF]:
 
 $$
-P_\mathrm{R} = P_\mathrm{T} \cdot \frac{A_\mathrm{R} \cdot A_\mathrm{T}}{d^2 \cdot \lambda^2}
+P_\mathrm{R} = \frac{P_\mathrm{T}}{4 \pi d^2} \cdot A_\mathrm{R} = P_\mathrm{T} \cdot \frac{A_\mathrm{R} \cdot A_\mathrm{T}}{d^2 \lambda^2}
 $$ {#eq-friis-transmission}
 
-Here, $A_\mathrm{R}$ and $A_\mathrm{T}$ are the effective areas of the transmit and the receive antenna, while $d$ is the distance (line of sight) between the two antennas, and $\lambda$ is the wavelength of the used transmission frequency.
-
-The effective area of an antenna depends on the type and construction, but generally we can say that
+Here, $A_\mathrm{R}$ (and $A_\mathrm{T}$) is the effective area of the receive/transmit antenna, while $d$ is the distance (line of sight) between the two antennas. The effective area of an antenna depends on the type and construction, but generally we can say that
 
 $$
 A \propto \lambda^2
@@ -61,7 +59,7 @@ $$
 c = \lambda f.
 $$
 
-Generally speaking, the size of an electromagnetic antenna is proportional to the wavelength of the EM wave use for transmission. For man devices, we seek antenna on the order of a few centimeters, this is way frequencies in the hundreds of MHz to GHz are so popular. [@tbl-rf-applications] lists a few typical applications and their frequency and wavelength.
+Generally speaking, the size of an electromagnetic antenna is proportional to the wavelength of the EM wave use for transmission. For man devices, we seek antennas on the order of a few centimeters, and this is why frequencies in the hundreds of MHz to GHz are so popular. [@tbl-rf-applications] lists a few typical applications and their frequency and wavelength.
 
 | Application     | Frequency   | Wavelength  |
 |:----------------|-------------|-------------|
