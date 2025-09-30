@@ -16,3 +16,4 @@ _site
 *.pdf
 *.toc
 *.tex
+**/*.quarto_ipynb

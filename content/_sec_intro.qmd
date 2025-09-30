@@ -16,7 +16,7 @@ limitations under the License.
 
 # Introduction {#sec-intro}
 
-This is the material for an introductory radio-frequency integrated circuits course. The contents are derived from [@Razavi_RFIC] and [@Darabi_RFIC]; these two books are an excellent introduction into this topic and are highly recommended!
+This is the material for an introductory radio-frequency integrated circuits course. The contents are large based on [@Razavi_RFIC] and [@Darabi_RFIC]; these two books are an excellent introduction into this topic and are highly recommended! For a generation introduction into RF and microwave [@Pozar_RF] is highly recommended.
 
 It is assumed that readers are familiar with the contents of this [Analog Circuit Design](https://iic-jku.github.io/analog-circuit-design/analog_circuit_design.html) course.
 
@@ -27,3 +27,104 @@ Please feel free to submit [pull requests](https://github.com/iic-jku/radio-freq
 
 The production of this document would be impossible without these (and many more) great open-source software products: `VS Code`, `Quarto`, `Pandoc`, `TexLive`, `Jupyter Notebook`, `Python`, `Xschem`, `ngspice`, `CACE`, `pygmid`, `schemdraw`, `Numpy`, `Scipy`, `Matplotlib`, `Pandas`, `Git`, `Docker`, `Ubuntu`, `Linux`, ...
 :::
+
+## Wireless Transmission {#sec-intro-wireless}
+
+In wireless transmission, we usually want to transmit data via a transmitter (TX) and a connected antenna to a receiver (RX). This arrangement is shown in [@fig-simple-wireless-system].
+
+{{< include ./figures/_fig_wireless_system.qmd >}}
+
+Unfortunately, wireless transmission is hard. The wireless channel, i.e., the usage of electromagnetic waves to transmit information from a transmitter to a receiver, is hard. The wireless channel, while tremendously useful, unfortunately has quite a few undesired features:
+
+- The wireless channels is shared between all users.
+- As a consequence, the available bandwidth is shared; this means that bandwidth is a scarce resource.
+- The wireless channel has significant losses.
+- The channel is time variant, as usually the transmitter and/or the receiver move, and/or the environment changes.
+
+In order to estimate the power $P_\mathrm{R}$ of the wireless transmission at the receiver we can use Friis' transmission formula [@Pozar_RF]:
+
+$$
+P_\mathrm{R} = P_\mathrm{T} \cdot \frac{A_\mathrm{R} \cdot A_\mathrm{T}}{d^2 \cdot \lambda^2}
+$$ {#eq-friis-transmission}
+
+Here, $A_\mathrm{R}$ and $A_\mathrm{T}$ are the effective areas of the transmit and the receive antenna, while $d$ is the distance (line of sight) between the two antennas, and $\lambda$ is the wavelength of the used transmission frequency.
+
+The effective area of an antenna depends on the type and construction, but generally we can say that
+
+$$
+A \propto \lambda^2
+$$
+
+For an isotropic antenna (a theoretical construct where the radiation is equal in all directions) $A = \lambda^2 / (4 \pi)$, while for a $\lambda/2$-dipole $A = 0.13 \lambda^2$. Of course, the speed of light $c$ relates frequency $f$ and wavelength $\lambda$ of an electromagnetic wave by
+
+$$
+c = \lambda f.
+$$
+
+Generally speaking, the size of an electromagnetic antenna is proportional to the wavelength of the EM wave use for transmission. For man devices, we seek antenna on the order of a few centimeters, this is way frequencies in the hundreds of MHz to GHz are so popular. [@tbl-rf-applications] lists a few typical applications and their frequency and wavelength.
+
+| Application     | Frequency   | Wavelength  |
+|:----------------|-------------|-------------|
+| FM Radio        | 88--108 MHz | 2.8-3.4 m   |
+| WiFi (lowband)  | 2.4 GHz     | 12.5 cm     |
+| WiFi (highband) | 5 GHz       | 6 cm        |
+| Bluetooth       | 2.4 GHz     | 12.5 cm     |
+| Cellular        | 0.6--5 GHz  | 6-50 cm     |
+| GNSS            | 1.575 GHz   | 19 cm       |
+: Typical RF applications with their operating frequencies and corresponding wavelengths {#tbl-rf-applications}
+
+As you can see in [@tbl-rf-applications] many of these antennas would not fit into the used device form factors, i.e., often we have to use electrically small antennas.
+
+::: {#nte-wavelength-calculation .callout-note}
+## Wavelength Calculation {#exm-wavelength-calc}
+Let's calculate the wavelength for a Bluetooth signal at 2.4 GHz. Given:
+
+- Frequency $f = 2.4$ GHz $= 2.4 \times 10^9$ Hz  
+- Speed of light $c = 3 \times 10^8$ m/s
+
+Using the relationship $c = \lambda f$, we can solve for wavelength:
+
+$$\lambda = \frac{c}{f} = \frac{3 \times 10^8 \text{ m/s}}{2.4 \times 10^9 \text{ Hz}} = 0.125 \text{ m} = 12.5 \text{ cm}$$
+
+This means that a quarter-wavelength monopole antenna for 2.4 GHz Bluetooth would be approximately 3.1 cm long, which easily fits into most mobile devices.
+:::
+
+In order to get a feeling for the attenuation experienced in wireless communication, we now calculate the following exemplary transmission. We will use the unit of dBm with is often used in RF design and is defined as
+
+$$
+P|_\text{dBm} = 10 \cdot \log_{10} \left( \frac{P|_\text{W}}{1\,\text{mW}} \right)
+$$ {#eq-dbm}
+
+::: {#nte-wireless-attenuation .callout-note}
+## Wireless Transmission
+
+We use the following parameters:
+
+- Transmit power $P_\mathrm{T} = 1$ W
+- Frequency $f = 2.4$ GHz
+- Communication distance $d = 10$ km
+- Using $\lambda/2$ dipoles on both ends
+
+Using [@eq-friis-transmission] we calculate
+
+$$
+P_\mathrm{R} = P_\mathrm{T} \cdot \frac{0.13 \lambda^2 \cdot 0.13 \lambda^2}{d^2 \lambda^2} = P_\mathrm{T} \cdot 0.13^2 \left( \frac{\lambda}{d} \right)^2 =  2.64\,\text{pW} = -85.8\,\text{dBm}
+$$
+
+With the transmit power of 1 W = 30 dBm we have an attenuation of 116 dB! This is a very large number!
+:::
+
+As dire as the situation of [@nte-wireless-attenuation] already looks, this is not even all factors considered:
+
+- The given attenuation is for line-of-sight paths; often, the attenuation is significantly higher than this due to blockage by buildings, mountains, rain, or foliage.
+- In lack of a direct line-of-sight path, the EM wave is redirected by reflections, causing additional attenuation, and the potential destructive interference by multi-path reception.
+
+The consequences of this are (among others):
+
+- The transmitter needs to generate enough **transmit power** to overcome the transmission loss; this has to be done often with high **efficiency**, as the transmit device is battery operated or limited by cooling.
+- The receiver has to be able to process **weak signals**, i.e., the **noise** level of the signal processing has to be very low.
+- Often, the receive signal is very weak, while there are strong signals at other frequencies (i.e., other wireless transmitters are located close to the receiver). This means the receiver has to be able to process a weak signal while simultaneously tolerate **large interfering signals** (called blockers).
+- Since the frequency spectrum is shared among many users and wireless applications, the transmit information has to be packed efficiently into a **small bandwidth**.
+- Very often, wireless devices are battery-operated. This means transmit and receive functions have to be implemented using **minimum power consumption**.
+
+As stated in the beginning, designing wireless systems is hard.
