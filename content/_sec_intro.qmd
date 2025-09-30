@@ -76,7 +76,7 @@ Generally speaking, the size of an electromagnetic antenna is proportional to th
 As you can see in [@tbl-rf-applications] many of these antennas would not fit into the used device form factors, i.e., often we have to use electrically small antennas.
 
 ::: {#nte-wavelength-calculation .callout-note}
-## Wavelength Calculation {#exm-wavelength-calc}
+## Wavelength Calculation
 Let's calculate the wavelength for a Bluetooth signal at 2.4 GHz. Given:
 
 - Frequency $f = 2.4$ GHz $= 2.4 \times 10^9$ Hz  

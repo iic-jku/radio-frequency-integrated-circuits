@@ -1,0 +1,61 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+negative WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-harmonics
+#| echo: false 
+#| fig-cap: "Single-tone test showing created harmonics at 2ω and 3ω."
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Create figure with single subplot
+fig, ax = plt.subplots(1, 1)
+
+# Define frequencies (for example)
+f1 = 2.40  # GHz
+
+# Calculate harmonics
+f_harmonic_2 = 2*f1
+f_harmonic_3 = 3*f1
+
+# Frequency domain spectrum
+frequencies = [f1, f_harmonic_2, f_harmonic_3]
+freq_labels = ['ω', '2ω', '3ω']
+colors = ['blue', 'red', 'red']
+amplitudes = [1.0, 0.3, 0.1]  # Relative amplitudes
+line_styles = ['-', '--', '--']
+
+# Plot spectral lines
+for i, (freq, amp, color, style, label) in enumerate(zip(frequencies, amplitudes, colors, line_styles, freq_labels)):
+    ax.vlines(freq, 0, amp, colors=color, linestyles=style, linewidth=3, alpha=0.8)
+    ax.plot(freq, amp, 'o', color=color, markersize=8, markerfacecolor=color, alpha=0.8)
+    
+    # Add frequency labels
+    if 'harmonic' not in label:  # Fundamental tones
+        ax.text(freq, amp + 0.1, label, ha='center', va='bottom', color=color)
+    else:  # Harmonics
+        ax.text(freq, amp + 0.1, f'{label}\n(IM3)', ha='center', va='bottom', color=color)
+
+# Frequency domain formatting
+ax.set_xlabel('Frequency (GHz)')
+ax.set_ylabel('Magnitude')
+ax.grid(True, alpha=0.3)
+ax.set_xlim(f1 - f1/2, f_harmonic_3 + f1/2)
+ax.set_ylim(0, 1.2)
+
+plt.show()
+```

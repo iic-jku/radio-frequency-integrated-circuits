@@ -1,0 +1,256 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+# Fundamentals {#sec-fundamentals}
+
+In this section, we will discuss a few important concepts which will be instrumental in the further study of RF circuits and systems. As signals in RF circuits and systems are often limited on the top end by linearity, and on the bottom end by noise, we will discuss these two topics in some detail.
+
+## Linearity {#sec-linearity}
+
+As we have already seen in @sec-intro-wireless the transmitter has to process large signals without distorting them, while the receiver has to process small signals in the presence of large signals. Both situations mean we need metrics and models to quantify and discuss linearity properties.
+
+We are going to use a very simple, time-invariant model to study linearity, based on a Taylor polynomial.
+
+::: {.callout-important}
+## Linearity and Time Invariance in RF Systems
+We use time invariance to simplify the mathematics. In practice, many circuits and systems will show time variant behavior which leads to quite a few very interesting and important phenomena!
+:::
+
+We model a nonlinear circuit block with the following Taylor polynomial:
+
+$$
+y(t) = \alpha_0 + \alpha_1 x(t) + \alpha_2 x(t)^2 + \alpha_3 x(t)^3 + \ldots
+$$ {#eq-nonlinear-model}
+
+Usually, the blocks under study will have higher order nonlinear terms but we often stop at 3rd order to keep things simple. For practical work, higher order terms should be included if necessary.
+
+Which $x(t)$ should we use to study wireless systems? Often, the bandwidth $f_\mathrm{BW}$ of a transmit signal is much smaller than the center frequency $f_0$, i.e., $f_\mathrm{BW} \ll f_0$. In this case using a sinusoidal signal as a mode is both simple to handle and approximately correct.
+
+### Single-Tone Linearity {#sec-linearity-single}
+
+We thus set (with $A$ being the amplitude of the input signal and $\omega = 2 \pi f$ the angular frequency)
+
+$$
+x(t) = A \cos(\omega t)
+$$
+
+and insert it into @eq-nonlinear-model. After some simple trigonometric manipulations we are at
+
+$$
+\begin{multlined}
+y(t) = 
+\underbrace{ \frac{1}{2} \alpha_2 A^2 }_\text{dc component}
++
+\underbrace{ \left(\alpha_1 A + \frac{3}{4} \alpha_3 A^3 \right) \cos(\omega t) }_\text{fundamental} \\
++
+\underbrace{ \frac{1}{2} \alpha_2 A^2 \cos(2 \omega t) }_\text{2nd harmonic}
++
+\underbrace{ \frac{1}{4} \alpha_3 A^3 \cos(3 \omega t) }_\text{3rd harmonic}
+\end{multlined}
+$$ {#eq-linearity-single}
+
+Looking at @eq-linearity-single we can make a few interesting observations:
+
+- Even-order nonlinearity ($\alpha_2$) creates low-frequency components; it effectively adds frequency components related to the envelope $A$. If $A$ is a constant then this results in a dc term; if $A(t)$ is time variant it will created a squared version of it at low frequencies.
+- The $\alpha_1$ term is the gain of the circuit block.
+- Odd-order nonlinearity ($\alpha_3$) can impact the gain of the fundamental term passing through the block. Depending on the sign of $\alpha_3$ this can lead to gain contraction or expansion.
+- Even- and odd-order nonlinearities creates additional frequency components, so-called harmonics of the fundamental frequency. These harmonics are often unwanted, as they are far outside the wanted transmission frequency range, and need to be minimized, by either
+  1. use a lowpass filter to filter these harmonics, or
+  2. increase the linearity, i.e., make the $\alpha_2$, $\alpha_3$, etc., small enough.
+
+The created harmonics are illustrated in @fig-harmonics. Note that measuring harmonics to quantify the nonlinearity metrics like $\alpha_2$ and $\alpha_3$ is often not very accurate, as these harmonics are often filtered in bandwidth-limited systems.
+
+{{< include ./figures/_fig_harmonics.qmd >}}
+
+How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal $x(t)$ in amplitude, and observe the output $y(t)$. If the observed gain drops by 1 dB from the small-signal value we note the input power, and call this point the **1dB compression point** ($P_\mathrm{1dB}$). We should always add whether this 1dB compression point is input- or output-referred to avoid ambiguity. The diagram in @fig-1db-compression-point shows this test ($\alpha_1 = 100$, $\alpha_3 = -0.2$).
+
+{{< include ./figures/_fig_1dB_compression.qmd >}}
+
+::: {.callout-important}
+## Compressive vs. Expansive Behavior
+Note that for compressive behaviour, $\alpha_3$ and $\alpha_1$ have different signs, while for expansive behaviour, they have the same sign.
+
+At some point, every circuit block will show compressive behavior, as the maximum signal amplitude will be limited by power supply voltages, device breakdown voltages, etc.
+:::
+
+### Multi-Tone Linearity
+
+We now elevate our investigations and apply two sinusoids with different frequencies and different amplitudes and see which signals we get at the output of the nonlinear block. The two-tone test and resulting third-order intermodulation products (IM3) are illustrated in @fig-im3-tones.
+
+$$
+x(t) = A_1 \cos(\omega_1 t) + A_2 \cos(\omega_2 t)
+$$
+
+We apply the above stimulus to our nonlinear model described by @eq-nonlinear-model and again, after some trigonometric manipulations, arrive at:
+
+$$
+y(t) = y'(t) + y''(t) + y'''(t)
+$$ {#eq-linearity-double}
+
+As many different frequency components are created by this simple two-tone test (and nonlinearity only up to 3rd order) we split the result into different equations and look at the result separately.
+
+First, we start with the fundamental tones:
+
+$$
+\begin{multlined}
+    y'(t) = \left( \underbrace{\alpha_1 A_1 + \frac{3}{4} \alpha_3 A_1^3}_\text{compression/expansion} + \underbrace{\frac{3}{2} \alpha_3 A_1 A_2^2}_\text{cross-modulation/desens} \right) \cos(\omega_1 t) \\
+    + \left( \underbrace{\alpha_1 A_2 + \frac{3}{4} \alpha_3 A_2^3}_\text{compression/expansion} + \underbrace{\frac{3}{2} \alpha_3 A_2 A_1^2}_\text{cross-modulation/desens} \right) \cos(\omega_2 t)
+\end{multlined}
+$$ {#eq-linearity-double-a}
+
+As shown in @eq-linearity-double-a, interesting things happen:
+
+- We (again) have the gain compression/expansion effect as already discussed in @sec-linearity-single.
+- In addition, we have **cross-modulation**, i.e., the envelope of one tone (e.g., $A_2(t)$ of the tone at $\omega_2$) impacts the envelope of the other tone at $\omega_1$. This can lead to unwanted signal distortation, even if there is a large frequency separation between $\omega_1$ and $\omega_2$!
+- Further, since the sign of $\alpha_3$ is usually opposite to $\alpha_1$, this can also lead to **desensitization** ("desens"). If, for example, $A_2 \gg A_1$, then there would be no compression due to the tone $\omega_1$ itself, however, the large tone at $\omega_2$ will lead to gain compression of the tone at $\omega_1$; this effect is called desense.
+
+We now look at the next class of generated tones:
+
+$$
+\begin{multlined}
+    y''(t) = \frac{1}{2} \alpha_2 A_1^2 + \frac{1}{2} \alpha_2 A_2^2 \\
+    + \alpha_2 A_1 A_2 \cos[ (\omega_1 - \omega_2) t] \\
+    + \alpha_2 A_1 A_2 \cos[ (\omega_1 + \omega_2) t]
+\end{multlined}
+$$ {#eq-linearity-double-b}
+
+As we can see in @eq-linearity-double-b new tones are created (besides the low frequency components we already know from the single-tone test) at the sum and difference of $\omega_1$ and $\omega_2$. These new frequency components are called "**intermodulation products of second order**" (IM2). These tones are created by the even-order nonlinearity ($\alpha_2$). These IM2 products are far away from the wanted tones, so are often not very problematic in amplifiers (but there can be exceptions!). However, they can be very problematic in frequency conversion blocks like mixers. We will come back to this point when discussing zero-IF receivers.
+
+We now investigate the next couple of tones:
+
+$$
+\begin{multlined}
+    y'''(t) = \frac{3}{4} \alpha_3 A_1^2 A_2 \cos[(2 \omega_1 + \omega_2) t] \\
+    + \frac{3}{4} \alpha_3 A_1^2 A_2 \cos[(2 \omega_1 - \omega_2) t] \\
+    + \frac{3}{4} \alpha_3 A_1 A_2^2 \cos[(2 \omega_2 + \omega_1) t] \\
+    + \frac{3}{4} \alpha_3 A_1 A_2^2 \cos[(2 \omega_2 - \omega_1) t] 
+\end{multlined}
+$$ {#eq-linearity-double-c}
+
+The tones shown in @eq-linearity-double-c are called "i**ntermodulation products of third order**" (IM3), and are caused by the odd nonlinearities (like $\alpha_3$). While the IM3 tones located at $2 \omega_1 + \omega_2$ and $\omega_1 + 2 \omega_2$ are similar to the sum IM2 tone and far away from $\omega_1$ and $\omega_2$, the other two tones are concerning.
+
+Expressing $\Delta \omega = \omega_2 - \omega_1$ (and assuming $\omega_1 < \omega_2$), the building law of $2 \omega_1 - \omega_2 = \omega_1 - \Delta \omega$ and $2 \omega_2 - \omega_1 = \omega_2 + \Delta \omega$ results in new tones right besides $\omega_1$ and $\omega_2$, with a frequency separation only defined by $\Delta \omega$. This situation is illustrated in @fig-im3-tones.
+
+{{< include ./figures/_fig_im3_tones.qmd >}}
+
+This close localization of the IM3 tones can also be utilized to characterize nonlinear performance. Using gain compression or harmonic generation (H3) it can be very difficult to extract nonlinearity of third order ($\alpha_3$). However, using a two-tone test, the IM3 tones can be readily measured, even if the measured signal path shows a **bandpass characteristic**! As RF systems frequently employ bandpass filters to suppress out-of-band signals, this is a very important property of the two-tone test.
+
+The resulting test is called a two-tone test yielding the third-order intercept point (IP3). This test is widely used in RF design to characterize the linearity of amplifiers, mixers, and complete transceiver systems. The power relationship between fundamental tones and IM3 products as a function of input power is shown in @fig-im3-power-sweep.
+
+{{< include ./figures/_fig_im3_power_sweep.qmd >}}
+
+Note that, as shown in @fig-im3-power-sweep, the IM3 products rise with a slope of 3 dB/dB, i.e., if the input power is increased by 1 dB, the IM3 products increase by 3 dB. The fundamental tones rise with a slope of 1 dB/dB (as long as we are in the linear region). The IP3 point is defined as the intersection of the **extrapolated** linear lines of fundamental and IM3 products. As both lines have different slopes, this intersection point is usually far outside the actual operating range of the circuit block under test!
+
+When calculating the IIP3 (input-referred IP3) we can use the following formula, assuming equal input power per tone. It is important to always check the slope of the IM3 products to ensure that we are indeed in the third-order region! If the input power per tone is $P_\mathrm{in}$ (in dBm) and the input-referred power of one IM3 tone is $P_\mathrm{IM3}$ (in dBm), then the input-referred IP3 is given by
+
+$$
+\text{IIP3} = P_\mathrm{in} + \frac{P_\mathrm{in} - P_\mathrm{IM3}}{2}
+$$ {#eq-iip3}
+
+Further, for midly nonlinear systems (i.e., $\alpha_3$ is dominating), the IIP3 can be approximated from the 1dB compression point as
+
+$$
+\text{IIP3}|_\mathrm{dBm} \approx P_\mathrm{1dB}|_\mathrm{dBm} + 9.6\,\text{dB}.
+$$ {#eq-iip3-approx}
+
+If we have two blocks which are cascaded, and we know the gain and IIP3 of both blocks, we can calculate the overall IIP3 of the cascade with the following approximation. An exact calculation is very involved, as the nonlinearities of the first block (and the resulting tones) will be processed by the second block, creating even more tones; this process escalates very quickly. However, for practical purposes, the following approximation is often sufficient:
+
+$$
+\frac{1}{\text{IIP3}_\text{total}} \approx \frac{1}{\text{IIP3}_1} + \frac{G_1}{\text{IIP3}_2}
+$$ {#eq-iip3-cascade}
+
+Here $G_1$ is the linear gain of the first block, and $\text{IIP3}_1$, $\text{IIP3}_2$ are the input-referred IP3 of the first and second block, respectively. Note that all powers have to be in linear units (i.e., Watts) when using @eq-iip3-cascade. An even more simplified version of @eq-iip3-cascade can be used with all quantities given in dBm and dB, respectively:
+
+$$
+\text{IIP3}_\text{total} \approx \min \{  \text{IIP3}_1, \text{IIP3}_2 - G_1 \}
+$$ {#eq-iip3-cascade-simple}
+
+A typical RF system cascade with multiple blocks and their individual IIP3 contributions is shown in @fig-iip3-cascade.
+
+{{< include ./figures/_fig_iip3_cascade.qmd >}}
+
+::: {#nte-iip3-cascade .callout-note}
+## Simple IIP3 Cascade Calculation
+Let's calculate the overall IIP3 of two cascaded blocks. The first block is a low-noise amplifier with an IIP3 of -10 dBm and a gain of 20 dB. The second block is a mixer that has a gain of 10 dB and an IIP3 of 5 dBm. What is the overall IIP3?
+
+Using @eq-iip3-cascade-simple we can quickly estimate:
+
+$$
+\text{IIP3}_\text{total} \approx \min \{ -10\,\text{dBm}, 5\,\text{dBm} - 20\,\text{dB} = -15\,\text{dBm} \} = -15\,\text{dBm}
+$$
+
+We see that the overall IIP3 is limited by the linearity of the second block, as the first block amplifies all signals (including blockers) by 20 dB before they reach the second block.
+:::
+
+## Noise {#sec-noise}
+
+Just as nonlinearity is a limiting factor for large signals, noise is the limiting factor for small signals. Noise is present in all electronic circuits and systems, and it is impossible to avoid it. However, we can try to minimize its impact on the system performance.
+
+Noise is usually characterized by its power spectral density (PSD) in units of Watts per Hertz (W/Hz). For example, thermal noise at room temperature has a PSD of approximately $k T = 4 \times 10^{-21}$ W/Hz, or --174 dBm/Hz (with the Boltzmann constant $k = 1.38 \times 10^{-23}\,\text{J/K}$). This means that if we have a bandwidth of 1 MHz, the total thermal noise power would be:
+
+$$
+P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \left( \frac{1\,\text{MHz}}{1\,\text{Hz}} \right) = -114\,\text{dBm}
+$$
+
+The PSD of noise can be flat vs. frequency (which is called "white noise"), or can decrease with frequency (e.g., "flicker noise" or "1/f noise"). Further, noise can be generated by resistors (thermal noise), semiconductors (shot noise, generation-recombination noise), etc. A detailed discussion of noise sources can be found in [@Gray_Meyer_5th_ed] or [@Razavi_Analog_CMOS].
+
+### Types of Noise Generation
+
+**Resistors** generate thermal noise, which is white noise with a PSD of $4 k T R$ (in V$^2$/Hz) when looking at the voltage across the resistor, or $4 k T / R$ (in A$^2$/Hz) when looking at the current through the resistor. This noise is generated by the random thermal motion of charge carriers in the resistor.
+
+**MOSFETs** generate several types of noise, the most important ones being the thermal noise of the channel and flicker noise.
+
+The thermal noise of the channel can be modeled as a current noise source between drain and source with a PSD of $4 k T \gamma g_{d0}$ (in A$^2$/Hz), where $\gamma$ is a process-dependent parameter (usually between 2/3 and 2). The parameter $g_{d0}$ is the small-signal output conductance of the MOSFET in triode, i.e., $g_{d0} = \gds$, or equal to $g_{d0} = \gm$ when in saturation.
+
+In saturation, it is often useful to express the thermal noise as a voltage noise source at the gate with a PSD of $4 k T \gamma / \gm$ (in V$^2$/Hz). We can see that we can lower this noise of the MOSFET by increasing the transconductance $\gm$, which can be achieved by increasing the bias current.
+
+In addition, at high frequencies, the MOSFET also has induced gate-current noise, which is correlated with the channel thermal noise. A detailed discussion of this noise source can be found in [@Razavi_Analog_CMOS].
+
+Flicker noise is usually modeled as a voltage noise source at the gate with a PSD of $K_f / (\Cox W L f)$ (in V$^2$/Hz), where $K_f$ is a process-dependent parameter, $\Cox$ is the oxide capacitance per unit area, $L$ and $W$ are the length and width of the MOSFET, and $f$ is the frequency. Note that we can lower the flicker noise by increasing the area of the MOSFET ($W L$), however, this increases the parasitic capacitances associated with the MOSFET, and this often prohibitive for RF operation!
+
+In **bipolar junction transistors (BJTs)**, the most important noise source is the shot noise due to the diffusion current in the base-emitter junction. Its PSD can be modeled as a current noise source between collector and emitter with a PSD of $2 q I_\mathrm{C}$ (in A$^2$/Hz), where $q$ is the elementary charge ($q = 1.6 \times 10^{-19}$ C) and $I_\mathrm{C}$ is the dc collector current.
+
+::: {#nte-shot-thermal-noise .callout-note}
+## Equivalance of Shot and Thermal Noise
+Note that it has been shown in [@Sarpeshkar_1993] that thermal noise and shot noise are actually equivalent, as both are generated by the random, thermally agitated motion of charge carriers!
+:::
+
+Ideal **capacitors** and **inductors** do not generate noise, however, real capacitors and inductors have parasitic resistances which generate thermal noise.
+
+In RF systems additional noise sources can be present. One noteworthy example is the [**cosmic microwave background**](https://en.wikipedia.org/wiki/Cosmic_microwave_background) radiation, which can be modeled as a noise temperature of approximately 3 K. While this is negligible compared to thermal noise at room temperature (approximately 290 K), it can be significant in very low-noise systems, such as radio telescopes pointing to the sky.
+
+### Noise in Impedance-Matched Systems
+
+We now want to calculate the maximum noise power that can be extracted from a noisy source. We assume the following situation as shown in @fig-noise-matched-system. Note that the voltage source $\overline{V_\mathrm{n,s}^2}$ models the thermal noise of the source resistor $R_\mathrm{s}$.
+
+{{< include ./figures/_fig_noise_matched_system.qmd >}}
+
+We know that the noise of the source resistor is given by $\overline{V_\mathrm{n,s}^2} = 4 k T R_\mathrm{s}$. We assume the load resistor $R_\mathrm{load}$ as noiseless and matched to the source resistor, i.e., $R_\mathrm{load} = R_\mathrm{s}$ for [maximum power transfer](https://en.wikipedia.org/wiki/Maximum_power_transfer_theorem). The noise power spectral density delivered to the load resistor is then given by
+
+$$
+P_\mathrm{n,load} = \frac{\overline{V_\mathrm{n,load}^2}}{R_\mathrm{load}} = \frac{\overline{V_\mathrm{n,d}^2}}{4 R_\mathrm{s}} = k T
+$$ {#eq-noise-power-matched}
+
+The calculation of @eq-noise-power-matched confirms the initial statement that the maximum noise power spectral density that can be extracted from a noisy source is $k T$ (in W/Hz). This result is independent of the actual value of the source resistance $R_\mathrm{s}$.
+
+We can further generalize the thermal noise of any impedance as
+
+$$
+\overline{V_\mathrm{n}^2} = 4 k T \Re \{ Z \}
+$$ {#eq-thermal-noise-impedance}
+
+as for example in the complex impedance $Z_\mathrm{ant}$ of an antenna.
+

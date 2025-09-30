@@ -35,3 +35,4 @@ format:
 
 {{< include /content/_macros.qmd >}}
 {{< include /content/_sec_intro.qmd >}}
+{{< include /content/_sec_fundamentals.qmd >}}

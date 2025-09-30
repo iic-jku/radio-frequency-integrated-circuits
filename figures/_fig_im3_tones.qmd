@@ -1,0 +1,76 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+negative WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-im3-tones
+#| echo: false 
+#| fig-cap: "Two-tone test showing fundamental frequencies ω₁, ω₂ and third-order intermodulation products (IM3) at 2ω₁-ω₂ and 2ω₂-ω₁."
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Create figure with single subplot
+fig, ax = plt.subplots(1, 1)
+
+# Define frequencies (for example)
+f1 = 2.40  # GHz
+f2 = 2.42  # GHz
+df = f2 - f1  # Frequency spacing
+
+# Calculate IM3 frequencies
+f_im3_low = 2*f1 - f2
+f_im3_high = 2*f2 - f1
+
+# Frequency domain spectrum
+frequencies = [f_im3_low, f1, f2, f_im3_high]
+freq_labels = ['2ω₁-ω₂', 'ω₁', 'ω₂', '2ω₂-ω₁']
+colors = ['red', 'blue', 'blue', 'red']
+amplitudes = [0.3, 1.0, 0.8, 0.3]  # Relative amplitudes
+line_styles = ['--', '-', '-', '--']
+
+# Plot spectral lines
+for i, (freq, amp, color, style, label) in enumerate(zip(frequencies, amplitudes, colors, line_styles, freq_labels)):
+    ax.vlines(freq, 0, amp, colors=color, linestyles=style, linewidth=3, alpha=0.8)
+    ax.plot(freq, amp, 'o', color=color, markersize=8, markerfacecolor=color, alpha=0.8)
+    
+    # Add frequency labels
+    if 'IM3' not in label:  # Fundamental tones
+        ax.text(freq, amp + 0.1, label, ha='center', va='bottom', color=color)
+    else:  # IM3 products
+        ax.text(freq, amp + 0.1, f'{label}\n(IM3)', ha='center', va='bottom', color=color)
+
+# Frequency domain formatting
+ax.set_xlabel('Frequency (GHz)')
+ax.set_ylabel('Magnitude')
+ax.grid(True, alpha=0.3)
+ax.set_xlim(f_im3_low - 0.02, f_im3_high + 0.02)
+ax.set_ylim(0, 1.2)
+
+# Add frequency spacing annotations
+ax.annotate('', xy=(f1, 0.1), xytext=(f2, 0.1),
+            arrowprops=dict(arrowstyle='<->', color='black', lw=1.5))
+ax.text((f1+f2)/2, 0.2, f'Δω', ha='center', va='top')
+
+ax.annotate('', xy=(f_im3_low, 0.1), xytext=(f1, 0.1),
+            arrowprops=dict(arrowstyle='<->', color='black', lw=1.5))
+ax.text((f1+f_im3_low)/2, 0.2, f'Δω', ha='center', va='top')
+
+ax.annotate('', xy=(f_im3_high, 0.1), xytext=(f2, 0.1),
+            arrowprops=dict(arrowstyle='<->', color='black', lw=1.5))
+ax.text((f2+f_im3_high)/2, 0.2, f'Δω', ha='center', va='top')
+
+plt.show()
+```
