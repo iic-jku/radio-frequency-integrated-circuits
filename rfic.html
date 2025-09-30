@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.34">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2025-09-08">
+<meta name="dcterms.date" content="2025-09-30">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -54,18 +54,22 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-befe23ebd2f54d8af2c8a89d1a1611f1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e8e54fbf2d9ade825dca367f4b247db7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-f4a5ee9f428d00c6bef4a716450a67ee.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-e8e54fbf2d9ade825dca367f4b247db7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-b66d9f3da4d84aca26cc7cc1c94b0445.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-d3daa1d1ef55350d6f5c3e6cec97cbbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-b66d9f3da4d84aca26cc7cc1c94b0445.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -94,6 +98,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -266,6 +299,8 @@ div.csl-indent {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Radio-Frequency Integrated Circuits</span>
     </a>
@@ -314,7 +349,10 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#sec-intro" id="toc-sec-intro" class="nav-link active" data-scroll-target="#sec-intro"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#sec-intro" id="toc-sec-intro" class="nav-link active" data-scroll-target="#sec-intro"><span class="header-section-number">1</span> Introduction</a>
+  <ul class="collapse">
+  <li><a href="#sec-intro-wireless" id="toc-sec-intro-wireless" class="nav-link" data-scroll-target="#sec-intro-wireless"><span class="header-section-number">1.1</span> Wireless Transmission</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="rfic.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
@@ -350,7 +388,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 8, 2025</p>
+      <p class="date">September 30, 2025</p>
     </div>
   </div>
   
@@ -367,7 +405,7 @@ div.csl-indent {
 </div>
 <section id="sec-intro" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>This is the material for an introductory radio-frequency integrated circuits course. The contents are derived from <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span> and <span class="citation" data-cites="Darabi_RFIC">(<a href="#ref-Darabi_RFIC" role="doc-biblioref">Darabi 2020</a>)</span>; these two books are an excellent introduction into this topic and are highly recommended!</p>
+<p>This is the material for an introductory radio-frequency integrated circuits course. The contents are large based on <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span> and <span class="citation" data-cites="Darabi_RFIC">(<a href="#ref-Darabi_RFIC" role="doc-biblioref">Darabi 2020</a>)</span>; these two books are an excellent introduction into this topic and are highly recommended! For a generation introduction into RF and microwave <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span> is highly recommended.</p>
 <p>It is assumed that readers are familiar with the contents of this <a href="https://iic-jku.github.io/analog-circuit-design/analog_circuit_design.html">Analog Circuit Design</a> course.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -384,14 +422,170 @@ Important
 <p>The production of this document would be impossible without these (and many more) great open-source software products: <code>VS Code</code>, <code>Quarto</code>, <code>Pandoc</code>, <code>TexLive</code>, <code>Jupyter Notebook</code>, <code>Python</code>, <code>Xschem</code>, <code>ngspice</code>, <code>CACE</code>, <code>pygmid</code>, <code>schemdraw</code>, <code>Numpy</code>, <code>Scipy</code>, <code>Matplotlib</code>, <code>Pandas</code>, <code>Git</code>, <code>Docker</code>, <code>Ubuntu</code>, <code>Linux</code>, …</p>
 </div>
 </div>
+<section id="sec-intro-wireless" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="sec-intro-wireless"><span class="header-section-number">1.1</span> Wireless Transmission</h2>
+<p>In wireless transmission, we usually want to transmit data via a transmitter (TX) and a connected antenna to a receiver (RX). This arrangement is shown in <a href="#fig-simple-wireless-system" class="quarto-xref">Figure&nbsp;1</a>.</p>
+<div id="cell-fig-simple-wireless-system" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div id="fig-simple-wireless-system" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-simple-wireless-system-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-simple-wireless-system-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: The block diagram of a simple wireless system."><img src="rfic_files/figure-html/fig-simple-wireless-system-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-simple-wireless-system-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The block diagram of a simple wireless system.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Unfortunately, wireless transmission is hard. The wireless channel, i.e., the usage of electromagnetic waves to transmit information from a transmitter to a receiver, is hard. The wireless channel, while tremendously useful, unfortunately has quite a few undesired features:</p>
+<ul>
+<li>The wireless channels is shared between all users.</li>
+<li>As a consequence, the available bandwidth is shared; this means that bandwidth is a scarce resource.</li>
+<li>The wireless channel has significant losses.</li>
+<li>The channel is time variant, as usually the transmitter and/or the receiver move, and/or the environment changes.</li>
+</ul>
+<p>In order to estimate the power <span class="math inline">\(P_\mathrm{R}\)</span> of the wireless transmission at the receiver we can use Friis’ transmission formula <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span>:</p>
+<p><span id="eq-friis-transmission"><span class="math display">\[
+P_\mathrm{R} = P_\mathrm{T} \cdot \frac{A_\mathrm{R} \cdot A_\mathrm{T}}{d^2 \cdot \lambda^2}
+\tag{1}\]</span></span></p>
+<p>Here, <span class="math inline">\(A_\mathrm{R}\)</span> and <span class="math inline">\(A_\mathrm{T}\)</span> are the effective areas of the transmit and the receive antenna, while <span class="math inline">\(d\)</span> is the distance (line of sight) between the two antennas, and <span class="math inline">\(\lambda\)</span> is the wavelength of the used transmission frequency.</p>
+<p>The effective area of an antenna depends on the type and construction, but generally we can say that</p>
+<p><span class="math display">\[
+A \propto \lambda^2
+\]</span></p>
+<p>For an isotropic antenna (a theoretical construct where the radiation is equal in all directions) <span class="math inline">\(A = \lambda^2 / (4 \pi)\)</span>, while for a <span class="math inline">\(\lambda/2\)</span>-dipole <span class="math inline">\(A = 0.13 \lambda^2\)</span>. Of course, the speed of light <span class="math inline">\(c\)</span> relates frequency <span class="math inline">\(f\)</span> and wavelength <span class="math inline">\(\lambda\)</span> of an electromagnetic wave by</p>
+<p><span class="math display">\[
+c = \lambda f.
+\]</span></p>
+<p>Generally speaking, the size of an electromagnetic antenna is proportional to the wavelength of the EM wave use for transmission. For man devices, we seek antenna on the order of a few centimeters, this is way frequencies in the hundreds of MHz to GHz are so popular. <a href="#tbl-rf-applications" class="quarto-xref">Table&nbsp;1</a> lists a few typical applications and their frequency and wavelength.</p>
+<div id="tbl-rf-applications" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-rf-applications-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Typical RF applications with their operating frequencies and corresponding wavelengths
+</figcaption>
+<div aria-describedby="tbl-rf-applications-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Application</th>
+<th>Frequency</th>
+<th>Wavelength</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">FM Radio</td>
+<td>88–108 MHz</td>
+<td>2.8-3.4 m</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WiFi (lowband)</td>
+<td>2.4 GHz</td>
+<td>12.5 cm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WiFi (highband)</td>
+<td>5 GHz</td>
+<td>6 cm</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bluetooth</td>
+<td>2.4 GHz</td>
+<td>12.5 cm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cellular</td>
+<td>0.6–5 GHz</td>
+<td>6-50 cm</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GNSS</td>
+<td>1.575 GHz</td>
+<td>19 cm</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>As you can see in <a href="#tbl-rf-applications" class="quarto-xref">Table&nbsp;1</a> many of these antennas would not fit into the used device form factors, i.e., often we have to use electrically small antennas.</p>
+<div id="nte-wavelength-calculation" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note&nbsp;1: Wavelength Calculation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s calculate the wavelength for a Bluetooth signal at 2.4 GHz. Given:</p>
+<ul>
+<li>Frequency <span class="math inline">\(f = 2.4\)</span> GHz <span class="math inline">\(= 2.4 \times 10^9\)</span> Hz<br>
+</li>
+<li>Speed of light <span class="math inline">\(c = 3 \times 10^8\)</span> m/s</li>
+</ul>
+<p>Using the relationship <span class="math inline">\(c = \lambda f\)</span>, we can solve for wavelength:</p>
+<p><span class="math display">\[\lambda = \frac{c}{f} = \frac{3 \times 10^8 \text{ m/s}}{2.4 \times 10^9 \text{ Hz}} = 0.125 \text{ m} = 12.5 \text{ cm}\]</span></p>
+<p>This means that a quarter-wavelength monopole antenna for 2.4 GHz Bluetooth would be approximately 3.1 cm long, which easily fits into most mobile devices.</p>
+</div>
+</div>
+<p>In order to get a feeling for the attenuation experienced in wireless communication, we now calculate the following exemplary transmission. We will use the unit of dBm with is often used in RF design and is defined as</p>
+<p><span id="eq-dbm"><span class="math display">\[
+P|_\text{dBm} = 10 \cdot \log_{10} \left( \frac{P|_\text{W}}{1\,\text{mW}} \right)
+\tag{2}\]</span></span></p>
+<div id="nte-wireless-attenuation" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note&nbsp;2: Wireless Transmission
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We use the following parameters:</p>
+<ul>
+<li>Transmit power <span class="math inline">\(P_\mathrm{T} = 1\)</span> W</li>
+<li>Frequency <span class="math inline">\(f = 2.4\)</span> GHz</li>
+<li>Communication distance <span class="math inline">\(d = 10\)</span> km</li>
+<li>Using <span class="math inline">\(\lambda/2\)</span> dipoles on both ends</li>
+</ul>
+<p>Using <a href="#eq-friis-transmission" class="quarto-xref">Equation&nbsp;1</a> we calculate</p>
+<p><span class="math display">\[
+P_\mathrm{R} = P_\mathrm{T} \cdot \frac{0.13 \lambda^2 \cdot 0.13 \lambda^2}{d^2 \lambda^2} = P_\mathrm{T} \cdot 0.13^2 \left( \frac{\lambda}{d} \right)^2 =  2.64\,\text{pW} = -85.8\,\text{dBm}
+\]</span></p>
+<p>With the transmit power of 1 W = 30 dBm we have an attenuation of 116 dB! This is a very large number!</p>
+</div>
+</div>
+<p>As dire as the situation of <a href="#nte-wireless-attenuation" class="quarto-xref">Note&nbsp;2</a> already looks, this is not even all factors considered:</p>
+<ul>
+<li>The given attenuation is for line-of-sight paths; often, the attenuation is significantly higher than this due to blockage by buildings, mountains, rain, or foliage.</li>
+<li>In lack of a direct line-of-sight path, the EM wave is redirected by reflections, causing additional attenuation, and the potential destructive interference by multi-path reception.</li>
+</ul>
+<p>The consequences of this are (among others):</p>
+<ul>
+<li>The transmitter needs to generate enough <strong>transmit power</strong> to overcome the transmission loss; this has to be done often with high <strong>efficiency</strong>, as the transmit device is battery operated or limited by cooling.</li>
+<li>The receiver has to be able to process <strong>weak signals</strong>, i.e., the <strong>noise</strong> level of the signal processing has to be very low.</li>
+<li>Often, the receive signal is very weak, while there are strong signals at other frequencies (i.e., other wireless transmitters are located close to the receiver). This means the receiver has to be able to process a weak signal while simultaneously tolerate <strong>large interfering signals</strong> (called blockers).</li>
+<li>Since the frequency spectrum is shared among many users and wireless applications, the transmit information has to be packed efficiently into a <strong>small bandwidth</strong>.</li>
+<li>Very often, wireless devices are battery-operated. This means transmit and receive functions have to be implemented using <strong>minimum power consumption</strong>.</li>
+</ul>
+<p>As stated in the beginning, designing wireless systems is hard.</p>
 
 
 
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-Darabi_RFIC" class="csl-entry" role="listitem">
 Darabi, Hooman. 2020. <em>Radio Frequency Integrated Circuits and Systems</em>. 2nd edition. Cambridge University Press.
+</div>
+<div id="ref-Pozar_RF" class="csl-entry" role="listitem">
+Pozar, David M. 2011. <em>Microwave Engineering</em>. Wiley.
 </div>
 <div id="ref-Razavi_RFIC" class="csl-entry" role="listitem">
 Razavi, Behzad. 2011. <em>RF Microelectronics</em>. 2nd edition. Pearson.
@@ -461,13 +655,14 @@ Razavi, Behzad. 2011. <em>RF Microelectronics</em>. 2nd edition. Pearson.
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -823,6 +1018,38 @@ Razavi, Behzad. 2011. <em>RF Microelectronics</em>. 2nd edition. Pearson.
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
