@@ -50,16 +50,16 @@ $$
 and insert it into @eq-nonlinear-model. After some simple trigonometric manipulations we are at
 
 $$
-\begin{multlined}
-y(t) = 
+\begin{align}
+y(t) &= 
 \underbrace{ \frac{1}{2} \alpha_2 A^2 }_\text{dc component}
 +
 \underbrace{ \left(\alpha_1 A + \frac{3}{4} \alpha_3 A^3 \right) \cos(\omega t) }_\text{fundamental} \\
-+
+&+
 \underbrace{ \frac{1}{2} \alpha_2 A^2 \cos(2 \omega t) }_\text{2nd harmonic}
 +
 \underbrace{ \frac{1}{4} \alpha_3 A^3 \cos(3 \omega t) }_\text{3rd harmonic}
-\end{multlined}
+\end{align}
 $$ {#eq-linearity-single}
 
 Looking at @eq-linearity-single we can make a few interesting observations:
@@ -105,10 +105,10 @@ As many different frequency components are created by this simple two-tone test 
 First, we start with the fundamental tones:
 
 $$
-\begin{multlined}
-    y'(t) = \left( \underbrace{\alpha_1 A_1 + \frac{3}{4} \alpha_3 A_1^3}_\text{compression/expansion} + \underbrace{\frac{3}{2} \alpha_3 A_1 A_2^2}_\text{cross-modulation/desens} \right) \cos(\omega_1 t) \\
-    + \left( \underbrace{\alpha_1 A_2 + \frac{3}{4} \alpha_3 A_2^3}_\text{compression/expansion} + \underbrace{\frac{3}{2} \alpha_3 A_2 A_1^2}_\text{cross-modulation/desens} \right) \cos(\omega_2 t)
-\end{multlined}
+\begin{aligned}
+    y'(t) &= \left( \underbrace{\alpha_1 A_1 + \frac{3}{4} \alpha_3 A_1^3}_\text{compression/expansion} + \underbrace{\frac{3}{2} \alpha_3 A_1 A_2^2}_\text{cross-modulation/desens} \right) \cos(\omega_1 t) \\
+    &+ \left( \underbrace{\alpha_1 A_2 + \frac{3}{4} \alpha_3 A_2^3}_\text{compression/expansion} + \underbrace{\frac{3}{2} \alpha_3 A_2 A_1^2}_\text{cross-modulation/desens} \right) \cos(\omega_2 t)
+\end{aligned}
 $$ {#eq-linearity-double-a}
 
 As shown in @eq-linearity-double-a, interesting things happen:
@@ -120,11 +120,11 @@ As shown in @eq-linearity-double-a, interesting things happen:
 We now look at the next class of generated tones:
 
 $$
-\begin{multlined}
-    y''(t) = \frac{1}{2} \alpha_2 A_1^2 + \frac{1}{2} \alpha_2 A_2^2 \\
-    + \alpha_2 A_1 A_2 \cos[ (\omega_1 - \omega_2) t] \\
-    + \alpha_2 A_1 A_2 \cos[ (\omega_1 + \omega_2) t]
-\end{multlined}
+\begin{aligned}
+    y''(t) &= \frac{1}{2} \alpha_2 A_1^2 + \frac{1}{2} \alpha_2 A_2^2 \\
+    &+ \alpha_2 A_1 A_2 \cos[ (\omega_1 - \omega_2) t] \\
+    &+ \alpha_2 A_1 A_2 \cos[ (\omega_1 + \omega_2) t]
+\end{aligned}
 $$ {#eq-linearity-double-b}
 
 As we can see in @eq-linearity-double-b new tones are created (besides the low frequency components we already know from the single-tone test) at the sum and difference of $\omega_1$ and $\omega_2$. These new frequency components are called "**intermodulation products of second order**" (IM2). These tones are created by the even-order nonlinearity ($\alpha_2$). These IM2 products are far away from the wanted tones, so are often not very problematic in amplifiers (but there can be exceptions!). However, they can be very problematic in frequency conversion blocks like mixers. We will come back to this point when discussing zero-IF receivers.
@@ -132,12 +132,12 @@ As we can see in @eq-linearity-double-b new tones are created (besides the low f
 We now investigate the next couple of tones:
 
 $$
-\begin{multlined}
-    y'''(t) = \frac{3}{4} \alpha_3 A_1^2 A_2 \cos[(2 \omega_1 + \omega_2) t] \\
-    + \frac{3}{4} \alpha_3 A_1^2 A_2 \cos[(2 \omega_1 - \omega_2) t] \\
-    + \frac{3}{4} \alpha_3 A_1 A_2^2 \cos[(2 \omega_2 + \omega_1) t] \\
-    + \frac{3}{4} \alpha_3 A_1 A_2^2 \cos[(2 \omega_2 - \omega_1) t] 
-\end{multlined}
+\begin{aligned}
+    y'''(t) &= \frac{3}{4} \alpha_3 A_1^2 A_2 \cos[(2 \omega_1 + \omega_2) t] \\
+    &+ \frac{3}{4} \alpha_3 A_1^2 A_2 \cos[(2 \omega_1 - \omega_2) t] \\
+    &+ \frac{3}{4} \alpha_3 A_1 A_2^2 \cos[(2 \omega_2 + \omega_1) t] \\
+    &+ \frac{3}{4} \alpha_3 A_1 A_2^2 \cos[(2 \omega_2 - \omega_1) t]
+\end{aligned}
 $$ {#eq-linearity-double-c}
 
 The tones shown in @eq-linearity-double-c are called "i**ntermodulation products of third order**" (IM3), and are caused by the odd nonlinearities (like $\alpha_3$). While the IM3 tones located at $2 \omega_1 + \omega_2$ and $\omega_1 + 2 \omega_2$ are similar to the sum IM2 tone and far away from $\omega_1$ and $\omega_2$, the other two tones are concerning.
@@ -318,3 +318,37 @@ where $F_i$ and $G_i$ are the noise factor and power gain of the $i$-th block, r
 - The noise factor of the last block is reduced by the gain of all preceding blocks, so it is usually not very important.
 
 Here we also see a trade-off between noise and linearity, as shown by @eq-iip3-cascade and @eq-friis. For low noise, we should try to maximize $G_1$, however, this will affect linearity (IIP3) in a negative way. As in many other situation in RF design, we have to find a good compromise between conflicting requirements.
+
+### Sensitivity {#sec-sensitivity}
+
+In RF receivers, we often want to know the minimum input signal power that can be detected with a certain SNR. This minimum input signal power is called the **sensitivity** of the receiver. The sensitivity can be calculated as
+
+$$
+P_\mathrm{in, min} = P_\mathrm{n} \cdot \text{SNR}_\mathrm{min} \cdot F
+$$ {#eq-sensitivity}
+
+where $P_\mathrm{n}$ is the noise power at the input, $\text{SNR}_\mathrm{min}$ is the minimum detectable SNR, and $F$ is the noise factor of the receiver. The input noise power can be calculated as
+
+$$
+P_\mathrm{n} = k T B
+$$
+    
+where $k$ is the Boltzmann constant, $T$ is the temperature in Kelvin, and $B$ is the bandwidth of the receiver. Expressing @eq-sensitivity in dBm we get the following formula:
+
+$$
+P_\mathrm{in, min}|_\mathrm{dBm} = -174\,\text{dBm/Hz} + \text{NF} + 10 \log_{10}(B/\text{Hz}) + \text{SNR}_\mathrm{min}|_\mathrm{dB} 
+$$ {#eq-sensitivity-dbm}
+
+where -174 dBm/Hz is the thermal noise PSD at room temperature (290 K). We can see that the sensitivity improves with lower noise figure, smaller bandwidth, and lower minimum detectable SNR.
+
+::: {#nte-wifi-sensitivity .callout-note}
+## Sensitivity Calculation for WiFi
+Let's calculate the sensitivity of a WiFi receiver operating at 5 GHz with a bandwidth of $B = 80\,\text{MHz}$, a noise figure of $NF = 7\,\text{dB}$, and a minimum detectable SNR of 25 dB. This high SNR means that a high-order modulation scheme (like 64-QAM) is used for high data rates.
+
+Using @eq-sensitivity-dbm we get:
+$$
+P_\mathrm{in, min} = -174\,\text{dBm/Hz} + 7\,\text{dB} + 10 \log_{10} (80 \times 10^6) + 25\,\text{dB} \approx -63\,\text{dBm}
+$$
+
+This means that the minimum input signal power that can be detected by the WiFi receiver is approximately -63 dBm.
+:::
