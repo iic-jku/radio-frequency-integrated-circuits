@@ -439,7 +439,7 @@ Important
 </div>
 <section id="sec-intro-wireless" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="sec-intro-wireless"><span class="header-section-number">1.1</span> Wireless Transmission</h2>
-<p>In wireless transmission, we usually want to transmit data via a transmitter (TX) and a connected antenna to a receiver (RX). This arrangement is shown in <a href="#fig-simple-wireless-system" class="quarto-xref">Figure&nbsp;1</a>.</p>
+<p>In wireless transmission, we usually want to transmit data via a transmitter (TX) and a connected antenna to a receiver (RX) using an electromagnetic (EM) wave. This arrangement is shown in <a href="#fig-simple-wireless-system" class="quarto-xref">Figure&nbsp;1</a>.</p>
 <div id="cell-fig-simple-wireless-system" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div id="fig-simple-wireless-system" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -454,19 +454,18 @@ Figure&nbsp;1: The block diagram of a simple wireless system.
 </div>
 </div>
 </div>
-<p>Unfortunately, wireless transmission is hard. The wireless channel, i.e., the usage of electromagnetic waves to transmit information from a transmitter to a receiver, is hard. The wireless channel, while tremendously useful, unfortunately has quite a few undesired features:</p>
+<p>Unfortunately, wireless transmission is hard. The wireless channel, i.e., the usage of electromagnetic waves to transmit information from a transmitter to a receiver, while tremendously useful, unfortunately has quite a few undesired features:</p>
 <ul>
-<li>The wireless channels is shared between all users.</li>
+<li>The wireless channel is shared between all users.</li>
 <li>As a consequence, the available bandwidth is shared; this means that bandwidth is a scarce resource.</li>
 <li>The wireless channel has significant losses.</li>
 <li>The channel is time variant, as usually the transmitter and/or the receiver move, and/or the environment changes.</li>
 </ul>
 <p>In order to estimate the power <span class="math inline">\(P_\mathrm{R}\)</span> of the wireless transmission at the receiver we can use Friis’ transmission formula <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span>:</p>
 <p><span id="eq-friis-transmission"><span class="math display">\[
-P_\mathrm{R} = P_\mathrm{T} \cdot \frac{A_\mathrm{R} \cdot A_\mathrm{T}}{d^2 \cdot \lambda^2}
+P_\mathrm{R} = \frac{P_\mathrm{T}}{4 \pi d^2} \cdot A_\mathrm{R} = P_\mathrm{T} \cdot \frac{A_\mathrm{R} \cdot A_\mathrm{T}}{d^2 \lambda^2}
 \tag{1}\]</span></span></p>
-<p>Here, <span class="math inline">\(A_\mathrm{R}\)</span> and <span class="math inline">\(A_\mathrm{T}\)</span> are the effective areas of the transmit and the receive antenna, while <span class="math inline">\(d\)</span> is the distance (line of sight) between the two antennas, and <span class="math inline">\(\lambda\)</span> is the wavelength of the used transmission frequency.</p>
-<p>The effective area of an antenna depends on the type and construction, but generally we can say that</p>
+<p>Here, <span class="math inline">\(A_\mathrm{R}\)</span> (and <span class="math inline">\(A_\mathrm{T}\)</span>) is the effective area of the receive/transmit antenna, while <span class="math inline">\(d\)</span> is the distance (line of sight) between the two antennas. The effective area of an antenna depends on the type and construction, but generally we can say that</p>
 <p><span class="math display">\[
 A \propto \lambda^2
 \]</span></p>
@@ -474,7 +473,7 @@ A \propto \lambda^2
 <p><span class="math display">\[
 c = \lambda f.
 \]</span></p>
-<p>Generally speaking, the size of an electromagnetic antenna is proportional to the wavelength of the EM wave use for transmission. For man devices, we seek antenna on the order of a few centimeters, this is way frequencies in the hundreds of MHz to GHz are so popular. <a href="#tbl-rf-applications" class="quarto-xref">Table&nbsp;1</a> lists a few typical applications and their frequency and wavelength.</p>
+<p>Generally speaking, the size of an electromagnetic antenna is proportional to the wavelength of the EM wave use for transmission. For man devices, we seek antennas on the order of a few centimeters, and this is why frequencies in the hundreds of MHz to GHz are so popular. <a href="#tbl-rf-applications" class="quarto-xref">Table&nbsp;1</a> lists a few typical applications and their frequency and wavelength.</p>
 <div id="tbl-rf-applications" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-rf-applications-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
