@@ -15,9 +15,9 @@ limitations under the License.
 :::
 
 ```{python}
-#| label: fig-iip3-cascade
+#| label: fig-noise-cascade
 #| echo: false
-#| fig-cap: "Block cascade for IIP3 calculation showing multiple stages with gains and individual IIP3 values."
+#| fig-cap: "Block cascade for noise factor calculation showing multiple stages with gains and individual noise factors."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -26,23 +26,32 @@ sd.svgconfig.svg2 = False
 with sd.Drawing(canvas='svg') as d:
     d.config(unit=2)
     d.config(fontsize=14)
-   
-    elm.Dot(open=True).label(r'$x(t)$')
+
+    elm.Ground()
+    Vn = elm.SourceSin().up().label(r'$S_\mathrm{in}$')
+    Rs = elm.Resistor().right().label(r'$R_\mathrm{s}$')
+    
+    elm.Line().right().length(d.unit*0.25)
+    elm.Dot(open=True)
     elm.Line().right().length(d.unit*0.5)
-    dsp.Box().label(r'$G_1$, $\text{IIP3}_1$')
+
+    dsp.Box().label(r'$G_1$, $F_1$')
 
     elm.Line().right().length(d.unit*0.5)
     elm.Dot(open=True)
     elm.Line().right().length(d.unit*0.5)
     
-    dsp.Box().label(r'$G_2$, $\text{IIP3}_2$')
-    
+    dsp.Box().label(r'$G_2$, $F_2$')
+
     elm.Line().right().length(d.unit*0.5)
     elm.Dot(open=True)
     elm.Line().right().length(d.unit*0.5)
     
-    dsp.Box().label(r'$G_3$, $\text{IIP3}_3$')
+    dsp.Box().label(r'$G_3$, $F_3$')
 
     elm.Line().right().length(d.unit*0.5)
-    elm.Dot(open=True).label(r'$y(t)$')
+    elm.Dot(open=True)
+    elm.Line().right().length(d.unit*0.5)
+    Rl = elm.Resistor().down().label(r'$R_\mathrm{load}$')
+    elm.Ground()
 ```
