@@ -1,0 +1,132 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-trx-block
+#| echo: false
+#| fig-cap: "Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system." 
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    rf_pos=d.here
+
+    dsp.Arrow().right(d.unit/2).label(r'$s_\mathrm{RX}$', 'left')
+    dsp.Amp()
+    dsp.Line().right(d.unit/4).dot()
+
+    # RX I path
+    d.push()
+    dsp.Line().up(d.unit)
+    dsp.Arrow().right(d.unit/4)
+    mix1 = dsp.Mixer()
+    dsp.Arrow().length(d.unit/4)
+    lpf1 = dsp.Filter(response='lp')
+    dsp.Arrow().length(d.unit/4)
+    dsp.Amp()
+    dsp.Arrow().length(d.unit/4)
+    adc1 = dsp.Adc().label('ADC')
+    dsp.Arrow().length(d.unit/4)
+    dsp.Square().label('DSP')
+    dsp.Arrow().length(d.unit/2).label(r'$s_\mathrm{RX,I}$', 'right')
+
+    dsp1 = dsp.Ic(pins=[dsp.IcPin(side='L'), dsp.IcPin(side='L'), dsp.IcPin(side='R')], size=(2.75, 12), leadlen=0).anchor('inL2').label('MODEM')
+
+    d.pop()
+
+    # RX Q path
+    d.push()
+    dsp.Line().down(d.unit)
+    dsp.Arrow().right(d.unit/4)
+    mix2 = dsp.Mixer()
+    dsp.Arrow().length(d.unit/4)
+    lpf2 = dsp.Filter(response='lp')
+    dsp.Arrow().length(d.unit/4)
+    dsp.Amp()
+    dsp.Arrow().length(d.unit/4)
+    adc2 = dsp.Adc().label('ADC')
+    dsp.Arrow().length(d.unit/4)
+    dsp.Square().label('DSP')
+    dsp.Arrow().length(d.unit/2).label(r'$s_\mathrm{RX,Q}$', 'right')
+    d.pop()
+
+    # PLL
+    d.move(dx=d.unit/4)
+    iq1 = dsp.Square().label('0/90°')
+    dsp.Arrow().at(iq1.N).up(d.unit/2)
+    dsp.Arrow().at(iq1.S).down(d.unit/2)
+    dsp.Line().at(iq1.E).right(d.unit/4)
+    osc1 = dsp.Oscillator()
+    dsp.Line().right(d.unit/4)
+    pll1 = dsp.Square().label('PLL')
+    
+    # Transmitter section (mirrored below)
+    # Start from beginning of the diagram and move down
+    d.here = rf_pos
+    d.move(dx=0, dy=-d.unit*3.5)
+
+    dsp.Arrow().right(d.unit/2).label(r'$s_\mathrm{TX}$', 'left').reverse()
+    dsp.Amp().reverse()
+    dsp.Arrow().right(d.unit/4).dot().reverse()
+
+    # TX I path
+    d.push()
+    dsp.Line().up(d.unit)
+    dsp.Line().right(d.unit/4)
+    mix3 = dsp.Mixer()
+    dsp.Arrow().length(d.unit/4).reverse()
+    lpf3 = dsp.Filter(response='lp')
+    dsp.Arrow().length(d.unit/4).reverse()
+    dsp.Amp().reverse()
+    dsp.Arrow().length(d.unit/4).reverse()
+    dac1 = dsp.Adc().label('DAC')
+    dsp.Arrow().length(d.unit/4).reverse()
+    dsp.Square().label('DSP')
+    dsp.Arrow().length(d.unit/2).label(r'$s_\mathrm{TX,I}$', 'right').reverse()
+    d.pop()
+
+   # TX Q path
+    d.push()
+    dsp.Line().down(d.unit)
+    dsp.Line().right(d.unit/4)
+    mix4 = dsp.Mixer()
+    dsp.Arrow().length(d.unit/4).reverse()
+    lpf4 = dsp.Filter(response='lp')
+    dsp.Arrow().length(d.unit/4).reverse()
+    dsp.Amp().reverse()
+    dsp.Arrow().length(d.unit/4).reverse()
+    dac2 = dsp.Adc().label('DAC')
+    dsp.Arrow().length(d.unit/4).reverse()
+    dsp.Square().label('DSP')
+    dsp.Arrow().length(d.unit/2).label(r'$s_\mathrm{TX,Q}$', 'right').reverse()
+    d.pop()
+
+    # PLL
+    d.move(dx=d.unit/4)
+    iq2 = dsp.Square().label('0/90°')
+    dsp.Arrow().at(iq2.N).up(d.unit/2)
+    dsp.Arrow().at(iq2.S).down(d.unit/2)
+    dsp.Line().at(iq2.E).right(d.unit/4)
+    osc2 = dsp.Oscillator()
+    dsp.Line().right(d.unit/4)
+    pll2 = dsp.Square().label('PLL')
+
+```
