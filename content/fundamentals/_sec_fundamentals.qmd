@@ -73,11 +73,11 @@ Looking at @eq-linearity-single we can make a few interesting observations:
 
 The created harmonics are illustrated in @fig-harmonics. Note that measuring harmonics to quantify the nonlinearity metrics like $\alpha_2$ and $\alpha_3$ is often not very accurate, as these harmonics are often filtered in bandwidth-limited systems.
 
-{{< include ./figures/_fig_harmonics.qmd >}}
+{{< include /content/fundamentals/_fig_harmonics.qmd >}}
 
 How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal $x(t)$ in amplitude, and observe the output $y(t)$. If the observed gain drops by 1 dB from the small-signal value we note the input power, and call this point the **1dB compression point** ($P_\mathrm{1dB}$). We should always add whether this 1dB compression point is input- or output-referred to avoid ambiguity. The diagram in @fig-1db-compression-point shows this test ($\alpha_1 = 100$, $\alpha_3 = -0.2$).
 
-{{< include ./figures/_fig_1db_compression.qmd >}}
+{{< include /content/fundamentals/_fig_1db_compression.qmd >}}
 
 ::: {.callout-important}
 ## Compressive vs. Expansive Behavior
@@ -144,13 +144,13 @@ The tones shown in @eq-linearity-double-c are called "i**ntermodulation products
 
 Expressing $\Delta \omega = \omega_2 - \omega_1$ (and assuming $\omega_1 < \omega_2$), the building law of $2 \omega_1 - \omega_2 = \omega_1 - \Delta \omega$ and $2 \omega_2 - \omega_1 = \omega_2 + \Delta \omega$ results in new tones right besides $\omega_1$ and $\omega_2$, with a frequency separation only defined by $\Delta \omega$. This situation is illustrated in @fig-im3-tones.
 
-{{< include ./figures/_fig_im3_tones.qmd >}}
+{{< include /content/fundamentals/_fig_im3_tones.qmd >}}
 
 This close localization of the IM3 tones can also be utilized to characterize nonlinear performance. Using gain compression or harmonic generation (H3) it can be very difficult to extract nonlinearity of third order ($\alpha_3$). However, using a two-tone test, the IM3 tones can be readily measured, even if the measured signal path shows a **bandpass characteristic**! As RF systems frequently employ bandpass filters to suppress out-of-band signals, this is a very important property of the two-tone test.
 
 The resulting test is called a two-tone test yielding the third-order intercept point (IP3). This test is widely used in RF design to characterize the linearity of amplifiers, mixers, and complete transceiver systems. The power relationship between fundamental tones and IM3 products as a function of input power is shown in @fig-im3-power-sweep.
 
-{{< include ./figures/_fig_im3_power_sweep.qmd >}}
+{{< include /content/fundamentals/_fig_im3_power_sweep.qmd >}}
 
 Note that, as shown in @fig-im3-power-sweep, the IM3 products rise with a slope of 3 dB/dB, i.e., if the input power is increased by 1 dB, the IM3 products increase by 3 dB. The fundamental tones rise with a slope of 1 dB/dB (as long as we are in the linear region). The IP3 point is defined as the intersection of the **extrapolated** linear lines of fundamental and IM3 products. As both lines have different slopes, this intersection point is usually far outside the actual operating range of the circuit block under test!
 
@@ -180,7 +180,7 @@ $$ {#eq-iip3-cascade-simple}
 
 A typical RF system cascade with multiple blocks and their individual IIP3 contributions is shown in @fig-iip3-cascade.
 
-{{< include ./figures/_fig_iip3_cascade.qmd >}}
+{{< include /content/fundamentals/_fig_iip3_cascade.qmd >}}
 
 ::: {#nte-iip3-cascade .callout-note}
 ## Simple IIP3 Cascade Calculation
@@ -247,7 +247,7 @@ In RF systems additional noise sources can be present. One noteworthy example is
 
 We now want to calculate the maximum noise power that can be extracted from a noisy source. We assume the following situation as shown in @fig-noise-matched-system. Note that the voltage source $\overline{V_\mathrm{n,s}^2}$ models the thermal noise of the source resistor $R_\mathrm{s}$ resulting in a Thevenin equivalent circuit.
 
-{{< include ./figures/_fig_noise_matched_system.qmd >}}
+{{< include /content/fundamentals/_fig_noise_matched_system.qmd >}}
 
 We know that the noise of the source resistor is given by $\overline{V_\mathrm{n,s}^2} = 4 k T R_\mathrm{s}$. We assume the load resistor $R_\mathrm{load}$ as noiseless and matched to the source resistor, i.e., $R_\mathrm{load} = R_\mathrm{s}$ for [maximum power transfer](https://en.wikipedia.org/wiki/Maximum_power_transfer_theorem). The noise power spectral density delivered to the load resistor is then given by
 
@@ -282,7 +282,7 @@ Note that the SNR can be improved by filtering, as filtering reduces the noise p
 
 Let us look at a simple model of a noise circuit block as shown in @fig-noise-block. The input signal $S_\mathrm{in}$ is accompanied by noise $N_\mathrm{in}$. By definition it is assumed that the input noise power results from a matched resistor at $T_0 = 290\,\text{K}$, so that $N_\mathrm{in} = k T_0$. The circuit block has a power gain $G$ and adds its own noise $N_\mathrm{dut}$ to the output signal. For simplicity, we assume that the input and output of the circuit block are impedance matched to avoid reflections.
 
-{{< include ./figures/_fig_noise_block.qmd >}}
+{{< include /content/fundamentals/_fig_noise_block.qmd >}}
 
 The output signal and noise powers are then given by
 
@@ -303,7 +303,7 @@ in other words, the noise factor is 1 plus the ratio of the noise added by the d
 
 Note that a noiseless block ($N_\mathrm{dut} = 0$) has a noise factor of $F=1$. A passive block with loss factor $L$ (and impedance matched at input and output) has a noise factor of $F=L$ (in linear units), as it attenuates the signal and $N_\mathrm{out} = N_\mathrm{in} = k T$ if everything is in thermal equilibrium.
 
-{{< include ./figures/_fig_noise_cascade.qmd >}}
+{{< include /content/fundamentals/_fig_noise_cascade.qmd >}}
 
 If we have a cascade of multiple blocks, as shown in @fig-noise-cascade, we can calculate the overall noise factor with the **Friis formula** [@Pozar_RF]
 

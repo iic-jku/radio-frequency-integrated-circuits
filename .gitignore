@@ -6,8 +6,6 @@ _freeze
 figures/_fig_*_files
 index_files
 site_libs
-content/_sec_*_files
-content/_app_*_files
 /.quarto/
 __pycache__
 _site
@@ -18,3 +16,5 @@ _site
 *.tex
 **/*.quarto_ipynb
 /rfic_files
+/content/fundamentals/_*_files
+/content/intro/_*_files

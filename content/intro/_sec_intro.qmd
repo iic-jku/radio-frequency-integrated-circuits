@@ -32,7 +32,7 @@ The production of this document would be impossible without these (and many more
 
 In wireless transmission, we usually want to transmit data via a transmitter (TX) and a connected antenna to a receiver (RX) using an electromagnetic (EM) wave. This arrangement is shown in [@fig-simple-wireless-system].
 
-{{< include ./figures/_fig_wireless_system.qmd >}}
+{{< include /content/intro/_fig_wireless_system.qmd >}}
 
 Unfortunately, wireless transmission is hard. The wireless channel, i.e., the usage of electromagnetic waves to transmit information from a transmitter to a receiver, while tremendously useful, unfortunately has quite a few undesired features:
 
