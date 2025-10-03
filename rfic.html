@@ -368,6 +368,17 @@ window.Quarto = {
   <li><a href="#sec-sensitivity" id="toc-sec-sensitivity" class="nav-link" data-scroll-target="#sec-sensitivity"><span class="header-section-number">2.2.4</span> Sensitivity</a></li>
   </ul></li>
   </ul></li>
+  <li><a href="#sec-trx" id="toc-sec-trx" class="nav-link" data-scroll-target="#sec-trx"><span class="header-section-number">3</span> Transceivers</a>
+  <ul class="collapse">
+  <li><a href="#direct-conversion-transceiver" id="toc-direct-conversion-transceiver" class="nav-link" data-scroll-target="#direct-conversion-transceiver"><span class="header-section-number">3.1</span> Direct-Conversion Transceiver</a></li>
+  <li><a href="#modulation-and-demodulation" id="toc-modulation-and-demodulation" class="nav-link" data-scroll-target="#modulation-and-demodulation"><span class="header-section-number">3.2</span> Modulation and Demodulation</a></li>
+  <li><a href="#filtering" id="toc-filtering" class="nav-link" data-scroll-target="#filtering"><span class="header-section-number">3.3</span> Filtering</a></li>
+  </ul></li>
+  <li><a href="#sec-lna" id="toc-sec-lna" class="nav-link" data-scroll-target="#sec-lna"><span class="header-section-number">4</span> Low Noise Amplifiers</a></li>
+  <li><a href="#sec-mixer" id="toc-sec-mixer" class="nav-link" data-scroll-target="#sec-mixer"><span class="header-section-number">5</span> Mixers</a></li>
+  <li><a href="#sec-oscillator" id="toc-sec-oscillator" class="nav-link" data-scroll-target="#sec-oscillator"><span class="header-section-number">6</span> Oscillators</a></li>
+  <li><a href="#sec-pll" id="toc-sec-pll" class="nav-link" data-scroll-target="#sec-pll"><span class="header-section-number">7</span> Phase-Locked Loops</a></li>
+  <li><a href="#sec-poweramp" id="toc-sec-poweramp" class="nav-link" data-scroll-target="#sec-poweramp"><span class="header-section-number">8</span> Power Amplifiers</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="rfic.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
@@ -1000,14 +1011,124 @@ P_\mathrm{in, min} = -174\,\text{dBm/Hz} + 7\,\text{dB} + 10 \log_{10} (80 \time
 <p>This means that the minimum input signal power that can be detected by the WiFi receiver is approximately -63 dBm.</p>
 </div>
 </div>
+</section>
+</section>
+</section>
+<section id="sec-trx" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Transceivers</h1>
+<p>Nowadays, the various small-signal RF functions for receive and transmit are integrated into so-called transceivers (TRX). A TRX is a device that can both transmit and receive signals, and is usually called an “RFIC”. While high monolithic integration is certainly the norm for radio-frequency devices intended for standards like Bluetooth, WiFi, cellular, etc., it is increasingly used also for mm-wave frequencies for applications like automotive radar and 5G cellular.</p>
+<p>Typically TRX include components like amplifiers, mixers, filters, oscillators, and phase-locked loops. When digital interfaces are used for the baseband data transport also functions like analog-to-digital conversion (ADC) and digital-to-analog conversion (DAC) are integrated together with digital signal processing (DSP) blocks and potentially high-speed interfaces.</p>
+<p>In this lecture we will focus on the RF part of a TRX, which is responsible for the upconversion of baseband or intermediate frequency (IF) signals to the desired transmit frequency during transmission, and the downconversion of received signals from the carrier frequency to baseband or IF during reception. For filters, low-frequency amplifiers, ADCs, DACs, and DSP blocks we refer to related courses and literature, for example <a href="https://iic-jku.github.io/analog-circuit-design/analog_circuit_design.html">our analog circuit design course</a>.</p>
+<section id="direct-conversion-transceiver" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="direct-conversion-transceiver"><span class="header-section-number">3.1</span> Direct-Conversion Transceiver</h2>
+<p>The following typical functions have to be performed by a TRX:</p>
+<ul>
+<li>Pulse-shaping filtering of the baseband signal (can be implemented analog or in most cases digital).</li>
+<li>Modulating the baseband signal onto a carrier frequency (upconversion) in the TX or downconversion in the RX.</li>
+<li>Contain the RF signal in a small bandwidth (TX), or single out the wanted signal in the RX.</li>
+<li>Adapt gain (and linearity) to the signal strength in the RX, and to the output power in the TX.</li>
+<li>Generate the carrier frequency (local oscillator, LO) with low phase noise.</li>
+</ul>
+<p>The dominant architecture for the TRX is the so-called direct-conversion (or Zero-IF) architecture, where the upconversion and downconversion is performed in a single step. This is in contrast to superheterodyne architectures, where the signal is first converted to an intermediate frequency (IF) before being converted to baseband. The direct-conversion architecture has the advantage of reduced complexity and cost, as it requires fewer components and less filtering. However, it also has some disadvantages, such as increased susceptibility to DC offsets and I/Q imbalance. A typical TRX block diagram is shown in Figure <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;10</a>.</p>
+<div id="cell-fig-trx-block" class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display">
+<div id="fig-trx-block" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-trx-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-trx-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;10: Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system."><img src="rfic_files/figure-html/fig-trx-block-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trx-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>As can be seen in <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;10</a>, this generic example can be adapted in various ways. Generally, the amplifier gains are adjustable to adapt to different signal levels. If various channel bandwidths are to be supported, the corner frequencies of the low-pass filters (LPF) can be adjusted, as well as (optionally) the sampling rate of the ADCs and DACs. The local oscillator (LO) frequency is generated by a phase-locked loop (PLL) synthesizer, which can be tuned to the desired carrier frequency. In case of frequency-division duplex (FDD) operation, two PLLs are used to generate the TX and RX LO frequencies, which are separated by the duplex distance. In time-division duplex (TDD) operation, a single PLL is sufficient, supplying the LO signal to both RX and TX.</p>
+</section>
+<section id="modulation-and-demodulation" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="modulation-and-demodulation"><span class="header-section-number">3.2</span> Modulation and Demodulation</h2>
+<p>Modulation is the process of varying a carrier signal at frequency <span class="math inline">\(f_\mathrm{c}\)</span> in order to transmit information. The complex baseband signal (after converting the real-valued digital <span class="math inline">\(s_\mathrm{I}\)</span> and <span class="math inline">\(s_\mathrm{Q}\)</span> signals to analog and pulse-shaping filtering) is represented as</p>
+<p><span class="math display">\[
+s_\mathrm{BB}(t) = s_\mathrm{I}(t) + j s_\mathrm{Q}(t).
+\]</span></p>
+<p>We want to shift this signal to the carrier frequency <span class="math inline">\(f_\mathrm{c}\)</span>, which can be done by multiplying with a complex exponential:</p>
+<p><span class="math display">\[
+s_\mathrm{RF,complex}(t) = s_\mathrm{BB}(t) \cdot e^{j \omega_\mathrm{c} t} = [s_\mathrm{I}(t) + j s_\mathrm{Q}(t)] \cdot [\cos(\omega_\mathrm{c} t) + j \sin(\omega_\mathrm{c} t)].
+\]</span></p>
+<p>The real-valued RF signal is obtained by taking the real part of this expression:</p>
+<p><span id="eq-modulation"><span class="math display">\[
+s_\mathrm{RF}(t) = \Re \{ s_\mathrm{RF,complex}(t) \} = s_\mathrm{I}(t) \cos(\omega_\mathrm{c} t) - s_\mathrm{Q}(t) \sin(\omega_\mathrm{c} t).
+\tag{19}\]</span></span></p>
+<p>The process formulated in <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;19</a> is done in the TX, as shown in <a href="#fig-tx-modulation" class="quarto-xref">Figure&nbsp;11</a>.</p>
+<div id="cell-fig-tx-modulation" class="cell" data-execution_count="11">
+<div class="cell-output cell-output-display">
+<div id="fig-tx-modulation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tx-modulation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-tx-modulation-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;11: TX modulator."><img src="rfic_files/figure-html/fig-tx-modulation-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tx-modulation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: TX modulator.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The RF signal generation according to <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;19</a> is called quadrature modulation. This is the modulation used most often in modern communication systems, as it allows to transmit two independent signals (I and Q) in the same bandwidth. The I and Q signals are also called quadrature components, as they are 90° out of phase with each other.</p>
+<p>Alternatively, a modulation called polar modulation can be used, where the amplitude and phase of the carrier are varied according to the baseband signal. This is done by converting the I and Q signals to polar coordinates</p>
+<p><span class="math display">\[
+s_\mathrm{RF}(t) = \Re \{ A(t) \cdot e^{j \varphi(t)} \cdot e^{j \omega_\mathrm{c} t} \}
+\]</span></p>
+<p>with</p>
+<p><span class="math display">\[
+A(t) = \sqrt{s_\mathrm{I}^2(t) + s_\mathrm{Q}^2(t)}, \quad \varphi(t) = \tan^{-1}\left(\frac{s_\mathrm{I}(t)}{s_\mathrm{Q}(t)}\right).
+\]</span></p>
+<p>As the mathematical operations required for the cartesian to polar transformation are quite nonlinear, the <span class="math inline">\(A(t)\)</span> and <span class="math inline">\(\phi(t)\)</span> signals are wideband. Some wireless standards allow efficient use of polar modulation, for example Bluetooth, where basically all TX are realized as polar modulators.</p>
+<p>In the RX, the received RF signal is downconverted to baseband by a similar process, as shown in <a href="#fig-rx-demodulation" class="quarto-xref">Figure&nbsp;12</a>.</p>
+<div id="cell-fig-rx-demodulation" class="cell" data-execution_count="12">
+<div class="cell-output cell-output-display">
+<div id="fig-rx-demodulation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rx-demodulation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-rx-demodulation-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;12: RX demodulator."><img src="rfic_files/figure-html/fig-rx-demodulation-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rx-demodulation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12: RX demodulator.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>For demodulation we have to shift the RF signal down to baseband, which mathematically is done by multiplying with the complex conjugate of the carrier:</p>
+<p><span id="eq-demodulation"><span class="math display">\[
+s_\mathrm{BB,complex}(t) = s_\mathrm{RF}(t) \cdot e^{-j \omega_\mathrm{c} t} = s_\mathrm{RF}(t) \cdot [\cos(\omega_\mathrm{c} t) - j \sin(\omega_\mathrm{c} t)]
+\tag{20}\]</span></span></p>
+</section>
+<section id="filtering" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="filtering"><span class="header-section-number">3.3</span> Filtering</h2>
+</section>
+</section>
+<section id="sec-lna" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Low Noise Amplifiers</h1>
+</section>
+<section id="sec-mixer" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Mixers</h1>
+</section>
+<section id="sec-oscillator" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Oscillators</h1>
+</section>
+<section id="sec-pll" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Phase-Locked Loops</h1>
+</section>
+<section id="sec-poweramp" class="level1" data-number="8">
+
 
 
 
 </section>
-</section>
-</section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">8 Power Amplifiers</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-Darabi_RFIC" class="csl-entry" role="listitem">
 Darabi, Hooman. 2020. <em>Radio Frequency Integrated Circuits and Systems</em>. 2nd edition. Cambridge University Press.
 </div>
