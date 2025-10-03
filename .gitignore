@@ -18,3 +18,9 @@ _site
 /rfic_files
 /content/fundamentals/_*_files
 /content/intro/_*_files
+/content/lna/_*_files
+/content/mixer/_*_files
+/content/oscillator/_*_files
+/content/pll/_*_files
+/content/poweramp/_*_files
+/content/trx/_*_files
