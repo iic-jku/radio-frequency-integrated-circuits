@@ -1,0 +1,125 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+negative WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-filtering-rx
+#| echo: false 
+#| fig-cap: "Filtering of wanted channel amid strong unwanted blockers. Exemplary shown in an RX scenario around 900 MHz. The strong blockers (top figure) are attenuated by an RF bandpass filter (bottom figure) with a bandwidth of 20 MHz, achieving more than 40 dB rejection of the blockers while only slightly attenuating the wanted signal."
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Create figure with two subplots
+fig, (ax1, ax2) = plt.subplots(2, 1)
+
+# Define frequency range
+f_center = 900  # MHz - wanted channel center frequency
+f_range = np.linspace(800, 1000, 1000)  # MHz
+
+# Define signal frequencies and amplitudes
+f_wanted = f_center  # 900 MHz - small wanted signal
+f_blocker1 = 850     # MHz - large blocker
+f_blocker2 = 950     # MHz - large blocker 
+f_blocker3 = 880     # MHz - medium blocker
+f_blocker4 = 920     # MHz - medium blocker
+
+# Signal amplitudes (dBm)
+amp_wanted = -80     # Small wanted signal
+amp_blocker1 = -20   # Strong blockers
+amp_blocker2 = -25   # Strong blockers
+amp_blocker3 = -40   # Medium blockers  
+amp_blocker4 = -35   # Medium blockers
+
+# Use dBm values directly for plotting
+# Plot 1: Input spectrum with wanted signal and blockers
+signals = [(f_wanted, amp_wanted, 'green', 'Wanted Channel\n(900 MHz)', '-'),
+           (f_blocker1, amp_blocker1, 'red', 'Blocker 1\n(850 MHz)', '-'),
+           (f_blocker2, amp_blocker2, 'red', 'Blocker 2\n(950 MHz)', '-'),
+           (f_blocker3, amp_blocker3, 'orange', 'Blocker 3\n(880 MHz)', '-'),
+           (f_blocker4, amp_blocker4, 'orange', 'Blocker 4\n(920 MHz)', '-')]
+
+for freq, amp, color, label, style in signals:
+    ax1.vlines(freq, -90, amp, colors=color, linewidth=4, alpha=0.8)
+    ax1.plot(freq, amp, 'o', color=color, markersize=10, markerfacecolor=color, alpha=0.8)
+    
+    # Add signal labels with power levels
+    if 'Wanted' in label:
+        ax1.text(freq, amp + 10, f'{label}\n{amp} dBm', ha='center', va='bottom', 
+                color=color,
+                bbox=dict(boxstyle="round,pad=0.3", facecolor='lightgreen', alpha=0.7))
+    elif 'Blocker 1' in label or 'Blocker 2' in label:
+        ax1.text(freq, amp + 10, f'{label}\n{amp} dBm', 
+                ha='center', va='bottom', color=color,
+                bbox=dict(boxstyle="round,pad=0.2", facecolor='lightcoral', alpha=0.7))
+    else:
+        ax1.text(freq, amp + 10, f'{label}\n{amp} dBm', ha='center', va='bottom', 
+                color=color, bbox=dict(boxstyle="round,pad=0.2", facecolor='moccasin', alpha=0.7))
+
+ax1.set_xlabel('Frequency (MHz)')
+ax1.set_ylabel('Power (dBm)')
+ax1.grid(True, alpha=0.3)
+ax1.set_xlim(825, 975)
+ax1.set_ylim(-90, 20)
+
+# Plot 2: Filter response and filtered spectrum
+# Define bandpass filter response (centered at wanted channel)
+bandwidth = 20  # MHz
+Q = f_center / bandwidth  # Quality factor
+
+# Idealized bandpass filter response
+def bandpass_response(f, f_center, bandwidth):
+    return 1 / (1 + ((f - f_center) / (bandwidth/2))**4)
+
+filter_response = bandpass_response(f_range, f_center, bandwidth)
+
+# Plot filter response (normalized, right y-axis)
+ax2_filter = ax2.twinx()
+ax2_filter.plot(f_range, filter_response, 'b-', linewidth=3, alpha=0.8, 
+                label=f'Bandpass Filter\n(BW = {bandwidth} MHz)')
+ax2_filter.set_ylabel('Filter Response (normalized)', color='blue')
+ax2_filter.set_ylim(0, 1.2)
+ax2_filter.tick_params(axis='y', labelcolor='blue')
+
+# Plot filtered signals in dBm
+insertion_loss = 3  # dB typical filter insertion loss
+for freq, amp, color, label, style in signals:
+    filter_attenuation_db = -20 * np.log10(bandpass_response(freq, f_center, bandwidth) + 1e-6)
+    filtered_amp_dbm = amp - insertion_loss - filter_attenuation_db
+    
+    if filtered_amp_dbm > -100:  # Only show signals above noise floor
+        ax2.vlines(freq, -120, filtered_amp_dbm, colors=color, linewidth=3, alpha=0.8)
+        ax2.plot(freq, filtered_amp_dbm, 'o', color=color, markersize=8, 
+                markerfacecolor=color, alpha=0.8)
+        
+        if 'Wanted' in label:
+            ax2.text(freq, filtered_amp_dbm + 5, f'Wanted\n{filtered_amp_dbm:.0f} dBm', 
+                    ha='center', va='bottom', color=color)
+        elif filtered_amp_dbm > -90:  # Show blocker levels if significant
+            ax2.text(freq, filtered_amp_dbm + 3, f'{filtered_amp_dbm:.0f} dBm', 
+                    ha='center', va='bottom', color=color)
+
+ax2.set_xlabel('Frequency (MHz)')
+ax2.set_ylabel('Output Power (dBm)')
+ax2.grid(True, alpha=0.3)
+ax2.set_xlim(825, 975)
+ax2.set_ylim(-100, -50)
+
+# Add legend for filter response
+ax2_filter.legend(loc='upper left')
+
+plt.tight_layout()
+plt.show()
+```

@@ -15,9 +15,9 @@ limitations under the License.
 :::
 
 ```{python}
-#| label: fig-trx-block
+#| label: fig-trx-lowif
 #| echo: false
-#| fig-cap: "Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system." 
+#| fig-cap: "Block diagram of a low-IF transceiver (TRX) showing the main functional blocks of RX and TX. Note the usage of complex analog and digital baseband filters. Otherwise, the structure is similar to a zero-IF TRX as shown in @fig-trx-block." 
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -38,13 +38,15 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Line().up(d.unit)
     dsp.Arrow().right(d.unit/4)
     mix1 = dsp.Mixer()
-    dsp.Arrow().length(d.unit/4)
-    lpf1 = dsp.Filter(response='lp')
+    dsp.Arrow().length(d.unit*2)
+    dsp.Ic(pins=[dsp.IcPin(side='L'), dsp.IcPin(side='L'), dsp.IcPin(side='R')], size=(1, 5), leadlen=0).anchor('inL2').color('gray')
+    lpf1 = dsp.Filter(response='bp')
     dsp.Arrow().length(d.unit/4)
     dsp.Amp()
     dsp.Arrow().length(d.unit/4)
     adc1 = dsp.Adc().label('ADC')
     dsp.Arrow().length(d.unit/4)
+    dsp.Ic(pins=[dsp.IcPin(side='L'), dsp.IcPin(side='L'), dsp.IcPin(side='R')], size=(1, 5), leadlen=0).anchor('inL2').color('gray')
     dsp.Square().label('DSP')
     dsp.Arrow().length(d.unit/2).label(r'$s_\mathrm{RX,I}$', 'right')
 
@@ -57,8 +59,8 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Line().down(d.unit)
     dsp.Arrow().right(d.unit/4)
     mix2 = dsp.Mixer()
-    dsp.Arrow().length(d.unit/4)
-    lpf2 = dsp.Filter(response='lp')
+    dsp.Arrow().length(d.unit*2)
+    lpf2 = dsp.Filter(response='bp')
     dsp.Arrow().length(d.unit/4)
     dsp.Amp()
     dsp.Arrow().length(d.unit/4)
@@ -92,13 +94,16 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Line().up(d.unit)
     dsp.Line().right(d.unit/4)
     mix3 = dsp.Mixer()
-    dsp.Arrow().length(d.unit/4).reverse()
-    lpf3 = dsp.Filter(response='lp')
+    dsp.Arrow().length(d.unit*2).reverse()
+
+    dsp.Ic(pins=[dsp.IcPin(side='L'), dsp.IcPin(side='L'), dsp.IcPin(side='R')], size=(1, 5), leadlen=0).anchor('inL2').color('gray')
+    lpf3 = dsp.Filter(response='bp')
     dsp.Arrow().length(d.unit/4).reverse()
     dsp.Amp().reverse()
     dsp.Arrow().length(d.unit/4).reverse()
     dac1 = dsp.Adc().label('DAC')
     dsp.Arrow().length(d.unit/4).reverse()
+    dsp.Ic(pins=[dsp.IcPin(side='L'), dsp.IcPin(side='L'), dsp.IcPin(side='R')], size=(1, 5), leadlen=0).anchor('inL2').color('gray')
     dsp.Square().label('DSP')
     dsp.Arrow().length(d.unit/2).label(r'$s_\mathrm{TX,I}$', 'right').reverse()
     d.pop()
@@ -108,8 +113,8 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Line().down(d.unit)
     dsp.Line().right(d.unit/4)
     mix4 = dsp.Mixer()
-    dsp.Arrow().length(d.unit/4).reverse()
-    lpf4 = dsp.Filter(response='lp')
+    dsp.Arrow().length(d.unit*2).reverse()
+    lpf4 = dsp.Filter(response='bp')
     dsp.Arrow().length(d.unit/4).reverse()
     dsp.Amp().reverse()
     dsp.Arrow().length(d.unit/4).reverse()

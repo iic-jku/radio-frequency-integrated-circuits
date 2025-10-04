@@ -15,9 +15,9 @@ limitations under the License.
 :::
 
 ```{python}
-#| label: fig-trx-block
+#| label: fig-trx-superheterodyne
 #| echo: false
-#| fig-cap: "Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system." 
+#| fig-cap: "Block diagram of a super-heterodyne transceiver (TRX) showing the main functional blocks of RX and TX." 
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -31,7 +31,22 @@ with sd.Drawing(canvas='svg') as d:
 
     dsp.Arrow().right(d.unit/2).label(r'$s_\mathrm{RX}$', 'left')
     dsp.Amp()
+    dsp.Arrow().right(d.unit/4)
+    dsp.Filter(response='bp').label(r'Image BPF', 'top', ofst=.25)
+    dsp.Arrow().right(d.unit/4)
+    rxmix = dsp.Mixer()
+    dsp.Arrow().right(d.unit/4)
+    dsp.Filter(response='bp').label(r'IF BPF', 'top', ofst=.25)
+    dsp.Arrow().right(d.unit/4)
+    dsp.Amp()
     dsp.Line().right(d.unit/4).dot()
+
+    d.push()
+    dsp.Arrow().down(d.unit/2).at(rxmix.S).reverse().label(r'$f_\mathrm{LO,RX}$')
+    rxosc = dsp.Oscillator()
+    dsp.Line().right(d.unit/4).at(rxosc.N)
+    pll1 = dsp.Square().label('PLL')
+    d.pop()
 
     # RX I path
     d.push()
@@ -42,14 +57,7 @@ with sd.Drawing(canvas='svg') as d:
     lpf1 = dsp.Filter(response='lp')
     dsp.Arrow().length(d.unit/4)
     dsp.Amp()
-    dsp.Arrow().length(d.unit/4)
-    adc1 = dsp.Adc().label('ADC')
-    dsp.Arrow().length(d.unit/4)
-    dsp.Square().label('DSP')
-    dsp.Arrow().length(d.unit/2).label(r'$s_\mathrm{RX,I}$', 'right')
-
-    dsp1 = dsp.Ic(pins=[dsp.IcPin(side='L'), dsp.IcPin(side='L'), dsp.IcPin(side='R')], size=(2.75, 12), leadlen=0).anchor('inL2').label('MODEM')
-
+    dsp.Arrow().length(d.unit/2).linestyle('--')
     d.pop()
 
     # RX Q path
@@ -61,11 +69,7 @@ with sd.Drawing(canvas='svg') as d:
     lpf2 = dsp.Filter(response='lp')
     dsp.Arrow().length(d.unit/4)
     dsp.Amp()
-    dsp.Arrow().length(d.unit/4)
-    adc2 = dsp.Adc().label('ADC')
-    dsp.Arrow().length(d.unit/4)
-    dsp.Square().label('DSP')
-    dsp.Arrow().length(d.unit/2).label(r'$s_\mathrm{RX,Q}$', 'right')
+    dsp.Arrow().length(d.unit/2).linestyle('--')
     d.pop()
 
     # PLL
@@ -85,7 +89,22 @@ with sd.Drawing(canvas='svg') as d:
 
     dsp.Arrow().right(d.unit/2).label(r'$s_\mathrm{TX}$', 'left').reverse()
     dsp.Amp().reverse()
+    dsp.Arrow().right(d.unit/4).reverse()
+    dsp.Filter(response='bp').label(r'Image BPF', 'top', ofst=.25)
+    dsp.Arrow().right(d.unit/4).reverse()
+    txmix = dsp.Mixer()
+    dsp.Arrow().right(d.unit/4).reverse()
+    dsp.Filter(response='bp').label(r'IF BPF', 'top', ofst=.25)
+    dsp.Arrow().right(d.unit/4).reverse()
+    dsp.Amp().reverse()
     dsp.Arrow().right(d.unit/4).dot().reverse()
+
+    d.push()
+    dsp.Arrow().down(d.unit/2).at(txmix.S).reverse().label(r'$f_\mathrm{LO,TX}$')
+    txosc = dsp.Oscillator()
+    dsp.Line().right(d.unit/4).at(txosc.N)
+    pll1 = dsp.Square().label('PLL')
+    d.pop()
 
     # TX I path
     d.push()
@@ -96,11 +115,7 @@ with sd.Drawing(canvas='svg') as d:
     lpf3 = dsp.Filter(response='lp')
     dsp.Arrow().length(d.unit/4).reverse()
     dsp.Amp().reverse()
-    dsp.Arrow().length(d.unit/4).reverse()
-    dac1 = dsp.Adc().label('DAC')
-    dsp.Arrow().length(d.unit/4).reverse()
-    dsp.Square().label('DSP')
-    dsp.Arrow().length(d.unit/2).label(r'$s_\mathrm{TX,I}$', 'right').reverse()
+    dsp.Arrow().length(d.unit/2).reverse().linestyle('--')
     d.pop()
 
    # TX Q path
@@ -112,11 +127,7 @@ with sd.Drawing(canvas='svg') as d:
     lpf4 = dsp.Filter(response='lp')
     dsp.Arrow().length(d.unit/4).reverse()
     dsp.Amp().reverse()
-    dsp.Arrow().length(d.unit/4).reverse()
-    dac2 = dsp.Adc().label('DAC')
-    dsp.Arrow().length(d.unit/4).reverse()
-    dsp.Square().label('DSP')
-    dsp.Arrow().length(d.unit/2).label(r'$s_\mathrm{TX,Q}$', 'right').reverse()
+    dsp.Arrow().length(d.unit/2).reverse().linestyle('--')
     d.pop()
 
     # PLL
