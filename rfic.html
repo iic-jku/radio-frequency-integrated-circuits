@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2025-10-03">
+<meta name="dcterms.date" content="2025-10-04">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -373,6 +373,20 @@ window.Quarto = {
   <li><a href="#direct-conversion-transceiver" id="toc-direct-conversion-transceiver" class="nav-link" data-scroll-target="#direct-conversion-transceiver"><span class="header-section-number">3.1</span> Direct-Conversion Transceiver</a></li>
   <li><a href="#modulation-and-demodulation" id="toc-modulation-and-demodulation" class="nav-link" data-scroll-target="#modulation-and-demodulation"><span class="header-section-number">3.2</span> Modulation and Demodulation</a></li>
   <li><a href="#filtering" id="toc-filtering" class="nav-link" data-scroll-target="#filtering"><span class="header-section-number">3.3</span> Filtering</a></li>
+  <li><a href="#direct-conversion-architecture" id="toc-direct-conversion-architecture" class="nav-link" data-scroll-target="#direct-conversion-architecture"><span class="header-section-number">3.4</span> Direct-Conversion Architecture</a></li>
+  <li><a href="#duplexing" id="toc-duplexing" class="nav-link" data-scroll-target="#duplexing"><span class="header-section-number">3.5</span> Duplexing</a>
+  <ul class="collapse">
+  <li><a href="#frequency-division-duplex-fdd" id="toc-frequency-division-duplex-fdd" class="nav-link" data-scroll-target="#frequency-division-duplex-fdd"><span class="header-section-number">3.5.1</span> Frequency-Division Duplex (FDD)</a></li>
+  <li><a href="#time-division-duplex-tdd" id="toc-time-division-duplex-tdd" class="nav-link" data-scroll-target="#time-division-duplex-tdd"><span class="header-section-number">3.5.2</span> Time-Division Duplex (TDD)</a></li>
+  <li><a href="#comparison-of-fdd-and-tdd" id="toc-comparison-of-fdd-and-tdd" class="nav-link" data-scroll-target="#comparison-of-fdd-and-tdd"><span class="header-section-number">3.5.3</span> Comparison of FDD and TDD</a></li>
+  </ul></li>
+  <li><a href="#specialty-architectures" id="toc-specialty-architectures" class="nav-link" data-scroll-target="#specialty-architectures"><span class="header-section-number">3.6</span> Specialty Architectures</a>
+  <ul class="collapse">
+  <li><a href="#super-heterodyne-architecture" id="toc-super-heterodyne-architecture" class="nav-link" data-scroll-target="#super-heterodyne-architecture"><span class="header-section-number">3.6.1</span> Super-Heterodyne Architecture</a></li>
+  <li><a href="#low-if-architecture" id="toc-low-if-architecture" class="nav-link" data-scroll-target="#low-if-architecture"><span class="header-section-number">3.6.2</span> Low-IF Architecture</a></li>
+  <li><a href="#super-simple-architecture" id="toc-super-simple-architecture" class="nav-link" data-scroll-target="#super-simple-architecture"><span class="header-section-number">3.6.3</span> Super Simple Architecture</a></li>
+  </ul></li>
+  <li><a href="#iq-imbalance" id="toc-iq-imbalance" class="nav-link" data-scroll-target="#iq-imbalance"><span class="header-section-number">3.7</span> I/Q Imbalance</a></li>
   </ul></li>
   <li><a href="#sec-lna" id="toc-sec-lna" class="nav-link" data-scroll-target="#sec-lna"><span class="header-section-number">4</span> Low Noise Amplifiers</a></li>
   <li><a href="#sec-mixer" id="toc-sec-mixer" class="nav-link" data-scroll-target="#sec-mixer"><span class="header-section-number">5</span> Mixers</a></li>
@@ -414,7 +428,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 3, 2025</p>
+      <p class="date">October 4, 2025</p>
     </div>
   </div>
   
@@ -1107,6 +1121,295 @@ s_\mathrm{BB,complex}(t) = s_\mathrm{RF}(t) \cdot e^{-j \omega_\mathrm{c} t} = s
 </section>
 <section id="filtering" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="filtering"><span class="header-section-number">3.3</span> Filtering</h2>
+<p>Filtering is an essential function in both TX and RX. In the TX, filtering is used to limit the bandwidth of the transmitted signal to the allocated channel bandwidth, and to suppress out-of-band emissions. In the RX, filtering is used to select the wanted signal from a crowded spectrum, and to suppress unwanted signals (blockers) that can cause interference or desensitization of the RX. A typical example of filtering in the RX is shown in <a href="#fig-filtering-rx" class="quarto-xref">Figure&nbsp;13</a>, where a bandpass filter is used to attenuate strong unwanted blockers while only slightly attenuating the wanted signal.</p>
+<div id="cell-fig-filtering-rx" class="cell" data-execution_count="13">
+<div class="cell-output cell-output-display">
+<div id="fig-filtering-rx" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-filtering-rx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-filtering-rx-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure&nbsp;13: Filtering of wanted channel amid strong unwanted blockers. Exemplary shown in an RX scenario around 900 MHz. The strong blockers (top figure) are attenuated by an RF bandpass filter (bottom figure) with a bandwidth of 20 MHz, achieving more than 40 dB rejection of the blockers while only slightly attenuating the wanted signal."><img src="rfic_files/figure-html/fig-filtering-rx-output-1.png" width="662" height="470" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-filtering-rx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13: Filtering of wanted channel amid strong unwanted blockers. Exemplary shown in an RX scenario around 900 MHz. The strong blockers (top figure) are attenuated by an RF bandpass filter (bottom figure) with a bandwidth of 20 MHz, achieving more than 40 dB rejection of the blockers while only slightly attenuating the wanted signal.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In any filter there exists a fundamental trade-off between selectivity (steepness of the filter skirts), bandwidth, and insertion loss. A very selective filter with steep skirts and large BW will have a high insertion loss. Conversely, a filter with low insertion loss will have a gentle roll-off and may not sufficiently suppress unwanted signals. A useful metric to quantify the performance of a filter is the quality factor <span class="math inline">\(Q\)</span>, defined as</p>
+<p><span class="math display">\[
+Q = \frac{f_\mathrm{c}}{\Delta f}
+\]</span></p>
+<p>where <span class="math inline">\(f_\mathrm{c}\)</span> is the center frequency and <span class="math inline">\(\Delta f\)</span> is the –3 dB bandwidth of the filter. A higher <span class="math inline">\(Q\)</span> indicates a more selective filter.</p>
+<p>The achievable <span class="math inline">\(Q\)</span> depends on the filter technology used. For example, on-chip LC filters can achieve <span class="math inline">\(Q\)</span> values of around 10-20, while off-chip SAW or BAW/FBAR filters can achieve <span class="math inline">\(Q\)</span> values of several hundreds, and a crystal filter can achieve <span class="math inline">\(Q\)</span> values of several thousands. The choice of filter technology depends on the application requirements, such as frequency range, bandwidth, insertion loss, and cost. Generally speaking, the required filtering to single out the wanted signal in the RX spectrum and decrease the power of strong blockers to a tolerable level is one of the most critical design choices, and is usually distributed at different locations in the RX chain:</p>
+<ul>
+<li>RF filters (between antenna and LNA) provide a first level of filtering, and are usually implemented as off-chip SAW or BAW/FBAR filters. They provide high <span class="math inline">\(Q\)</span> and good selectivity, but have a fixed center frequency and bandwidth. They are used to pass the wanted band of interest, and to attenuate strong out-of-band blockers.</li>
+<li>IF filters (in case of a super-heterodyne receiver) provide additional filtering, and can be implemented as on-chip LC filters or off-chip SAW/BAW filters. They provide moderate <span class="math inline">\(Q\)</span> and selectivity, and can be tuned to some extent.</li>
+<li>BB filters (after downconversion) provide the final level of filtering before entering the ADCs, and are usually implemented as on-chip active RC filters. They provide channel selection, and can be easily adjusted to different bandwidths.</li>
+<li>Digital filters (in the DSP block) provide the final level of filtering and signal processing, and can be implemented as FIR or IIR filters. They provide high flexibility and can be easily adapted to different standards and requirements. Digital filters show now variations, so they can be designed to be very selective.</li>
+</ul>
+<p>It is important to note (because this dictates a lot of choices in RF design) that high-<span class="math inline">\(Q\)</span> filters are usually fixed-frequency and fixed-bandwidth. Only baseband and digital filters can be easily adjusted to different bandwidths!</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Filter Technologies
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Baseband filters (analog)</strong> are usually implemented as active <span class="math inline">\(RC\)</span> filters on-chip. They are very flexible and can have adjustable bandwidth by either changing <span class="math inline">\(R\)</span> and/or <span class="math inline">\(C\)</span>. For medium frequencies <span class="math inline">\(g_\mathrm{m}-C\)</span> filters can be used, which are also tunable by changing the transconductance <span class="math inline">\(g_\mathrm{m}\)</span> and/or <span class="math inline">\(C\)</span>. For even higher bandwidths, on-chip LC filters can be used, which have a limited <span class="math inline">\(Q\)</span> of around 10-20.</p>
+<p><strong>Baseband filters (digital)</strong> are implemented as FIR or IIR filters in the DSP block. They are very flexible and can be easily adapted to different standards and requirements. Digital filters show now variations, so they can be designed to be very selective.</p>
+<p><strong>Surface acoustic wave (SAW)</strong> and <strong>bulk acoustic wave (BAW/FBAR)</strong> filters are off-chip components that can achieve high <span class="math inline">\(Q\)</span> values of several hundreds. They have a fixed center frequency and bandwidth. Usually 1-2 such filters are required per supported band of interest.</p>
+<p><strong>Crystal filters</strong> can achieve very high <span class="math inline">\(Q\)</span> values of several thousands, but are usually bulky and expensive.</p>
+<p><strong>LC filters</strong> can be either implemented off-chip (using discrete components) or on-chip. Off-chip LC filters can achieve higher <span class="math inline">\(Q\)</span> values than on-chip LC filters, but are usually larger and more expensive. On-chip LC filters are limited in <span class="math inline">\(Q\)</span> (around 10-20), but are very compact and can be integrated into the RFIC. Off-chip LC filters can achieve <span class="math inline">\(Q\)</span> values of around 50-100, depending on the frequency and component quality.</p>
+<p><strong>Ceramic filters</strong> are another off-chip filter technology that can achieve moderate to high <span class="math inline">\(Q\)</span> values (up to several hundreds). They are usually smaller and less expensive than SAW or BAW/FBAR filters, but also lower performance.</p>
+<p><strong>Waveguide filters</strong> are used at very high frequencies (above 10 GHz) and can achieve very high <span class="math inline">\(Q\)</span> values (up to several thousands). They are usually bulky and expensive, and are not commonly used in mobile applications, but rather in fixed installations like base stations or satellite communication.</p>
+</div>
+</div>
+<p>Fundamentally, the choice of filter technology is a trade-off between performance, size, cost, and flexibility. In most cases, a combination of different filter technologies is used to achieve the desired performance.</p>
+</section>
+<section id="direct-conversion-architecture" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="direct-conversion-architecture"><span class="header-section-number">3.4</span> Direct-Conversion Architecture</h2>
+<p>The transceiver architecture shown in <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;10</a> is called direct-conversion or zero-IF architecture, as the downconversion in the RX and upconversion in the TX is done in a single step. This architecture several advantages:</p>
+<ul>
+<li>Per RX and TX a single LO is required (which can even be shared between RX and TX in TDD operation).</li>
+<li>There are a minimum number of RF blocks, which good for cost and power consumption.</li>
+<li>This architecture is very flexible and can be easily adapted to different standards and requirements, and shows generally very good performance if the disadvantages can be overcome by good design.</li>
+<li>This architecture allows a high integration level, as basically all blocks can be implemented on-chip.</li>
+<li>Direct conversion is the de-facto standard architecture for cellular, WiFi, Bluetooth (with the exception of the TX), and GNSS.</li>
+</ul>
+<p>However, the direct-conversion architecture also has some disadvantages:</p>
+<ul>
+<li>LO-RF coupling can cause self-mixing and desensitization of the RX, as well as LO leakage in the TX. This is an issue because the LO frequency is the same as the RF frequency.</li>
+<li>Even-order distortion products (especially IIP2) cause sensitivity degradation due to strong amplitude-modulated blockers.</li>
+<li>LO pulling can occur in the TX (again, LO and RF are at the same frequency).</li>
+<li>IQ errors (gain and phase mismatch) of the <span class="math inline">\(I\)</span> and <span class="math inline">\(Q\)</span> paths can cause constellation distortion leading to increased error vector magnitude (EVM).</li>
+<li>DC offsets can occur due to self-mixing of LO leakage and even-order distortion products.</li>
+<li>Flicker noise (1/f noise) upconversion can cause increased phase noise close to the carrier, as well as increased RX noise figure.</li>
+</ul>
+<p>Nowadays there exist good design techniques to mitigate these disadvantages. However, in some cases (for example very high linearity requirements, or very high frequencies) other architectures like low-IF or super-heterodyne may be preferred.</p>
+</section>
+<section id="duplexing" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="duplexing"><span class="header-section-number">3.5</span> Duplexing</h2>
+<p>In the block diagram of <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;10</a>, we have not yet considered how to share the antenna between RX and TX. Essentially, there are two main methods to achieve this: <strong>frequency-division duplex (FDD)</strong> and <strong>time-division duplex (TDD)</strong>.</p>
+<section id="frequency-division-duplex-fdd" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="frequency-division-duplex-fdd"><span class="header-section-number">3.5.1</span> Frequency-Division Duplex (FDD)</h3>
+<p>In FDD, the RX and TX operate at different frequencies, separated by a duplex distance. This allows simultaneous transmission and reception, which is beneficial for applications like voice communication where low latency is required. However, FDD requires two separate frequency bands, which can be a limitation in terms of spectrum availability. Additionally, FDD requires two PLLs to generate the RX and TX LO frequencies, which increases complexity and power consumption.</p>
+<p>The RF RX and TX paths are connected to the antenna via a duplexer, which is a three-port device that allows signals to pass between the antenna and the RX or TX path, while isolating the RX and TX paths from each other. A typical FDD TRX block diagram is shown in <strong>?@fig-fdd-trx</strong>.</p>
+<div id="cell-fig-trx-fdd" class="cell" data-execution_count="14">
+<div class="cell-output cell-output-display">
+<div id="fig-trx-fdd" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-trx-fdd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-trx-fdd-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Figure&nbsp;14: Block diagram of an FDD RF front-end."><img src="rfic_files/figure-html/fig-trx-fdd-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trx-fdd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14: Block diagram of an FDD RF front-end.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Advantages of FDD:</p>
+<ul>
+<li>RX and TX can operate simultaneously, which is beneficial for low-latency applications.</li>
+<li>There is no need for fast switching between RX and TX, which simplifies the design.</li>
+<li>Relaxed synchronization requirements between RX and TX and different users.</li>
+</ul>
+<p>Disadvantages of FDD:</p>
+<ul>
+<li>Duplexers are costly components, which significant insertion loss depending on filtering requirements.</li>
+<li>Requires two separate frequency bands, which can be a limitation in terms of spectrum availability, and MIMO channel estimation.</li>
+<li>The large TX causes severe desensitization of the RX, which requires high linearity and good filtering (50 dB to 60 dB).</li>
+</ul>
+</section>
+<section id="time-division-duplex-tdd" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="time-division-duplex-tdd"><span class="header-section-number">3.5.2</span> Time-Division Duplex (TDD)</h3>
+<p>In TDD, the RX and TX share the same frequency band but operate at different times. This allows for more efficient use of the available spectrum, as the same frequency can be used for both transmission and reception. TDD is particularly well-suited for applications with asymmetric traffic patterns, where the data rate in one direction is significantly higher than in the other. However, TDD requires precise timing control to avoid interference between RX and TX periods, which can increase complexity. In TDD, a single PLL can be used to generate the LO frequency for both RX and TX, which reduces complexity and power consumption. The RF RX and TX paths are connected to the antenna via a switch, which alternates between connecting the antenna to the RX path and the TX path. A typical TDD TRX block diagram is shown in <strong>?@fig-tdd-trx</strong>.</p>
+<div id="cell-fig-trx-tdd" class="cell" data-execution_count="15">
+<div class="cell-output cell-output-display">
+<div id="fig-trx-tdd" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-trx-tdd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-trx-tdd-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="Figure&nbsp;15: Block diagram of a TDD RF front-end."><img src="rfic_files/figure-html/fig-trx-tdd-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trx-tdd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15: Block diagram of a TDD RF front-end.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Advantages of TDD:</p>
+<ul>
+<li>More efficient use of the available spectrum, as the same frequency can be used for both RX and TX.</li>
+<li>A single PLL can be used for both RX and TX, which reduces complexity and power consumption.</li>
+<li>No duplexer is required (just a single band filter), which reduces cost and insertion loss.</li>
+<li>No RX blocking by own TX, which relaxes linearity and filtering requirements.</li>
+<li>Easier to implement MIMO, as all antennas can operate in the same frequency band.</li>
+</ul>
+<p>Disadvantages of TDD:</p>
+<ul>
+<li>RX and TX cannot operate simultaneously, which can be a limitation for low-latency applications.</li>
+<li>Requires precise timing control to avoid interference between RX and TX periods, which can increase complexity.</li>
+<li>Synchronization between RX and TX and different users is required, which can be challenging in some scenarios.</li>
+</ul>
+</section>
+<section id="comparison-of-fdd-and-tdd" class="level3" data-number="3.5.3">
+<h3 data-number="3.5.3" class="anchored" data-anchor-id="comparison-of-fdd-and-tdd"><span class="header-section-number">3.5.3</span> Comparison of FDD and TDD</h3>
+<p>Below is a summary of important wireless standards and their duplexing method as shown in <a href="#tbl-duplexing-standards" class="quarto-xref">Table&nbsp;2</a>:</p>
+<div id="tbl-duplexing-standards" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-duplexing-standards-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Comparison of duplexing methods used by major wireless standards
+</figcaption>
+<div aria-describedby="tbl-duplexing-standards-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 22%">
+<col style="width: 53%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Wireless Standard</th>
+<th style="text-align: left;">Duplexing Method</th>
+<th style="text-align: left;">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">GSM (2G)</td>
+<td style="text-align: left;">FDD &amp; TDMA</td>
+<td style="text-align: left;">TX and RX operate at different frequencies (FDD) and different times (TDMA)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UMTS (3G)</td>
+<td style="text-align: left;">FDD</td>
+<td style="text-align: left;">Traditional cellular standard using paired spectrum</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LTE (4G)</td>
+<td style="text-align: left;">FDD/TDD</td>
+<td style="text-align: left;">FDD is used mostly &lt;2.7 GHz, TDD is used &gt;2.3 GHz</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5G NR</td>
+<td style="text-align: left;">FDD/TDD</td>
+<td style="text-align: left;">FDD is used mostly &lt;2.7 GHz, TDD is used &gt;2.3 GHz</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WiFi (802.11)</td>
+<td style="text-align: left;">TDD</td>
+<td style="text-align: left;">Unlicensed spectrum operation</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bluetooth</td>
+<td style="text-align: left;">TDD</td>
+<td style="text-align: left;">Short-range personal area network</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Zigbee</td>
+<td style="text-align: left;">TDD</td>
+<td style="text-align: left;">Low-power IoT applications</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>As you can see in <a href="#tbl-duplexing-standards" class="quarto-xref">Table&nbsp;2</a>, there is a tendency to use FDD for lower frequencies and large communication distances, while TDD is preferred for higher frequencies and smaller distances.</p>
+</section>
+</section>
+<section id="specialty-architectures" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="specialty-architectures"><span class="header-section-number">3.6</span> Specialty Architectures</h2>
+<p>In some cases, other architectures may be preferred over the direct-conversion architecture. During the evolution of wireless communication, many different architectures have been proposed and used. However, only a few of them are still relevant today. Some examples are shown next.</p>
+<section id="super-heterodyne-architecture" class="level3" data-number="3.6.1">
+<h3 data-number="3.6.1" class="anchored" data-anchor-id="super-heterodyne-architecture"><span class="header-section-number">3.6.1</span> Super-Heterodyne Architecture</h3>
+<p>The super-heterodyne architecture is a widely used approach in radio. It works by mixing the incoming/outgoing RF signal with an LO to produce an intermediate frequency (IF) signal. This IF signal is then amplified and processed, allowing for better selectivity and sensitivity compared to direct-conversion architectures. Super-heterodyne receivers/transmitters are known for their excellent performance in terms of image rejection and dynamic range, making them suitable for a variety of applications, including traditional analog TV and radio broadcasting. As simplified block diagram of a super-heterodyne transceiver is shown in <a href="#fig-trx-superheterodyne" class="quarto-xref">Figure&nbsp;16</a>.</p>
+<div id="cell-fig-trx-superheterodyne" class="cell" data-execution_count="16">
+<div class="cell-output cell-output-display">
+<div id="fig-trx-superheterodyne" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-trx-superheterodyne-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-trx-superheterodyne-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-16" title="Figure&nbsp;16: Block diagram of a super-heterodyne transceiver (TRX) showing the main functional blocks of RX and TX."><img src="rfic_files/figure-html/fig-trx-superheterodyne-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trx-superheterodyne-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16: Block diagram of a super-heterodyne transceiver (TRX) showing the main functional blocks of RX and TX.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>When you compare <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;10</a> with <a href="#fig-trx-superheterodyne" class="quarto-xref">Figure&nbsp;16</a>, you can immediately appreciate the increased complexity of the super-heterodyne architecture. It requires two PLLs to generate the RX and TX LO frequencies, as well as additional mixers and filters for the IF stage. This increases cost, power consumption, and size. However, the super-heterodyne architecture can provide better performance in terms of selectivity and sensitivity, especially in challenging RF environments with strong blockers, as it allows filtering at RF, IF, and baseband frequencies.</p>
+<p>One important aspect of super-heterodyne receivers is the choice of the intermediate frequency (IF). The IF should be high enough to allow for effective filtering and <strong>image rejection</strong>, but low enough to avoid excessive complexity and power consumption. Common IF frequencies range from a few MHz to several hundred MHz, depending on the application and frequency band.</p>
+<p>An important issue in super-heterodyne receivers is the <strong>image frequency</strong>. The image frequency is a spurious frequency that can interfere with the desired signal, and is located at <span class="math inline">\(f_\mathrm{image} = f_\mathrm{RF} \pm 2 f_\mathrm{IF}\)</span> (the signs depends on the choice of high-side or low-side mixing). To suppress the image frequency, an image-reject filter is either placed before (RX) or after (TX) the mixer. The design of this filter is critical, as it must provide sufficient attenuation of the image frequency while maintaining low insertion loss for the desired signal.</p>
+<p>An alternative to image filtering is the use of active image rejection techniques, such as the <strong>Hartley</strong> or <strong>Weaver</strong> architectures. These techniques use additional mixers and phase shifters to cancel out the image frequency, allowing for improved performance without the need for a dedicated image-reject filter.</p>
+</section>
+<section id="low-if-architecture" class="level3" data-number="3.6.2">
+<h3 data-number="3.6.2" class="anchored" data-anchor-id="low-if-architecture"><span class="header-section-number">3.6.2</span> Low-IF Architecture</h3>
+<p>To avoid some of the issues of direct-conversion architectures (like dc offsets and flicker noise), a low-IF architecture can be used. In a low-IF architecture, the RX and TX signals are mixed to a low intermediate frequency (typically a few MHz to tens of MHz) instead of directly to baseband. This allows for easier filtering of DC offsets and flicker noise, while still maintaining the benefits of a single LO and reduced complexity compared to super-heterodyne architectures. A low-IF architecture is shown in <a href="#fig-trx-lowif" class="quarto-xref">Figure&nbsp;17</a>.</p>
+<div id="cell-fig-trx-lowif" class="cell" data-execution_count="17">
+<div class="cell-output cell-output-display">
+<div id="fig-trx-lowif" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-trx-lowif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-trx-lowif-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-17" title="Figure&nbsp;17: Block diagram of a low-IF transceiver (TRX) showing the main functional blocks of RX and TX. Note the usage of complex analog and digital baseband filters. Otherwise, the structure is similar to a zero-IF TRX as shown in Figure&nbsp;10."><img src="rfic_files/figure-html/fig-trx-lowif-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trx-lowif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;17: Block diagram of a low-IF transceiver (TRX) showing the main functional blocks of RX and TX. Note the usage of complex analog and digital baseband filters. Otherwise, the structure is similar to a zero-IF TRX as shown in <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;10</a>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The low-IF architecture is the defacto standard for Bluetooth receivers. Its advantage compared to direct-conversion vanishes for larger channel bandwidths, this is why it is not used for cellular or WiFi (GSM receivers might be an exception).</p>
+<p>One noteworthy disadvantage of low-IF architectures is the required 2xBW compared to direct-conversion. This might cause increased power consumption in the analog baseband filters and ADCs/DACs. Additionally, the low-IF architecture still requires careful design to mitigate issues like IQ imbalance and LO leakage, although these issues are generally less severe than in direct-conversion architectures.</p>
+</section>
+<section id="super-simple-architecture" class="level3" data-number="3.6.3">
+<h3 data-number="3.6.3" class="anchored" data-anchor-id="super-simple-architecture"><span class="header-section-number">3.6.3</span> Super Simple Architecture</h3>
+<p>For some applications with very low cost and low performance requirements, a super simple architecture can be used (think garage door opener). In this architecture, the RX and TX paths are stripped down to the bare minimum. A super simple receiver just uses a bandpass filter and an envelope detector, while a super simple transmitter uses an oscillator and power amplifier. These simplified architectures are shown in <a href="#fig-trx-supersimple" class="quarto-xref">Figure&nbsp;18</a>.</p>
+<div id="cell-fig-trx-supersimple" class="cell" data-execution_count="18">
+<div class="cell-output cell-output-display">
+<div id="fig-trx-supersimple" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-trx-supersimple-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-trx-supersimple-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-18" title="Figure&nbsp;18: Block diagram of a super simple TX and RX."><img src="rfic_files/figure-html/fig-trx-supersimple-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trx-supersimple-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18: Block diagram of a super simple TX and RX.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Despite the simple architecture, digital amplitude-shift-keying (ASK) or on-off-keying (OOK) can be used. If the receiver is able to discriminate between frequencies (e.g., by using two RF filters with an envelope detector each), also frequency-shift-keying (FSK) can be used.</p>
+</section>
+</section>
+<section id="iq-imbalance" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="iq-imbalance"><span class="header-section-number">3.7</span> I/Q Imbalance</h2>
+<p>In direct-conversion and low-IF architectures, the I and Q paths are used to process the in-phase and quadrature components of the signal. Ideally, these paths should have identical gain and a 90° phase difference. However, in practice, there are always some mismatches between the I and Q paths, leading to <strong>I/Q imbalance</strong>. This imbalance can cause constellation distortion, leading to increased error vector magnitude (EVM) and degraded system performance.</p>
+<p>I/Q imbalance can be characterized by two parameters: gain mismatch (<span class="math inline">\(\Delta G\)</span>) and phase mismatch (<span class="math inline">\(\Delta \varphi\)</span>). Gain mismatch refers to the difference in gain between the I and Q paths, while phase mismatch refers to the deviation from the ideal 90° phase difference. The impact of I/Q imbalance on system performance depends on the modulation scheme used, with higher-order modulations being more sensitive to these impairments.</p>
+<p>There are two ways to quantify I/Q imbalance:</p>
+<ul>
+<li><strong>Image rejection ratio (IRR)</strong>: The IRR is a measure of how well the receiver can reject the image frequency caused by I/Q imbalance. It is defined as the ratio of the power of the desired signal to the power of the image (unwanted) signal, typically expressed in dB. A higher IRR indicates better performance, with values above 30 dB to 40 dB generally considered acceptable for most applications.</li>
+<li><strong>Error vector magnitude (EVM)</strong>: The EVM is a measure of the difference between the ideal transmitted signal and the received signal, expressed as a percentage of the signal’s magnitude. It quantifies the overall distortion in the received signal, including the effects of I/Q imbalance. Lower EVM values indicate better performance, with typical requirements ranging from 1% to 10% depending on the modulation scheme and application.</li>
+</ul>
+<p>The EVM (in rms) is defined as</p>
+<p><span id="eq-evm-definition"><span class="math display">\[
+\text{EVM} = \frac{\sqrt{\frac{1}{N} \sum_{i=1}^{N} |s_\mathrm{ideal}(i) - s_\mathrm{meas}(i)|^2}}{\sqrt{\frac{1}{N} \sum_{i=1}^{N} |s_\mathrm{ideal}(i)|^2}}
+\tag{21}\]</span></span></p>
+<p>where <span class="math inline">\(s_\mathrm{ideal}(i)\)</span> is the ideal transmitted symbol, <span class="math inline">\(s_\mathrm{meas}(i)\)</span> is the measured received symbol, and <span class="math inline">\(N\)</span> is the number of symbols. EVM is expressed either in percent or in dB using</p>
+<p><span class="math display">\[
+\text{EVM}|_\mathrm{dB} = 20 \cdot \log_{10}(\text{EVM}).
+\]</span></p>
+<p>In order to make the I/Q mismatch sufficiently small, among the possible techniques are:</p>
+<ul>
+<li>Careful layout and matching of the components in the I and Q paths to minimize gain and phase mismatches. This usually involves good layout techniques. Further, the LO I/Q generation should be done with high accuracy.</li>
+<li>Calibration techniques can be used to measure and compensate for I/Q imbalance. This can be done either in the analog domain (e.g., using variable gain amplifiers and phase shifters) or in the digital domain (e.g., using digital signal processing algorithms). Digital compensation is usually preferred, as it is more flexible and can adapt to changing conditions. A <a href="https://en.wikipedia.org/wiki/CORDIC">CORDIC</a> can be readily used for this purpose.</li>
+</ul>
 </section>
 </section>
 <section id="sec-lna" class="level1" data-number="4">
