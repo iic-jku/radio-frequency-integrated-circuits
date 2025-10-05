@@ -133,11 +133,11 @@ In order to allow communication between different devices, different operators, 
 
 | Standard  | GSM (2G) | WCDMA (3G) | LTE (4G)<br>**5G NR** | WiFi | Bluetooth | GNSS |
 |:----------|-----|--------|-----------|-------|-----------|------|
-| **Frequency range (MHz)** | 850, 900, 1800, 1900 | 850, 900, 1700, 1900, 2100 | Multiple bands 450...7100 **(FR1)** | 2400, 5000, 6000 | 2400 | 1500, 1200 |
+| **Frequency range (MHz)** | 850, 900, 1800, 1900 | 850, 900, 1700, 1900, 2100 | Multiple bands 450...7100 **(FR1)**, **24000...48000 (FR2)** | 2400, 5000, 6000 | 2400 | 1500, 1200 |
 | **Modulation** | GMSK, 8PSK (EDGE) | QPSK (DL), BPSK (UL), 16QAM (HSPA), 64QAM (HSPA) | QPSK, 16QAM, 64QAM (DL+UL) 256QAM (DL**+UL**) | BPSK, QPSK, 16QAM, 64QAM, 256QAM, 1024QAM, 4096QM | GFSK (m=0.28...0.35), π/4-DQPSK, 8DPSK | BPSK, QPSK |
 | **Transmission/ multiple access** | TDMA, FDMA | DS-CDMA | OFDMA (DL**+UL**), SC-FDMA/**DFT-s-OFDM (UL)** | OFDM, CSMA/CA | FHSS | CDMA |
 | **Duplex** | FDD | FDD | FDD, TDD | TDD | TDD | n/a |
-| **Channel bandwidth** | 200 kHz | 5 MHz | 1.4, 3, 5, 10, 15, 20, ..., **100 MHz** | 10, 20, 40, 80, 160, 320 MHz | 1 MHz | 16...24 MHz |
+| **Channel bandwidth** | 200 kHz | 5 MHz | 1.4, 3, 5, 10, 15, 20, ..., **100 MHz (FR1), 400 MHz (FR2)** | 10, 20, 40, 80, 160, 320 MHz | 1 MHz | 16...24 MHz |
 | **Symbol rate** | 270.833 ksym/s | 3.84 Msym/s | 15/**30/60** ksym/s | 312.5 ksym/s | 1 Msym/s | 50 sym/s |
 | **Pulse shaping** | Gaussian (BT=0.3) | Root Raised Cosine (α=0.22) | Rectangular | Rectangular | Gaussian (BT=0.5) | Rectangular |
 | **Transmit power** | 1...2 W | 250 mW | 200 mW (FDD), 400 mW (TDD) | 100 mW | 1...100 mW | n/a |
@@ -147,3 +147,5 @@ In order to allow communication between different devices, different operators, 
 : Comparison of wireless communication standards {#tbl-wireless-standards}
 
 During this course, we will learn what these terms mean and how they impact the design of RF integrated circuits.
+
+As you can see in @tbl-wireless-standards, since LTE (4G) and 5G NR, many additional bands have been defined in the sub-6 GHz range (FR1) and also in the mm-wave range (FR2, 24.25 to 52.6 GHz). This means that modern wireless devices have to support many different frequency bands, which makes the design of RF frontends even more challenging. A good overview of the different frequency bands is given here for [LTE](https://www.sqimway.com/lte_band.php) and [5G NR](https://www.sqimway.com/nr_band.php).
