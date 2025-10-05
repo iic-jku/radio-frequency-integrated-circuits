@@ -77,6 +77,7 @@ with sd.Drawing(canvas='svg') as d:
     osc1 = dsp.Oscillator()
     dsp.Line().right(d.unit/4)
     pll1 = dsp.Square().label('PLL')
+    dsp.Arrow().right(d.unit/4).reverse().label(r'$f_\mathrm{ref}$', 'right')
     
     # Transmitter section (mirrored below)
     # Start from beginning of the diagram and move down
@@ -128,5 +129,5 @@ with sd.Drawing(canvas='svg') as d:
     osc2 = dsp.Oscillator()
     dsp.Line().right(d.unit/4)
     pll2 = dsp.Square().label('PLL')
-
+    dsp.Arrow().right(d.unit/4).reverse().label(r'$f_\mathrm{ref}$', 'right')
 ```
