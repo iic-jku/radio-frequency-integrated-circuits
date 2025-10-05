@@ -126,3 +126,24 @@ The consequences of this are (among others):
 - Very often, wireless devices are battery-operated. This means transmit and receive functions have to be implemented using **minimum power consumption**.
 
 As stated in the beginning, designing wireless systems is hard.
+
+## Wireless Standards {#sec-intro-standards}
+
+In order to allow communication between different devices, different operators, and different manufacturers, wireless communication is standardized. There are many different standards, each with its own characteristics. Wireless standards define every aspect of the wireless communication, and be documents with hundreds or thousands of pages. Here, we mainly focus on the radio-frequency and analog aspects of wireless standards. Summarized in @tbl-wireless-standards are a few popular wireless standards with their main characteristics.
+
+| Standard  | GSM (2G) | WCDMA (3G) | LTE (4G)<br>**5G NR** | WiFi | Bluetooth | GNSS |
+|:----------|-----|--------|-----------|-------|-----------|------|
+| **Frequency range (MHz)** | 850, 900, 1800, 1900 | 850, 900, 1700, 1900, 2100 | Multiple bands 450...7100 **(FR1)** | 2400, 5000, 6000 | 2400 | 1500, 1200 |
+| **Modulation** | GMSK, 8PSK (EDGE) | QPSK (DL), BPSK (UL), 16QAM (HSPA), 64QAM (HSPA) | QPSK, 16QAM, 64QAM (DL+UL) 256QAM (DL**+UL**) | BPSK, QPSK, 16QAM, 64QAM, 256QAM, 1024QAM, 4096QM | GFSK (m=0.28...0.35), π/4-DQPSK, 8DPSK | BPSK, QPSK |
+| **Transmission/ multiple access** | TDMA, FDMA | DS-CDMA | OFDMA (DL**+UL**), SC-FDMA/**DFT-s-OFDM (UL)** | OFDM, CSMA/CA | FHSS | CDMA |
+| **Duplex** | FDD | FDD | FDD, TDD | TDD | TDD | n/a |
+| **Channel bandwidth** | 200 kHz | 5 MHz | 1.4, 3, 5, 10, 15, 20, ..., **100 MHz** | 10, 20, 40, 80, 160, 320 MHz | 1 MHz | 16...24 MHz |
+| **Symbol rate** | 270.833 ksym/s | 3.84 Msym/s | 15/**30/60** ksym/s | 312.5 ksym/s | 1 Msym/s | 50 sym/s |
+| **Pulse shaping** | Gaussian (BT=0.3) | Root Raised Cosine (α=0.22) | Rectangular | Rectangular | Gaussian (BT=0.5) | Rectangular |
+| **Transmit power** | 1...2 W | 250 mW | 200 mW (FDD), 400 mW (TDD) | 100 mW | 1...100 mW | n/a |
+| **PAR (UL)** | 0 dB (GMSK), 3 dB (8PSK) | 3...8 dB | 6...8 dB | Up to 12 dB | 0 dB (GFSK), 3 dB (8DPSK) | n/a |
+| **MIMO** | no | Not realized (DL 2x2) | DL 4x4 (up to 8x8) | 2x2 (up to 8x8) | no | no |
+| **Channel bond** | no | Up to 4x5 MHz | Up to 7x20/4x100 MHz | Up to 80+80+80+80 MHz | no | no |
+: Comparison of wireless communication standards {#tbl-wireless-standards}
+
+During this course, we will learn what these terms mean and how they impact the design of RF integrated circuits.
