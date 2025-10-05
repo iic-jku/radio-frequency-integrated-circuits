@@ -36,11 +36,11 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Line().up(d.unit).at(sw.b).length(d.unit/2)
     dsp.Arrow().right(d.unit/2).label(r'RX')
     dsp.Amp()
-    dsp.Arrow().right(d.unit/2).linestyle('--')
+    dsp.Arrow().right(d.unit/2).linestyle('--').label(r'$s_\mathrm{RX}$', 'right')
 
     dsp.Arrow().down(d.unit).at(sw.c).length(d.unit/2).reverse()
     dsp.Line().right(d.unit/2).label(r'TX')
     dsp.Amp().reverse()
-    dsp.Arrow().right(d.unit/2).reverse().linestyle('--') 
+    dsp.Arrow().right(d.unit/2).reverse().linestyle('--').label(r'$s_\mathrm{TX}$', 'right')
 
 ```
