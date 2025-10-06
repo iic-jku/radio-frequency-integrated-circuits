@@ -175,7 +175,7 @@ $$
 Without proof (refer to [@Razavi_RFIC] or [@Darabi_RFIC] for a derivation) we find for the noise factor of this input stage (with some simplification) as
 
 $$
-F = 1 + \frac{\gamma R_\mathrmP{s} \omega_0^2 C_\mathrm{gs}^2}{\gm}.
+F = 1 + \frac{\gamma R_\mathrm{s} \omega_0^2 C_\mathrm{gs}^2}{\gm}.
 $$ {#eq-lna-inductive-degeneration-noise-factor}
 
 Finally we have an LNA input stage configuration which allows us to achieve a noise figure below 3 dB, even with $\gamma > 1$, by proper choice of $\gm$. Making $\gm$ large (by spending more bias current) results in (first order) arbitrarily low noise figure. The inductively-degenerated common-source LNA is a widely used LNA input stage configuration in modern RFICs. A somewhat detailed schematic is shown in @fig-lna-inductive-degeneration-detailed.
