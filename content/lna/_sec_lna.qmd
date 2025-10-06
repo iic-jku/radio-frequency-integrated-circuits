@@ -15,3 +15,126 @@ limitations under the License.
 :::
 
 # Low Noise Amplifiers {#sec-lna}
+
+As shown in @sec-sensitivity, the sensitivity of a receiver is determined (besides the channel bandwidth) mainly by the noise figure of the receiver. The noise figure is in turn determined by the noise figure of the first active component in the receive chain, which is usually a low noise amplifier (LNA), as exemplified in @eq-friis. Hence, as shown in @fig-trx-fdd and @fig-trx-tdd, low noise amplifiers (LNAs) are the first active building block in a receiver after the antenna and some initial RF filtering.
+
+{{< include /content/lna/_fig_lna_block.qmd >}}
+
+The LNA as a building block is shown in @fig-lna-block. The main purpose of the LNA is to amplify the received signal with as little additional noise as possible. The LNA is usually designed for a specific frequency band, e.g., the 2.4 GHz ISM band or the 5 GHz WLAN band, and is typically designed for a specific impedance, e.g., 50 Ω, which is the standard impedance for RF systems; impedance matching is usually required at the input; the output impedance matching is only required if the output of the LNA goes off chip---if it is kept on chip impedance matching is often not required. The LNA is also designed to be sufficiently linear, i.e., to not introduce significant distortion to the amplified signal, however, compared to the noise requirements, linearity is often less critical.
+
+Why is impedance matching at the input of the LNA so important?
+
+- The antenna is usually designed for a specific impedance, e.g., 50 Ω, and if the LNA input is not matched to this impedance, a significant portion of the received signal will be reflected back to the antenna, resulting in a loss of signal power.
+- Filters at the input of the LNA need to be terminated with the correct impedance to achieve the desired filter characteristics.
+- Any transmission line in front of the LNA needs to be matched to avoid reflections and standing waves.
+
+To quantify the "quality" of an impedance match, the reflection coefficient $\Gamma$ is often used, which is defined as [@Pozar_RF]:
+
+$$
+\Gamma = \frac{Z_{\mathrm{in}} - Z_0}{Z_{\mathrm{in}} + Z_0}
+$$
+
+where $Z_0$ is the characteristic impedance of the system (usually 50 Ω) and $Z_{\mathrm{in}}$ is the input impedance of the LNA. The reflection coefficient $\Gamma$ is a complex number with a magnitude between 0 and 1, where 0 indicates a perfect match and 1 indicates a complete mismatch. However, in practice, the more commonly used metric for impedance matching is the return loss (RL), which is defined as [@Pozar_RF]:
+
+$$
+\text{RL} = -20 \log_{10} |\Gamma| = 20 \log_{10} \left| \frac{Z_\mathrm{in} + Z_0}{Z_\mathrm{in} - Z_0} \right|.
+$$
+
+A higher return loss indicates a better impedance match.  A return loss of 10 dB indicates that 10% of the signal power is reflected back, while a return loss of 20 dB indicates that only 1% of the signal power is reflected back. In practice, a return loss of at least 10 dB is desired, with higher (positive!) values being better [@Bird.2009].
+
+## Resistively Matched Common-Source LNA {#sec-lna-resistive-matching}
+
+The key question is now how to design an LNA with low noise figure and an input impedance matched to 50 Ω? In order to appreciate this design challenge, we will first try a naive approach, using a common-source amplifier with resistive termination, as shown in @fig-lna-naive.
+
+{{< include /content/lna/_fig_lna_naive.qmd >}}
+
+If we assume the gate capacitance of $M_1$ negligible, we can achieve good input impedance matching by choosing $R_\mathrm{s} = R_\mathrm{p} = 50\,\Omega$. The voltage gain of this simple common-source LNA is given by $A_\mathrm{v} = -\gm R_\mathrm{D}$, neglecting capacitances and $\gds$ of $M_1$ (we assume that the load tank is tuned to the desired frequency with $\omega_0 = 1 / \sqrt{L C}$).
+
+How can we calculate the noise figure of this simple LNA? We formulate
+
+$$
+F = \frac{\text{total noise at output}}{\text{noise at output due to source only}}.
+$$ {#eq-lna-noise-factor}
+
+We derive a small-signal equivalent circuit of @fig-lna-naive, which is shown in @fig-lna-naive-noise, to calculate the total noise at the output of the LNA.
+
+{{< include /content/lna/_fig_lna_naive_noise.qmd >}}
+
+Withe the help of @fig-lna-naive-noise, we can calculate the total output noise power spectral density as
+
+$$
+\overline{v_\mathrm{n,out,1}^2} = A_\mathrm{v}^2 \cdot 4 k T (R_\mathrm{s} \parallel R_\mathrm{p}) = (\gm R_\mathrm{D})^2 \cdot 4 k T (R_\mathrm{s} \parallel R_\mathrm{p})
+$$
+
+and
+
+$$
+\overline{i_\mathrm{n,out}^2} = 4 k T \gamma \gm + \frac{4 k T}{R_\mathrm{D}}
+$$
+$$
+\overline{v_\mathrm{n,out,2}^2} = R_\mathrm{D}^2 \cdot \overline{i_\mathrm{n,out}^2} = 4 k T \gamma \gm R_\mathrm{D}^2 + 4 k T R_\mathrm{D}
+$$
+
+so that in total
+
+$$
+\overline{v_\mathrm{n,out}^2} = \overline{v_\mathrm{n,out,1}^2} + \overline{v_\mathrm{n,out,2}^2} = 4 k T \left[ (\gm R_\mathrm{D})^2 (R_\mathrm{s} \parallel R_\mathrm{p}) + \gamma \gm R_\mathrm{D}^2 + R_\mathrm{D} \right].
+$$ {#eq-lna-naive-noise-total}
+
+We now need to find the output noise coming from the source only. For this we can use the equivalent circuit in @fig-lna-naive-noise-input, to formulate the output noise due to the source only.
+
+{{< include /content/lna/_fig_lna_naive_noise_input.qmd >}}
+
+We find that
+
+$$
+\overline{v_\mathrm{n,out,s}^2} = A_\mathrm{v}^2 \cdot 4 k T R_\mathrm{s} \cdot \left(\frac{R_\mathrm{p}}{R_\mathrm{s} + R_\mathrm{p}}{} \right)^2.
+$$ {#eq-lna-naive-noise-input}
+
+Finally, we can use @eq-lna-naive-noise-total and @eq-lna-naive-noise-input with @eq-lna-noise-factor to calculate the noise figure of the simple resistively matched common-source LNA as
+
+$$
+F = \frac{\overline{v_\mathrm{n,out}^2}}{\overline{v_\mathrm{n,out,s}^2}} = 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} + \frac{\gamma R_\mathrm{s}}{\gm (R_\mathrm{s} \parallel R_\mathrm{p})^2} + \frac{R_\mathrm{s}}{\gm^2 (R_\mathrm{s} \parallel R_\mathrm{p})^2 R_\mathrm{D}}.
+$$ {#eq-lna-naive-noise-factor}
+
+::: {.callout-note}
+## Common-source LNA with Resistive Matching 
+As an exercise to calculate circuits with noise, re-confirm and derive yourself the result of @eq-lna-naive-noise-factor.
+:::
+
+How can we interpret @eq-lna-naive-noise-factor? We see that we can minimize the noise factor by making $\gm$ large. Then we have a noise factor of
+
+$$
+F = 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} = 2
+$$
+
+so we see that we are limited to a minimum noise figure of 3 dB, even if we spend the bias current to make $\gm$ very large. We can go below 3 dB noise figure only if we choose $R_\mathrm{p} > R_\mathrm{s}$, however, this means that the input is no longer matched to 50 Ω, which is usually not acceptable. Hence, this simple resistively matched common-source LNA is not a good choice for a low-noise amplifier, with one exception: For very wideband amplifiers, where a NF of larger then 3 dB is acceptable, this configuration might be a good choice.
+
+We see that we are stuck at high noise figures if we realize the real part of the input impedance with a resistor. This leaves us with the question on how to realize a real part of the input impedance then? We will answer this question in the next section.
+
+## Common-Gate LNA {#sec-lna-common-gate}
+
+We remember from our [analog circuit design lecture](https://iic-jku.github.io/analog-circuit-design/analog_circuit_design.html) that the common-gate configuration has an input impedance of $1/\gm$, neglecting parasitic capacitances. Hence, if we choose $\gm = 1/50\,\Omega = 20\,\text{mS}$, we can achieve input matching to 50 Ω without using a resistor at the input. This is the key idea of the common-gate LNA, which is shown in @fig-lna-cg.
+
+{{< include /content/lna/_fig_lna_cg.qmd >}}
+
+By inspecting @fig-lna-cg and the practice from @sec-lna-resistive-matching, we can directly write down the output noise voltage as (with $1/\gm = R_\mathrm{s}$)
+
+$$
+\overline{v_\mathrm{n,out}^2} = k T \left[ (\gm R_\mathrm{D})^2 R_\mathrm{s} + \gamma \gm R_\mathrm{D}^2 + 4 R_\mathrm{D} \right] = k T \left( \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + \gamma \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + 4 R_\mathrm{D} \right).
+$$ {#eq-lna-cg-noise-total} 
+
+The output noise due to the source only is given by
+
+$$
+\overline{v_\mathrm{n,out,s}^2} = \frac{R_\mathrm{D}^2}{R_\mathrm{s}}.
+$$ {#eq-lna-cg-noise-source}
+
+Finally, we can use @eq-lna-cg-noise-total and @eq-lna-cg-noise-source with @eq-lna-noise-factor to calculate the noise figure of the common-gate LNA as
+
+$$
+F = 1 + \gamma + \frac{4 R_\mathrm{s}}{R_\mathrm{D}}  \xrightarrow{R_\mathrm{D} \gg R_\mathrm{s}} F = 1 + \gamma .
+$$ {#eq-lna-cg-noise-factor}
+
+With a classical long-channel $\gamma = 2/3$, we can achieve a minimum noise figure of 2.2 dB, which is already better than the resistively matched common-source LNA. However, with modern short-channel devices, $\gamma$ is often larger than 1, so that the minimum noise figure of the common-gate LNA is often larger than 3 dB [@Razavi_RFIC].
+

@@ -1,0 +1,48 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-lna-naive-noise-input
+#| echo: false
+#| fig-cap: "Eqivalent circuit to calculate the output noise from the input."
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    elm.Ground()
+    elm.SourceSin().up().label(r'$4 k T R_\mathrm{s}$').color('blue')
+    elm.Resistor().right().label(r'$R_\mathrm{s}$')
+    elm.Line().right().length(d.unit/4).dot(open=True)
+    elm.Line().right().length(d.unit/2).dot()
+    d.push()
+    Rp = elm.Resistor().down().label(r'$R_\mathrm{p}$')
+    gnd1 = elm.Ground()
+    d.pop()
+    elm.Line().right().length(d.unit/2)
+    M1 = elm.AnalogNFet(offset_gate=False).label(r'$M_1$', loc='right').reverse().anchor('gate').drop('source')
+    elm.Line().down().toy(Rp.end)
+    elm.Ground()
+
+    # load
+    elm.Line().at(M1.drain).right().length(d.unit/2).label(r'$\overline{v_\mathrm{n,out,s}^2}$', loc='right').dot(open=True).idot()
+    Rd = elm.Resistor().at(M1.drain).up().label(r'$R_\mathrm{D}$')
+    elm.Line().at((Rd.end[0]-d.unit/4, Rd.end[1])).to((Rd.end[0]+d.unit/4, Rd.end[1])).label(r'$V_\mathrm{DD}$').linewidth(3)
+```
