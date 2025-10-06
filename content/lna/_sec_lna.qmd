@@ -63,22 +63,22 @@ We derive a small-signal equivalent circuit of @fig-lna-naive, which is shown in
 Withe the help of @fig-lna-naive-noise, we can calculate the total output noise power spectral density as
 
 $$
-\overline{v_\mathrm{n,out,1}^2} = A_\mathrm{v}^2 \cdot 4 k T (R_\mathrm{s} \parallel R_\mathrm{p}) = (\gm R_\mathrm{D})^2 \cdot 4 k T (R_\mathrm{s} \parallel R_\mathrm{p})
+\overline{V_\mathrm{n,out,1}^2} = A_\mathrm{v}^2 \cdot 4 k T (R_\mathrm{s} \parallel R_\mathrm{p}) = (\gm R_\mathrm{D})^2 \cdot 4 k T (R_\mathrm{s} \parallel R_\mathrm{p})
 $$
 
 and
 
 $$
-\overline{i_\mathrm{n,out}^2} = 4 k T \gamma \gm + \frac{4 k T}{R_\mathrm{D}}
+\overline{I_\mathrm{n,out}^2} = 4 k T \gamma \gm + \frac{4 k T}{R_\mathrm{D}}
 $$
 $$
-\overline{v_\mathrm{n,out,2}^2} = R_\mathrm{D}^2 \cdot \overline{i_\mathrm{n,out}^2} = 4 k T \gamma \gm R_\mathrm{D}^2 + 4 k T R_\mathrm{D}
+\overline{V_\mathrm{n,out,2}^2} = R_\mathrm{D}^2 \cdot \overline{I_\mathrm{n,out}^2} = 4 k T \gamma \gm R_\mathrm{D}^2 + 4 k T R_\mathrm{D}
 $$
 
 so that in total
 
 $$
-\overline{v_\mathrm{n,out}^2} = \overline{v_\mathrm{n,out,1}^2} + \overline{v_\mathrm{n,out,2}^2} = 4 k T \left[ (\gm R_\mathrm{D})^2 (R_\mathrm{s} \parallel R_\mathrm{p}) + \gamma \gm R_\mathrm{D}^2 + R_\mathrm{D} \right].
+\overline{V_\mathrm{n,out}^2} = \overline{V_\mathrm{n,out,1}^2} + \overline{V_\mathrm{n,out,2}^2} = 4 k T \left[ (\gm R_\mathrm{D})^2 (R_\mathrm{s} \parallel R_\mathrm{p}) + \gamma \gm R_\mathrm{D}^2 + R_\mathrm{D} \right].
 $$ {#eq-lna-naive-noise-total}
 
 We now need to find the output noise coming from the source only. For this we can use the equivalent circuit in @fig-lna-naive-noise-input, to formulate the output noise due to the source only.
@@ -88,13 +88,13 @@ We now need to find the output noise coming from the source only. For this we ca
 We find that
 
 $$
-\overline{v_\mathrm{n,out,s}^2} = A_\mathrm{v}^2 \cdot 4 k T R_\mathrm{s} \cdot \left(\frac{R_\mathrm{p}}{R_\mathrm{s} + R_\mathrm{p}}{} \right)^2.
+\overline{V_\mathrm{n,out,s}^2} = A_\mathrm{v}^2 \cdot 4 k T R_\mathrm{s} \cdot \left(\frac{R_\mathrm{p}}{R_\mathrm{s} + R_\mathrm{p}}{} \right)^2.
 $$ {#eq-lna-naive-noise-input}
 
 Finally, we can use @eq-lna-naive-noise-total and @eq-lna-naive-noise-input with @eq-lna-noise-factor to calculate the noise figure of the simple resistively matched common-source LNA as
 
 $$
-F = \frac{\overline{v_\mathrm{n,out}^2}}{\overline{v_\mathrm{n,out,s}^2}} = 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} + \frac{\gamma R_\mathrm{s}}{\gm (R_\mathrm{s} \parallel R_\mathrm{p})^2} + \frac{R_\mathrm{s}}{\gm^2 (R_\mathrm{s} \parallel R_\mathrm{p})^2 R_\mathrm{D}}.
+F = \frac{\overline{V_\mathrm{n,out}^2}}{\overline{V_\mathrm{n,out,s}^2}} = 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} + \frac{\gamma R_\mathrm{s}}{\gm (R_\mathrm{s} \parallel R_\mathrm{p})^2} + \frac{R_\mathrm{s}}{\gm^2 (R_\mathrm{s} \parallel R_\mathrm{p})^2 R_\mathrm{D}}.
 $$ {#eq-lna-naive-noise-factor}
 
 ::: {.callout-note}
@@ -121,13 +121,13 @@ We remember from our [analog circuit design lecture](https://iic-jku.github.io/a
 By inspecting @fig-lna-cg and the practice from @sec-lna-resistive-matching, we can directly write down the output noise voltage as (with $1/\gm = R_\mathrm{s}$)
 
 $$
-\overline{v_\mathrm{n,out}^2} = k T \left[ (\gm R_\mathrm{D})^2 R_\mathrm{s} + \gamma \gm R_\mathrm{D}^2 + 4 R_\mathrm{D} \right] = k T \left( \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + \gamma \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + 4 R_\mathrm{D} \right).
+\overline{V_\mathrm{n,out}^2} = k T \left[ (\gm R_\mathrm{D})^2 R_\mathrm{s} + \gamma \gm R_\mathrm{D}^2 + 4 R_\mathrm{D} \right] = k T \left( \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + \gamma \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + 4 R_\mathrm{D} \right).
 $$ {#eq-lna-cg-noise-total} 
 
 The output noise due to the source only is given by
 
 $$
-\overline{v_\mathrm{n,out,s}^2} = \frac{R_\mathrm{D}^2}{R_\mathrm{s}}.
+\overline{V_\mathrm{n,out,s}^2} = \frac{R_\mathrm{D}^2}{R_\mathrm{s}}.
 $$ {#eq-lna-cg-noise-source}
 
 Finally, we can use @eq-lna-cg-noise-total and @eq-lna-cg-noise-source with @eq-lna-noise-factor to calculate the noise figure of the common-gate LNA as
@@ -138,3 +138,50 @@ $$ {#eq-lna-cg-noise-factor}
 
 With a classical long-channel $\gamma = 2/3$, we can achieve a minimum noise figure of 2.2 dB, which is already better than the resistively matched common-source LNA. However, with modern short-channel devices, $\gamma$ is often larger than 1, so that the minimum noise figure of the common-gate LNA is often larger than 3 dB [@Razavi_RFIC].
 
+## Inductively-Degenerated Common-Source LNA {#sec-lna-inductive-degeneration}
+
+As we have seen in @sec-lna-common-gate, using circuit techniques can realize a real part of an input impedance without the associated thermal noise of a resistor. We now try something different, in the hope that it will result in an even lower noise figure. We construct an LNA based on a common-source MOSFET amplifier, but we add an impedance $Z_\mathrm{deg}$ into the source line. This arrangement is shown in @fig-lna-inductive-degeneration.
+
+{{< include /content/lna/_fig_lna_inductive_degeneration.qmd >}}
+
+We now extract the small-signal equivalent circuit of @fig-lna-inductive-degeneration, which is shown in @fig-lna-inductive-degeneration-zin, to calculate the input impedance.
+
+{{< include /content/lna/_fig_lna_inductive_degeneration_zin.qmd >}}
+
+We find that
+
+$$
+v_\mathrm{x} = v_\mathrm{gs} + Z_\mathrm{deg} (i_\mathrm{x} + \gm v_\mathrm{gs}), \quad v_\mathrm{gs} = \frac{i_\mathrm{x}}{s C_\mathrm{gs}}
+$$
+
+so that we can write the input impedance as
+
+$$
+Z_\mathrm{in} = \frac{v_\mathrm{x}}{i_\mathrm{x}} = \frac{1}{s C_\mathrm{gs}} + Z_\mathrm{deg} + \frac{\gm Z_\mathrm{deg}}{s C_\mathrm{gs}}. 
+$$ {#eq-lna-inductive-degeneration-zin}
+
+The final term in @eq-lna-inductive-degeneration-zin is the interesting one: By choosing $Z_\mathrm{deg}$ to be inductive (which we can do by either use an on-chip or off-chip inductor), we can realize a real part of the input impedance. If we choose $Z_\mathrm{deg} = s L$, we find that
+
+$$
+Z_\mathrm{in} = \frac{1}{s C_\mathrm{gs}} + s L + \frac{\gm L}{C_\mathrm{gs}}.
+$$
+
+By proper choice of $L$ and $C_\mathrm{gs}$, we can achieve input matching to 50 Ω at the desired frequency $\omega_0$. We find that the real part of the input impedance is given by
+
+$$
+\Re \{ Z_\mathrm{in} \} = \frac{\gm L}{C_\mathrm{gs}}
+$$
+
+Without proof (refer to [@Razavi_RFIC] or [@Darabi_RFIC] for a derivation) we find for the noise factor of this input stage (with some simplification) as
+
+$$
+F = 1 + \frac{\gamma R_\mathrmP{s} \omega_0^2 C_\mathrm{gs}^2}{\gm}.
+$$ {#eq-lna-inductive-degeneration-noise-factor}
+
+Finally we have an LNA input stage configuration which allows us to achieve a noise figure below 3 dB, even with $\gamma > 1$, by proper choice of $\gm$. Making $\gm$ large (by spending more bias current) results in (first order) arbitrarily low noise figure. The inductively-degenerated common-source LNA is a widely used LNA input stage configuration in modern RFICs. A somewhat detailed schematic is shown in @fig-lna-inductive-degeneration-detailed.
+
+{{< include /content/lna/_fig_lna_inductive_degeneration_detailed.qmd >}}
+
+The inductor $L_\mathrm{match}$ is used to match the input impedance to 50 Ω at the desired frequency, $L_\mathrm{deg}$ is used to realize the real part of the input impedance, $R_\mathrm{bias}$ is used to set the bias current of $M_1$, $M_2$ is a cascode transistor which increases the output impedance and thus the gain of the stage (plus it improves the reverse isolation), and $R_\mathrm{D}$, $L_\mathrm{D}$, and $C_\mathrm{D}$ form a load tank which provides high gain at the desired frequency. A dc block is used at the input so that the bias point of $M_1$ is not corrupted by the input signal source. The bias voltage $V_\mathrm{bias2}$ sets the operating point of the cascode transistor $M_2$.
+
+What is missing in @fig-lna-inductive-degeneration-detailed is any form of frequency tuning of the load to the frequency of interest, and the support of different gain modes. Apart from these details this LNA circuit is a good starting point for a practical LNA design.

@@ -15,9 +15,9 @@ limitations under the License.
 :::
 
 ```{python}
-#| label: fig-lna-naive-noise
+#| label: fig-lna-inductive-degeneration
 #| echo: false
-#| fig-cap: "Equivalent circuit of resistively matched common-source LNA."
+#| fig-cap: "A common-source MOSFET stage with degeneration impedance."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -27,27 +27,33 @@ sd.svgconfig.svg2 = False
 with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=14)
 
-    elm.Ground()
-    src1 = elm.SourceSin().up().label(r'$4 k T (R_\mathrm{s} \parallel R_\mathrm{p})$').color('blue')
-    elm.Line().right().length(d.unit/2)
-    elm.Resistor().right().label(r'$R_\mathrm{s} \parallel R_\mathrm{p}$')
+    #elm.Ground()
+    src1 = elm.SourceSin().up().label(r'$v_\mathrm{in}$')
+    elm.Resistor().right().label(r'$R_\mathrm{s}=50\,\Omega$')
+    elm.Line().right().length(d.unit/4)
+    elm.Dot(open=True).label(r'$v_\mathrm{x}$', loc='top')
     elm.Line().right().length(d.unit/2)
     M1 = elm.AnalogNFet(offset_gate=False).label(r'$M_1$', loc='right').reverse().anchor('gate').drop('source')
-    elm.Line().down().toy(src1.start)
+    Zdeg = elm.ResistorIEC().down().label(r'$Z_\mathrm{deg}$')
     elm.Ground()
 
     # load
-    R1 = elm.Resistor().up().label(r'$R_\mathrm{D}$').at(M1.drain)
-    elm.Line().right().length(d.unit*3/4).dot().at(M1.drain).idot()
+    elm.Line().up().at(M1.drain).length(d.unit/4).dot()
     d.push()
-    elm.Line().right().length(d.unit/2).label(r'$\overline{V_\mathrm{n,out}^2}$', loc='right').dot(open=True)
+    elm.Resistor().up().label(r'$R_\mathrm{D}$')
     d.pop()
     d.push()
-    elm.SourceI().down().label(r'$4 k T \gamma \gm$', loc='bottom').color('blue')
-    elm.Line().down().toy(src1.start)
-    elm.Ground()
+    elm.Line().left().length(d.unit/2)
+    L1 = elm.Inductor().up().label(r'$L$')
     d.pop()
-    N1 = elm.SourceI().up().label(r'$4 k T / R_\mathrm{D}$', loc='bottom').color('blue')
+    elm.Line().right().length(d.unit/2).dot()
+    d.push()
+    elm.Line().right().length(d.unit/2).label(r'$v_\mathrm{out}$', loc='right').dot(open=True)
+    d.pop()
+    C1 = elm.Capacitor().up().label(r'$C$')
+    elm.Line().at((L1.end[0]-d.unit/4, L1.end[1])).to((C1.end[0]+d.unit/4, C1.end[1])).label(r'$V_\mathrm{DD}$').linewidth(3)
 
-    elm.Line().at((R1.end[0]-d.unit/4, R1.end[1])).to((N1.end[0]+d.unit/4, N1.end[1])).label(r'$V_\mathrm{DD}$').linewidth(3)
+    # complete ground of input
+    elm.Line().at(src1.start).down().toy(Zdeg.end)
+    elm.Ground()
 ```
