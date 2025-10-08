@@ -356,17 +356,18 @@ window.Quarto = {
   </ul></li>
   <li><a href="#sec-fundamentals" id="toc-sec-fundamentals" class="nav-link" data-scroll-target="#sec-fundamentals"><span class="header-section-number">2</span> Fundamentals</a>
   <ul class="collapse">
-  <li><a href="#sec-linearity" id="toc-sec-linearity" class="nav-link" data-scroll-target="#sec-linearity"><span class="header-section-number">2.1</span> Linearity</a>
+  <li><a href="#sec-channel-capacity" id="toc-sec-channel-capacity" class="nav-link" data-scroll-target="#sec-channel-capacity"><span class="header-section-number">2.1</span> Channel Capacity</a></li>
+  <li><a href="#sec-linearity" id="toc-sec-linearity" class="nav-link" data-scroll-target="#sec-linearity"><span class="header-section-number">2.2</span> Linearity</a>
   <ul class="collapse">
-  <li><a href="#sec-linearity-single" id="toc-sec-linearity-single" class="nav-link" data-scroll-target="#sec-linearity-single"><span class="header-section-number">2.1.1</span> Single-Tone Linearity</a></li>
-  <li><a href="#multi-tone-linearity" id="toc-multi-tone-linearity" class="nav-link" data-scroll-target="#multi-tone-linearity"><span class="header-section-number">2.1.2</span> Multi-Tone Linearity</a></li>
+  <li><a href="#sec-linearity-single" id="toc-sec-linearity-single" class="nav-link" data-scroll-target="#sec-linearity-single"><span class="header-section-number">2.2.1</span> Single-Tone Linearity</a></li>
+  <li><a href="#multi-tone-linearity" id="toc-multi-tone-linearity" class="nav-link" data-scroll-target="#multi-tone-linearity"><span class="header-section-number">2.2.2</span> Multi-Tone Linearity</a></li>
   </ul></li>
-  <li><a href="#sec-noise" id="toc-sec-noise" class="nav-link" data-scroll-target="#sec-noise"><span class="header-section-number">2.2</span> Noise</a>
+  <li><a href="#sec-noise" id="toc-sec-noise" class="nav-link" data-scroll-target="#sec-noise"><span class="header-section-number">2.3</span> Noise</a>
   <ul class="collapse">
-  <li><a href="#types-of-noise-generation" id="toc-types-of-noise-generation" class="nav-link" data-scroll-target="#types-of-noise-generation"><span class="header-section-number">2.2.1</span> Types of Noise Generation</a></li>
-  <li><a href="#noise-in-impedance-matched-systems" id="toc-noise-in-impedance-matched-systems" class="nav-link" data-scroll-target="#noise-in-impedance-matched-systems"><span class="header-section-number">2.2.2</span> Noise in Impedance-Matched Systems</a></li>
-  <li><a href="#sec-noise-figure" id="toc-sec-noise-figure" class="nav-link" data-scroll-target="#sec-noise-figure"><span class="header-section-number">2.2.3</span> Noise Figure</a></li>
-  <li><a href="#sec-sensitivity" id="toc-sec-sensitivity" class="nav-link" data-scroll-target="#sec-sensitivity"><span class="header-section-number">2.2.4</span> Sensitivity</a></li>
+  <li><a href="#types-of-noise-generation" id="toc-types-of-noise-generation" class="nav-link" data-scroll-target="#types-of-noise-generation"><span class="header-section-number">2.3.1</span> Types of Noise Generation</a></li>
+  <li><a href="#noise-in-impedance-matched-systems" id="toc-noise-in-impedance-matched-systems" class="nav-link" data-scroll-target="#noise-in-impedance-matched-systems"><span class="header-section-number">2.3.2</span> Noise in Impedance-Matched Systems</a></li>
+  <li><a href="#sec-noise-figure" id="toc-sec-noise-figure" class="nav-link" data-scroll-target="#sec-noise-figure"><span class="header-section-number">2.3.3</span> Noise Figure</a></li>
+  <li><a href="#sec-sensitivity" id="toc-sec-sensitivity" class="nav-link" data-scroll-target="#sec-sensitivity"><span class="header-section-number">2.3.4</span> Sensitivity</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#sec-trx" id="toc-sec-trx" class="nav-link" data-scroll-target="#sec-trx"><span class="header-section-number">3</span> Transceivers</a>
@@ -781,8 +782,37 @@ Table&nbsp;2: Comparison of wireless communication standards
 <section id="sec-fundamentals" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Fundamentals</h1>
 <p>In this section, we will discuss a few important concepts which will be instrumental in the further study of RF circuits and systems. As signals in RF circuits and systems are often limited on the top end by linearity, and on the bottom end by noise, we will discuss these two topics in some detail.</p>
-<section id="sec-linearity" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="sec-linearity"><span class="header-section-number">2.1</span> Linearity</h2>
+<section id="sec-channel-capacity" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sec-channel-capacity"><span class="header-section-number">2.1</span> Channel Capacity</h2>
+<p>In <a href="#sec-intro" class="quarto-xref">Section&nbsp;1</a> we have already discussed the fact that we need to pack information into a minimum bandwidth, as the available spectrum is limited. To appreciate the limits of information transfer, we need to understand how much information can be transmitted over a given bandwidth. This limit is given by the <em>Shannon-Hartley theorem</em>, which gives the maximum data rate <span class="math inline">\(C\)</span> (in bit/s) that can be transmitted over a communication channel with bandwidth <span class="math inline">\(B\)</span> (in Hz) and signal-to-noise ratio <span class="math inline">\(\text{SNR}\)</span> (with linear units):</p>
+<p><span id="eq-shannon-hartley"><span class="math display">\[
+C = B \cdot \log_2(1 + \text{SNR})
+\tag{4}\]</span></span></p>
+<p>This formula gives us a theoretical upper limit on the data rate that can be achieved with a given bandwidth and SNR <em>under optimal conditions</em>. It is important to note that this limit is only achievable with ideal coding and modulation schemes, which are not practical in real-world systems. However, it provides a useful benchmark for evaluating the performance of communication systems.</p>
+<div id="nte-channel-limit" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note&nbsp;3: Channel Capacity Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let us calculate the channel capacity for a system with a bandwidth of 2 MHz and an SNR of 7 dB (the BW and minimum SNR of Bluetooth LE for 1 Mbps). First, we need to convert the SNR from dB to linear units:</p>
+<p><span class="math display">\[
+\text{SNR} = 10^{{7}/{10}} \approx 5
+\]</span></p>
+<p>Now we can use <a href="#eq-shannon-hartley" class="quarto-xref">Equation&nbsp;4</a> to calculate the channel capacity:</p>
+<p><span class="math display">\[
+C = B \cdot \log_2(1 + \text{SNR}) = 2\,\text{MHz} \cdot \log_2(1 + 5) = 2\,\text{MHz} \cdot 2.585 \approx 5.2\,\text{Mbps}
+\]</span></p>
+<p>This sounds reasonable, as the user data rate for Bluetooth LE is 1 Mbps for the given SNR, which allows for quite some overhead for coding and protocols.</p>
+</div>
+</div>
+</section>
+<section id="sec-linearity" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-linearity"><span class="header-section-number">2.2</span> Linearity</h2>
 <p>As we have already seen in <a href="#sec-intro-wireless" class="quarto-xref">Section&nbsp;1.1</a> the transmitter has to process large signals without distorting them, while the receiver has to process small signals in the presence of large signals. Both situations mean we need metrics and models to quantify and discuss linearity properties.</p>
 <p>We are going to use a very simple, time-invariant model to study linearity, based on a Taylor polynomial.</p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -795,22 +825,23 @@ Table&nbsp;2: Comparison of wireless communication standards
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>We use time invariance to simplify the mathematics. In practice, many circuits and systems will show time variant behavior which leads to quite a few very interesting and important phenomena!</p>
+<p>We use time invariance to simplify the mathematics. In practice, many circuits and systems will show time variant behavior which leads to quite a few very interesting and important phenomena! A time-invariant nonlinear system is also called a “memoryless” system, as the output at time <span class="math inline">\(t\)</span> only depends on the input at time <span class="math inline">\(t\)</span>.</p>
+<p>In contrast, a system with memory (i.e., time-variant) will have an output at time <span class="math inline">\(t\)</span> which depends on the input at time <span class="math inline">\(t\)</span> and also on past inputs (e.g., at times <span class="math inline">\(t - \Delta T\)</span>, <span class="math inline">\(t - 2 \Delta T\)</span>, etc.). Examples of systems with memory are filters, which have a frequency-dependent response, or power amplifiers with thermal memory effects.</p>
 </div>
 </div>
 <p>We model a nonlinear circuit block with the following Taylor polynomial:</p>
 <p><span id="eq-nonlinear-model"><span class="math display">\[
 y(t) = \alpha_0 + \alpha_1 x(t) + \alpha_2 x(t)^2 + \alpha_3 x(t)^3 + \ldots
-\tag{4}\]</span></span></p>
+\tag{5}\]</span></span></p>
 <p>Usually, the blocks under study will have higher order nonlinear terms but we often stop at 3rd order to keep things simple. For practical work, higher order terms should be included if necessary.</p>
-<p>Which <span class="math inline">\(x(t)\)</span> should we use to study wireless systems? Often, the bandwidth <span class="math inline">\(f_\mathrm{BW}\)</span> of a transmit signal is much smaller than the center frequency <span class="math inline">\(f_0\)</span>, i.e., <span class="math inline">\(f_\mathrm{BW} \ll f_0\)</span>. In this case using a sinusoidal signal as a mode is both simple to handle and approximately correct.</p>
-<section id="sec-linearity-single" class="level3" data-number="2.1.1">
-<h3 data-number="2.1.1" class="anchored" data-anchor-id="sec-linearity-single"><span class="header-section-number">2.1.1</span> Single-Tone Linearity</h3>
+<p>Which <span class="math inline">\(x(t)\)</span> should we use to study wireless systems? Often, the bandwidth <span class="math inline">\(f_\mathrm{BW}\)</span> of a transmit signal is much smaller than the center frequency <span class="math inline">\(f_0\)</span>, i.e., <span class="math inline">\(f_\mathrm{BW} \ll f_0\)</span>. In this case using a sinusoidal signal as a model is both simple to handle and approximately correct.</p>
+<section id="sec-linearity-single" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="sec-linearity-single"><span class="header-section-number">2.2.1</span> Single-Tone Linearity</h3>
 <p>We thus set (with <span class="math inline">\(A\)</span> being the amplitude of the input signal and <span class="math inline">\(\omega = 2 \pi f\)</span> the angular frequency)</p>
 <p><span class="math display">\[
 x(t) = A \cos(\omega t)
 \]</span></p>
-<p>and insert it into <a href="#eq-nonlinear-model" class="quarto-xref">Equation&nbsp;4</a>. After some simple trigonometric manipulations we are at</p>
+<p>and insert it into <a href="#eq-nonlinear-model" class="quarto-xref">Equation&nbsp;5</a>. After some simple trigonometric manipulations we are at</p>
 <p><span id="eq-linearity-single"><span class="math display">\[
 \begin{split}
 y(t) &amp;=
@@ -822,8 +853,8 @@ y(t) &amp;=
 +
 \underbrace{ \frac{1}{4} \alpha_3 A^3 \cos(3 \omega t) }_\text{3rd harmonic}
 \end{split}
-\tag{5}\]</span></span></p>
-<p>Looking at <a href="#eq-linearity-single" class="quarto-xref">Equation&nbsp;5</a> we can make a few interesting observations:</p>
+\tag{6}\]</span></span></p>
+<p>Looking at <a href="#eq-linearity-single" class="quarto-xref">Equation&nbsp;6</a> we can make a few interesting observations:</p>
 <ul>
 <li>Even-order nonlinearity (<span class="math inline">\(\alpha_2\)</span>) creates low-frequency components; it effectively adds frequency components related to the envelope <span class="math inline">\(A\)</span>. If <span class="math inline">\(A\)</span> is a constant then this results in a dc term; if <span class="math inline">\(A(t)\)</span> is time variant it will created a squared version of it at low frequencies.</li>
 <li>The <span class="math inline">\(\alpha_1\)</span> term is the gain of the circuit block.</li>
@@ -879,16 +910,16 @@ Figure&nbsp;4: 1dB compression point test showing input vs output power relation
 </div>
 </div>
 </section>
-<section id="multi-tone-linearity" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="multi-tone-linearity"><span class="header-section-number">2.1.2</span> Multi-Tone Linearity</h3>
+<section id="multi-tone-linearity" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="multi-tone-linearity"><span class="header-section-number">2.2.2</span> Multi-Tone Linearity</h3>
 <p>We now elevate our investigations and apply two sinusoids with different frequencies and different amplitudes and see which signals we get at the output of the nonlinear block. The two-tone test and resulting third-order intermodulation products (IM3) are illustrated in <a href="#fig-im3-tones" class="quarto-xref">Figure&nbsp;5</a>.</p>
 <p><span class="math display">\[
 x(t) = A_1 \cos(\omega_1 t) + A_2 \cos(\omega_2 t)
 \]</span></p>
-<p>We apply the above stimulus to our nonlinear model described by <a href="#eq-nonlinear-model" class="quarto-xref">Equation&nbsp;4</a> and again, after some trigonometric manipulations, arrive at:</p>
+<p>We apply the above stimulus to our nonlinear model described by <a href="#eq-nonlinear-model" class="quarto-xref">Equation&nbsp;5</a> and again, after some trigonometric manipulations, arrive at:</p>
 <p><span id="eq-linearity-double"><span class="math display">\[
 y(t) = y'(t) + y''(t) + y'''(t)
-\tag{6}\]</span></span></p>
+\tag{7}\]</span></span></p>
 <p>As many different frequency components are created by this simple two-tone test (and nonlinearity only up to 3rd order) we split the result into different equations and look at the result separately.</p>
 <p>First, we start with the fundamental tones:</p>
 <p><span id="eq-linearity-double-a"><span class="math display">\[
@@ -896,10 +927,10 @@ y(t) = y'(t) + y''(t) + y'''(t)
     y'(t) &amp;= \left( \underbrace{\alpha_1 A_1 + \frac{3}{4} \alpha_3 A_1^3}_\text{compression/expansion} + \underbrace{\frac{3}{2} \alpha_3 A_1 A_2^2}_\text{cross-modulation/desens} \right) \cos(\omega_1 t) \\
     &amp;+ \left( \underbrace{\alpha_1 A_2 + \frac{3}{4} \alpha_3 A_2^3}_\text{compression/expansion} + \underbrace{\frac{3}{2} \alpha_3 A_2 A_1^2}_\text{cross-modulation/desens} \right) \cos(\omega_2 t)
 \end{split}
-\tag{7}\]</span></span></p>
-<p>As shown in <a href="#eq-linearity-double-a" class="quarto-xref">Equation&nbsp;7</a>, interesting things happen:</p>
+\tag{8}\]</span></span></p>
+<p>As shown in <a href="#eq-linearity-double-a" class="quarto-xref">Equation&nbsp;8</a>, interesting things happen:</p>
 <ul>
-<li>We (again) have the gain compression/expansion effect as already discussed in <a href="#sec-linearity-single" class="quarto-xref">Section&nbsp;2.1.1</a>.</li>
+<li>We (again) have the gain compression/expansion effect as already discussed in <a href="#sec-linearity-single" class="quarto-xref">Section&nbsp;2.2.1</a>.</li>
 <li>In addition, we have <strong>cross-modulation</strong>, i.e., the envelope of one tone (e.g., <span class="math inline">\(A_2(t)\)</span> of the tone at <span class="math inline">\(\omega_2\)</span>) impacts the envelope of the other tone at <span class="math inline">\(\omega_1\)</span>. This can lead to unwanted signal distortation, even if there is a large frequency separation between <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>!</li>
 <li>Further, since the sign of <span class="math inline">\(\alpha_3\)</span> is usually opposite to <span class="math inline">\(\alpha_1\)</span>, this can also lead to <strong>desensitization</strong> (“desens”). If, for example, <span class="math inline">\(A_2 \gg A_1\)</span>, then there would be no compression due to the tone <span class="math inline">\(\omega_1\)</span> itself, however, the large tone at <span class="math inline">\(\omega_2\)</span> will lead to gain compression of the tone at <span class="math inline">\(\omega_1\)</span>; this effect is called desense.</li>
 </ul>
@@ -910,8 +941,8 @@ y(t) = y'(t) + y''(t) + y'''(t)
     &amp;+ \alpha_2 A_1 A_2 \cos[ (\omega_1 - \omega_2) t] \\
     &amp;+ \alpha_2 A_1 A_2 \cos[ (\omega_1 + \omega_2) t]
 \end{split}
-\tag{8}\]</span></span></p>
-<p>As we can see in <a href="#eq-linearity-double-b" class="quarto-xref">Equation&nbsp;8</a> new tones are created (besides the low frequency components we already know from the single-tone test) at the sum and difference of <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>. These new frequency components are called “<strong>intermodulation products of second order</strong>” (IM2). These tones are created by the even-order nonlinearity (<span class="math inline">\(\alpha_2\)</span>). These IM2 products are far away from the wanted tones, so are often not very problematic in amplifiers (but there can be exceptions!). However, they can be very problematic in frequency conversion blocks like mixers. We will come back to this point when discussing zero-IF receivers.</p>
+\tag{9}\]</span></span></p>
+<p>As we can see in <a href="#eq-linearity-double-b" class="quarto-xref">Equation&nbsp;9</a> new tones are created (besides the low frequency components we already know from the single-tone test) at the sum and difference of <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>. These new frequency components are called “<strong>intermodulation products of second order</strong>” (IM2). These tones are created by the even-order nonlinearity (<span class="math inline">\(\alpha_2\)</span>). These IM2 products are far away from the wanted tones, so are often not very problematic in amplifiers (but there can be exceptions!). However, they can be very problematic in frequency conversion blocks like mixers. We will come back to this point when discussing zero-IF receivers.</p>
 <p>We now investigate the next couple of tones:</p>
 <p><span id="eq-linearity-double-c"><span class="math display">\[
 \begin{split}
@@ -920,8 +951,8 @@ y(t) = y'(t) + y''(t) + y'''(t)
     &amp;+ \frac{3}{4} \alpha_3 A_1 A_2^2 \cos[(2 \omega_2 + \omega_1) t] \\
     &amp;+ \frac{3}{4} \alpha_3 A_1 A_2^2 \cos[(2 \omega_2 - \omega_1) t]
 \end{split}
-\tag{9}\]</span></span></p>
-<p>The tones shown in <a href="#eq-linearity-double-c" class="quarto-xref">Equation&nbsp;9</a> are called “i<strong>ntermodulation products of third order</strong>” (IM3), and are caused by the odd nonlinearities (like <span class="math inline">\(\alpha_3\)</span>). While the IM3 tones located at <span class="math inline">\(2 \omega_1 + \omega_2\)</span> and <span class="math inline">\(\omega_1 + 2 \omega_2\)</span> are similar to the sum IM2 tone and far away from <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>, the other two tones are concerning.</p>
+\tag{10}\]</span></span></p>
+<p>The tones shown in <a href="#eq-linearity-double-c" class="quarto-xref">Equation&nbsp;10</a> are called “i<strong>ntermodulation products of third order</strong>” (IM3), and are caused by the odd nonlinearities (like <span class="math inline">\(\alpha_3\)</span>). While the IM3 tones located at <span class="math inline">\(2 \omega_1 + \omega_2\)</span> and <span class="math inline">\(\omega_1 + 2 \omega_2\)</span> are similar to the sum IM2 tone and far away from <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>, the other two tones are concerning.</p>
 <p>Expressing <span class="math inline">\(\Delta \omega = \omega_2 - \omega_1\)</span> (and assuming <span class="math inline">\(\omega_1 &lt; \omega_2\)</span>), the building law of <span class="math inline">\(2 \omega_1 - \omega_2 = \omega_1 - \Delta \omega\)</span> and <span class="math inline">\(2 \omega_2 - \omega_1 = \omega_2 + \Delta \omega\)</span> results in new tones right besides <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>, with a frequency separation only defined by <span class="math inline">\(\Delta \omega\)</span>. This situation is illustrated in <a href="#fig-im3-tones" class="quarto-xref">Figure&nbsp;5</a>.</p>
 <div id="cell-fig-im3-tones" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
@@ -957,19 +988,19 @@ Figure&nbsp;6: Two-tone IM3 test showing fundamental and IM3 product power vs.&n
 <p>When calculating the IIP3 (input-referred IP3) we can use the following formula, assuming equal input power per tone. It is important to always check the slope of the IM3 products to ensure that we are indeed in the third-order region! If the input power per tone is <span class="math inline">\(P_\mathrm{in}\)</span> (in dBm) and the input-referred power of one IM3 tone is <span class="math inline">\(P_\mathrm{IM3}\)</span> (in dBm), then the input-referred IP3 is given by</p>
 <p><span id="eq-iip3"><span class="math display">\[
 \text{IIP3} = P_\mathrm{in} + \frac{P_\mathrm{in} - P_\mathrm{IM3}}{2}
-\tag{10}\]</span></span></p>
+\tag{11}\]</span></span></p>
 <p>Further, for midly nonlinear systems (i.e., <span class="math inline">\(\alpha_3\)</span> is dominating), the IIP3 can be approximated from the 1dB compression point as</p>
 <p><span id="eq-iip3-approx"><span class="math display">\[
 \text{IIP3}|_\mathrm{dBm} \approx P_\mathrm{1dB}|_\mathrm{dBm} + 9.6\,\text{dB}.
-\tag{11}\]</span></span></p>
+\tag{12}\]</span></span></p>
 <p>If we have two blocks which are cascaded, and we know the gain and IIP3 of both blocks, we can calculate the overall IIP3 of the cascade with the following approximation. An exact calculation is very involved, as the nonlinearities of the first block (and the resulting tones) will be processed by the second block, creating even more tones; this process escalates very quickly. However, for practical purposes, the following approximation is often sufficient:</p>
 <p><span id="eq-iip3-cascade"><span class="math display">\[
 \frac{1}{\text{IIP3}_\text{total}} \approx \frac{1}{\text{IIP3}_1} + \frac{G_1}{\text{IIP3}_2} + \frac{G_1 G_2}{\text{IIP3}_3}
-\tag{12}\]</span></span></p>
-<p>Here <span class="math inline">\(G_1\)</span> is the linear gain of the first block, and <span class="math inline">\(\text{IIP3}_1\)</span>, <span class="math inline">\(\text{IIP3}_2\)</span> are the input-referred IP3 of the first and second block, respectively. Note that all powers have to be in linear units (i.e., Watts) when using <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;12</a>. An even more simplified version of <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;12</a> can be used with all quantities given in dBm and dB, respectively:</p>
+\tag{13}\]</span></span></p>
+<p>Here <span class="math inline">\(G_1\)</span> is the linear gain of the first block, and <span class="math inline">\(\text{IIP3}_1\)</span>, <span class="math inline">\(\text{IIP3}_2\)</span> are the input-referred IP3 of the first and second block, respectively. Note that all powers have to be in linear units (i.e., Watts) when using <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;13</a>. An even more simplified version of <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;13</a> can be used with all quantities given in dBm and dB, respectively:</p>
 <p><span id="eq-iip3-cascade-simple"><span class="math display">\[
 \text{IIP3}_\text{total} \approx \min \{  \text{IIP3}_1, \text{IIP3}_2 - G_1, \text{IIP3}_3 - G_1 - G_2 \}
-\tag{13}\]</span></span></p>
+\tag{14}\]</span></span></p>
 <p>A typical RF system cascade with multiple blocks and their individual IIP3 contributions is shown in <a href="#fig-iip3-cascade" class="quarto-xref">Figure&nbsp;7</a>.</p>
 <div id="cell-fig-iip3-cascade" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
@@ -991,12 +1022,12 @@ Figure&nbsp;7: Block cascade for IIP3 calculation showing multiple stages with g
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note&nbsp;3: Simple IIP3 Cascade Calculation
+Note&nbsp;4: Simple IIP3 Cascade Calculation
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Let’s calculate the overall IIP3 of two cascaded blocks. The first block is a low-noise amplifier with an IIP3 of -10 dBm and a gain of 20 dB. The second block is a mixer that has a gain of 10 dB and an IIP3 of 5 dBm. What is the overall IIP3?</p>
-<p>Using <a href="#eq-iip3-cascade-simple" class="quarto-xref">Equation&nbsp;13</a> we can quickly estimate:</p>
+<p>Using <a href="#eq-iip3-cascade-simple" class="quarto-xref">Equation&nbsp;14</a> we can quickly estimate:</p>
 <p><span class="math display">\[
 \text{IIP3}_\text{total} \approx \min \{ -10\,\text{dBm}, 5\,\text{dBm} - 20\,\text{dB} = -15\,\text{dBm} \} = -15\,\text{dBm}
 \]</span></p>
@@ -1005,16 +1036,16 @@ Note&nbsp;3: Simple IIP3 Cascade Calculation
 </div>
 </section>
 </section>
-<section id="sec-noise" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="sec-noise"><span class="header-section-number">2.2</span> Noise</h2>
+<section id="sec-noise" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="sec-noise"><span class="header-section-number">2.3</span> Noise</h2>
 <p>Just as nonlinearity is a limiting factor for large signals, noise is the limiting factor for small signals. Noise is present in all electronic circuits and systems, and it is impossible to avoid it. However, we can try to minimize its impact on the system performance.</p>
 <p>Noise is usually characterized by its power spectral density (PSD) in units of Watts per Hertz (W/Hz). For example, thermal noise at room temperature has a PSD of approximately <span class="math inline">\(k T = 4 \times 10^{-21}\)</span> W/Hz, or –174 dBm/Hz (with the Boltzmann constant <span class="math inline">\(k = 1.38 \times 10^{-23}\,\text{J/K}\)</span>). This means that if we have a bandwidth of 1 MHz, the total thermal noise power would be:</p>
 <p><span class="math display">\[
 P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \left( \frac{1\,\text{MHz}}{1\,\text{Hz}} \right) = -114\,\text{dBm}
 \]</span></p>
 <p>The PSD of noise can be flat vs.&nbsp;frequency (which is called “white noise”), or can decrease with frequency (e.g., “flicker noise” or “1/f noise”). Further, noise can be generated by resistors (thermal noise), semiconductors (shot noise, generation-recombination noise), etc. A detailed discussion of noise sources can be found in <span class="citation" data-cites="Gray_Meyer_5th_ed">(<a href="#ref-Gray_Meyer_5th_ed" role="doc-biblioref">Gray et al. 2009</a>)</span> or <span class="citation" data-cites="Razavi_Analog_CMOS">(<a href="#ref-Razavi_Analog_CMOS" role="doc-biblioref">Razavi 2017</a>)</span>.</p>
-<section id="types-of-noise-generation" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="types-of-noise-generation"><span class="header-section-number">2.2.1</span> Types of Noise Generation</h3>
+<section id="types-of-noise-generation" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="types-of-noise-generation"><span class="header-section-number">2.3.1</span> Types of Noise Generation</h3>
 <p><strong>Resistors</strong> generate thermal noise, which is white noise with a PSD of <span class="math inline">\(4 k T R\)</span> (in V<span class="math inline">\(^2\)</span>/Hz) when looking at the voltage across the resistor, or <span class="math inline">\(4 k T / R\)</span> (in A<span class="math inline">\(^2\)</span>/Hz) when looking at the current through the resistor. This noise is generated by the random thermal motion of charge carriers in the resistor.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1055,8 +1086,8 @@ P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \le
 <p>Ideal <strong>capacitors</strong> and <strong>inductors</strong> do not generate noise, however, real capacitors and inductors have parasitic resistances which generate thermal noise.</p>
 <p>In RF systems additional noise sources can be present. One noteworthy example is the <a href="https://en.wikipedia.org/wiki/Cosmic_microwave_background"><strong>cosmic microwave background</strong></a> radiation, which can be modeled as a noise temperature of approximately 3 K. While this is negligible compared to thermal noise at room temperature (approximately 290 K), it can be significant in very low-noise systems, such as radio telescopes pointing to the sky. An other important noise source in RF systems is the <strong>atmospheric noise</strong>, which is generated by natural phenomena like lightning or in the ionosphere.</p>
 </section>
-<section id="noise-in-impedance-matched-systems" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="noise-in-impedance-matched-systems"><span class="header-section-number">2.2.2</span> Noise in Impedance-Matched Systems</h3>
+<section id="noise-in-impedance-matched-systems" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="noise-in-impedance-matched-systems"><span class="header-section-number">2.3.2</span> Noise in Impedance-Matched Systems</h3>
 <p>We now want to calculate the maximum noise power that can be extracted from a noisy source. We assume the following situation as shown in <a href="#fig-noise-matched-system" class="quarto-xref">Figure&nbsp;8</a>. Note that the voltage source <span class="math inline">\(\overline{V_\mathrm{n,s}^2}\)</span> models the thermal noise of the source resistor <span class="math inline">\(R_\mathrm{s}\)</span> resulting in a Thevenin equivalent circuit.</p>
 <div id="cell-fig-noise-matched-system" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
@@ -1075,20 +1106,20 @@ Figure&nbsp;8: A noise-matched system with source and load impedances.
 <p>We know that the noise of the source resistor is given by <span class="math inline">\(\overline{V_\mathrm{n,s}^2} = 4 k T R_\mathrm{s}\)</span>. We assume the load resistor <span class="math inline">\(R_\mathrm{load}\)</span> as noiseless and matched to the source resistor, i.e., <span class="math inline">\(R_\mathrm{load} = R_\mathrm{s}\)</span> for <a href="https://en.wikipedia.org/wiki/Maximum_power_transfer_theorem">maximum power transfer</a>. The noise power spectral density delivered to the load resistor is then given by</p>
 <p><span id="eq-noise-power-matched"><span class="math display">\[
 P_\mathrm{n,load} = \frac{\overline{V_\mathrm{n,load}^2}}{R_\mathrm{load}} = \frac{\overline{V_\mathrm{n,d}^2}}{4 R_\mathrm{s}} = k T
-\tag{14}\]</span></span></p>
-<p>The calculation of <a href="#eq-noise-power-matched" class="quarto-xref">Equation&nbsp;14</a> confirms the initial statement that the maximum noise power spectral density that can be extracted from a noisy source is <span class="math inline">\(k T\)</span> (in W/Hz). This result is independent of the actual value of the source resistance <span class="math inline">\(R_\mathrm{s}\)</span>.</p>
+\tag{15}\]</span></span></p>
+<p>The calculation of <a href="#eq-noise-power-matched" class="quarto-xref">Equation&nbsp;15</a> confirms the initial statement that the maximum noise power spectral density that can be extracted from a noisy source is <span class="math inline">\(k T\)</span> (in W/Hz). This result is independent of the actual value of the source resistance <span class="math inline">\(R_\mathrm{s}\)</span>.</p>
 <p>We can further generalize the thermal noise of any impedance as</p>
 <p><span id="eq-thermal-noise-impedance"><span class="math display">\[
 \overline{V_\mathrm{n}^2} = 4 k T \Re \{ Z \}
-\tag{15}\]</span></span></p>
+\tag{16}\]</span></span></p>
 <p>as for example in the complex impedance <span class="math inline">\(Z_\mathrm{ant}\)</span> of an antenna.</p>
 </section>
-<section id="sec-noise-figure" class="level3" data-number="2.2.3">
-<h3 data-number="2.2.3" class="anchored" data-anchor-id="sec-noise-figure"><span class="header-section-number">2.2.3</span> Noise Figure</h3>
+<section id="sec-noise-figure" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="sec-noise-figure"><span class="header-section-number">2.3.3</span> Noise Figure</h3>
 <p>In RF systems, we often want to quantify the noise performance of a circuit block or a complete system. The most widely used metric is the <strong>noise factor (F)</strong>, which is defined as the ratio of the signal-to-noise ratio (SNR) at the input to the SNR at the output of a circuit block or system. If we express the noise factor in dB, we call it the <strong>noise figure (NF)</strong> <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span>. The noise factor is given by</p>
 <p><span id="eq-noise-figure"><span class="math display">\[
 F = \frac{\text{SNR}_\mathrm{in}}{\text{SNR}_\mathrm{out}} = \frac{(P_\mathrm{s}/P_\mathrm{n})_\mathrm{in}}{(P_\mathrm{s}/P_\mathrm{n})_\mathrm{out}}
-\tag{16}\]</span></span></p>
+\tag{17}\]</span></span></p>
 <p>where <span class="math inline">\(P_\mathrm{s}\)</span> is the signal power and <span class="math inline">\(P_\mathrm{n}\)</span> is the noise power. The noise factor is always larger than or equal to 1 (or 0 dB), as no circuit can improve the SNR!</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1147,29 +1178,29 @@ Figure&nbsp;10: Block cascade for noise factor calculation showing multiple stag
 <p>If we have a cascade of multiple blocks, as shown in <a href="#fig-noise-cascade" class="quarto-xref">Figure&nbsp;10</a>, we can calculate the overall noise factor with the <strong>Friis formula</strong> <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span></p>
 <p><span id="eq-friis"><span class="math display">\[
 F_\mathrm{total} = 1 + (F_1 - 1) + \frac{F_2 - 1}{G_1} + \frac{F_3 - 1}{G_1 G_2}
-\tag{17}\]</span></span></p>
-<p>where <span class="math inline">\(F_i\)</span> and <span class="math inline">\(G_i\)</span> are the noise factor and power gain of the <span class="math inline">\(i\)</span>-th block, respectively. Note that all gains have to be in linear units (not dB) when using <a href="#eq-friis" class="quarto-xref">Equation&nbsp;17</a>. We can interpret <a href="#eq-friis" class="quarto-xref">Equation&nbsp;17</a> as follows:</p>
+\tag{18}\]</span></span></p>
+<p>where <span class="math inline">\(F_i\)</span> and <span class="math inline">\(G_i\)</span> are the noise factor and power gain of the <span class="math inline">\(i\)</span>-th block, respectively. Note that all gains have to be in linear units (not dB) when using <a href="#eq-friis" class="quarto-xref">Equation&nbsp;18</a>. We can interpret <a href="#eq-friis" class="quarto-xref">Equation&nbsp;18</a> as follows:</p>
 <ul>
 <li>The overall noise factor <span class="math inline">\(F_\mathrm{total}\)</span> is always larger than or equal to the noise factor of the first block (<span class="math inline">\(F_1\)</span>).</li>
 <li>The noise factor of the first block is the most important one, as the noise factors of the following blocks are reduced by the gain of all preceding blocks. This is especially important in RF receivers, where the first block is usually a low-noise amplifier (LNA) with a very low noise figure (e.g., 1 dB or less) and a high gain (e.g., 10 dB or more). This ensures that the noise of the following blocks is negligible.</li>
 <li>The noise factor of the last block is reduced by the gain of all preceding blocks, so it is usually not very important.</li>
 </ul>
-<p>Here we also see a trade-off between noise and linearity, as shown by <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;12</a> and <a href="#eq-friis" class="quarto-xref">Equation&nbsp;17</a>. For low noise, we should try to maximize <span class="math inline">\(G_1\)</span>, however, this will affect linearity (IIP3) in a negative way. As in many other situation in RF design, we have to find a good compromise between conflicting requirements.</p>
+<p>Here we also see a trade-off between noise and linearity, as shown by <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;13</a> and <a href="#eq-friis" class="quarto-xref">Equation&nbsp;18</a>. For low noise, we should try to maximize <span class="math inline">\(G_1\)</span>, however, this will affect linearity (IIP3) in a negative way. As in many other situation in RF design, we have to find a good compromise between conflicting requirements.</p>
 </section>
-<section id="sec-sensitivity" class="level3" data-number="2.2.4">
-<h3 data-number="2.2.4" class="anchored" data-anchor-id="sec-sensitivity"><span class="header-section-number">2.2.4</span> Sensitivity</h3>
+<section id="sec-sensitivity" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="sec-sensitivity"><span class="header-section-number">2.3.4</span> Sensitivity</h3>
 <p>In RF receivers, we often want to know the minimum input signal power that can be detected with a certain SNR. This minimum input signal power is called the <strong>sensitivity</strong> of the receiver. The sensitivity can be calculated as</p>
 <p><span id="eq-sensitivity"><span class="math display">\[
 P_\mathrm{in, min} = P_\mathrm{n} \cdot \text{SNR}_\mathrm{min} \cdot F
-\tag{18}\]</span></span></p>
+\tag{19}\]</span></span></p>
 <p>where <span class="math inline">\(P_\mathrm{n}\)</span> is the noise power at the input, <span class="math inline">\(\text{SNR}_\mathrm{min}\)</span> is the minimum detectable SNR, and <span class="math inline">\(F\)</span> is the noise factor of the receiver. The input noise power can be calculated as</p>
 <p><span class="math display">\[
 P_\mathrm{n} = k T B
 \]</span></p>
-<p>where <span class="math inline">\(k\)</span> is the Boltzmann constant, <span class="math inline">\(T\)</span> is the temperature in Kelvin, and <span class="math inline">\(B\)</span> is the bandwidth of the receiver. Expressing <a href="#eq-sensitivity" class="quarto-xref">Equation&nbsp;18</a> in dBm we get the following formula:</p>
+<p>where <span class="math inline">\(k\)</span> is the Boltzmann constant, <span class="math inline">\(T\)</span> is the temperature in Kelvin, and <span class="math inline">\(B\)</span> is the bandwidth of the receiver. Expressing <a href="#eq-sensitivity" class="quarto-xref">Equation&nbsp;19</a> in dBm we get the following formula:</p>
 <p><span id="eq-sensitivity-dbm"><span class="math display">\[
 P_\mathrm{in, min}|_\mathrm{dBm} = -174\,\text{dBm/Hz} + \text{NF} + 10 \log_{10}(B/\text{Hz}) + \text{SNR}_\mathrm{min}|_\mathrm{dB}
-\tag{19}\]</span></span></p>
+\tag{20}\]</span></span></p>
 <p>where -174 dBm/Hz is the thermal noise PSD at room temperature (290 K). We can see that the sensitivity improves with lower noise figure, smaller bandwidth, and lower minimum detectable SNR.</p>
 <div id="nte-wifi-sensitivity" class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1177,12 +1208,12 @@ P_\mathrm{in, min}|_\mathrm{dBm} = -174\,\text{dBm/Hz} + \text{NF} + 10 \log_{10
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note&nbsp;4: Sensitivity Calculation for WiFi
+Note&nbsp;5: Sensitivity Calculation for WiFi
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Let’s calculate the sensitivity of a WiFi receiver operating at 5 GHz with a bandwidth of <span class="math inline">\(B = 80\,\text{MHz}\)</span>, a noise figure of <span class="math inline">\(NF = 7\,\text{dB}\)</span>, and a minimum detectable SNR of 25 dB. This high SNR means that a high-order modulation scheme (like 64-QAM) is used for high data rates.</p>
-<p>Using <a href="#eq-sensitivity-dbm" class="quarto-xref">Equation&nbsp;19</a> we get: <span class="math display">\[
+<p>Using <a href="#eq-sensitivity-dbm" class="quarto-xref">Equation&nbsp;20</a> we get: <span class="math display">\[
 P_\mathrm{in, min} = -174\,\text{dBm/Hz} + 7\,\text{dB} + 10 \log_{10} (80 \times 10^6) + 25\,\text{dB} \approx -63\,\text{dBm}
 \]</span></p>
 <p>This means that the minimum input signal power that can be detected by the WiFi receiver is approximately -63 dBm.</p>
@@ -1237,8 +1268,8 @@ s_\mathrm{RF,complex}(t) = s_\mathrm{BB}(t) \cdot e^{j \omega_\mathrm{c} t} = [s
 <p>The real-valued RF signal is obtained by taking the real part of this expression:</p>
 <p><span id="eq-modulation"><span class="math display">\[
 s_\mathrm{RF}(t) = \Re \{ s_\mathrm{RF,complex}(t) \} = s_\mathrm{I}(t) \cos(\omega_\mathrm{c} t) - s_\mathrm{Q}(t) \sin(\omega_\mathrm{c} t).
-\tag{20}\]</span></span></p>
-<p>The process formulated in <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;20</a> is done in the TX, as shown in <a href="#fig-tx-modulation" class="quarto-xref">Figure&nbsp;12</a>.</p>
+\tag{21}\]</span></span></p>
+<p>The process formulated in <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;21</a> is done in the TX, as shown in <a href="#fig-tx-modulation" class="quarto-xref">Figure&nbsp;12</a>.</p>
 <div id="cell-fig-tx-modulation" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div id="fig-tx-modulation" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1253,7 +1284,7 @@ Figure&nbsp;12: TX modulator.
 </div>
 </div>
 </div>
-<p>The RF signal generation according to <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;20</a> is called quadrature modulation. This is the modulation used most often in modern communication systems, as it allows to transmit two independent signals (I and Q) in the same bandwidth. The I and Q signals are also called quadrature components, as they are 90° out of phase with each other.</p>
+<p>The RF signal generation according to <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;21</a> is called quadrature modulation. This is the modulation used most often in modern communication systems, as it allows to transmit two independent signals (I and Q) in the same bandwidth. The I and Q signals are also called quadrature components, as they are 90° out of phase with each other.</p>
 <p>Alternatively, a modulation called polar modulation can be used, where the amplitude and phase of the carrier are varied according to the baseband signal. This is done by converting the I and Q signals to polar coordinates</p>
 <p><span class="math display">\[
 s_\mathrm{RF}(t) = \Re \{ A(t) \cdot e^{j \varphi(t)} \cdot e^{j \omega_\mathrm{c} t} \}
@@ -1281,7 +1312,7 @@ Figure&nbsp;13: RX demodulator.
 <p>For demodulation we have to shift the RF signal down to baseband, which mathematically is done by multiplying with the complex conjugate of the carrier:</p>
 <p><span id="eq-demodulation"><span class="math display">\[
 s_\mathrm{BB,complex}(t) = s_\mathrm{RF}(t) \cdot e^{-j \omega_\mathrm{c} t} = s_\mathrm{RF}(t) \cdot [\cos(\omega_\mathrm{c} t) - j \sin(\omega_\mathrm{c} t)]
-\tag{21}\]</span></span></p>
+\tag{22}\]</span></span></p>
 </section>
 <section id="filtering" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="filtering"><span class="header-section-number">3.3</span> Filtering</h2>
@@ -1564,7 +1595,7 @@ Figure&nbsp;19: Block diagram of a super simple TX and RX.
 <p>The EVM (in rms) is defined as</p>
 <p><span id="eq-evm-definition"><span class="math display">\[
 \text{EVM} = \frac{\sqrt{\frac{1}{N} \sum_{i=1}^{N} |s_\mathrm{ideal}(i) - s_\mathrm{meas}(i)|^2}}{\sqrt{\frac{1}{N} \sum_{i=1}^{N} |s_\mathrm{ideal}(i)|^2}}
-\tag{22}\]</span></span></p>
+\tag{23}\]</span></span></p>
 <p>where <span class="math inline">\(s_\mathrm{ideal}(i)\)</span> is the ideal transmitted symbol, <span class="math inline">\(s_\mathrm{meas}(i)\)</span> is the measured received symbol, and <span class="math inline">\(N\)</span> is the number of symbols. EVM is expressed either in percent or in dB using</p>
 <p><span class="math display">\[
 \text{EVM}|_\mathrm{dB} = 20 \cdot \log_{10}(\text{EVM}).
@@ -1578,7 +1609,7 @@ Figure&nbsp;19: Block diagram of a super simple TX and RX.
 </section>
 <section id="sec-lna" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Low Noise Amplifiers</h1>
-<p>As shown in <a href="#sec-sensitivity" class="quarto-xref">Section&nbsp;2.2.4</a>, the sensitivity of a receiver is determined (besides the channel bandwidth) mainly by the noise figure of the receiver. The noise figure is in turn determined by the noise figure of the first active component in the receive chain, which is usually a low noise amplifier (LNA), as exemplified in <a href="#eq-friis" class="quarto-xref">Equation&nbsp;17</a>. Hence, as shown in <a href="#fig-trx-fdd" class="quarto-xref">Figure&nbsp;15</a> and <a href="#fig-trx-tdd" class="quarto-xref">Figure&nbsp;16</a>, low noise amplifiers (LNAs) are the first active building block in a receiver after the antenna and some initial RF filtering.</p>
+<p>As shown in <a href="#sec-sensitivity" class="quarto-xref">Section&nbsp;2.3.4</a>, the sensitivity of a receiver is determined (besides the channel bandwidth) mainly by the noise figure of the receiver. The noise figure is in turn determined by the noise figure of the first active component in the receive chain, which is usually a low noise amplifier (LNA), as exemplified in <a href="#eq-friis" class="quarto-xref">Equation&nbsp;18</a>. Hence, as shown in <a href="#fig-trx-fdd" class="quarto-xref">Figure&nbsp;15</a> and <a href="#fig-trx-tdd" class="quarto-xref">Figure&nbsp;16</a>, low noise amplifiers (LNAs) are the first active building block in a receiver after the antenna and some initial RF filtering.</p>
 <div id="cell-fig-lna-block" class="cell" data-execution_count="20">
 <div class="cell-output cell-output-display">
 <div id="fig-lna-block" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1630,7 +1661,7 @@ Figure&nbsp;21: A simple LNA with resistive input matching and a tank circuit as
 <p>How can we calculate the noise figure of this simple LNA? We formulate</p>
 <p><span id="eq-lna-noise-factor"><span class="math display">\[
 F = \frac{\text{total noise at output}}{\text{noise at output due to source only}}.
-\tag{23}\]</span></span></p>
+\tag{24}\]</span></span></p>
 <p>We derive a small-signal equivalent circuit of <a href="#fig-lna-naive" class="quarto-xref">Figure&nbsp;21</a>, which is shown in <a href="#fig-lna-naive-noise" class="quarto-xref">Figure&nbsp;22</a>, to calculate the total noise at the output of the LNA.</p>
 <div id="cell-fig-lna-naive-noise" class="cell" data-execution_count="22">
 <div class="cell-output cell-output-display">
@@ -1659,7 +1690,7 @@ Figure&nbsp;22: Equivalent circuit of resistively matched common-source LNA.
 <p>so that in total</p>
 <p><span id="eq-lna-naive-noise-total"><span class="math display">\[
 \overline{V_\mathrm{n,out}^2} = \overline{V_\mathrm{n,out,1}^2} + \overline{V_\mathrm{n,out,2}^2} = 4 k T \left[ (g_\mathrm{m}R_\mathrm{D})^2 (R_\mathrm{s} \parallel R_\mathrm{p}) + \gamma g_\mathrm{m}R_\mathrm{D}^2 + R_\mathrm{D} \right].
-\tag{24}\]</span></span></p>
+\tag{25}\]</span></span></p>
 <p>We now need to find the output noise coming from the source only. For this we can use the equivalent circuit in <a href="#fig-lna-naive-noise-input" class="quarto-xref">Figure&nbsp;23</a>, to formulate the output noise due to the source only.</p>
 <div id="cell-fig-lna-naive-noise-input" class="cell" data-execution_count="23">
 <div class="cell-output cell-output-display">
@@ -1678,11 +1709,11 @@ Figure&nbsp;23: Eqivalent circuit to calculate the output noise from the input.
 <p>We find that</p>
 <p><span id="eq-lna-naive-noise-input"><span class="math display">\[
 \overline{V_\mathrm{n,out,s}^2} = A_\mathrm{v}^2 \cdot 4 k T R_\mathrm{s} \cdot \left(\frac{R_\mathrm{p}}{R_\mathrm{s} + R_\mathrm{p}}{} \right)^2.
-\tag{25}\]</span></span></p>
-<p>Finally, we can use <a href="#eq-lna-naive-noise-total" class="quarto-xref">Equation&nbsp;24</a> and <a href="#eq-lna-naive-noise-input" class="quarto-xref">Equation&nbsp;25</a> with <a href="#eq-lna-noise-factor" class="quarto-xref">Equation&nbsp;23</a> to calculate the noise figure of the simple resistively matched common-source LNA as</p>
+\tag{26}\]</span></span></p>
+<p>Finally, we can use <a href="#eq-lna-naive-noise-total" class="quarto-xref">Equation&nbsp;25</a> and <a href="#eq-lna-naive-noise-input" class="quarto-xref">Equation&nbsp;26</a> with <a href="#eq-lna-noise-factor" class="quarto-xref">Equation&nbsp;24</a> to calculate the noise figure of the simple resistively matched common-source LNA as</p>
 <p><span id="eq-lna-naive-noise-factor"><span class="math display">\[
 F = \frac{\overline{V_\mathrm{n,out}^2}}{\overline{V_\mathrm{n,out,s}^2}} = 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} + \frac{\gamma R_\mathrm{s}}{g_\mathrm{m}(R_\mathrm{s} \parallel R_\mathrm{p})^2} + \frac{R_\mathrm{s}}{g_\mathrm{m}^2 (R_\mathrm{s} \parallel R_\mathrm{p})^2 R_\mathrm{D}}.
-\tag{26}\]</span></span></p>
+\tag{27}\]</span></span></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1693,10 +1724,10 @@ F = \frac{\overline{V_\mathrm{n,out}^2}}{\overline{V_\mathrm{n,out,s}^2}} = 1 + 
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>As an exercise to calculate circuits with noise, re-confirm and derive yourself the result of <a href="#eq-lna-naive-noise-factor" class="quarto-xref">Equation&nbsp;26</a>.</p>
+<p>As an exercise to calculate circuits with noise, re-confirm and derive yourself the result of <a href="#eq-lna-naive-noise-factor" class="quarto-xref">Equation&nbsp;27</a>.</p>
 </div>
 </div>
-<p>How can we interpret <a href="#eq-lna-naive-noise-factor" class="quarto-xref">Equation&nbsp;26</a>? We see that we can minimize the noise factor by making <span class="math inline">\(g_\mathrm{m}\)</span> large. Then we have a noise factor of</p>
+<p>How can we interpret <a href="#eq-lna-naive-noise-factor" class="quarto-xref">Equation&nbsp;27</a>? We see that we can minimize the noise factor by making <span class="math inline">\(g_\mathrm{m}\)</span> large. Then we have a noise factor of</p>
 <p><span class="math display">\[
 F = 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} = 2
 \]</span></p>
@@ -1723,15 +1754,15 @@ Figure&nbsp;24: Circuit diagram of a common-gate LNA.
 <p>By inspecting <a href="#fig-lna-cg" class="quarto-xref">Figure&nbsp;24</a> and the practice from <a href="#sec-lna-resistive-matching" class="quarto-xref">Section&nbsp;4.1</a>, we can directly write down the output noise voltage as (with <span class="math inline">\(1/g_\mathrm{m}= R_\mathrm{s}\)</span>)</p>
 <p><span id="eq-lna-cg-noise-total"><span class="math display">\[
 \overline{V_\mathrm{n,out}^2} = k T \left[ (g_\mathrm{m}R_\mathrm{D})^2 R_\mathrm{s} + \gamma g_\mathrm{m}R_\mathrm{D}^2 + 4 R_\mathrm{D} \right] = k T \left( \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + \gamma \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + 4 R_\mathrm{D} \right).
-\tag{27}\]</span></span></p>
+\tag{28}\]</span></span></p>
 <p>The output noise due to the source only is given by</p>
 <p><span id="eq-lna-cg-noise-source"><span class="math display">\[
 \overline{V_\mathrm{n,out,s}^2} = \frac{R_\mathrm{D}^2}{R_\mathrm{s}}.
-\tag{28}\]</span></span></p>
-<p>Finally, we can use <a href="#eq-lna-cg-noise-total" class="quarto-xref">Equation&nbsp;27</a> and <a href="#eq-lna-cg-noise-source" class="quarto-xref">Equation&nbsp;28</a> with <a href="#eq-lna-noise-factor" class="quarto-xref">Equation&nbsp;23</a> to calculate the noise figure of the common-gate LNA as</p>
+\tag{29}\]</span></span></p>
+<p>Finally, we can use <a href="#eq-lna-cg-noise-total" class="quarto-xref">Equation&nbsp;28</a> and <a href="#eq-lna-cg-noise-source" class="quarto-xref">Equation&nbsp;29</a> with <a href="#eq-lna-noise-factor" class="quarto-xref">Equation&nbsp;24</a> to calculate the noise figure of the common-gate LNA as</p>
 <p><span id="eq-lna-cg-noise-factor"><span class="math display">\[
 F = 1 + \gamma + \frac{4 R_\mathrm{s}}{R_\mathrm{D}}  \xrightarrow{R_\mathrm{D} \gg R_\mathrm{s}} F = 1 + \gamma .
-\tag{29}\]</span></span></p>
+\tag{30}\]</span></span></p>
 <p>With a classical long-channel <span class="math inline">\(\gamma = 2/3\)</span>, we can achieve a minimum noise figure of 2.2 dB, which is already better than the resistively matched common-source LNA. However, with modern short-channel devices, <span class="math inline">\(\gamma\)</span> is often larger than 1, so that the minimum noise figure of the common-gate LNA is often larger than 3 dB <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span>.</p>
 </section>
 <section id="sec-lna-inductive-degeneration" class="level2" data-number="4.3">
@@ -1773,8 +1804,8 @@ v_\mathrm{x} = v_\mathrm{gs} + Z_\mathrm{deg} (i_\mathrm{x} + g_\mathrm{m}v_\mat
 <p>so that we can write the input impedance as</p>
 <p><span id="eq-lna-inductive-degeneration-zin"><span class="math display">\[
 Z_\mathrm{in} = \frac{v_\mathrm{x}}{i_\mathrm{x}} = \frac{1}{s C_\mathrm{gs}} + Z_\mathrm{deg} + \frac{g_\mathrm{m}Z_\mathrm{deg}}{s C_\mathrm{gs}}.
-\tag{30}\]</span></span></p>
-<p>The final term in <a href="#eq-lna-inductive-degeneration-zin" class="quarto-xref">Equation&nbsp;30</a> is the interesting one: By choosing <span class="math inline">\(Z_\mathrm{deg}\)</span> to be inductive (which we can do by either use an on-chip or off-chip inductor), we can realize a real part of the input impedance. If we choose <span class="math inline">\(Z_\mathrm{deg} = s L\)</span>, we find that</p>
+\tag{31}\]</span></span></p>
+<p>The final term in <a href="#eq-lna-inductive-degeneration-zin" class="quarto-xref">Equation&nbsp;31</a> is the interesting one: By choosing <span class="math inline">\(Z_\mathrm{deg}\)</span> to be inductive (which we can do by either use an on-chip or off-chip inductor), we can realize a real part of the input impedance. If we choose <span class="math inline">\(Z_\mathrm{deg} = s L\)</span>, we find that</p>
 <p><span class="math display">\[
 Z_\mathrm{in} = \frac{1}{s C_\mathrm{gs}} + s L + \frac{g_\mathrm{m}L}{C_\mathrm{gs}}.
 \]</span></p>
@@ -1785,7 +1816,7 @@ Z_\mathrm{in} = \frac{1}{s C_\mathrm{gs}} + s L + \frac{g_\mathrm{m}L}{C_\mathrm
 <p>Without proof (refer to <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span> or <span class="citation" data-cites="Darabi_RFIC">(<a href="#ref-Darabi_RFIC" role="doc-biblioref">Darabi 2020</a>)</span> for a derivation) we find for the noise factor of this input stage (with some simplification) as</p>
 <p><span id="eq-lna-inductive-degeneration-noise-factor"><span class="math display">\[
 F = 1 + \frac{\gamma R_\mathrm{s} \omega_0^2 C_\mathrm{gs}^2}{g_\mathrm{m}}.
-\tag{31}\]</span></span></p>
+\tag{32}\]</span></span></p>
 <p>Finally we have an LNA input stage configuration which allows us to achieve a noise figure below 3 dB, even with <span class="math inline">\(\gamma &gt; 1\)</span>, by proper choice of <span class="math inline">\(g_\mathrm{m}\)</span>. Making <span class="math inline">\(g_\mathrm{m}\)</span> large (by spending more bias current) results in (first order) arbitrarily low noise figure. The inductively-degenerated common-source LNA is a widely used LNA input stage configuration in modern RFICs. A somewhat detailed schematic is shown in <a href="#fig-lna-inductive-degeneration-detailed" class="quarto-xref">Figure&nbsp;27</a>.</p>
 <div id="cell-fig-lna-inductive-degeneration-detailed" class="cell" data-execution_count="27">
 <div class="cell-output cell-output-display">
