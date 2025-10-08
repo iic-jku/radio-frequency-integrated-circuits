@@ -16,7 +16,7 @@ limitations under the License.
 
 # Introduction {#sec-intro}
 
-This is the material for an introductory radio-frequency integrated circuits course. The contents are large based on [@Razavi_RFIC] and [@Darabi_RFIC]; these two books are an excellent introduction into this topic and are highly recommended! For a generation introduction into RF and microwave [@Pozar_RF] is highly recommended.
+This is the material for an introductory radio-frequency integrated circuits course. The contents are largely based on [@Razavi_RFIC] and [@Darabi_RFIC]; these two books are an excellent introduction into this topic and are highly recommended! For a general introduction into RF and microwave [@Pozar_RF] is a great read!
 
 It is assumed that readers are familiar with the contents of this [Analog Circuit Design](https://iic-jku.github.io/analog-circuit-design/analog_circuit_design.html) course.
 
@@ -25,7 +25,7 @@ All course material (source code of this document, Jupyter notebooks for calcula
 
 Please feel free to submit [pull requests](https://github.com/iic-jku/radio-frequency-integrated-circuits/pulls) to fix typos or add content! If you want to discuss something that is not clear, please [open an issue](https://github.com/iic-jku/radio-frequency-integrated-circuits/issues/new).
 
-The production of this document would be impossible without these (and many more) great open-source software products: `VS Code`, `Quarto`, `Pandoc`, `TexLive`, `Jupyter Notebook`, `Python`, `Xschem`, `ngspice`, `CACE`, `pygmid`, `schemdraw`, `Numpy`, `Scipy`, `Matplotlib`, `Pandas`, `Git`, `Docker`, `Ubuntu`, `Linux`, ...
+The production of this document would be impossible without these (and many more) great open-source software products: `VS Code`, `Quarto`, `Pandoc`, `LaTeX`, `Typst`, `Jupyter Notebook`, `Python`, `Xschem`, `ngspice`, `CACE`, `pygmid`, `schemdraw`, `Numpy`, `Scipy`, `Matplotlib`, `Pandas`, `Git`, `Docker`, `Ubuntu`, `Linux`, ...
 :::
 
 ## Wireless Transmission {#sec-intro-wireless}
