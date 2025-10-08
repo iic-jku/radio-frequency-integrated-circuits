@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2025-10-06">
+<meta name="dcterms.date" content="2025-10-08">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -434,7 +434,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 6, 2025</p>
+      <p class="date">October 8, 2025</p>
     </div>
   </div>
   
@@ -605,7 +605,26 @@ P_\mathrm{R} = P_\mathrm{T} \cdot \frac{0.13 \lambda^2 \cdot 0.13 \lambda^2}{d^2
 <p>With the transmit power of 1 W = 30 dBm we have an attenuation of 116 dB! This is a very large number!</p>
 </div>
 </div>
-<p>As dire as the situation of <a href="#nte-wireless-attenuation" class="quarto-xref">Note&nbsp;2</a> already looks, this is not even all factors considered:</p>
+<p>The loss we calculated in <a href="#nte-wireless-attenuation" class="quarto-xref">Note&nbsp;2</a> is called the free-space path loss (FSPL). It is the minimum loss we can expect in a wireless communication system. In reality, the situation is often even worse. The free-space path loss <span class="math inline">\(\text{FSPL}\)</span> (in dB) can be calculated as</p>
+<p><span id="eq-fspl"><span class="math display">\[
+\text{FSPL} = 20 \cdot \log_{10}(d / \text{m}) + 20 \cdot \log_{10}(f / \text{Hz}) + 20 \cdot \log_{10} \left( \frac{4\pi}{c} \text{m/s} \right).
+\tag{3}\]</span></span></p>
+<p><a href="#eq-fspl" class="quarto-xref">Equation&nbsp;3</a> can be readily derived from <a href="#eq-friis-transmission" class="quarto-xref">Equation&nbsp;1</a> and <a href="#eq-dbm" class="quarto-xref">Equation&nbsp;2</a> assuming isotropic antennas at transmitter and receiver. Using <a href="#eq-fspl" class="quarto-xref">Equation&nbsp;3</a> we can easily calculate the FSPL for different distances and frequencies. The results are shown in <a href="#fig-free-space-path-loss" class="quarto-xref">Figure&nbsp;2</a>. It should be noted that the FSPL increases by 20 dB per decade of distance and 20 dB per decade of frequency, making higher frequencies and longer distances very challenging.</p>
+<div id="cell-fig-free-space-path-loss" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div id="fig-free-space-path-loss" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-free-space-path-loss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-free-space-path-loss-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Free space path loss vs.&nbsp;distance for different frequencies (1 GHz, 10 GHz, and 100 GHz)."><img src="rfic_files/figure-html/fig-free-space-path-loss-output-1.png" width="612" height="434" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-free-space-path-loss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Free space path loss vs.&nbsp;distance for different frequencies (1 GHz, 10 GHz, and 100 GHz).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>As dire as the situation of <a href="#fig-free-space-path-loss" class="quarto-xref">Figure&nbsp;2</a> already looks, this is not even all factors considered:</p>
 <ul>
 <li>The given attenuation is for line-of-sight paths; often, the attenuation is significantly higher than this due to blockage by buildings, mountains, rain, or foliage.</li>
 <li>In lack of a direct line-of-sight path, the EM wave is redirected by reflections, causing additional attenuation, and the potential destructive interference by multi-path reception.</li>
@@ -782,7 +801,7 @@ Table&nbsp;2: Comparison of wireless communication standards
 <p>We model a nonlinear circuit block with the following Taylor polynomial:</p>
 <p><span id="eq-nonlinear-model"><span class="math display">\[
 y(t) = \alpha_0 + \alpha_1 x(t) + \alpha_2 x(t)^2 + \alpha_3 x(t)^3 + \ldots
-\tag{3}\]</span></span></p>
+\tag{4}\]</span></span></p>
 <p>Usually, the blocks under study will have higher order nonlinear terms but we often stop at 3rd order to keep things simple. For practical work, higher order terms should be included if necessary.</p>
 <p>Which <span class="math inline">\(x(t)\)</span> should we use to study wireless systems? Often, the bandwidth <span class="math inline">\(f_\mathrm{BW}\)</span> of a transmit signal is much smaller than the center frequency <span class="math inline">\(f_0\)</span>, i.e., <span class="math inline">\(f_\mathrm{BW} \ll f_0\)</span>. In this case using a sinusoidal signal as a mode is both simple to handle and approximately correct.</p>
 <section id="sec-linearity-single" class="level3" data-number="2.1.1">
@@ -791,7 +810,7 @@ y(t) = \alpha_0 + \alpha_1 x(t) + \alpha_2 x(t)^2 + \alpha_3 x(t)^3 + \ldots
 <p><span class="math display">\[
 x(t) = A \cos(\omega t)
 \]</span></p>
-<p>and insert it into <a href="#eq-nonlinear-model" class="quarto-xref">Equation&nbsp;3</a>. After some simple trigonometric manipulations we are at</p>
+<p>and insert it into <a href="#eq-nonlinear-model" class="quarto-xref">Equation&nbsp;4</a>. After some simple trigonometric manipulations we are at</p>
 <p><span id="eq-linearity-single"><span class="math display">\[
 \begin{split}
 y(t) &amp;=
@@ -803,8 +822,8 @@ y(t) &amp;=
 +
 \underbrace{ \frac{1}{4} \alpha_3 A^3 \cos(3 \omega t) }_\text{3rd harmonic}
 \end{split}
-\tag{4}\]</span></span></p>
-<p>Looking at <a href="#eq-linearity-single" class="quarto-xref">Equation&nbsp;4</a> we can make a few interesting observations:</p>
+\tag{5}\]</span></span></p>
+<p>Looking at <a href="#eq-linearity-single" class="quarto-xref">Equation&nbsp;5</a> we can make a few interesting observations:</p>
 <ul>
 <li>Even-order nonlinearity (<span class="math inline">\(\alpha_2\)</span>) creates low-frequency components; it effectively adds frequency components related to the envelope <span class="math inline">\(A\)</span>. If <span class="math inline">\(A\)</span> is a constant then this results in a dc term; if <span class="math inline">\(A(t)\)</span> is time variant it will created a squared version of it at low frequencies.</li>
 <li>The <span class="math inline">\(\alpha_1\)</span> term is the gain of the circuit block.</li>
@@ -815,31 +834,31 @@ y(t) &amp;=
 <li>increase the linearity, i.e., make the <span class="math inline">\(\alpha_2\)</span>, <span class="math inline">\(\alpha_3\)</span>, etc., small enough.</li>
 </ol></li>
 </ul>
-<p>The created harmonics are illustrated in <a href="#fig-harmonics" class="quarto-xref">Figure&nbsp;2</a>. Note that measuring harmonics to quantify the nonlinearity metrics like <span class="math inline">\(\alpha_2\)</span> and <span class="math inline">\(\alpha_3\)</span> is often not very accurate, as these harmonics are often filtered in bandwidth-limited systems.</p>
-<div id="cell-fig-harmonics" class="cell" data-execution_count="2">
+<p>The created harmonics are illustrated in <a href="#fig-harmonics" class="quarto-xref">Figure&nbsp;3</a>. Note that measuring harmonics to quantify the nonlinearity metrics like <span class="math inline">\(\alpha_2\)</span> and <span class="math inline">\(\alpha_3\)</span> is often not very accurate, as these harmonics are often filtered in bandwidth-limited systems.</p>
+<div id="cell-fig-harmonics" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div id="fig-harmonics" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-harmonics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-harmonics-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Single-tone test showing created harmonics at 2ω and 3ω."><img src="rfic_files/figure-html/fig-harmonics-output-1.png" width="589" height="434" class="figure-img"></a>
+<a href="rfic_files/figure-html/fig-harmonics-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Single-tone test showing created harmonics at 2ω and 3ω."><img src="rfic_files/figure-html/fig-harmonics-output-1.png" width="589" height="434" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-harmonics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Single-tone test showing created harmonics at 2ω and 3ω.
+Figure&nbsp;3: Single-tone test showing created harmonics at 2ω and 3ω.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal <span class="math inline">\(x(t)\)</span> in amplitude, and observe the output <span class="math inline">\(y(t)\)</span>. If the observed gain drops by 1 dB from the small-signal value we note the input power, and call this point the <strong>1dB compression point</strong> (<span class="math inline">\(P_\mathrm{1dB}\)</span>). We should always add whether this 1dB compression point is input- or output-referred to avoid ambiguity. The diagram in <a href="#fig-1db-compression-point" class="quarto-xref">Figure&nbsp;3</a> shows this test (<span class="math inline">\(\alpha_1 = 100\)</span>, <span class="math inline">\(\alpha_3 = -0.2\)</span>).</p>
-<div id="cell-fig-1db-compression-point" class="cell" data-execution_count="3">
+<p>How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal <span class="math inline">\(x(t)\)</span> in amplitude, and observe the output <span class="math inline">\(y(t)\)</span>. If the observed gain drops by 1 dB from the small-signal value we note the input power, and call this point the <strong>1dB compression point</strong> (<span class="math inline">\(P_\mathrm{1dB}\)</span>). We should always add whether this 1dB compression point is input- or output-referred to avoid ambiguity. The diagram in <a href="#fig-1db-compression-point" class="quarto-xref">Figure&nbsp;4</a> shows this test (<span class="math inline">\(\alpha_1 = 100\)</span>, <span class="math inline">\(\alpha_3 = -0.2\)</span>).</p>
+<div id="cell-fig-1db-compression-point" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div id="fig-1db-compression-point" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1db-compression-point-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-1db-compression-point-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: 1dB compression point test showing input vs output power relationship and the definition of P1dB."><img src="rfic_files/figure-html/fig-1db-compression-point-output-1.png" width="600" height="434" class="figure-img"></a>
+<a href="rfic_files/figure-html/fig-1db-compression-point-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: 1dB compression point test showing input vs output power relationship and the definition of P1dB."><img src="rfic_files/figure-html/fig-1db-compression-point-output-1.png" width="600" height="434" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1db-compression-point-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: 1dB compression point test showing input vs output power relationship and the definition of P1dB.
+Figure&nbsp;4: 1dB compression point test showing input vs output power relationship and the definition of P1dB.
 </figcaption>
 </figure>
 </div>
@@ -862,14 +881,14 @@ Figure&nbsp;3: 1dB compression point test showing input vs output power relation
 </section>
 <section id="multi-tone-linearity" class="level3" data-number="2.1.2">
 <h3 data-number="2.1.2" class="anchored" data-anchor-id="multi-tone-linearity"><span class="header-section-number">2.1.2</span> Multi-Tone Linearity</h3>
-<p>We now elevate our investigations and apply two sinusoids with different frequencies and different amplitudes and see which signals we get at the output of the nonlinear block. The two-tone test and resulting third-order intermodulation products (IM3) are illustrated in <a href="#fig-im3-tones" class="quarto-xref">Figure&nbsp;4</a>.</p>
+<p>We now elevate our investigations and apply two sinusoids with different frequencies and different amplitudes and see which signals we get at the output of the nonlinear block. The two-tone test and resulting third-order intermodulation products (IM3) are illustrated in <a href="#fig-im3-tones" class="quarto-xref">Figure&nbsp;5</a>.</p>
 <p><span class="math display">\[
 x(t) = A_1 \cos(\omega_1 t) + A_2 \cos(\omega_2 t)
 \]</span></p>
-<p>We apply the above stimulus to our nonlinear model described by <a href="#eq-nonlinear-model" class="quarto-xref">Equation&nbsp;3</a> and again, after some trigonometric manipulations, arrive at:</p>
+<p>We apply the above stimulus to our nonlinear model described by <a href="#eq-nonlinear-model" class="quarto-xref">Equation&nbsp;4</a> and again, after some trigonometric manipulations, arrive at:</p>
 <p><span id="eq-linearity-double"><span class="math display">\[
 y(t) = y'(t) + y''(t) + y'''(t)
-\tag{5}\]</span></span></p>
+\tag{6}\]</span></span></p>
 <p>As many different frequency components are created by this simple two-tone test (and nonlinearity only up to 3rd order) we split the result into different equations and look at the result separately.</p>
 <p>First, we start with the fundamental tones:</p>
 <p><span id="eq-linearity-double-a"><span class="math display">\[
@@ -877,8 +896,8 @@ y(t) = y'(t) + y''(t) + y'''(t)
     y'(t) &amp;= \left( \underbrace{\alpha_1 A_1 + \frac{3}{4} \alpha_3 A_1^3}_\text{compression/expansion} + \underbrace{\frac{3}{2} \alpha_3 A_1 A_2^2}_\text{cross-modulation/desens} \right) \cos(\omega_1 t) \\
     &amp;+ \left( \underbrace{\alpha_1 A_2 + \frac{3}{4} \alpha_3 A_2^3}_\text{compression/expansion} + \underbrace{\frac{3}{2} \alpha_3 A_2 A_1^2}_\text{cross-modulation/desens} \right) \cos(\omega_2 t)
 \end{split}
-\tag{6}\]</span></span></p>
-<p>As shown in <a href="#eq-linearity-double-a" class="quarto-xref">Equation&nbsp;6</a>, interesting things happen:</p>
+\tag{7}\]</span></span></p>
+<p>As shown in <a href="#eq-linearity-double-a" class="quarto-xref">Equation&nbsp;7</a>, interesting things happen:</p>
 <ul>
 <li>We (again) have the gain compression/expansion effect as already discussed in <a href="#sec-linearity-single" class="quarto-xref">Section&nbsp;2.1.1</a>.</li>
 <li>In addition, we have <strong>cross-modulation</strong>, i.e., the envelope of one tone (e.g., <span class="math inline">\(A_2(t)\)</span> of the tone at <span class="math inline">\(\omega_2\)</span>) impacts the envelope of the other tone at <span class="math inline">\(\omega_1\)</span>. This can lead to unwanted signal distortation, even if there is a large frequency separation between <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>!</li>
@@ -891,8 +910,8 @@ y(t) = y'(t) + y''(t) + y'''(t)
     &amp;+ \alpha_2 A_1 A_2 \cos[ (\omega_1 - \omega_2) t] \\
     &amp;+ \alpha_2 A_1 A_2 \cos[ (\omega_1 + \omega_2) t]
 \end{split}
-\tag{7}\]</span></span></p>
-<p>As we can see in <a href="#eq-linearity-double-b" class="quarto-xref">Equation&nbsp;7</a> new tones are created (besides the low frequency components we already know from the single-tone test) at the sum and difference of <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>. These new frequency components are called “<strong>intermodulation products of second order</strong>” (IM2). These tones are created by the even-order nonlinearity (<span class="math inline">\(\alpha_2\)</span>). These IM2 products are far away from the wanted tones, so are often not very problematic in amplifiers (but there can be exceptions!). However, they can be very problematic in frequency conversion blocks like mixers. We will come back to this point when discussing zero-IF receivers.</p>
+\tag{8}\]</span></span></p>
+<p>As we can see in <a href="#eq-linearity-double-b" class="quarto-xref">Equation&nbsp;8</a> new tones are created (besides the low frequency components we already know from the single-tone test) at the sum and difference of <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>. These new frequency components are called “<strong>intermodulation products of second order</strong>” (IM2). These tones are created by the even-order nonlinearity (<span class="math inline">\(\alpha_2\)</span>). These IM2 products are far away from the wanted tones, so are often not very problematic in amplifiers (but there can be exceptions!). However, they can be very problematic in frequency conversion blocks like mixers. We will come back to this point when discussing zero-IF receivers.</p>
 <p>We now investigate the next couple of tones:</p>
 <p><span id="eq-linearity-double-c"><span class="math display">\[
 \begin{split}
@@ -901,66 +920,66 @@ y(t) = y'(t) + y''(t) + y'''(t)
     &amp;+ \frac{3}{4} \alpha_3 A_1 A_2^2 \cos[(2 \omega_2 + \omega_1) t] \\
     &amp;+ \frac{3}{4} \alpha_3 A_1 A_2^2 \cos[(2 \omega_2 - \omega_1) t]
 \end{split}
-\tag{8}\]</span></span></p>
-<p>The tones shown in <a href="#eq-linearity-double-c" class="quarto-xref">Equation&nbsp;8</a> are called “i<strong>ntermodulation products of third order</strong>” (IM3), and are caused by the odd nonlinearities (like <span class="math inline">\(\alpha_3\)</span>). While the IM3 tones located at <span class="math inline">\(2 \omega_1 + \omega_2\)</span> and <span class="math inline">\(\omega_1 + 2 \omega_2\)</span> are similar to the sum IM2 tone and far away from <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>, the other two tones are concerning.</p>
-<p>Expressing <span class="math inline">\(\Delta \omega = \omega_2 - \omega_1\)</span> (and assuming <span class="math inline">\(\omega_1 &lt; \omega_2\)</span>), the building law of <span class="math inline">\(2 \omega_1 - \omega_2 = \omega_1 - \Delta \omega\)</span> and <span class="math inline">\(2 \omega_2 - \omega_1 = \omega_2 + \Delta \omega\)</span> results in new tones right besides <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>, with a frequency separation only defined by <span class="math inline">\(\Delta \omega\)</span>. This situation is illustrated in <a href="#fig-im3-tones" class="quarto-xref">Figure&nbsp;4</a>.</p>
-<div id="cell-fig-im3-tones" class="cell" data-execution_count="4">
+\tag{9}\]</span></span></p>
+<p>The tones shown in <a href="#eq-linearity-double-c" class="quarto-xref">Equation&nbsp;9</a> are called “i<strong>ntermodulation products of third order</strong>” (IM3), and are caused by the odd nonlinearities (like <span class="math inline">\(\alpha_3\)</span>). While the IM3 tones located at <span class="math inline">\(2 \omega_1 + \omega_2\)</span> and <span class="math inline">\(\omega_1 + 2 \omega_2\)</span> are similar to the sum IM2 tone and far away from <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>, the other two tones are concerning.</p>
+<p>Expressing <span class="math inline">\(\Delta \omega = \omega_2 - \omega_1\)</span> (and assuming <span class="math inline">\(\omega_1 &lt; \omega_2\)</span>), the building law of <span class="math inline">\(2 \omega_1 - \omega_2 = \omega_1 - \Delta \omega\)</span> and <span class="math inline">\(2 \omega_2 - \omega_1 = \omega_2 + \Delta \omega\)</span> results in new tones right besides <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>, with a frequency separation only defined by <span class="math inline">\(\Delta \omega\)</span>. This situation is illustrated in <a href="#fig-im3-tones" class="quarto-xref">Figure&nbsp;5</a>.</p>
+<div id="cell-fig-im3-tones" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div id="fig-im3-tones" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-im3-tones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-im3-tones-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Two-tone test showing fundamental frequencies ω₁, ω₂ and third-order intermodulation products (IM3) at 2ω₁-ω₂ and 2ω₂-ω₁."><img src="rfic_files/figure-html/fig-im3-tones-output-1.png" width="604" height="434" class="figure-img"></a>
+<a href="rfic_files/figure-html/fig-im3-tones-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Two-tone test showing fundamental frequencies ω₁, ω₂ and third-order intermodulation products (IM3) at 2ω₁-ω₂ and 2ω₂-ω₁."><img src="rfic_files/figure-html/fig-im3-tones-output-1.png" width="604" height="434" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-im3-tones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Two-tone test showing fundamental frequencies ω₁, ω₂ and third-order intermodulation products (IM3) at 2ω₁-ω₂ and 2ω₂-ω₁.
+Figure&nbsp;5: Two-tone test showing fundamental frequencies ω₁, ω₂ and third-order intermodulation products (IM3) at 2ω₁-ω₂ and 2ω₂-ω₁.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>This close localization of the IM3 tones can also be utilized to characterize nonlinear performance. Using gain compression or harmonic generation (H3) it can be very difficult to extract nonlinearity of third order (<span class="math inline">\(\alpha_3\)</span>). However, using a two-tone test, the IM3 tones can be readily measured, even if the measured signal path shows a <strong>bandpass characteristic</strong>! As RF systems frequently employ bandpass filters to suppress out-of-band signals, this is a very important property of the two-tone test.</p>
-<p>The resulting test is called a two-tone test yielding the third-order intercept point (IP3). This test is widely used in RF design to characterize the linearity of amplifiers, mixers, and complete transceiver systems. The power relationship between fundamental tones and IM3 products as a function of input power is shown in <a href="#fig-im3-power-sweep" class="quarto-xref">Figure&nbsp;5</a>.</p>
-<div id="cell-fig-im3-power-sweep" class="cell" data-execution_count="5">
+<p>The resulting test is called a two-tone test yielding the third-order intercept point (IP3). This test is widely used in RF design to characterize the linearity of amplifiers, mixers, and complete transceiver systems. The power relationship between fundamental tones and IM3 products as a function of input power is shown in <a href="#fig-im3-power-sweep" class="quarto-xref">Figure&nbsp;6</a>.</p>
+<div id="cell-fig-im3-power-sweep" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div id="fig-im3-power-sweep" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-im3-power-sweep-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-im3-power-sweep-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Two-tone IM3 test showing fundamental and IM3 product power vs.&nbsp;input power, with IP3 intercept point definition. Equal input power per tone is assumed."><img src="rfic_files/figure-html/fig-im3-power-sweep-output-1.png" width="604" height="434" class="figure-img"></a>
+<a href="rfic_files/figure-html/fig-im3-power-sweep-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Two-tone IM3 test showing fundamental and IM3 product power vs.&nbsp;input power, with IP3 intercept point definition. Equal input power per tone is assumed."><img src="rfic_files/figure-html/fig-im3-power-sweep-output-1.png" width="604" height="434" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-im3-power-sweep-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Two-tone IM3 test showing fundamental and IM3 product power vs.&nbsp;input power, with IP3 intercept point definition. Equal input power per tone is assumed.
+Figure&nbsp;6: Two-tone IM3 test showing fundamental and IM3 product power vs.&nbsp;input power, with IP3 intercept point definition. Equal input power per tone is assumed.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Note that, as shown in <a href="#fig-im3-power-sweep" class="quarto-xref">Figure&nbsp;5</a>, the IM3 products rise with a slope of 3 dB/dB, i.e., if the input power is increased by 1 dB, the IM3 products increase by 3 dB. The fundamental tones rise with a slope of 1 dB/dB (as long as we are in the linear region). The IP3 point is defined as the intersection of the <strong>extrapolated</strong> linear lines of fundamental and IM3 products. As both lines have different slopes, this intersection point is usually far outside the actual operating range of the circuit block under test!</p>
+<p>Note that, as shown in <a href="#fig-im3-power-sweep" class="quarto-xref">Figure&nbsp;6</a>, the IM3 products rise with a slope of 3 dB/dB, i.e., if the input power is increased by 1 dB, the IM3 products increase by 3 dB. The fundamental tones rise with a slope of 1 dB/dB (as long as we are in the linear region). The IP3 point is defined as the intersection of the <strong>extrapolated</strong> linear lines of fundamental and IM3 products. As both lines have different slopes, this intersection point is usually far outside the actual operating range of the circuit block under test!</p>
 <p>When calculating the IIP3 (input-referred IP3) we can use the following formula, assuming equal input power per tone. It is important to always check the slope of the IM3 products to ensure that we are indeed in the third-order region! If the input power per tone is <span class="math inline">\(P_\mathrm{in}\)</span> (in dBm) and the input-referred power of one IM3 tone is <span class="math inline">\(P_\mathrm{IM3}\)</span> (in dBm), then the input-referred IP3 is given by</p>
 <p><span id="eq-iip3"><span class="math display">\[
 \text{IIP3} = P_\mathrm{in} + \frac{P_\mathrm{in} - P_\mathrm{IM3}}{2}
-\tag{9}\]</span></span></p>
+\tag{10}\]</span></span></p>
 <p>Further, for midly nonlinear systems (i.e., <span class="math inline">\(\alpha_3\)</span> is dominating), the IIP3 can be approximated from the 1dB compression point as</p>
 <p><span id="eq-iip3-approx"><span class="math display">\[
 \text{IIP3}|_\mathrm{dBm} \approx P_\mathrm{1dB}|_\mathrm{dBm} + 9.6\,\text{dB}.
-\tag{10}\]</span></span></p>
+\tag{11}\]</span></span></p>
 <p>If we have two blocks which are cascaded, and we know the gain and IIP3 of both blocks, we can calculate the overall IIP3 of the cascade with the following approximation. An exact calculation is very involved, as the nonlinearities of the first block (and the resulting tones) will be processed by the second block, creating even more tones; this process escalates very quickly. However, for practical purposes, the following approximation is often sufficient:</p>
 <p><span id="eq-iip3-cascade"><span class="math display">\[
 \frac{1}{\text{IIP3}_\text{total}} \approx \frac{1}{\text{IIP3}_1} + \frac{G_1}{\text{IIP3}_2} + \frac{G_1 G_2}{\text{IIP3}_3}
-\tag{11}\]</span></span></p>
-<p>Here <span class="math inline">\(G_1\)</span> is the linear gain of the first block, and <span class="math inline">\(\text{IIP3}_1\)</span>, <span class="math inline">\(\text{IIP3}_2\)</span> are the input-referred IP3 of the first and second block, respectively. Note that all powers have to be in linear units (i.e., Watts) when using <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;11</a>. An even more simplified version of <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;11</a> can be used with all quantities given in dBm and dB, respectively:</p>
+\tag{12}\]</span></span></p>
+<p>Here <span class="math inline">\(G_1\)</span> is the linear gain of the first block, and <span class="math inline">\(\text{IIP3}_1\)</span>, <span class="math inline">\(\text{IIP3}_2\)</span> are the input-referred IP3 of the first and second block, respectively. Note that all powers have to be in linear units (i.e., Watts) when using <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;12</a>. An even more simplified version of <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;12</a> can be used with all quantities given in dBm and dB, respectively:</p>
 <p><span id="eq-iip3-cascade-simple"><span class="math display">\[
 \text{IIP3}_\text{total} \approx \min \{  \text{IIP3}_1, \text{IIP3}_2 - G_1, \text{IIP3}_3 - G_1 - G_2 \}
-\tag{12}\]</span></span></p>
-<p>A typical RF system cascade with multiple blocks and their individual IIP3 contributions is shown in <a href="#fig-iip3-cascade" class="quarto-xref">Figure&nbsp;6</a>.</p>
-<div id="cell-fig-iip3-cascade" class="cell" data-execution_count="6">
+\tag{13}\]</span></span></p>
+<p>A typical RF system cascade with multiple blocks and their individual IIP3 contributions is shown in <a href="#fig-iip3-cascade" class="quarto-xref">Figure&nbsp;7</a>.</p>
+<div id="cell-fig-iip3-cascade" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div id="fig-iip3-cascade" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-iip3-cascade-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-iip3-cascade-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Block cascade for IIP3 calculation showing multiple stages with gains and individual IIP3 values."><img src="rfic_files/figure-html/fig-iip3-cascade-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-iip3-cascade-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Block cascade for IIP3 calculation showing multiple stages with gains and individual IIP3 values."><img src="rfic_files/figure-html/fig-iip3-cascade-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-iip3-cascade-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Block cascade for IIP3 calculation showing multiple stages with gains and individual IIP3 values.
+Figure&nbsp;7: Block cascade for IIP3 calculation showing multiple stages with gains and individual IIP3 values.
 </figcaption>
 </figure>
 </div>
@@ -977,7 +996,7 @@ Note&nbsp;3: Simple IIP3 Cascade Calculation
 </div>
 <div class="callout-body-container callout-body">
 <p>Let’s calculate the overall IIP3 of two cascaded blocks. The first block is a low-noise amplifier with an IIP3 of -10 dBm and a gain of 20 dB. The second block is a mixer that has a gain of 10 dB and an IIP3 of 5 dBm. What is the overall IIP3?</p>
-<p>Using <a href="#eq-iip3-cascade-simple" class="quarto-xref">Equation&nbsp;12</a> we can quickly estimate:</p>
+<p>Using <a href="#eq-iip3-cascade-simple" class="quarto-xref">Equation&nbsp;13</a> we can quickly estimate:</p>
 <p><span class="math display">\[
 \text{IIP3}_\text{total} \approx \min \{ -10\,\text{dBm}, 5\,\text{dBm} - 20\,\text{dB} = -15\,\text{dBm} \} = -15\,\text{dBm}
 \]</span></p>
@@ -1038,16 +1057,16 @@ P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \le
 </section>
 <section id="noise-in-impedance-matched-systems" class="level3" data-number="2.2.2">
 <h3 data-number="2.2.2" class="anchored" data-anchor-id="noise-in-impedance-matched-systems"><span class="header-section-number">2.2.2</span> Noise in Impedance-Matched Systems</h3>
-<p>We now want to calculate the maximum noise power that can be extracted from a noisy source. We assume the following situation as shown in <a href="#fig-noise-matched-system" class="quarto-xref">Figure&nbsp;7</a>. Note that the voltage source <span class="math inline">\(\overline{V_\mathrm{n,s}^2}\)</span> models the thermal noise of the source resistor <span class="math inline">\(R_\mathrm{s}\)</span> resulting in a Thevenin equivalent circuit.</p>
-<div id="cell-fig-noise-matched-system" class="cell" data-execution_count="7">
+<p>We now want to calculate the maximum noise power that can be extracted from a noisy source. We assume the following situation as shown in <a href="#fig-noise-matched-system" class="quarto-xref">Figure&nbsp;8</a>. Note that the voltage source <span class="math inline">\(\overline{V_\mathrm{n,s}^2}\)</span> models the thermal noise of the source resistor <span class="math inline">\(R_\mathrm{s}\)</span> resulting in a Thevenin equivalent circuit.</p>
+<div id="cell-fig-noise-matched-system" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div id="fig-noise-matched-system" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-noise-matched-system-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-noise-matched-system-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: A noise-matched system with source and load impedances."><img src="rfic_files/figure-html/fig-noise-matched-system-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-noise-matched-system-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;8: A noise-matched system with source and load impedances."><img src="rfic_files/figure-html/fig-noise-matched-system-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-noise-matched-system-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: A noise-matched system with source and load impedances.
+Figure&nbsp;8: A noise-matched system with source and load impedances.
 </figcaption>
 </figure>
 </div>
@@ -1056,12 +1075,12 @@ Figure&nbsp;7: A noise-matched system with source and load impedances.
 <p>We know that the noise of the source resistor is given by <span class="math inline">\(\overline{V_\mathrm{n,s}^2} = 4 k T R_\mathrm{s}\)</span>. We assume the load resistor <span class="math inline">\(R_\mathrm{load}\)</span> as noiseless and matched to the source resistor, i.e., <span class="math inline">\(R_\mathrm{load} = R_\mathrm{s}\)</span> for <a href="https://en.wikipedia.org/wiki/Maximum_power_transfer_theorem">maximum power transfer</a>. The noise power spectral density delivered to the load resistor is then given by</p>
 <p><span id="eq-noise-power-matched"><span class="math display">\[
 P_\mathrm{n,load} = \frac{\overline{V_\mathrm{n,load}^2}}{R_\mathrm{load}} = \frac{\overline{V_\mathrm{n,d}^2}}{4 R_\mathrm{s}} = k T
-\tag{13}\]</span></span></p>
-<p>The calculation of <a href="#eq-noise-power-matched" class="quarto-xref">Equation&nbsp;13</a> confirms the initial statement that the maximum noise power spectral density that can be extracted from a noisy source is <span class="math inline">\(k T\)</span> (in W/Hz). This result is independent of the actual value of the source resistance <span class="math inline">\(R_\mathrm{s}\)</span>.</p>
+\tag{14}\]</span></span></p>
+<p>The calculation of <a href="#eq-noise-power-matched" class="quarto-xref">Equation&nbsp;14</a> confirms the initial statement that the maximum noise power spectral density that can be extracted from a noisy source is <span class="math inline">\(k T\)</span> (in W/Hz). This result is independent of the actual value of the source resistance <span class="math inline">\(R_\mathrm{s}\)</span>.</p>
 <p>We can further generalize the thermal noise of any impedance as</p>
 <p><span id="eq-thermal-noise-impedance"><span class="math display">\[
 \overline{V_\mathrm{n}^2} = 4 k T \Re \{ Z \}
-\tag{14}\]</span></span></p>
+\tag{15}\]</span></span></p>
 <p>as for example in the complex impedance <span class="math inline">\(Z_\mathrm{ant}\)</span> of an antenna.</p>
 </section>
 <section id="sec-noise-figure" class="level3" data-number="2.2.3">
@@ -1069,7 +1088,7 @@ P_\mathrm{n,load} = \frac{\overline{V_\mathrm{n,load}^2}}{R_\mathrm{load}} = \fr
 <p>In RF systems, we often want to quantify the noise performance of a circuit block or a complete system. The most widely used metric is the <strong>noise factor (F)</strong>, which is defined as the ratio of the signal-to-noise ratio (SNR) at the input to the SNR at the output of a circuit block or system. If we express the noise factor in dB, we call it the <strong>noise figure (NF)</strong> <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span>. The noise factor is given by</p>
 <p><span id="eq-noise-figure"><span class="math display">\[
 F = \frac{\text{SNR}_\mathrm{in}}{\text{SNR}_\mathrm{out}} = \frac{(P_\mathrm{s}/P_\mathrm{n})_\mathrm{in}}{(P_\mathrm{s}/P_\mathrm{n})_\mathrm{out}}
-\tag{15}\]</span></span></p>
+\tag{16}\]</span></span></p>
 <p>where <span class="math inline">\(P_\mathrm{s}\)</span> is the signal power and <span class="math inline">\(P_\mathrm{n}\)</span> is the noise power. The noise factor is always larger than or equal to 1 (or 0 dB), as no circuit can improve the SNR!</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1084,16 +1103,16 @@ F = \frac{\text{SNR}_\mathrm{in}}{\text{SNR}_\mathrm{out}} = \frac{(P_\mathrm{s}
 <p>Note that the SNR can be improved by filtering, as filtering reduces the noise power. If the noise bandwidth is larger than the signal bandwidth, then the SNR can be improved without affecting the signal. However, this is not considered in the noise factor, as the noise factor assumes that both signal and noise pass through the same bandwidth.</p>
 </div>
 </div>
-<p>Let us look at a simple model of a noise circuit block as shown in <a href="#fig-noise-block" class="quarto-xref">Figure&nbsp;8</a>. The input signal <span class="math inline">\(S_\mathrm{in}\)</span> is accompanied by noise <span class="math inline">\(N_\mathrm{in}\)</span>. By definition it is assumed that the input noise power results from a matched resistor at <span class="math inline">\(T_0 = 290\,\text{K}\)</span>, so that <span class="math inline">\(N_\mathrm{in} = k T_0\)</span>. The circuit block has a power gain <span class="math inline">\(G\)</span> and adds its own noise <span class="math inline">\(N_\mathrm{dut}\)</span> to the output signal. For simplicity, we assume that the input and output of the circuit block are impedance matched to avoid reflections.</p>
-<div id="cell-fig-noise-block" class="cell" data-execution_count="8">
+<p>Let us look at a simple model of a noise circuit block as shown in <a href="#fig-noise-block" class="quarto-xref">Figure&nbsp;9</a>. The input signal <span class="math inline">\(S_\mathrm{in}\)</span> is accompanied by noise <span class="math inline">\(N_\mathrm{in}\)</span>. By definition it is assumed that the input noise power results from a matched resistor at <span class="math inline">\(T_0 = 290\,\text{K}\)</span>, so that <span class="math inline">\(N_\mathrm{in} = k T_0\)</span>. The circuit block has a power gain <span class="math inline">\(G\)</span> and adds its own noise <span class="math inline">\(N_\mathrm{dut}\)</span> to the output signal. For simplicity, we assume that the input and output of the circuit block are impedance matched to avoid reflections.</p>
+<div id="cell-fig-noise-block" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display">
 <div id="fig-noise-block" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-noise-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-noise-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;8: A noise-matched system with source and load impedances and a noisy circuit block."><img src="rfic_files/figure-html/fig-noise-block-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-noise-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: A noise-matched system with source and load impedances and a noisy circuit block."><img src="rfic_files/figure-html/fig-noise-block-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-noise-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: A noise-matched system with source and load impedances and a noisy circuit block.
+Figure&nbsp;9: A noise-matched system with source and load impedances and a noisy circuit block.
 </figcaption>
 </figure>
 </div>
@@ -1111,46 +1130,46 @@ F = \frac{{S_\mathrm{in}}/{N_\mathrm{in}}}{{S_\mathrm{out}}/{N_\mathrm{out}}} = 
 \]</span></p>
 <p>in other words, the noise factor is 1 plus the ratio of the noise added by the device under test (DUT) to the amplified input noise.</p>
 <p>Note that a noiseless block (<span class="math inline">\(N_\mathrm{dut} = 0\)</span>) has a noise factor of <span class="math inline">\(F=1\)</span>. A passive block with loss factor <span class="math inline">\(L\)</span> (and impedance matched at input and output) has a noise factor of <span class="math inline">\(F=L\)</span> (in linear units), as it attenuates the signal and <span class="math inline">\(N_\mathrm{out} = N_\mathrm{in} = k T\)</span> if everything is in thermal equilibrium.</p>
-<div id="cell-fig-noise-cascade" class="cell" data-execution_count="9">
+<div id="cell-fig-noise-cascade" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div id="fig-noise-cascade" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-noise-cascade-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-noise-cascade-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: Block cascade for noise factor calculation showing multiple stages with gains and individual noise factors."><img src="rfic_files/figure-html/fig-noise-cascade-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-noise-cascade-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;10: Block cascade for noise factor calculation showing multiple stages with gains and individual noise factors."><img src="rfic_files/figure-html/fig-noise-cascade-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-noise-cascade-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9: Block cascade for noise factor calculation showing multiple stages with gains and individual noise factors.
+Figure&nbsp;10: Block cascade for noise factor calculation showing multiple stages with gains and individual noise factors.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>If we have a cascade of multiple blocks, as shown in <a href="#fig-noise-cascade" class="quarto-xref">Figure&nbsp;9</a>, we can calculate the overall noise factor with the <strong>Friis formula</strong> <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span></p>
+<p>If we have a cascade of multiple blocks, as shown in <a href="#fig-noise-cascade" class="quarto-xref">Figure&nbsp;10</a>, we can calculate the overall noise factor with the <strong>Friis formula</strong> <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span></p>
 <p><span id="eq-friis"><span class="math display">\[
 F_\mathrm{total} = 1 + (F_1 - 1) + \frac{F_2 - 1}{G_1} + \frac{F_3 - 1}{G_1 G_2}
-\tag{16}\]</span></span></p>
-<p>where <span class="math inline">\(F_i\)</span> and <span class="math inline">\(G_i\)</span> are the noise factor and power gain of the <span class="math inline">\(i\)</span>-th block, respectively. Note that all gains have to be in linear units (not dB) when using <a href="#eq-friis" class="quarto-xref">Equation&nbsp;16</a>. We can interpret <a href="#eq-friis" class="quarto-xref">Equation&nbsp;16</a> as follows:</p>
+\tag{17}\]</span></span></p>
+<p>where <span class="math inline">\(F_i\)</span> and <span class="math inline">\(G_i\)</span> are the noise factor and power gain of the <span class="math inline">\(i\)</span>-th block, respectively. Note that all gains have to be in linear units (not dB) when using <a href="#eq-friis" class="quarto-xref">Equation&nbsp;17</a>. We can interpret <a href="#eq-friis" class="quarto-xref">Equation&nbsp;17</a> as follows:</p>
 <ul>
 <li>The overall noise factor <span class="math inline">\(F_\mathrm{total}\)</span> is always larger than or equal to the noise factor of the first block (<span class="math inline">\(F_1\)</span>).</li>
 <li>The noise factor of the first block is the most important one, as the noise factors of the following blocks are reduced by the gain of all preceding blocks. This is especially important in RF receivers, where the first block is usually a low-noise amplifier (LNA) with a very low noise figure (e.g., 1 dB or less) and a high gain (e.g., 10 dB or more). This ensures that the noise of the following blocks is negligible.</li>
 <li>The noise factor of the last block is reduced by the gain of all preceding blocks, so it is usually not very important.</li>
 </ul>
-<p>Here we also see a trade-off between noise and linearity, as shown by <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;11</a> and <a href="#eq-friis" class="quarto-xref">Equation&nbsp;16</a>. For low noise, we should try to maximize <span class="math inline">\(G_1\)</span>, however, this will affect linearity (IIP3) in a negative way. As in many other situation in RF design, we have to find a good compromise between conflicting requirements.</p>
+<p>Here we also see a trade-off between noise and linearity, as shown by <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;12</a> and <a href="#eq-friis" class="quarto-xref">Equation&nbsp;17</a>. For low noise, we should try to maximize <span class="math inline">\(G_1\)</span>, however, this will affect linearity (IIP3) in a negative way. As in many other situation in RF design, we have to find a good compromise between conflicting requirements.</p>
 </section>
 <section id="sec-sensitivity" class="level3" data-number="2.2.4">
 <h3 data-number="2.2.4" class="anchored" data-anchor-id="sec-sensitivity"><span class="header-section-number">2.2.4</span> Sensitivity</h3>
 <p>In RF receivers, we often want to know the minimum input signal power that can be detected with a certain SNR. This minimum input signal power is called the <strong>sensitivity</strong> of the receiver. The sensitivity can be calculated as</p>
 <p><span id="eq-sensitivity"><span class="math display">\[
 P_\mathrm{in, min} = P_\mathrm{n} \cdot \text{SNR}_\mathrm{min} \cdot F
-\tag{17}\]</span></span></p>
+\tag{18}\]</span></span></p>
 <p>where <span class="math inline">\(P_\mathrm{n}\)</span> is the noise power at the input, <span class="math inline">\(\text{SNR}_\mathrm{min}\)</span> is the minimum detectable SNR, and <span class="math inline">\(F\)</span> is the noise factor of the receiver. The input noise power can be calculated as</p>
 <p><span class="math display">\[
 P_\mathrm{n} = k T B
 \]</span></p>
-<p>where <span class="math inline">\(k\)</span> is the Boltzmann constant, <span class="math inline">\(T\)</span> is the temperature in Kelvin, and <span class="math inline">\(B\)</span> is the bandwidth of the receiver. Expressing <a href="#eq-sensitivity" class="quarto-xref">Equation&nbsp;17</a> in dBm we get the following formula:</p>
+<p>where <span class="math inline">\(k\)</span> is the Boltzmann constant, <span class="math inline">\(T\)</span> is the temperature in Kelvin, and <span class="math inline">\(B\)</span> is the bandwidth of the receiver. Expressing <a href="#eq-sensitivity" class="quarto-xref">Equation&nbsp;18</a> in dBm we get the following formula:</p>
 <p><span id="eq-sensitivity-dbm"><span class="math display">\[
 P_\mathrm{in, min}|_\mathrm{dBm} = -174\,\text{dBm/Hz} + \text{NF} + 10 \log_{10}(B/\text{Hz}) + \text{SNR}_\mathrm{min}|_\mathrm{dB}
-\tag{18}\]</span></span></p>
+\tag{19}\]</span></span></p>
 <p>where -174 dBm/Hz is the thermal noise PSD at room temperature (290 K). We can see that the sensitivity improves with lower noise figure, smaller bandwidth, and lower minimum detectable SNR.</p>
 <div id="nte-wifi-sensitivity" class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1163,7 +1182,7 @@ Note&nbsp;4: Sensitivity Calculation for WiFi
 </div>
 <div class="callout-body-container callout-body">
 <p>Let’s calculate the sensitivity of a WiFi receiver operating at 5 GHz with a bandwidth of <span class="math inline">\(B = 80\,\text{MHz}\)</span>, a noise figure of <span class="math inline">\(NF = 7\,\text{dB}\)</span>, and a minimum detectable SNR of 25 dB. This high SNR means that a high-order modulation scheme (like 64-QAM) is used for high data rates.</p>
-<p>Using <a href="#eq-sensitivity-dbm" class="quarto-xref">Equation&nbsp;18</a> we get: <span class="math display">\[
+<p>Using <a href="#eq-sensitivity-dbm" class="quarto-xref">Equation&nbsp;19</a> we get: <span class="math display">\[
 P_\mathrm{in, min} = -174\,\text{dBm/Hz} + 7\,\text{dB} + 10 \log_{10} (80 \times 10^6) + 25\,\text{dB} \approx -63\,\text{dBm}
 \]</span></p>
 <p>This means that the minimum input signal power that can be detected by the WiFi receiver is approximately -63 dBm.</p>
@@ -1187,23 +1206,23 @@ P_\mathrm{in, min} = -174\,\text{dBm/Hz} + 7\,\text{dB} + 10 \log_{10} (80 \time
 <li>Adapt gain (and linearity) to the signal strength in the RX, and to the output power in the TX.</li>
 <li>Generate the carrier frequency (local oscillator, LO) with low phase noise.</li>
 </ul>
-<p>The dominant architecture for the TRX is the so-called direct-conversion (or Zero-IF) architecture, where the upconversion and downconversion is performed in a single step. This is in contrast to superheterodyne architectures, where the signal is first converted to an intermediate frequency (IF) before being converted to baseband. The direct-conversion architecture has the advantage of reduced complexity and cost, as it requires fewer components and less filtering. However, it also has some disadvantages, such as increased susceptibility to DC offsets and I/Q imbalance. A typical TRX block diagram is shown in Figure <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;10</a>.</p>
-<div id="cell-fig-trx-block" class="cell" data-execution_count="10">
+<p>The dominant architecture for the TRX is the so-called direct-conversion (or Zero-IF) architecture, where the upconversion and downconversion is performed in a single step. This is in contrast to superheterodyne architectures, where the signal is first converted to an intermediate frequency (IF) before being converted to baseband. The direct-conversion architecture has the advantage of reduced complexity and cost, as it requires fewer components and less filtering. However, it also has some disadvantages, such as increased susceptibility to DC offsets and I/Q imbalance. A typical TRX block diagram is shown in Figure <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;11</a>.</p>
+<div id="cell-fig-trx-block" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div id="fig-trx-block" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-trx-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-trx-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;10: Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system."><img src="rfic_files/figure-html/fig-trx-block-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-trx-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;11: Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system."><img src="rfic_files/figure-html/fig-trx-block-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trx-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10: Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system.
+Figure&nbsp;11: Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>As can be seen in <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;10</a>, this generic example can be adapted in various ways. Generally, the amplifier gains are adjustable to adapt to different signal levels. If various channel bandwidths are to be supported, the corner frequencies of the low-pass filters (LPF) can be adjusted, as well as (optionally) the sampling rate of the ADCs and DACs. The local oscillator (LO) frequency is generated by a phase-locked loop (PLL) synthesizer, which can be tuned to the desired carrier frequency. In case of frequency-division duplex (FDD) operation, two PLLs are used to generate the TX and RX LO frequencies, which are separated by the duplex distance. In time-division duplex (TDD) operation, a single PLL is sufficient, supplying the LO signal to both RX and TX.</p>
-<p>The modem that is shown in <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;10</a> is responsible for the digital baseband processing, including functions like channel coding/decoding, modulation/demodulation, equalization, and error correction. The modem is usually implemented as a digital System-on-Chip (SoC) consisting of (multiple) CPUS, DSPs, and fixed-function blocks for time-critical processing. For an in-depth discussion we recommend <span class="citation" data-cites="Sklar_Digital_Communications">(<a href="#ref-Sklar_Digital_Communications" role="doc-biblioref">Sklar and Harris 2020</a>)</span> or <span class="citation" data-cites="Molisch_Wireless_Communications">(<a href="#ref-Molisch_Wireless_Communications" role="doc-biblioref">Molisch 2022</a>)</span>.</p>
+<p>As can be seen in <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;11</a>, this generic example can be adapted in various ways. Generally, the amplifier gains are adjustable to adapt to different signal levels. If various channel bandwidths are to be supported, the corner frequencies of the low-pass filters (LPF) can be adjusted, as well as (optionally) the sampling rate of the ADCs and DACs. The local oscillator (LO) frequency is generated by a phase-locked loop (PLL) synthesizer, which can be tuned to the desired carrier frequency. In case of frequency-division duplex (FDD) operation, two PLLs are used to generate the TX and RX LO frequencies, which are separated by the duplex distance. In time-division duplex (TDD) operation, a single PLL is sufficient, supplying the LO signal to both RX and TX.</p>
+<p>The modem that is shown in <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;11</a> is responsible for the digital baseband processing, including functions like channel coding/decoding, modulation/demodulation, equalization, and error correction. The modem is usually implemented as a digital System-on-Chip (SoC) consisting of (multiple) CPUS, DSPs, and fixed-function blocks for time-critical processing. For an in-depth discussion we recommend <span class="citation" data-cites="Sklar_Digital_Communications">(<a href="#ref-Sklar_Digital_Communications" role="doc-biblioref">Sklar and Harris 2020</a>)</span> or <span class="citation" data-cites="Molisch_Wireless_Communications">(<a href="#ref-Molisch_Wireless_Communications" role="doc-biblioref">Molisch 2022</a>)</span>.</p>
 </section>
 <section id="modulation-and-demodulation" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="modulation-and-demodulation"><span class="header-section-number">3.2</span> Modulation and Demodulation</h2>
@@ -1218,23 +1237,23 @@ s_\mathrm{RF,complex}(t) = s_\mathrm{BB}(t) \cdot e^{j \omega_\mathrm{c} t} = [s
 <p>The real-valued RF signal is obtained by taking the real part of this expression:</p>
 <p><span id="eq-modulation"><span class="math display">\[
 s_\mathrm{RF}(t) = \Re \{ s_\mathrm{RF,complex}(t) \} = s_\mathrm{I}(t) \cos(\omega_\mathrm{c} t) - s_\mathrm{Q}(t) \sin(\omega_\mathrm{c} t).
-\tag{19}\]</span></span></p>
-<p>The process formulated in <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;19</a> is done in the TX, as shown in <a href="#fig-tx-modulation" class="quarto-xref">Figure&nbsp;11</a>.</p>
-<div id="cell-fig-tx-modulation" class="cell" data-execution_count="11">
+\tag{20}\]</span></span></p>
+<p>The process formulated in <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;20</a> is done in the TX, as shown in <a href="#fig-tx-modulation" class="quarto-xref">Figure&nbsp;12</a>.</p>
+<div id="cell-fig-tx-modulation" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div id="fig-tx-modulation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-tx-modulation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-tx-modulation-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;11: TX modulator."><img src="rfic_files/figure-html/fig-tx-modulation-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-tx-modulation-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;12: TX modulator."><img src="rfic_files/figure-html/fig-tx-modulation-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tx-modulation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11: TX modulator.
+Figure&nbsp;12: TX modulator.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>The RF signal generation according to <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;19</a> is called quadrature modulation. This is the modulation used most often in modern communication systems, as it allows to transmit two independent signals (I and Q) in the same bandwidth. The I and Q signals are also called quadrature components, as they are 90° out of phase with each other.</p>
+<p>The RF signal generation according to <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;20</a> is called quadrature modulation. This is the modulation used most often in modern communication systems, as it allows to transmit two independent signals (I and Q) in the same bandwidth. The I and Q signals are also called quadrature components, as they are 90° out of phase with each other.</p>
 <p>Alternatively, a modulation called polar modulation can be used, where the amplitude and phase of the carrier are varied according to the baseband signal. This is done by converting the I and Q signals to polar coordinates</p>
 <p><span class="math display">\[
 s_\mathrm{RF}(t) = \Re \{ A(t) \cdot e^{j \varphi(t)} \cdot e^{j \omega_\mathrm{c} t} \}
@@ -1244,16 +1263,16 @@ s_\mathrm{RF}(t) = \Re \{ A(t) \cdot e^{j \varphi(t)} \cdot e^{j \omega_\mathrm{
 A(t) = \sqrt{s_\mathrm{I}^2(t) + s_\mathrm{Q}^2(t)}, \quad \varphi(t) = \tan^{-1}\left(\frac{s_\mathrm{I}(t)}{s_\mathrm{Q}(t)}\right).
 \]</span></p>
 <p>As the mathematical operations required for the cartesian to polar transformation are quite nonlinear, the <span class="math inline">\(A(t)\)</span> and <span class="math inline">\(\phi(t)\)</span> signals are wideband. Some wireless standards allow efficient use of polar modulation, for example Bluetooth, where basically all TX are realized as polar modulators.</p>
-<p>In the RX, the received RF signal is downconverted to baseband by a similar process, as shown in <a href="#fig-rx-demodulation" class="quarto-xref">Figure&nbsp;12</a>.</p>
-<div id="cell-fig-rx-demodulation" class="cell" data-execution_count="12">
+<p>In the RX, the received RF signal is downconverted to baseband by a similar process, as shown in <a href="#fig-rx-demodulation" class="quarto-xref">Figure&nbsp;13</a>.</p>
+<div id="cell-fig-rx-demodulation" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div id="fig-rx-demodulation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rx-demodulation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-rx-demodulation-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;12: RX demodulator."><img src="rfic_files/figure-html/fig-rx-demodulation-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-rx-demodulation-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure&nbsp;13: RX demodulator."><img src="rfic_files/figure-html/fig-rx-demodulation-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rx-demodulation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12: RX demodulator.
+Figure&nbsp;13: RX demodulator.
 </figcaption>
 </figure>
 </div>
@@ -1262,20 +1281,20 @@ Figure&nbsp;12: RX demodulator.
 <p>For demodulation we have to shift the RF signal down to baseband, which mathematically is done by multiplying with the complex conjugate of the carrier:</p>
 <p><span id="eq-demodulation"><span class="math display">\[
 s_\mathrm{BB,complex}(t) = s_\mathrm{RF}(t) \cdot e^{-j \omega_\mathrm{c} t} = s_\mathrm{RF}(t) \cdot [\cos(\omega_\mathrm{c} t) - j \sin(\omega_\mathrm{c} t)]
-\tag{20}\]</span></span></p>
+\tag{21}\]</span></span></p>
 </section>
 <section id="filtering" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="filtering"><span class="header-section-number">3.3</span> Filtering</h2>
-<p>Filtering is an essential function in both TX and RX. In the TX, filtering is used to limit the bandwidth of the transmitted signal to the allocated channel bandwidth, and to suppress out-of-band emissions. In the RX, filtering is used to select the wanted signal from a crowded spectrum, and to suppress unwanted signals (blockers) that can cause interference or desensitization of the RX. A typical example of filtering in the RX is shown in <a href="#fig-filtering-rx" class="quarto-xref">Figure&nbsp;13</a>, where a bandpass filter is used to attenuate strong unwanted blockers while only slightly attenuating the wanted signal.</p>
-<div id="cell-fig-filtering-rx" class="cell" data-execution_count="13">
+<p>Filtering is an essential function in both TX and RX. In the TX, filtering is used to limit the bandwidth of the transmitted signal to the allocated channel bandwidth, and to suppress out-of-band emissions. In the RX, filtering is used to select the wanted signal from a crowded spectrum, and to suppress unwanted signals (blockers) that can cause interference or desensitization of the RX. A typical example of filtering in the RX is shown in <a href="#fig-filtering-rx" class="quarto-xref">Figure&nbsp;14</a>, where a bandpass filter is used to attenuate strong unwanted blockers while only slightly attenuating the wanted signal.</p>
+<div id="cell-fig-filtering-rx" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div id="fig-filtering-rx" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-filtering-rx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-filtering-rx-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure&nbsp;13: Filtering of wanted channel amid strong unwanted blockers. Exemplary shown in an RX scenario around 900 MHz. The strong blockers (top figure) are attenuated by an RF bandpass filter (bottom figure) with a bandwidth of 20 MHz, achieving more than 40 dB rejection of the blockers while only slightly attenuating the wanted signal."><img src="rfic_files/figure-html/fig-filtering-rx-output-1.png" width="662" height="470" class="figure-img"></a>
+<a href="rfic_files/figure-html/fig-filtering-rx-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Figure&nbsp;14: Filtering of wanted channel amid strong unwanted blockers. Exemplary shown in an RX scenario around 900 MHz. The strong blockers (top figure) are attenuated by an RF bandpass filter (bottom figure) with a bandwidth of 20 MHz, achieving more than 40 dB rejection of the blockers while only slightly attenuating the wanted signal."><img src="rfic_files/figure-html/fig-filtering-rx-output-1.png" width="662" height="470" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-filtering-rx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13: Filtering of wanted channel amid strong unwanted blockers. Exemplary shown in an RX scenario around 900 MHz. The strong blockers (top figure) are attenuated by an RF bandpass filter (bottom figure) with a bandwidth of 20 MHz, achieving more than 40 dB rejection of the blockers while only slightly attenuating the wanted signal.
+Figure&nbsp;14: Filtering of wanted channel amid strong unwanted blockers. Exemplary shown in an RX scenario around 900 MHz. The strong blockers (top figure) are attenuated by an RF bandpass filter (bottom figure) with a bandwidth of 20 MHz, achieving more than 40 dB rejection of the blockers while only slightly attenuating the wanted signal.
 </figcaption>
 </figure>
 </div>
@@ -1317,7 +1336,7 @@ Q = \frac{f_\mathrm{c}}{\Delta f}
 </section>
 <section id="direct-conversion-architecture" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="direct-conversion-architecture"><span class="header-section-number">3.4</span> Direct-Conversion Architecture</h2>
-<p>The transceiver architecture shown in <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;10</a> is called direct-conversion or zero-IF architecture, as the downconversion in the RX and upconversion in the TX is done in a single step. This architecture several advantages:</p>
+<p>The transceiver architecture shown in <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;11</a> is called direct-conversion or zero-IF architecture, as the downconversion in the RX and upconversion in the TX is done in a single step. This architecture several advantages:</p>
 <ul>
 <li>Per RX and TX a single LO is required (which can even be shared between RX and TX in TDD operation).</li>
 <li>There are a minimum number of RF blocks, which good for cost and power consumption.</li>
@@ -1338,20 +1357,20 @@ Q = \frac{f_\mathrm{c}}{\Delta f}
 </section>
 <section id="duplexing" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="duplexing"><span class="header-section-number">3.5</span> Duplexing</h2>
-<p>In the block diagram of <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;10</a>, we have not yet considered how to share the antenna between RX and TX. Essentially, there are two main methods to achieve this: <strong>frequency-division duplex (FDD)</strong> and <strong>time-division duplex (TDD)</strong>.</p>
+<p>In the block diagram of <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;11</a>, we have not yet considered how to share the antenna between RX and TX. Essentially, there are two main methods to achieve this: <strong>frequency-division duplex (FDD)</strong> and <strong>time-division duplex (TDD)</strong>.</p>
 <section id="frequency-division-duplex-fdd" class="level3" data-number="3.5.1">
 <h3 data-number="3.5.1" class="anchored" data-anchor-id="frequency-division-duplex-fdd"><span class="header-section-number">3.5.1</span> Frequency-Division Duplex (FDD)</h3>
 <p>In FDD, the RX and TX operate at different frequencies, separated by a duplex distance. This allows simultaneous transmission and reception, which is beneficial for applications like voice communication where low latency is required. However, FDD requires two separate frequency bands, which can be a limitation in terms of spectrum availability. Additionally, FDD requires two PLLs to generate the RX and TX LO frequencies, which increases complexity and power consumption.</p>
-<p>The RF RX and TX paths are connected to the antenna via a duplexer, which is a three-port device that allows signals to pass between the antenna and the RX or TX path, while isolating the RX and TX paths from each other. A typical FDD TRX block diagram is shown in <a href="#fig-trx-fdd" class="quarto-xref">Figure&nbsp;14</a>.</p>
-<div id="cell-fig-trx-fdd" class="cell" data-execution_count="14">
+<p>The RF RX and TX paths are connected to the antenna via a duplexer, which is a three-port device that allows signals to pass between the antenna and the RX or TX path, while isolating the RX and TX paths from each other. A typical FDD TRX block diagram is shown in <a href="#fig-trx-fdd" class="quarto-xref">Figure&nbsp;15</a>.</p>
+<div id="cell-fig-trx-fdd" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div id="fig-trx-fdd" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-trx-fdd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-trx-fdd-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Figure&nbsp;14: Block diagram of an FDD RF front-end."><img src="rfic_files/figure-html/fig-trx-fdd-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-trx-fdd-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="Figure&nbsp;15: Block diagram of an FDD RF front-end."><img src="rfic_files/figure-html/fig-trx-fdd-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trx-fdd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14: Block diagram of an FDD RF front-end.
+Figure&nbsp;15: Block diagram of an FDD RF front-end.
 </figcaption>
 </figure>
 </div>
@@ -1372,16 +1391,16 @@ Figure&nbsp;14: Block diagram of an FDD RF front-end.
 </section>
 <section id="time-division-duplex-tdd" class="level3" data-number="3.5.2">
 <h3 data-number="3.5.2" class="anchored" data-anchor-id="time-division-duplex-tdd"><span class="header-section-number">3.5.2</span> Time-Division Duplex (TDD)</h3>
-<p>In TDD, the RX and TX share the same frequency band but operate at different times. This allows for more efficient use of the available spectrum, as the same frequency can be used for both transmission and reception. TDD is particularly well-suited for applications with asymmetric traffic patterns, where the data rate in one direction is significantly higher than in the other. However, TDD requires precise timing control to avoid interference between RX and TX periods, which can increase complexity. In TDD, a single PLL can be used to generate the LO frequency for both RX and TX, which reduces complexity and power consumption. The RF RX and TX paths are connected to the antenna via a switch, which alternates between connecting the antenna to the RX path and the TX path. A typical TDD TRX block diagram is shown in <a href="#fig-trx-tdd" class="quarto-xref">Figure&nbsp;15</a>.</p>
-<div id="cell-fig-trx-tdd" class="cell" data-execution_count="15">
+<p>In TDD, the RX and TX share the same frequency band but operate at different times. This allows for more efficient use of the available spectrum, as the same frequency can be used for both transmission and reception. TDD is particularly well-suited for applications with asymmetric traffic patterns, where the data rate in one direction is significantly higher than in the other. However, TDD requires precise timing control to avoid interference between RX and TX periods, which can increase complexity. In TDD, a single PLL can be used to generate the LO frequency for both RX and TX, which reduces complexity and power consumption. The RF RX and TX paths are connected to the antenna via a switch, which alternates between connecting the antenna to the RX path and the TX path. A typical TDD TRX block diagram is shown in <a href="#fig-trx-tdd" class="quarto-xref">Figure&nbsp;16</a>.</p>
+<div id="cell-fig-trx-tdd" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div id="fig-trx-tdd" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-trx-tdd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-trx-tdd-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="Figure&nbsp;15: Block diagram of a TDD RF front-end."><img src="rfic_files/figure-html/fig-trx-tdd-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-trx-tdd-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-16" title="Figure&nbsp;16: Block diagram of a TDD RF front-end."><img src="rfic_files/figure-html/fig-trx-tdd-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trx-tdd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15: Block diagram of a TDD RF front-end.
+Figure&nbsp;16: Block diagram of a TDD RF front-end.
 </figcaption>
 </figure>
 </div>
@@ -1473,38 +1492,38 @@ Table&nbsp;3: Comparison of duplexing methods used by major wireless standards
 <p>In some cases, other architectures may be preferred over the direct-conversion architecture. During the evolution of wireless communication, many different architectures have been proposed and used. However, only a few of them are still relevant today. Some examples are shown next.</p>
 <section id="super-heterodyne-architecture" class="level3" data-number="3.6.1">
 <h3 data-number="3.6.1" class="anchored" data-anchor-id="super-heterodyne-architecture"><span class="header-section-number">3.6.1</span> Super-Heterodyne Architecture</h3>
-<p>The super-heterodyne architecture is a widely used approach in radio. It works by mixing the incoming/outgoing RF signal with an LO to produce an intermediate frequency (IF) signal. This IF signal is then amplified and processed, allowing for better selectivity and sensitivity compared to direct-conversion architectures. Super-heterodyne receivers/transmitters are known for their excellent performance in terms of image rejection and dynamic range, making them suitable for a variety of applications, including traditional analog TV and radio broadcasting. As simplified block diagram of a super-heterodyne transceiver is shown in <a href="#fig-trx-superheterodyne" class="quarto-xref">Figure&nbsp;16</a>.</p>
-<div id="cell-fig-trx-superheterodyne" class="cell" data-execution_count="16">
+<p>The super-heterodyne architecture is a widely used approach in radio. It works by mixing the incoming/outgoing RF signal with an LO to produce an intermediate frequency (IF) signal. This IF signal is then amplified and processed, allowing for better selectivity and sensitivity compared to direct-conversion architectures. Super-heterodyne receivers/transmitters are known for their excellent performance in terms of image rejection and dynamic range, making them suitable for a variety of applications, including traditional analog TV and radio broadcasting. As simplified block diagram of a super-heterodyne transceiver is shown in <a href="#fig-trx-superheterodyne" class="quarto-xref">Figure&nbsp;17</a>.</p>
+<div id="cell-fig-trx-superheterodyne" class="cell" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div id="fig-trx-superheterodyne" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-trx-superheterodyne-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-trx-superheterodyne-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-16" title="Figure&nbsp;16: Block diagram of a super-heterodyne transceiver (TRX) showing the main functional blocks of RX and TX."><img src="rfic_files/figure-html/fig-trx-superheterodyne-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-trx-superheterodyne-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-17" title="Figure&nbsp;17: Block diagram of a super-heterodyne transceiver (TRX) showing the main functional blocks of RX and TX."><img src="rfic_files/figure-html/fig-trx-superheterodyne-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trx-superheterodyne-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;16: Block diagram of a super-heterodyne transceiver (TRX) showing the main functional blocks of RX and TX.
+Figure&nbsp;17: Block diagram of a super-heterodyne transceiver (TRX) showing the main functional blocks of RX and TX.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>When you compare <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;10</a> with <a href="#fig-trx-superheterodyne" class="quarto-xref">Figure&nbsp;16</a>, you can immediately appreciate the increased complexity of the super-heterodyne architecture. It requires two PLLs to generate the RX and TX LO frequencies, as well as additional mixers and filters for the IF stage. This increases cost, power consumption, and size. However, the super-heterodyne architecture can provide better performance in terms of selectivity and sensitivity, especially in challenging RF environments with strong blockers, as it allows filtering at RF, IF, and baseband frequencies.</p>
+<p>When you compare <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;11</a> with <a href="#fig-trx-superheterodyne" class="quarto-xref">Figure&nbsp;17</a>, you can immediately appreciate the increased complexity of the super-heterodyne architecture. It requires two PLLs to generate the RX and TX LO frequencies, as well as additional mixers and filters for the IF stage. This increases cost, power consumption, and size. However, the super-heterodyne architecture can provide better performance in terms of selectivity and sensitivity, especially in challenging RF environments with strong blockers, as it allows filtering at RF, IF, and baseband frequencies.</p>
 <p>One important aspect of super-heterodyne receivers is the choice of the intermediate frequency (IF). The IF should be high enough to allow for effective filtering and <strong>image rejection</strong>, but low enough to avoid excessive complexity and power consumption. Common IF frequencies range from a few MHz to several hundred MHz, depending on the application and frequency band.</p>
 <p>An important issue in super-heterodyne receivers is the <strong>image frequency</strong>. The image frequency is a spurious frequency that can interfere with the desired signal, and is located at <span class="math inline">\(f_\mathrm{image} = f_\mathrm{RF} \pm 2 f_\mathrm{IF}\)</span> (the signs depends on the choice of high-side or low-side mixing). To suppress the image frequency, an image-reject filter is either placed before (RX) or after (TX) the mixer. The design of this filter is critical, as it must provide sufficient attenuation of the image frequency while maintaining low insertion loss for the desired signal.</p>
 <p>An alternative to image filtering is the use of active image rejection techniques, such as the <strong>Hartley</strong> or <strong>Weaver</strong> architectures. These techniques use additional mixers and phase shifters to cancel out the image frequency, allowing for improved performance without the need for a dedicated image-reject filter.</p>
 </section>
 <section id="low-if-architecture" class="level3" data-number="3.6.2">
 <h3 data-number="3.6.2" class="anchored" data-anchor-id="low-if-architecture"><span class="header-section-number">3.6.2</span> Low-IF Architecture</h3>
-<p>To avoid some of the issues of direct-conversion architectures (like dc offsets and flicker noise), a low-IF architecture can be used. In a low-IF architecture, the RX and TX signals are mixed to a low intermediate frequency (typically a few MHz to tens of MHz) instead of directly to baseband. This allows for easier filtering of DC offsets and flicker noise, while still maintaining the benefits of a single LO and reduced complexity compared to super-heterodyne architectures. A low-IF architecture is shown in <a href="#fig-trx-lowif" class="quarto-xref">Figure&nbsp;17</a>.</p>
-<div id="cell-fig-trx-lowif" class="cell" data-execution_count="17">
+<p>To avoid some of the issues of direct-conversion architectures (like dc offsets and flicker noise), a low-IF architecture can be used. In a low-IF architecture, the RX and TX signals are mixed to a low intermediate frequency (typically a few MHz to tens of MHz) instead of directly to baseband. This allows for easier filtering of DC offsets and flicker noise, while still maintaining the benefits of a single LO and reduced complexity compared to super-heterodyne architectures. A low-IF architecture is shown in <a href="#fig-trx-lowif" class="quarto-xref">Figure&nbsp;18</a>.</p>
+<div id="cell-fig-trx-lowif" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div id="fig-trx-lowif" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-trx-lowif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-trx-lowif-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-17" title="Figure&nbsp;17: Block diagram of a low-IF transceiver (TRX) showing the main functional blocks of RX and TX. Note the usage of complex analog and digital baseband filters. Otherwise, the structure is similar to a zero-IF TRX as shown in Figure&nbsp;10."><img src="rfic_files/figure-html/fig-trx-lowif-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-trx-lowif-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-18" title="Figure&nbsp;18: Block diagram of a low-IF transceiver (TRX) showing the main functional blocks of RX and TX. Note the usage of complex analog and digital baseband filters. Otherwise, the structure is similar to a zero-IF TRX as shown in Figure&nbsp;11."><img src="rfic_files/figure-html/fig-trx-lowif-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trx-lowif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;17: Block diagram of a low-IF transceiver (TRX) showing the main functional blocks of RX and TX. Note the usage of complex analog and digital baseband filters. Otherwise, the structure is similar to a zero-IF TRX as shown in <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;10</a>.
+Figure&nbsp;18: Block diagram of a low-IF transceiver (TRX) showing the main functional blocks of RX and TX. Note the usage of complex analog and digital baseband filters. Otherwise, the structure is similar to a zero-IF TRX as shown in <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;11</a>.
 </figcaption>
 </figure>
 </div>
@@ -1515,16 +1534,16 @@ Figure&nbsp;17: Block diagram of a low-IF transceiver (TRX) showing the main fun
 </section>
 <section id="super-simple-architecture" class="level3" data-number="3.6.3">
 <h3 data-number="3.6.3" class="anchored" data-anchor-id="super-simple-architecture"><span class="header-section-number">3.6.3</span> Super Simple Architecture</h3>
-<p>For some applications with very low cost and low performance requirements, a super simple architecture can be used (think garage door opener). In this architecture, the RX and TX paths are stripped down to the bare minimum. A super simple receiver just uses a bandpass filter and an envelope detector, while a super simple transmitter uses an oscillator and power amplifier. These simplified architectures are shown in <a href="#fig-trx-supersimple" class="quarto-xref">Figure&nbsp;18</a>.</p>
-<div id="cell-fig-trx-supersimple" class="cell" data-execution_count="18">
+<p>For some applications with very low cost and low performance requirements, a super simple architecture can be used (think garage door opener). In this architecture, the RX and TX paths are stripped down to the bare minimum. A super simple receiver just uses a bandpass filter and an envelope detector, while a super simple transmitter uses an oscillator and power amplifier. These simplified architectures are shown in <a href="#fig-trx-supersimple" class="quarto-xref">Figure&nbsp;19</a>.</p>
+<div id="cell-fig-trx-supersimple" class="cell" data-execution_count="19">
 <div class="cell-output cell-output-display">
 <div id="fig-trx-supersimple" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-trx-supersimple-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-trx-supersimple-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-18" title="Figure&nbsp;18: Block diagram of a super simple TX and RX."><img src="rfic_files/figure-html/fig-trx-supersimple-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-trx-supersimple-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-19" title="Figure&nbsp;19: Block diagram of a super simple TX and RX."><img src="rfic_files/figure-html/fig-trx-supersimple-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trx-supersimple-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;18: Block diagram of a super simple TX and RX.
+Figure&nbsp;19: Block diagram of a super simple TX and RX.
 </figcaption>
 </figure>
 </div>
@@ -1545,7 +1564,7 @@ Figure&nbsp;18: Block diagram of a super simple TX and RX.
 <p>The EVM (in rms) is defined as</p>
 <p><span id="eq-evm-definition"><span class="math display">\[
 \text{EVM} = \frac{\sqrt{\frac{1}{N} \sum_{i=1}^{N} |s_\mathrm{ideal}(i) - s_\mathrm{meas}(i)|^2}}{\sqrt{\frac{1}{N} \sum_{i=1}^{N} |s_\mathrm{ideal}(i)|^2}}
-\tag{21}\]</span></span></p>
+\tag{22}\]</span></span></p>
 <p>where <span class="math inline">\(s_\mathrm{ideal}(i)\)</span> is the ideal transmitted symbol, <span class="math inline">\(s_\mathrm{meas}(i)\)</span> is the measured received symbol, and <span class="math inline">\(N\)</span> is the number of symbols. EVM is expressed either in percent or in dB using</p>
 <p><span class="math display">\[
 \text{EVM}|_\mathrm{dB} = 20 \cdot \log_{10}(\text{EVM}).
@@ -1559,22 +1578,22 @@ Figure&nbsp;18: Block diagram of a super simple TX and RX.
 </section>
 <section id="sec-lna" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Low Noise Amplifiers</h1>
-<p>As shown in <a href="#sec-sensitivity" class="quarto-xref">Section&nbsp;2.2.4</a>, the sensitivity of a receiver is determined (besides the channel bandwidth) mainly by the noise figure of the receiver. The noise figure is in turn determined by the noise figure of the first active component in the receive chain, which is usually a low noise amplifier (LNA), as exemplified in <a href="#eq-friis" class="quarto-xref">Equation&nbsp;16</a>. Hence, as shown in <a href="#fig-trx-fdd" class="quarto-xref">Figure&nbsp;14</a> and <a href="#fig-trx-tdd" class="quarto-xref">Figure&nbsp;15</a>, low noise amplifiers (LNAs) are the first active building block in a receiver after the antenna and some initial RF filtering.</p>
-<div id="cell-fig-lna-block" class="cell" data-execution_count="19">
+<p>As shown in <a href="#sec-sensitivity" class="quarto-xref">Section&nbsp;2.2.4</a>, the sensitivity of a receiver is determined (besides the channel bandwidth) mainly by the noise figure of the receiver. The noise figure is in turn determined by the noise figure of the first active component in the receive chain, which is usually a low noise amplifier (LNA), as exemplified in <a href="#eq-friis" class="quarto-xref">Equation&nbsp;17</a>. Hence, as shown in <a href="#fig-trx-fdd" class="quarto-xref">Figure&nbsp;15</a> and <a href="#fig-trx-tdd" class="quarto-xref">Figure&nbsp;16</a>, low noise amplifiers (LNAs) are the first active building block in a receiver after the antenna and some initial RF filtering.</p>
+<div id="cell-fig-lna-block" class="cell" data-execution_count="20">
 <div class="cell-output cell-output-display">
 <div id="fig-lna-block" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lna-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-lna-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-19" title="Figure&nbsp;19: Block diagram of an LNA. Typically, the LNA input is impedance matched to 50 Ω, while the output is often not matched if the LNA is kept on chip. Often, the LNA gain is adjustable to allow for gain control in the receiver depending on the signal conditions. The LNA also might have a low-power bypass mode to reduce the power consumption of the LNA for sufficiently strong signals."><img src="rfic_files/figure-html/fig-lna-block-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-lna-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-20" title="Figure&nbsp;20: Block diagram of an LNA. Typically, the LNA input is impedance matched to 50 Ω, while the output is often not matched if the LNA is kept on chip. Often, the LNA gain is adjustable to allow for gain control in the receiver depending on the signal conditions. The LNA also might have a low-power bypass mode to reduce the power consumption of the LNA for sufficiently strong signals."><img src="rfic_files/figure-html/fig-lna-block-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lna-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19: Block diagram of an LNA. Typically, the LNA input is impedance matched to 50 Ω, while the output is often not matched if the LNA is kept on chip. Often, the LNA gain is adjustable to allow for gain control in the receiver depending on the signal conditions. The LNA also might have a low-power bypass mode to reduce the power consumption of the LNA for sufficiently strong signals.
+Figure&nbsp;20: Block diagram of an LNA. Typically, the LNA input is impedance matched to 50 Ω, while the output is often not matched if the LNA is kept on chip. Often, the LNA gain is adjustable to allow for gain control in the receiver depending on the signal conditions. The LNA also might have a low-power bypass mode to reduce the power consumption of the LNA for sufficiently strong signals.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>The LNA as a building block is shown in <a href="#fig-lna-block" class="quarto-xref">Figure&nbsp;19</a>. The main purpose of the LNA is to amplify the received signal with as little additional noise as possible. The LNA is usually designed for a specific frequency band, e.g., the 2.4 GHz ISM band or the 5 GHz WLAN band, and is typically designed for a specific impedance, e.g., 50 Ω, which is the standard impedance for RF systems; impedance matching is usually required at the input; the output impedance matching is only required if the output of the LNA goes off chip—if it is kept on chip impedance matching is often not required. The LNA is also designed to be sufficiently linear, i.e., to not introduce significant distortion to the amplified signal, however, compared to the noise requirements, linearity is often less critical.</p>
+<p>The LNA as a building block is shown in <a href="#fig-lna-block" class="quarto-xref">Figure&nbsp;20</a>. The main purpose of the LNA is to amplify the received signal with as little additional noise as possible. The LNA is usually designed for a specific frequency band, e.g., the 2.4 GHz ISM band or the 5 GHz WLAN band, and is typically designed for a specific impedance, e.g., 50 Ω, which is the standard impedance for RF systems; impedance matching is usually required at the input; the output impedance matching is only required if the output of the LNA goes off chip—if it is kept on chip impedance matching is often not required. The LNA is also designed to be sufficiently linear, i.e., to not introduce significant distortion to the amplified signal, however, compared to the noise requirements, linearity is often less critical.</p>
 <p>Why is impedance matching at the input of the LNA so important?</p>
 <ul>
 <li>The antenna is usually designed for a specific impedance, e.g., 50 Ω, and if the LNA input is not matched to this impedance, a significant portion of the received signal will be reflected back to the antenna, resulting in a loss of signal power.</li>
@@ -1592,16 +1611,16 @@ Figure&nbsp;19: Block diagram of an LNA. Typically, the LNA input is impedance m
 <p>A higher return loss indicates a better impedance match. A return loss of 10 dB indicates that 10% of the signal power is reflected back, while a return loss of 20 dB indicates that only 1% of the signal power is reflected back. In practice, a return loss of at least 10 dB is desired, with higher (positive!) values being better <span class="citation" data-cites="Bird.2009">(<a href="#ref-Bird.2009" role="doc-biblioref">Bird 2009</a>)</span>.</p>
 <section id="sec-lna-resistive-matching" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="sec-lna-resistive-matching"><span class="header-section-number">4.1</span> Resistively Matched Common-Source LNA</h2>
-<p>The key question is now how to design an LNA with low noise figure and an input impedance matched to 50 Ω? In order to appreciate this design challenge, we will first try a naive approach, using a common-source amplifier with resistive termination, as shown in <a href="#fig-lna-naive" class="quarto-xref">Figure&nbsp;20</a>.</p>
-<div id="cell-fig-lna-naive" class="cell" data-execution_count="20">
+<p>The key question is now how to design an LNA with low noise figure and an input impedance matched to 50 Ω? In order to appreciate this design challenge, we will first try a naive approach, using a common-source amplifier with resistive termination, as shown in <a href="#fig-lna-naive" class="quarto-xref">Figure&nbsp;21</a>.</p>
+<div id="cell-fig-lna-naive" class="cell" data-execution_count="21">
 <div class="cell-output cell-output-display">
 <div id="fig-lna-naive" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lna-naive-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-lna-naive-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-20" title="Figure&nbsp;20: A simple LNA with resistive input matching and a tank circuit as a load (biasing details are omitted). The LNA is driven by a 50 Ω source."><img src="rfic_files/figure-html/fig-lna-naive-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-lna-naive-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-21" title="Figure&nbsp;21: A simple LNA with resistive input matching and a tank circuit as a load (biasing details are omitted). The LNA is driven by a 50 Ω source."><img src="rfic_files/figure-html/fig-lna-naive-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lna-naive-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;20: A simple LNA with resistive input matching and a tank circuit as a load (biasing details are omitted). The LNA is driven by a 50 Ω source.
+Figure&nbsp;21: A simple LNA with resistive input matching and a tank circuit as a load (biasing details are omitted). The LNA is driven by a 50 Ω source.
 </figcaption>
 </figure>
 </div>
@@ -1611,23 +1630,23 @@ Figure&nbsp;20: A simple LNA with resistive input matching and a tank circuit as
 <p>How can we calculate the noise figure of this simple LNA? We formulate</p>
 <p><span id="eq-lna-noise-factor"><span class="math display">\[
 F = \frac{\text{total noise at output}}{\text{noise at output due to source only}}.
-\tag{22}\]</span></span></p>
-<p>We derive a small-signal equivalent circuit of <a href="#fig-lna-naive" class="quarto-xref">Figure&nbsp;20</a>, which is shown in <a href="#fig-lna-naive-noise" class="quarto-xref">Figure&nbsp;21</a>, to calculate the total noise at the output of the LNA.</p>
-<div id="cell-fig-lna-naive-noise" class="cell" data-execution_count="21">
+\tag{23}\]</span></span></p>
+<p>We derive a small-signal equivalent circuit of <a href="#fig-lna-naive" class="quarto-xref">Figure&nbsp;21</a>, which is shown in <a href="#fig-lna-naive-noise" class="quarto-xref">Figure&nbsp;22</a>, to calculate the total noise at the output of the LNA.</p>
+<div id="cell-fig-lna-naive-noise" class="cell" data-execution_count="22">
 <div class="cell-output cell-output-display">
 <div id="fig-lna-naive-noise" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lna-naive-noise-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-lna-naive-noise-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-21" title="Figure&nbsp;21: Equivalent circuit of resistively matched common-source LNA."><img src="rfic_files/figure-html/fig-lna-naive-noise-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-lna-naive-noise-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-22" title="Figure&nbsp;22: Equivalent circuit of resistively matched common-source LNA."><img src="rfic_files/figure-html/fig-lna-naive-noise-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lna-naive-noise-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;21: Equivalent circuit of resistively matched common-source LNA.
+Figure&nbsp;22: Equivalent circuit of resistively matched common-source LNA.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Withe the help of <a href="#fig-lna-naive-noise" class="quarto-xref">Figure&nbsp;21</a>, we can calculate the total output noise power spectral density as</p>
+<p>Withe the help of <a href="#fig-lna-naive-noise" class="quarto-xref">Figure&nbsp;22</a>, we can calculate the total output noise power spectral density as</p>
 <p><span class="math display">\[
 \overline{V_\mathrm{n,out,1}^2} = A_\mathrm{v}^2 \cdot 4 k T (R_\mathrm{s} \parallel R_\mathrm{p}) = (g_\mathrm{m}R_\mathrm{D})^2 \cdot 4 k T (R_\mathrm{s} \parallel R_\mathrm{p})
 \]</span></p>
@@ -1640,17 +1659,17 @@ Figure&nbsp;21: Equivalent circuit of resistively matched common-source LNA.
 <p>so that in total</p>
 <p><span id="eq-lna-naive-noise-total"><span class="math display">\[
 \overline{V_\mathrm{n,out}^2} = \overline{V_\mathrm{n,out,1}^2} + \overline{V_\mathrm{n,out,2}^2} = 4 k T \left[ (g_\mathrm{m}R_\mathrm{D})^2 (R_\mathrm{s} \parallel R_\mathrm{p}) + \gamma g_\mathrm{m}R_\mathrm{D}^2 + R_\mathrm{D} \right].
-\tag{23}\]</span></span></p>
-<p>We now need to find the output noise coming from the source only. For this we can use the equivalent circuit in <a href="#fig-lna-naive-noise-input" class="quarto-xref">Figure&nbsp;22</a>, to formulate the output noise due to the source only.</p>
-<div id="cell-fig-lna-naive-noise-input" class="cell" data-execution_count="22">
+\tag{24}\]</span></span></p>
+<p>We now need to find the output noise coming from the source only. For this we can use the equivalent circuit in <a href="#fig-lna-naive-noise-input" class="quarto-xref">Figure&nbsp;23</a>, to formulate the output noise due to the source only.</p>
+<div id="cell-fig-lna-naive-noise-input" class="cell" data-execution_count="23">
 <div class="cell-output cell-output-display">
 <div id="fig-lna-naive-noise-input" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lna-naive-noise-input-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-lna-naive-noise-input-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-22" title="Figure&nbsp;22: Eqivalent circuit to calculate the output noise from the input."><img src="rfic_files/figure-html/fig-lna-naive-noise-input-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-lna-naive-noise-input-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-23" title="Figure&nbsp;23: Eqivalent circuit to calculate the output noise from the input."><img src="rfic_files/figure-html/fig-lna-naive-noise-input-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lna-naive-noise-input-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;22: Eqivalent circuit to calculate the output noise from the input.
+Figure&nbsp;23: Eqivalent circuit to calculate the output noise from the input.
 </figcaption>
 </figure>
 </div>
@@ -1659,11 +1678,11 @@ Figure&nbsp;22: Eqivalent circuit to calculate the output noise from the input.
 <p>We find that</p>
 <p><span id="eq-lna-naive-noise-input"><span class="math display">\[
 \overline{V_\mathrm{n,out,s}^2} = A_\mathrm{v}^2 \cdot 4 k T R_\mathrm{s} \cdot \left(\frac{R_\mathrm{p}}{R_\mathrm{s} + R_\mathrm{p}}{} \right)^2.
-\tag{24}\]</span></span></p>
-<p>Finally, we can use <a href="#eq-lna-naive-noise-total" class="quarto-xref">Equation&nbsp;23</a> and <a href="#eq-lna-naive-noise-input" class="quarto-xref">Equation&nbsp;24</a> with <a href="#eq-lna-noise-factor" class="quarto-xref">Equation&nbsp;22</a> to calculate the noise figure of the simple resistively matched common-source LNA as</p>
+\tag{25}\]</span></span></p>
+<p>Finally, we can use <a href="#eq-lna-naive-noise-total" class="quarto-xref">Equation&nbsp;24</a> and <a href="#eq-lna-naive-noise-input" class="quarto-xref">Equation&nbsp;25</a> with <a href="#eq-lna-noise-factor" class="quarto-xref">Equation&nbsp;23</a> to calculate the noise figure of the simple resistively matched common-source LNA as</p>
 <p><span id="eq-lna-naive-noise-factor"><span class="math display">\[
 F = \frac{\overline{V_\mathrm{n,out}^2}}{\overline{V_\mathrm{n,out,s}^2}} = 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} + \frac{\gamma R_\mathrm{s}}{g_\mathrm{m}(R_\mathrm{s} \parallel R_\mathrm{p})^2} + \frac{R_\mathrm{s}}{g_\mathrm{m}^2 (R_\mathrm{s} \parallel R_\mathrm{p})^2 R_\mathrm{D}}.
-\tag{25}\]</span></span></p>
+\tag{26}\]</span></span></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1674,10 +1693,10 @@ F = \frac{\overline{V_\mathrm{n,out}^2}}{\overline{V_\mathrm{n,out,s}^2}} = 1 + 
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>As an exercise to calculate circuits with noise, re-confirm and derive yourself the result of <a href="#eq-lna-naive-noise-factor" class="quarto-xref">Equation&nbsp;25</a>.</p>
+<p>As an exercise to calculate circuits with noise, re-confirm and derive yourself the result of <a href="#eq-lna-naive-noise-factor" class="quarto-xref">Equation&nbsp;26</a>.</p>
 </div>
 </div>
-<p>How can we interpret <a href="#eq-lna-naive-noise-factor" class="quarto-xref">Equation&nbsp;25</a>? We see that we can minimize the noise factor by making <span class="math inline">\(g_\mathrm{m}\)</span> large. Then we have a noise factor of</p>
+<p>How can we interpret <a href="#eq-lna-naive-noise-factor" class="quarto-xref">Equation&nbsp;26</a>? We see that we can minimize the noise factor by making <span class="math inline">\(g_\mathrm{m}\)</span> large. Then we have a noise factor of</p>
 <p><span class="math display">\[
 F = 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} = 2
 \]</span></p>
@@ -1686,62 +1705,62 @@ F = 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} = 2
 </section>
 <section id="sec-lna-common-gate" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="sec-lna-common-gate"><span class="header-section-number">4.2</span> Common-Gate LNA</h2>
-<p>We remember from our <a href="https://iic-jku.github.io/analog-circuit-design/analog_circuit_design.html">analog circuit design lecture</a> that the common-gate configuration has an input impedance of <span class="math inline">\(1/g_\mathrm{m}\)</span>, neglecting parasitic capacitances. Hence, if we choose <span class="math inline">\(g_\mathrm{m}= 1/50\,\Omega = 20\,\text{mS}\)</span>, we can achieve input matching to 50 Ω without using a resistor at the input. This is the key idea of the common-gate LNA, which is shown in <a href="#fig-lna-cg" class="quarto-xref">Figure&nbsp;23</a>.</p>
-<div id="cell-fig-lna-cg" class="cell" data-execution_count="23">
+<p>We remember from our <a href="https://iic-jku.github.io/analog-circuit-design/analog_circuit_design.html">analog circuit design lecture</a> that the common-gate configuration has an input impedance of <span class="math inline">\(1/g_\mathrm{m}\)</span>, neglecting parasitic capacitances. Hence, if we choose <span class="math inline">\(g_\mathrm{m}= 1/50\,\Omega = 20\,\text{mS}\)</span>, we can achieve input matching to 50 Ω without using a resistor at the input. This is the key idea of the common-gate LNA, which is shown in <a href="#fig-lna-cg" class="quarto-xref">Figure&nbsp;24</a>.</p>
+<div id="cell-fig-lna-cg" class="cell" data-execution_count="24">
 <div class="cell-output cell-output-display">
 <div id="fig-lna-cg" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lna-cg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-lna-cg-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-23" title="Figure&nbsp;23: Circuit diagram of a common-gate LNA."><img src="rfic_files/figure-html/fig-lna-cg-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-lna-cg-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-24" title="Figure&nbsp;24: Circuit diagram of a common-gate LNA."><img src="rfic_files/figure-html/fig-lna-cg-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lna-cg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;23: Circuit diagram of a common-gate LNA.
+Figure&nbsp;24: Circuit diagram of a common-gate LNA.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>By inspecting <a href="#fig-lna-cg" class="quarto-xref">Figure&nbsp;23</a> and the practice from <a href="#sec-lna-resistive-matching" class="quarto-xref">Section&nbsp;4.1</a>, we can directly write down the output noise voltage as (with <span class="math inline">\(1/g_\mathrm{m}= R_\mathrm{s}\)</span>)</p>
+<p>By inspecting <a href="#fig-lna-cg" class="quarto-xref">Figure&nbsp;24</a> and the practice from <a href="#sec-lna-resistive-matching" class="quarto-xref">Section&nbsp;4.1</a>, we can directly write down the output noise voltage as (with <span class="math inline">\(1/g_\mathrm{m}= R_\mathrm{s}\)</span>)</p>
 <p><span id="eq-lna-cg-noise-total"><span class="math display">\[
 \overline{V_\mathrm{n,out}^2} = k T \left[ (g_\mathrm{m}R_\mathrm{D})^2 R_\mathrm{s} + \gamma g_\mathrm{m}R_\mathrm{D}^2 + 4 R_\mathrm{D} \right] = k T \left( \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + \gamma \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + 4 R_\mathrm{D} \right).
-\tag{26}\]</span></span></p>
+\tag{27}\]</span></span></p>
 <p>The output noise due to the source only is given by</p>
 <p><span id="eq-lna-cg-noise-source"><span class="math display">\[
 \overline{V_\mathrm{n,out,s}^2} = \frac{R_\mathrm{D}^2}{R_\mathrm{s}}.
-\tag{27}\]</span></span></p>
-<p>Finally, we can use <a href="#eq-lna-cg-noise-total" class="quarto-xref">Equation&nbsp;26</a> and <a href="#eq-lna-cg-noise-source" class="quarto-xref">Equation&nbsp;27</a> with <a href="#eq-lna-noise-factor" class="quarto-xref">Equation&nbsp;22</a> to calculate the noise figure of the common-gate LNA as</p>
+\tag{28}\]</span></span></p>
+<p>Finally, we can use <a href="#eq-lna-cg-noise-total" class="quarto-xref">Equation&nbsp;27</a> and <a href="#eq-lna-cg-noise-source" class="quarto-xref">Equation&nbsp;28</a> with <a href="#eq-lna-noise-factor" class="quarto-xref">Equation&nbsp;23</a> to calculate the noise figure of the common-gate LNA as</p>
 <p><span id="eq-lna-cg-noise-factor"><span class="math display">\[
 F = 1 + \gamma + \frac{4 R_\mathrm{s}}{R_\mathrm{D}}  \xrightarrow{R_\mathrm{D} \gg R_\mathrm{s}} F = 1 + \gamma .
-\tag{28}\]</span></span></p>
+\tag{29}\]</span></span></p>
 <p>With a classical long-channel <span class="math inline">\(\gamma = 2/3\)</span>, we can achieve a minimum noise figure of 2.2 dB, which is already better than the resistively matched common-source LNA. However, with modern short-channel devices, <span class="math inline">\(\gamma\)</span> is often larger than 1, so that the minimum noise figure of the common-gate LNA is often larger than 3 dB <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span>.</p>
 </section>
 <section id="sec-lna-inductive-degeneration" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="sec-lna-inductive-degeneration"><span class="header-section-number">4.3</span> Inductively-Degenerated Common-Source LNA</h2>
-<p>As we have seen in <a href="#sec-lna-common-gate" class="quarto-xref">Section&nbsp;4.2</a>, using circuit techniques can realize a real part of an input impedance without the associated thermal noise of a resistor. We now try something different, in the hope that it will result in an even lower noise figure. We construct an LNA based on a common-source MOSFET amplifier, but we add an impedance <span class="math inline">\(Z_\mathrm{deg}\)</span> into the source line. This arrangement is shown in <a href="#fig-lna-inductive-degeneration" class="quarto-xref">Figure&nbsp;24</a>.</p>
-<div id="cell-fig-lna-inductive-degeneration" class="cell" data-execution_count="24">
+<p>As we have seen in <a href="#sec-lna-common-gate" class="quarto-xref">Section&nbsp;4.2</a>, using circuit techniques can realize a real part of an input impedance without the associated thermal noise of a resistor. We now try something different, in the hope that it will result in an even lower noise figure. We construct an LNA based on a common-source MOSFET amplifier, but we add an impedance <span class="math inline">\(Z_\mathrm{deg}\)</span> into the source line. This arrangement is shown in <a href="#fig-lna-inductive-degeneration" class="quarto-xref">Figure&nbsp;25</a>.</p>
+<div id="cell-fig-lna-inductive-degeneration" class="cell" data-execution_count="25">
 <div class="cell-output cell-output-display">
 <div id="fig-lna-inductive-degeneration" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lna-inductive-degeneration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-lna-inductive-degeneration-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-24" title="Figure&nbsp;24: A common-source MOSFET stage with degeneration impedance."><img src="rfic_files/figure-html/fig-lna-inductive-degeneration-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-lna-inductive-degeneration-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-25" title="Figure&nbsp;25: A common-source MOSFET stage with degeneration impedance."><img src="rfic_files/figure-html/fig-lna-inductive-degeneration-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lna-inductive-degeneration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;24: A common-source MOSFET stage with degeneration impedance.
+Figure&nbsp;25: A common-source MOSFET stage with degeneration impedance.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>We now extract the small-signal equivalent circuit of <a href="#fig-lna-inductive-degeneration" class="quarto-xref">Figure&nbsp;24</a>, which is shown in <a href="#fig-lna-inductive-degeneration-zin" class="quarto-xref">Figure&nbsp;25</a>, to calculate the input impedance.</p>
-<div id="cell-fig-lna-inductive-degeneration-zin" class="cell" data-execution_count="25">
+<p>We now extract the small-signal equivalent circuit of <a href="#fig-lna-inductive-degeneration" class="quarto-xref">Figure&nbsp;25</a>, which is shown in <a href="#fig-lna-inductive-degeneration-zin" class="quarto-xref">Figure&nbsp;26</a>, to calculate the input impedance.</p>
+<div id="cell-fig-lna-inductive-degeneration-zin" class="cell" data-execution_count="26">
 <div class="cell-output cell-output-display">
 <div id="fig-lna-inductive-degeneration-zin" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lna-inductive-degeneration-zin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-lna-inductive-degeneration-zin-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-25" title="Figure&nbsp;25: Equivalent small-signal circuit of the input stage around M_1."><img src="rfic_files/figure-html/fig-lna-inductive-degeneration-zin-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-lna-inductive-degeneration-zin-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-26" title="Figure&nbsp;26: Equivalent small-signal circuit of the input stage around M_1."><img src="rfic_files/figure-html/fig-lna-inductive-degeneration-zin-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lna-inductive-degeneration-zin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;25: Equivalent small-signal circuit of the input stage around <span class="math inline">\(M_1\)</span>.
+Figure&nbsp;26: Equivalent small-signal circuit of the input stage around <span class="math inline">\(M_1\)</span>.
 </figcaption>
 </figure>
 </div>
@@ -1754,8 +1773,8 @@ v_\mathrm{x} = v_\mathrm{gs} + Z_\mathrm{deg} (i_\mathrm{x} + g_\mathrm{m}v_\mat
 <p>so that we can write the input impedance as</p>
 <p><span id="eq-lna-inductive-degeneration-zin"><span class="math display">\[
 Z_\mathrm{in} = \frac{v_\mathrm{x}}{i_\mathrm{x}} = \frac{1}{s C_\mathrm{gs}} + Z_\mathrm{deg} + \frac{g_\mathrm{m}Z_\mathrm{deg}}{s C_\mathrm{gs}}.
-\tag{29}\]</span></span></p>
-<p>The final term in <a href="#eq-lna-inductive-degeneration-zin" class="quarto-xref">Equation&nbsp;29</a> is the interesting one: By choosing <span class="math inline">\(Z_\mathrm{deg}\)</span> to be inductive (which we can do by either use an on-chip or off-chip inductor), we can realize a real part of the input impedance. If we choose <span class="math inline">\(Z_\mathrm{deg} = s L\)</span>, we find that</p>
+\tag{30}\]</span></span></p>
+<p>The final term in <a href="#eq-lna-inductive-degeneration-zin" class="quarto-xref">Equation&nbsp;30</a> is the interesting one: By choosing <span class="math inline">\(Z_\mathrm{deg}\)</span> to be inductive (which we can do by either use an on-chip or off-chip inductor), we can realize a real part of the input impedance. If we choose <span class="math inline">\(Z_\mathrm{deg} = s L\)</span>, we find that</p>
 <p><span class="math display">\[
 Z_\mathrm{in} = \frac{1}{s C_\mathrm{gs}} + s L + \frac{g_\mathrm{m}L}{C_\mathrm{gs}}.
 \]</span></p>
@@ -1766,24 +1785,24 @@ Z_\mathrm{in} = \frac{1}{s C_\mathrm{gs}} + s L + \frac{g_\mathrm{m}L}{C_\mathrm
 <p>Without proof (refer to <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span> or <span class="citation" data-cites="Darabi_RFIC">(<a href="#ref-Darabi_RFIC" role="doc-biblioref">Darabi 2020</a>)</span> for a derivation) we find for the noise factor of this input stage (with some simplification) as</p>
 <p><span id="eq-lna-inductive-degeneration-noise-factor"><span class="math display">\[
 F = 1 + \frac{\gamma R_\mathrm{s} \omega_0^2 C_\mathrm{gs}^2}{g_\mathrm{m}}.
-\tag{30}\]</span></span></p>
-<p>Finally we have an LNA input stage configuration which allows us to achieve a noise figure below 3 dB, even with <span class="math inline">\(\gamma &gt; 1\)</span>, by proper choice of <span class="math inline">\(g_\mathrm{m}\)</span>. Making <span class="math inline">\(g_\mathrm{m}\)</span> large (by spending more bias current) results in (first order) arbitrarily low noise figure. The inductively-degenerated common-source LNA is a widely used LNA input stage configuration in modern RFICs. A somewhat detailed schematic is shown in <a href="#fig-lna-inductive-degeneration-detailed" class="quarto-xref">Figure&nbsp;26</a>.</p>
-<div id="cell-fig-lna-inductive-degeneration-detailed" class="cell" data-execution_count="26">
+\tag{31}\]</span></span></p>
+<p>Finally we have an LNA input stage configuration which allows us to achieve a noise figure below 3 dB, even with <span class="math inline">\(\gamma &gt; 1\)</span>, by proper choice of <span class="math inline">\(g_\mathrm{m}\)</span>. Making <span class="math inline">\(g_\mathrm{m}\)</span> large (by spending more bias current) results in (first order) arbitrarily low noise figure. The inductively-degenerated common-source LNA is a widely used LNA input stage configuration in modern RFICs. A somewhat detailed schematic is shown in <a href="#fig-lna-inductive-degeneration-detailed" class="quarto-xref">Figure&nbsp;27</a>.</p>
+<div id="cell-fig-lna-inductive-degeneration-detailed" class="cell" data-execution_count="27">
 <div class="cell-output cell-output-display">
 <div id="fig-lna-inductive-degeneration-detailed" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lna-inductive-degeneration-detailed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-lna-inductive-degeneration-detailed-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-26" title="Figure&nbsp;26: An (almost complete) common-source MOSFET stage with degeneration impedance and cascode."><img src="rfic_files/figure-html/fig-lna-inductive-degeneration-detailed-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-lna-inductive-degeneration-detailed-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-27" title="Figure&nbsp;27: An (almost complete) common-source MOSFET stage with degeneration impedance and cascode."><img src="rfic_files/figure-html/fig-lna-inductive-degeneration-detailed-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lna-inductive-degeneration-detailed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;26: An (almost complete) common-source MOSFET stage with degeneration impedance and cascode.
+Figure&nbsp;27: An (almost complete) common-source MOSFET stage with degeneration impedance and cascode.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>The inductor <span class="math inline">\(L_\mathrm{match}\)</span> is used to match the input impedance to 50 Ω at the desired frequency, <span class="math inline">\(L_\mathrm{deg}\)</span> is used to realize the real part of the input impedance, <span class="math inline">\(R_\mathrm{bias}\)</span> is used to set the bias current of <span class="math inline">\(M_1\)</span>, <span class="math inline">\(M_2\)</span> is a cascode transistor which increases the output impedance and thus the gain of the stage (plus it improves the reverse isolation), and <span class="math inline">\(R_\mathrm{D}\)</span>, <span class="math inline">\(L_\mathrm{D}\)</span>, and <span class="math inline">\(C_\mathrm{D}\)</span> form a load tank which provides high gain at the desired frequency. A dc block is used at the input so that the bias point of <span class="math inline">\(M_1\)</span> is not corrupted by the input signal source. The bias voltage <span class="math inline">\(V_\mathrm{bias2}\)</span> sets the operating point of the cascode transistor <span class="math inline">\(M_2\)</span>.</p>
-<p>What is missing in <a href="#fig-lna-inductive-degeneration-detailed" class="quarto-xref">Figure&nbsp;26</a> is any form of frequency tuning of the load to the frequency of interest, and the support of different gain modes. Apart from these details this LNA circuit is a good starting point for a practical LNA design.</p>
+<p>What is missing in <a href="#fig-lna-inductive-degeneration-detailed" class="quarto-xref">Figure&nbsp;27</a> is any form of frequency tuning of the load to the frequency of interest, and the support of different gain modes. Apart from these details this LNA circuit is a good starting point for a practical LNA design.</p>
 </section>
 </section>
 <section id="sec-mixer" class="level1" data-number="5">
