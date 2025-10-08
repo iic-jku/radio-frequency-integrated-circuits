@@ -1,0 +1,83 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-free-space-path-loss
+#| echo: false
+#| fig-cap: "Free space path loss vs. distance for different frequencies (1 GHz, 10 GHz, and 100 GHz)."
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define distance range in kilometers
+distance_km = np.linspace(1, 100, 200)
+
+# Define frequencies in Hz
+frequencies = {
+    '1 GHz': 1e9,
+    '10 GHz': 10e9, 
+    '100 GHz': 100e9
+}
+
+# Speed of light in m/s
+c = 299792458
+
+# Function to calculate Free Space Path Loss (FSPL) in dB
+def free_space_path_loss_db(distance_km, frequency_hz):
+    """
+    Calculate Free Space Path Loss in dB
+    FSPL(dB) = 20*log10(d) + 20*log10(f) + 20*log10(4π/c)
+    where:
+    - d is distance in meters
+    - f is frequency in Hz
+    - c is speed of light in m/s
+    """
+    distance_m = distance_km * 1000  # Convert km to m
+    fspl_db = (20 * np.log10(distance_m) + 
+               20 * np.log10(frequency_hz) + 
+               20 * np.log10(4 * np.pi / c))
+    return fspl_db
+
+# Create the plot
+fig, ax = plt.subplots(1, 1)
+
+# Colors for different frequencies
+colors = ['green', 'blue', 'red']
+
+# Plot FSPL for each frequency
+for i, (freq_label, frequency) in enumerate(frequencies.items()):
+    fspl = free_space_path_loss_db(distance_km, frequency)
+    ax.plot(distance_km, fspl, color=colors[i], linewidth=2.5, 
+            label=f'{freq_label}')
+
+# Formatting
+ax.set_xlabel('Distance (km)')
+ax.set_ylabel('Free Space Path Loss (dB)')
+ax.set_xscale('log')
+ax.grid(True, alpha=0.3)
+ax.legend(loc='lower right')
+
+# Set x-axis to show plain numbers instead of scientific notation
+from matplotlib.ticker import ScalarFormatter
+ax.xaxis.set_major_formatter(ScalarFormatter())
+ax.xaxis.get_major_formatter().set_scientific(False)
+
+# Set axis limits
+ax.set_xlim(1, 100)
+ax.set_ylim(90, 170)
+
+plt.show()
+```

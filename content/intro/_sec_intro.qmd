@@ -112,7 +112,17 @@ $$
 With the transmit power of 1 W = 30 dBm we have an attenuation of 116 dB! This is a very large number!
 :::
 
-As dire as the situation of [@nte-wireless-attenuation] already looks, this is not even all factors considered:
+The loss we calculated in @nte-wireless-attenuation is called the free-space path loss (FSPL). It is the minimum loss we can expect in a wireless communication system. In reality, the situation is often even worse. The free-space path loss $\text{FSPL}$ (in dB) can be calculated as
+
+$$
+\text{FSPL} = 20 \cdot \log_{10}(d / \text{m}) + 20 \cdot \log_{10}(f / \text{Hz}) + 20 \cdot \log_{10} \left( \frac{4\pi}{c} \text{m/s} \right).
+$$ {#eq-fspl}
+
+@eq-fspl can be readily derived from @eq-friis-transmission and @eq-dbm assuming isotropic antennas at transmitter and receiver. Using @eq-fspl we can easily calculate the FSPL for different distances and frequencies. The results are shown in [@fig-free-space-path-loss]. It should be noted that the FSPL increases by 20 dB per decade of distance and 20 dB per decade of frequency, making higher frequencies and longer distances very challenging.
+
+{{< include /content/intro/_fig_free_space_path_loss.qmd >}}
+
+As dire as the situation of @fig-free-space-path-loss already looks, this is not even all factors considered:
 
 - The given attenuation is for line-of-sight paths; often, the attenuation is significantly higher than this due to blockage by buildings, mountains, rain, or foliage.
 - In lack of a direct line-of-sight path, the EM wave is redirected by reflections, causing additional attenuation, and the potential destructive interference by multi-path reception.
