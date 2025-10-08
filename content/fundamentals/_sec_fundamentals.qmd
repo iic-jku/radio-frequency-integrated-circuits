@@ -18,6 +18,33 @@ limitations under the License.
 
 In this section, we will discuss a few important concepts which will be instrumental in the further study of RF circuits and systems. As signals in RF circuits and systems are often limited on the top end by linearity, and on the bottom end by noise, we will discuss these two topics in some detail.
 
+## Channel Capacity {#sec-channel-capacity}
+
+In @sec-intro we have already discussed the fact that we need to pack information into a minimum bandwidth, as the available spectrum is limited. To appreciate the limits of information transfer, we need to understand how much information can be transmitted over a given bandwidth. This limit is given by the _Shannon-Hartley theorem_, which gives the maximum data rate $C$ (in bit/s) that can be transmitted over a communication channel with bandwidth $B$ (in Hz) and signal-to-noise ratio $\text{SNR}$ (with linear units):
+
+$$
+C = B \cdot \log_2(1 + \text{SNR})
+$$ {#eq-shannon-hartley}
+
+This formula gives us a theoretical upper limit on the data rate that can be achieved with a given bandwidth and SNR _under optimal conditions_. It is important to note that this limit is only achievable with ideal coding and modulation schemes, which are not practical in real-world systems. However, it provides a useful benchmark for evaluating the performance of communication systems.
+
+::: {#nte-channel-limit .callout-note}
+## Channel Capacity Example
+Let us calculate the channel capacity for a system with a bandwidth of 2 MHz and an SNR of 7 dB (the BW and minimum SNR of Bluetooth LE for 1 Mbps). First, we need to convert the SNR from dB to linear units:
+
+$$
+\text{SNR} = 10^{{7}/{10}} \approx 5
+$$
+
+Now we can use @eq-shannon-hartley to calculate the channel capacity:
+
+$$
+C = B \cdot \log_2(1 + \text{SNR}) = 2\,\text{MHz} \cdot \log_2(1 + 5) = 2\,\text{MHz} \cdot 2.585 \approx 5.2\,\text{Mbps}
+$$
+
+This sounds reasonable, as the user data rate for Bluetooth LE is 1 Mbps for the given SNR, which allows for quite some overhead for coding and protocols. 
+:::
+
 ## Linearity {#sec-linearity}
 
 As we have already seen in @sec-intro-wireless the transmitter has to process large signals without distorting them, while the receiver has to process small signals in the presence of large signals. Both situations mean we need metrics and models to quantify and discuss linearity properties.
@@ -26,7 +53,9 @@ We are going to use a very simple, time-invariant model to study linearity, base
 
 ::: {.callout-important}
 ## Linearity and Time Invariance in RF Systems
-We use time invariance to simplify the mathematics. In practice, many circuits and systems will show time variant behavior which leads to quite a few very interesting and important phenomena!
+We use time invariance to simplify the mathematics. In practice, many circuits and systems will show time variant behavior which leads to quite a few very interesting and important phenomena! A time-invariant nonlinear system is also called a "memoryless" system, as the output at time $t$ only depends on the input at time $t$.
+
+In contrast, a system with memory (i.e., time-variant) will have an output at time $t$ which depends on the input at time $t$ and also on past inputs (e.g., at times $t - \Delta T$, $t - 2 \Delta T$, etc.). Examples of systems with memory are filters, which have a frequency-dependent response, or power amplifiers with thermal memory effects.
 :::
 
 We model a nonlinear circuit block with the following Taylor polynomial:
@@ -37,7 +66,7 @@ $$ {#eq-nonlinear-model}
 
 Usually, the blocks under study will have higher order nonlinear terms but we often stop at 3rd order to keep things simple. For practical work, higher order terms should be included if necessary.
 
-Which $x(t)$ should we use to study wireless systems? Often, the bandwidth $f_\mathrm{BW}$ of a transmit signal is much smaller than the center frequency $f_0$, i.e., $f_\mathrm{BW} \ll f_0$. In this case using a sinusoidal signal as a mode is both simple to handle and approximately correct.
+Which $x(t)$ should we use to study wireless systems? Often, the bandwidth $f_\mathrm{BW}$ of a transmit signal is much smaller than the center frequency $f_0$, i.e., $f_\mathrm{BW} \ll f_0$. In this case using a sinusoidal signal as a model is both simple to handle and approximately correct.
 
 ### Single-Tone Linearity {#sec-linearity-single}
 
