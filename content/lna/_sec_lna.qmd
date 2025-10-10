@@ -34,7 +34,11 @@ $$
 \Gamma = \frac{Z_{\mathrm{in}} - Z_0}{Z_{\mathrm{in}} + Z_0}
 $$
 
-where $Z_0$ is the characteristic impedance of the system (usually 50 Ω) and $Z_{\mathrm{in}}$ is the input impedance of the LNA. The reflection coefficient $\Gamma$ is a complex number with a magnitude between 0 and 1, where 0 indicates a perfect match and 1 indicates a complete mismatch. However, in practice, the more commonly used metric for impedance matching is the return loss (RL), which is defined as [@Pozar_RF]:
+where $Z_0$ is the characteristic impedance of the system (usually 50 Ω) and $Z_{\mathrm{in}}$ is the input impedance of the LNA. The reflection coefficient $\Gamma$ is a complex number with a magnitude between 0 and 1, where 0 indicates a perfect match and 1 indicates a complete mismatch. This reflection coefficient can be represented on a Smith chart shown in @fig-smith-chart.
+
+{{< include /content/lna/_fig_smith_chart.qmd >}}
+
+However, in practice, the more commonly used metric for impedance matching is the return loss (RL), which is defined as [@Pozar_RF]:
 
 $$
 \text{RL} = -20 \log_{10} |\Gamma| = 20 \log_{10} \left| \frac{Z_\mathrm{in} + Z_0}{Z_\mathrm{in} - Z_0} \right|.
