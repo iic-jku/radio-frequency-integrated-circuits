@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-rf-design-multidisciplinary
 #| echo: false
-#| fig-cap: "RF design as a multidisciplinary field requiring knowledge from various engineering domains (adapted from [@Razavi_RF])."
+#| fig-cap: "RF design as a multidisciplinary field requiring knowledge from various engineering domains (adapted from [@Razavi_RFIC])."
 
 import numpy as np
 import matplotlib.pyplot as plt

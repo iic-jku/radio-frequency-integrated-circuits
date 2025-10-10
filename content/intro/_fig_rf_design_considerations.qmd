@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-rf-design-considerations
 #| echo: false
-#| fig-cap: "RFIC require careful design considerations and trade-offs (adapted from [@Razavi_RF])."
+#| fig-cap: "RFIC require careful design considerations and trade-offs (adapted from [@Razavi_RFIC])."
 
 import numpy as np
 import matplotlib.pyplot as plt
