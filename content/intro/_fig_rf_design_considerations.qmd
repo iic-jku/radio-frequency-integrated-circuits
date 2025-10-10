@@ -1,0 +1,91 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-rf-design-considerations
+#| echo: false
+#| fig-cap: "RFIC require careful design considerations and trade-offs (adapted from [@Razavi_RF])."
+
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+# Create figure and axis
+fig, ax = plt.subplots(1, 1, figsize=(5, 5))
+
+# Define the disciplines around RF Design
+disciplines = [
+    'Noise', 'Power', 'Frequency', 'Linearity', 'Gain', 'Supply\nVoltage'
+]
+
+# Number of disciplines
+n_disciplines = len(disciplines)
+
+# Center position
+center_x, center_y = 0, 0
+
+# Radius for discipline positioning
+radius = 12
+
+# Calculate angles for each discipline (evenly distributed)
+angles = np.linspace(0, 2*np.pi, n_disciplines, endpoint=False)
+
+# Position disciplines and add double-sided arrows between adjacent ones
+discipline_positions = []
+for i, (angle, discipline) in enumerate(zip(angles, disciplines)):
+    # Calculate position
+    x = center_x + radius * np.cos(angle)
+    y = center_y + radius * np.sin(angle)
+    discipline_positions.append((x, y))
+    
+    # Add discipline text centered around circle points
+    ax.text(x, y, discipline, ha='center', va='center')
+
+# Draw double-sided arrows between adjacent disciplines
+for i in range(n_disciplines):
+    # Current and next discipline positions (wrapping around)
+    x1, y1 = discipline_positions[i]
+    x2, y2 = discipline_positions[(i + 1) % n_disciplines]
+    
+    # Calculate direction vector
+    dx = x2 - x1
+    dy = y2 - y1
+    length = np.sqrt(dx**2 + dy**2)
+    
+    # Normalize direction vector
+    unit_dx = dx / length
+    unit_dy = dy / length
+    
+    # Move arrow endpoints closer to text (reduce gap from text edge)
+    text_offset = 4  # Distance from text center to arrow tip
+    arrow_start_x = x1 + text_offset * unit_dx
+    arrow_start_y = y1 + text_offset * unit_dy
+    arrow_end_x = x2 - text_offset * unit_dx
+    arrow_end_y = y2 - text_offset * unit_dy
+    
+    # Draw double-sided arrow closer to text
+    ax.annotate('', xy=(arrow_end_x, arrow_end_y), 
+                xytext=(arrow_start_x, arrow_start_y),
+                arrowprops=dict(arrowstyle='<->', color='black', lw=1.5))
+    
+# Set axis properties
+ax.set_xlim(-radius*1.5, radius*1.5)
+ax.set_ylim(-radius*1.5, radius*1.5)
+ax.set_aspect('equal')
+ax.axis('off')  # Hide axes for cleaner look
+
+plt.show()
+```
