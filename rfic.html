@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2025-10-08">
+<meta name="dcterms.date" content="2025-10-10">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -395,6 +395,7 @@ window.Quarto = {
   <li><a href="#sec-lna-resistive-matching" id="toc-sec-lna-resistive-matching" class="nav-link" data-scroll-target="#sec-lna-resistive-matching"><span class="header-section-number">4.1</span> Resistively Matched Common-Source LNA</a></li>
   <li><a href="#sec-lna-common-gate" id="toc-sec-lna-common-gate" class="nav-link" data-scroll-target="#sec-lna-common-gate"><span class="header-section-number">4.2</span> Common-Gate LNA</a></li>
   <li><a href="#sec-lna-inductive-degeneration" id="toc-sec-lna-inductive-degeneration" class="nav-link" data-scroll-target="#sec-lna-inductive-degeneration"><span class="header-section-number">4.3</span> Inductively-Degenerated Common-Source LNA</a></li>
+  <li><a href="#sec-lna-feedback" id="toc-sec-lna-feedback" class="nav-link" data-scroll-target="#sec-lna-feedback"><span class="header-section-number">4.4</span> Feedback LNA</a></li>
   </ul></li>
   <li><a href="#sec-mixer" id="toc-sec-mixer" class="nav-link" data-scroll-target="#sec-mixer"><span class="header-section-number">5</span> Mixers</a></li>
   <li><a href="#sec-oscillator" id="toc-sec-oscillator" class="nav-link" data-scroll-target="#sec-oscillator"><span class="header-section-number">6</span> Oscillators</a></li>
@@ -435,7 +436,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 8, 2025</p>
+      <p class="date">October 10, 2025</p>
     </div>
   </div>
   
@@ -1834,6 +1835,50 @@ Figure&nbsp;27: An (almost complete) common-source MOSFET stage with degeneratio
 </div>
 <p>The inductor <span class="math inline">\(L_\mathrm{match}\)</span> is used to match the input impedance to 50 Ω at the desired frequency, <span class="math inline">\(L_\mathrm{deg}\)</span> is used to realize the real part of the input impedance, <span class="math inline">\(R_\mathrm{bias}\)</span> is used to set the bias current of <span class="math inline">\(M_1\)</span>, <span class="math inline">\(M_2\)</span> is a cascode transistor which increases the output impedance and thus the gain of the stage (plus it improves the reverse isolation), and <span class="math inline">\(R_\mathrm{D}\)</span>, <span class="math inline">\(L_\mathrm{D}\)</span>, and <span class="math inline">\(C_\mathrm{D}\)</span> form a load tank which provides high gain at the desired frequency. A dc block is used at the input so that the bias point of <span class="math inline">\(M_1\)</span> is not corrupted by the input signal source. The bias voltage <span class="math inline">\(V_\mathrm{bias2}\)</span> sets the operating point of the cascode transistor <span class="math inline">\(M_2\)</span>.</p>
 <p>What is missing in <a href="#fig-lna-inductive-degeneration-detailed" class="quarto-xref">Figure&nbsp;27</a> is any form of frequency tuning of the load to the frequency of interest, and the support of different gain modes. Apart from these details this LNA circuit is a good starting point for a practical LNA design.</p>
+</section>
+<section id="sec-lna-feedback" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="sec-lna-feedback"><span class="header-section-number">4.4</span> Feedback LNA</h2>
+<p>One drawback of the inductively-degenerated common-source LNA is the usage of at least one inductor. If the inductor is placed on chip it has a comparatively large size, and if it is implemented in the package (via a bondwiew) or on the PCB it add to the bill-of-materials (BOM) cost.</p>
+<p>If the CMOS technology is sufficiently fast, then a shunt feedback LNA, as shown in <a href="#fig-lna-shunt-fb" class="quarto-xref">Figure&nbsp;28</a>, might be a good choice.</p>
+<div id="cell-fig-lna-shunt-fb" class="cell" data-execution_count="28">
+<div class="cell-output cell-output-display">
+<div id="fig-lna-shunt-fb" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lna-shunt-fb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-lna-shunt-fb-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-28" title="Figure&nbsp;28: A shunt-feedback LNA."><img src="rfic_files/figure-html/fig-lna-shunt-fb-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lna-shunt-fb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28: A shunt-feedback LNA.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Without proof, the input impedance of the shunt feedback LNA is given by</p>
+<p><span id="eq-lna-shunt-fb-zin"><span class="math display">\[
+Z_\mathrm{in} = \frac{Z_\mathrm{F} + Z_\mathrm{L}}{1 + g_\mathrm{m}Z_\mathrm{L}}.
+\tag{33}\]</span></span></p>
+<p>The noise factor of the shunt feedback LNA is given by</p>
+<p><span id="eq-lna-shunt-fb-noise-factor"><span class="math display">\[
+F = 1 + \left| \frac{Z_\mathrm{F} + R_\mathrm{s}}{g_\mathrm{m}Z_\mathrm{F} + 1} \right|^2 \cdot \frac{\gamma g_\mathrm{m}+ \Re \{ Y_\mathrm{L} \} }{\Re \{ Z_\mathrm{in} \}}
+\tag{34}\]</span></span></p>
+<p>As you can see from <a href="#eq-lna-shunt-fb-noise-factor" class="quarto-xref">Equation&nbsp;34</a>, by making <span class="math inline">\(g_\mathrm{m}\)</span> large (by spending more bias current) the noise figure can be made arbitrarily small! Depending on the choice of <span class="math inline">\(Z_\mathrm{F}\)</span> and <span class="math inline">\(Z_\mathrm{L}\)</span>, the input impedance of this LNA can be changed in interesting ways.</p>
+<p>By setting <span class="math inline">\(Z_\mathrm{L} \rightarrow \infty\)</span> (e.g., by biasing with a current source and high-impedance loading), we find that</p>
+<p><span class="math display">\[
+Z_\mathrm{in} = \frac{1}{g_\mathrm{m}}
+\]</span></p>
+<p>which is independent of <span class="math inline">\(Z_\mathrm{F}\)</span> and is a well-known result for a common-source stage. The disadavntage of this configuration is the noise factor, which (given that <span class="math inline">\(Z_\mathrm{F}\)</span> is sufficiently large) trends to <span class="math inline">\(F = 1 + \gamma\)</span>, which is the same as for the common-gate LNA.</p>
+<p>A bit more interesting is the case when <span class="math inline">\(g_\mathrm{m}Z_\mathrm{L} = A_0\)</span> and <span class="math inline">\(Z_\mathrm{L} \gg Z_\mathrm{F}\)</span>, which results in</p>
+<p><span class="math display">\[
+Z_\mathrm{in} = \frac{Z_\mathrm{L}}{1 + A_0}
+\]</span></p>
+<p>which is the well-known result that the input impedance of an amplifier with feedback is reduced by the factor <span class="math inline">\(1 + A_0\)</span>, where <span class="math inline">\(A_0\)</span> is the open-loop gain of the amplifier. The noise factor can be made small by making <span class="math inline">\(g_\mathrm{m}\)</span> large, as we have already noted above.</p>
+<p>A very interesting case can be achieved by choosing <span class="math inline">\(Z_\mathrm{L} = 1 / s C_\mathrm{L}\)</span> and <span class="math inline">\(Z_\mathrm{F} = 1 / s C_\mathrm{F}\)</span>, which results in</p>
+<p><span id="eq-lna-shunt-fb-yin"><span class="math display">\[
+Y_\mathrm{in} = \frac{1}{Z_\mathrm{in}} = \frac{g_\mathrm{m}C_\mathrm{F}}{C_\mathrm{L} + C_\mathrm{F}} + s \frac{C_\mathrm{L} C_\mathrm{F}}{C_\mathrm{L} + C_\mathrm{F}}
+\tag{35}\]</span></span></p>
+<p>Looking at <a href="#eq-lna-shunt-fb-yin" class="quarto-xref">Equation&nbsp;35</a>, we see that the input admittance has a <strong>real part</strong>! By proper choice of components, we can achieve an input impedance matched to 50 Ω at the desired frequency. The noise factor can again be made small by making <span class="math inline">\(g_\mathrm{m}\)</span> large.</p>
+<p>There is also an option, again by proper choice of <span class="math inline">\(Z_\mathrm{F}\)</span> and <span class="math inline">\(Z_\mathrm{L}\)</span>, to achieve an inductive input impedance component, which can be used to resonate out the input capacitance of the LNA, similar to the inductively-degenerated common-source LNA. However, in contrast to the inductively-degenerated common-source LNA, no inductor is required in this case. This configuration is called a reactance-cancelling LNA.</p>
 </section>
 </section>
 <section id="sec-mixer" class="level1" data-number="5">
