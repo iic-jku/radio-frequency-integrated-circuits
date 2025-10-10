@@ -1,0 +1,84 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-gaussian-pulse
+#| echo: false
+#| fig-cap: "Gaussian pulse shaping in time and frequency domain for different bandwidth-time products BT."
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Create figure with subplots
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 5))
+
+# Parameters
+T = 1.0  # Symbol period
+fs = 100 / T  # Sampling frequency (high for smooth curves)
+t_span = 4 * T  # Time span to plot
+f_span = 6 / T  # Frequency span to plot
+
+# Time and frequency vectors
+t = np.linspace(-t_span/2, t_span/2, int(fs * t_span))
+f = np.linspace(-f_span, f_span, 1000)
+
+# BT products to plot (bandwidth-time products)
+BT_values = [0.3, 0.5]
+colors = ['green', 'blue']
+linestyles = ['-', '-']
+
+# Plot time domain responses
+for i, (BT, color) in enumerate(zip(BT_values, colors)):
+    # Gaussian pulse in time domain
+    # For BT product: B = BT/T
+    B = BT / T  # 3dB bandwidth
+    alpha = np.sqrt(np.log(2)/2) * T/BT
+    h_t = np.sqrt(np.pi)/alpha * np.exp(- (np.pi * t / alpha)**2)
+
+    ax1.plot(t/T, h_t, color=color, linewidth=2.5, 
+             label=f'BT = {BT}', linestyle=linestyles[i])
+
+# Plot frequency domain responses
+for i, (BT, color) in enumerate(zip(BT_values, colors)):
+    # Gaussian spectrum in frequency domain
+    B = BT / T  # 3dB bandwidth
+    alpha = np.sqrt(np.log(2)/2) * T/BT
+    H_f = np.exp(-alpha**2 * f**2)
+
+    # Convert to dB (20*log10), handle zero values
+    H_f_dB = 20 * np.log10(np.maximum(H_f, 1e-10))
+    ax2.plot(f * T, H_f_dB, color=color, linewidth=2.5, 
+             label=f'BT = {BT}', linestyle=linestyles[i])
+
+# Format time domain plot
+ax1.set_xlabel('Time (t/T)')
+ax1.set_ylabel('Amplitude h(t)')
+ax1.grid(True, alpha=0.3)
+ax1.legend(loc='upper right')
+ax1.set_xlim(-3, 3)
+ax1.set_ylim(0, 2)
+
+# Format frequency domain plot
+ax2.set_xlabel('Normalized Frequency (fT)')
+ax2.set_ylabel('Magnitude |H(f)| (dB)')
+ax2.grid(True, alpha=0.3)
+ax2.legend(loc='upper right')
+ax2.set_xlim(-3, 3)
+ax2.set_ylim(-60, 5)
+
+plt.tight_layout()
+plt.show()
+```

@@ -1,0 +1,104 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-rf-design-multidisciplinary
+#| echo: false
+#| fig-cap: "RF design as a multidisciplinary field requiring knowledge from various engineering domains (adapted from [@Razavi_RF])."
+
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+# Create figure and axis
+fig, ax = plt.subplots(1, 1, figsize=(6, 6))
+
+# Define the disciplines around RF Design
+disciplines = [
+    'Communication\nTheory',
+    'Random\nSignals',
+    'Transceiver\nArchitectures', 
+    'CAD Tools\nSimulation',
+    'Wireless\nStandards',
+    'Multiple\nAccess',
+    'Signal\nPropagation',
+    'Microwave\nTheory',
+    'IC Design'
+]
+
+# Number of disciplines
+n_disciplines = len(disciplines)
+
+# Center position
+center_x, center_y = 0, 0
+
+# Radius for discipline positioning
+radius = 12
+
+# Calculate angles for each discipline (evenly distributed)
+angles = np.linspace(0, 2*np.pi, n_disciplines, endpoint=False)
+
+# Colors for different disciplines
+colors = ['lightblue', 'lightcoral', 'lightgreen', 'lightyellow', 
+          'lightpink', 'lightcyan', 'lightyellow', 'lavender', 'lightgray', 'lightgoldenrodyellow']
+
+# Draw center circle for RF Design
+center_circle = patches.Circle((center_x, center_y), 5, 
+                              facecolor='orange', linewidth=0, alpha=0.8)
+ax.add_patch(center_circle)
+ax.text(center_x, center_y, 'RF Design', ha='center', va='center', fontweight='bold')
+
+# Draw discipline circles and connections
+for i, (angle, discipline, color) in enumerate(zip(angles, disciplines, colors)):
+    # Calculate position
+    x = center_x + radius * np.cos(angle)
+    y = center_y + radius * np.sin(angle)
+    
+    # Draw discipline circle
+    discipline_circle = patches.Circle((x, y), 4.5, facecolor=color, linewidth=0, alpha=0.7)
+    ax.add_patch(discipline_circle)
+    
+    # Add discipline text
+    ax.text(x, y, discipline, ha='center', va='center')
+    
+    # Draw connection line from center circle edge to discipline circle edge
+    dx = x - center_x
+    dy = y - center_y
+    norm = np.sqrt(dx**2 + dy**2)
+    
+    # Calculate start and end points on circle edges
+    start_x = center_x + 5 * dx / norm  # Edge of center circle (radius 0.8)
+    start_y = center_y + 5 * dy / norm
+    end_x = x - 4.5 * dx / norm  # Edge of discipline circle (radius 0.6)
+    end_y = y - 4.5 * dy / norm
+    
+    # Draw line connecting the circles
+    ax.plot([start_x, end_x], [start_y, end_y], 'k-', linewidth=2, alpha=0.6)
+    
+    # Add arrow in the middle of the connection line
+    mid_x = (start_x + end_x) / 2
+    mid_y = (start_y + end_y) / 2
+    arrow_dx = 0.15 * dx / norm  # Arrow direction and length
+    arrow_dy = 0.15 * dy / norm
+    
+# Set axis properties
+ax.set_xlim(-radius*1.5, radius*1.5)
+ax.set_ylim(-radius*1.5, radius*1.5)
+ax.set_aspect('equal')
+ax.axis('off')  # Hide axes for cleaner look
+
+plt.show()
+```
