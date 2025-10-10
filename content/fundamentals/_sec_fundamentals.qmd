@@ -476,3 +476,39 @@ The Gaussian pulse for $BT=0.5$ as used in Bluetooth is shown in [@fig-gaussian-
 {{< include /content/fundamentals/_fig_gaussian_pulse.qmd >}}
 
 For both the raised-cosine and Gaussian pulse, the trade-off between time- and frequency-domain containment is clearly visible. This is also captured in "**Küpfmüller's uncertainty principle**", which states that the product of the time duration and the bandwidth of a pulse is lower-bounded by a constant. In other words, if we want to have a pulse that is very short in time, it will have a wide bandwidth, and vice versa.
+
+## Orthogonal Frequency-Division Multiplexing (OFDM) {#sec-fundamentals-ofdm}
+
+As we have seen in the previous section, if we make the symbol rate high, we need to use pulses with a wide bandwidth. The problem with a wide bandwidth in wireless communication is **multi-path propagation**, which causes frequency-selective fading. This means that some frequencies are attenuated more than others, which can cause errors in the received signal. Equalizing such a frequency-selective channel can be very complex, especially if the channel changes rapidly (as in mobile communication). We now face a dilemma: How can we achieve high data rates (which require high symbol rates and thus wide bandwidth) while avoiding frequency-selective fading? The key idea, implemented in **OFDM**, is to split the wideband channel into multiple narrowband sub-channels (subcarriers), each with a low symbol rate. This way, each subcarrier experiences flat fading, which is much easier to equalize.
+
+The key question is now how to implement this idea efficiently, as we now have to apply modulation to hundreds or thousands of individual subcarriers. The solution is to use the **inverse fast Fourier transform (IFFT)** at the transmitter to generate the time-domain OFDM signal from the frequency-domain symbols, and the **fast Fourier transform (FFT)** at the receiver to recover the frequency-domain symbols from the time-domain OFDM signal. This is illustrated in @fig-ofdm-transceiver.
+
+{{< include /content/fundamentals/_fig_ofdm_transceiver.qmd >}}
+
+The OFDM transmitter takes a block of $N$ symbols (e.g., 64-QAM symbols) and maps them onto $N$ subcarriers, thereby reducing the symbol rate for each subcarrier to $T_\mathrm{b} / N$. The IFFT then generates the time-domain OFDM signal, which is transmitted over the wireless channel. Before transmission the **cyclic prefix (CP)** is added to each OFDM symbol.
+
+At the receiver, first the CP is removed, and then the FFT recovers the frequency-domain symbols, which can then be equalized (fairly simply by multiplying each subcarrier with a complex factor to correct amplitude and phase) and demodulated.
+
+A key property of OFDM is that the subcarriers are **orthogonal** to each other, which means that they do not interfere with each other, even if they overlap in frequency. This is achieved by choosing the subcarrier spacing $\Delta f$ such that it is equal to the symbol rate $1/T_\mathrm{b}$, i.e., $\Delta f = 1/T_\mathrm{b}$. This way, the integral of the product of two different subcarriers over one symbol period is zero, which means that they are orthogonal.
+
+To further improve the robustness against multi-path propagation, a CP is added to each OFDM symbol. The CP is a copy of the last part of the OFDM symbol, which is added to the beginning of the symbol. This way, if there are delayed copies of the OFDM symbol due to multi-path propagation, they will still fall within the CP and will not cause inter-symbol interference (ISI). The length of the CP should be longer than the maximum delay spread of the channel.
+
+::: {#nte-lte-ofdm .callout-note}
+## OFDM in LTE
+In LTE OFDM is used for the downlink (base station to user equipment) with the following parameters:
+
+- Subcarrier spacing: 15 kHz
+- CP length: 5.2 µs (normal), 4.7 µs (extended)
+- Number of subcarriers: 1200 (for 20 MHz bandwidth)
+- Modulation: QPSK, 16-QAM, 64-QAM, 256-QAM
+
+From the subcarrier spacing we can calculate the symbol duration as $T_\mathrm{b} = 1 / \Delta f = 1 / 15\,\text{kHz} \approx 66.7\,\mu\text{s}$.
+
+We can calculate the raw bitrate for a 20 MHz LTE channel as
+
+$$
+\text{Bitrate} = N_\mathrm{sc} \cdot N_\mathrm{sym} \cdot \frac{1}{T_\mathrm{b} + T_\mathrm{CP}} = 1200 \cdot 8 \cdot \frac{1}{66.7\,\mu\text{s} + 5.2\,\mu\text{s}} \approx 133\,\text{Mbps}
+$$
+
+Without the overhead for control channels and error correction coding a user datarate of approximately 100 Mbps can be achieved in a 20 MHz LTE channel.
+:::

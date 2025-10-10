@@ -1,0 +1,68 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-ofdm-block-diagram
+#| echo: false
+#| fig-cap: "OFDM transmission system block diagram showing transmitter and receiver processing chains."
+
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    elm.Dot(open=True).label(r'Bitrate $T_\mathrm{b}$', loc='left')
+    dsp.Arrow().right(d.unit/2)
+    dsp.Square().label('S/P')
+    dsp.Arrow().right(d.unit/2).label(r'$T_\mathrm{b} / N$')
+    dsp.Square().label('QAM\nMap')
+    dsp.Arrow().right(d.unit/2)
+    dsp.Square().label('IFFT')
+    dsp.Arrow().right(d.unit/2)
+    dsp.Square().label('P/S')
+    dsp.Arrow().right(d.unit/2)
+    dsp.Square().label('Add\nCP')
+    dsp.Arrow().right(d.unit/2)
+    dsp.Square().label('Radio')
+    dsp.Line().right(d.unit/2)
+    elm.Antenna()
+    
+    # Move down for receiver chain
+    d.move(dx=-d.unit*7, dy=-d.unit*1.5)
+    
+    # Receiver chain (bottom row)
+    elm.Antenna()
+    dsp.Arrow().right(d.unit/2)
+    dsp.Square().label('Radio')
+    dsp.Arrow().right(d.unit/2)
+    dsp.Square().label('Rem.\nCP')
+    dsp.Arrow().right(d.unit/2)
+    dsp.Square().label('S/P')
+    dsp.Arrow().right(d.unit/2)
+    dsp.Square().label('FFT')
+    dsp.Arrow().right(d.unit/2)
+    dsp.Square().label('EQ')
+    dsp.Arrow().right(d.unit/2)
+    dsp.Square().label('QAM\nDem.')
+    dsp.Arrow().right(d.unit/2).label(r'$T_\mathrm{b} / N$')
+    dsp.Square().label('P/S')
+    dsp.Arrow().right(d.unit/2)
+    elm.Dot(open=True).label(r'Bitrate $T_\mathrm{b}$', loc='right')
+```
