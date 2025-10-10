@@ -1,0 +1,114 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-raised-cosine-pulse
+#| echo: false
+#| fig-cap: "Raised cosine pulse shaping in time and frequency domain for different roll-off factors α."
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Create figure with subplots
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 5))
+
+# Parameters
+T = 1.0  # Symbol period
+fs = 100 / T  # Sampling frequency (high for smooth curves)
+t_span = 18 * T  # Time span to plot
+f_span = 2 / T  # Frequency span to plot
+
+# Time and frequency vectors
+t = np.linspace(-t_span/2, t_span/2, int(fs * t_span))
+f = np.linspace(-f_span, f_span, 1000)
+
+# Roll-off factors to plot
+alphas = [0, 0.22]
+colors = ['blue', 'green']
+linestyles = ['-', '-']
+
+# Plot time domain responses
+for i, (alpha, color) in enumerate(zip(alphas, colors)):
+    # Raised cosine pulse in time domain
+    # h(t) = (sin(πt/T) / (πt/T)) * (cos(παt/T) / (1 - (2αt/T)²))
+    
+    # Handle special cases to avoid division by zero
+    h_t = np.zeros_like(t)
+    
+    for j, t_val in enumerate(t):
+        if abs(t_val) < 1e-10:  # t ≈ 0
+            h_t[j] = 1.0
+        elif alpha > 0 and abs(abs(t_val) - T/(2*alpha)) < 1e-10:  # t = ±T/(2α)
+            h_t[j] = (np.pi/4) * np.sin(np.pi/(2*alpha)) / T
+        else:
+            # General case
+            if abs(t_val) < 1e-10:
+                sinc_term = 1.0
+            else:
+                sinc_term = np.sin(np.pi * t_val / T) / (np.pi * t_val / T)
+            
+            cos_term = np.cos(np.pi * alpha * t_val / T)
+            denom = 1 - (2 * alpha * t_val / T)**2
+            
+            if abs(denom) > 1e-10:
+                h_t[j] = sinc_term * cos_term / denom
+            else:
+                h_t[j] = 0
+    
+    ax1.plot(t/T, h_t, color=color, linewidth=2.5, 
+             label=f'α = {alpha}', linestyle=linestyles[i])
+
+# Plot frequency domain responses
+for i, (alpha, color) in enumerate(zip(alphas, colors)):
+    # Raised cosine spectrum
+    H_f = np.zeros_like(f)
+    
+    for j, f_val in enumerate(f):
+        f_abs = abs(f_val)
+        if f_abs <= (1 - alpha) / (2 * T):
+            H_f[j] = T
+        elif (1 - alpha) / (2 * T) < f_abs <= (1 + alpha) / (2 * T):
+            if alpha > 0:
+                arg = (np.pi * T / alpha) * (f_abs - (1 - alpha) / (2 * T))
+                H_f[j] = (T / 2) * (1 + np.cos(arg))
+            else:
+                H_f[j] = 0
+        else:
+            H_f[j] = 0
+    
+    # Convert to dB (20*log10), handle zero values
+    H_f_dB = 20 * np.log10(np.maximum(H_f / T, 1e-10))
+    ax2.plot(f * T, H_f_dB, color=color, linewidth=2.5, 
+             label=f'α = {alpha}', linestyle=linestyles[i])
+
+# Format time domain plot
+ax1.set_xlabel('Time (t/T)')
+ax1.set_ylabel('Amplitude h(t)')
+ax1.grid(True, alpha=0.3)
+ax1.legend(loc='upper right')
+ax1.set_xlim(-9, 9)
+ax1.set_ylim(-0.3, 1.1)
+
+# Format frequency domain plot
+ax2.set_xlabel('Normalized Frequency (fT)')
+ax2.set_ylabel('Magnitude |H(f)| (dB)')
+ax2.grid(True, alpha=0.3)
+ax2.set_xlim(-1, 1)
+ax2.set_ylim(-60, 5)
+
+plt.tight_layout()
+plt.show()
+```
