@@ -185,3 +185,51 @@ Finally we have an LNA input stage configuration which allows us to achieve a no
 The inductor $L_\mathrm{match}$ is used to match the input impedance to 50 Ω at the desired frequency, $L_\mathrm{deg}$ is used to realize the real part of the input impedance, $R_\mathrm{bias}$ is used to set the bias current of $M_1$, $M_2$ is a cascode transistor which increases the output impedance and thus the gain of the stage (plus it improves the reverse isolation), and $R_\mathrm{D}$, $L_\mathrm{D}$, and $C_\mathrm{D}$ form a load tank which provides high gain at the desired frequency. A dc block is used at the input so that the bias point of $M_1$ is not corrupted by the input signal source. The bias voltage $V_\mathrm{bias2}$ sets the operating point of the cascode transistor $M_2$.
 
 What is missing in @fig-lna-inductive-degeneration-detailed is any form of frequency tuning of the load to the frequency of interest, and the support of different gain modes. Apart from these details this LNA circuit is a good starting point for a practical LNA design.
+
+## Feedback LNA {#sec-lna-feedback}
+
+One drawback of the inductively-degenerated common-source LNA is the usage of at least one inductor. If the inductor is placed on chip it has a comparatively large size, and if it is implemented in the package (via a bondwiew) or on the PCB it add to the bill-of-materials (BOM) cost.
+
+If the CMOS technology is sufficiently fast, then a shunt feedback LNA, as shown in @fig-lna-shunt-fb, might be a good choice.
+
+{{< include /content/lna/_fig_lna_shunt_fb.qmd >}}
+
+Without proof, the input impedance of the shunt feedback LNA is given by
+
+$$
+Z_\mathrm{in} = \frac{Z_\mathrm{F} + Z_\mathrm{L}}{1 + \gm Z_\mathrm{L}}.
+$$ {#eq-lna-shunt-fb-zin}
+
+The noise factor of the shunt feedback LNA is given by
+
+$$
+F = 1 + \left| \frac{Z_\mathrm{F} + R_\mathrm{s}}{\gm Z_\mathrm{F} + 1} \right|^2 \cdot \frac{\gamma \gm + \Re \{ Y_\mathrm{L} \} }{\Re \{ Z_\mathrm{in} \}}
+$$ {#eq-lna-shunt-fb-noise-factor}
+
+As you can see from @eq-lna-shunt-fb-noise-factor, by making $\gm$ large (by spending more bias current) the noise figure can be made arbitrarily small! Depending on the choice of $Z_\mathrm{F}$ and $Z_\mathrm{L}$, the input impedance of this LNA can be changed in interesting ways.
+
+By setting $Z_\mathrm{L} \rightarrow \infty$ (e.g., by biasing with a current source and high-impedance loading), we find that
+
+$$
+Z_\mathrm{in} = \frac{1}{\gm}
+$$
+
+which is independent of $Z_\mathrm{F}$ and is a well-known result for a common-source stage. The disadavntage of this configuration is the noise factor, which (given that $Z_\mathrm{F}$ is sufficiently large) trends to $F = 1 + \gamma$, which is the same as for the common-gate LNA.
+
+A bit more interesting is the case when $\gm Z_\mathrm{L} = A_0$ and $Z_\mathrm{L} \gg Z_\mathrm{F}$, which results in
+
+$$
+Z_\mathrm{in} = \frac{Z_\mathrm{L}}{1 + A_0}
+$$
+
+which is the well-known result that the input impedance of an amplifier with feedback is reduced by the factor $1 + A_0$, where $A_0$ is the open-loop gain of the amplifier. The noise factor can be made small by making $\gm$ large, as we have already noted above.
+
+A very interesting case can be achieved by choosing $Z_\mathrm{L} = 1 / s C_\mathrm{L}$ and $Z_\mathrm{F} = 1 / s C_\mathrm{F}$, which results in
+
+$$
+Y_\mathrm{in} = \frac{1}{Z_\mathrm{in}} = \frac{\gm C_\mathrm{F}}{C_\mathrm{L} + C_\mathrm{F}} + s \frac{C_\mathrm{L} C_\mathrm{F}}{C_\mathrm{L} + C_\mathrm{F}}
+$$ {#eq-lna-shunt-fb-yin}
+
+Looking at @eq-lna-shunt-fb-yin, we see that the input admittance has a **real part**! By proper choice of components, we can achieve an input impedance matched to 50 Ω at the desired frequency. The noise factor can again be made small by making $\gm$ large.
+
+There is also an option, again by proper choice of $Z_\mathrm{F}$ and $Z_\mathrm{L}$, to achieve an inductive input impedance component, which can be used to resonate out the input capacitance of the LNA, similar to the inductively-degenerated common-source LNA. However, in contrast to the inductively-degenerated common-source LNA, no inductor is required in this case. This configuration is called a reactance-cancelling LNA.
