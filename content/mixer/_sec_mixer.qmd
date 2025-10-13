@@ -112,3 +112,16 @@ The idea is that in input transconductor creates currents, which are switched in
 
 ## N-Path Filter {#sec-mixer-npath}
 
+Without much deliberation or diving into the background, it has to be stated that passive mixers (based on MOSFET switches) have a few very interesting properties. One of them is that they can be used to implement very high-quality bandpass filters, called "**N-path filters**" [@Lepage.1953]. The basic idea is shown in @fig-npath-filter. We use 4 phases of an LO signal to switch the 4 capacitors to ground in a round-robin fashion. The duty cycle of each LO phase is 25% to have a non-overlapping clock.
+
+{{< include /content/mixer/_fig_npath_filter.qmd >}}
+
+The key observation to make is that a switch that is opened and closed at a certain frequency (the LO frequency) can be seen as a time-variant resistor. This time-variant resistor converts impedance seen at one one to the other end, and also changes the frequency of this apparent impedance. In other words, if we connect grounded capacitors at one end of the mixer switches, and we look into the other end, we see a **bandpass filter centered at the LO** frequency! In this way we can build bandpass filters (and also bandstop filters [@Vazny.2010]) at very high frequencies which are precisely centered (without component variations) around $\omega_\mathrm{LO}$.
+
+The impedance characteristics of such a tank circuit exhibit first-order bandpass behavior, as shown in @fig-tank-bandpass. The peak impedance reaches 5.3 times the switch resistance ($R_\mathrm{sw}$), and importantly, the bandwidth is inversely proportional to the capacitance value, i.e., $\mathrm{BW} \propto 1/C$. This relationship allows for precise control of the filter bandwidth by adjusting the capacitor values.
+
+{{< include /content/mixer/_fig_tank_bandpass.qmd >}}
+
+## LO Generation {#sec-mixer-lo}
+
+To be written.
