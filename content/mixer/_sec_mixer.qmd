@@ -15,3 +15,46 @@ limitations under the License.
 :::
 
 # Mixers {#sec-mixer}
+
+As we have seen in @sec-trx-mod-demod we are using mixers to "upconvert" and "downconvert" signals, i.e., we shift the frequency of a signal to a higher or lower frequency with the help of an auxilliary signal, called the "**local oscillator**" (LO) signal. The block diagram of a mixer is shown in @fig-mixer-block.
+
+{{< include /content/mixer/_fig_mixer_block.qmd >}}
+
+What we usually want in a mixer is that the input signal at $\omega_\mathrm{in}$ is shifted by $\omega_\mathrm{LO}$, so that the output signal is located at
+
+$$
+\omega_\mathrm{out} = \omega_\mathrm{in} \pm \omega_\mathrm{LO}.
+$$
+
+It should be noted noted that the output signal usually contains additional frequency components, which are not desired. These so-called "**spurious**" components are usually filtered out in a subsequent filtering stage.
+
+Recalling the properties of [linear time-invariant (LTI)](https://en.wikipedia.org/wiki/Linear_time-invariant_system) systems, we know that in an LTI system *no new frequency components* (which are not already present in the input signal) are generated. In conclusion, in order to generate new frequency components, a mixer has to be either
+
+- a **non-linear** system, or
+- a **time-variant** system.
+
+Next we will look at two options on how to implement a mixer.
+
+## Non-Linear Mixer {#sec-mixer-nonlinear}
+
+Generally speaking, we can use any non-linear device to implement a mixer (often, this generation of new frequency components in a nonlinear system is highly undesired; in a mixer, we want this effect). As a simple example we look at the case of a square function, shown in @fig-mixer-square.
+
+{{< include /content/mixer/_fig_mixer_square.qmd >}}
+
+When we apply the sum of the signals $s_\mathrm{in}(t) = \cos( \omega_\mathrm{in} t)$ and $s_\mathrm{LO}(t) = \cos(\omega_\mathrm{LO} t)$ to the input of a squarer, we get the output signal
+
+$$
+\begin{split}
+s_\mathrm{out}(t) = [ s_\mathrm{in}(t) + s_\mathrm{LO}(t) ]^2 &= \cos(\omega_\mathrm{in} t + \omega_\mathrm{LO} t) + \cos(\omega_\mathrm{in} t - \omega_\mathrm{LO} t) \\
+&+ 1 + \frac{1}{2} \cos(2 \omega_\mathrm{in} t) + \frac{1}{2} \cos(2 \omega_\mathrm{LO} t).
+\end{split}
+$$ {#eq-mixer-square-output}
+
+We see that the output signal contains the desired frequency components at $\omega_\mathrm{in} \pm \omega_\mathrm{LO}$, but also additional components at dc (0 Hz), $2 \omega_\mathrm{in}$, and $2 \omega_\mathrm{LO}$. These additional components are usually unwanted and have to be filtered out in a subsequent filtering stage. As a side-note, in some circuits a **frequency doubler** is desired, which can be implemented by simply filtering out the other frequency components. In a doubler no LO signal is required, as the input signal is simply squared.
+
+A simple example circuit is a diode, which has a non-linear current-voltage characteristic. The block diagram of a simple diode mixer is shown in @fig-diode-mixer.
+
+{{< include /content/mixer/_fig_diode_mixer.qmd >}}
+
+This structure is conceptionally simple, it just requires a (fast) diode, filters to couple the desired frequency components in and out, and an RF choke to provide a dc bias voltage for the diode. However, the performance of such a simple mixer is usually not very good, as the diode is a highly non-linear device, which generates many spurious frequency components. More advanced mixer circuits use more complex non-linear devices (for example, a ring of diodes) to improve the performance. The advantage of these mixers is that they can operate up to very high frequencies (in the mm-wave range and beyond). If you can make a nonlinear device, you can make a mixer (think also of [nonlinear optics](https://en.wikipedia.org/wiki/Nonlinear_optics), for example).
+
