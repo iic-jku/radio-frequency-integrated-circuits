@@ -118,7 +118,7 @@ $$
 \text{FSPL} = 20 \cdot \log_{10}(d / \text{m}) + 20 \cdot \log_{10}(f / \text{Hz}) + 20 \cdot \log_{10} \left( \frac{4\pi}{c} \text{m/s} \right).
 $$ {#eq-fspl}
 
-@eq-fspl can be readily derived from @eq-friis-transmission and @eq-dbm assuming isotropic antennas at transmitter and receiver. Using @eq-fspl we can easily calculate the FSPL for different distances and frequencies. The results are shown in [@fig-free-space-path-loss]. It should be noted that the FSPL increases by 20 dB per decade of distance and 20 dB per decade of frequency, making higher frequencies and longer distances very challenging.
+@eq-fspl can be readily derived from @eq-friis-transmission and @eq-dbm assuming isotropic antennas at transmitter and receiver. Using @eq-fspl we can easily calculate the FSPL for different distances and frequencies. The results are shown in @fig-free-space-path-loss. It should be noted that the FSPL increases by 20 dB per decade of distance and 20 dB per decade of frequency, making higher frequencies and longer distances very challenging.
 
 {{< include /content/intro/_fig_free_space_path_loss.qmd >}}
 
@@ -160,7 +160,7 @@ During this course, we will learn what these terms mean and how they impact the 
 
 As you can see in @tbl-wireless-standards, since LTE (4G) and 5G NR, many additional bands have been defined in the sub-6 GHz range (FR1) and also in the mm-wave range (FR2, 24.25 to 52.6 GHz). This means that modern wireless devices have to support many different frequency bands, which makes the design of RF frontends even more challenging. A good overview of the different frequency bands is given here for [LTE](https://www.sqimway.com/lte_band.php) and [5G NR](https://www.sqimway.com/nr_band.php).
 
-RFIC design is a multidisciplinary field, requiring knowledge from various engineering domains, as shown in [@fig-rf-multidisciplinary]. This makes RFIC design challenging, but also very interesting!
+RFIC design is a multidisciplinary field, requiring knowledge from various engineering domains, as shown in @fig-rf-design-multidisciplinary. This makes RFIC design challenging, but also very interesting!
 
 {{< include /content/intro/_fig_rf_multidisciplinary.qmd >}}
 
