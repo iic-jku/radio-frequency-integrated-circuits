@@ -15,7 +15,7 @@ limitations under the License.
 :::
 
 ```{python}
-#| label: fig-ofdm-block-diagram
+#| label: fig-ofdm-transceiver
 #| echo: false
 #| fig-cap: "OFDM transmission system block diagram showing transmitter and receiver processing chains."
 
