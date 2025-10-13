@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2025-10-10">
+<meta name="dcterms.date" content="2025-10-13">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -440,7 +440,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 10, 2025</p>
+      <p class="date">October 13, 2025</p>
     </div>
   </div>
   
@@ -782,7 +782,7 @@ Table&nbsp;2: Comparison of wireless communication standards
 </div>
 <p>During this course, we will learn what these terms mean and how they impact the design of RF integrated circuits.</p>
 <p>As you can see in <a href="#tbl-wireless-standards" class="quarto-xref">Table&nbsp;2</a>, since LTE (4G) and 5G NR, many additional bands have been defined in the sub-6 GHz range (FR1) and also in the mm-wave range (FR2, 24.25 to 52.6 GHz). This means that modern wireless devices have to support many different frequency bands, which makes the design of RF frontends even more challenging. A good overview of the different frequency bands is given here for <a href="https://www.sqimway.com/lte_band.php">LTE</a> and <a href="https://www.sqimway.com/nr_band.php">5G NR</a>.</p>
-<p>RFIC design is a multidisciplinary field, requiring knowledge from various engineering domains, as shown in <strong>?@fig-rf-multidisciplinary</strong>. This makes RFIC design challenging, but also very interesting!</p>
+<p>RFIC design is a multidisciplinary field, requiring knowledge from various engineering domains, as shown in <a href="#fig-rf-design-multidisciplinary" class="quarto-xref">Figure&nbsp;3</a>. This makes RFIC design challenging, but also very interesting!</p>
 <div id="cell-fig-rf-design-multidisciplinary" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div id="fig-rf-design-multidisciplinary" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1420,15 +1420,15 @@ Figure&nbsp;15: Gaussian pulse shaping in time and frequency domain for differen
 <section id="sec-fundamentals-ofdm" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="sec-fundamentals-ofdm"><span class="header-section-number">2.6</span> Orthogonal Frequency-Division Multiplexing (OFDM)</h2>
 <p>As we have seen in the previous section, if we make the symbol rate high, we need to use pulses with a wide bandwidth. The problem with a wide bandwidth in wireless communication is <strong>multi-path propagation</strong>, which causes frequency-selective fading. This means that some frequencies are attenuated more than others, which can cause errors in the received signal. Equalizing such a frequency-selective channel can be very complex, especially if the channel changes rapidly (as in mobile communication). We now face a dilemma: How can we achieve high data rates (which require high symbol rates and thus wide bandwidth) while avoiding frequency-selective fading? The key idea, implemented in <strong>OFDM</strong>, is to split the wideband channel into multiple narrowband sub-channels (subcarriers), each with a low symbol rate. This way, each subcarrier experiences flat fading, which is much easier to equalize.</p>
-<p>The key question is now how to implement this idea efficiently, as we now have to apply modulation to hundreds or thousands of individual subcarriers. The solution is to use the <strong>inverse fast Fourier transform (IFFT)</strong> at the transmitter to generate the time-domain OFDM signal from the frequency-domain symbols, and the <strong>fast Fourier transform (FFT)</strong> at the receiver to recover the frequency-domain symbols from the time-domain OFDM signal. This is illustrated in <strong>?@fig-ofdm-transceiver</strong>.</p>
-<div id="cell-fig-ofdm-block-diagram" class="cell" data-execution_count="16">
+<p>The key question is now how to implement this idea efficiently, as we now have to apply modulation to hundreds or thousands of individual subcarriers. The solution is to use the <strong>inverse fast Fourier transform (IFFT)</strong> at the transmitter to generate the time-domain OFDM signal from the frequency-domain symbols, and the <strong>fast Fourier transform (FFT)</strong> at the receiver to recover the frequency-domain symbols from the time-domain OFDM signal. This is illustrated in <a href="#fig-ofdm-transceiver" class="quarto-xref">Figure&nbsp;16</a>.</p>
+<div id="cell-fig-ofdm-transceiver" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display">
-<div id="fig-ofdm-block-diagram" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-ofdm-transceiver" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-ofdm-block-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-ofdm-block-diagram-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-16" title="Figure&nbsp;16: OFDM transmission system block diagram showing transmitter and receiver processing chains."><img src="rfic_files/figure-html/fig-ofdm-block-diagram-output-1.svg" class="img-fluid figure-img"></a>
+<div aria-describedby="fig-ofdm-transceiver-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-ofdm-transceiver-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-16" title="Figure&nbsp;16: OFDM transmission system block diagram showing transmitter and receiver processing chains."><img src="rfic_files/figure-html/fig-ofdm-transceiver-output-1.svg" class="img-fluid figure-img"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ofdm-block-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ofdm-transceiver-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;16: OFDM transmission system block diagram showing transmitter and receiver processing chains.
 </figcaption>
 </figure>
