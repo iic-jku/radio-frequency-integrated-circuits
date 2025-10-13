@@ -376,8 +376,8 @@ window.Quarto = {
   </ul></li>
   <li><a href="#sec-trx" id="toc-sec-trx" class="nav-link" data-scroll-target="#sec-trx"><span class="header-section-number">3</span> Transceivers</a>
   <ul class="collapse">
-  <li><a href="#direct-conversion-transceiver" id="toc-direct-conversion-transceiver" class="nav-link" data-scroll-target="#direct-conversion-transceiver"><span class="header-section-number">3.1</span> Direct-Conversion Transceiver</a></li>
-  <li><a href="#modulation-and-demodulation" id="toc-modulation-and-demodulation" class="nav-link" data-scroll-target="#modulation-and-demodulation"><span class="header-section-number">3.2</span> Modulation and Demodulation</a></li>
+  <li><a href="#sec-trx-direct-conversion" id="toc-sec-trx-direct-conversion" class="nav-link" data-scroll-target="#sec-trx-direct-conversion"><span class="header-section-number">3.1</span> Direct-Conversion Transceiver</a></li>
+  <li><a href="#sec-trx-mod-demod" id="toc-sec-trx-mod-demod" class="nav-link" data-scroll-target="#sec-trx-mod-demod"><span class="header-section-number">3.2</span> Modulation and Demodulation</a></li>
   <li><a href="#filtering" id="toc-filtering" class="nav-link" data-scroll-target="#filtering"><span class="header-section-number">3.3</span> Filtering</a></li>
   <li><a href="#direct-conversion-architecture" id="toc-direct-conversion-architecture" class="nav-link" data-scroll-target="#direct-conversion-architecture"><span class="header-section-number">3.4</span> Direct-Conversion Architecture</a></li>
   <li><a href="#duplexing" id="toc-duplexing" class="nav-link" data-scroll-target="#duplexing"><span class="header-section-number">3.5</span> Duplexing</a>
@@ -401,7 +401,14 @@ window.Quarto = {
   <li><a href="#sec-lna-inductive-degeneration" id="toc-sec-lna-inductive-degeneration" class="nav-link" data-scroll-target="#sec-lna-inductive-degeneration"><span class="header-section-number">4.3</span> Inductively-Degenerated Common-Source LNA</a></li>
   <li><a href="#sec-lna-feedback" id="toc-sec-lna-feedback" class="nav-link" data-scroll-target="#sec-lna-feedback"><span class="header-section-number">4.4</span> Feedback LNA</a></li>
   </ul></li>
-  <li><a href="#sec-mixer" id="toc-sec-mixer" class="nav-link" data-scroll-target="#sec-mixer"><span class="header-section-number">5</span> Mixers</a></li>
+  <li><a href="#sec-mixer" id="toc-sec-mixer" class="nav-link" data-scroll-target="#sec-mixer"><span class="header-section-number">5</span> Mixers</a>
+  <ul class="collapse">
+  <li><a href="#sec-mixer-nonlinear" id="toc-sec-mixer-nonlinear" class="nav-link" data-scroll-target="#sec-mixer-nonlinear"><span class="header-section-number">5.1</span> Non-Linear Mixer</a></li>
+  <li><a href="#sec-mixer-time-variant" id="toc-sec-mixer-time-variant" class="nav-link" data-scroll-target="#sec-mixer-time-variant"><span class="header-section-number">5.2</span> Time-Variant Mixer</a></li>
+  <li><a href="#sec-mixer-gilbert" id="toc-sec-mixer-gilbert" class="nav-link" data-scroll-target="#sec-mixer-gilbert"><span class="header-section-number">5.3</span> Gilbert Cell Mixer</a></li>
+  <li><a href="#sec-mixer-npath" id="toc-sec-mixer-npath" class="nav-link" data-scroll-target="#sec-mixer-npath"><span class="header-section-number">5.4</span> N-Path Filter</a></li>
+  <li><a href="#sec-mixer-lo" id="toc-sec-mixer-lo" class="nav-link" data-scroll-target="#sec-mixer-lo"><span class="header-section-number">5.5</span> LO Generation</a></li>
+  </ul></li>
   <li><a href="#sec-oscillator" id="toc-sec-oscillator" class="nav-link" data-scroll-target="#sec-oscillator"><span class="header-section-number">6</span> Oscillators</a></li>
   <li><a href="#sec-pll" id="toc-sec-pll" class="nav-link" data-scroll-target="#sec-pll"><span class="header-section-number">7</span> Phase-Locked Loops</a></li>
   <li><a href="#sec-poweramp" id="toc-sec-poweramp" class="nav-link" data-scroll-target="#sec-poweramp"><span class="header-section-number">8</span> Power Amplifiers</a></li>
@@ -1483,8 +1490,8 @@ Note&nbsp;6: OFDM in LTE
 <p>Nowadays, the various small-signal RF functions for receive and transmit are integrated into so-called transceivers (TRX). A TRX is a device that can both transmit and receive signals, and is usually called an “RFIC”. While high monolithic integration is certainly the norm for radio-frequency devices intended for standards like Bluetooth, WiFi, cellular, etc., it is increasingly used also for mm-wave frequencies for applications like automotive radar and 5G cellular.</p>
 <p>Typically TRX include components like amplifiers, mixers, filters, oscillators, and phase-locked loops. When digital interfaces are used for the baseband data transport also functions like analog-to-digital conversion (ADC) and digital-to-analog conversion (DAC) are integrated together with digital signal processing (DSP) blocks and potentially high-speed interfaces.</p>
 <p>In this lecture we will focus on the RF part of a TRX, which is responsible for the upconversion of baseband or intermediate frequency (IF) signals to the desired transmit frequency during transmission, and the downconversion of received signals from the carrier frequency to baseband or IF during reception. For filters, low-frequency amplifiers, ADCs, DACs, and DSP blocks we refer to related courses and literature, for example <a href="https://iic-jku.github.io/analog-circuit-design/analog_circuit_design.html">our analog circuit design course</a>.</p>
-<section id="direct-conversion-transceiver" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="direct-conversion-transceiver"><span class="header-section-number">3.1</span> Direct-Conversion Transceiver</h2>
+<section id="sec-trx-direct-conversion" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-trx-direct-conversion"><span class="header-section-number">3.1</span> Direct-Conversion Transceiver</h2>
 <p>The following typical functions have to be performed by a TRX:</p>
 <ul>
 <li>Pulse-shaping filtering of the baseband signal (can be implemented analog or in most cases digital).</li>
@@ -1511,8 +1518,8 @@ Figure&nbsp;17: Block diagram of a typical transceiver (TRX) showing the main fu
 <p>As can be seen in <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;17</a>, this generic example can be adapted in various ways. Generally, the amplifier gains are adjustable to adapt to different signal levels. If various channel bandwidths are to be supported, the corner frequencies of the low-pass filters (LPF) can be adjusted, as well as (optionally) the sampling rate of the ADCs and DACs. The local oscillator (LO) frequency is generated by a phase-locked loop (PLL) synthesizer, which can be tuned to the desired carrier frequency. In case of frequency-division duplex (FDD) operation, two PLLs are used to generate the TX and RX LO frequencies, which are separated by the duplex distance. In time-division duplex (TDD) operation, a single PLL is sufficient, supplying the LO signal to both RX and TX.</p>
 <p>The modem that is shown in <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;17</a> is responsible for the digital baseband processing, including functions like channel coding/decoding, modulation/demodulation, equalization, and error correction. The modem is usually implemented as a digital System-on-Chip (SoC) consisting of (multiple) CPUS, DSPs, and fixed-function blocks for time-critical processing. For an in-depth discussion we recommend <span class="citation" data-cites="Sklar_Digital_Communications">(<a href="#ref-Sklar_Digital_Communications" role="doc-biblioref">Sklar and Harris 2020</a>)</span> or <span class="citation" data-cites="Molisch_Wireless_Communications">(<a href="#ref-Molisch_Wireless_Communications" role="doc-biblioref">Molisch 2022</a>)</span>.</p>
 </section>
-<section id="modulation-and-demodulation" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="modulation-and-demodulation"><span class="header-section-number">3.2</span> Modulation and Demodulation</h2>
+<section id="sec-trx-mod-demod" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-trx-mod-demod"><span class="header-section-number">3.2</span> Modulation and Demodulation</h2>
 <p>Modulation is the process of varying a carrier signal at frequency <span class="math inline">\(f_\mathrm{c}\)</span> in order to transmit information. The complex baseband signal (after converting the real-valued digital <span class="math inline">\(s_\mathrm{I}\)</span> and <span class="math inline">\(s_\mathrm{Q}\)</span> signals to analog and pulse-shaping filtering) is represented as</p>
 <p><span class="math display">\[
 s_\mathrm{BB}(t) = s_\mathrm{I}(t) + j s_\mathrm{Q}(t).
@@ -2153,6 +2160,209 @@ Y_\mathrm{in} = \frac{1}{Z_\mathrm{in}} = \frac{g_\mathrm{m}C_\mathrm{F}}{C_\mat
 </section>
 <section id="sec-mixer" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Mixers</h1>
+<p>As we have seen in <a href="#sec-trx-mod-demod" class="quarto-xref">Section&nbsp;3.2</a> we are using mixers to “upconvert” and “downconvert” signals, i.e., we shift the frequency of a signal to a higher or lower frequency with the help of an auxilliary signal, called the “<strong>local oscillator</strong>” (LO) signal. The block diagram of a mixer is shown in <a href="#fig-mixer-block" class="quarto-xref">Figure&nbsp;37</a>.</p>
+<div id="cell-fig-mixer-square" class="cell" data-execution_count="36">
+<div class="cell-output cell-output-display">
+<div id="fig-mixer-square" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mixer-square-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-mixer-square-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-36" title="Figure&nbsp;36: A squarer as a nonlinear mixer."><img src="rfic_files/figure-html/fig-mixer-square-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mixer-square-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;36: A squarer as a nonlinear mixer.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>What we usually want in a mixer is that the input signal at <span class="math inline">\(\omega_\mathrm{in}\)</span> is shifted by <span class="math inline">\(\omega_\mathrm{LO}\)</span>, so that the output signal is located at</p>
+<p><span class="math display">\[
+\omega_\mathrm{out} = \omega_\mathrm{in} \pm \omega_\mathrm{LO}.
+\]</span></p>
+<p>It should be noted noted that the output signal usually contains additional frequency components, which are not desired. These so-called “<strong>spurious</strong>” components are usually filtered out in a subsequent filtering stage.</p>
+<p>Recalling the properties of <a href="https://en.wikipedia.org/wiki/Linear_time-invariant_system">linear time-invariant (LTI)</a> systems, we know that in an LTI system <em>no new frequency components</em> (which are not already present in the input signal) are generated. In conclusion, in order to generate new frequency components, a mixer has to be either</p>
+<ul>
+<li>a <strong>non-linear</strong> system, or</li>
+<li>a <strong>time-variant</strong> system.</li>
+</ul>
+<p>Next we will look at two options on how to implement a mixer.</p>
+<section id="sec-mixer-nonlinear" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="sec-mixer-nonlinear"><span class="header-section-number">5.1</span> Non-Linear Mixer</h2>
+<p>Generally speaking, we can use any non-linear device to implement a mixer (often, this generation of new frequency components in a nonlinear system is highly undesired; in a mixer, we want this effect). As a simple example we look at the case of a square function, shown in <a href="#fig-mixer-square" class="quarto-xref">Figure&nbsp;36</a>.</p>
+<div id="cell-fig-mixer-block" class="cell" data-execution_count="37">
+<div class="cell-output cell-output-display">
+<div id="fig-mixer-block" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mixer-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-mixer-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-37" title="Figure&nbsp;37: Mixer block diagram."><img src="rfic_files/figure-html/fig-mixer-block-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mixer-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;37: Mixer block diagram.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>When we apply the sum of the signals <span class="math inline">\(s_\mathrm{in}(t) = \cos( \omega_\mathrm{in} t)\)</span> and <span class="math inline">\(s_\mathrm{LO}(t) = \cos(\omega_\mathrm{LO} t)\)</span> to the input of a squarer, we get the output signal</p>
+<p><span id="eq-mixer-square-output"><span class="math display">\[
+\begin{split}
+s_\mathrm{out}(t) = [ s_\mathrm{in}(t) + s_\mathrm{LO}(t) ]^2 &amp;= \cos(\omega_\mathrm{in} t + \omega_\mathrm{LO} t) + \cos(\omega_\mathrm{in} t - \omega_\mathrm{LO} t) \\
+&amp;+ 1 + \frac{1}{2} \cos(2 \omega_\mathrm{in} t) + \frac{1}{2} \cos(2 \omega_\mathrm{LO} t).
+\end{split}
+\tag{36}\]</span></span></p>
+<p>We see that the output signal contains the desired frequency components at <span class="math inline">\(\omega_\mathrm{in} \pm \omega_\mathrm{LO}\)</span>, but also additional components at dc (0 Hz), <span class="math inline">\(2 \omega_\mathrm{in}\)</span>, and <span class="math inline">\(2 \omega_\mathrm{LO}\)</span>. These additional components are usually unwanted and have to be filtered out in a subsequent filtering stage. As a side-note, in some circuits a <strong>frequency doubler</strong> is desired, which can be implemented by simply filtering out the other frequency components. In a doubler no LO signal is required, as the input signal is simply squared.</p>
+<p>A simple example circuit is a diode, which has a non-linear current-voltage characteristic. The block diagram of a simple diode mixer is shown in <a href="#fig-diode-mixer" class="quarto-xref">Figure&nbsp;38</a>.</p>
+<div id="cell-fig-diode-mixer" class="cell" data-execution_count="38">
+<div class="cell-output cell-output-display">
+<div id="fig-diode-mixer" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-diode-mixer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-diode-mixer-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-38" title="Figure&nbsp;38: A diode mixer."><img src="rfic_files/figure-html/fig-diode-mixer-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diode-mixer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;38: A diode mixer.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>This structure is conceptionally simple, it just requires a (fast) diode, filters to couple the desired frequency components in and out, and an RF choke to provide a dc bias voltage for the diode. However, the performance of such a simple mixer is usually not very good, as the diode is a highly non-linear device, which generates many spurious frequency components. More advanced mixer circuits use more complex non-linear devices (for example, a ring of diodes) to improve the performance. The advantage of these mixers is that they can operate up to very high frequencies (in the mm-wave range and beyond). If you can make a nonlinear device, you can make a mixer (think also of <a href="https://en.wikipedia.org/wiki/Nonlinear_optics">nonlinear optics</a>, for example).</p>
+</section>
+<section id="sec-mixer-time-variant" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="sec-mixer-time-variant"><span class="header-section-number">5.2</span> Time-Variant Mixer</h2>
+<p>In contrast to the non-linear mixer, a time-variant mixer uses an ideally <strong>linear</strong> device, but changes its properties over time. A simple example is a switch, which is opened and closed at the LO frequency. The block diagram of such a mixer is shown in <a href="#fig-switch-mixer" class="quarto-xref">Figure&nbsp;39</a>. This system is ideally linear from input to output, but very nonlinear when considering the LO input.</p>
+<div id="cell-fig-switch-mixer" class="cell" data-execution_count="39">
+<div class="cell-output cell-output-display">
+<div id="fig-switch-mixer" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-switch-mixer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-switch-mixer-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-39" title="Figure&nbsp;39: A switch as a time-variant mixer."><img src="rfic_files/figure-html/fig-switch-mixer-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-switch-mixer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;39: A switch as a time-variant mixer.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>When the switch is closed (<span class="math inline">\(s_\mathrm{LO} \ge 0\)</span>), the input signal is passed to the output, i.e., <span class="math inline">\(s_\mathrm{out}(t) = s_\mathrm{in}(t)\)</span>; when the switch is open (<span class="math inline">\(s_\mathrm{LO} &lt; 0\)</span>), no signal is passed, i.e, <span class="math inline">\(s_\mathrm{out}(t) = 0\)</span>. The output signal can be expressed as</p>
+<p><span class="math display">\[
+s_\mathrm{out}(t) = s_\mathrm{in}(t) \cdot \frac{1}{2} \left\{ 1 + \mathrm{sgn}[ s_\mathrm{LO}(t) ] \right\},
+\]</span></p>
+<p>where <span class="math inline">\(\mathrm{sgn}(\cdot)\)</span> is the sign function. The term in curly brackets is a square wave that switches between 0 and 1 at the LO frequency. This square wave can be expressed as a Fourier series, which contains the fundamental frequency at <span class="math inline">\(\omega_\mathrm{LO}\)</span> and all odd harmonics <span class="math inline">\(3 \omega_\mathrm{LO}\)</span>, <span class="math inline">\(5 \omega_\mathrm{LO}\)</span>, and so on. In conclusion, the input signal is again expressed as <span class="math inline">\(\cos(\omega_\mathrm{in} t)\)</span>, we get the output signal</p>
+<p><span id="eq-mixer-single-output"><span class="math display">\[
+s_\mathrm{out}(t) = \frac{1}{\pi} \cos(\omega_\mathrm{in} t \pm \omega_\mathrm{LO} t) + \ldots
+\tag{37}\]</span></span></p>
+<p>Again, we see that the output signal contains the desired frequency components at <span class="math inline">\(\omega_\mathrm{in} \pm \omega_\mathrm{LO}\)</span>, but also additional components at <span class="math inline">\(3 \omega_\mathrm{LO}\)</span>, <span class="math inline">\(5 \omega_\mathrm{LO}\)</span>, and so on. These additional components are usually unwanted and have to be filtered out in a subsequent filtering stage. The advantage of a time-variant mixer is that it can be implemented readily in CMOS, as shown in <a href="#fig-cmos-single-mixer" class="quarto-xref">Figure&nbsp;40</a>.</p>
+<div id="cell-fig-cmos-single-mixer" class="cell" data-execution_count="40">
+<div class="cell-output cell-output-display">
+<div id="fig-cmos-single-mixer" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cmos-single-mixer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-cmos-single-mixer-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-40" title="Figure&nbsp;40: A MOSFET as a switch used as a mixer, with ac-coupled LO signal."><img src="rfic_files/figure-html/fig-cmos-single-mixer-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cmos-single-mixer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;40: A MOSFET as a switch used as a mixer, with ac-coupled LO signal.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The implementation in <a href="#fig-cmos-single-mixer" class="quarto-xref">Figure&nbsp;40</a> uses a single NMOS transistor as a switch. The LO signal is ac-coupled to the gate of the transistor, so that the dc operating point is set by the bias voltage <span class="math inline">\(V_\mathrm{bias}\)</span>. When the LO signal is high enough, the transistor is switched on and the input signal <span class="math inline">\(v_\mathrm{in}(t)\)</span> is passed to the output; when the LO signal is low, the transistor is switched off and no signal is passed. Note that with the MOSFET we can switch voltages as well as currents, so the mixer can work in both modes, voltage mode or current mode.</p>
+<p>A big disadvantage of this simple implementation that the input signal is “lost” for half of the cycle when the MOSFET switch is open. A fully differential implementation (having differential ports at input, output and LO input) can alleviate this problem, as the input signal is always connected to one of the two output ports. This configuration is called a “<strong>double-balanced mixer</strong>” and is widely used in practice. It is shown in <a href="#fig-cmos-double-mixer" class="quarto-xref">Figure&nbsp;41</a>.</p>
+<div id="cell-fig-cmos-double-mixer" class="cell" data-execution_count="41">
+<div class="cell-output cell-output-display">
+<div id="fig-cmos-double-mixer" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cmos-double-mixer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-cmos-double-mixer-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-41" title="Figure&nbsp;41: A fully-differential double-balanced MOSFET mixer."><img src="rfic_files/figure-html/fig-cmos-double-mixer-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cmos-double-mixer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;41: A fully-differential double-balanced MOSFET mixer.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that with a double-balanced mixer we have 6 dB more conversion gain compared to the single-balanced mixer (refer to <a href="#eq-mixer-single-output" class="quarto-xref">Equation&nbsp;37</a>), as can be seen in <a href="#eq-mixer-double-output" class="quarto-xref">Equation&nbsp;38</a>. Note that the factor of <span class="math inline">\(2/\pi\)</span> is the conversion loss of an ideal double balanced mixer of 3.9 dB.</p>
+<p><span id="eq-mixer-double-output"><span class="math display">\[
+s_\mathrm{out}(t) = \frac{2}{\pi} \cos(\omega_\mathrm{in} t \pm \omega_\mathrm{LO} t) + \ldots
+\tag{38}\]</span></span></p>
+<p>Note that no dc current needs to flow through the mixer structures shown in <a href="#fig-cmos-single-mixer" class="quarto-xref">Figure&nbsp;40</a> and <a href="#fig-cmos-double-mixer" class="quarto-xref">Figure&nbsp;41</a>, which is a huge advantage when thinking of flicker noise. Flicker noise in a MOSFET is proportional to the dc current flowing through the device, so if no dc current flows, no flicker noise is generated!</p>
+<p>In order to look at the full picture, we embed the mixer of <a href="#fig-cmos-double-mixer" class="quarto-xref">Figure&nbsp;41</a> in a complete RX front-end, as shown in <a href="#fig-rx-mixer-simplified" class="quarto-xref">Figure&nbsp;42</a>. An LNA (essentially a <span class="math inline">\(g_\mathrm{m}\)</span> cell) creates a current signal from the received voltage signal at the antenna. This current signal is then fed to the mixer in the current domain, and further sinked into a transimpedance amplifier (TIA), which also implements a lowpass pole. The simplified circuit is shown in <a href="#fig-rx-mixer-simplified" class="quarto-xref">Figure&nbsp;42</a>.</p>
+<div id="cell-fig-rx-mixer-simplified" class="cell" data-execution_count="42">
+<div class="cell-output cell-output-display">
+<div id="fig-rx-mixer-simplified" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rx-mixer-simplified-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-rx-mixer-simplified-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-42" title="Figure&nbsp;42: An RX front-end using a current-mode (passive) mixer."><img src="rfic_files/figure-html/fig-rx-mixer-simplified-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rx-mixer-simplified-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;42: An RX front-end using a current-mode (passive) mixer.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The capacitors connected directly to ground at the mixer outputs are good practice, as they shunt high-frequency switching noise to ground, and in this way help the performance of the TIA, which otherwise would have to sink these currents. Note that all blocker currents originating at the LNA output and passing through the mixer are shunt by the feedback capacitors to the output of the TIA, and need to be actively driven by the TIA’s output stage!</p>
+</section>
+<section id="sec-mixer-gilbert" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="sec-mixer-gilbert"><span class="header-section-number">5.3</span> Gilbert Cell Mixer</h2>
+<p>As we have seen in <a href="#sec-mixer-time-variant" class="quarto-xref">Section&nbsp;5.2</a>, in CMOS we have quite a few options to implement a mixer as the MOSFET is a good current and voltage switch. This is in stark contrast to te BJT, as the bipolar transistor can only be used as an (excellent) current switch in the differential pair configuration. Hence, we need to implement a current-mode mixer in bipolar technology. The most widely used structure is the so-called “<strong>Gilbert cell</strong>”, shown in <a href="#fig-gilbert-mixer" class="quarto-xref">Figure&nbsp;43</a>.</p>
+<div id="cell-fig-gilbert-mixer" class="cell" data-execution_count="43">
+<div class="cell-output cell-output-display">
+<div id="fig-gilbert-mixer" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gilbert-mixer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-gilbert-mixer-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-43" title="Figure&nbsp;43: A Gilbert mixer based on bipolar differential pairs."><img src="rfic_files/figure-html/fig-gilbert-mixer-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gilbert-mixer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;43: A Gilbert mixer based on bipolar differential pairs.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The idea is that in input transconductor creates currents, which are switched in the double differential pair, and convert the mixed currents back to voltage in the load impedances. There are many known variations of this circuit, like skipping the current source at the bottom to increase linearity and headroom, or swap the input transconductor for another structure. It might also be useful to “bleed” some bias current from the LO switching stage to improve noise.</p>
+</section>
+<section id="sec-mixer-npath" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="sec-mixer-npath"><span class="header-section-number">5.4</span> N-Path Filter</h2>
+<p>Without much deliberation or diving into the background, it has to be stated that passive mixers (based on MOSFET switches) have a few very interesting properties. One of them is that they can be used to implement very high-quality bandpass filters, called “<strong>N-path filters</strong>” <span class="citation" data-cites="Lepage.1953">(<a href="#ref-Lepage.1953" role="doc-biblioref">Lepage, Cahn, and Brown 1953</a>)</span>. The basic idea is shown in <a href="#fig-npath-filter" class="quarto-xref">Figure&nbsp;44</a>. We use 4 phases of an LO signal to switch the 4 capacitors to ground in a round-robin fashion. The duty cycle of each LO phase is 25% to have a non-overlapping clock.</p>
+<div id="cell-fig-npath-filter" class="cell" data-execution_count="44">
+<div class="cell-output cell-output-display">
+<div id="fig-npath-filter" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-npath-filter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-npath-filter-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-44" title="Figure&nbsp;44: A 4-phase N-path filter."><img src="rfic_files/figure-html/fig-npath-filter-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-npath-filter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;44: A 4-phase N-path filter.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The key observation to make is that a switch that is opened and closed at a certain frequency (the LO frequency) can be seen as a time-variant resistor. This time-variant resistor converts impedance seen at one one to the other end, and also changes the frequency of this apparent impedance. In other words, if we connect grounded capacitors at one end of the mixer switches, and we look into the other end, we see a <strong>bandpass filter centered at the LO</strong> frequency! In this way we can build bandpass filters (and also bandstop filters <span class="citation" data-cites="Vazny.2010">(<a href="#ref-Vazny.2010" role="doc-biblioref">Vazny et al. 2010</a>)</span>) at very high frequencies which are precisely centered (without component variations) around <span class="math inline">\(\omega_\mathrm{LO}\)</span>.</p>
+<p>The impedance characteristics of such a tank circuit exhibit first-order bandpass behavior, as shown in <a href="#fig-tank-bandpass" class="quarto-xref">Figure&nbsp;45</a>. The peak impedance reaches 5.3 times the switch resistance (<span class="math inline">\(R_\mathrm{sw}\)</span>), and importantly, the bandwidth is inversely proportional to the capacitance value, i.e., <span class="math inline">\(\mathrm{BW} \propto 1/C\)</span>. This relationship allows for precise control of the filter bandwidth by adjusting the capacitor values.</p>
+<div id="cell-fig-tank-bandpass" class="cell" data-execution_count="45">
+<div class="cell-output cell-output-display">
+<div id="fig-tank-bandpass" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tank-bandpass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-tank-bandpass-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-45" title="Figure&nbsp;45: First-order bandpass behavior and impedance of an N-path filter."><img src="rfic_files/figure-html/fig-tank-bandpass-output-1.png" width="656" height="465" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tank-bandpass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;45: First-order bandpass behavior and impedance of an N-path filter.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-mixer-lo" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="sec-mixer-lo"><span class="header-section-number">5.5</span> LO Generation</h2>
+<p>To be written.</p>
+</section>
 </section>
 <section id="sec-oscillator" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Oscillators</h1>
@@ -2180,6 +2390,9 @@ Darabi, Hooman. 2020. <em>Radio Frequency Integrated Circuits and Systems</em>. 
 <div id="ref-Gray_Meyer_5th_ed" class="csl-entry" role="listitem">
 Gray, Paul R., Paul J. Hurst, Stephen H. Lewis, and Robert G. Meyer. 2009. <em><span class="nocase">Analysis and Design of Analog Integrated Circuits</span></em>. Fifth. Wiley.
 </div>
+<div id="ref-Lepage.1953" class="csl-entry" role="listitem">
+Lepage, W. R., C. R. Cahn, and J. S. Brown. 1953. <span>“<span class="nocase">Analysis of a comb filter using synchronously commutated capacitors</span>.”</span> <em>Transactions of the American Institute of Electrical Engineers, Part I: Communication and Electronics</em> 72 (1): 63–68. <a href="https://doi.org/10.1109/tce.1953.6371974">https://doi.org/10.1109/tce.1953.6371974</a>.
+</div>
 <div id="ref-Molisch_Wireless_Communications" class="csl-entry" role="listitem">
 Molisch, Andreas F. 2022. <em>Wireless Communications: From Fundamentals to Beyond 5G</em>. 3rd edition. Wiley-IEEE Press.
 </div>
@@ -2197,6 +2410,9 @@ Sarpeshkar, R., T. Delbruck, and C. A. Mead. 1993. <span>“<span class="nocase"
 </div>
 <div id="ref-Sklar_Digital_Communications" class="csl-entry" role="listitem">
 Sklar, Bernard, and Fredric J. Harris. 2020. <em>Digital Communications: Fundamentals and Applications</em>. 3rd edition. Pearson.
+</div>
+<div id="ref-Vazny.2010" class="csl-entry" role="listitem">
+Vazny, Rastislav, Werner Schelmbauer, Harald Pretl, Stefan Herzinger, and Robert Weigel. 2010. <span>“<span class="nocase">An Interstage Filter-Free Mobile Radio Receiver with Integrated TX Leakage Filtering</span>.”</span> In, 21–24. 2010 IEEE Radio Frequency Integrated Circuits Symposium. IEEE. <a href="https://doi.org/10.1109/rfic.2010.5477294">https://doi.org/10.1109/rfic.2010.5477294</a>.
 </div>
 </div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div>Apache-2.0 license</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
