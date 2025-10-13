@@ -22,7 +22,7 @@ Typically TRX include components like amplifiers, mixers, filters, oscillators, 
 
 In this lecture we will focus on the RF part of a TRX, which is responsible for the upconversion of baseband or intermediate frequency (IF) signals to the desired transmit frequency during transmission, and the downconversion of received signals from the carrier frequency to baseband or IF during reception. For filters, low-frequency amplifiers, ADCs, DACs, and DSP blocks we refer to related courses and literature, for example [our analog circuit design course](https://iic-jku.github.io/analog-circuit-design/analog_circuit_design.html).
 
-## Direct-Conversion Transceiver
+## Direct-Conversion Transceiver {#sec-trx-direct-conversion}
 
 The following typical functions have to be performed by a TRX:
 
@@ -40,7 +40,7 @@ As can be seen in @fig-trx-block, this generic example can be adapted in various
 
 The modem that is shown in @fig-trx-block is responsible for the digital baseband processing, including functions like channel coding/decoding, modulation/demodulation, equalization, and error correction. The modem is usually implemented as a digital System-on-Chip (SoC) consisting of (multiple) CPUS, DSPs, and fixed-function blocks for time-critical processing. For an in-depth discussion we recommend [@Sklar_Digital_Communications] or [@Molisch_Wireless_Communications].
 
-## Modulation and Demodulation
+## Modulation and Demodulation {#sec-trx-mod-demod}
 
 Modulation is the process of varying a carrier signal at frequency $f_\mathrm{c}$ in order to transmit information. The complex baseband signal (after converting the real-valued digital $s_\mathrm{I}$ and $s_\mathrm{Q}$ signals to analog and pulse-shaping filtering) is represented as
 

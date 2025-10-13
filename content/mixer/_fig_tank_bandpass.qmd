@@ -1,0 +1,100 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-tank-bandpass
+#| echo: false
+#| fig-cap: "First-order bandpass behavior and impedance of an N-path filter."
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define frequency range around resonant frequency
+f0 = 1.0  # Normalized resonant frequency
+f = np.linspace(0.1, 2.0, 1000)
+omega = 2 * np.pi * f
+
+# Tank circuit parameters (normalized)
+omega0 = 2 * np.pi * f0
+Q = 10  # Quality factor for demonstration
+Rsw = 1.0  # Switch resistance (normalized)
+
+# First-order bandpass impedance (magnitude)
+# |Z| = Rsw * Q / sqrt(1 + Q^2 * (omega/omega0 - omega0/omega)^2)
+# At resonance, |Z| = Q * Rsw
+frequency_ratio = omega / omega0
+delta_f = frequency_ratio - 1/frequency_ratio
+Z_magnitude = (Q * Rsw) / np.sqrt(1 + (Q * delta_f)**2)
+
+# Peak impedance value (5.3 * Rsw)
+Z_peak = 5.3 * Rsw
+Q_actual = Z_peak / Rsw  # This gives us Q = 5.3
+
+# Recalculate with actual Q
+Z_magnitude = (Q_actual * Rsw) / np.sqrt(1 + (Q_actual * delta_f)**2)
+
+# Find 3dB bandwidth points
+Z_3dB = Z_peak / np.sqrt(2)
+idx_3dB_lower = np.argmin(np.abs(Z_magnitude[f < f0] - Z_3dB))
+idx_3dB_upper = np.argmin(np.abs(Z_magnitude[f > f0] - Z_3dB)) + len(f[f < f0])
+f_3dB_lower = f[idx_3dB_lower]
+f_3dB_upper = f[idx_3dB_upper]
+bandwidth = f_3dB_upper - f_3dB_lower
+
+# Create the plot
+fig, ax = plt.subplots(1, 1)
+
+# Plot impedance magnitude
+ax.plot(f, Z_magnitude, 'b-', linewidth=2.5, label='|Z(ω)|')
+
+# Mark peak impedance
+ax.plot(f0, Z_peak, 'ro', markersize=8, markerfacecolor='red', 
+        markeredgewidth=2, markeredgecolor='darkred')
+ax.annotate(f'5.3×Rsw', xy=(f0, Z_peak), xytext=(f0 + 0.2, Z_peak + 0.3),
+            color='red',
+            arrowprops=dict(arrowstyle='->', color='red', lw=1.5))
+
+# Mark 3dB bandwidth points
+ax.plot([f_3dB_lower, f_3dB_upper], [Z_3dB, Z_3dB], 'go', markersize=6, 
+        markerfacecolor='green', markeredgewidth=1.5, markeredgecolor='darkgreen')
+
+# Draw bandwidth arrow and label
+ax.annotate('', xy=(f_3dB_upper, Z_3dB - 1.2), xytext=(f_3dB_lower, Z_3dB - 1.2),
+            arrowprops=dict(arrowstyle='<->', color='green', lw=2))
+ax.text((f_3dB_lower + f_3dB_upper)/2, Z_3dB - 1.5, 
+        f'BW ∝ 1/C', 
+        ha='center', va='top', color='green',
+        bbox=dict(boxstyle='round,pad=0.3', facecolor='lightgreen', alpha=0.7))
+
+# Add horizontal dashed line for 3dB level
+ax.axhline(y=Z_3dB, color='gray', linestyle='--', alpha=0.6, linewidth=1)
+ax.text(0.15, Z_3dB + 0.1, '-3dB', color='gray')
+
+# Add vertical line at resonance
+ax.axvline(x=f0, color='gray', linestyle=':', alpha=0.6, linewidth=1)
+
+# Formatting
+ax.set_xlabel('Frequency (normalized to f₀)')
+ax.set_ylabel('Impedance Magnitude |Zin(ω) / Rsw|')
+ax.grid(True, alpha=0.3)
+
+# Set axis limits for better visualization
+ax.set_xlim(0.1, 2.0)
+ax.set_ylim(0, 6)
+
+plt.tight_layout()
+plt.show()
+```

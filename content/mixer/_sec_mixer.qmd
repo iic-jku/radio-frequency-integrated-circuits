@@ -15,3 +15,113 @@ limitations under the License.
 :::
 
 # Mixers {#sec-mixer}
+
+As we have seen in @sec-trx-mod-demod we are using mixers to "upconvert" and "downconvert" signals, i.e., we shift the frequency of a signal to a higher or lower frequency with the help of an auxilliary signal, called the "**local oscillator**" (LO) signal. The block diagram of a mixer is shown in @fig-mixer-block.
+
+{{< include /content/mixer/_fig_mixer_block.qmd >}}
+
+What we usually want in a mixer is that the input signal at $\omega_\mathrm{in}$ is shifted by $\omega_\mathrm{LO}$, so that the output signal is located at
+
+$$
+\omega_\mathrm{out} = \omega_\mathrm{in} \pm \omega_\mathrm{LO}.
+$$
+
+It should be noted noted that the output signal usually contains additional frequency components, which are not desired. These so-called "**spurious**" components are usually filtered out in a subsequent filtering stage.
+
+Recalling the properties of [linear time-invariant (LTI)](https://en.wikipedia.org/wiki/Linear_time-invariant_system) systems, we know that in an LTI system *no new frequency components* (which are not already present in the input signal) are generated. In conclusion, in order to generate new frequency components, a mixer has to be either
+
+- a **non-linear** system, or
+- a **time-variant** system.
+
+Next we will look at two options on how to implement a mixer.
+
+## Non-Linear Mixer {#sec-mixer-nonlinear}
+
+Generally speaking, we can use any non-linear device to implement a mixer (often, this generation of new frequency components in a nonlinear system is highly undesired; in a mixer, we want this effect). As a simple example we look at the case of a square function, shown in @fig-mixer-square.
+
+{{< include /content/mixer/_fig_mixer_square.qmd >}}
+
+When we apply the sum of the signals $s_\mathrm{in}(t) = \cos( \omega_\mathrm{in} t)$ and $s_\mathrm{LO}(t) = \cos(\omega_\mathrm{LO} t)$ to the input of a squarer, we get the output signal
+
+$$
+\begin{split}
+s_\mathrm{out}(t) = [ s_\mathrm{in}(t) + s_\mathrm{LO}(t) ]^2 &= \cos(\omega_\mathrm{in} t + \omega_\mathrm{LO} t) + \cos(\omega_\mathrm{in} t - \omega_\mathrm{LO} t) \\
+&+ 1 + \frac{1}{2} \cos(2 \omega_\mathrm{in} t) + \frac{1}{2} \cos(2 \omega_\mathrm{LO} t).
+\end{split}
+$$ {#eq-mixer-square-output}
+
+We see that the output signal contains the desired frequency components at $\omega_\mathrm{in} \pm \omega_\mathrm{LO}$, but also additional components at dc (0 Hz), $2 \omega_\mathrm{in}$, and $2 \omega_\mathrm{LO}$. These additional components are usually unwanted and have to be filtered out in a subsequent filtering stage. As a side-note, in some circuits a **frequency doubler** is desired, which can be implemented by simply filtering out the other frequency components. In a doubler no LO signal is required, as the input signal is simply squared.
+
+A simple example circuit is a diode, which has a non-linear current-voltage characteristic. The block diagram of a simple diode mixer is shown in @fig-diode-mixer.
+
+{{< include /content/mixer/_fig_diode_mixer.qmd >}}
+
+This structure is conceptionally simple, it just requires a (fast) diode, filters to couple the desired frequency components in and out, and an RF choke to provide a dc bias voltage for the diode. However, the performance of such a simple mixer is usually not very good, as the diode is a highly non-linear device, which generates many spurious frequency components. More advanced mixer circuits use more complex non-linear devices (for example, a ring of diodes) to improve the performance. The advantage of these mixers is that they can operate up to very high frequencies (in the mm-wave range and beyond). If you can make a nonlinear device, you can make a mixer (think also of [nonlinear optics](https://en.wikipedia.org/wiki/Nonlinear_optics), for example).
+
+## Time-Variant Mixer {#sec-mixer-time-variant}
+
+In contrast to the non-linear mixer, a time-variant mixer uses an ideally **linear** device, but changes its properties over time. A simple example is a switch, which is opened and closed at the LO frequency. The block diagram of such a mixer is shown in @fig-switch-mixer. This system is ideally linear from input to output, but very nonlinear when considering the LO input.
+
+{{< include /content/mixer/_fig_switch_mixer.qmd >}}
+
+When the switch is closed ($s_\mathrm{LO} \ge 0$), the input signal is passed to the output, i.e., $s_\mathrm{out}(t) = s_\mathrm{in}(t)$; when the switch is open ($s_\mathrm{LO} < 0$), no signal is passed, i.e, $s_\mathrm{out}(t) = 0$. The output signal can be expressed as
+
+$$
+s_\mathrm{out}(t) = s_\mathrm{in}(t) \cdot \frac{1}{2} \left\{ 1 + \mathrm{sgn}[ s_\mathrm{LO}(t) ] \right\},
+$$
+
+where $\mathrm{sgn}(\cdot)$ is the sign function. The term in curly brackets is a square wave that switches between 0 and 1 at the LO frequency. This square wave can be expressed as a Fourier series, which contains the fundamental frequency at $\omega_\mathrm{LO}$ and all odd harmonics $3 \omega_\mathrm{LO}$, $5 \omega_\mathrm{LO}$, and so on. In conclusion, the input signal is again expressed as $\cos(\omega_\mathrm{in} t)$, we get the output signal
+
+$$
+s_\mathrm{out}(t) = \frac{1}{\pi} \cos(\omega_\mathrm{in} t \pm \omega_\mathrm{LO} t) + \ldots
+$$ {#eq-mixer-single-output}
+
+
+Again, we see that the output signal contains the desired frequency components at $\omega_\mathrm{in} \pm \omega_\mathrm{LO}$, but also additional components at $3 \omega_\mathrm{LO}$, $5 \omega_\mathrm{LO}$, and so on. These additional components are usually unwanted and have to be filtered out in a subsequent filtering stage. The advantage of a time-variant mixer is that it can be implemented readily in CMOS, as shown in @fig-cmos-single-mixer.
+
+{{< include /content/mixer/_fig_cmos_mixer_single.qmd >}}
+
+The implementation in @fig-cmos-single-mixer uses a single NMOS transistor as a switch. The LO signal is ac-coupled to the gate of the transistor, so that the dc operating point is set by the bias voltage $V_\mathrm{bias}$. When the LO signal is high enough, the transistor is switched on and the input signal $v_\mathrm{in}(t)$ is passed to the output; when the LO signal is low, the transistor is switched off and no signal is passed. Note that with the MOSFET we can switch voltages as well as currents, so the mixer can work in both modes, voltage mode or current mode.
+
+
+A big disadvantage of this simple implementation that the input signal is "lost" for half of the cycle when the MOSFET switch is open. A fully differential implementation (having differential ports at input, output and LO input) can alleviate this problem, as the input signal is always connected to one of the two output ports. This configuration is called a "**double-balanced mixer**" and is widely used in practice. It is shown in @fig-cmos-double-mixer.
+
+{{< include /content/mixer/_fig_cmos_mixer_double.qmd >}}
+
+Note that with a double-balanced mixer we have 6 dB more conversion gain compared to the single-balanced mixer (refer to @eq-mixer-single-output), as can be seen in @eq-mixer-double-output. Note that the factor of $2/\pi$ is the conversion loss of an ideal double balanced mixer of 3.9 dB.
+
+$$
+s_\mathrm{out}(t) = \frac{2}{\pi} \cos(\omega_\mathrm{in} t \pm \omega_\mathrm{LO} t) + \ldots
+$$ {#eq-mixer-double-output}
+
+Note that no dc current needs to flow through the mixer structures shown in @fig-cmos-single-mixer and @fig-cmos-double-mixer, which is a huge advantage when thinking of flicker noise. Flicker noise in a MOSFET is proportional to the dc current flowing through the device, so if no dc current flows, no flicker noise is generated!
+
+In order to look at the full picture, we embed the mixer of @fig-cmos-double-mixer in a complete RX front-end, as shown in @fig-rx-mixer-simplified. An LNA (essentially a $\gm$ cell) creates a current signal from the received voltage signal at the antenna. This current signal is then fed to the mixer in the current domain, and further sinked into a transimpedance amplifier (TIA), which also implements a lowpass pole. The simplified circuit is shown in @fig-rx-mixer-simplified [@RedmanWhite.2001].
+
+{{< include /content/mixer/_fig_rx_mixer.qmd >}}
+
+The capacitors connected directly to ground at the mixer outputs are good practice, as they shunt high-frequency switching noise to ground, and in this way help the performance of the TIA, which otherwise would have to sink these currents. Note that all blocker currents originating at the LNA output and passing through the mixer are shunt by the feedback capacitors to the output of the TIA, and need to be actively driven by the TIA's output stage!
+
+## Gilbert Cell Mixer {#sec-mixer-gilbert}
+
+As we have seen in @sec-mixer-time-variant, in CMOS we have quite a few options to implement a mixer as the MOSFET is a good current and voltage switch. This is in stark contrast to te BJT, as the bipolar transistor can only be used as an (excellent) current switch in the differential pair configuration. Hence, we need to implement a current-mode mixer in bipolar technology. The most widely used structure is the so-called "**Gilbert cell**", shown in @fig-gilbert-mixer [@Gilbert.1968].
+
+{{< include /content/mixer/_fig_gilbert_mixer.qmd >}}
+
+The idea is that in input transconductor creates currents, which are switched in the double differential pair, and convert the mixed currents back to voltage in the load impedances. There are many known variations of this circuit, like skipping the current source at the bottom to increase linearity and headroom, or swap the input transconductor for another structure. It might also be useful to "bleed" some bias current from the LO switching stage to improve noise.
+
+## N-Path Filter {#sec-mixer-npath}
+
+Without much deliberation or diving into the background, it has to be stated that passive mixers (based on MOSFET switches) have a few very interesting properties. One of them is that they can be used to implement very high-quality bandpass filters, called "**N-path filters**" [@Lepage.1953]. The basic idea is shown in @fig-npath-filter. We use 4 phases of an LO signal to switch the 4 capacitors to ground in a round-robin fashion. The duty cycle of each LO phase is 25% to have a non-overlapping clock.
+
+{{< include /content/mixer/_fig_npath_filter.qmd >}}
+
+The key observation to make is that a switch that is opened and closed at a certain frequency (the LO frequency) can be seen as a time-variant resistor. This time-variant resistor converts impedance seen at one one to the other end, and also changes the frequency of this apparent impedance. In other words, if we connect grounded capacitors at one end of the mixer switches, and we look into the other end, we see a **bandpass filter centered at the LO** frequency! In this way we can build bandpass filters (and also bandstop filters [@Vazny.2010]) at very high frequencies which are precisely centered (without component variations) around $\omega_\mathrm{LO}$.
+
+The impedance characteristics of such a tank circuit exhibit first-order bandpass behavior, as shown in @fig-tank-bandpass. The peak impedance reaches 5.3 times the switch resistance ($R_\mathrm{sw}$), and importantly, the bandwidth is inversely proportional to the capacitance value, i.e., $\mathrm{BW} \propto 1/C$. This relationship allows for precise control of the filter bandwidth by adjusting the capacitor values.
+
+{{< include /content/mixer/_fig_tank_bandpass.qmd >}}
+
+## LO Generation {#sec-mixer-lo}
+
+To be written.

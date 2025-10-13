@@ -1,0 +1,109 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-gilbert-mixer
+#| echo: false
+#| fig-cap: "A Gilbert mixer based on bipolar differential pairs."
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+import schemdraw.logic as lgc
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    Q1 = elm.BjtNpn().drop('emitter')
+    elm.Line().down(d.unit/4)
+    elm.Line().right(d.unit).dot()
+    pos1 = d.here
+    elm.Line().right(d.unit)
+    elm.Line().up(d.unit/4)
+    Q2 = elm.BjtNpn().anchor('emitter').theta(0).reverse()
+    d.here = pos1
+    Ibias = elm.SourceI().down()
+    elm.Ground()
+    elm.Line().left(d.unit/4).dot(open=True).at(Q1.base).label(r'$v_\mathrm{rf,p}$', loc='left')
+    elm.Line().right(d.unit/4).dot(open=True).at(Q2.base).label(r'$v_\mathrm{rf,n}$', loc='right')
+
+    d.here = Q1.collector
+    elm.Line().up(d.unit/2).dot()
+    d.push()
+    elm.Line().right(d.unit/2)
+    elm.Line().up(d.unit/4)
+    Q3 = elm.BjtNpn().anchor('emitter').theta(0).reverse()
+    d.pop()
+    elm.Line().left(d.unit/2)
+    elm.Line().up(d.unit/4)
+    Q4 = elm.BjtNpn().anchor('emitter').theta(0)
+
+    d.here = Q2.collector
+    elm.Line().up(d.unit/2).dot()
+    d.push()
+    elm.Line().right(d.unit/2)
+    elm.Line().up(d.unit/4)
+    Q5 = elm.BjtNpn().anchor('emitter').theta(0).reverse()
+    d.pop()
+    elm.Line().left(d.unit/2)
+    elm.Line().up(d.unit/4)
+    Q6 = elm.BjtNpn().anchor('emitter').theta(0)
+
+    # load impedance
+    elm.Line().up(d.unit/4).dot().at(Q4.collector)
+    d.push()
+    elm.Line().right().tox(Q6.collector)
+    elm.Line().down().to(Q6.collector)
+    d.pop()
+    elm.Line().up(d.unit/2).dot()
+    d.push()
+    elm.Line().right(d.unit/2).dot(open=True).label(r'$v_\mathrm{out,p}$', loc='right')
+    d.pop()
+    elm.Line().up(d.unit/4)
+    Z1 = elm.ResistorIEC().up()
+
+    elm.Line().up(d.unit/2).dot().at(Q5.collector)
+    d.push()
+    elm.Line().left().tox(Q3.collector)
+    elm.Line().down().to(Q3.collector)
+    d.pop()
+    elm.Line().up(d.unit/4).dot()
+    d.push()
+    elm.Line().left(d.unit/2).dot(open=True).label(r'$v_\mathrm{out,n}$', loc='left')
+    d.pop()
+    elm.Line().up(d.unit/4)
+    Z2 = elm.ResistorIEC().up()
+
+    # lo connections
+    elm.Line().at(Q3.base).right().tox(Ibias.start).dot()
+    d.push()
+    elm.Line().right().to(Q6.base)
+    d.pop()
+    elm.Line().down(d.unit/4).dot(open=True).label(r'$v_\mathrm{lo,n}$', loc='left')
+
+    elm.Line().at(Q4.base).left(d.unit/4).dot()
+    d.push()
+    elm.Line().left(d.unit/2).dot(open=True).label(r'$v_\mathrm{lo,p}$', loc='left')
+    d.pop()
+    elm.Line().down(d.unit)
+    elm.Line().right(d.unit*4.25)
+    elm.Line().up(d.unit)
+    elm.Line().left().to(Q5.base)
+
+    # vdd
+    elm.Line().at((Z1.end[0]-d.unit/4, Z1.end[1])).to((Z2.end[0]+d.unit/4, Z2.end[1])).label(r'$V_\mathrm{DD}$').linewidth(3)
+```

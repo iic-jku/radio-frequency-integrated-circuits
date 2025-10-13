@@ -1,0 +1,63 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-cmos-double-mixer
+#| echo: false
+#| fig-cap: "A fully-differential double-balanced MOSFET mixer."
+import schemdraw as sd
+import schemdraw.elements as elm
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    pos1 = d.here
+    elm.Line().right(d.unit/2).label(r'$v_\mathrm{in,p}$', 'left').dot().idot(open=True)
+    pos2 = d.here
+    elm.Line().right(d.unit/2)
+    M1 = elm.AnalogNFet(offset_gate=False).reverse().anchor('source').drop('drain').theta(270)
+    elm.Line().right(d.unit*1.5).dot()
+    elm.Line().right(d.unit).dot(open=True).label(r'$v_\mathrm{out,p}$', 'right')
+    elm.Line().up(d.unit/2).dot(open=True).at(M1.gate).label(r'$v_\mathrm{LO,p}$', 'right')
+
+    d.here = pos1
+    d.move(dx=0, dy=-d.unit*2)
+    elm.Line().right(d.unit/2).label(r'$v_\mathrm{in,n}$', 'left').dot().idot(open=True)
+    pos3 = d.here
+    elm.Line().right(d.unit/2)
+    M2 = elm.AnalogNFet(offset_gate=False).reverse().anchor('source').drop('drain').theta(270)
+    elm.Line().right(d.unit*2).dot()
+    elm.Line().right(d.unit/2).dot(open=True).label(r'$v_\mathrm{out,n}$', 'right')
+    elm.Line().at(M1.gate).to(M2.gate)
+
+    d.here = pos2
+    elm.Line().down(d.unit/2)
+    elm.Line().right(d.unit*1.5)
+    M3 = elm.AnalogNFet(offset_gate=False).reverse().anchor('source').drop('drain').theta(270)
+    elm.Line().right(d.unit)
+    elm.Line().down(d.unit*1.5)
+    elm.Line().up(d.unit).dot(open=True).at(M3.gate).label(r'$v_\mathrm{LO,n}$', 'right')
+
+    d.here = pos3
+    elm.Line().up(d.unit/2)
+    elm.Line().right(d.unit*1.5)
+    M4 = elm.AnalogNFet(offset_gate=False).reverse().anchor('source').drop('drain').theta(270)
+    elm.Line().right(d.unit/2)
+    elm.Line().up(d.unit*1.5)
+    elm.Line().at(M3.gate).to(M4.gate)
+```
