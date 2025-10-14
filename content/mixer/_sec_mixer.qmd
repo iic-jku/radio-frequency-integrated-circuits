@@ -124,4 +124,28 @@ The impedance characteristics of such a tank circuit exhibit first-order bandpas
 
 ## LO Generation {#sec-mixer-lo}
 
-To be written.
+As you have seen in @sec-trx-mod-demod, for complex-valued modulation schemes (like QPSK, QAM, OFDM, and so on) we need to generate quadrature LO signals (i.e., two LO signals with a 90° phase shift). There are many ways to generate such signals, and we will now study a few of them.
+
+### RC/CR Phase Shift Network {#sec-lo-rc}
+
+The probably simplest way to generate quadrature LO signals is to use a simple RC/CR phase shift network, as shown in @fig-rc-cr-phase-shift. The RC network (a first-order lowpass) generates a phase shift between 0° and -90°, while the CR network (a first-order highpass) generates a phase shift between 0° and +90°. By operating the network at $\omega_0 = 1/RC$, we can achieve a 90° phase shift between the two outputs.
+
+{{< include /content/mixer/_fig_rc_cr_phase_shift.qmd >}}
+
+The advantage of this network is its simplicity, as it only requires a few passive components, and it can generate I and Q phases from an incoming signal at the target frequency. The disadvantage is that the phase shift is frequency-dependent, so the quadrature signals are only perfectly in phase at one frequency. Furthermore, the amplitude of the two outputs is not equal, which might require additional gain stages to equalize the amplitudes. Further, this passive network has a 3dB loss, so we need additional gain stages to compensate for this loss.
+
+### Polyphase Filter {#sec-lo-polyphase}
+
+We can create a more advanced phase shift network (following the idea of @sec-lo-rc) by using a so-called "**polyphase filter**" [@Kaukovuori.2008]. The idea is to use multiple RC sections to create a more ideal phase shift network. An example is shown in @fig-polyphase-filter.
+
+{{< include /content/mixer/_fig_polyphase_filter.qmd >}}
+
+As shown in the figure above, we can use multiple stages (with $R_1 C_1 \ne R_2 C_2$) in cascade to broaden the frequency range over which we have a good 90° phase shift between the four outputs. The more stages we use, the better the performance, but also the more components are required. Note that this network is still passive, so it has an inherent loss, which also increases with the number of stages. The idea behind this network is that the network is transparent for positive frequencies, and blocks negative frequencies (or vice versa). We enter the network with real signals (having positive and negative frequency components), and at the output we get complex signals (having only positive or negative frequency components). In this sense this network is a complex filter.
+
+Note that polyphase filters are popular when we have to create complex signals from real signals. We can use the polyphase filter in the LO path, or also in the signal path (e.g., in a receiver). The benefit is that we can work with a signal where input frequency is equal to the output frequency. This is in strong contrast to the approach we will discuss next.
+
+### Flip-Flop Based Phase Generation {#sec-lo-ff}
+
+The most widely used approach to generate quadrature LO signals is to use digital circuits, as shown in @fig-ff-phase-gen. The idea is to use a flip-flop (or a latch) to divide the frequency of an incoming clock signal by 2. If we drive the two flip-flops (which are connected as toggle flip-flops) by inverted clocks, then the resulting output signals are 90° phase-shifted, as shown in @fig-ff-phase-diagram.
+
+{{< include /content/mixer/_fig_ff_phase_gen.qmd >}}

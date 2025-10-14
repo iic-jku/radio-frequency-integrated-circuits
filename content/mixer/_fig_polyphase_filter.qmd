@@ -1,0 +1,93 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-polyphase-filter
+#| echo: false
+#| fig-cap: "A two-stage polyphase network."
+import schemdraw as sd
+import schemdraw.elements as elm
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    # stage 1
+
+    R1 = elm.Resistor().right().label(r'$R_1$').idot()
+    d.move(dx=-d.unit, dy=-d.unit)
+    R2 = elm.Resistor().right().label(r'$R_1$').dot().idot()
+    d.move(dx=-d.unit, dy=-d.unit)
+    R3 = elm.Resistor().right().label(r'$R_1$').dot().idot()
+    d.move(dx=-d.unit, dy=-d.unit)
+    R4 = elm.Resistor().right().label(r'$R_1$').dot().idot()
+
+    C1 = elm.Capacitor().at(R1.start).to(R2.end).label(r'$C_1$')
+    C2 = elm.Capacitor().at(R2.start).to(R3.end).label(r'$C_1$')
+    C3 = elm.Capacitor().at(R3.start).to(R4.end).label(r'$C_1$')
+    C4 = elm.Capacitor().at(R4.start).to((R4.end[0], R4.end[1]-d.unit)).label(r'$C_1$')
+
+    elm.Line().right(d.unit/2)
+    elm.Line().up(d.unit*4).dot()
+
+    # stage 2
+
+    d.here = R1.end
+    d.move(dx=d.unit, dy=0)
+
+    R5 = elm.Resistor().right().label(r'$R_2$').idot()
+    d.move(dx=-d.unit, dy=-d.unit)
+    R6 = elm.Resistor().right().label(r'$R_2$').dot().idot()
+    d.move(dx=-d.unit, dy=-d.unit)
+    R7 = elm.Resistor().right().label(r'$R_2$').dot().idot()
+    d.move(dx=-d.unit, dy=-d.unit)
+    R8 = elm.Resistor().right().label(r'$R_2$').dot().idot()
+
+    C5 = elm.Capacitor().at(R5.start).to(R6.end).label(r'$C_2$')
+    C6 = elm.Capacitor().at(R6.start).to(R7.end).label(r'$C_2$')
+    C7 = elm.Capacitor().at(R7.start).to(R8.end).label(r'$C_2$')
+    C8 = elm.Capacitor().at(R8.start).to((R8.end[0], R8.end[1]-d.unit)).label(r'$C_2$')
+
+    elm.Line().right(d.unit/2)
+    elm.Line().up(d.unit*4).dot()
+
+    # input connections
+
+    elm.Line().left(d.unit/2).dot().at(R1.start)
+    elm.Line().left(d.unit/2).label(r'$v_\mathrm{in,0}$', 'left').dot(open=True)
+    elm.Line().left(d.unit/2).at(R2.start)
+    elm.Line().up(d.unit)
+
+    elm.Line().left(d.unit/2).dot().at(R3.start)
+    elm.Line().left(d.unit/2).label(r'$v_\mathrm{in,180}$', 'left').dot(open=True)
+    elm.Line().left(d.unit/2).at(R4.start)
+    elm.Line().up(d.unit)
+
+    # interconnections
+
+    elm.Line().at(R1.end).to(R5.start)
+    elm.Line().at(R2.end).to(R6.start)
+    elm.Line().at(R3.end).to(R7.start)
+    elm.Line().at(R4.end).to(R8.start)
+
+    # output connections
+
+    elm.Line().right(d.unit).at(R5.end).label(r'$v_\mathrm{out,0}$', 'right').dot(open=True)
+    elm.Line().right(d.unit).at(R6.end).label(r'$v_\mathrm{out,90}$', 'right').dot(open=True)
+    elm.Line().right(d.unit).at(R7.end).label(r'$v_\mathrm{out,180}$', 'right').dot(open=True)
+    elm.Line().right(d.unit).at(R8.end).label(r'$v_\mathrm{out,270}$', 'right').dot(open=True)
+```
