@@ -164,3 +164,23 @@ Often, we need 4 four-phase LO signal with 25% duty cycle (instead of the 50% du
 
 The advantage of using flip-flops to generate multi-phase LO signals is that very precise phase shifts can be achieved, which can be produced over a very wide frequency range. They can be implemented in different logic styles, like CMOS, ECL, CML, and so on. The disadvantage is that we need a high-frequency clock signal above the target frequency, which might be difficult to generate. Still, I/Q generation with flip-flops is the de-facto standard approach in modern RFICs.
 
+### Delay-Based Phase Generation {#sec-lo-delay}
+
+The final approach we want to mention is to use a delay line (or multiple ones) to generate phase shifts. Using transmission lines, this approach is widely used at very high frequencies, where other approaches (like the ones shown in @sec-lo-polyphase or @sec-lo-ff) are difficult to implement. One well-known approach is the 90° hybrid coupler, realized with $\lambda/4$ transmission lines [@Pozar_RF].  When the frequencies are high enough (and the resulting wavelengths short enough) then this approach can be even implemented on-chip. The disadvantage is that the phase shift is frequency-dependent, so the quadrature signals are only perfectly in phase at one frequency. Further, this passive network has a 3dB loss, so we need additional gain stages to compensate for this loss. A branch-line hybrid coupler is shown in @fig-branch-line-coupler.
+
+{{< include /content/mixer/_fig_branch_line_coupler.qmd >}}
+
+The 3-port S-parameter matrix of an ideal branch-line coupler (assuming port 4 is poperly terminated with $Z_0$) is given by
+
+$$
+S = \frac{1}{\sqrt{2}} \begin{bmatrix}
+0 & -j & -1 \\
+-j & 0 & 0 \\
+-1 & 0 & 0
+\end{bmatrix}.
+$$ {#eq-branch-line-coupler-sparams}
+
+A feature of the coupler in @fig-branch-line-coupler is that it is single ended; a differential implementation needs either two couplers, or a coupler with subsequent baluns.
+
+Another approach, which is similar to the flip-flop based approach, is to use a delay line to generate the required phase shifts. This can be done with a single delay line and multiple taps, or with multiple delay lines. The idea is that we delay the input clock signal by a certain amount of time, which corresponds to a 90° phase shift at the target frequency. This approach is shown in @fig-delay-line-iq. Since the delay of a delay line is frequency dependent, and the delay will change with process, voltage, and temperature (PVT) variations, we have to implement a tuning mechanism to adjust the delay. This implementation is called a delay-locked loop (DLL), which is similar to a phase-locked loop (PLL, see @sec-pll).
+
