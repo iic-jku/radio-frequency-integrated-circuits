@@ -1,0 +1,75 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-logen-25
+#| echo: false
+#| fig-cap: "I/Q generation with a divide-by-2 and 25% duty cycle generation."
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.logic as lgc
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    d.push()
+    elm.Line().right(d.unit/2).idot(open=True).label(r'$v_\mathrm{lo2,p}$', 'left')
+    ff1 = elm.intcircuits.DFlipFlop().anchor('CLK')
+    d.pop()
+
+    d.move(dx=0, dy=-d.unit*2)
+    elm.Line().right(d.unit/2).idot(open=True).label(r'$v_\mathrm{lo2,n}$', 'left')
+    ff2 = elm.intcircuits.DFlipFlop().anchor('CLK')
+
+    #elm.Line().at(ff1.Q).right(d.unit/2).dot(open=True).label(r'$v_\mathrm{lo,ip}$', 'right')
+    #elm.Line().at(ff1.Qbar).right(d.unit/2).dot(open=True).label(r'$v_\mathrm{lo,in}$', 'right')
+    #elm.Line().at(ff2.Q).right(d.unit/2).dot(open=True).label(r'$v_\mathrm{lo,qp}$', 'right')
+    #elm.Line().at(ff2.Qbar).right(d.unit/2).dot(open=True).label(r'$v_\mathrm{lo,qn}$', 'right')
+
+    elm.Line().at(ff1.Qbar).idot().up(d.unit*1.5)
+    elm.Line().left(d.unit*1.5)
+    elm.Line().down().to(ff1.D)
+
+    elm.Line().at(ff2.Qbar).idot().up(d.unit*1.5)
+    elm.Line().left(d.unit*1.5)
+    elm.Line().down().to(ff2.D)
+
+    elm.Line().at(ff1.Q).right(d.unit*1.25)
+    g1 = lgc.And().anchor('in1')
+    elm.Line().at(g1.out).right(d.unit/2).dot(open=True).label(r'$v_\mathrm{lo,ip}$', 'right')
+    elm.Line().at(g1.in2).left(d.unit*4/4)
+    elm.Line().down().toy(ff2.Qbar).dot()
+
+    elm.Line().at(ff2.Q).right(d.unit*1.25)
+    g2 = lgc.And().anchor('in1')
+    elm.Line().at(g2.out).right(d.unit/2).dot(open=True).label(r'$v_\mathrm{lo,qp}$', 'right')
+    elm.Line().at(g2.in2).left(d.unit*2/4)
+    elm.Line().up().toy(ff1.Q).dot()
+
+    elm.Line().at(ff1.Qbar).right(d.unit*1.25)
+    g3 = lgc.And().anchor('in1')
+    elm.Line().at(g3.out).right(d.unit/2).dot(open=True).label(r'$v_\mathrm{lo,in}$', 'right')
+    elm.Line().at(g3.in2).left(d.unit*3/4)
+    elm.Line().down().toy(ff2.Q).dot()
+
+    elm.Line().at(ff2.Qbar).right(d.unit*1.25)
+    g4 = lgc.And().anchor('in1')
+    elm.Line().at(g4.out).right(d.unit/2).dot(open=True).label(r'$v_\mathrm{lo,qn}$', 'right')
+    elm.Line().at(g4.in2).left(d.unit*1/4)
+    elm.Line().up().toy(ff1.Qbar).dot()
+```

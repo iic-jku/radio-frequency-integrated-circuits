@@ -146,6 +146,21 @@ Note that polyphase filters are popular when we have to create complex signals f
 
 ### Flip-Flop Based Phase Generation {#sec-lo-ff}
 
-The most widely used approach to generate quadrature LO signals is to use digital circuits, as shown in @fig-ff-phase-gen. The idea is to use a flip-flop (or a latch) to divide the frequency of an incoming clock signal by 2. If we drive the two flip-flops (which are connected as toggle flip-flops) by inverted clocks, then the resulting output signals are 90° phase-shifted, as shown in @fig-ff-phase-diagram.
+The most widely used approach to generate quadrature LO signals is to use digital circuits, as shown in @fig-iq-divider. The idea is to use a flip-flop (or a latch) to divide the frequency of an incoming clock signal by 2. If we drive the two flip-flops (which are connected as toggle flip-flops) by inverted clocks, then the resulting output signals are 90° phase-shifted, as shown in @fig-ff-phase-diagram.
 
-{{< include /content/mixer/_fig_ff_phase_gen.qmd >}}
+{{< include /content/mixer/_fig_iq_divider.qmd >}}
+
+{{< include /content/mixer/_fig_iqgen_phase_diagram.qmd >}}
+
+It is important to note that the circuits shown in @fig-iq-divider has to be implemented in a way so that there is no phase ambiguity, i.e., the I-phase is lagging the Q-phase by exactly 90°. This can be achieved by using a reset signal to set the flip-flops to a known state at startup, or implement flip-flips using a differential clock input.
+
+If the input clock is not 2x the target frequency but higher (e.g., 4x), then we can use a frequency divider approach to generate more than four phases. This could be useful in an N-path filter, where we could need more than four phases (see @sec-mixer-npath).
+
+Often, we need 4 four-phase LO signal with 25% duty cycle (instead of the 50% duty cycle shown in @fig-ff-phase-diagram). This can be achieved by using additional logic gates to combine the outputs of the flip-flops, as shown in @fig-logen-25. The resulting LO waveforms are shown in @fig-logen-25-waveforms.
+
+{{< include /content/mixer/_fig_logen_25.qmd >}}
+
+{{< include /content/mixer/_fig_logen_25_waveforms.qmd >}}
+
+The advantage of using flip-flops to generate multi-phase LO signals is that very precise phase shifts can be achieved, which can be produced over a very wide frequency range. They can be implemented in different logic styles, like CMOS, ECL, CML, and so on. The disadvantage is that we need a high-frequency clock signal above the target frequency, which might be difficult to generate. Still, I/Q generation with flip-flops is the de-facto standard approach in modern RFICs.
+
