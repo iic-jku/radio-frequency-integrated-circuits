@@ -117,7 +117,7 @@ It is important to note (because this dictates a lot of choices in RF design) th
 ## Filter Technologies
 **Baseband filters (analog)** are usually implemented as active $RC$ filters on-chip. They are very flexible and can have adjustable bandwidth by either changing $R$ and/or $C$. For medium frequencies $\gm-C$ filters can be used, which are also tunable by changing the transconductance $\gm$ and/or $C$. For even higher bandwidths, on-chip LC filters can be used, which have a limited $Q$ of around 10-20.
 
-**Baseband filters (digital)** are implemented as FIR or IIR filters in the DSP block. They are very flexible and can be easily adapted to different standards and requirements. Digital filters show now variations, so they can be designed to be very selective.
+**Baseband filters (digital)** are implemented as FIR or IIR filters in the DSP block. They are very flexible and can be easily adapted to different standards and requirements. Digital filters show no variations, so they can be designed to be very selective.
 
 **Surface acoustic wave (SAW)** and **bulk acoustic wave (BAW/FBAR)** filters are off-chip components that can achieve high $Q$ values of several hundreds. They have a fixed center frequency and bandwidth. Usually 1-2 such filters are required per supported band of interest.
 
@@ -134,11 +134,11 @@ Fundamentally, the choice of filter technology is a trade-off between performanc
 
 ## Direct-Conversion Architecture
 
-The transceiver architecture shown in @fig-trx-block is called direct-conversion or zero-IF architecture, as the downconversion in the RX and upconversion in the TX is done in a single step. This architecture several advantages:
+The transceiver architecture shown in @fig-trx-block is called direct-conversion or zero-IF architecture, as the downconversion in the RX and upconversion in the TX is done in a single step. This architecture has several advantages:
 
 - Per RX and TX a single LO is required (which can even be shared between RX and TX in TDD operation).
-- There are a minimum number of RF blocks, which good for cost and power consumption.
-- This architecture is very flexible and can be easily adapted to different standards and requirements, and shows generally very good performance if the disadvantages can be overcome by good design.
+- There are a minimum number of RF blocks, which is good for cost and power consumption.
+- This architecture is very flexible and can be easily adapted to different standards and requirements, and generally shows very good performance if the disadvantages can be overcome by good design.
 - This architecture allows a high integration level, as basically all blocks can be implemented on-chip.
 - Direct conversion is the de-facto standard architecture for cellular, WiFi, Bluetooth (with the exception of the TX), and GNSS.
 
@@ -173,9 +173,9 @@ Advantages of FDD:
 
 Disadvantages of FDD:
 
-- Duplexers are costly components, which significant insertion loss depending on filtering requirements.
+- Duplexers are costly components with significant insertion loss depending on filtering requirements.
 - Requires two separate frequency bands, which can be a limitation in terms of spectrum availability, and MIMO channel estimation.
-- The large TX causes severe desensitization of the RX, which requires high linearity and good filtering (50 dB to 60 dB).
+- The strong TX causes severe desensitization of the RX, which requires high linearity and good filtering (50 dB to 60 dB).
 
 ### Time-Division Duplex (TDD)
 
@@ -215,7 +215,7 @@ Below is a summary of important wireless standards and their duplexing method as
 
 : Comparison of duplexing methods used by major wireless standards {#tbl-duplexing-standards}
 
-As you can see in @tbl-duplexing-standards, there is a tendency to use FDD for lower frequencies and large communication distances, while TDD is preferred for higher frequencies and smaller distances.
+As you can see in @tbl-duplexing-standards, there is a tendency to use FDD for lower frequencies and long communication distances, while TDD is preferred for higher frequencies and shorter distances.
 
 ## Specialty Architectures
 
@@ -223,7 +223,7 @@ In some cases, other architectures may be preferred over the direct-conversion a
 
 ### Super-Heterodyne Architecture
 
-The super-heterodyne architecture is a widely used approach in radio. It works by mixing the incoming/outgoing RF signal with an LO to produce an intermediate frequency (IF) signal. This IF signal is then amplified and processed, allowing for better selectivity and sensitivity compared to direct-conversion architectures. Super-heterodyne receivers/transmitters are known for their excellent performance in terms of image rejection and dynamic range, making them suitable for a variety of applications, including traditional analog TV and radio broadcasting. As simplified block diagram of a super-heterodyne transceiver is shown in @fig-trx-superheterodyne.
+The super-heterodyne architecture is a widely used approach in radio. It works by mixing the incoming/outgoing RF signal with an LO to produce an intermediate frequency (IF) signal. This IF signal is then amplified and processed, allowing for better selectivity and sensitivity compared to direct-conversion architectures. Super-heterodyne receivers/transmitters are known for their excellent performance in terms of image rejection and dynamic range, making them suitable for a variety of applications, including traditional analog TV and radio broadcasting. A simplified block diagram of a super-heterodyne transceiver is shown in @fig-trx-superheterodyne.
 
 {{< include /content/trx/_fig_trx_superheterodyne.qmd >}}
 
@@ -231,7 +231,7 @@ When you compare @fig-trx-block with @fig-trx-superheterodyne, you can immediate
 
 One important aspect of super-heterodyne receivers is the choice of the intermediate frequency (IF). The IF should be high enough to allow for effective filtering and **image rejection**, but low enough to avoid excessive complexity and power consumption. Common IF frequencies range from a few MHz to several hundred MHz, depending on the application and frequency band.
 
-An important issue in super-heterodyne receivers is the **image frequency**. The image frequency is a spurious frequency that can interfere with the desired signal, and is located at $f_\mathrm{image} = f_\mathrm{RF} \pm 2 f_\mathrm{IF}$ (the signs depends on the choice of high-side or low-side mixing). To suppress the image frequency, an image-reject filter is either placed before (RX) or after (TX) the mixer. The design of this filter is critical, as it must provide sufficient attenuation of the image frequency while maintaining low insertion loss for the desired signal.
+An important issue in super-heterodyne receivers is the **image frequency**. The image frequency is a spurious frequency that can interfere with the desired signal, and is located at $f_\mathrm{image} = f_\mathrm{RF} \pm 2 f_\mathrm{IF}$ (the sign depends on the choice of high-side or low-side mixing). To suppress the image frequency, an image-reject filter is either placed before (RX) or after (TX) the mixer. The design of this filter is critical, as it must provide sufficient attenuation of the image frequency while maintaining low insertion loss for the desired signal.
 
 An alternative to image filtering is the use of active image rejection techniques, such as the **Hartley** or **Weaver** architectures. These techniques use additional mixers and phase shifters to cancel out the image frequency, allowing for improved performance without the need for a dedicated image-reject filter.
 
@@ -241,7 +241,7 @@ To avoid some of the issues of direct-conversion architectures (like dc offsets 
 
 {{< include /content/trx/_fig_trx_lowif.qmd >}}
 
-The low-IF architecture is the defacto standard for Bluetooth receivers. Its advantage compared to direct-conversion vanishes for larger channel bandwidths, this is why it is not used for cellular or WiFi (GSM receivers might be an exception).
+The low-IF architecture is the de facto standard for Bluetooth receivers. Its advantage compared to direct-conversion vanishes for larger channel bandwidths, which is why it is not used for cellular or WiFi (GSM receivers might be an exception).
 
 One noteworthy disadvantage of low-IF architectures is the required 2xBW compared to direct-conversion. This might cause increased power consumption in the analog baseband filters and ADCs/DACs. Additionally, the low-IF architecture still requires careful design to mitigate issues like IQ imbalance and LO leakage, although these issues are generally less severe than in direct-conversion architectures.
 
