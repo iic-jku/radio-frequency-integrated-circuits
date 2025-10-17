@@ -20,7 +20,7 @@ As shown in @sec-sensitivity, the sensitivity of a receiver is determined (besid
 
 {{< include /content/lna/_fig_lna_block.qmd >}}
 
-The LNA as a building block is shown in @fig-lna-block. The main purpose of the LNA is to amplify the received signal with as little additional noise as possible. The LNA is usually designed for a specific frequency band, e.g., the 2.4 GHz ISM band or the 5 GHz WLAN band, and is typically designed for a specific impedance, e.g., 50 Ω, which is the standard impedance for RF systems; impedance matching is usually required at the input; the output impedance matching is only required if the output of the LNA goes off chip---if it is kept on chip impedance matching is often not required. The LNA is also designed to be sufficiently linear, i.e., to not introduce significant distortion to the amplified signal, however, compared to the noise requirements, linearity is often less critical.
+The LNA as a building block is shown in @fig-lna-block. The main purpose of the LNA is to amplify the received signal with as little additional noise as possible. The LNA is usually designed for a specific frequency band, e.g., the 2.4 GHz ISM band or the 5 GHz WLAN band, and is typically designed for a specific impedance, e.g., 50 Ω, which is the standard impedance for RF systems. Impedance matching is usually required at the input; the output impedance matching is only required if the output of the LNA goes off-chip; if it is kept on-chip, impedance matching is often not required. The LNA is also designed to be sufficiently linear, i.e., to not introduce significant distortion to the amplified signal; however, compared to the noise requirements, linearity is often less critical.
 
 Why is impedance matching at the input of the LNA so important?
 
@@ -44,7 +44,7 @@ $$
 \text{RL} = -20 \log_{10} |\Gamma| = 20 \log_{10} \left| \frac{Z_\mathrm{in} + Z_0}{Z_\mathrm{in} - Z_0} \right|.
 $$
 
-A higher return loss indicates a better impedance match.  A return loss of 10 dB indicates that 10% of the signal power is reflected back, while a return loss of 20 dB indicates that only 1% of the signal power is reflected back. In practice, a return loss of at least 10 dB is desired, with higher (positive!) values being better [@Bird.2009].
+A higher return loss indicates a better impedance match.  A return loss of 10 dB indicates that 10% of the signal power is reflected back, while a return loss of 20 dB indicates that only 1% of the signal power is reflected back. In practice, a return loss of at least 10 dB is desired, with higher (positive) values being better [@Bird.2009].
 
 ## Resistively Matched Common-Source LNA {#sec-lna-resistive-matching}
 
@@ -52,7 +52,7 @@ The key question is now how to design an LNA with low noise figure and an input 
 
 {{< include /content/lna/_fig_lna_naive.qmd >}}
 
-If we assume the gate capacitance of $M_1$ negligible, we can achieve good input impedance matching by choosing $R_\mathrm{s} = R_\mathrm{p} = 50\,\Omega$. The voltage gain of this simple common-source LNA is given by $A_\mathrm{v} = -\gm R_\mathrm{D}$, neglecting capacitances and $\gds$ of $M_1$ (we assume that the load tank is tuned to the desired frequency with $\omega_0 = 1 / \sqrt{L C}$).
+If we assume the gate capacitance of $M_1$ is negligible, we can achieve good input impedance matching by choosing $R_\mathrm{s} = R_\mathrm{p} = 50\,\Omega$. The voltage gain of this simple common-source LNA is given by $A_\mathrm{v} = -\gm R_\mathrm{D}$, neglecting capacitances and $\gds$ of $M_1$ (we assume that the load tank is tuned to the desired frequency with $\omega_0 = 1 / \sqrt{L C}$).
 
 How can we calculate the noise figure of this simple LNA? We formulate
 
@@ -64,7 +64,7 @@ We derive a small-signal equivalent circuit of @fig-lna-naive, which is shown in
 
 {{< include /content/lna/_fig_lna_naive_noise.qmd >}}
 
-Withe the help of @fig-lna-naive-noise, we can calculate the total output noise power spectral density as
+With the help of @fig-lna-naive-noise, we can calculate the total output noise power spectral density as
 
 $$
 \overline{V_\mathrm{n,out,1}^2} = A_\mathrm{v}^2 \cdot 4 k T (R_\mathrm{s} \parallel R_\mathrm{p}) = (\gm R_\mathrm{D})^2 \cdot 4 k T (R_\mathrm{s} \parallel R_\mathrm{p})
@@ -112,9 +112,9 @@ $$
 F = 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} = 2
 $$
 
-so we see that we are limited to a minimum noise figure of 3 dB, even if we spend the bias current to make $\gm$ very large. We can go below 3 dB noise figure only if we choose $R_\mathrm{p} > R_\mathrm{s}$, however, this means that the input is no longer matched to 50 Ω, which is usually not acceptable. Hence, this simple resistively matched common-source LNA is not a good choice for a low-noise amplifier, with one exception: For very wideband amplifiers, where a NF of larger then 3 dB is acceptable, this configuration might be a good choice.
+so we see that we are limited to a minimum noise figure of 3 dB, even if we spend the bias current to make $\gm$ very large. We can go below 3 dB noise figure only if we choose $R_\mathrm{p} > R_\mathrm{s}$, however, this means that the input is no longer matched to 50 Ω, which is usually not acceptable. Hence, this simple resistively matched common-source LNA is not a good choice for a low-noise amplifier, with one exception: For very wideband amplifiers, where a NF of larger than 3 dB is acceptable, this configuration might be a good choice.
 
-We see that we are stuck at high noise figures if we realize the real part of the input impedance with a resistor. This leaves us with the question on how to realize a real part of the input impedance then? We will answer this question in the next section.
+We see that we are stuck at high noise figures if we realize the real part of the input impedance with a resistor. This leaves us with the question of how to realize a real part of the input impedance then. We will answer this question in the next section.
 
 ## Common-Gate LNA {#sec-lna-common-gate}
 
@@ -122,7 +122,7 @@ We remember from our [analog circuit design lecture](https://iic-jku.github.io/a
 
 {{< include /content/lna/_fig_lna_cg.qmd >}}
 
-By inspecting @fig-lna-cg and the practice from @sec-lna-resistive-matching, we can directly write down the output noise voltage as (with $1/\gm = R_\mathrm{s}$)
+By inspecting @fig-lna-cg and following the practice from @sec-lna-resistive-matching, we can directly write down the output noise voltage as (with $1/\gm = R_\mathrm{s}$)
 
 $$
 \overline{V_\mathrm{n,out}^2} = k T \left[ (\gm R_\mathrm{D})^2 R_\mathrm{s} + \gamma \gm R_\mathrm{D}^2 + 4 R_\mathrm{D} \right] = k T \left( \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + \gamma \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + 4 R_\mathrm{D} \right).
@@ -182,7 +182,7 @@ $$
 F = 1 + \frac{\gamma R_\mathrm{s} \omega_0^2 C_\mathrm{gs}^2}{\gm}.
 $$ {#eq-lna-inductive-degeneration-noise-factor}
 
-Finally we have an LNA input stage configuration which allows us to achieve a noise figure below 3 dB, even with $\gamma > 1$, by proper choice of $\gm$. Making $\gm$ large (by spending more bias current) results in (first order) arbitrarily low noise figure. The inductively-degenerated common-source LNA is a widely used LNA input stage configuration in modern RFICs. A somewhat detailed schematic is shown in @fig-lna-inductive-degeneration-detailed.
+Finally, we have an LNA input stage configuration that allows us to achieve a noise figure below 3 dB, even with $\gamma > 1$, by proper choice of $\gm$. Making $\gm$ large (by spending more bias current) results in (to first order) arbitrarily low noise figure. The inductively-degenerated common-source LNA is a widely used LNA input stage configuration in modern RFICs. A somewhat detailed schematic is shown in @fig-lna-inductive-degeneration-detailed.
 
 {{< include /content/lna/_fig_lna_inductive_degeneration_detailed.qmd >}}
 
@@ -192,9 +192,9 @@ What is missing in @fig-lna-inductive-degeneration-detailed is any form of frequ
 
 ## Feedback LNA {#sec-lna-feedback}
 
-One drawback of the inductively-degenerated common-source LNA is the usage of at least one inductor. If the inductor is placed on chip it has a comparatively large size, and if it is implemented in the package (via a bondwiew) or on the PCB it add to the bill-of-materials (BOM) cost.
+One drawback of the inductively-degenerated common-source LNA is the usage of at least one inductor. If the inductor is placed on-chip, it has a comparatively large size, and if it is implemented in the package (via a bondwire) or on the PCB, it adds to the bill-of-materials (BOM) cost.
 
-If the CMOS technology is sufficiently fast, then a shunt feedback LNA, as shown in @fig-lna-shunt-fb, might be a good choice.
+If the CMOS technology is sufficiently fast, a shunt feedback LNA, as shown in @fig-lna-shunt-fb, might be a good choice.
 
 {{< include /content/lna/_fig_lna_shunt_fb.qmd >}}
 
@@ -218,7 +218,7 @@ $$
 Z_\mathrm{in} = \frac{1}{\gm}
 $$
 
-which is independent of $Z_\mathrm{F}$ and is a well-known result for a common-source stage. The disadavntage of this configuration is the noise factor, which (given that $Z_\mathrm{F}$ is sufficiently large) trends to $F = 1 + \gamma$, which is the same as for the common-gate LNA.
+which is independent of $Z_\mathrm{F}$ and is a well-known result for a common-source stage. The disadvantage of this configuration is the noise factor, which (given that $Z_\mathrm{F}$ is sufficiently large) tends to $F = 1 + \gamma$, which is the same as for the common-gate LNA.
 
 A bit more interesting is the case when $\gm Z_\mathrm{L} = A_0$ and $Z_\mathrm{L} \gg Z_\mathrm{F}$, which results in
 
@@ -236,4 +236,4 @@ $$ {#eq-lna-shunt-fb-yin}
 
 Looking at @eq-lna-shunt-fb-yin, we see that the input admittance has a **real part**! By proper choice of components, we can achieve an input impedance matched to 50 Ω at the desired frequency. The noise factor can again be made small by making $\gm$ large.
 
-There is also an option, again by proper choice of $Z_\mathrm{F}$ and $Z_\mathrm{L}$, to achieve an inductive input impedance component, which can be used to resonate out the input capacitance of the LNA, similar to the inductively-degenerated common-source LNA. However, in contrast to the inductively-degenerated common-source LNA, no inductor is required in this case. This configuration is called a reactance-cancelling LNA.
+There is also an option, by proper choice of $Z_\mathrm{F}$ and $Z_\mathrm{L}$, to achieve an inductive input impedance component, which can be used to resonate out the input capacitance of the LNA, similar to the inductively-degenerated common-source LNA. However, in contrast to the inductively-degenerated common-source LNA, no inductor is required in this case. This configuration is called a reactance-canceling LNA.
