@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2025-10-13">
+<meta name="dcterms.date" content="2025-10-17">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -447,7 +447,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 13, 2025</p>
+      <p class="date">October 17, 2025</p>
     </div>
   </div>
   
@@ -517,7 +517,7 @@ A \propto \lambda^2
 <p><span class="math display">\[
 c = \lambda f.
 \]</span></p>
-<p>Generally speaking, the size of an electromagnetic antenna is proportional to the wavelength of the EM wave use for transmission. For man devices, we seek antennas on the order of a few centimeters, and this is why frequencies in the hundreds of MHz to GHz are so popular. <a href="#tbl-rf-applications" class="quarto-xref">Table&nbsp;1</a> lists a few typical applications and their frequency and wavelength.</p>
+<p>Generally speaking, the size of an electromagnetic antenna is proportional to the wavelength of the EM wave used for transmission. For many devices, we seek antennas on the order of a few centimeters, and this is why frequencies in the hundreds of MHz to GHz are so popular. <a href="#tbl-rf-applications" class="quarto-xref">Table&nbsp;1</a> lists a few typical applications and their frequency and wavelength.</p>
 <div id="tbl-rf-applications" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-rf-applications-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -590,7 +590,7 @@ Note&nbsp;1: Wavelength Calculation
 <p>This means that a quarter-wavelength monopole antenna for 2.4 GHz Bluetooth would be approximately 3.1 cm long, which easily fits into most mobile devices.</p>
 </div>
 </div>
-<p>In order to get a feeling for the attenuation experienced in wireless communication, we now calculate the following exemplary transmission. We will use the unit of dBm with is often used in RF design and is defined as</p>
+<p>In order to get a feeling for the attenuation experienced in wireless communication, we now calculate the following exemplary transmission. We will use the unit of dBm which is often used in RF design and is defined as</p>
 <p><span id="eq-dbm"><span class="math display">\[
 P|_\text{dBm} = 10 \cdot \log_{10} \left( \frac{P|_\text{W}}{1\,\text{mW}} \right)
 \tag{2}\]</span></span></p>
@@ -640,13 +640,13 @@ Figure&nbsp;2: Free space path loss vs.&nbsp;distance for different frequencies 
 <p>As dire as the situation of <a href="#fig-free-space-path-loss" class="quarto-xref">Figure&nbsp;2</a> already looks, this is not even all factors considered:</p>
 <ul>
 <li>The given attenuation is for line-of-sight paths; often, the attenuation is significantly higher than this due to blockage by buildings, mountains, rain, or foliage.</li>
-<li>In lack of a direct line-of-sight path, the EM wave is redirected by reflections, causing additional attenuation, and the potential destructive interference by multi-path reception.</li>
+<li>In the absence of a direct line-of-sight path, the EM wave is redirected by reflections, causing additional attenuation, and potential destructive interference by multi-path reception.</li>
 </ul>
 <p>The consequences of this are (among others):</p>
 <ul>
 <li>The transmitter needs to generate enough <strong>transmit power</strong> to overcome the transmission loss; this has to be done often with high <strong>efficiency</strong>, as the transmit device is battery operated or limited by cooling.</li>
 <li>The receiver has to be able to process <strong>weak signals</strong>, i.e., the <strong>noise</strong> level of the signal processing has to be very low.</li>
-<li>Often, the receive signal is very weak, while there are strong signals at other frequencies (i.e., other wireless transmitters are located close to the receiver). This means the receiver has to be able to process a weak signal while simultaneously tolerate <strong>large interfering signals</strong> (called blockers).</li>
+<li>Often, the receive signal is very weak, while there are strong signals at other frequencies (i.e., other wireless transmitters are located close to the receiver). This means the receiver has to be able to process a weak signal while simultaneously tolerating <strong>large interfering signals</strong> (called blockers).</li>
 <li>Since the frequency spectrum is shared among many users and wireless applications, the transmit information has to be packed efficiently into a <strong>small bandwidth</strong>.</li>
 <li>Very often, wireless devices are battery-operated. This means transmit and receive functions have to be implemented using <strong>minimum power consumption</strong>.</li>
 </ul>
@@ -654,7 +654,7 @@ Figure&nbsp;2: Free space path loss vs.&nbsp;distance for different frequencies 
 </section>
 <section id="sec-intro-standards" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="sec-intro-standards"><span class="header-section-number">1.2</span> Wireless Standards</h2>
-<p>In order to allow communication between different devices, different operators, and different manufacturers, wireless communication is standardized. There are many different standards, each with its own characteristics. Wireless standards define every aspect of the wireless communication, and be documents with hundreds or thousands of pages. Here, we mainly focus on the radio-frequency and analog aspects of wireless standards. Summarized in <a href="#tbl-wireless-standards" class="quarto-xref">Table&nbsp;2</a> are a few popular wireless standards with their main characteristics.</p>
+<p>In order to allow communication between different devices, different operators, and different manufacturers, wireless communication is standardized. There are many different standards, each with its own characteristics. Wireless standards define every aspect of wireless communication, and can be documents with hundreds or thousands of pages. Here, we mainly focus on the radio-frequency and analog aspects of wireless standards. Summarized in <a href="#tbl-wireless-standards" class="quarto-xref">Table&nbsp;2</a> are a few popular wireless standards with their main characteristics.</p>
 <div id="tbl-wireless-standards" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-wireless-standards-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -804,7 +804,7 @@ Figure&nbsp;3: RF design as a multidisciplinary field requiring knowledge from v
 </div>
 </div>
 </div>
-<p>Further, RFIC design requires careful consideration of many different aspects, as shown in <a href="#fig-rf-design-considerations" class="quarto-xref">Figure&nbsp;4</a>. Many parameters are often tightly coupled, requriring careful trade-offs during the design process.</p>
+<p>Further, RFIC design requires careful consideration of many different aspects, as shown in <a href="#fig-rf-design-considerations" class="quarto-xref">Figure&nbsp;4</a>. Many parameters are often tightly coupled, requiring careful trade-offs during the design process.</p>
 <div id="cell-fig-rf-design-considerations" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div id="fig-rf-design-considerations" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -898,10 +898,10 @@ y(t) &amp;=
 \tag{6}\]</span></span></p>
 <p>Looking at <a href="#eq-linearity-single" class="quarto-xref">Equation&nbsp;6</a> we can make a few interesting observations:</p>
 <ul>
-<li>Even-order nonlinearity (<span class="math inline">\(\alpha_2\)</span>) creates low-frequency components; it effectively adds frequency components related to the envelope <span class="math inline">\(A\)</span>. If <span class="math inline">\(A\)</span> is a constant then this results in a dc term; if <span class="math inline">\(A(t)\)</span> is time variant it will created a squared version of it at low frequencies.</li>
+<li>Even-order nonlinearity (<span class="math inline">\(\alpha_2\)</span>) creates low-frequency components; it effectively adds frequency components related to the envelope <span class="math inline">\(A\)</span>. If <span class="math inline">\(A\)</span> is a constant then this results in a dc term; if <span class="math inline">\(A(t)\)</span> is time variant it will create a squared version of it at low frequencies.</li>
 <li>The <span class="math inline">\(\alpha_1\)</span> term is the gain of the circuit block.</li>
 <li>Odd-order nonlinearity (<span class="math inline">\(\alpha_3\)</span>) can impact the gain of the fundamental term passing through the block. Depending on the sign of <span class="math inline">\(\alpha_3\)</span> this can lead to gain contraction or expansion.</li>
-<li>Even- and odd-order nonlinearities creates additional frequency components, so-called harmonics of the fundamental frequency. These harmonics are often unwanted, as they are far outside the wanted transmission frequency range, and need to be minimized, by either
+<li>Even- and odd-order nonlinearities create additional frequency components, so-called harmonics of the fundamental frequency. These harmonics are often unwanted, as they are far outside the wanted transmission frequency range, and need to be minimized, by either
 <ol type="1">
 <li>use a lowpass filter to filter these harmonics, or</li>
 <li>increase the linearity, i.e., make the <span class="math inline">\(\alpha_2\)</span>, <span class="math inline">\(\alpha_3\)</span>, etc., small enough.</li>
@@ -973,7 +973,7 @@ y(t) = y'(t) + y''(t) + y'''(t)
 <p>As shown in <a href="#eq-linearity-double-a" class="quarto-xref">Equation&nbsp;8</a>, interesting things happen:</p>
 <ul>
 <li>We (again) have the gain compression/expansion effect as already discussed in <a href="#sec-linearity-single" class="quarto-xref">Section&nbsp;2.2.1</a>.</li>
-<li>In addition, we have <strong>cross-modulation</strong>, i.e., the envelope of one tone (e.g., <span class="math inline">\(A_2(t)\)</span> of the tone at <span class="math inline">\(\omega_2\)</span>) impacts the envelope of the other tone at <span class="math inline">\(\omega_1\)</span>. This can lead to unwanted signal distortation, even if there is a large frequency separation between <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>!</li>
+<li>In addition, we have <strong>cross-modulation</strong>, i.e., the envelope of one tone (e.g., <span class="math inline">\(A_2(t)\)</span> of the tone at <span class="math inline">\(\omega_2\)</span>) impacts the envelope of the other tone at <span class="math inline">\(\omega_1\)</span>. This can lead to unwanted signal distortion, even if there is a large frequency separation between <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>!</li>
 <li>Further, since the sign of <span class="math inline">\(\alpha_3\)</span> is usually opposite to <span class="math inline">\(\alpha_1\)</span>, this can also lead to <strong>desensitization</strong> (“desens”). If, for example, <span class="math inline">\(A_2 \gg A_1\)</span>, then there would be no compression due to the tone <span class="math inline">\(\omega_1\)</span> itself, however, the large tone at <span class="math inline">\(\omega_2\)</span> will lead to gain compression of the tone at <span class="math inline">\(\omega_1\)</span>; this effect is called desense.</li>
 </ul>
 <p>We now look at the next class of generated tones:</p>
@@ -994,7 +994,7 @@ y(t) = y'(t) + y''(t) + y'''(t)
     &amp;+ \frac{3}{4} \alpha_3 A_1 A_2^2 \cos[(2 \omega_2 - \omega_1) t]
 \end{split}
 \tag{10}\]</span></span></p>
-<p>The tones shown in <a href="#eq-linearity-double-c" class="quarto-xref">Equation&nbsp;10</a> are called “i<strong>ntermodulation products of third order</strong>” (IM3), and are caused by the odd nonlinearities (like <span class="math inline">\(\alpha_3\)</span>). While the IM3 tones located at <span class="math inline">\(2 \omega_1 + \omega_2\)</span> and <span class="math inline">\(\omega_1 + 2 \omega_2\)</span> are similar to the sum IM2 tone and far away from <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>, the other two tones are concerning.</p>
+<p>The tones shown in <a href="#eq-linearity-double-c" class="quarto-xref">Equation&nbsp;10</a> are called “<strong>intermodulation products of third order</strong>” (IM3), and are caused by the odd nonlinearities (like <span class="math inline">\(\alpha_3\)</span>). While the IM3 tones located at <span class="math inline">\(2 \omega_1 + \omega_2\)</span> and <span class="math inline">\(\omega_1 + 2 \omega_2\)</span> are similar to the sum IM2 tone and far away from <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>, the other two tones are concerning.</p>
 <p>Expressing <span class="math inline">\(\Delta \omega = \omega_2 - \omega_1\)</span> (and assuming <span class="math inline">\(\omega_1 &lt; \omega_2\)</span>), the building law of <span class="math inline">\(2 \omega_1 - \omega_2 = \omega_1 - \Delta \omega\)</span> and <span class="math inline">\(2 \omega_2 - \omega_1 = \omega_2 + \Delta \omega\)</span> results in new tones right besides <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>, with a frequency separation only defined by <span class="math inline">\(\Delta \omega\)</span>. This situation is illustrated in <a href="#fig-im3-tones" class="quarto-xref">Figure&nbsp;7</a>.</p>
 <div id="cell-fig-im3-tones" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
@@ -1080,7 +1080,7 @@ Note&nbsp;4: Simple IIP3 Cascade Calculation
 </section>
 <section id="sec-noise" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="sec-noise"><span class="header-section-number">2.3</span> Noise</h2>
-<p>Just as nonlinearity is a limiting factor for large signals, noise is the limiting factor for small signals. Noise is present in all electronic circuits and systems, and it is impossible to avoid it. However, we can try to minimize its impact on the system performance.</p>
+<p>Just as nonlinearity is a limiting factor for large signals, noise is the limiting factor for small signals. Noise is present in all electronic circuits and systems, and it is impossible to avoid it. However, we can try to minimize its impact on system performance.</p>
 <p>Noise is usually characterized by its power spectral density (PSD) in units of Watts per Hertz (W/Hz). For example, thermal noise at room temperature has a PSD of approximately <span class="math inline">\(k T = 4 \times 10^{-21}\)</span> W/Hz, or –174 dBm/Hz (with the Boltzmann constant <span class="math inline">\(k = 1.38 \times 10^{-23}\,\text{J/K}\)</span>). This means that if we have a bandwidth of 1 MHz, the total thermal noise power would be:</p>
 <p><span class="math display">\[
 P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \left( \frac{1\,\text{MHz}}{1\,\text{Hz}} \right) = -114\,\text{dBm}
@@ -1116,7 +1116,7 @@ P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \le
 <p>In saturation, it is often useful to express the thermal noise as a voltage noise source at the gate with a PSD of <span class="math inline">\(\overline{V_\mathrm{n}^2} = 4 k T \gamma / g_\mathrm{m}\)</span> (in V<span class="math inline">\(^2\)</span>/Hz). We can see that we can lower this noise of the MOSFET by increasing the transconductance <span class="math inline">\(g_\mathrm{m}\)</span>, which can be achieved by increasing the bias current.</p>
 <p>In addition, at high frequencies, the MOSFET also has induced gate-current noise, which is correlated with the channel thermal noise. A detailed discussion of this noise source can be found in <span class="citation" data-cites="Razavi_Analog_CMOS">(<a href="#ref-Razavi_Analog_CMOS" role="doc-biblioref">Razavi 2017</a>)</span>.</p>
 <p>Flicker noise is usually modeled as a voltage noise source at the gate with a PSD of <span class="math inline">\(K_f / (C'_\mathrm{ox}W L f)\)</span> (in V<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(K_f\)</span> is a process-dependent parameter, <span class="math inline">\(C'_\mathrm{ox}\)</span> is the oxide capacitance per unit area, <span class="math inline">\(L\)</span> and <span class="math inline">\(W\)</span> are the length and width of the MOSFET, and <span class="math inline">\(f\)</span> is the frequency. Note that we can lower the flicker noise by increasing the area of the MOSFET (<span class="math inline">\(W L\)</span>), however, this increases the parasitic capacitances associated with the MOSFET, and this often prohibitive for RF operation!</p>
-<p>In <strong>bipolar junction transistors (BJTs)</strong>, the most important noise source is the shot noise due to the diffusion current in the base-emitter junction. Its PSD can be modeled as a current noise source between collector and emitter with a PSD of <span class="math inline">\(2 q I_\mathrm{C}\)</span> (in A<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(q\)</span> is the elementary charge (<span class="math inline">\(q = 1.6 \times 10^{-19}\)</span> C) and <span class="math inline">\(I_\mathrm{C}\)</span> is the dc collector current.</p>
+<p>In <strong>bipolar junction transistors (BJTs)</strong>, the most important noise source is the shot noise due to the diffusion current in the base-emitter junction. Its PSD can be modeled as a current noise source between collector and emitter with a PSD of <span class="math inline">\(2 q I_\mathrm{C}\)</span> (in A<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(q\)</span> is the elementary charge (<span class="math inline">\(q = 1.6 \times 10^{-19}\)</span> C) and <span class="math inline">\(I_\mathrm{C}\)</span> is the DC collector current.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1131,7 +1131,7 @@ P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \le
 </div>
 </div>
 <p>Ideal <strong>capacitors</strong> and <strong>inductors</strong> do not generate noise, however, real capacitors and inductors have parasitic resistances which generate thermal noise.</p>
-<p>In RF systems additional noise sources can be present. One noteworthy example is the <a href="https://en.wikipedia.org/wiki/Cosmic_microwave_background"><strong>cosmic microwave background</strong></a> radiation, which can be modeled as a noise temperature of approximately 3 K. While this is negligible compared to thermal noise at room temperature (approximately 290 K), it can be significant in very low-noise systems, such as radio telescopes pointing to the sky. An other important noise source in RF systems is the <strong>atmospheric noise</strong>, which is generated by natural phenomena like lightning or in the ionosphere.</p>
+<p>In RF systems additional noise sources can be present. One noteworthy example is the <a href="https://en.wikipedia.org/wiki/Cosmic_microwave_background"><strong>cosmic microwave background</strong></a> radiation, which can be modeled as a noise temperature of approximately 3 K. While this is negligible compared to thermal noise at room temperature (approximately 290 K), it can be significant in very low-noise systems, such as radio telescopes pointing to the sky. Another important noise source in RF systems is the <strong>atmospheric noise</strong>, which is generated by natural phenomena like lightning or in the ionosphere.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1482,7 +1482,7 @@ Note&nbsp;6: OFDM in LTE
 <li><p><strong>Orthogonal frequency division multiple access (OFDMA)</strong>: A variant of OFDM, where multiple users are assigned different subcarriers for transmission, allowing for efficient use of the frequency spectrum. This is used in 4G LTE and 5G NR.</p></li>
 <li><p><strong>Spatial division multiple access (SDMA)</strong>: Uses multiple antennas to create spatially separated channels, allowing multiple users to transmit simultaneously in the same frequency band.</p></li>
 </ol>
-<p>In addition, all of these techniques can be combined to create more efficient and flexible communication systems. For example, OFDMA can be used in conjunction with SDMA to allow multiple users to share the same frequency resources while also taking advantage of spatial diversity. Also TDMA can be combined with FDMA to create a hybrid multiple access scheme (which has been used in 2G GSM).</p>
+<p>In addition, all of these techniques can be combined to create more efficient and flexible communication systems. For example, OFDMA can be used in conjunction with SDMA to allow multiple users to share the same frequency resources while also taking advantage of spatial diversity. Also, TDMA can be combined with FDMA to create a hybrid multiple access scheme (which has been used in 2G GSM).</p>
 </section>
 </section>
 <section id="sec-trx" class="level1" data-number="3">
@@ -1618,7 +1618,7 @@ Q = \frac{f_\mathrm{c}}{\Delta f}
 </div>
 <div class="callout-body-container callout-body">
 <p><strong>Baseband filters (analog)</strong> are usually implemented as active <span class="math inline">\(RC\)</span> filters on-chip. They are very flexible and can have adjustable bandwidth by either changing <span class="math inline">\(R\)</span> and/or <span class="math inline">\(C\)</span>. For medium frequencies <span class="math inline">\(g_\mathrm{m}-C\)</span> filters can be used, which are also tunable by changing the transconductance <span class="math inline">\(g_\mathrm{m}\)</span> and/or <span class="math inline">\(C\)</span>. For even higher bandwidths, on-chip LC filters can be used, which have a limited <span class="math inline">\(Q\)</span> of around 10-20.</p>
-<p><strong>Baseband filters (digital)</strong> are implemented as FIR or IIR filters in the DSP block. They are very flexible and can be easily adapted to different standards and requirements. Digital filters show now variations, so they can be designed to be very selective.</p>
+<p><strong>Baseband filters (digital)</strong> are implemented as FIR or IIR filters in the DSP block. They are very flexible and can be easily adapted to different standards and requirements. Digital filters show no variations, so they can be designed to be very selective.</p>
 <p><strong>Surface acoustic wave (SAW)</strong> and <strong>bulk acoustic wave (BAW/FBAR)</strong> filters are off-chip components that can achieve high <span class="math inline">\(Q\)</span> values of several hundreds. They have a fixed center frequency and bandwidth. Usually 1-2 such filters are required per supported band of interest.</p>
 <p><strong>Crystal filters</strong> can achieve very high <span class="math inline">\(Q\)</span> values of several thousands, but are usually bulky and expensive.</p>
 <p><strong>LC filters</strong> can be either implemented off-chip (using discrete components) or on-chip. Off-chip LC filters can achieve higher <span class="math inline">\(Q\)</span> values than on-chip LC filters, but are usually larger and more expensive. On-chip LC filters are limited in <span class="math inline">\(Q\)</span> (around 10-20), but are very compact and can be integrated into the RFIC. Off-chip LC filters can achieve <span class="math inline">\(Q\)</span> values of around 50-100, depending on the frequency and component quality.</p>
@@ -1630,11 +1630,11 @@ Q = \frac{f_\mathrm{c}}{\Delta f}
 </section>
 <section id="direct-conversion-architecture" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="direct-conversion-architecture"><span class="header-section-number">3.4</span> Direct-Conversion Architecture</h2>
-<p>The transceiver architecture shown in <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;17</a> is called direct-conversion or zero-IF architecture, as the downconversion in the RX and upconversion in the TX is done in a single step. This architecture several advantages:</p>
+<p>The transceiver architecture shown in <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;17</a> is called direct-conversion or zero-IF architecture, as the downconversion in the RX and upconversion in the TX is done in a single step. This architecture has several advantages:</p>
 <ul>
 <li>Per RX and TX a single LO is required (which can even be shared between RX and TX in TDD operation).</li>
-<li>There are a minimum number of RF blocks, which good for cost and power consumption.</li>
-<li>This architecture is very flexible and can be easily adapted to different standards and requirements, and shows generally very good performance if the disadvantages can be overcome by good design.</li>
+<li>There are a minimum number of RF blocks, which is good for cost and power consumption.</li>
+<li>This architecture is very flexible and can be easily adapted to different standards and requirements, and generally shows very good performance if the disadvantages can be overcome by good design.</li>
 <li>This architecture allows a high integration level, as basically all blocks can be implemented on-chip.</li>
 <li>Direct conversion is the de-facto standard architecture for cellular, WiFi, Bluetooth (with the exception of the TX), and GNSS.</li>
 </ul>
@@ -1678,9 +1678,9 @@ Figure&nbsp;21: Block diagram of an FDD RF front-end.
 </ul>
 <p>Disadvantages of FDD:</p>
 <ul>
-<li>Duplexers are costly components, which significant insertion loss depending on filtering requirements.</li>
+<li>Duplexers are costly components with significant insertion loss depending on filtering requirements.</li>
 <li>Requires two separate frequency bands, which can be a limitation in terms of spectrum availability, and MIMO channel estimation.</li>
-<li>The large TX causes severe desensitization of the RX, which requires high linearity and good filtering (50 dB to 60 dB).</li>
+<li>The strong TX causes severe desensitization of the RX, which requires high linearity and good filtering (50 dB to 60 dB).</li>
 </ul>
 </section>
 <section id="time-division-duplex-tdd" class="level3" data-number="3.5.2">
@@ -1778,7 +1778,7 @@ Table&nbsp;4: Comparison of duplexing methods used by major wireless standards
 </div>
 </figure>
 </div>
-<p>As you can see in <a href="#tbl-duplexing-standards" class="quarto-xref">Table&nbsp;4</a>, there is a tendency to use FDD for lower frequencies and large communication distances, while TDD is preferred for higher frequencies and smaller distances.</p>
+<p>As you can see in <a href="#tbl-duplexing-standards" class="quarto-xref">Table&nbsp;4</a>, there is a tendency to use FDD for lower frequencies and long communication distances, while TDD is preferred for higher frequencies and shorter distances.</p>
 </section>
 </section>
 <section id="specialty-architectures" class="level2" data-number="3.6">
@@ -1786,7 +1786,7 @@ Table&nbsp;4: Comparison of duplexing methods used by major wireless standards
 <p>In some cases, other architectures may be preferred over the direct-conversion architecture. During the evolution of wireless communication, many different architectures have been proposed and used. However, only a few of them are still relevant today. Some examples are shown next.</p>
 <section id="super-heterodyne-architecture" class="level3" data-number="3.6.1">
 <h3 data-number="3.6.1" class="anchored" data-anchor-id="super-heterodyne-architecture"><span class="header-section-number">3.6.1</span> Super-Heterodyne Architecture</h3>
-<p>The super-heterodyne architecture is a widely used approach in radio. It works by mixing the incoming/outgoing RF signal with an LO to produce an intermediate frequency (IF) signal. This IF signal is then amplified and processed, allowing for better selectivity and sensitivity compared to direct-conversion architectures. Super-heterodyne receivers/transmitters are known for their excellent performance in terms of image rejection and dynamic range, making them suitable for a variety of applications, including traditional analog TV and radio broadcasting. As simplified block diagram of a super-heterodyne transceiver is shown in <a href="#fig-trx-superheterodyne" class="quarto-xref">Figure&nbsp;23</a>.</p>
+<p>The super-heterodyne architecture is a widely used approach in radio. It works by mixing the incoming/outgoing RF signal with an LO to produce an intermediate frequency (IF) signal. This IF signal is then amplified and processed, allowing for better selectivity and sensitivity compared to direct-conversion architectures. Super-heterodyne receivers/transmitters are known for their excellent performance in terms of image rejection and dynamic range, making them suitable for a variety of applications, including traditional analog TV and radio broadcasting. A simplified block diagram of a super-heterodyne transceiver is shown in <a href="#fig-trx-superheterodyne" class="quarto-xref">Figure&nbsp;23</a>.</p>
 <div id="cell-fig-trx-superheterodyne" class="cell" data-execution_count="23">
 <div class="cell-output cell-output-display">
 <div id="fig-trx-superheterodyne" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1803,7 +1803,7 @@ Figure&nbsp;23: Block diagram of a super-heterodyne transceiver (TRX) showing th
 </div>
 <p>When you compare <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;17</a> with <a href="#fig-trx-superheterodyne" class="quarto-xref">Figure&nbsp;23</a>, you can immediately appreciate the increased complexity of the super-heterodyne architecture. It requires two PLLs to generate the RX and TX LO frequencies, as well as additional mixers and filters for the IF stage. This increases cost, power consumption, and size. However, the super-heterodyne architecture can provide better performance in terms of selectivity and sensitivity, especially in challenging RF environments with strong blockers, as it allows filtering at RF, IF, and baseband frequencies.</p>
 <p>One important aspect of super-heterodyne receivers is the choice of the intermediate frequency (IF). The IF should be high enough to allow for effective filtering and <strong>image rejection</strong>, but low enough to avoid excessive complexity and power consumption. Common IF frequencies range from a few MHz to several hundred MHz, depending on the application and frequency band.</p>
-<p>An important issue in super-heterodyne receivers is the <strong>image frequency</strong>. The image frequency is a spurious frequency that can interfere with the desired signal, and is located at <span class="math inline">\(f_\mathrm{image} = f_\mathrm{RF} \pm 2 f_\mathrm{IF}\)</span> (the signs depends on the choice of high-side or low-side mixing). To suppress the image frequency, an image-reject filter is either placed before (RX) or after (TX) the mixer. The design of this filter is critical, as it must provide sufficient attenuation of the image frequency while maintaining low insertion loss for the desired signal.</p>
+<p>An important issue in super-heterodyne receivers is the <strong>image frequency</strong>. The image frequency is a spurious frequency that can interfere with the desired signal, and is located at <span class="math inline">\(f_\mathrm{image} = f_\mathrm{RF} \pm 2 f_\mathrm{IF}\)</span> (the sign depends on the choice of high-side or low-side mixing). To suppress the image frequency, an image-reject filter is either placed before (RX) or after (TX) the mixer. The design of this filter is critical, as it must provide sufficient attenuation of the image frequency while maintaining low insertion loss for the desired signal.</p>
 <p>An alternative to image filtering is the use of active image rejection techniques, such as the <strong>Hartley</strong> or <strong>Weaver</strong> architectures. These techniques use additional mixers and phase shifters to cancel out the image frequency, allowing for improved performance without the need for a dedicated image-reject filter.</p>
 </section>
 <section id="low-if-architecture" class="level3" data-number="3.6.2">
@@ -1823,7 +1823,7 @@ Figure&nbsp;24: Block diagram of a low-IF transceiver (TRX) showing the main fun
 </div>
 </div>
 </div>
-<p>The low-IF architecture is the defacto standard for Bluetooth receivers. Its advantage compared to direct-conversion vanishes for larger channel bandwidths, this is why it is not used for cellular or WiFi (GSM receivers might be an exception).</p>
+<p>The low-IF architecture is the de facto standard for Bluetooth receivers. Its advantage compared to direct-conversion vanishes for larger channel bandwidths, which is why it is not used for cellular or WiFi (GSM receivers might be an exception).</p>
 <p>One noteworthy disadvantage of low-IF architectures is the required 2xBW compared to direct-conversion. This might cause increased power consumption in the analog baseband filters and ADCs/DACs. Additionally, the low-IF architecture still requires careful design to mitigate issues like IQ imbalance and LO leakage, although these issues are generally less severe than in direct-conversion architectures.</p>
 </section>
 <section id="super-simple-architecture" class="level3" data-number="3.6.3">
@@ -1887,7 +1887,7 @@ Figure&nbsp;26: Block diagram of an LNA. Typically, the LNA input is impedance m
 </div>
 </div>
 </div>
-<p>The LNA as a building block is shown in <a href="#fig-lna-block" class="quarto-xref">Figure&nbsp;26</a>. The main purpose of the LNA is to amplify the received signal with as little additional noise as possible. The LNA is usually designed for a specific frequency band, e.g., the 2.4 GHz ISM band or the 5 GHz WLAN band, and is typically designed for a specific impedance, e.g., 50 Ω, which is the standard impedance for RF systems; impedance matching is usually required at the input; the output impedance matching is only required if the output of the LNA goes off chip—if it is kept on chip impedance matching is often not required. The LNA is also designed to be sufficiently linear, i.e., to not introduce significant distortion to the amplified signal, however, compared to the noise requirements, linearity is often less critical.</p>
+<p>The LNA as a building block is shown in <a href="#fig-lna-block" class="quarto-xref">Figure&nbsp;26</a>. The main purpose of the LNA is to amplify the received signal with as little additional noise as possible. The LNA is usually designed for a specific frequency band, e.g., the 2.4 GHz ISM band or the 5 GHz WLAN band, and is typically designed for a specific impedance, e.g., 50 Ω, which is the standard impedance for RF systems. Impedance matching is usually required at the input; the output impedance matching is only required if the output of the LNA goes off-chip; if it is kept on-chip, impedance matching is often not required. The LNA is also designed to be sufficiently linear, i.e., to not introduce significant distortion to the amplified signal; however, compared to the noise requirements, linearity is often less critical.</p>
 <p>Why is impedance matching at the input of the LNA so important?</p>
 <ul>
 <li>The antenna is usually designed for a specific impedance, e.g., 50 Ω, and if the LNA input is not matched to this impedance, a significant portion of the received signal will be reflected back to the antenna, resulting in a loss of signal power.</li>
@@ -1917,7 +1917,7 @@ Figure&nbsp;27: Smith chart showing constant resistance and reactance circles fo
 <p><span class="math display">\[
 \text{RL} = -20 \log_{10} |\Gamma| = 20 \log_{10} \left| \frac{Z_\mathrm{in} + Z_0}{Z_\mathrm{in} - Z_0} \right|.
 \]</span></p>
-<p>A higher return loss indicates a better impedance match. A return loss of 10 dB indicates that 10% of the signal power is reflected back, while a return loss of 20 dB indicates that only 1% of the signal power is reflected back. In practice, a return loss of at least 10 dB is desired, with higher (positive!) values being better <span class="citation" data-cites="Bird.2009">(<a href="#ref-Bird.2009" role="doc-biblioref">Bird 2009</a>)</span>.</p>
+<p>A higher return loss indicates a better impedance match. A return loss of 10 dB indicates that 10% of the signal power is reflected back, while a return loss of 20 dB indicates that only 1% of the signal power is reflected back. In practice, a return loss of at least 10 dB is desired, with higher (positive) values being better <span class="citation" data-cites="Bird.2009">(<a href="#ref-Bird.2009" role="doc-biblioref">Bird 2009</a>)</span>.</p>
 <section id="sec-lna-resistive-matching" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="sec-lna-resistive-matching"><span class="header-section-number">4.1</span> Resistively Matched Common-Source LNA</h2>
 <p>The key question is now how to design an LNA with low noise figure and an input impedance matched to 50 Ω? In order to appreciate this design challenge, we will first try a naive approach, using a common-source amplifier with resistive termination, as shown in <a href="#fig-lna-naive" class="quarto-xref">Figure&nbsp;28</a>.</p>
@@ -1935,7 +1935,7 @@ Figure&nbsp;28: A simple LNA with resistive input matching and a tank circuit as
 </div>
 </div>
 </div>
-<p>If we assume the gate capacitance of <span class="math inline">\(M_1\)</span> negligible, we can achieve good input impedance matching by choosing <span class="math inline">\(R_\mathrm{s} = R_\mathrm{p} = 50\,\Omega\)</span>. The voltage gain of this simple common-source LNA is given by <span class="math inline">\(A_\mathrm{v} = -g_\mathrm{m}R_\mathrm{D}\)</span>, neglecting capacitances and <span class="math inline">\(g_\mathrm{ds}\)</span> of <span class="math inline">\(M_1\)</span> (we assume that the load tank is tuned to the desired frequency with <span class="math inline">\(\omega_0 = 1 / \sqrt{L C}\)</span>).</p>
+<p>If we assume the gate capacitance of <span class="math inline">\(M_1\)</span> is negligible, we can achieve good input impedance matching by choosing <span class="math inline">\(R_\mathrm{s} = R_\mathrm{p} = 50\,\Omega\)</span>. The voltage gain of this simple common-source LNA is given by <span class="math inline">\(A_\mathrm{v} = -g_\mathrm{m}R_\mathrm{D}\)</span>, neglecting capacitances and <span class="math inline">\(g_\mathrm{ds}\)</span> of <span class="math inline">\(M_1\)</span> (we assume that the load tank is tuned to the desired frequency with <span class="math inline">\(\omega_0 = 1 / \sqrt{L C}\)</span>).</p>
 <p>How can we calculate the noise figure of this simple LNA? We formulate</p>
 <p><span id="eq-lna-noise-factor"><span class="math display">\[
 F = \frac{\text{total noise at output}}{\text{noise at output due to source only}}.
@@ -1955,7 +1955,7 @@ Figure&nbsp;29: Equivalent circuit of resistively matched common-source LNA.
 </div>
 </div>
 </div>
-<p>Withe the help of <a href="#fig-lna-naive-noise" class="quarto-xref">Figure&nbsp;29</a>, we can calculate the total output noise power spectral density as</p>
+<p>With the help of <a href="#fig-lna-naive-noise" class="quarto-xref">Figure&nbsp;29</a>, we can calculate the total output noise power spectral density as</p>
 <p><span class="math display">\[
 \overline{V_\mathrm{n,out,1}^2} = A_\mathrm{v}^2 \cdot 4 k T (R_\mathrm{s} \parallel R_\mathrm{p}) = (g_\mathrm{m}R_\mathrm{D})^2 \cdot 4 k T (R_\mathrm{s} \parallel R_\mathrm{p})
 \]</span></p>
@@ -2009,8 +2009,8 @@ F = \frac{\overline{V_\mathrm{n,out}^2}}{\overline{V_\mathrm{n,out,s}^2}} = 1 + 
 <p><span class="math display">\[
 F = 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} = 2
 \]</span></p>
-<p>so we see that we are limited to a minimum noise figure of 3 dB, even if we spend the bias current to make <span class="math inline">\(g_\mathrm{m}\)</span> very large. We can go below 3 dB noise figure only if we choose <span class="math inline">\(R_\mathrm{p} &gt; R_\mathrm{s}\)</span>, however, this means that the input is no longer matched to 50 Ω, which is usually not acceptable. Hence, this simple resistively matched common-source LNA is not a good choice for a low-noise amplifier, with one exception: For very wideband amplifiers, where a NF of larger then 3 dB is acceptable, this configuration might be a good choice.</p>
-<p>We see that we are stuck at high noise figures if we realize the real part of the input impedance with a resistor. This leaves us with the question on how to realize a real part of the input impedance then? We will answer this question in the next section.</p>
+<p>so we see that we are limited to a minimum noise figure of 3 dB, even if we spend the bias current to make <span class="math inline">\(g_\mathrm{m}\)</span> very large. We can go below 3 dB noise figure only if we choose <span class="math inline">\(R_\mathrm{p} &gt; R_\mathrm{s}\)</span>, however, this means that the input is no longer matched to 50 Ω, which is usually not acceptable. Hence, this simple resistively matched common-source LNA is not a good choice for a low-noise amplifier, with one exception: For very wideband amplifiers, where a NF of larger than 3 dB is acceptable, this configuration might be a good choice.</p>
+<p>We see that we are stuck at high noise figures if we realize the real part of the input impedance with a resistor. This leaves us with the question of how to realize a real part of the input impedance then. We will answer this question in the next section.</p>
 </section>
 <section id="sec-lna-common-gate" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="sec-lna-common-gate"><span class="header-section-number">4.2</span> Common-Gate LNA</h2>
@@ -2029,7 +2029,7 @@ Figure&nbsp;31: Circuit diagram of a common-gate LNA.
 </div>
 </div>
 </div>
-<p>By inspecting <a href="#fig-lna-cg" class="quarto-xref">Figure&nbsp;31</a> and the practice from <a href="#sec-lna-resistive-matching" class="quarto-xref">Section&nbsp;4.1</a>, we can directly write down the output noise voltage as (with <span class="math inline">\(1/g_\mathrm{m}= R_\mathrm{s}\)</span>)</p>
+<p>By inspecting <a href="#fig-lna-cg" class="quarto-xref">Figure&nbsp;31</a> and following the practice from <a href="#sec-lna-resistive-matching" class="quarto-xref">Section&nbsp;4.1</a>, we can directly write down the output noise voltage as (with <span class="math inline">\(1/g_\mathrm{m}= R_\mathrm{s}\)</span>)</p>
 <p><span id="eq-lna-cg-noise-total"><span class="math display">\[
 \overline{V_\mathrm{n,out}^2} = k T \left[ (g_\mathrm{m}R_\mathrm{D})^2 R_\mathrm{s} + \gamma g_\mathrm{m}R_\mathrm{D}^2 + 4 R_\mathrm{D} \right] = k T \left( \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + \gamma \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + 4 R_\mathrm{D} \right).
 \tag{28}\]</span></span></p>
@@ -2095,7 +2095,7 @@ Z_\mathrm{in} = \frac{1}{s C_\mathrm{gs}} + s L + \frac{g_\mathrm{m}L}{C_\mathrm
 <p><span id="eq-lna-inductive-degeneration-noise-factor"><span class="math display">\[
 F = 1 + \frac{\gamma R_\mathrm{s} \omega_0^2 C_\mathrm{gs}^2}{g_\mathrm{m}}.
 \tag{32}\]</span></span></p>
-<p>Finally we have an LNA input stage configuration which allows us to achieve a noise figure below 3 dB, even with <span class="math inline">\(\gamma &gt; 1\)</span>, by proper choice of <span class="math inline">\(g_\mathrm{m}\)</span>. Making <span class="math inline">\(g_\mathrm{m}\)</span> large (by spending more bias current) results in (first order) arbitrarily low noise figure. The inductively-degenerated common-source LNA is a widely used LNA input stage configuration in modern RFICs. A somewhat detailed schematic is shown in <a href="#fig-lna-inductive-degeneration-detailed" class="quarto-xref">Figure&nbsp;34</a>.</p>
+<p>Finally, we have an LNA input stage configuration that allows us to achieve a noise figure below 3 dB, even with <span class="math inline">\(\gamma &gt; 1\)</span>, by proper choice of <span class="math inline">\(g_\mathrm{m}\)</span>. Making <span class="math inline">\(g_\mathrm{m}\)</span> large (by spending more bias current) results in (to first order) arbitrarily low noise figure. The inductively-degenerated common-source LNA is a widely used LNA input stage configuration in modern RFICs. A somewhat detailed schematic is shown in <a href="#fig-lna-inductive-degeneration-detailed" class="quarto-xref">Figure&nbsp;34</a>.</p>
 <div id="cell-fig-lna-inductive-degeneration-detailed" class="cell" data-execution_count="34">
 <div class="cell-output cell-output-display">
 <div id="fig-lna-inductive-degeneration-detailed" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2115,8 +2115,8 @@ Figure&nbsp;34: An (almost complete) common-source MOSFET stage with degeneratio
 </section>
 <section id="sec-lna-feedback" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="sec-lna-feedback"><span class="header-section-number">4.4</span> Feedback LNA</h2>
-<p>One drawback of the inductively-degenerated common-source LNA is the usage of at least one inductor. If the inductor is placed on chip it has a comparatively large size, and if it is implemented in the package (via a bondwiew) or on the PCB it add to the bill-of-materials (BOM) cost.</p>
-<p>If the CMOS technology is sufficiently fast, then a shunt feedback LNA, as shown in <a href="#fig-lna-shunt-fb" class="quarto-xref">Figure&nbsp;35</a>, might be a good choice.</p>
+<p>One drawback of the inductively-degenerated common-source LNA is the usage of at least one inductor. If the inductor is placed on-chip, it has a comparatively large size, and if it is implemented in the package (via a bondwire) or on the PCB, it adds to the bill-of-materials (BOM) cost.</p>
+<p>If the CMOS technology is sufficiently fast, a shunt feedback LNA, as shown in <a href="#fig-lna-shunt-fb" class="quarto-xref">Figure&nbsp;35</a>, might be a good choice.</p>
 <div id="cell-fig-lna-shunt-fb" class="cell" data-execution_count="35">
 <div class="cell-output cell-output-display">
 <div id="fig-lna-shunt-fb" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2144,7 +2144,7 @@ F = 1 + \left| \frac{Z_\mathrm{F} + R_\mathrm{s}}{g_\mathrm{m}Z_\mathrm{F} + 1} 
 <p><span class="math display">\[
 Z_\mathrm{in} = \frac{1}{g_\mathrm{m}}
 \]</span></p>
-<p>which is independent of <span class="math inline">\(Z_\mathrm{F}\)</span> and is a well-known result for a common-source stage. The disadavntage of this configuration is the noise factor, which (given that <span class="math inline">\(Z_\mathrm{F}\)</span> is sufficiently large) trends to <span class="math inline">\(F = 1 + \gamma\)</span>, which is the same as for the common-gate LNA.</p>
+<p>which is independent of <span class="math inline">\(Z_\mathrm{F}\)</span> and is a well-known result for a common-source stage. The disadvantage of this configuration is the noise factor, which (given that <span class="math inline">\(Z_\mathrm{F}\)</span> is sufficiently large) tends to <span class="math inline">\(F = 1 + \gamma\)</span>, which is the same as for the common-gate LNA.</p>
 <p>A bit more interesting is the case when <span class="math inline">\(g_\mathrm{m}Z_\mathrm{L} = A_0\)</span> and <span class="math inline">\(Z_\mathrm{L} \gg Z_\mathrm{F}\)</span>, which results in</p>
 <p><span class="math display">\[
 Z_\mathrm{in} = \frac{Z_\mathrm{L}}{1 + A_0}
@@ -2155,7 +2155,7 @@ Z_\mathrm{in} = \frac{Z_\mathrm{L}}{1 + A_0}
 Y_\mathrm{in} = \frac{1}{Z_\mathrm{in}} = \frac{g_\mathrm{m}C_\mathrm{F}}{C_\mathrm{L} + C_\mathrm{F}} + s \frac{C_\mathrm{L} C_\mathrm{F}}{C_\mathrm{L} + C_\mathrm{F}}
 \tag{35}\]</span></span></p>
 <p>Looking at <a href="#eq-lna-shunt-fb-yin" class="quarto-xref">Equation&nbsp;35</a>, we see that the input admittance has a <strong>real part</strong>! By proper choice of components, we can achieve an input impedance matched to 50 Ω at the desired frequency. The noise factor can again be made small by making <span class="math inline">\(g_\mathrm{m}\)</span> large.</p>
-<p>There is also an option, again by proper choice of <span class="math inline">\(Z_\mathrm{F}\)</span> and <span class="math inline">\(Z_\mathrm{L}\)</span>, to achieve an inductive input impedance component, which can be used to resonate out the input capacitance of the LNA, similar to the inductively-degenerated common-source LNA. However, in contrast to the inductively-degenerated common-source LNA, no inductor is required in this case. This configuration is called a reactance-cancelling LNA.</p>
+<p>There is also an option, by proper choice of <span class="math inline">\(Z_\mathrm{F}\)</span> and <span class="math inline">\(Z_\mathrm{L}\)</span>, to achieve an inductive input impedance component, which can be used to resonate out the input capacitance of the LNA, similar to the inductively-degenerated common-source LNA. However, in contrast to the inductively-degenerated common-source LNA, no inductor is required in this case. This configuration is called a reactance-canceling LNA.</p>
 </section>
 </section>
 <section id="sec-mixer" class="level1" data-number="5">
