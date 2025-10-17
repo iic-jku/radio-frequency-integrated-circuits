@@ -64,9 +64,9 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-b66d9f3da4d84aca26cc7cc1c94b0445.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-d3daa1d1ef55350d6f5c3e6cec97cbbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-b66d9f3da4d84aca26cc7cc1c94b0445.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dcc5d479ecc22b2d9b7a952d2cc3846d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-927f67718f75996ba3813496780a68e6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-dcc5d479ecc22b2d9b7a952d2cc3846d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -407,7 +407,13 @@ window.Quarto = {
   <li><a href="#sec-mixer-time-variant" id="toc-sec-mixer-time-variant" class="nav-link" data-scroll-target="#sec-mixer-time-variant"><span class="header-section-number">5.2</span> Time-Variant Mixer</a></li>
   <li><a href="#sec-mixer-gilbert" id="toc-sec-mixer-gilbert" class="nav-link" data-scroll-target="#sec-mixer-gilbert"><span class="header-section-number">5.3</span> Gilbert Cell Mixer</a></li>
   <li><a href="#sec-mixer-npath" id="toc-sec-mixer-npath" class="nav-link" data-scroll-target="#sec-mixer-npath"><span class="header-section-number">5.4</span> N-Path Filter</a></li>
-  <li><a href="#sec-mixer-lo" id="toc-sec-mixer-lo" class="nav-link" data-scroll-target="#sec-mixer-lo"><span class="header-section-number">5.5</span> LO Generation</a></li>
+  <li><a href="#sec-mixer-lo" id="toc-sec-mixer-lo" class="nav-link" data-scroll-target="#sec-mixer-lo"><span class="header-section-number">5.5</span> LO Generation</a>
+  <ul class="collapse">
+  <li><a href="#sec-lo-rc" id="toc-sec-lo-rc" class="nav-link" data-scroll-target="#sec-lo-rc"><span class="header-section-number">5.5.1</span> RC/CR Phase Shift Network</a></li>
+  <li><a href="#sec-lo-polyphase" id="toc-sec-lo-polyphase" class="nav-link" data-scroll-target="#sec-lo-polyphase"><span class="header-section-number">5.5.2</span> Polyphase Filter</a></li>
+  <li><a href="#sec-lo-ff" id="toc-sec-lo-ff" class="nav-link" data-scroll-target="#sec-lo-ff"><span class="header-section-number">5.5.3</span> Flip-Flop Based Phase Generation</a></li>
+  <li><a href="#sec-lo-delay" id="toc-sec-lo-delay" class="nav-link" data-scroll-target="#sec-lo-delay"><span class="header-section-number">5.5.4</span> Delay-Based Phase Generation</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#sec-oscillator" id="toc-sec-oscillator" class="nav-link" data-scroll-target="#sec-oscillator"><span class="header-section-number">6</span> Oscillators</a></li>
   <li><a href="#sec-pll" id="toc-sec-pll" class="nav-link" data-scroll-target="#sec-pll"><span class="header-section-number">7</span> Phase-Locked Loops</a></li>
@@ -2160,7 +2166,7 @@ Y_\mathrm{in} = \frac{1}{Z_\mathrm{in}} = \frac{g_\mathrm{m}C_\mathrm{F}}{C_\mat
 </section>
 <section id="sec-mixer" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Mixers</h1>
-<p>As we have seen in <a href="#sec-trx-mod-demod" class="quarto-xref">Section&nbsp;3.2</a> we are using mixers to “upconvert” and “downconvert” signals, i.e., we shift the frequency of a signal to a higher or lower frequency with the help of an auxilliary signal, called the “<strong>local oscillator</strong>” (LO) signal. The block diagram of a mixer is shown in <a href="#fig-mixer-block" class="quarto-xref">Figure&nbsp;37</a>.</p>
+<p>As we have seen in <a href="#sec-trx-mod-demod" class="quarto-xref">Section&nbsp;3.2</a>, we are using mixers to “upconvert” and “downconvert” signals, i.e., we shift the frequency of a signal to a higher or lower frequency with the help of an auxiliary signal, called the “<strong>local oscillator</strong>” (LO) signal. The block diagram of a mixer is shown in <a href="#fig-mixer-block" class="quarto-xref">Figure&nbsp;37</a>.</p>
 <div id="cell-fig-mixer-square" class="cell" data-execution_count="36">
 <div class="cell-output cell-output-display">
 <div id="fig-mixer-square" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2179,7 +2185,7 @@ Figure&nbsp;36: A squarer as a nonlinear mixer.
 <p><span class="math display">\[
 \omega_\mathrm{out} = \omega_\mathrm{in} \pm \omega_\mathrm{LO}.
 \]</span></p>
-<p>It should be noted noted that the output signal usually contains additional frequency components, which are not desired. These so-called “<strong>spurious</strong>” components are usually filtered out in a subsequent filtering stage.</p>
+<p>It should be noted that the output signal usually contains additional frequency components, which are not desired. These so-called “<strong>spurious</strong>” components are usually filtered out in a subsequent filtering stage.</p>
 <p>Recalling the properties of <a href="https://en.wikipedia.org/wiki/Linear_time-invariant_system">linear time-invariant (LTI)</a> systems, we know that in an LTI system <em>no new frequency components</em> (which are not already present in the input signal) are generated. In conclusion, in order to generate new frequency components, a mixer has to be either</p>
 <ul>
 <li>a <strong>non-linear</strong> system, or</li>
@@ -2245,11 +2251,11 @@ Figure&nbsp;39: A switch as a time-variant mixer.
 </div>
 </div>
 </div>
-<p>When the switch is closed (<span class="math inline">\(s_\mathrm{LO} \ge 0\)</span>), the input signal is passed to the output, i.e., <span class="math inline">\(s_\mathrm{out}(t) = s_\mathrm{in}(t)\)</span>; when the switch is open (<span class="math inline">\(s_\mathrm{LO} &lt; 0\)</span>), no signal is passed, i.e, <span class="math inline">\(s_\mathrm{out}(t) = 0\)</span>. The output signal can be expressed as</p>
+<p>When the switch is closed (<span class="math inline">\(s_\mathrm{LO} \ge 0\)</span>), the input signal is passed to the output, i.e., <span class="math inline">\(s_\mathrm{out}(t) = s_\mathrm{in}(t)\)</span>; when the switch is open (<span class="math inline">\(s_\mathrm{LO} &lt; 0\)</span>), no signal is passed, i.e., <span class="math inline">\(s_\mathrm{out}(t) = 0\)</span>. The output signal can be expressed as</p>
 <p><span class="math display">\[
 s_\mathrm{out}(t) = s_\mathrm{in}(t) \cdot \frac{1}{2} \left\{ 1 + \mathrm{sgn}[ s_\mathrm{LO}(t) ] \right\},
 \]</span></p>
-<p>where <span class="math inline">\(\mathrm{sgn}(\cdot)\)</span> is the sign function. The term in curly brackets is a square wave that switches between 0 and 1 at the LO frequency. This square wave can be expressed as a Fourier series, which contains the fundamental frequency at <span class="math inline">\(\omega_\mathrm{LO}\)</span> and all odd harmonics <span class="math inline">\(3 \omega_\mathrm{LO}\)</span>, <span class="math inline">\(5 \omega_\mathrm{LO}\)</span>, and so on. In conclusion, the input signal is again expressed as <span class="math inline">\(\cos(\omega_\mathrm{in} t)\)</span>, we get the output signal</p>
+<p>where <span class="math inline">\(\mathrm{sgn}(\cdot)\)</span> is the sign function. The term in curly brackets is a square wave that switches between 0 and 1 at the LO frequency. This square wave can be expressed as a Fourier series, which contains the fundamental frequency at <span class="math inline">\(\omega_\mathrm{LO}\)</span> and all odd harmonics <span class="math inline">\(3 \omega_\mathrm{LO}\)</span>, <span class="math inline">\(5 \omega_\mathrm{LO}\)</span>, and so on. In conclusion, if the input signal is expressed as <span class="math inline">\(\cos(\omega_\mathrm{in} t)\)</span>, we get the output signal</p>
 <p><span id="eq-mixer-single-output"><span class="math display">\[
 s_\mathrm{out}(t) = \frac{1}{\pi} \cos(\omega_\mathrm{in} t \pm \omega_\mathrm{LO} t) + \ldots
 \tag{37}\]</span></span></p>
@@ -2269,7 +2275,7 @@ Figure&nbsp;40: A MOSFET as a switch used as a mixer, with ac-coupled LO signal.
 </div>
 </div>
 <p>The implementation in <a href="#fig-cmos-single-mixer" class="quarto-xref">Figure&nbsp;40</a> uses a single NMOS transistor as a switch. The LO signal is ac-coupled to the gate of the transistor, so that the dc operating point is set by the bias voltage <span class="math inline">\(V_\mathrm{bias}\)</span>. When the LO signal is high enough, the transistor is switched on and the input signal <span class="math inline">\(v_\mathrm{in}(t)\)</span> is passed to the output; when the LO signal is low, the transistor is switched off and no signal is passed. Note that with the MOSFET we can switch voltages as well as currents, so the mixer can work in both modes, voltage mode or current mode.</p>
-<p>A big disadvantage of this simple implementation that the input signal is “lost” for half of the cycle when the MOSFET switch is open. A fully differential implementation (having differential ports at input, output and LO input) can alleviate this problem, as the input signal is always connected to one of the two output ports. This configuration is called a “<strong>double-balanced mixer</strong>” and is widely used in practice. It is shown in <a href="#fig-cmos-double-mixer" class="quarto-xref">Figure&nbsp;41</a>.</p>
+<p>A big disadvantage of this simple implementation is that the input signal is “lost” for half of the cycle when the MOSFET switch is open. A fully differential implementation (having differential ports at input, output and LO input) can alleviate this problem, as the input signal is always connected to one of the two output ports. This configuration is called a “<strong>double-balanced mixer</strong>” and is widely used in practice. It is shown in <a href="#fig-cmos-double-mixer" class="quarto-xref">Figure&nbsp;41</a>.</p>
 <div id="cell-fig-cmos-double-mixer" class="cell" data-execution_count="41">
 <div class="cell-output cell-output-display">
 <div id="fig-cmos-double-mixer" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2284,7 +2290,7 @@ Figure&nbsp;41: A fully-differential double-balanced MOSFET mixer.
 </div>
 </div>
 </div>
-<p>Note that with a double-balanced mixer we have 6 dB more conversion gain compared to the single-balanced mixer (refer to <a href="#eq-mixer-single-output" class="quarto-xref">Equation&nbsp;37</a>), as can be seen in <a href="#eq-mixer-double-output" class="quarto-xref">Equation&nbsp;38</a>. Note that the factor of <span class="math inline">\(2/\pi\)</span> is the conversion loss of an ideal double balanced mixer of 3.9 dB.</p>
+<p>Note that with a double-balanced mixer, we have 6 dB more conversion gain compared to the single-balanced mixer (refer to <a href="#eq-mixer-single-output" class="quarto-xref">Equation&nbsp;37</a>), as can be seen in <a href="#eq-mixer-double-output" class="quarto-xref">Equation&nbsp;38</a>. Note that the factor of <span class="math inline">\(2/\pi\)</span> represents the conversion loss of an ideal double-balanced mixer of 3.9 dB.</p>
 <p><span id="eq-mixer-double-output"><span class="math display">\[
 s_\mathrm{out}(t) = \frac{2}{\pi} \cos(\omega_\mathrm{in} t \pm \omega_\mathrm{LO} t) + \ldots
 \tag{38}\]</span></span></p>
@@ -2308,7 +2314,7 @@ Figure&nbsp;42: An RX front-end using a current-mode (passive) mixer.
 </section>
 <section id="sec-mixer-gilbert" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="sec-mixer-gilbert"><span class="header-section-number">5.3</span> Gilbert Cell Mixer</h2>
-<p>As we have seen in <a href="#sec-mixer-time-variant" class="quarto-xref">Section&nbsp;5.2</a>, in CMOS we have quite a few options to implement a mixer as the MOSFET is a good current and voltage switch. This is in stark contrast to te BJT, as the bipolar transistor can only be used as an (excellent) current switch in the differential pair configuration. Hence, we need to implement a current-mode mixer in bipolar technology. The most widely used structure is the so-called “<strong>Gilbert cell</strong>”, shown in <a href="#fig-gilbert-mixer" class="quarto-xref">Figure&nbsp;43</a>.</p>
+<p>As we have seen in <a href="#sec-mixer-time-variant" class="quarto-xref">Section&nbsp;5.2</a>, in CMOS we have quite a few options to implement a mixer as the MOSFET is a good current and voltage switch. This is in stark contrast to the BJT, as the bipolar transistor can only be used as an (excellent) current switch in the differential pair configuration. Hence, we need to implement a current-mode mixer in bipolar technology. The most widely used structure is the so-called “<strong>Gilbert cell</strong>”, shown in <a href="#fig-gilbert-mixer" class="quarto-xref">Figure&nbsp;43</a>.</p>
 <div id="cell-fig-gilbert-mixer" class="cell" data-execution_count="43">
 <div class="cell-output cell-output-display">
 <div id="fig-gilbert-mixer" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2323,7 +2329,7 @@ Figure&nbsp;43: A Gilbert mixer based on bipolar differential pairs.
 </div>
 </div>
 </div>
-<p>The idea is that in input transconductor creates currents, which are switched in the double differential pair, and convert the mixed currents back to voltage in the load impedances. There are many known variations of this circuit, like skipping the current source at the bottom to increase linearity and headroom, or swap the input transconductor for another structure. It might also be useful to “bleed” some bias current from the LO switching stage to improve noise.</p>
+<p>The idea is that an input transconductor creates currents, which are switched in the double differential pair, and converts the mixed currents back to voltage in the load impedances. There are many known variations of this circuit, like skipping the current source at the bottom to increase linearity and headroom, or swap the input transconductor for another structure. It might also be useful to “bleed” some bias current from the LO switching stage to improve noise.</p>
 </section>
 <section id="sec-mixer-npath" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="sec-mixer-npath"><span class="header-section-number">5.4</span> N-Path Filter</h2>
@@ -2342,7 +2348,7 @@ Figure&nbsp;44: A 4-phase N-path filter.
 </div>
 </div>
 </div>
-<p>The key observation to make is that a switch that is opened and closed at a certain frequency (the LO frequency) can be seen as a time-variant resistor. This time-variant resistor converts impedance seen at one one to the other end, and also changes the frequency of this apparent impedance. In other words, if we connect grounded capacitors at one end of the mixer switches, and we look into the other end, we see a <strong>bandpass filter centered at the LO</strong> frequency! In this way we can build bandpass filters (and also bandstop filters <span class="citation" data-cites="Vazny.2010">(<a href="#ref-Vazny.2010" role="doc-biblioref">Vazny et al. 2010</a>)</span>) at very high frequencies which are precisely centered (without component variations) around <span class="math inline">\(\omega_\mathrm{LO}\)</span>.</p>
+<p>The key observation to make is that a switch that is opened and closed at a certain frequency (the LO frequency) can be seen as a time-variant resistor. This time-variant resistor converts impedance seen at one one to the other end, and also changes the frequency of this apparent impedance. In other words, if we connect grounded capacitors at one end of the mixer switches and look into the other end, we see a <strong>bandpass filter centered at the LO</strong> frequency! In this way we can build bandpass filters (and also bandstop filters <span class="citation" data-cites="Vazny.2010">(<a href="#ref-Vazny.2010" role="doc-biblioref">Vazny et al. 2010</a>)</span>) at very high frequencies which are precisely centered (without component variations) around <span class="math inline">\(\omega_\mathrm{LO}\)</span>.</p>
 <p>The impedance characteristics of such a tank circuit exhibit first-order bandpass behavior, as shown in <a href="#fig-tank-bandpass" class="quarto-xref">Figure&nbsp;45</a>. The peak impedance reaches 5.3 times the switch resistance (<span class="math inline">\(R_\mathrm{sw}\)</span>), and importantly, the bandwidth is inversely proportional to the capacitance value, i.e., <span class="math inline">\(\mathrm{BW} \propto 1/C\)</span>. This relationship allows for precise control of the filter bandwidth by adjusting the capacitor values.</p>
 <div id="cell-fig-tank-bandpass" class="cell" data-execution_count="45">
 <div class="cell-output cell-output-display">
@@ -2361,7 +2367,153 @@ Figure&nbsp;45: First-order bandpass behavior and impedance of an N-path filter.
 </section>
 <section id="sec-mixer-lo" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="sec-mixer-lo"><span class="header-section-number">5.5</span> LO Generation</h2>
-<p>To be written.</p>
+<p>As you have seen in <a href="#sec-trx-mod-demod" class="quarto-xref">Section&nbsp;3.2</a>, for complex-valued modulation schemes (like QPSK, QAM, OFDM, and so on) we need to generate quadrature LO signals (i.e., two LO signals with a 90° phase shift). There are many ways to generate such signals, and we will now study a few of them.</p>
+<section id="sec-lo-rc" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="sec-lo-rc"><span class="header-section-number">5.5.1</span> RC/CR Phase Shift Network</h3>
+<p>The probably simplest way to generate quadrature LO signals is to use a simple RC/CR phase shift network, as shown in <a href="#fig-rc-cr-phase-shift" class="quarto-xref">Figure&nbsp;46</a>. The RC network (a first-order lowpass) generates a phase shift between 0° and -90°, while the CR network (a first-order highpass) generates a phase shift between 0° and +90°. By operating the network at <span class="math inline">\(\omega_0 = 1/RC\)</span>, we can achieve a 90° phase shift between the two outputs.</p>
+<div id="cell-fig-rc-cr-phase-shift" class="cell" data-execution_count="46">
+<div class="cell-output cell-output-display">
+<div id="fig-rc-cr-phase-shift" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rc-cr-phase-shift-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-rc-cr-phase-shift-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-46" title="Figure&nbsp;46: An RC/CR IQ generation network."><img src="rfic_files/figure-html/fig-rc-cr-phase-shift-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rc-cr-phase-shift-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;46: An RC/CR IQ generation network.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The advantage of this network is its simplicity, as it only requires a few passive components, and it can generate I and Q phases from an incoming signal at the target frequency. The disadvantage is that the phase shift is frequency-dependent, so the quadrature signals are only perfectly in phase at one frequency. Furthermore, the amplitude of the two outputs is not equal, which might require additional gain stages to equalize the amplitudes. Additionally, this passive network has a 3 dB loss, so we need additional gain stages to compensate for this loss.</p>
+</section>
+<section id="sec-lo-polyphase" class="level3" data-number="5.5.2">
+<h3 data-number="5.5.2" class="anchored" data-anchor-id="sec-lo-polyphase"><span class="header-section-number">5.5.2</span> Polyphase Filter</h3>
+<p>We can create a more advanced phase shift network (following the idea of <a href="#sec-lo-rc" class="quarto-xref">Section&nbsp;5.5.1</a>) by using a so-called “<strong>polyphase filter</strong>” <span class="citation" data-cites="Kaukovuori.2008">(<a href="#ref-Kaukovuori.2008" role="doc-biblioref">Kaukovuori et al. 2008</a>)</span>. The idea is to use multiple RC sections to create a more ideal phase shift network. An example is shown in <a href="#fig-polyphase-filter" class="quarto-xref">Figure&nbsp;47</a>.</p>
+<div id="cell-fig-polyphase-filter" class="cell" data-execution_count="47">
+<div class="cell-output cell-output-display">
+<div id="fig-polyphase-filter" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polyphase-filter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-polyphase-filter-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-47" title="Figure&nbsp;47: A two-stage polyphase network."><img src="rfic_files/figure-html/fig-polyphase-filter-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polyphase-filter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;47: A two-stage polyphase network.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>As shown in the figure above, we can use multiple stages (with <span class="math inline">\(R_1 C_1 \ne R_2 C_2\)</span>) in cascade to broaden the frequency range over which we have a good 90° phase shift between the four outputs. The more stages we use, the better the performance, but also the more components are required. Note that this network is still passive, so it has an inherent loss, which also increases with the number of stages. The idea behind this network is that the network is transparent for positive frequencies, and blocks negative frequencies (or vice versa). We enter the network with real signals (having positive and negative frequency components), and at the output we get complex signals (having only positive or negative frequency components). In this sense this network is a complex filter.</p>
+<p>Note that polyphase filters are popular when we have to create complex signals from real signals. We can use the polyphase filter in the LO path, or also in the signal path (e.g., in a receiver). The benefit is that we can work with a signal where input frequency is equal to the output frequency. This is in strong contrast to the approach we will discuss next.</p>
+</section>
+<section id="sec-lo-ff" class="level3" data-number="5.5.3">
+<h3 data-number="5.5.3" class="anchored" data-anchor-id="sec-lo-ff"><span class="header-section-number">5.5.3</span> Flip-Flop Based Phase Generation</h3>
+<p>The most widely used approach to generate quadrature LO signals is to use digital circuits, as shown in <a href="#fig-iq-divider" class="quarto-xref">Figure&nbsp;48</a>. The idea is to use a flip-flop (or a latch) to divide the frequency of an incoming clock signal by 2. If we drive the two flip-flops (which are connected as toggle flip-flops) by inverted clocks, then the resulting output signals are 90° phase-shifted, as shown in <a href="#fig-ff-phase-diagram" class="quarto-xref">Figure&nbsp;49</a>.</p>
+<div id="cell-fig-iq-divider" class="cell" data-execution_count="48">
+<div class="cell-output cell-output-display">
+<div id="fig-iq-divider" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-iq-divider-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-iq-divider-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-48" title="Figure&nbsp;48: I/Q generation with a divide-by-2."><img src="rfic_files/figure-html/fig-iq-divider-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-iq-divider-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;48: I/Q generation with a divide-by-2.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-fig-ff-phase-diagram" class="cell" data-execution_count="49">
+<div class="cell-output cell-output-display">
+<div id="fig-ff-phase-diagram" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ff-phase-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-ff-phase-diagram-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-49" title="Figure&nbsp;49: Input and output waveforms of I/Q generation with a divide-by-2."><img src="rfic_files/figure-html/fig-ff-phase-diagram-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ff-phase-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;49: Input and output waveforms of I/Q generation with a divide-by-2.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>It is important to note that the circuit shown in <a href="#fig-iq-divider" class="quarto-xref">Figure&nbsp;48</a> has to be implemented in a way so that there is no phase ambiguity, i.e., the I-phase is lagging the Q-phase by exactly 90°. This can be achieved by using a reset signal to set the flip-flops to a known state at startup, or by implementing flip-flops using a differential clock input.</p>
+<p>If the input clock is not 2x the target frequency but higher (e.g., 4x), then we can use a frequency divider approach to generate more than four phases. This could be useful in an N-path filter, where we could need more than four phases (see <a href="#sec-mixer-npath" class="quarto-xref">Section&nbsp;5.4</a>).</p>
+<p>Often, we need four-phase LO signals with 25% duty cycle (instead of the 50% duty cycle shown in <a href="#fig-ff-phase-diagram" class="quarto-xref">Figure&nbsp;49</a>). This can be achieved by using additional logic gates to combine the outputs of the flip-flops, as shown in <a href="#fig-logen-25" class="quarto-xref">Figure&nbsp;50</a>. The resulting LO waveforms are shown in <a href="#fig-logen-25-waveforms" class="quarto-xref">Figure&nbsp;51</a>.</p>
+<div id="cell-fig-logen-25" class="cell" data-execution_count="50">
+<div class="cell-output cell-output-display">
+<div id="fig-logen-25" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-logen-25-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-logen-25-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-50" title="Figure&nbsp;50: I/Q generation with a divide-by-2 and 25% duty cycle generation."><img src="rfic_files/figure-html/fig-logen-25-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logen-25-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;50: I/Q generation with a divide-by-2 and 25% duty cycle generation.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-fig-logen-25-waveforms" class="cell" data-execution_count="51">
+<div class="cell-output cell-output-display">
+<div id="fig-logen-25-waveforms" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-logen-25-waveforms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-logen-25-waveforms-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-51" title="Figure&nbsp;51: Input and output waveforms of I/Q generation with a divide-by-2 and 25% duty cycle generation."><img src="rfic_files/figure-html/fig-logen-25-waveforms-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logen-25-waveforms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;51: Input and output waveforms of I/Q generation with a divide-by-2 and 25% duty cycle generation.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The advantage of using flip-flops to generate multi-phase LO signals is that very precise phase shifts can be achieved, which can be produced over a very wide frequency range. They can be implemented in different logic styles, like CMOS, ECL, CML, and so on. The disadvantage is that we need a high-frequency clock signal above the target frequency, which might be difficult to generate. Still, I/Q generation with flip-flops is the de-facto standard approach in modern RFICs.</p>
+</section>
+<section id="sec-lo-delay" class="level3" data-number="5.5.4">
+<h3 data-number="5.5.4" class="anchored" data-anchor-id="sec-lo-delay"><span class="header-section-number">5.5.4</span> Delay-Based Phase Generation</h3>
+<p>The final approach we want to mention is to use a delay line (or multiple ones) to generate phase shifts. Using transmission lines, this approach is widely used at very high frequencies, where other approaches (like the ones shown in <a href="#sec-lo-polyphase" class="quarto-xref">Section&nbsp;5.5.2</a> or <a href="#sec-lo-ff" class="quarto-xref">Section&nbsp;5.5.3</a>) are difficult to implement. One well-known approach is the 90° hybrid coupler, realized with <span class="math inline">\(\lambda/4\)</span> transmission lines <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span>. When the frequencies are high enough (and the resulting wavelengths short enough), this approach can even be implemented on-chip. The disadvantage is that the phase shift is frequency-dependent, so the quadrature signals are only perfectly in phase at one frequency. Furthermore, this passive network has a 3 dB loss, so we need additional gain stages to compensate for this loss. A branch-line hybrid coupler is shown in <a href="#fig-branch-line-coupler" class="quarto-xref">Figure&nbsp;52</a>.</p>
+<div id="cell-fig-branch-line-coupler" class="cell" data-execution_count="52">
+<div class="cell-output cell-output-display">
+<div id="fig-branch-line-coupler" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-branch-line-coupler-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-branch-line-coupler-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-52" title="Figure&nbsp;52: Branch-line hybrid coupler schematic showing the transmission line structure with characteristic impedances and λ/4 length sections."><img src="rfic_files/figure-html/fig-branch-line-coupler-output-1.png" width="772" height="657" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-branch-line-coupler-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;52: Branch-line hybrid coupler schematic showing the transmission line structure with characteristic impedances and λ/4 length sections.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The 3-port S-parameter matrix of an ideal branch-line coupler (assuming port 4 is poperly terminated with <span class="math inline">\(Z_0\)</span>) is given by</p>
+<p><span id="eq-branch-line-coupler-sparams"><span class="math display">\[
+S = \frac{1}{\sqrt{2}} \begin{bmatrix}
+0 &amp; -j &amp; -1 \\
+-j &amp; 0 &amp; 0 \\
+-1 &amp; 0 &amp; 0
+\end{bmatrix}.
+\tag{39}\]</span></span></p>
+<p>A feature of the coupler in <a href="#fig-branch-line-coupler" class="quarto-xref">Figure&nbsp;52</a> is that it is single-ended; a differential implementation needs either two couplers or a coupler with subsequent baluns.</p>
+<p>Another approach, which is similar to the flip-flop based approach, is to use a delay line to generate the required phase shifts. This can be done with a single delay line and multiple taps, or with multiple delay lines. The idea is that we delay the input clock signal by a certain amount of time, which corresponds to a 90° phase shift at the target frequency. This approach is shown in <a href="#fig-logen-dll" class="quarto-xref">Figure&nbsp;53</a>. Since the delay of a delay line is frequency dependent, and the delay will change with process, voltage, and temperature (PVT) variations, we have to implement a tuning mechanism to adjust the delay. This implementation is called a delay-locked loop (DLL), which is similar to a phase-locked loop (PLL, see <a href="#sec-pll" class="quarto-xref">Section&nbsp;7</a>).</p>
+<div id="cell-fig-logen-dll" class="cell" data-execution_count="53">
+<div class="cell-output cell-output-display">
+<div id="fig-logen-dll" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-logen-dll-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-logen-dll-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-53" title="Figure&nbsp;53: LO multiphase generation by delay-locked loop (DLL). An extension to more than four phases is straightforward."><img src="rfic_files/figure-html/fig-logen-dll-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logen-dll-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;53: LO multiphase generation by delay-locked loop (DLL). An extension to more than four phases is straightforward.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>With a phase detector (PD) we can compare the phase of the output signal with the input signal, and regulate the delay per stage so that after four delays the edges line up. Then we can tap the equally-spaced phases and use them as LO signals. The advantage of this approach is that we can flexibly create a required number of phases from an input clock. This feature is also used in wireline communication systems to generate multiple phases for the data sampling.</p>
+</section>
 </section>
 </section>
 <section id="sec-oscillator" class="level1" data-number="6">
@@ -2389,6 +2541,9 @@ Darabi, Hooman. 2020. <em>Radio Frequency Integrated Circuits and Systems</em>. 
 </div>
 <div id="ref-Gray_Meyer_5th_ed" class="csl-entry" role="listitem">
 Gray, Paul R., Paul J. Hurst, Stephen H. Lewis, and Robert G. Meyer. 2009. <em><span class="nocase">Analysis and Design of Analog Integrated Circuits</span></em>. Fifth. Wiley.
+</div>
+<div id="ref-Kaukovuori.2008" class="csl-entry" role="listitem">
+Kaukovuori, Jouni, Kari Stadius, Jussi Ryynänen, and Kari A. I. Halonen. 2008. <span>“<span class="nocase">Analysis and Design of Passive Polyphase Filters</span>.”</span> <em>IEEE Transactions on Circuits and Systems–I: Regular Papers</em> 55 (10): 3023–37. <a href="https://doi.org/10.1109/tcsi.2008.917990">https://doi.org/10.1109/tcsi.2008.917990</a>.
 </div>
 <div id="ref-Lepage.1953" class="csl-entry" role="listitem">
 Lepage, W. R., C. R. Cahn, and J. S. Brown. 1953. <span>“<span class="nocase">Analysis of a comb filter using synchronously commutated capacitors</span>.”</span> <em>Transactions of the American Institute of Electrical Engineers, Part I: Communication and Electronics</em> 72 (1): 63–68. <a href="https://doi.org/10.1109/tce.1953.6371974">https://doi.org/10.1109/tce.1953.6371974</a>.
