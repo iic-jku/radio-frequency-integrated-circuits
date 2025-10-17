@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-logen-dll
 #| echo: false
-#| fig-cap: "LO multiphase generation by delay-locked loop (DLL)."
+#| fig-cap: "LO multiphase generation by delay-locked loop (DLL). An extension to more than four phases is straightforward."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.logic as lgc
@@ -32,33 +32,38 @@ with sd.Drawing(canvas='svg') as d:
     pos1 = d.here
     elm.Line().right(d.unit)
     vg1 = dsp.VGA()
-    elm.Line().right(d.unit/2).dot()
+    ph1 = elm.Line().right(d.unit/2).dot()
     elm.Line().right(d.unit/2)
     vg2 = dsp.VGA()
-    elm.Line().right(d.unit/2).dot()
+    ph2 = elm.Line().right(d.unit/2).dot()
     elm.Line().right(d.unit/2)
     vg3 = dsp.VGA()
-    elm.Line().right(d.unit/2).dot()
+    ph3 = elm.Line().right(d.unit/2).dot()
     elm.Line().right(d.unit/2)
     vg4 = dsp.VGA()
-    l1 = elm.Line().right(d.unit/2).dot()
+    ph4 = elm.Line().right(d.unit/2).dot()
 
 
     d.here=pos1
 
-    elm.Line().down(d.unit)
+    elm.Line().up(d.unit)
     elm.Arrow().right(d.unit/4)
     pd = dsp.Square().label('PD', 'center')
 
-    elm.Line().at(l1.end).down(d.unit*1.5)
-    elm.Line().left().tox(pd.S)
-    elm.Arrow().up().to(pd.S)
+    elm.Line().at(ph4.end).up(d.unit*1.5)
+    elm.Line().left().tox(pd.N)
+    elm.Arrow().down().to(pd.N)
 
-    elm.Line().up(d.unit/4).at(pd.N)
+    elm.Line().down(d.unit/4).at(pd.S)
     l2 = elm.Line().right().tox(vg4.tune)
 
-    #elm.Line().at(vg1.tune).down()
+    elm.Line().at(vg1.tune).up().toy(l2.start).dot()
+    elm.Line().at(vg2.tune).up().toy(l2.start).dot()
+    elm.Line().at(vg3.tune).up().toy(l2.start).dot()
+    elm.Line().at(vg4.tune).up().toy(l2.start)
 
+    elm.Line().down(d.unit/2).at(ph1.end).dot(open=True).label(r'$\text{LO}_\mathrm{0}$', 'left')
+    elm.Line().down(d.unit/2).at(ph2.end).dot(open=True).label(r'$\text{LO}_\mathrm{90}$', 'left')
+    elm.Line().down(d.unit/2).at(ph3.end).dot(open=True).label(r'$\text{LO}_\mathrm{180}$', 'left')
+    elm.Line().down(d.unit/2).at(ph4.end).dot(open=True).label(r'$\text{LO}_\mathrm{270}$', 'left')
 ```
-
-
