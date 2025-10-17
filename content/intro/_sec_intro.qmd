@@ -59,7 +59,7 @@ $$
 c = \lambda f.
 $$
 
-Generally speaking, the size of an electromagnetic antenna is proportional to the wavelength of the EM wave use for transmission. For man devices, we seek antennas on the order of a few centimeters, and this is why frequencies in the hundreds of MHz to GHz are so popular. [@tbl-rf-applications] lists a few typical applications and their frequency and wavelength.
+Generally speaking, the size of an electromagnetic antenna is proportional to the wavelength of the EM wave used for transmission. For many devices, we seek antennas on the order of a few centimeters, and this is why frequencies in the hundreds of MHz to GHz are so popular. [@tbl-rf-applications] lists a few typical applications and their frequency and wavelength.
 
 | Application     | Frequency   | Wavelength  |
 |:----------------|-------------|-------------|
@@ -87,7 +87,7 @@ $$\lambda = \frac{c}{f} = \frac{3 \times 10^8 \text{ m/s}}{2.4 \times 10^9 \text
 This means that a quarter-wavelength monopole antenna for 2.4 GHz Bluetooth would be approximately 3.1 cm long, which easily fits into most mobile devices.
 :::
 
-In order to get a feeling for the attenuation experienced in wireless communication, we now calculate the following exemplary transmission. We will use the unit of dBm with is often used in RF design and is defined as
+In order to get a feeling for the attenuation experienced in wireless communication, we now calculate the following exemplary transmission. We will use the unit of dBm which is often used in RF design and is defined as
 
 $$
 P|_\text{dBm} = 10 \cdot \log_{10} \left( \frac{P|_\text{W}}{1\,\text{mW}} \right)
@@ -125,13 +125,13 @@ $$ {#eq-fspl}
 As dire as the situation of @fig-free-space-path-loss already looks, this is not even all factors considered:
 
 - The given attenuation is for line-of-sight paths; often, the attenuation is significantly higher than this due to blockage by buildings, mountains, rain, or foliage.
-- In lack of a direct line-of-sight path, the EM wave is redirected by reflections, causing additional attenuation, and the potential destructive interference by multi-path reception.
+- In the absence of a direct line-of-sight path, the EM wave is redirected by reflections, causing additional attenuation, and potential destructive interference by multi-path reception.
 
 The consequences of this are (among others):
 
 - The transmitter needs to generate enough **transmit power** to overcome the transmission loss; this has to be done often with high **efficiency**, as the transmit device is battery operated or limited by cooling.
 - The receiver has to be able to process **weak signals**, i.e., the **noise** level of the signal processing has to be very low.
-- Often, the receive signal is very weak, while there are strong signals at other frequencies (i.e., other wireless transmitters are located close to the receiver). This means the receiver has to be able to process a weak signal while simultaneously tolerate **large interfering signals** (called blockers).
+- Often, the receive signal is very weak, while there are strong signals at other frequencies (i.e., other wireless transmitters are located close to the receiver). This means the receiver has to be able to process a weak signal while simultaneously tolerating **large interfering signals** (called blockers).
 - Since the frequency spectrum is shared among many users and wireless applications, the transmit information has to be packed efficiently into a **small bandwidth**.
 - Very often, wireless devices are battery-operated. This means transmit and receive functions have to be implemented using **minimum power consumption**.
 
@@ -139,7 +139,7 @@ As stated in the beginning, designing wireless systems is hard.
 
 ## Wireless Standards {#sec-intro-standards}
 
-In order to allow communication between different devices, different operators, and different manufacturers, wireless communication is standardized. There are many different standards, each with its own characteristics. Wireless standards define every aspect of the wireless communication, and be documents with hundreds or thousands of pages. Here, we mainly focus on the radio-frequency and analog aspects of wireless standards. Summarized in @tbl-wireless-standards are a few popular wireless standards with their main characteristics.
+In order to allow communication between different devices, different operators, and different manufacturers, wireless communication is standardized. There are many different standards, each with its own characteristics. Wireless standards define every aspect of wireless communication, and can be documents with hundreds or thousands of pages. Here, we mainly focus on the radio-frequency and analog aspects of wireless standards. Summarized in @tbl-wireless-standards are a few popular wireless standards with their main characteristics.
 
 | Standard  | GSM (2G) | WCDMA (3G) | LTE (4G)<br>**5G NR** | WiFi | Bluetooth | GNSS |
 |:----------|-----|--------|-----------|-------|-----------|------|
@@ -164,6 +164,6 @@ RFIC design is a multidisciplinary field, requiring knowledge from various engin
 
 {{< include /content/intro/_fig_rf_multidisciplinary.qmd >}}
 
-Further, RFIC design requires careful consideration of many different aspects, as shown in [@fig-rf-design-considerations]. Many parameters are often tightly coupled, requriring careful trade-offs during the design process.
+Further, RFIC design requires careful consideration of many different aspects, as shown in @fig-rf-design-considerations. Many parameters are often tightly coupled, requiring careful trade-offs during the design process.
 
 {{< include /content/intro/_fig_rf_design_considerations.qmd >}}
