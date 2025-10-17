@@ -93,10 +93,10 @@ $$ {#eq-linearity-single}
 
 Looking at @eq-linearity-single we can make a few interesting observations:
 
-- Even-order nonlinearity ($\alpha_2$) creates low-frequency components; it effectively adds frequency components related to the envelope $A$. If $A$ is a constant then this results in a dc term; if $A(t)$ is time variant it will created a squared version of it at low frequencies.
+- Even-order nonlinearity ($\alpha_2$) creates low-frequency components; it effectively adds frequency components related to the envelope $A$. If $A$ is a constant then this results in a dc term; if $A(t)$ is time variant it will create a squared version of it at low frequencies.
 - The $\alpha_1$ term is the gain of the circuit block.
 - Odd-order nonlinearity ($\alpha_3$) can impact the gain of the fundamental term passing through the block. Depending on the sign of $\alpha_3$ this can lead to gain contraction or expansion.
-- Even- and odd-order nonlinearities creates additional frequency components, so-called harmonics of the fundamental frequency. These harmonics are often unwanted, as they are far outside the wanted transmission frequency range, and need to be minimized, by either
+- Even- and odd-order nonlinearities create additional frequency components, so-called harmonics of the fundamental frequency. These harmonics are often unwanted, as they are far outside the wanted transmission frequency range, and need to be minimized, by either
   1. use a lowpass filter to filter these harmonics, or
   2. increase the linearity, i.e., make the $\alpha_2$, $\alpha_3$, etc., small enough.
 
@@ -143,7 +143,7 @@ $$ {#eq-linearity-double-a}
 As shown in @eq-linearity-double-a, interesting things happen:
 
 - We (again) have the gain compression/expansion effect as already discussed in @sec-linearity-single.
-- In addition, we have **cross-modulation**, i.e., the envelope of one tone (e.g., $A_2(t)$ of the tone at $\omega_2$) impacts the envelope of the other tone at $\omega_1$. This can lead to unwanted signal distortation, even if there is a large frequency separation between $\omega_1$ and $\omega_2$!
+- In addition, we have **cross-modulation**, i.e., the envelope of one tone (e.g., $A_2(t)$ of the tone at $\omega_2$) impacts the envelope of the other tone at $\omega_1$. This can lead to unwanted signal distortion, even if there is a large frequency separation between $\omega_1$ and $\omega_2$!
 - Further, since the sign of $\alpha_3$ is usually opposite to $\alpha_1$, this can also lead to **desensitization** ("desens"). If, for example, $A_2 \gg A_1$, then there would be no compression due to the tone $\omega_1$ itself, however, the large tone at $\omega_2$ will lead to gain compression of the tone at $\omega_1$; this effect is called desense.
 
 We now look at the next class of generated tones:
@@ -169,7 +169,7 @@ $$
 \end{split}
 $$ {#eq-linearity-double-c}
 
-The tones shown in @eq-linearity-double-c are called "i**ntermodulation products of third order**" (IM3), and are caused by the odd nonlinearities (like $\alpha_3$). While the IM3 tones located at $2 \omega_1 + \omega_2$ and $\omega_1 + 2 \omega_2$ are similar to the sum IM2 tone and far away from $\omega_1$ and $\omega_2$, the other two tones are concerning.
+The tones shown in @eq-linearity-double-c are called "**intermodulation products of third order**" (IM3), and are caused by the odd nonlinearities (like $\alpha_3$). While the IM3 tones located at $2 \omega_1 + \omega_2$ and $\omega_1 + 2 \omega_2$ are similar to the sum IM2 tone and far away from $\omega_1$ and $\omega_2$, the other two tones are concerning.
 
 Expressing $\Delta \omega = \omega_2 - \omega_1$ (and assuming $\omega_1 < \omega_2$), the building law of $2 \omega_1 - \omega_2 = \omega_1 - \Delta \omega$ and $2 \omega_2 - \omega_1 = \omega_2 + \Delta \omega$ results in new tones right besides $\omega_1$ and $\omega_2$, with a frequency separation only defined by $\Delta \omega$. This situation is illustrated in @fig-im3-tones.
 
@@ -226,7 +226,7 @@ We see that the overall IIP3 is limited by the linearity of the second block, as
 
 ## Noise {#sec-noise}
 
-Just as nonlinearity is a limiting factor for large signals, noise is the limiting factor for small signals. Noise is present in all electronic circuits and systems, and it is impossible to avoid it. However, we can try to minimize its impact on the system performance.
+Just as nonlinearity is a limiting factor for large signals, noise is the limiting factor for small signals. Noise is present in all electronic circuits and systems, and it is impossible to avoid it. However, we can try to minimize its impact on system performance.
 
 Noise is usually characterized by its power spectral density (PSD) in units of Watts per Hertz (W/Hz). For example, thermal noise at room temperature has a PSD of approximately $k T = 4 \times 10^{-21}$ W/Hz, or --174 dBm/Hz (with the Boltzmann constant $k = 1.38 \times 10^{-23}\,\text{J/K}$). This means that if we have a bandwidth of 1 MHz, the total thermal noise power would be:
 
@@ -269,7 +269,7 @@ In addition, at high frequencies, the MOSFET also has induced gate-current noise
 
 Flicker noise is usually modeled as a voltage noise source at the gate with a PSD of $K_f / (\Cox W L f)$ (in V$^2$/Hz), where $K_f$ is a process-dependent parameter, $\Cox$ is the oxide capacitance per unit area, $L$ and $W$ are the length and width of the MOSFET, and $f$ is the frequency. Note that we can lower the flicker noise by increasing the area of the MOSFET ($W L$), however, this increases the parasitic capacitances associated with the MOSFET, and this often prohibitive for RF operation!
 
-In **bipolar junction transistors (BJTs)**, the most important noise source is the shot noise due to the diffusion current in the base-emitter junction. Its PSD can be modeled as a current noise source between collector and emitter with a PSD of $2 q I_\mathrm{C}$ (in A$^2$/Hz), where $q$ is the elementary charge ($q = 1.6 \times 10^{-19}$ C) and $I_\mathrm{C}$ is the dc collector current.
+In **bipolar junction transistors (BJTs)**, the most important noise source is the shot noise due to the diffusion current in the base-emitter junction. Its PSD can be modeled as a current noise source between collector and emitter with a PSD of $2 q I_\mathrm{C}$ (in A$^2$/Hz), where $q$ is the elementary charge ($q = 1.6 \times 10^{-19}$ C) and $I_\mathrm{C}$ is the DC collector current.
 
 ::: {.callout-important}
 ## Equivalence of Shot and Thermal Noise
@@ -278,7 +278,7 @@ Note that it has been shown in [@Sarpeshkar_1993] that thermal noise and shot no
 
 Ideal **capacitors** and **inductors** do not generate noise, however, real capacitors and inductors have parasitic resistances which generate thermal noise.
 
-In RF systems additional noise sources can be present. One noteworthy example is the [**cosmic microwave background**](https://en.wikipedia.org/wiki/Cosmic_microwave_background) radiation, which can be modeled as a noise temperature of approximately 3 K. While this is negligible compared to thermal noise at room temperature (approximately 290 K), it can be significant in very low-noise systems, such as radio telescopes pointing to the sky. An other important noise source in RF systems is the **atmospheric noise**, which is generated by natural phenomena like lightning or in the ionosphere.
+In RF systems additional noise sources can be present. One noteworthy example is the [**cosmic microwave background**](https://en.wikipedia.org/wiki/Cosmic_microwave_background) radiation, which can be modeled as a noise temperature of approximately 3 K. While this is negligible compared to thermal noise at room temperature (approximately 290 K), it can be significant in very low-noise systems, such as radio telescopes pointing to the sky. Another important noise source in RF systems is the **atmospheric noise**, which is generated by natural phenomena like lightning or in the ionosphere.
 
 ::: {.callout-note}
 ##  A Note on Circuit Noise Calculations
@@ -471,7 +471,7 @@ $$
 
 where $B T_\mathrm{b}$ controls the width of the pulse. The spectrum of the Gaussian pulse is also Gaussian-shaped, which helps to minimize inter-symbol interference (ISI). 
 
-The Gaussian pulse for $BT=0.5$ as used in Bluetooth is shown in [@fig-gaussian-pulse].
+The Gaussian pulse for $BT=0.5$ as used in Bluetooth is shown in @fig-gaussian-pulse.
 
 {{< include /content/fundamentals/_fig_gaussian_pulse.qmd >}}
 
@@ -527,4 +527,4 @@ In wireless communication systems, multiple users need to share the same frequen
 
 5. **Spatial division multiple access (SDMA)**: Uses multiple antennas to create spatially separated channels, allowing multiple users to transmit simultaneously in the same frequency band.
 
-In addition, all of these techniques can be combined to create more efficient and flexible communication systems. For example, OFDMA can be used in conjunction with SDMA to allow multiple users to share the same frequency resources while also taking advantage of spatial diversity. Also TDMA can be combined with FDMA to create a hybrid multiple access scheme (which has been used in 2G GSM).
+In addition, all of these techniques can be combined to create more efficient and flexible communication systems. For example, OFDMA can be used in conjunction with SDMA to allow multiple users to share the same frequency resources while also taking advantage of spatial diversity. Also, TDMA can be combined with FDMA to create a hybrid multiple access scheme (which has been used in 2G GSM).
