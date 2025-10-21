@@ -20,7 +20,7 @@ For the generation of the LO frequency to be used by in a mixer for frequency co
 
 {{< include /content/oscillator/_fig_oscillator_block.qmd >}}
 
-The question is how to construct an oscillator. In summary, we need to build something that oscillates, i.e., produces a sustained periodic signal. One way to achieve this is to construct a feedback loop where $|H(s = j \omega_0)| = 1$ and $\angle H(s = j \omega_0) = n \cdot 2 \pi$; these conditions are called the "[Barkhausen criterion](https://en.wikipedia.org/wiki/Barkhausen_criterion)" (here, $H(s)$ is the loop gain around the feedback loop). A ring oscillator is one example of such a feedback oscillator. For the 3-stage single-ended *ring oscillator* shown in @fig-ring-oscillator, each inverter provides a phase shift of $2 \pi / 3$ at the oscillation frequency $\omega_0$, resulting in a total phase shift of $2 \pi$ for the three inverters. The gain condition is fulfilled by the gain of the inverters, which must be larger than unity to compensate for losses in the loop. By using an odd number of inverters, a stable locking point at dc is avoided.
+The question is how to construct an oscillator. In summary, we need to build something that oscillates, i.e., produces a sustained periodic signal with frequency $\omega_0$. One way to achieve this is to construct a feedback loop where $|H(s = j \omega_0)| = 1$ and $\angle H(s = j \omega_0) = n \cdot 2 \pi$; these conditions are called the "[Barkhausen criterion](https://en.wikipedia.org/wiki/Barkhausen_criterion)" (here, $H(s)$ is the loop gain around the feedback loop). A ring oscillator is one example of such a feedback oscillator. For the 3-stage single-ended *ring oscillator* shown in @fig-ring-oscillator, each inverter provides a phase shift of $2 \pi / 3$ at the oscillation frequency $\omega_0$, resulting in a total phase shift of $2 \pi$ for the three inverters. The gain condition is fulfilled by the gain of the inverters, which must be larger than unity to compensate for losses in the loop. By using an odd number of inverters, a stable locking point at dc is avoided.
 
 {{< include /content/oscillator/_fig_ring_oscillator.qmd >}}
 
@@ -30,10 +30,48 @@ $$
 Q = 2 \pi \frac{\text{Average energy stored}}{\text{Energy loss per cycle}} = \frac{\omega_0}{\Delta \omega} = \frac{\omega_0}{2} \sqrt{ \left( \frac{d A}{d \omega} \right)^2 + \left( \frac{d \varphi}{d \omega} \right)^2 }
 $$ {#eq-definition-q}
 
-with a ring oscillator having very low $dA / d \omega$ and $d \varphi / d \omega$ slope ($A(\omega)$ and $\varphi(\omega)$ are the open loop gain and phase shift, respectively). It can be shown that $Q \approx 1.3$ for a 3-stage ring oscillator [@Razavi.1996]. For some applications, this might be sufficient, but in many cases, a higher $Q$ is desired to reduce phase noise and improve frequency stability (as we will see later in this chapter).
+with a ring oscillator having very low $dA / d \omega$ and $d \varphi / d \omega$ slopes ($A(\omega)$ and $\varphi(\omega)$ are the open loop gain and phase shift, respectively). It can be shown that $Q \approx 1.3$ for a 3-stage ring oscillator [@Razavi.1996]. For some applications, this might be sufficient, but in many cases, a higher $Q$ is desired to reduce phase noise and improve frequency stability (as we will see later in this chapter).
 
-According to @eq-definition-q, a high $Q$ can be achieved by using a resonator with high energy storage capability and low energy loss per cycle. We then add an amplifier in a feedback loop to compensate for the losses of the resonator. This principle is shown in @fig-lc-oscillator for a parallel LC tank circuit as the resonator. Sometimes the action of the feedback loop around the amplifier is modelled as a negative resistance $-R_\mathrm{amp}$ that compensates for the losses of the tank circuit represented by the resistor $R$.
+According to @eq-definition-q, a high $Q$ can be achieved by using a resonator with high energy storage capability and low energy loss per cycle. We then add an amplifier in a feedback loop to compensate for the losses of the resonator. This principle is shown in @fig-lc-oscillator for a parallel LC tank circuit as the resonator. Sometimes the action of the feedback loop around the amplifier is modelled as a negative resistance $-R_\mathrm{amp}$ that compensates for the losses of the tank circuit represented by the resistor $R_\mathrm{p}$. The single parallel resistor $R_\mathrm{p}$ models the losses of the inductor $L$ and the capacitor $C$.
 
-< include /content/oscillator/_fig_lc_oscillator.qmd >}}
+{{< include /content/oscillator/_fig_lc_oscillator.qmd >}}
 
-When $|-R_\mathrm{amp}| = R$, the losses of the tank circuit are fully compensated, and we have a sustained oscillation at the resonance frequency $\omega_0 = 1 / \sqrt{L C}$. In practice, the amplifier gain is usually set slightly higher than required for loss compensation to start the oscillation from noise. Then, as the oscillation amplitude increases, some non-linear mechanism reduces the effective gain until a stable oscillation amplitude is reached. Various implementations of such LC oscillators exist, which will be discussed in the following sections.
+When $|-R_\mathrm{amp}| = R_\mathrm{p}$, the losses of the tank circuit are fully compensated, and we have a sustained oscillation at the resonance frequency $\omega_0 = 1 / \sqrt{L C}$. In practice, the amplifier gain is usually set slightly higher than required for loss compensation to **start the oscillation from noise**. Then, as the oscillation amplitude increases, some **non-linear mechanism in the amplifier reduces the effective gain** until a stable oscillation amplitude is reached. Various implementations of such LC oscillators exist, which will be discussed in the following sections.
+
+- An alternative implementation of setting the oscillation amplitude is to use an *automatic level control* (ALC) loop, which measures the oscillation amplitude and adjusts the amplifier gain accordingly to maintain a constant output amplitude. This approach can improve the stability of the oscillation amplitude over process, voltage, and temperature variations.
+
+- As an alternative to start the oscillation from thermal noise (which can take considerable time depending on the $Q$ of the resonator) is to provide a known initial condition to the resonator, e.g., by pre-charging the capacitor $C$ to a certain voltage before enabling the amplifier. This way, the oscillation can start immediately from this initial energy stored in the resonator.
+
+As a first hint on how to optimize an LC oscillator for low phase noise, we can try to maximize $Q$ according to @eq-definition-q. The energy stored in the capacitor at peak voltage is
+
+$$
+E_\mathrm{stored} = \frac{C V_\mathrm{osc,p}^2}{2}
+$$
+
+so to maximize this we should maximize both $C$ and the peak oscillation voltage $V_\mathrm{osc,p}$. On the other hand, the energy loss per cycle is related to the power dissipated in the resistor $R_\mathrm{p}$ by
+
+$$
+E_\mathrm{loss} = \frac{V_\mathrm{osc,p}^2}{2 R_\mathrm{p}} \cdot \frac{1}{f_0}
+$$
+
+which we can minimize by maximizing $R_\mathrm{p}$. In summary, to maximize $Q$ we should use a large capacitance $C$, a high oscillation amplitude $V_\mathrm{osc,p}$, and a high tank resistance $R_\mathrm{p}$. Note that increasing $C$ will reduce $L$ for a given $\omega_0$. Calculating $Q$ from these expressions yields
+
+$$
+Q = 2 \pi \frac{E_\mathrm{stored}}{E_\mathrm{loss}} = \omega_0 C R_\mathrm{p} 
+$$
+
+which confirms the above observations.
+
+Fundamentally, if we describe the output voltage of the oscillator as
+
+$$
+v_\mathrm{osc}(t) = V_\mathrm{osc,p}(t) \cdot \cos[ \omega_0(t) t + \varphi(t) ]
+$$
+
+we want to keep the amplitude variations small, i.e., $V_\mathrm{osc,p}(t) = V_\mathrm{osc,p}$, and also the frequency variations small, i.e., $\omega_0(t) = \omega_0$. We further want to minimize any phase fluctuations, i.e., $\varphi(t) = \varphi_0$.
+
+As a side note, the definition of $Q$ in @eq-definition-q can be also be understand that it describes how many oscillation cycles it takes until the energy stored in the resonator is dissipated. For example, if $Q = 1000$ at $f_0 = 1\,\text{GHz}$, the energy stored in the resonator will last for approximately 1000 cycles, which is 1 µs. This time duration is sometimes called the "ring-down time" of the resonator.
+
+## Oscillator Noise {#sec-oscillator-noise}
+
+TBA
