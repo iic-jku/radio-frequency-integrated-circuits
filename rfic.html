@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2025-10-17">
+<meta name="dcterms.date" content="2025-10-22">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -64,9 +64,9 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-dcc5d479ecc22b2d9b7a952d2cc3846d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-927f67718f75996ba3813496780a68e6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-dcc5d479ecc22b2d9b7a952d2cc3846d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-b66d9f3da4d84aca26cc7cc1c94b0445.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-d3daa1d1ef55350d6f5c3e6cec97cbbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-b66d9f3da4d84aca26cc7cc1c94b0445.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -453,7 +453,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 17, 2025</p>
+      <p class="date">October 22, 2025</p>
     </div>
   </div>
   
@@ -1206,7 +1206,7 @@ F = \frac{\text{SNR}_\mathrm{in}}{\text{SNR}_\mathrm{out}} = \frac{(P_\mathrm{s}
 <p>Note that the SNR can be improved by filtering, as filtering reduces the noise power. If the noise bandwidth is larger than the signal bandwidth, then the SNR can be improved without affecting the signal. However, this is not considered in the noise factor, as the noise factor assumes that both signal and noise pass through the same bandwidth.</p>
 </div>
 </div>
-<p>Let us look at a simple model of a noise circuit block as shown in <a href="#fig-noise-block" class="quarto-xref">Figure&nbsp;11</a>. The input signal <span class="math inline">\(S_\mathrm{in}\)</span> is accompanied by noise <span class="math inline">\(N_\mathrm{in}\)</span>. By definition it is assumed that the input noise power results from a matched resistor at <span class="math inline">\(T_0 = 290\,\text{K}\)</span>, so that <span class="math inline">\(N_\mathrm{in} = k T_0\)</span>. The circuit block has a power gain <span class="math inline">\(G\)</span> and adds its own noise <span class="math inline">\(N_\mathrm{dut}\)</span> to the output signal. For simplicity, we assume that the input and output of the circuit block are impedance matched to avoid reflections.</p>
+<p>Let us look at a simple model of a noise circuit block as shown in <a href="#fig-noise-block" class="quarto-xref">Figure&nbsp;11</a>. The input signal <span class="math inline">\(S_\mathrm{in}\)</span> is accompanied by noise <span class="math inline">\(N_\mathrm{in}\)</span>. By definition it is assumed that the input noise power results from a matched resistor at <span class="math inline">\(T_0 = 290\,\text{K}\)</span>, so that <span class="math inline">\(N_\mathrm{in} = k T_0\)</span>. The circuit block has a power gain <span class="math inline">\(G\)</span> and adds its own noise <span class="math inline">\(N_\mathrm{dut}\)</span> to the output signal. For simplicity, we assume that the input and output of the circuit block are <strong>impedance matched</strong> to avoid reflections.</p>
 <div id="cell-fig-noise-block" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div id="fig-noise-block" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1323,7 +1323,7 @@ Figure&nbsp;13: 16-QAM constellation diagram with Gray code labeling of constell
 </div>
 </div>
 <p>Shown in <a href="#fig-16qam-constellation" class="quarto-xref">Figure&nbsp;13</a> is the “constellation diagram” of a 16-QAM modulation format. The constellation points are arranged in a square grid, with each point representing a unique combination of amplitude and phase. The distance between the constellation points determines the robustness against noise and interference; larger distances result in better performance, but also require more bandwidth. The mapping of bits to constellation points is called “bit mapping” or “symbol mapping”. The example in <a href="#fig-16qam-constellation" class="quarto-xref">Figure&nbsp;13</a> uses a Gray code mapping, which minimizes the number of bit errors in case of a symbol error.</p>
-<p>The constellation diagram can be imagined as a complex plane, where the x-axis represents the in-phase component (I) and the y-axis represents the quadrature component (Q) of the modulated signal. During transmission of a specific symbol, the RF carrier is modulated to the corresponding amplitude and phase, resulting in a specific point in the constellation diagram.</p>
+<p>The constellation diagram can be imagined as a complex plane, where the x-axis represents the in-phase component (I) and the y-axis represents the quadrature component (Q) of the modulated signal. During transmission of a specific symbol, the RF carrier is modulated to the corresponding amplitude and phase, resulting in a specific point in the constellation diagram. In <a href="#fig-16qam-constellation" class="quarto-xref">Figure&nbsp;13</a>, the amplitude and phase information for two consecutive symbols, <span class="math inline">\(A_N\)</span>/<span class="math inline">\(\varphi_N\)</span> and <span class="math inline">\(A_{N+1}\)</span>/<span class="math inline">\(\varphi_{N+1}\)</span>, is shown.</p>
 <p>The table below shows the SNR requirements for different modulation formats to achieve a bit error rate (BER) of <span class="math inline">\(10^{-5}\)</span> in an additive white Gaussian noise (AWGN) channel. As we can see, higher-order modulation formats require higher SNR to achieve the same BER.</p>
 <div id="tbl-modulation-snr" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
