@@ -62,6 +62,64 @@ for q_val in Q_levels:
         gray_code = gray_code_map[(q_val, i_val)]
         ax.text(i_val + 0.1, q_val + 0.3, gray_code, color='blue')
 
+# Add vector from origin to constellation point (3,3)
+target_i, target_q = 3, 3
+ax.annotate('', xy=(target_i, target_q), xytext=(0, 0),
+            arrowprops=dict(arrowstyle='->', lw=2.5, color='red'))
+
+# Calculate amplitude and phase for the vector
+amplitude = np.sqrt(target_i**2 + target_q**2)
+phase_rad = np.arctan2(target_q, target_i)
+phase_deg = np.degrees(phase_rad)
+
+# Add amplitude label along the vector (positioned to avoid overlap)
+mid_i, mid_q = target_i/2, target_q/2
+ax.text(mid_i + 1, mid_q + 0.5, r'$A_i$', color='red', ha='center', va='center')
+
+# Draw phase arc from x-axis
+arc_radius = 1.2
+theta = np.linspace(0, phase_rad, 50)
+arc_x = arc_radius * np.cos(theta)
+arc_y = arc_radius * np.sin(theta)
+ax.plot(arc_x, arc_y, 'g-', linewidth=2)
+
+# Add phase label (positioned to avoid overlap with grid and other elements)
+arc_label_radius = arc_radius + 0.2
+arc_label_angle = phase_rad / 3
+label_x = arc_label_radius * np.cos(arc_label_angle)
+label_y = arc_label_radius * np.sin(arc_label_angle)
+ax.text(label_x + 0.2, label_y + 0.2, r'$\varphi_i$', color='green', ha='center', va='center')
+
+# Add second vector from origin to constellation point (-1,-3)
+target_i2, target_q2 = -1, -3
+ax.annotate('', xy=(target_i2, target_q2), xytext=(0, 0),
+            arrowprops=dict(arrowstyle='->', lw=2.5, color='purple'))
+
+# Calculate amplitude and phase for the second vector
+amplitude2 = np.sqrt(target_i2**2 + target_q2**2)
+phase_rad2 = np.arctan2(target_q2, target_i2)
+phase_deg2 = np.degrees(phase_rad2)
+
+# Add amplitude label along the second vector (positioned to avoid overlap)
+mid_i2, mid_q2 = target_i2/2, target_q2/2
+ax.text(mid_i2 - 0.8, mid_q2 - 0.3, r'$A_{i+1}$', color='purple', ha='center', va='center')
+
+# Draw phase arc from x-axis for second vector (counterclockwise)
+arc_radius2 = 1.0
+# Calculate the positive angle for counterclockwise arc
+# For point (-1,-3), we go counterclockwise from 0 to the angle
+phase_rad2_positive = phase_rad2 + 2*np.pi if phase_rad2 < 0 else phase_rad2
+theta2 = np.linspace(0, phase_rad2_positive, 100)
+arc_x2 = arc_radius2 * np.cos(theta2)
+arc_y2 = arc_radius2 * np.sin(theta2)
+ax.plot(arc_x2, arc_y2, 'orange', linewidth=2)
+
+# Add phase label for second vector (positioned in second quadrant to avoid overlap)
+# Place label in the second quadrant where there's more space
+label_x2 = -1.6
+label_y2 = 0.5
+ax.text(label_x2, label_y2, r'$\varphi_{i+1}$', color='orange', ha='center', va='center')
+
 # Draw grid lines at constellation boundaries
 for val in [-3, -1, 0, 1, 3]:
     ax.axvline(x=val, color='gray', linestyle='--', alpha=0.3)
