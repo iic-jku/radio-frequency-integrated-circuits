@@ -1383,12 +1383,12 @@ Table&nbsp;3: SNR requirements for different modulation schemes to achieve BER =
 </section>
 <section id="sec-fundamentals-pulse-shaping" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="sec-fundamentals-pulse-shaping"><span class="header-section-number">2.5</span> Pulse Shaping and Spectral Efficiency</h2>
-<p>When we modulate symbols onto a carrier, we usually do not transmit the symbols as pure sinusoids, but rather as pulses with a certain shape. The pulse shape determines the bandwidth of the transmitted signal and its spectral efficiency. A common pulse shape is the rectangular pulse, which has a sinc-shaped spectrum. However, the sinc function <span class="math inline">\(\sin(\pi x)/ \pi x\)</span> has side lobes that extend to infinity, which can cause interference with adjacent channels.</p>
+<p>When we modulate symbols onto a carrier, we usually do not transmit the symbols as pure sinusoids, but rather as pulses with a certain shape. The pulse shape determines the bandwidth of the transmitted signal and its spectral efficiency. A common pulse shape is the <strong>rectangular pulse</strong>, which has a sinc-shaped spectrum. However, the sinc function <span class="math inline">\(\sin(\pi x)/ \pi x\)</span> has side lobes that extend to infinity, which can cause interference with adjacent channels.</p>
 <p>For reference, the spectrum of a random binary sequence with equal probability of 0s and 1s, using rectangular pulses with a duration of <span class="math inline">\(T_\mathrm{b}\)</span> is given by (<span class="math inline">\(S(f)\)</span> is the two-sided power spectral density):</p>
 <p><span class="math display">\[
 S(f) = \frac{T_\mathrm{b}}{4} \text{sinc}^2(fT_\mathrm{b}) + \frac{1}{4} \delta(f) = \frac{T_\mathrm{b}}{4} \left( \frac{\sin(\pi f T_\mathrm{b})}{\pi f T_\mathrm{b}} \right)^2 + \frac{1}{4} \delta(f)
 \]</span></p>
-<p>To avoid this, we can use pulse shapes that have better spectral properties, such as the raised cosine pulse or the root-raised cosine pulse. The raised-cosine pulse has a roll-off factor <span class="math inline">\(\alpha\)</span> that determines the excess bandwidth beyond the Nyquist bandwidth. The <strong>root-raised cosine (RRC)</strong> pulse is used in practical systems, as it can be implemented with a matched filter at the receiver.</p>
+<p>To avoid this, we can use pulse shapes that have better spectral properties, such as the raised cosine pulse or the root-raised cosine pulse. The <strong>raised-cosine pulse</strong> has a roll-off factor <span class="math inline">\(\alpha\)</span> that determines the excess bandwidth beyond the Nyquist bandwidth. The root-raised cosine (RRC) pulse is used in practical systems (with half the pulse filter implemented at the TX, and half at the RX), as it can be implemented with a matched filter at the receiver.</p>
 <p>The raised-cosine pulse <span class="math inline">\(p(t)\)</span> (with a spectrum shaped like a raised cosine) is given by:</p>
 <p><span class="math display">\[
 p(t) = \frac{\sin(\pi t / T_\mathrm{b})}{\pi t / T_\mathrm{b}} \cdot \frac{\cos(\alpha \pi t / T_\mathrm{b})}{1 - (2 \alpha t / T_\mathrm{b})^2}
@@ -1408,7 +1408,7 @@ Figure&nbsp;14: Raised cosine pulse shaping in time and frequency domain for dif
 </div>
 </div>
 </div>
-<p>Another often-used pulse shape is the Gaussian pulse, which is used in Gaussian minimum-shift keying (GMSK, used in 2G) modulation, or in Gaussian frequency-shift keying (GFSK, used in Bluetooth). The Gaussian pulse has a smooth shape and a narrow spectrum. The Gaussian pulse is given by:</p>
+<p>Another often-used pulse shape is the <strong>Gaussian pulse</strong>, which is used in Gaussian minimum-shift keying (<strong>GMSK</strong>, used in 2G) modulation, or in Gaussian frequency-shift keying (<strong>GFSK</strong>, used in Bluetooth). The Gaussian pulse has a smooth shape and a narrow spectrum. The Gaussian pulse is given by:</p>
 <p><span class="math display">\[
 p(t) = \frac{\sqrt{\pi}}{\alpha} e^{-(\pi t / \alpha)^2} \quad \text{with} \quad \alpha = \frac{\sqrt{\ln 2}}{\sqrt{2}} \cdot \frac{T_\mathrm{b}}{B T_\mathrm{b}}
 \]</span></p>
