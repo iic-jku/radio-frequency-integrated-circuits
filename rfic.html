@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2025-10-22">
+<meta name="dcterms.date" content="2025-10-29">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -380,7 +380,7 @@ window.Quarto = {
   <li><a href="#sec-trx-mod-demod" id="toc-sec-trx-mod-demod" class="nav-link" data-scroll-target="#sec-trx-mod-demod"><span class="header-section-number">3.2</span> Modulation and Demodulation</a></li>
   <li><a href="#filtering" id="toc-filtering" class="nav-link" data-scroll-target="#filtering"><span class="header-section-number">3.3</span> Filtering</a></li>
   <li><a href="#direct-conversion-architecture" id="toc-direct-conversion-architecture" class="nav-link" data-scroll-target="#direct-conversion-architecture"><span class="header-section-number">3.4</span> Direct-Conversion Architecture</a></li>
-  <li><a href="#duplexing" id="toc-duplexing" class="nav-link" data-scroll-target="#duplexing"><span class="header-section-number">3.5</span> Duplexing</a>
+  <li><a href="#sec-trx-duplexing" id="toc-sec-trx-duplexing" class="nav-link" data-scroll-target="#sec-trx-duplexing"><span class="header-section-number">3.5</span> Duplexing</a>
   <ul class="collapse">
   <li><a href="#frequency-division-duplex-fdd" id="toc-frequency-division-duplex-fdd" class="nav-link" data-scroll-target="#frequency-division-duplex-fdd"><span class="header-section-number">3.5.1</span> Frequency-Division Duplex (FDD)</a></li>
   <li><a href="#time-division-duplex-tdd" id="toc-time-division-duplex-tdd" class="nav-link" data-scroll-target="#time-division-duplex-tdd"><span class="header-section-number">3.5.2</span> Time-Division Duplex (TDD)</a></li>
@@ -453,7 +453,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 22, 2025</p>
+      <p class="date">October 29, 2025</p>
     </div>
   </div>
   
@@ -1512,10 +1512,10 @@ Note&nbsp;6: OFDM in LTE
 <div id="fig-trx-block" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-trx-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-trx-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-17" title="Figure&nbsp;17: Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system."><img src="rfic_files/figure-html/fig-trx-block-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-trx-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-17" title="Figure&nbsp;17: Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system. For implementation options of the RF front-end, see Section&nbsp;3.5."><img src="rfic_files/figure-html/fig-trx-block-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trx-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;17: Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system.
+Figure&nbsp;17: Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system. For implementation options of the RF front-end, see <a href="#sec-trx-duplexing" class="quarto-xref">Section&nbsp;3.5</a>.
 </figcaption>
 </figure>
 </div>
@@ -1526,17 +1526,17 @@ Figure&nbsp;17: Block diagram of a typical transceiver (TRX) showing the main fu
 </section>
 <section id="sec-trx-mod-demod" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="sec-trx-mod-demod"><span class="header-section-number">3.2</span> Modulation and Demodulation</h2>
-<p>Modulation is the process of varying a carrier signal at frequency <span class="math inline">\(f_\mathrm{c}\)</span> in order to transmit information. The complex baseband signal (after converting the real-valued digital <span class="math inline">\(s_\mathrm{I}\)</span> and <span class="math inline">\(s_\mathrm{Q}\)</span> signals to analog and pulse-shaping filtering) is represented as</p>
+<p>Modulation is the process of varying a carrier signal at frequency <span class="math inline">\(f_\mathrm{c}\)</span> in order to transmit information. The complex baseband signal (after converting the real-valued digital <span class="math inline">\(s_\mathrm{I}\)</span> and <span class="math inline">\(s_\mathrm{Q}\)</span> signals to analog and pulse-shaping filtering) is represented as (<span class="math inline">\(\tilde{s}_\mathrm{BB} \in \mathbb{C}\)</span>; <span class="math inline">\(s_\mathrm{I}, s_\mathrm{Q} \in \mathbb{R}\)</span>):</p>
 <p><span class="math display">\[
-s_\mathrm{BB}(t) = s_\mathrm{I}(t) + j s_\mathrm{Q}(t).
+\tilde{s}_\mathrm{BB}(t) = s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t).
 \]</span></p>
-<p>We want to shift this signal to the carrier frequency <span class="math inline">\(f_\mathrm{c}\)</span>, which can be done by multiplying with a complex exponential:</p>
+<p>We want to shift this signal to the carrier frequency <span class="math inline">\(f_\mathrm{c}\)</span>, which can be done by multiplying with a complex exponential (<span class="math inline">\(e^{j \omega_\mathrm{c} t}\)</span>, with <span class="math inline">\(\omega_\mathrm{c} = 2 \pi f_\mathrm{c}\)</span>):</p>
 <p><span class="math display">\[
-s_\mathrm{RF,complex}(t) = s_\mathrm{BB}(t) \cdot e^{j \omega_\mathrm{c} t} = [s_\mathrm{I}(t) + j s_\mathrm{Q}(t)] \cdot [\cos(\omega_\mathrm{c} t) + j \sin(\omega_\mathrm{c} t)].
+\tilde{s}_\mathrm{RF}(t) = \tilde{s}_\mathrm{BB}(t) \cdot e^{j \omega_\mathrm{c} t} = [s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t)] \cdot [\cos(\omega_\mathrm{c} t) + j \cdot \sin(\omega_\mathrm{c} t)].
 \]</span></p>
-<p>The real-valued RF signal is obtained by taking the real part of this expression:</p>
+<p>The real-valued RF signal is obtained by taking the real part of this expression (<span class="math inline">\(s_\mathrm{RF} \in \mathbb{R}\)</span>, <span class="math inline">\(\tilde{s}_\mathrm{RF} \in \mathbb{C}\)</span>):</p>
 <p><span id="eq-modulation"><span class="math display">\[
-s_\mathrm{RF}(t) = \Re \{ s_\mathrm{RF,complex}(t) \} = s_\mathrm{I}(t) \cos(\omega_\mathrm{c} t) - s_\mathrm{Q}(t) \sin(\omega_\mathrm{c} t).
+s_\mathrm{RF}(t) = \Re \{ \tilde{s}_\mathrm{RF}(t) \} = s_\mathrm{I}(t) \cos(\omega_\mathrm{c} t) - s_\mathrm{Q}(t) \sin(\omega_\mathrm{c} t).
 \tag{21}\]</span></span></p>
 <p>The process formulated in <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;21</a> is done in the TX, as shown in <a href="#fig-tx-modulation" class="quarto-xref">Figure&nbsp;18</a>.</p>
 <div id="cell-fig-tx-modulation" class="cell" data-execution_count="18">
@@ -1560,7 +1560,7 @@ s_\mathrm{RF}(t) = \Re \{ A(t) \cdot e^{j \varphi(t)} \cdot e^{j \omega_\mathrm{
 \]</span></p>
 <p>with</p>
 <p><span class="math display">\[
-A(t) = \sqrt{s_\mathrm{I}^2(t) + s_\mathrm{Q}^2(t)}, \quad \varphi(t) = \tan^{-1}\left(\frac{s_\mathrm{I}(t)}{s_\mathrm{Q}(t)}\right).
+A(t) = \sqrt{s_\mathrm{I}^2(t) + s_\mathrm{Q}^2(t)}, \quad \varphi(t) = \tan^{-1} \left[ \frac{s_\mathrm{I}(t)}{s_\mathrm{Q}(t)} \right].
 \]</span></p>
 <p>As the mathematical operations required for the cartesian to polar transformation are quite nonlinear, the <span class="math inline">\(A(t)\)</span> and <span class="math inline">\(\phi(t)\)</span> signals are wideband. Some wireless standards allow efficient use of polar modulation, for example Bluetooth, where basically all TX are realized as polar modulators.</p>
 <p>In the RX, the received RF signal is downconverted to baseband by a similar process, as shown in <a href="#fig-rx-demodulation" class="quarto-xref">Figure&nbsp;19</a>.</p>
@@ -1578,9 +1578,9 @@ Figure&nbsp;19: RX demodulator.
 </div>
 </div>
 </div>
-<p>For demodulation we have to shift the RF signal down to baseband, which mathematically is done by multiplying with the complex conjugate of the carrier:</p>
+<p>For demodulation we have to shift the RF signal down to baseband, which mathematically is done by multiplying with the complex conjugate of the carrier (<span class="math inline">\(e^{-j \omega_\mathrm{c} t}\)</span>)</p>
 <p><span id="eq-demodulation"><span class="math display">\[
-s_\mathrm{BB,complex}(t) = s_\mathrm{RF}(t) \cdot e^{-j \omega_\mathrm{c} t} = s_\mathrm{RF}(t) \cdot [\cos(\omega_\mathrm{c} t) - j \sin(\omega_\mathrm{c} t)]
+\tilde{s}_\mathrm{BB}(t) = s_\mathrm{RF}(t) \cdot e^{-j \omega_\mathrm{c} t} = s_\mathrm{RF}(t) \cdot [\cos(\omega_\mathrm{c} t) - j \cdot \sin(\omega_\mathrm{c} t)]
 \tag{22}\]</span></span></p>
 </section>
 <section id="filtering" class="level2" data-number="3.3">
@@ -1607,10 +1607,10 @@ Q = \frac{f_\mathrm{c}}{\Delta f}
 <p>where <span class="math inline">\(f_\mathrm{c}\)</span> is the center frequency and <span class="math inline">\(\Delta f\)</span> is the –3 dB bandwidth of the filter. A higher <span class="math inline">\(Q\)</span> indicates a more selective filter.</p>
 <p>The achievable <span class="math inline">\(Q\)</span> depends on the filter technology used. For example, on-chip LC filters can achieve <span class="math inline">\(Q\)</span> values of around 10-20, while off-chip SAW or BAW/FBAR filters can achieve <span class="math inline">\(Q\)</span> values of several hundreds, and a crystal filter can achieve <span class="math inline">\(Q\)</span> values of several thousands. The choice of filter technology depends on the application requirements, such as frequency range, bandwidth, insertion loss, and cost. Generally speaking, the required filtering to single out the wanted signal in the RX spectrum and decrease the power of strong blockers to a tolerable level is one of the most critical design choices, and is usually distributed at different locations in the RX chain:</p>
 <ul>
-<li>RF filters (between antenna and LNA) provide a first level of filtering, and are usually implemented as off-chip SAW or BAW/FBAR filters. They provide high <span class="math inline">\(Q\)</span> and good selectivity, but have a fixed center frequency and bandwidth. They are used to pass the wanted band of interest, and to attenuate strong out-of-band blockers.</li>
-<li>IF filters (in case of a super-heterodyne receiver) provide additional filtering, and can be implemented as on-chip LC filters or off-chip SAW/BAW filters. They provide moderate <span class="math inline">\(Q\)</span> and selectivity, and can be tuned to some extent.</li>
-<li>BB filters (after downconversion) provide the final level of filtering before entering the ADCs, and are usually implemented as on-chip active RC filters. They provide channel selection, and can be easily adjusted to different bandwidths.</li>
-<li>Digital filters (in the DSP block) provide the final level of filtering and signal processing, and can be implemented as FIR or IIR filters. They provide high flexibility and can be easily adapted to different standards and requirements. Digital filters show now variations, so they can be designed to be very selective.</li>
+<li><strong>RF filters</strong> (between antenna and LNA) provide a first level of filtering, and are usually implemented as off-chip SAW or BAW/FBAR filters. They provide high <span class="math inline">\(Q\)</span> and good selectivity, but have a fixed center frequency and bandwidth. They are used to pass the wanted band of interest, and to attenuate strong out-of-band blockers.</li>
+<li><strong>IF filters</strong> (in case of a super-heterodyne receiver) provide additional filtering, and can be implemented as on-chip LC filters or off-chip SAW/BAW filters. They provide moderate <span class="math inline">\(Q\)</span> and selectivity, and can be tuned to some extent.</li>
+<li><strong>BB filters</strong> (after downconversion) provide the final level of filtering before entering the ADCs, and are usually implemented as on-chip active RC filters. They provide channel selection, and can be easily adjusted to different bandwidths.</li>
+<li><strong>Digital filters</strong> (in the DSP block) provide the final level of filtering and signal processing, and can be implemented as FIR or IIR filters. They provide high flexibility and can be easily adapted to different standards and requirements. Digital filters show now variations, so they can be designed to be very selective.</li>
 </ul>
 <p>It is important to note (because this dictates a lot of choices in RF design) that high-<span class="math inline">\(Q\)</span> filters are usually fixed-frequency and fixed-bandwidth. Only baseband and digital filters can be easily adjusted to different bandwidths!</p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -1655,8 +1655,8 @@ Q = \frac{f_\mathrm{c}}{\Delta f}
 </ul>
 <p>Nowadays there exist good design techniques to mitigate these disadvantages. However, in some cases (for example very high linearity requirements, or very high frequencies) other architectures like low-IF or super-heterodyne may be preferred.</p>
 </section>
-<section id="duplexing" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="duplexing"><span class="header-section-number">3.5</span> Duplexing</h2>
+<section id="sec-trx-duplexing" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="sec-trx-duplexing"><span class="header-section-number">3.5</span> Duplexing</h2>
 <p>In the block diagram of <a href="#fig-trx-block" class="quarto-xref">Figure&nbsp;17</a>, we have not yet considered how to share the antenna between RX and TX. Essentially, there are two main methods to achieve this: <strong>frequency-division duplex (FDD)</strong> and <strong>time-division duplex (TDD)</strong>.</p>
 <section id="frequency-division-duplex-fdd" class="level3" data-number="3.5.1">
 <h3 data-number="3.5.1" class="anchored" data-anchor-id="frequency-division-duplex-fdd"><span class="header-section-number">3.5.1</span> Frequency-Division Duplex (FDD)</h3>
