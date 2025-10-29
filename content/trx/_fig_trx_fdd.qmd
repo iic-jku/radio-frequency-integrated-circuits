@@ -31,7 +31,7 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Line().right(d.unit/2)
     d.push()
     d.move(dx=0, dy=d.unit/4)
-    dpx1 = dsp.Filter(response='bp')
+    dpx1 = dsp.Filter(response='bp').label(r'$f_\mathrm{RX}$', loc='right', ofst=0.15)
     dsp.Line().up(d.unit).at(dpx1.N).length(d.unit/2)
     dsp.Arrow().right(d.unit/2).label(r'RX')
     dsp.Amp()
@@ -39,7 +39,7 @@ with sd.Drawing(canvas='svg') as d:
     d.pop()
 
     d.move(dx=0, dy=-d.unit/4)
-    dpx2 = dsp.Filter(response='bp')
+    dpx2 = dsp.Filter(response='bp').label(r'$f_\mathrm{TX}$', loc='right', ofst=0.15)
     dsp.Arrow().down(d.unit).at(dpx2.S).length(d.unit/2).reverse()
     dsp.Line().right(d.unit/2).label(r'TX')
     dsp.Amp().reverse()

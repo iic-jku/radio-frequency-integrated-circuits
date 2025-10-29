@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-trx-block
 #| echo: false
-#| fig-cap: "Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system." 
+#| fig-cap: "Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system. For implementation options of the RF front-end, see @sec-trx-duplexing." 
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -28,6 +28,8 @@ with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=14)
 
     rf_pos=d.here
+
+    frontend = dsp.Ic(pins=[dsp.IcPin(side='R'), dsp.IcPin(side='R')], size=(2.5, 8), leadlen=0).label('RF Frontend').anchor('inR2').linestyle(':')
 
     dsp.Arrow().right(d.unit/2).label(r'$s_\mathrm{RX}$', 'left')
     dsp.Amp()
@@ -48,7 +50,9 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Square().label('DSP')
     dsp.Arrow().length(d.unit/2).label(r'$s_\mathrm{RX,I}$', 'right')
 
-    dsp1 = dsp.Ic(pins=[dsp.IcPin(side='L'), dsp.IcPin(side='L'), dsp.IcPin(side='R')], size=(2.75, 12), leadlen=0).anchor('inL2').label('MODEM')
+    dsp1 = dsp.Ic(pins=[dsp.IcPin(side='L'), dsp.IcPin(side='L'), dsp.IcPin(side='R')], size=(2.5, 12), leadlen=0).anchor('inL2').label('MODEM').linestyle(':')
+    d.move(dx=2.5, dy=-5.5)
+    elm.Arrow(double=True).right(d.unit/2).label("user\ndata", 'right')
 
     d.pop()
 
@@ -73,7 +77,7 @@ with sd.Drawing(canvas='svg') as d:
     iq1 = dsp.Square().label('0/90°')
     dsp.Arrow().at(iq1.N).up(d.unit/2)
     dsp.Arrow().at(iq1.S).down(d.unit/2)
-    dsp.Arrow().at(iq1.E).right(d.unit/4).reverse()
+    dsp.Arrow().at(iq1.E).right(d.unit/2).reverse().label(r'$f_\mathrm{RX}$')
     osc1 = dsp.Oscillator()
     dsp.Line().right(d.unit/4)
     pll1 = dsp.Square().label('PLL')
@@ -125,7 +129,7 @@ with sd.Drawing(canvas='svg') as d:
     iq2 = dsp.Square().label('0/90°')
     dsp.Arrow().at(iq2.N).up(d.unit/2)
     dsp.Arrow().at(iq2.S).down(d.unit/2)
-    dsp.Arrow().at(iq2.E).right(d.unit/4).reverse()
+    dsp.Arrow().at(iq2.E).right(d.unit/2).reverse().label(r'$f_\mathrm{TX}$')
     osc2 = dsp.Oscillator()
     dsp.Line().right(d.unit/4)
     pll2 = dsp.Square().label('PLL')
