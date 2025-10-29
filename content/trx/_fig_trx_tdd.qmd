@@ -29,7 +29,7 @@ with sd.Drawing(canvas='svg') as d:
 
     elm.Antenna()
     dsp.Line().right(d.unit/2)
-    dsp.Filter(response='bp')
+    dsp.Filter(response='bp').label(r'$f_\mathrm{RX} = f_\mathrm{TX}$', loc='top', ofst=0.15)
     dsp.Line().right(d.unit/2)
 
     sw = elm.SwitchSpdt2()

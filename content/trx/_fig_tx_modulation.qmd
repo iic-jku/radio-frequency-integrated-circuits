@@ -39,7 +39,7 @@ with sd.Drawing(canvas='svg') as d:
 
     d.move(dx=0, dy=-2*d.unit)
 
-    dsp.Arrow().right(d.unit/2).label(r'$s_\mathrm{I}(t)$', 'left')
+    dsp.Arrow().right(d.unit/2).label(r'$s_\mathrm{Q}(t)$', 'left')
     mix2 = dsp.Mixer()
     dsp.Line().right(d.unit/2)
     dsp.Line().up(d.unit*3/4)

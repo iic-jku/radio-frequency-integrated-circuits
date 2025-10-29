@@ -42,22 +42,22 @@ The modem that is shown in @fig-trx-block is responsible for the digital baseban
 
 ## Modulation and Demodulation {#sec-trx-mod-demod}
 
-Modulation is the process of varying a carrier signal at frequency $f_\mathrm{c}$ in order to transmit information. The complex baseband signal (after converting the real-valued digital $s_\mathrm{I}$ and $s_\mathrm{Q}$ signals to analog and pulse-shaping filtering) is represented as
+Modulation is the process of varying a carrier signal at frequency $f_\mathrm{c}$ in order to transmit information. The complex baseband signal (after converting the real-valued digital $s_\mathrm{I}$ and $s_\mathrm{Q}$ signals to analog and pulse-shaping filtering) is represented as ($\tilde{s}_\mathrm{BB} \in \mathbb{C}$; $s_\mathrm{I}, s_\mathrm{Q} \in \mathbb{R}$):
 
 $$
-s_\mathrm{BB}(t) = s_\mathrm{I}(t) + j s_\mathrm{Q}(t).
+\tilde{s}_\mathrm{BB}(t) = s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t).
 $$
 
-We want to shift this signal to the carrier frequency $f_\mathrm{c}$, which can be done by multiplying with a complex exponential:
+We want to shift this signal to the carrier frequency $f_\mathrm{c}$, which can be done by multiplying with a complex exponential ($e^{j \omega_\mathrm{c} t}$, with $\omega_\mathrm{c} = 2 \pi f_\mathrm{c}$):
 
 $$
-s_\mathrm{RF,complex}(t) = s_\mathrm{BB}(t) \cdot e^{j \omega_\mathrm{c} t} = [s_\mathrm{I}(t) + j s_\mathrm{Q}(t)] \cdot [\cos(\omega_\mathrm{c} t) + j \sin(\omega_\mathrm{c} t)].
+\tilde{s}_\mathrm{RF}(t) = \tilde{s}_\mathrm{BB}(t) \cdot e^{j \omega_\mathrm{c} t} = [s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t)] \cdot [\cos(\omega_\mathrm{c} t) + j \cdot \sin(\omega_\mathrm{c} t)].
 $$
 
-The real-valued RF signal is obtained by taking the real part of this expression:
+The real-valued RF signal is obtained by taking the real part of this expression ($s_\mathrm{RF} \in \mathbb{R}$, $\tilde{s}_\mathrm{RF} \in \mathbb{C}$):
 
 $$
-s_\mathrm{RF}(t) = \Re \{ s_\mathrm{RF,complex}(t) \} = s_\mathrm{I}(t) \cos(\omega_\mathrm{c} t) - s_\mathrm{Q}(t) \sin(\omega_\mathrm{c} t).
+s_\mathrm{RF}(t) = \Re \{ \tilde{s}_\mathrm{RF}(t) \} = s_\mathrm{I}(t) \cos(\omega_\mathrm{c} t) - s_\mathrm{Q}(t) \sin(\omega_\mathrm{c} t).
 $$ {#eq-modulation}
 
 The process formulated in @eq-modulation is done in the TX, as shown in @fig-tx-modulation.
@@ -75,7 +75,7 @@ $$
 with
 
 $$
-A(t) = \sqrt{s_\mathrm{I}^2(t) + s_\mathrm{Q}^2(t)}, \quad \varphi(t) = \tan^{-1}\left(\frac{s_\mathrm{I}(t)}{s_\mathrm{Q}(t)}\right).
+A(t) = \sqrt{s_\mathrm{I}^2(t) + s_\mathrm{Q}^2(t)}, \quad \varphi(t) = \tan^{-1} \left[ \frac{s_\mathrm{I}(t)}{s_\mathrm{Q}(t)} \right].
 $$
 
 As the mathematical operations required for the cartesian to polar transformation are quite nonlinear, the $A(t)$ and $\phi(t)$ signals are wideband. Some wireless standards allow efficient use of polar modulation, for example Bluetooth, where basically all TX are realized as polar modulators.
@@ -84,10 +84,10 @@ In the RX, the received RF signal is downconverted to baseband by a similar proc
 
 {{< include /content/trx/_fig_rx_demodulation.qmd >}}
 
-For demodulation we have to shift the RF signal down to baseband, which mathematically is done by multiplying with the complex conjugate of the carrier:
+For demodulation we have to shift the RF signal down to baseband, which mathematically is done by multiplying with the complex conjugate of the carrier ($e^{-j \omega_\mathrm{c} t}$)
 
 $$
-s_\mathrm{BB,complex}(t) = s_\mathrm{RF}(t) \cdot e^{-j \omega_\mathrm{c} t} = s_\mathrm{RF}(t) \cdot [\cos(\omega_\mathrm{c} t) - j \sin(\omega_\mathrm{c} t)]
+\tilde{s}_\mathrm{BB}(t) = s_\mathrm{RF}(t) \cdot e^{-j \omega_\mathrm{c} t} = s_\mathrm{RF}(t) \cdot [\cos(\omega_\mathrm{c} t) - j \cdot \sin(\omega_\mathrm{c} t)]
 $$ {#eq-demodulation}
 
 ## Filtering
@@ -106,10 +106,10 @@ where $f_\mathrm{c}$ is the center frequency and $\Delta f$ is the --3 dB bandwi
 
 The achievable $Q$ depends on the filter technology used. For example, on-chip LC filters can achieve $Q$ values of around 10-20, while off-chip SAW or BAW/FBAR filters can achieve $Q$ values of several hundreds, and a crystal filter can achieve $Q$ values of several thousands. The choice of filter technology depends on the application requirements, such as frequency range, bandwidth, insertion loss, and cost. Generally speaking, the required filtering to single out the wanted signal in the RX spectrum and decrease the power of strong blockers to a tolerable level is one of the most critical design choices, and is usually distributed at different locations in the RX chain:
 
-- RF filters (between antenna and LNA) provide a first level of filtering, and are usually implemented as off-chip SAW or BAW/FBAR filters. They provide high $Q$ and good selectivity, but have a fixed center frequency and bandwidth. They are used to pass the wanted band of interest, and to attenuate strong out-of-band blockers.
-- IF filters (in case of a super-heterodyne receiver) provide additional filtering, and can be implemented as on-chip LC filters or off-chip SAW/BAW filters. They provide moderate $Q$ and selectivity, and can be tuned to some extent.
-- BB filters (after downconversion) provide the final level of filtering before entering the ADCs, and are usually implemented as on-chip active RC filters. They provide channel selection, and can be easily adjusted to different bandwidths.
-- Digital filters (in the DSP block) provide the final level of filtering and signal processing, and can be implemented as FIR or IIR filters. They provide high flexibility and can be easily adapted to different standards and requirements. Digital filters show now variations, so they can be designed to be very selective.
+- **RF filters** (between antenna and LNA) provide a first level of filtering, and are usually implemented as off-chip SAW or BAW/FBAR filters. They provide high $Q$ and good selectivity, but have a fixed center frequency and bandwidth. They are used to pass the wanted band of interest, and to attenuate strong out-of-band blockers.
+- **IF filters** (in case of a super-heterodyne receiver) provide additional filtering, and can be implemented as on-chip LC filters or off-chip SAW/BAW filters. They provide moderate $Q$ and selectivity, and can be tuned to some extent.
+- **BB filters** (after downconversion) provide the final level of filtering before entering the ADCs, and are usually implemented as on-chip active RC filters. They provide channel selection, and can be easily adjusted to different bandwidths.
+- **Digital filters** (in the DSP block) provide the final level of filtering and signal processing, and can be implemented as FIR or IIR filters. They provide high flexibility and can be easily adapted to different standards and requirements. Digital filters show now variations, so they can be designed to be very selective.
 
 It is important to note (because this dictates a lot of choices in RF design) that high-$Q$ filters are usually fixed-frequency and fixed-bandwidth. Only baseband and digital filters can be easily adjusted to different bandwidths!
 
@@ -153,7 +153,7 @@ However, the direct-conversion architecture also has some disadvantages:
 
 Nowadays there exist good design techniques to mitigate these disadvantages. However, in some cases (for example very high linearity requirements, or very high frequencies) other architectures like low-IF or super-heterodyne may be preferred.
 
-## Duplexing
+## Duplexing {#sec-trx-duplexing}
 
 In the block diagram of @fig-trx-block, we have not yet considered how to share the antenna between RX and TX. Essentially, there are two main methods to achieve this: **frequency-division duplex (FDD)** and **time-division duplex (TDD)**.
 
