@@ -1,0 +1,38 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-lc-oscillator-noise-model
+#| echo: false
+#| fig-cap: "LC parallel tank with oscillator in steady-state operation."
+#| 
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    L1 = elm.Inductor().label('$s L$').down()
+    elm.Line().right(d.unit).dot()
+    C1 = elm.Capacitor().label('$1 / s C$').up().dot()
+    elm.Line().left().tox(L1.start) 
+    elm.Line().at(C1.start).right(d.unit).dot(open=True)
+    elm.Gap().label(('',r'$Z_\mathrm{tank}(s)$','')).up()
+    elm.Line().left(d.unit).idot(open=True)
+```

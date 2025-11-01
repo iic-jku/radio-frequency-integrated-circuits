@@ -74,4 +74,79 @@ As a side note, the definition of $Q$ in @eq-definition-q can be also be underst
 
 ## Oscillator Noise {#sec-oscillator-noise}
 
-TBA
+For calculating the noise of an oscillator, we assume that an LC-based oscillator as shown in @fig-lc-oscillator is used. We assume that the oscillator is in steady state operation, i.e., $-R_\mathrm{amp} = R_\mathrm{p}$. We can then simplify the circuit to the one shown in @fig-lc-oscillator-noise-model.
+
+{{< include /content/oscillator/_fig_lc_oscillator_noise.qmd >}}
+
+We can calculate
+
+$$
+Z_\mathrm{tank}(s) = \frac{s L \frac{1}{s C}}{s L + \frac{1}{s C}} = \frac{s L}{1 + s^2 L C}.
+$$
+
+At $s = j \omega_0$, we have $Z_\mathrm{tank}(s) \to \infty$, so let's approximate around $\omega_0$:
+
+$$
+Z_\mathrm{tank}(j \omega_0 + j \Delta \omega) =\frac{j (\omega_0 + \Delta \omega) L}{1 - (\omega_0 + \Delta \omega)^2 L C}
+$$
+
+For $\Delta \omega \ll \omega_0$, we can approximate $(\omega_0 + \Delta \omega)^2 \approx \omega_0^2 + 2 \omega_0 \Delta \omega$ and $\omega_0 + \Delta \omega \approx \omega_0$, which yields (using $\omega_0^2 L C = 1$)
+
+$$
+Z_\mathrm{tank}(j \omega_0 + j \Delta \omega) = -\frac{j}{2 \Delta \omega C}.
+$$
+
+We now use the correspondence $C = 1 / \omega_0^2 L$ and express $L = R_\mathrm{p} / \omega_0 Q$ to get
+
+$$
+|Z_\mathrm{tank}(j \omega_0 + j \Delta \omega)| = \frac{R_\mathrm{p}}{2 Q} \left( \frac{\omega_0}{\Delta \omega} \right)
+$$
+
+which provides us with an expression for the magnitude of the tank impedance around resonance. We now calculate the noise power if a noise current is injected into this impedance. We use the single-sided noise current of $R_\mathrm{p}$ (see @sec-noise-types), increased by a factor $F$ contributed by the active circuit providing $-R_\mathrm{amp}$:
+
+$$
+\overline{I_n^2} = \frac{4 k T F}{R_\mathrm{p}} 
+$$
+
+The noise voltage across the tank at a frequency offset $\Delta \omega$ from $\omega_0$ is then
+
+$$
+\overline{V_n^2}(\Delta \omega) = |Z_\mathrm{tank}(j \omega_0 + j \Delta \omega)|^2 \cdot \frac{4 k T F}{R_\mathrm{p}} = \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2
+$$
+
+This absolute noise voltage is not of much interest per se. We normalize it to the oscillation amplitude $V_\mathrm{p}$, and only account for 1/2 of the noise, as the total noise power is split equally into amplitude noise and phase noise [@Razavi.1996], and we are only interested in the **phase noise**. This is because we assume the amplitude noise being removed by amplitude clipping in the LO chain routing the oscillator signal to the mixer. This is often a valid assumption. We introduce the symbol $\phn(\cdot)$ to denote this normalized phase noise of the oscillator:
+
+$$
+\phn\{\Delta \omega\} = \frac{\frac{1}{2} \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2}{\left( \frac{V_\mathrm{p}}{\sqrt{2}} \right)^2} = \frac{k T F R_\mathrm{p}}{V_\mathrm{p}^2} \cdot \frac{1}{Q^2} \cdot \left( \frac{\omega_0}{\Delta \omega} \right)^2
+$$ {#eq-lesson-equation}
+
+This equation is known as "**Leeson's equation**" [@Leeson.1966], and it provides us with important insights on how to design low phase noise oscillators:
+
+1. Use a resonator with high quality factor $Q$ to reduce phase noise. On-chip LC tanks usually provide moderate $Q$ values (e.g., 10 to 30), while off-chip crystals can provide very high $Q$ values (e.g., 10,000 to 100,000).
+2. Maximize the oscillation amplitude $V_\mathrm{p}$ to increase the stored energy in the resonator. In CMOS implementations, this is often limited by the supply voltage and/or device breakdown voltages.
+3. Use an active circuit with low noise factor $F$ to minimize the noise contribution of the negative resistance $-R_\mathrm{amp}$. A good value to aim for is $F \approx 2$ or lower.
+4. Maximize the tank resistance $R_\mathrm{p}$ to minimize the thermal noise contribution. This can be achieved by using high-Q inductors and low-loss capacitors.
+
+The phase noise $\phn\{\Delta \omega\}$ is expressed in the unit of dBc/Hz, i.e., in decibels of phase noise relative to the carrier power per 1 Hz of bandwidth. When expressing the phase noise of an oscillator in dBc/Hz it is important to state both the oscillation frequency $\omega_0$ and the offset frequency $\Delta \omega$ at which the phase noise is evaluated. For example, we could say that an oscillator has a phase noise of -137 dBc/Hz at 3 MHz offset from a carrier frequency of 2 GHz.
+
+The phase noise expressed with @eq-lesson-equation describes an important region of the total oscillator phase noise where the phase noise decreased with $1 / (\Delta \omega)^2$, i.e., with 20 dB per decade. This region is often called the "thermal noise region" as it is dominated by thermal noise from the tank resistor and the active circuit. However, at lower offset frequencies, other noise mechanisms (like flicker noise) can dominate, leading to different slopes of the phase noise vs. offset frequency curve. At larger offset frequencies, the phase noise can flatten out due to thermal noise floor limitation of bufer amplifiers following the oscillator. A typical phase noise plot of an LC oscillator is shown in @fig-phase-noise-spectrum.
+
+{{< include /content/oscillator/_fig_phase_noise_spectrum.qmd >}}
+
+It is important to note that the phase noise does not go to infinity as $\Delta \omega$ approaches zero, as @eq-lesson-equation might suggest. This is an artifact of the simplified model used to derive Leeson's equation. In reality, the phase noise has the form of a Lorentzian spectrum around the carrier frequency, which means that it flattens out at very low offset frequencies with a trend described by
+
+$$
+\phn \{ \Delta \omega \ll \} \propto \frac{1}{\omega_\mathrm{B}^2 + \Delta \omega^2}
+$$
+
+with $\omega_\mathrm{B}$ being the half-power bandwidth of the oscillator spectrum.
+
+Why is phase noise important?
+
+1. In RX and TX the phase noise of the LO creates jitter, which degrades signal quality and contributes to EVM degradation.
+2. In TX, phase noise of the LO creates noise sidebands around the carrier, which can lead to adjacent channel interference together with spectral regrowth due to nonlinearities and thermal noise.
+3. In RX, reciprocal mixing of the phase noise sidebands with the desired signal creates in-band noise, which degrades the SNR and sensitivity of the RX.
+4. In systems using multiple carriers or carriers with high-order modulation schemes (like in OFDM), phase noise can lead to inter-carrier interference (ICI) and symbol misinterpretation, further degrading system performance.
+
+## Reciprocal Mixing {#sec-oscillator-reciprocal-mixing}
+
