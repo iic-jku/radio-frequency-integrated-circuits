@@ -150,3 +150,67 @@ Why is phase noise important?
 
 ## Reciprocal Mixing {#sec-oscillator-reciprocal-mixing}
 
+Reciprocal mixing is a phenomenon that occurs in receivers when the phase noise sidebands of the local oscillator mix with strong adjacent channel signals, resulting in in-band noise that degrades the signal-to-noise ratio of the desired signal. This effect is particularly pronounced in systems with high-order modulation schemes or closely spaced channels, where even small amounts of phase noise can lead to significant performance degradation.
+
+To analyze reciprocal mixing, we consider a scenario where a strong interferer is present at a frequency offset $\Delta f$ from the desired signal. The phase noise of the local oscillator at this offset frequency can be characterized by its power spectral density $\phn\{\Delta f\}$. When the local oscillator mixes with the interferer, the phase noise sidebands effectively "fold" into the desired signal band, creating additional noise. This noise level can be estimated by multiplying the power of the interferer by the phase noise level at the offset frequency and considering the channel bandwidth $B$ of the RX
+
+$$
+P_\mathrm{RM} = P_\mathrm{interferer} + \phn\{ \Delta f\} + 10 \log_{10}(B)
+$$ {#eq-reciprocal-mixing-noise}
+
+where $P_\mathrm{RM}$ is the power of the reciprocal mixing noise introduced into the desired signal band.
+
+::: {#nte-reciprocal-mixing .callout-note}
+## Reciprocal Mixing Example
+Let us assume the following example from a Bluetooth LE receiver: The sensitivity target for the RX is -70 dBm with an SNR of 10 dB for a 1 MHz channel. An adjacent channel interferer is present at -27 dB channel to interferer ratio at an offset of 3 MHz. How much phase noise can the LO have to meet the sensitivity target?
+
+From the sensitivity target and the SNR requirement, we can calculate the maximum allowable noise floor in the RX. We add a margin of 3 dB to account for implementation losses:
+
+$$
+P_\mathrm{noise,max} = P_\mathrm{sens} - \text{SNR} - P_\mathrm{margin} = -70\,\text{dBm} - 10\,\text{dB} - 3\,\text{dB} = -83\,\text{dBm}
+$$
+
+The interferer power is:
+
+$$
+P_\mathrm{interferer} = P_\mathrm{sens} - \text{C/I} = -70\,\text{dBm} + 27\,\text{dB} = -43\,\text{dBm}
+$$
+
+Using @eq-reciprocal-mixing-noise, we can express the maximum allowable phase noise at 3 MHz offset at 2.4 GHz as:
+
+$$
+\phn\{3\,\text{MHz}\} = P_\mathrm{noise,max} - P_\mathrm{interferer} - 10 \log_{10}(B) = -83\,\text{dBm} + 43\,\text{dBm} - 60\,\text{dB} = -100\,\text{dBc/Hz}
+$$
+:::
+
+The reciprocal mixing scenario descibred in @nte-reciprocal-mixing is visualized in @fig-reciprocal-mixing.
+
+{{< include /content/oscillator/_fig_reciprocal_mixing.qmd >}}
+
+## Single-Ended Oscillators {#sec-single-ended-oscillators}
+
+Single-ended oscillators are commonly used in RF applications due to their simplicity and ease of integration, especially in quartz oscillators. A negative resistance is implemented using a single transistor amplifier as is shown in @fig-neg-r-single-ended. The transistor is configured with two capacitors $C_1$ and $C_2$ to provide a phase-shifted feedback path.
+
+{{< include /content/oscillator/_fig_neg_r_single_ended.qmd >}}
+
+It can be shown that the differential input impedance looking into the transistor gate and drain is given by
+
+$$
+Z_\mathrm{in}(s) = -\frac{\gm}{\omega^2 C_1 C_2} + \frac{C_1 + C_2}{s C_1 C_2} = -R_\mathrm{amp} + \frac{1}{s C_\mathrm{amp}}
+$$
+
+which consists of the series combination of a negative resistance $-R_\mathrm{amp}$ and a capacitance $C_\mathrm{amp}$. Note that the circuit in @fig-neg-r-single-ended does not show a ground symbol. In fact, any of the three nodes marked with blue numbers can be used as a reference node (ground), and this results in the following well-known oscillator topologies:
+
+| Reference Node | Oscillator Topology                                                      |
+|----------------|--------------------------------------------------------------------------|
+| Node 1 (Gate)  | [Colpitts oscillator](https://en.wikipedia.org/wiki/Colpitts_oscillator) |
+| Node 2 (Source)| [Pierce oscillator](https://en.wikipedia.org/wiki/Pierce_oscillator)     |
+| Node 3 (Drain) | [Clapp oscillator](https://en.wikipedia.org/wiki/Clapp_oscillator)       |
+
+When we investigate the equivalent electrical circuit of a quartz crystal, we find that it has inductive behavior between its series resonance frequency and its parallel resonance frequency, which are very close together. The quartz crystal equivalent circuit is shown in @fig-crystal-equivalent-circuit.
+
+{{< include /content/oscillator/_fig_crystal_equivalent_circuit.qmd >}}
+
+This means we can operate the quartz crystal as a high-Q inductor in an oscillator circuit, which results in the single-ended quartz crystal oscillator shown in @fig-quartz-crystal-oscillator, which is a very popular choice for high-performance crystal oscillators. Note that in simple implementation the current-bias MOSFET can be replaced by an inverter stage biased in the linear region.
+
+{{< include /content/oscillator/_fig_crystal_oscillator.qmd >}}

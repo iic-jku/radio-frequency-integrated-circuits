@@ -15,10 +15,9 @@ limitations under the License.
 :::
 
 ```{python}
-#| label: fig-lc-oscillator
+#| label: fig-neg-r-single-ended
 #| echo: false
-#| fig-cap: "LC parallel tank with connected negative resistance forming an LC oscillator."
-#| 
+#| fig-cap: "Circuit diagram of a single-ended negative resistance implementation." 
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -28,23 +27,20 @@ sd.svgconfig.svg2 = False
 with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=14)
 
-    L1 = elm.Inductor().label('$L$').down()
-    elm.Line().right(d.unit).dot()
-    C1 = elm.Capacitor().label('$C$').up().dot()
+    M1 = elm.AnalogNFet(offset_gate=False).label(r'$g_\mathrm{m}$', loc='right').reverse().anchor('source').drop('gate').theta(0)
+    l1 = elm.Line().up(d.unit/4).dot().at(M1.drain)
+    elm.Line().left(d.unit/2).dot(open=True).label(r'$Z_\mathrm{in}$', loc='left', ofst=(+d.unit/4,-d.unit*0))
+
+    elm.Line().left(d.unit/2).dot().at(M1.gate).label('1', color='blue', loc='top')
     d.push()
-    elm.Line().left().tox(L1.start) 
+    elm.Line().up(d.unit/4).dot(open=True)
     d.pop()
-    elm.Line().right(d.unit).dot()
-    elm.Resistor().label(r'$R_\mathrm{p}$').down().dot()
+    C1 = elm.Capacitor().label('$C_1$').down() 
+    elm.Line().right().tox(M1.source).dot().label('2', color='blue', loc='bottom')
     d.push()
-    elm.Line().left().tox(C1.start)
-    d.pop()
-    elm.Line().right(d.unit).dot(open=True)
-    d.push()
-    elm.Gap().label(('–',r'$V_\mathrm{osc}$','+')).up()
+    elm.Line().up().to(M1.source)
     d.pop()
     elm.Line().right(d.unit)
-    elm.Resistor().label(r'$-R_\mathrm{amp}$', loc='bottom').up().color('blue')
-    elm.Line().left(d.unit).dot(open=True)
-    elm.Line().left(d.unit)
+    C2 = elm.Capacitor().label('$C_2$').up().toy(l1.end)
+    elm.Line().left().tox(l1.start).label('3', color='blue', loc='top')
 ```

@@ -1,0 +1,113 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-reciprocal-mixing
+#| echo: false
+#| fig-cap: "Reciprocal mixing in a receiver: A strong interferer at offset frequency mixes with LO phase noise sidebands, creating in-band noise that degrades the desired signal SNR. The desired signal shows the same, scaled phase noise profile around it as the interferer, as both mix with the same LO phase noise."
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Create figure with single plot
+fig, ax = plt.subplots(1, 1)
+
+# RF frequencies (in GHz for BLE example)
+f_lo = 2.401  # LO frequency (GHz)  
+f_desired = 2.401  # Desired signal (same as LO for zero-IF)
+f_interferer = 2.404  # Interferer at +3 MHz offset
+df_offset = f_interferer - f_lo  # 3 MHz offset
+
+# Define power levels in dBm
+desired_power = -70  # dBm
+interferer_power = -43  # dBm  
+
+# Define frequency range
+freq_rf = np.linspace(2.395, 2.41, 1000)
+
+# Create phase noise around desired signal (-70 dBm)
+desired_phase_noise_power = np.zeros_like(freq_rf)
+for i, f in enumerate(freq_rf):
+    offset_hz = abs(f - f_desired) * 1e9  # Convert to Hz
+    if offset_hz > 1e3:  # Only show phase noise away from carrier
+        # Phase noise profile: -100 dBc/Hz at 3 MHz offset
+        # Scale relative to desired signal power (-70 dBm)
+        desired_phase_noise_power[i] = desired_power - 100 - 20 * np.log10(offset_hz / 3e6)
+        desired_phase_noise_power[i] = max(desired_phase_noise_power[i], -160)  # Limit floor
+    else:
+        desired_phase_noise_power[i] = -200  # Very low near carrier
+
+# Create phase noise around interferer (-43 dBm) 
+interferer_phase_noise_power = np.zeros_like(freq_rf)  
+for i, f in enumerate(freq_rf):
+    offset_hz = abs(f - f_interferer) * 1e9  # Convert to Hz
+    if offset_hz > 1e3:  # Only show phase noise away from carrier
+        # Same phase noise profile but scaled relative to interferer power (-43 dBm)
+        # Stronger signal typically has better phase noise (lower relative to carrier)
+        interferer_phase_noise_power[i] = interferer_power - 100 - 20 * np.log10(offset_hz / 3e6)
+        interferer_phase_noise_power[i] = max(interferer_phase_noise_power[i], -160)
+    else:
+        interferer_phase_noise_power[i] = -200
+
+# Define power levels in dBm
+desired_power = -70  # dBm
+interferer_power = -43  # dBm  
+lo_power = 0  # dBm (reference)
+
+# Plot desired signal
+ax.vlines(f_desired, -170, desired_power, colors='green', linewidth=4, label='Desired Signal (-70 dBm)')
+ax.plot(f_desired, desired_power, 'o', color='green', markersize=10, markerfacecolor='green')
+
+# Plot strong interferer  
+ax.vlines(f_interferer, -170, interferer_power, colors='red', linewidth=4, label='Strong Interferer (-43 dBm)')
+ax.plot(f_interferer, interferer_power, 'o', color='red', markersize=10, markerfacecolor='red')
+
+# Plot phase noise around desired signal (continuous spectrum)
+valid_desired_noise = desired_phase_noise_power > -170
+ax.plot(freq_rf[valid_desired_noise], desired_phase_noise_power[valid_desired_noise], 
+        color='green', linewidth=2, alpha=0.7, linestyle='--', label='Desired Signal Phase Noise')
+
+# Plot phase noise around Interferer (continuous spectrum)  
+valid_int_noise = interferer_phase_noise_power > -170
+ax.plot(freq_rf[valid_int_noise], interferer_phase_noise_power[valid_int_noise], 
+        color='red', linewidth=2, alpha=0.7, linestyle='--', label='Interferer Phase Noise')
+
+# Highlight the overlap regions where phase noise creates reciprocal mixing
+# Region 1: Interferer phase noise overlapping desired signal
+overlap_region_1 = (freq_rf >= f_desired - 0.0005) & (freq_rf <= f_desired + 0.0005)
+ax.fill_between(freq_rf[overlap_region_1], -170, 
+                interferer_phase_noise_power[overlap_region_1],
+                color='orange', alpha=0.5, label='Reciprocal Mixing from Interferer')
+
+# Add frequency annotations
+ax.text(f_desired, desired_power + 8, 'Desired Signal\n(-70 dBm)', ha='center', va='bottom', color='green')
+ax.text(f_interferer, interferer_power + 8, 'Strong Interferer\n(-43 dBm)', ha='center', va='bottom', color='red')
+
+# Add distance annotation
+ax.annotate('', xy=(f_desired, -100), xytext=(f_interferer, -100),
+            arrowprops=dict(arrowstyle='<->', color='black', lw=1.5))
+ax.text((f_desired + f_interferer)/2, -110, 'Δf = 3 MHz', ha='center', va='bottom')
+
+# Formatting
+ax.set_xlabel('Frequency (GHz)')
+ax.set_ylabel('Power (dBm)')
+ax.set_xlim(2.395, 2.41)
+ax.set_ylim(-170, -20)
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+```
