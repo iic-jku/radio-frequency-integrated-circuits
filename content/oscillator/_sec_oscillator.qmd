@@ -211,6 +211,104 @@ When we investigate the equivalent electrical circuit of a quartz crystal, we fi
 
 {{< include /content/oscillator/_fig_crystal_equivalent_circuit.qmd >}}
 
-This means we can operate the quartz crystal as a high-Q inductor in an oscillator circuit, which results in the single-ended quartz crystal oscillator shown in @fig-quartz-crystal-oscillator, which is a very popular choice for high-performance crystal oscillators. Note that in simple implementation the current-bias MOSFET can be replaced by an inverter stage biased in the linear region.
+This means we can operate the quartz crystal as a high-Q inductor in an oscillator circuit, which results in the single-ended quartz crystal oscillator shown in @fig-crystal-oscillator, which is a very popular choice for high-performance crystal oscillators. Note that in simple implementation the current-bias MOSFET can be replaced by an inverter stage biased in the linear region.
 
 {{< include /content/oscillator/_fig_crystal_oscillator.qmd >}}
+
+The series combination of $C_1$ and $C_2$ provides the load capacitance required by the crystal to oscillate at its specified frequency. The oscillation frequency can be approximated by ($C_\mathrm{load}^{-1} = 1/C_1 + 1/C_2$):
+
+$$
+f_0 \approx \frac{1}{2 \pi \sqrt{L_\mathrm{m} C_\mathrm{load}}}
+$$
+
+## Differential Oscillators {#sec-differential-oscillators}
+
+After discussing single-ended oscillators in @sec-single-ended-oscillators, we now turn to differential oscillator topologies, which are widely used in integrated LC oscillators due to their superior common-mode noise rejection and reduced even-order harmonics. A popular way to create a differential negative resistance is to use a cross-coupled pair of transistors as shown in @fig-cross-coupled-pair.
+
+{{< include /content/oscillator/_fig_cross_coupled_pair.qmd >}}
+
+We assume a symmetrical circuit by setting $\gm[1] = \gm[2] = \gm$. By analyzing the small-signal equivalent circuit, we can derive the differential input impedance looking into the gates of the transistors:
+
+$$
+Z_\mathrm{in} = -\frac{2}{\gm}
+$$
+
+A practical implementation of a differential LC oscillator using the cross-coupled pair is shown in @fig-oscillator-lc-nmos using a so-called "NMOS core", as it is using an NMOS-based differential pair.
+
+{{< include /content/oscillator/_fig_oscillator_lc_nmos.qmd >}}
+
+By putting the circuit in @fig-oscillator-lc-nmos onto its head we obtain a "PMOS core" oscillator, which is also widely used in integrated LC oscillators. This configuration is shown in @fig-oscillator-lc-pmos.
+
+{{< include /content/oscillator/_fig_oscillator_lc_pmos.qmd >}}
+
+In both oscillator topolopogies, the oscillation frequency is determined by the LC tank circuit formed by $L = L_1 + L_2$ and $C$. The oscillation frequency can be approximated by
+
+$$
+f_0 = \frac{1}{2 \pi \sqrt{L C}}
+$$
+
+As both technologies have their inductor middle point tied to a supply rail (ground for NMOS core, $V_\mathrm{DD}$ for PMOS core), the voltage swing across the tank can go well beyond the supply voltage, which is an advantage of these topologies. However, note that the maximum voltage swing is still limited by the device breakdown voltages. of $M_1$ and $M_2$, wich can be critical in advanced CMOS technologies with low breakdown voltages. To utilize both an NMOS and a PMOS cross-coupled pair in parallel, a so-called "complementary (or CMOS) LC oscillator" can be used, which is shown in @fig-oscillator-lc-cmos. Here, the voltage swing across the tank is limited to the supply voltage, so it is inherently safe regarding device breakdown. Also, the transconductance of both NMOS and PMOS devices contribute to the negative resistance, which can reduce power consumption for a given oscillation amplitude.
+
+{{< include /content/oscillator/_fig_oscillator_lc_cmos.qmd >}}
+
+Note that no bias current sources are shown in @fig-oscillator-lc-cmos, but can be added in practice. However, they required some voltage headroom, which lowers the maximum voltage swing across the tank, which is negative for phase noise performance according to Leeson's equation in @eq-lesson-equation.
+
+The inductor $L$ used in LC tanks is often implemented as a differential spiral inductor, which can be realized on-chip using the top metal layers of the CMOS process. If higher $Q$ is sought, then off-chip inductors must be used, which is more expensive and uses package pins to connect the inductor. Alternatively, bondwire inductors can be used, which utilize the bondwires connecting the die to the package leads as inductors. Bondwire inductors can provide high $Q$ values and are a cost-effective solution for improving oscillator performance without requiring off-chip components. For mm-wave frequencies, transmission line stubs can be used as inductors, which can be implemented on-chip using coplanar waveguide (CPW) or microstrip structures.
+
+## Frequency Tuning of Oscillators {#sec-frequency-tuning-of-oscillators}
+
+Note that all three LC oscillator topologies shown in @sec-differential-oscillators have a fixed oscillation frequency determined by the LC tank circuit. In practice, it is often desirable to be able to tune the oscillation frequency over a certain range. There are only two ways to achieve this, either by tuning the inductance $L$ or the capacitance $C$ of the tank circuit. In integrated LC oscillators, it is common to use a fixed inductor and a tunable capacitor, which is shown in @fig-oscillator-lc-nmos, @fig-oscillator-lc-pmos, and @fig-oscillator-lc-cmos.
+
+The need to change the oscillator frequency can arise from various requirements:
+
+1. We need to precisely tune the oscillator frequency to match a desired carrier frequency.
+2. The oscillator frequency needs to be adjusted to compensate for process, voltage, and temperature (PVT) variations that can affect the resonant frequency of the LC tank.
+
+In order to achieve a tunable capacitance, a so-called "varactor" (variable capacitor) is often used. A varactor is a semiconductor device that exhibits a capacitance that varies with the applied voltage. Common ways to implement a varactor in integrated circuits are:
+
+1. Use the gate-to-channel capacitance of a MOSFET operated in reverse bias. By changing the voltage applied to the gate, the depletion region width in the channel changes, which in turn changes the capacitance.
+2. Use a PN-junction diode operated in reverse bias. The depletion region width of the diode changes with the applied voltage, leading to a change in capacitance.
+3. Use a gate-to-channel capacitance of special MOSFET structure in accumulation mode, which can be achieved by using a NMOS situated in an n-well (in contrast to the usual operation in a p-well). Changing the gate-to-channel voltage changes the accumulation capacitance [@Andreani.2000].
+4. Use a switched capacitor bank, where multiple capacitors are connected in parallel or series using switches (usually MOSFETs) to achieve discrete capacitance values.
+
+In order to characterize the tuning sensitivity of an oscillator, the metric $K_\mathrm{VCO}$ (voltage-controlled oscillator gain) is often used, which is defined as
+
+$$
+K_\mathrm{VCO} = \frac{d f_0}{d V_\mathrm{tune}}
+$$
+
+with $V_\mathrm{tune}$ being the control voltage applied to the varactor. The unit of $K_\mathrm{VCO}$ is usually expressed in MHz/V or GHz/V. A high $K_\mathrm{VCO}$ means that a small change in tuning voltage results in a large change in oscillation frequency, which can be beneficial for wide tuning ranges but can also make the oscillator more sensitive to noise on the tuning voltage line.
+
+Note that the tuning sensitivity $K_\mathrm{VCO}$ is usually quite nonlinear over the tuning range, so it is common to specify $K_\mathrm{VCO}$ at a certain operating point or as an average value over the tuning range.
+
+In order to achieve a wide tuning range while maintaining a sufficiently small $K_\mathrm{VCO}$ for phase noise reasons, a combination of coarse and fine tuning mechanisms can be used [@Kral.1998]. For example, a switched capacitor bank can provide coarse tuning steps, while a varactor can provide fine tuning within each step. It is important to ensure that the overall tuning range is free of dead zones, where the oscillator cannot be tuned to certain frequencies due to non-overlapping tuning ranges of the coarse and fine tuning elements.
+
+While there are many ways to implement a switched capacitor for use in an oscillator tuning circuit, one popular way is shown in @fig-switched-capacitor. Many such switched capacitors with different values of $C$ (often binary weighted) can be combined to form a capacitor bank for coarse frequency tuning.
+
+{{< include /content/oscillator/_fig_switched_capacitor.qmd >}}
+
+Here, when the control signal $S$ is high, the effective capacitance is $C/2$, with a parasitic series resistance $R_\mathrm{on}$ due to the switch. When $S$ is low, the effective capacitance is $C_\mathrm{off}$, which is the parasitic drain-source capacitance of the MOSFET switch.
+
+Note that there exists a trade-off when designing the switched capacitor: A larger switch (with increased $W$) reduces $R_\mathrm{on}$, but increases $C_\mathrm{off}$. A large $R_\mathrm{on}$ leads to increased losses in the tank circuit, which degrades the quality factor $Q$ and increases phase noise according to @eq-lesson-equation. On the other hand, a large $C_\mathrm{off}$ reduces the effective tuning range of the switched capacitor, which can be detrimental if a wide tuning range is required.
+
+In **digitally-controlled oscillators (DCOs)**, the tuning voltage $V_\mathrm{tune}$ is replaced by a digital control word that selects different capacitance values from a capacitor bank. This approach allows for precise and repeatable frequency tuning, which is beneficial in applications requiring frequency synthesis or channel selection. These fine tuning steps can also be implemented according to @fig-switched-capacitor, however, the value of $C$ must be sufficiently small.
+
+## Oscillator Modelling {#sec-oscillator-modeling}
+
+The instantaneous frequency of an oscillator can be expressed as
+
+$$
+\omega_\mathrm{VCO}(t) = \omega_0 t + K_\mathrm{VCO} \cdot V_\mathrm{tune}(t)
+$$
+
+where $\omega_0$ is the nominal oscillation frequency, $K_\mathrm{VCO}$ is the tuning sensitivity, and $V_\mathrm{tune}(t)$ is the tuning voltage applied to the varactor. Looking at the instantaneous phase $\varphi_\mathrm{VCO}(t)$ of the oscillator, we can integrate the instantaneous frequency $\omega_\mathrm{VCO}(t)$ to obtain
+
+$$
+\varphi_\mathrm{VCO}(t) = \int_0^t \omega_\mathrm{VCO}(\tau) d\tau = \omega_0 t + K_\mathrm{VCO} \int_0^t V_\mathrm{tune}(\tau) d\tau.
+$$
+
+Inspecting this equation, we see that with respect to phase, an oscillator is a **perfect** integrator of the tuning voltage over time! For simulation purposes, we can therefore model an oscillator as an integrator block as shown in @fig-oscillator-model.
+
+{{< include /content/oscillator/_fig_oscillator_model.qmd >}}
+
+In this model we look at the phase output of the oscillator as an *excess phase* with respect to the nominal phase $\omega_0 t$. This delta phase is obtained by integrating the tuning voltage $V_\mathrm{tune}(t)$ scaled by $K_\mathrm{VCO}$.

@@ -28,7 +28,7 @@ sd.svgconfig.svg2 = False
 with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=14)
 
-    L1 = elm.Inductor().label('$s L$').down()
+    L1 = elm.Inductor2(loops=2).label('$s L$').down()
     elm.Line().right(d.unit).dot()
     C1 = elm.Capacitor().label('$1 / s C$').up().dot()
     elm.Line().left().tox(L1.start) 

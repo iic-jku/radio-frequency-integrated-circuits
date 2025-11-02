@@ -1,0 +1,78 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-oscillator-lc-cmos
+#| echo: false
+#| fig-cap: "An LC differential oscillator using a PMOS and an NMOS cross-coupled differential pair."
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    # Start from VDD at top
+    elm.Vdd()
+    
+    # cross-coupled PMOS pair (at top)
+    d.push()
+    elm.Line().left(d.unit*1.5).idot()
+    elm.Line().down(d.unit/4)
+    M1 = elm.AnalogPFet(offset_gate=False).label('$M_1$', loc='left').theta(0)
+    d.pop()
+    elm.Line().right(d.unit*1.5) 
+    elm.Line().down(d.unit/4)
+    M2 = elm.AnalogPFet(offset_gate=False).label('$M_2$', loc='right').anchor('source').theta(0).reverse()
+
+    # Cross-coupling connections for PMOS
+    elm.Line().down(d.unit/4).at(M1.drain).dot()
+    d.push()
+    l1 = elm.Line().down(d.unit/2).dot()
+    d.pop()
+    elm.Wire('z').to(M2.gate)
+
+    elm.Line().down(d.unit/4).at(M2.drain).dot()
+    d.push()
+    l2 = elm.Line().down(d.unit/2).dot()
+    d.pop()
+    elm.Wire('z').to(M1.gate)
+
+    # LC tank
+    elm.CapacitorVar().at(l1.end).to(l2.end).label('$C$', loc='bottom')
+    l3 = elm.Line().down(d.unit).at(l1.end).dot()
+    l4 = elm.Line().down(d.unit).at(l2.end).dot()
+    elm.Inductor2(loops=2).at(l3.end).to(l4.end).label('$L$', loc='top')
+
+    # cross-coupled NMOS pair
+    l5 = elm.Line().down(d.unit/2).at(l4.end).dot()
+    elm.Line().down(d.unit/4)
+    M4 = elm.AnalogNFet(offset_gate=False).label('$M_4$', loc='right').reverse().drop('source').theta(0)
+    elm.Line().down(d.unit/4)
+    elm.Line().left(d.unit*1.5).dot()
+    elm.Ground()
+    elm.Line().left(d.unit*1.5)
+    elm.Line().up(d.unit/4)
+    M3 = elm.AnalogNFet(offset_gate=False).label('$M_3$', loc='left').anchor('source').theta(0).drop('drain')
+    elm.Line().up(d.unit/4).dot()
+    d.push()
+    elm.Wire('z').to(M4.gate)
+    d.pop()
+    elm.Line().up().to(l3.end)
+    elm.Wire('z').at(l5.end).to(M3.gate)
+```

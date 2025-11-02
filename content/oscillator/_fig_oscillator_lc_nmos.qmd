@@ -1,0 +1,62 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-oscillator-lc-nmos
+#| echo: false
+#| fig-cap: "An LC differential oscillator using an NMOS cross-coupled differential pair. $L_1$ and $L_2$ are usually implemented as a single on-chip spiral inductor with a center tap."
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    # cross-coupled NMOS pair
+    M1 = elm.AnalogNFet(offset_gate=False).label('$M_1$', loc='right').reverse().drop('source').theta(0)
+    elm.Line().down(d.unit/4)
+    elm.Line().left(d.unit*1.5).dot()
+    pos1 = d.here
+    d.push()
+    Ibias = elm.SourceI().down()
+    elm.Ground()
+    d.pop()
+    elm.Line().left(d.unit*1.5)
+    elm.Line().up(d.unit/4)
+    M2 = elm.AnalogNFet(offset_gate=False).label('$M_2$', loc='left').anchor('source').theta(0)
+
+    elm.Line().up(d.unit/4).at(M1.drain).dot()
+    d.push()
+    l1 = elm.Line().up(d.unit/2).dot()
+    d.pop()
+    elm.Wire('z').to(M2.gate)
+
+    elm.Line().up(d.unit/4).at(M2.drain).dot()
+    d.push()
+    l2 = elm.Line().up(d.unit/2).dot()
+    d.pop()
+    elm.Wire('z').to(M1.gate)
+
+    # LC tank
+    elm.CapacitorVar().at(l1.end).to(l2.end).label('$C$', loc='top').flip().reverse()
+    l3 = elm.Line().up(d.unit).at(l1.end)
+    l4 = elm.Line().up(d.unit).at(l2.end)
+    elm.Inductor2(loops=2).at(l3.end).tox(pos1).label('$L_1$', loc='bottom').dot()
+    elm.Vdd()
+    elm.Inductor2(loops=2).to(l4.end).label('$L_2$', loc='bottom')
+```

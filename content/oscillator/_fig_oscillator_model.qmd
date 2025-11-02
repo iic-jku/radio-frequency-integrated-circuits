@@ -15,10 +15,9 @@ limitations under the License.
 :::
 
 ```{python}
-#| label: fig-crystal-equivalent-circuit
+#| label: fig-oscillator-model
 #| echo: false
-#| fig-cap: "Quartz crystal equivalent circuit."
-#| 
+#| fig-cap: "A model of a VCO as a perfect integrator for the excess phase in the $s$-domain."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -28,15 +27,7 @@ sd.svgconfig.svg2 = False
 with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=14)
 
-    elm.Crystal().right().idot(open=True).dot(open=True)
-    d.move(dx = d.unit, dy=0)
-
-    elm.Line().right(d.unit/2).idot(open=True).dot()
-    Rm = elm.Resistor().right().label(r'$R_\mathrm{m}$')
-    Lm = elm.Inductor2(loops=2).right().label(r'$L_\mathrm{m}$')
-    Cm = elm.Capacitor().right().label(r'$C_\mathrm{m}$').dot()
-    elm.Line().right(d.unit/2).dot(open=True)
-    elm.Line().down(d.unit*3/4).at(Cm.end)
-    elm.Capacitor().left().label(r'$C_0$').tox(Rm.start)
-    elm.Line().up().to(Rm.start)
+    dsp.Arrow().right(d.unit/2).label(r'$V_\mathrm{tune}(s)$', 'left')
+    dsp.Square().label(r'$\frac{K_\mathrm{VCO}}{s}$', loc='center')
+    dsp.Arrow().length(d.unit/2).label(r'$\varphi_\mathrm{VCO}(s)$', 'right')
 ```

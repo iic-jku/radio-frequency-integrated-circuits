@@ -15,10 +15,9 @@ limitations under the License.
 :::
 
 ```{python}
-#| label: fig-lc-oscillator
+#| label: fig-cross-coupled-pair
 #| echo: false
-#| fig-cap: "LC parallel tank with connected negative resistance forming an LC oscillator."
-#| 
+#| fig-cap: "A cross-coupled differential pair."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -28,23 +27,28 @@ sd.svgconfig.svg2 = False
 with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=14)
 
-    L1 = elm.Inductor2(loops=2).label('$L$').down()
-    elm.Line().right(d.unit).dot()
-    C1 = elm.Capacitor().label('$C$').up().dot()
+    M1 = elm.AnalogNFet(offset_gate=False).label(r'$g_\mathrm{m1}$', loc='right').reverse().drop('source').theta(0)
+    elm.Line().down(d.unit/4)
+    elm.Line().left(d.unit*1.5).dot()
     d.push()
-    elm.Line().left().tox(L1.start) 
+    elm.SourceI().down()
+    elm.Ground()
     d.pop()
-    elm.Line().right(d.unit).dot()
-    elm.Resistor().label(r'$R_\mathrm{p}$').down().dot()
+    elm.Line().left(d.unit*1.5)
+    elm.Line().up(d.unit/4)
+    M2 = elm.AnalogNFet(offset_gate=False).label(r'$g_\mathrm{m2}$', loc='left').anchor('source').theta(0)
+
+    elm.Line().up(d.unit/4).at(M1.drain).dot()
     d.push()
-    elm.Line().left().tox(C1.start)
+    l1 = elm.Line().up(d.unit/2).dot(open=True)
     d.pop()
-    elm.Line().right(d.unit).dot(open=True)
+    elm.Wire('z').to(M2.gate)
+
+    elm.Line().up(d.unit/4).at(M2.drain).dot()
     d.push()
-    elm.Gap().label(('–',r'$V_\mathrm{osc}$','+')).up()
+    l2 = elm.Line().up(d.unit/2).dot(open=True)
     d.pop()
-    elm.Line().right(d.unit)
-    elm.Resistor().label(r'$-R_\mathrm{amp}$', loc='bottom').up().color('blue')
-    elm.Line().left(d.unit).dot(open=True)
-    elm.Line().left(d.unit)
+    elm.Wire('z').to(M1.gate)
+
+    elm.Gap().label(('',r'$Z_\mathrm{amp}$','')).at(l1.end).to(l2.end)
 ```
