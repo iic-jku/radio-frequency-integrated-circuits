@@ -51,6 +51,6 @@ with sd.Drawing(canvas='svg') as d:
     elm.Ground()
     d.pop()
     dsp.Line().up(d.unit/4)
-    elm.Inductor().up().label('RF choke', loc='bottom')
+    elm.Inductor2().up().label('RF choke', loc='bottom')
     elm.Dot(open=True).label(r'$V_\mathrm{bias}$', 'top')
 ```
