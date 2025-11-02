@@ -364,7 +364,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#sec-noise" id="toc-sec-noise" class="nav-link" data-scroll-target="#sec-noise"><span class="header-section-number">2.3</span> Noise</a>
   <ul class="collapse">
-  <li><a href="#types-of-noise-generation" id="toc-types-of-noise-generation" class="nav-link" data-scroll-target="#types-of-noise-generation"><span class="header-section-number">2.3.1</span> Types of Noise Generation</a></li>
+  <li><a href="#sec-noise-types" id="toc-sec-noise-types" class="nav-link" data-scroll-target="#sec-noise-types"><span class="header-section-number">2.3.1</span> Types of Noise Generation</a></li>
   <li><a href="#noise-in-impedance-matched-systems" id="toc-noise-in-impedance-matched-systems" class="nav-link" data-scroll-target="#noise-in-impedance-matched-systems"><span class="header-section-number">2.3.2</span> Noise in Impedance-Matched Systems</a></li>
   <li><a href="#sec-noise-figure" id="toc-sec-noise-figure" class="nav-link" data-scroll-target="#sec-noise-figure"><span class="header-section-number">2.3.3</span> Noise Figure</a></li>
   <li><a href="#sec-sensitivity" id="toc-sec-sensitivity" class="nav-link" data-scroll-target="#sec-sensitivity"><span class="header-section-number">2.3.4</span> Sensitivity</a></li>
@@ -415,7 +415,15 @@ window.Quarto = {
   <li><a href="#sec-lo-delay" id="toc-sec-lo-delay" class="nav-link" data-scroll-target="#sec-lo-delay"><span class="header-section-number">5.5.4</span> Delay-Based Phase Generation</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#sec-oscillator" id="toc-sec-oscillator" class="nav-link" data-scroll-target="#sec-oscillator"><span class="header-section-number">6</span> Oscillators</a></li>
+  <li><a href="#sec-oscillator" id="toc-sec-oscillator" class="nav-link" data-scroll-target="#sec-oscillator"><span class="header-section-number">6</span> Oscillators</a>
+  <ul class="collapse">
+  <li><a href="#sec-oscillator-noise" id="toc-sec-oscillator-noise" class="nav-link" data-scroll-target="#sec-oscillator-noise"><span class="header-section-number">6.1</span> Oscillator Noise</a></li>
+  <li><a href="#sec-oscillator-reciprocal-mixing" id="toc-sec-oscillator-reciprocal-mixing" class="nav-link" data-scroll-target="#sec-oscillator-reciprocal-mixing"><span class="header-section-number">6.2</span> Reciprocal Mixing</a></li>
+  <li><a href="#sec-single-ended-oscillators" id="toc-sec-single-ended-oscillators" class="nav-link" data-scroll-target="#sec-single-ended-oscillators"><span class="header-section-number">6.3</span> Single-Ended Oscillators</a></li>
+  <li><a href="#sec-differential-oscillators" id="toc-sec-differential-oscillators" class="nav-link" data-scroll-target="#sec-differential-oscillators"><span class="header-section-number">6.4</span> Differential Oscillators</a></li>
+  <li><a href="#sec-frequency-tuning-of-oscillators" id="toc-sec-frequency-tuning-of-oscillators" class="nav-link" data-scroll-target="#sec-frequency-tuning-of-oscillators"><span class="header-section-number">6.5</span> Frequency Tuning of Oscillators</a></li>
+  <li><a href="#sec-oscillator-modeling" id="toc-sec-oscillator-modeling" class="nav-link" data-scroll-target="#sec-oscillator-modeling"><span class="header-section-number">6.6</span> Oscillator Modelling</a></li>
+  </ul></li>
   <li><a href="#sec-pll" id="toc-sec-pll" class="nav-link" data-scroll-target="#sec-pll"><span class="header-section-number">7</span> Phase-Locked Loops</a></li>
   <li><a href="#sec-poweramp" id="toc-sec-poweramp" class="nav-link" data-scroll-target="#sec-poweramp"><span class="header-section-number">8</span> Power Amplifiers</a></li>
   </ul>
@@ -470,7 +478,7 @@ window.Quarto = {
 </div>
 <section id="sec-intro" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>This is the material for an introductory radio-frequency integrated circuits course. The contents are largely based on <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span> and <span class="citation" data-cites="Darabi_RFIC">(<a href="#ref-Darabi_RFIC" role="doc-biblioref">Darabi 2020</a>)</span>; these two books are an excellent introduction into this topic and are highly recommended! For a general introduction into RF and microwave <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span> is a great read!</p>
+<p>This is the material for an introductory radio-frequency integrated circuits course. The contents are largely based on <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Behzad Razavi 2011</a>)</span> and <span class="citation" data-cites="Darabi_RFIC">(<a href="#ref-Darabi_RFIC" role="doc-biblioref">Darabi 2020</a>)</span>; these two books are an excellent introduction into this topic and are highly recommended! For a general introduction into RF and microwave <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span> is a great read!</p>
 <p>It is assumed that readers are familiar with the contents of this <a href="https://iic-jku.github.io/analog-circuit-design/analog_circuit_design.html">Analog Circuit Design</a> course.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -804,7 +812,7 @@ Table&nbsp;2: Comparison of wireless communication standards
 <a href="rfic_files/figure-html/fig-rf-design-multidisciplinary-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: RF design as a multidisciplinary field requiring knowledge from various engineering domains (adapted from [@Razavi_RFIC])."><img src="rfic_files/figure-html/fig-rf-design-multidisciplinary-output-1.png" width="463" height="463" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rf-design-multidisciplinary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: RF design as a multidisciplinary field requiring knowledge from various engineering domains (adapted from <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span>).
+Figure&nbsp;3: RF design as a multidisciplinary field requiring knowledge from various engineering domains (adapted from <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Behzad Razavi 2011</a>)</span>).
 </figcaption>
 </figure>
 </div>
@@ -819,7 +827,7 @@ Figure&nbsp;3: RF design as a multidisciplinary field requiring knowledge from v
 <a href="rfic_files/figure-html/fig-rf-design-considerations-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: RFIC require careful design considerations and trade-offs (adapted from [@Razavi_RFIC])."><img src="rfic_files/figure-html/fig-rf-design-considerations-output-1.png" width="389" height="389" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rf-design-considerations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: RFIC require careful design considerations and trade-offs (adapted from <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span>).
+Figure&nbsp;4: RFIC require careful design considerations and trade-offs (adapted from <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Behzad Razavi 2011</a>)</span>).
 </figcaption>
 </figure>
 </div>
@@ -1091,9 +1099,9 @@ Note&nbsp;4: Simple IIP3 Cascade Calculation
 <p><span class="math display">\[
 P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \left( \frac{1\,\text{MHz}}{1\,\text{Hz}} \right) = -114\,\text{dBm}
 \]</span></p>
-<p>The PSD of noise can be flat vs.&nbsp;frequency (which is called “white noise”), or can decrease with frequency (e.g., “flicker noise” or “1/f noise”). Further, noise can be generated by resistors (thermal noise), semiconductors (shot noise, generation-recombination noise), etc. A detailed discussion of noise sources can be found in <span class="citation" data-cites="Gray_Meyer_5th_ed">(<a href="#ref-Gray_Meyer_5th_ed" role="doc-biblioref">Gray et al. 2009</a>)</span> or <span class="citation" data-cites="Razavi_Analog_CMOS">(<a href="#ref-Razavi_Analog_CMOS" role="doc-biblioref">Razavi 2017</a>)</span>.</p>
-<section id="types-of-noise-generation" class="level3" data-number="2.3.1">
-<h3 data-number="2.3.1" class="anchored" data-anchor-id="types-of-noise-generation"><span class="header-section-number">2.3.1</span> Types of Noise Generation</h3>
+<p>The PSD of noise can be flat vs.&nbsp;frequency (which is called “white noise”), or can decrease with frequency (e.g., “flicker noise” or “1/f noise”). Further, noise can be generated by resistors (thermal noise), semiconductors (shot noise, generation-recombination noise), etc. A detailed discussion of noise sources can be found in <span class="citation" data-cites="Gray_Meyer_5th_ed">(<a href="#ref-Gray_Meyer_5th_ed" role="doc-biblioref">Gray et al. 2009</a>)</span> or <span class="citation" data-cites="Razavi_Analog_CMOS">(<a href="#ref-Razavi_Analog_CMOS" role="doc-biblioref">Behzad Razavi 2017</a>)</span>.</p>
+<section id="sec-noise-types" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="sec-noise-types"><span class="header-section-number">2.3.1</span> Types of Noise Generation</h3>
 <p><strong>Resistors</strong> generate thermal noise, which is white noise with a PSD of <span class="math inline">\(4 k T R\)</span> (in V<span class="math inline">\(^2\)</span>/Hz) when looking at the voltage across the resistor, or <span class="math inline">\(4 k T / R\)</span> (in A<span class="math inline">\(^2\)</span>/Hz) when looking at the current through the resistor. This noise is generated by the random thermal motion of charge carriers in the resistor.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1120,7 +1128,7 @@ P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \le
 <p><strong>MOSFETs</strong> generate several types of noise, the most important ones being the thermal noise of the channel and flicker noise.</p>
 <p>The thermal noise of the channel can be modeled as a current noise source between drain and source with a PSD of <span class="math inline">\(\overline{I_\mathrm{n}^2} = 4 k T \gamma g_{d0}\)</span> (in A<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(\gamma\)</span> is a process-dependent parameter (usually between 2/3 and 2). The parameter <span class="math inline">\(g_{d0}\)</span> is the small-signal output conductance of the MOSFET in triode, i.e., <span class="math inline">\(g_{d0} = g_\mathrm{ds}\)</span>, or equal to <span class="math inline">\(g_{d0} = g_\mathrm{m}\)</span> when in saturation.</p>
 <p>In saturation, it is often useful to express the thermal noise as a voltage noise source at the gate with a PSD of <span class="math inline">\(\overline{V_\mathrm{n}^2} = 4 k T \gamma / g_\mathrm{m}\)</span> (in V<span class="math inline">\(^2\)</span>/Hz). We can see that we can lower this noise of the MOSFET by increasing the transconductance <span class="math inline">\(g_\mathrm{m}\)</span>, which can be achieved by increasing the bias current.</p>
-<p>In addition, at high frequencies, the MOSFET also has induced gate-current noise, which is correlated with the channel thermal noise. A detailed discussion of this noise source can be found in <span class="citation" data-cites="Razavi_Analog_CMOS">(<a href="#ref-Razavi_Analog_CMOS" role="doc-biblioref">Razavi 2017</a>)</span>.</p>
+<p>In addition, at high frequencies, the MOSFET also has induced gate-current noise, which is correlated with the channel thermal noise. A detailed discussion of this noise source can be found in <span class="citation" data-cites="Razavi_Analog_CMOS">(<a href="#ref-Razavi_Analog_CMOS" role="doc-biblioref">Behzad Razavi 2017</a>)</span>.</p>
 <p>Flicker noise is usually modeled as a voltage noise source at the gate with a PSD of <span class="math inline">\(K_f / (C'_\mathrm{ox}W L f)\)</span> (in V<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(K_f\)</span> is a process-dependent parameter, <span class="math inline">\(C'_\mathrm{ox}\)</span> is the oxide capacitance per unit area, <span class="math inline">\(L\)</span> and <span class="math inline">\(W\)</span> are the length and width of the MOSFET, and <span class="math inline">\(f\)</span> is the frequency. Note that we can lower the flicker noise by increasing the area of the MOSFET (<span class="math inline">\(W L\)</span>), however, this increases the parasitic capacitances associated with the MOSFET, and this often prohibitive for RF operation!</p>
 <p>In <strong>bipolar junction transistors (BJTs)</strong>, the most important noise source is the shot noise due to the diffusion current in the base-emitter junction. Its PSD can be modeled as a current noise source between collector and emitter with a PSD of <span class="math inline">\(2 q I_\mathrm{C}\)</span> (in A<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(q\)</span> is the elementary charge (<span class="math inline">\(q = 1.6 \times 10^{-19}\)</span> C) and <span class="math inline">\(I_\mathrm{C}\)</span> is the DC collector current.</p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -2047,7 +2055,7 @@ Figure&nbsp;31: Circuit diagram of a common-gate LNA.
 <p><span id="eq-lna-cg-noise-factor"><span class="math display">\[
 F = 1 + \gamma + \frac{4 R_\mathrm{s}}{R_\mathrm{D}}  \xrightarrow{R_\mathrm{D} \gg R_\mathrm{s}} F = 1 + \gamma .
 \tag{30}\]</span></span></p>
-<p>With a classical long-channel <span class="math inline">\(\gamma = 2/3\)</span>, we can achieve a minimum noise figure of 2.2 dB, which is already better than the resistively matched common-source LNA. However, with modern short-channel devices, <span class="math inline">\(\gamma\)</span> is often larger than 1, so that the minimum noise figure of the common-gate LNA is often larger than 3 dB <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span>.</p>
+<p>With a classical long-channel <span class="math inline">\(\gamma = 2/3\)</span>, we can achieve a minimum noise figure of 2.2 dB, which is already better than the resistively matched common-source LNA. However, with modern short-channel devices, <span class="math inline">\(\gamma\)</span> is often larger than 1, so that the minimum noise figure of the common-gate LNA is often larger than 3 dB <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Behzad Razavi 2011</a>)</span>.</p>
 </section>
 <section id="sec-lna-inductive-degeneration" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="sec-lna-inductive-degeneration"><span class="header-section-number">4.3</span> Inductively-Degenerated Common-Source LNA</h2>
@@ -2097,7 +2105,7 @@ Z_\mathrm{in} = \frac{1}{s C_\mathrm{gs}} + s L + \frac{g_\mathrm{m}L}{C_\mathrm
 <p><span class="math display">\[
 \Re \{ Z_\mathrm{in} \} = \frac{g_\mathrm{m}L}{C_\mathrm{gs}}
 \]</span></p>
-<p>Without proof (refer to <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span> or <span class="citation" data-cites="Darabi_RFIC">(<a href="#ref-Darabi_RFIC" role="doc-biblioref">Darabi 2020</a>)</span> for a derivation) we find for the noise factor of this input stage (with some simplification) as</p>
+<p>Without proof (refer to <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Behzad Razavi 2011</a>)</span> or <span class="citation" data-cites="Darabi_RFIC">(<a href="#ref-Darabi_RFIC" role="doc-biblioref">Darabi 2020</a>)</span> for a derivation) we find for the noise factor of this input stage (with some simplification) as</p>
 <p><span id="eq-lna-inductive-degeneration-noise-factor"><span class="math display">\[
 F = 1 + \frac{\gamma R_\mathrm{s} \omega_0^2 C_\mathrm{gs}^2}{g_\mathrm{m}}.
 \tag{32}\]</span></span></p>
@@ -2518,7 +2526,430 @@ Figure&nbsp;53: LO multiphase generation by delay-locked loop (DLL). An extensio
 </section>
 <section id="sec-oscillator" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Oscillators</h1>
-<p>To be added.</p>
+<p>For the generation of the LO frequency to be used in a mixer for frequency conversion, oscillators are used. Ideally, oscillators produce a stable, noise-free sinusoidal signal, independent of environmental conditions like temperature or supply voltage variations. The circuit symbol of an oscillator is shown in <a href="#fig-oscillator-symbol" class="quarto-xref">Figure&nbsp;54</a>.</p>
+<div id="cell-fig-oscillator-symbol" class="cell" data-execution_count="54">
+<div class="cell-output cell-output-display">
+<div id="fig-oscillator-symbol" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-oscillator-symbol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-oscillator-symbol-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-54" title="Figure&nbsp;54: Oscillator symbol."><img src="rfic_files/figure-html/fig-oscillator-symbol-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-oscillator-symbol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;54: Oscillator symbol.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The question is how to construct an oscillator. In summary, we need to build something that oscillates, i.e., produces a sustained periodic signal with frequency <span class="math inline">\(\omega_0\)</span>. One way to achieve this is to construct a feedback loop where <span class="math inline">\(|H(s = j \omega_0)| = 1\)</span> and <span class="math inline">\(\angle H(s = j \omega_0) = n \cdot 2 \pi\)</span>; these conditions are called the “<a href="https://en.wikipedia.org/wiki/Barkhausen_criterion">Barkhausen criterion</a>” (here, <span class="math inline">\(H(s)\)</span> is the loop gain around the feedback loop). A ring oscillator is one example of such a feedback oscillator. For the 3-stage single-ended <em>ring oscillator</em> shown in <a href="#fig-ring-oscillator" class="quarto-xref">Figure&nbsp;55</a>, each inverter provides a phase shift of <span class="math inline">\(2 \pi / 3\)</span> at the oscillation frequency <span class="math inline">\(\omega_0\)</span>, resulting in a total phase shift of <span class="math inline">\(2 \pi\)</span> for the three inverters. The gain condition is fulfilled by the gain of the inverters, which must be larger than unity to compensate for losses in the loop. By using an odd number of inverters, a stable locking point at dc is avoided.</p>
+<div id="cell-fig-ring-oscillator" class="cell" data-execution_count="55">
+<div class="cell-output cell-output-display">
+<div id="fig-ring-oscillator" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ring-oscillator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-ring-oscillator-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-55" title="Figure&nbsp;55: Three stage single-ended ring oscillator."><img src="rfic_files/figure-html/fig-ring-oscillator-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ring-oscillator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;55: Three stage single-ended ring oscillator.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that the output frequency of the ring oscillator shown above is ill-controlled, as it only depends on the delay (i.e., phase shift) of the inverters, which are usually dependent on process, voltage, and temperature (PVT) variations. Also, the inherent quality factor of such an oscillator is low, as exemplified by the definition of the quality factor <span class="math inline">\(Q\)</span> as <span class="citation" data-cites="Razavi.1996">(<a href="#ref-Razavi.1996" role="doc-biblioref">B. Razavi 1996</a>)</span></p>
+<p><span id="eq-definition-q"><span class="math display">\[
+Q = 2 \pi \frac{\text{Average energy stored}}{\text{Energy loss per cycle}} = \frac{\omega_0}{\Delta \omega} = \frac{\omega_0}{2} \sqrt{ \left( \frac{d A}{d \omega} \right)^2 + \left( \frac{d \varphi}{d \omega} \right)^2 }
+\tag{40}\]</span></span></p>
+<p>with a ring oscillator having very low <span class="math inline">\(dA / d \omega\)</span> and <span class="math inline">\(d \varphi / d \omega\)</span> slopes (<span class="math inline">\(A(\omega)\)</span> and <span class="math inline">\(\varphi(\omega)\)</span> are the open loop gain and phase shift, respectively). It can be shown that <span class="math inline">\(Q \approx 1.3\)</span> for a 3-stage ring oscillator <span class="citation" data-cites="Razavi.1996">(<a href="#ref-Razavi.1996" role="doc-biblioref">B. Razavi 1996</a>)</span>. For some applications, this might be sufficient, but in many cases, a higher <span class="math inline">\(Q\)</span> is desired to reduce phase noise and improve frequency stability (as we will see later in this chapter).</p>
+<p>According to <a href="#eq-definition-q" class="quarto-xref">Equation&nbsp;40</a>, a high <span class="math inline">\(Q\)</span> can be achieved by using a resonator with high energy storage capability and low energy loss per cycle. We then add an amplifier in a feedback loop to compensate for the losses of the resonator. This principle is shown in <a href="#fig-lc-oscillator" class="quarto-xref">Figure&nbsp;56</a> for a parallel LC tank circuit as the resonator. Sometimes the action of the feedback loop around the amplifier is modelled as a negative resistance <span class="math inline">\(-R_\mathrm{amp}\)</span> that compensates for the losses of the tank circuit represented by the resistor <span class="math inline">\(R_\mathrm{p}\)</span>. The single parallel resistor <span class="math inline">\(R_\mathrm{p}\)</span> models the losses of the inductor <span class="math inline">\(L\)</span> and the capacitor <span class="math inline">\(C\)</span>.</p>
+<div id="cell-fig-lc-oscillator" class="cell" data-execution_count="56">
+<div class="cell-output cell-output-display">
+<div id="fig-lc-oscillator" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lc-oscillator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-lc-oscillator-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-56" title="Figure&nbsp;56: LC parallel tank with connected negative resistance forming an LC oscillator."><img src="rfic_files/figure-html/fig-lc-oscillator-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lc-oscillator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;56: LC parallel tank with connected negative resistance forming an LC oscillator.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>When <span class="math inline">\(|-R_\mathrm{amp}| = R_\mathrm{p}\)</span>, the losses of the tank circuit are fully compensated, and we have a sustained oscillation at the resonance frequency <span class="math inline">\(\omega_0 = 1 / \sqrt{L C}\)</span>. In practice, the amplifier gain is usually set slightly higher than required for loss compensation to <strong>start the oscillation from noise</strong>. Then, as the oscillation amplitude increases, some <strong>non-linear mechanism in the amplifier reduces the effective gain</strong> until a stable oscillation amplitude is reached. Various implementations of such LC oscillators exist, which will be discussed in the following sections.</p>
+<ul>
+<li><p>An alternative implementation of setting the oscillation amplitude is to use an <em>automatic level control</em> (ALC) loop, which measures the oscillation amplitude and adjusts the amplifier gain accordingly to maintain a constant output amplitude. This approach can improve the stability of the oscillation amplitude over process, voltage, and temperature variations.</p></li>
+<li><p>As an alternative to start the oscillation from thermal noise (which can take considerable time depending on the <span class="math inline">\(Q\)</span> of the resonator) is to provide a known initial condition to the resonator, e.g., by pre-charging the capacitor <span class="math inline">\(C\)</span> to a certain voltage before enabling the amplifier. This way, the oscillation can start immediately from this initial energy stored in the resonator.</p></li>
+</ul>
+<p>As a first hint on how to optimize an LC oscillator for low phase noise, we can try to maximize <span class="math inline">\(Q\)</span> according to <a href="#eq-definition-q" class="quarto-xref">Equation&nbsp;40</a>. The energy stored in the capacitor at peak voltage is</p>
+<p><span class="math display">\[
+E_\mathrm{stored} = \frac{C V_\mathrm{osc,p}^2}{2}
+\]</span></p>
+<p>so to maximize this we should maximize both <span class="math inline">\(C\)</span> and the peak oscillation voltage <span class="math inline">\(V_\mathrm{osc,p}\)</span>. On the other hand, the energy loss per cycle is related to the power dissipated in the resistor <span class="math inline">\(R_\mathrm{p}\)</span> by</p>
+<p><span class="math display">\[
+E_\mathrm{loss} = \frac{V_\mathrm{osc,p}^2}{2 R_\mathrm{p}} \cdot \frac{1}{f_0}
+\]</span></p>
+<p>which we can minimize by maximizing <span class="math inline">\(R_\mathrm{p}\)</span>. In summary, to maximize <span class="math inline">\(Q\)</span> we should use a large capacitance <span class="math inline">\(C\)</span>, a high oscillation amplitude <span class="math inline">\(V_\mathrm{osc,p}\)</span>, and a high tank resistance <span class="math inline">\(R_\mathrm{p}\)</span>. Note that increasing <span class="math inline">\(C\)</span> will reduce <span class="math inline">\(L\)</span> for a given <span class="math inline">\(\omega_0\)</span>. Calculating <span class="math inline">\(Q\)</span> from these expressions yields</p>
+<p><span class="math display">\[
+Q = 2 \pi \frac{E_\mathrm{stored}}{E_\mathrm{loss}} = \omega_0 C R_\mathrm{p}
+\]</span></p>
+<p>which confirms the above observations.</p>
+<p>Fundamentally, if we describe the output voltage of the oscillator as</p>
+<p><span class="math display">\[
+v_\mathrm{osc}(t) = V_\mathrm{osc,p}(t) \cdot \cos[ \omega_0(t) t + \varphi(t) ]
+\]</span></p>
+<p>we want to keep the amplitude variations small, i.e., <span class="math inline">\(V_\mathrm{osc,p}(t) = V_\mathrm{osc,p}\)</span>, and also the frequency variations small, i.e., <span class="math inline">\(\omega_0(t) = \omega_0\)</span>. We further want to minimize any phase fluctuations, i.e., <span class="math inline">\(\varphi(t) = \varphi_0\)</span>.</p>
+<p>As a side note, the definition of <span class="math inline">\(Q\)</span> in <a href="#eq-definition-q" class="quarto-xref">Equation&nbsp;40</a> can also be understood as describing how many oscillation cycles it takes until the energy stored in the resonator is dissipated. For example, if <span class="math inline">\(Q = 1000\)</span> at <span class="math inline">\(f_0 = 1\,\text{GHz}\)</span>, the energy stored in the resonator will last for approximately 1000 cycles, which is 1 µs. This time duration is sometimes called the “ring-down time” of the resonator.</p>
+<section id="sec-oscillator-noise" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="sec-oscillator-noise"><span class="header-section-number">6.1</span> Oscillator Noise</h2>
+<p>For calculating the noise of an oscillator, we assume that an LC-based oscillator as shown in <a href="#fig-lc-oscillator" class="quarto-xref">Figure&nbsp;56</a> is used. We assume that the oscillator is in steady-state operation, i.e., <span class="math inline">\(-R_\mathrm{amp} = R_\mathrm{p}\)</span>. We can then simplify the circuit to the one shown in <a href="#fig-lc-oscillator-noise-model" class="quarto-xref">Figure&nbsp;57</a>.</p>
+<div id="cell-fig-lc-oscillator-noise-model" class="cell" data-execution_count="57">
+<div class="cell-output cell-output-display">
+<div id="fig-lc-oscillator-noise-model" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lc-oscillator-noise-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-lc-oscillator-noise-model-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-57" title="Figure&nbsp;57: LC parallel tank with oscillator in steady-state operation."><img src="rfic_files/figure-html/fig-lc-oscillator-noise-model-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lc-oscillator-noise-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;57: LC parallel tank with oscillator in steady-state operation.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can calculate</p>
+<p><span class="math display">\[
+Z_\mathrm{tank}(s) = \frac{s L \frac{1}{s C}}{s L + \frac{1}{s C}} = \frac{s L}{1 + s^2 L C}.
+\]</span></p>
+<p>At <span class="math inline">\(s = j \omega_0\)</span>, we have <span class="math inline">\(Z_\mathrm{tank}(s) \to \infty\)</span>, so let’s approximate around <span class="math inline">\(\omega_0\)</span>:</p>
+<p><span class="math display">\[
+Z_\mathrm{tank}(j \omega_0 + j \Delta \omega) =\frac{j (\omega_0 + \Delta \omega) L}{1 - (\omega_0 + \Delta \omega)^2 L C}
+\]</span></p>
+<p>For <span class="math inline">\(\Delta \omega \ll \omega_0\)</span>, we can approximate <span class="math inline">\((\omega_0 + \Delta \omega)^2 \approx \omega_0^2 + 2 \omega_0 \Delta \omega\)</span> and <span class="math inline">\(\omega_0 + \Delta \omega \approx \omega_0\)</span>, which yields (using <span class="math inline">\(\omega_0^2 L C = 1\)</span>)</p>
+<p><span class="math display">\[
+Z_\mathrm{tank}(j \omega_0 + j \Delta \omega) = -\frac{j}{2 \Delta \omega C}.
+\]</span></p>
+<p>We now use the correspondence <span class="math inline">\(C = 1 / \omega_0^2 L\)</span> and express <span class="math inline">\(L = R_\mathrm{p} / \omega_0 Q\)</span> to get</p>
+<p><span class="math display">\[
+|Z_\mathrm{tank}(j \omega_0 + j \Delta \omega)| = \frac{R_\mathrm{p}}{2 Q} \left( \frac{\omega_0}{\Delta \omega} \right)
+\]</span></p>
+<p>which provides us with an expression for the magnitude of the tank impedance around resonance. We now calculate the noise power if a noise current is injected into this impedance. We use the single-sided noise current of <span class="math inline">\(R_\mathrm{p}\)</span> (see <a href="#sec-noise-types" class="quarto-xref">Section&nbsp;2.3.1</a>), increased by a factor <span class="math inline">\(F\)</span> contributed by the active circuit providing <span class="math inline">\(-R_\mathrm{amp}\)</span>:</p>
+<p><span class="math display">\[
+\overline{I_n^2} = \frac{4 k T F}{R_\mathrm{p}}
+\]</span></p>
+<p>The noise voltage across the tank at a frequency offset <span class="math inline">\(\Delta \omega\)</span> from <span class="math inline">\(\omega_0\)</span> is then</p>
+<p><span class="math display">\[
+\overline{V_n^2}(\Delta \omega) = |Z_\mathrm{tank}(j \omega_0 + j \Delta \omega)|^2 \cdot \frac{4 k T F}{R_\mathrm{p}} = \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2
+\]</span></p>
+<p>This absolute noise voltage is not of much interest per se. We normalize it to the oscillation amplitude <span class="math inline">\(V_\mathrm{p}\)</span>, and only account for 1/2 of the noise, as the total noise power is split equally into amplitude noise and phase noise <span class="citation" data-cites="Razavi.1996">(<a href="#ref-Razavi.1996" role="doc-biblioref">B. Razavi 1996</a>)</span>, and we are only interested in the <strong>phase noise</strong>. This is because we assume the amplitude noise is removed by amplitude clipping in the LO chain routing the oscillator signal to the mixer. This is often a valid assumption. We introduce the symbol <span class="math inline">\(\mathcal{L}(\cdot)\)</span> to denote this normalized phase noise of the oscillator:</p>
+<p><span id="eq-lesson-equation"><span class="math display">\[
+\mathcal{L}\{\Delta \omega\} = \frac{\frac{1}{2} \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2}{\left( \frac{V_\mathrm{p}}{\sqrt{2}} \right)^2} = \frac{k T F R_\mathrm{p}}{V_\mathrm{p}^2} \cdot \frac{1}{Q^2} \cdot \left( \frac{\omega_0}{\Delta \omega} \right)^2
+\tag{41}\]</span></span></p>
+<p>This equation is known as “<strong>Leeson’s equation</strong>” <span class="citation" data-cites="Leeson.1966">(<a href="#ref-Leeson.1966" role="doc-biblioref">Leeson 1966</a>)</span>, and it provides us with important insights on how to design low phase noise oscillators:</p>
+<ol type="1">
+<li>Use a resonator with high quality factor <span class="math inline">\(Q\)</span> to reduce phase noise. On-chip LC tanks usually provide moderate <span class="math inline">\(Q\)</span> values (e.g., 10 to 30), while off-chip crystals can provide very high <span class="math inline">\(Q\)</span> values (e.g., 10,000 to 100,000).</li>
+<li>Maximize the oscillation amplitude <span class="math inline">\(V_\mathrm{p}\)</span> to increase the stored energy in the resonator. In CMOS implementations, this is often limited by the supply voltage and/or device breakdown voltages.</li>
+<li>Use an active circuit with low noise factor <span class="math inline">\(F\)</span> to minimize the noise contribution of the negative resistance <span class="math inline">\(-R_\mathrm{amp}\)</span>. A good value to aim for is <span class="math inline">\(F \approx 2\)</span> or lower.</li>
+<li>Maximize the tank resistance <span class="math inline">\(R_\mathrm{p}\)</span> to minimize the thermal noise contribution. This can be achieved by using high-Q inductors and low-loss capacitors.</li>
+</ol>
+<p>The phase noise <span class="math inline">\(\mathcal{L}\{\Delta \omega\}\)</span> is expressed in the unit of dBc/Hz, i.e., in decibels of phase noise relative to the carrier power per 1 Hz of bandwidth. When expressing the phase noise of an oscillator in dBc/Hz it is important to state both the oscillation frequency <span class="math inline">\(\omega_0\)</span> and the offset frequency <span class="math inline">\(\Delta \omega\)</span> at which the phase noise is evaluated. For example, we could say that an oscillator has a phase noise of -137 dBc/Hz at 3 MHz offset from a carrier frequency of 2 GHz.</p>
+<p>The phase noise expressed with <a href="#eq-lesson-equation" class="quarto-xref">Equation&nbsp;41</a> describes an important region of the total oscillator phase noise where the phase noise decreases with <span class="math inline">\(1 / (\Delta \omega)^2\)</span>, i.e., with 20 dB per decade. This region is often called the “thermal noise region” as it is dominated by thermal noise from the tank resistor and the active circuit. However, at lower offset frequencies, other noise mechanisms (like flicker noise) can dominate, leading to different slopes of the phase noise vs.&nbsp;offset frequency curve. At larger offset frequencies, the phase noise can flatten out due to thermal noise floor limitation of buffer amplifiers following the oscillator. A typical phase noise plot of an LC oscillator is shown in <a href="#fig-phase-noise-spectrum" class="quarto-xref">Figure&nbsp;58</a>.</p>
+<div id="cell-fig-phase-noise-spectrum" class="cell" data-execution_count="58">
+<div class="cell-output cell-output-display">
+<div id="fig-phase-noise-spectrum" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-phase-noise-spectrum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-phase-noise-spectrum-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-58" title="Figure&nbsp;58: Phase noise spectrum of a typical LC oscillator showing characteristic 1/f³ and 1/f² slopes vs.&nbsp;frequency offset from carrier. The flicker noise corner (where the 1/f³ region transitions to the 1/f² region) is around 10 kHz, and the thermal noise floor onset is marked at 10 MHz."><img src="rfic_files/figure-html/fig-phase-noise-spectrum-output-1.png" width="656" height="463" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-phase-noise-spectrum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;58: Phase noise spectrum of a typical LC oscillator showing characteristic 1/f³ and 1/f² slopes vs.&nbsp;frequency offset from carrier. The flicker noise corner (where the 1/f³ region transitions to the 1/f² region) is around 10 kHz, and the thermal noise floor onset is marked at 10 MHz.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>It is important to note that the phase noise does not go to infinity as <span class="math inline">\(\Delta \omega\)</span> approaches zero, as <a href="#eq-lesson-equation" class="quarto-xref">Equation&nbsp;41</a> might suggest. This is an artifact of the simplified model used to derive Leeson’s equation. In reality, the phase noise has the form of a Lorentzian spectrum around the carrier frequency, which means that it flattens out at very low offset frequencies with a trend described by</p>
+<p><span class="math display">\[
+\mathcal{L}\{ \Delta \omega \ll \} \propto \frac{1}{\omega_\mathrm{B}^2 + \Delta \omega^2}
+\]</span></p>
+<p>with <span class="math inline">\(\omega_\mathrm{B}\)</span> being the half-power bandwidth of the oscillator spectrum.</p>
+<p>Why is phase noise important?</p>
+<ol type="1">
+<li>In RX and TX the phase noise of the LO creates jitter, which degrades signal quality and contributes to EVM degradation.</li>
+<li>In TX, phase noise of the LO creates noise sidebands around the carrier, which can lead to adjacent channel interference together with spectral regrowth due to nonlinearities and thermal noise.</li>
+<li>In RX, reciprocal mixing of the phase noise sidebands with the desired signal creates in-band noise, which degrades the SNR and sensitivity of the RX.</li>
+<li>In systems using multiple carriers or carriers with high-order modulation schemes (like in OFDM), phase noise can lead to inter-carrier interference (ICI) and symbol misinterpretation, further degrading system performance.</li>
+</ol>
+</section>
+<section id="sec-oscillator-reciprocal-mixing" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="sec-oscillator-reciprocal-mixing"><span class="header-section-number">6.2</span> Reciprocal Mixing</h2>
+<p>Reciprocal mixing is a phenomenon that occurs in receivers when the phase noise sidebands of the local oscillator mix with strong adjacent channel signals, resulting in in-band noise that degrades the signal-to-noise ratio of the desired signal. This effect is particularly pronounced in systems with high-order modulation schemes or closely spaced channels, where even small amounts of phase noise can lead to significant performance degradation.</p>
+<p>To analyze reciprocal mixing, we consider a scenario where a strong interferer is present at a frequency offset <span class="math inline">\(\Delta f\)</span> from the desired signal. The phase noise of the local oscillator at this offset frequency can be characterized by its power spectral density <span class="math inline">\(\mathcal{L}\{\Delta f\}\)</span>. When the local oscillator mixes with the interferer, the phase noise sidebands effectively “fold” into the desired signal band, creating additional noise. This noise level can be estimated by multiplying the power of the interferer by the phase noise level at the offset frequency and considering the channel bandwidth <span class="math inline">\(B\)</span> of the RX</p>
+<p><span id="eq-reciprocal-mixing-noise"><span class="math display">\[
+P_\mathrm{RM} = P_\mathrm{interferer} + \mathcal{L}\{ \Delta f\} + 10 \log_{10}(B)
+\tag{42}\]</span></span></p>
+<p>where <span class="math inline">\(P_\mathrm{RM}\)</span> is the power of the reciprocal mixing noise introduced into the desired signal band.</p>
+<div id="nte-reciprocal-mixing" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note&nbsp;7: Reciprocal Mixing Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let us assume the following example from a Bluetooth LE receiver: The sensitivity target for the RX is -70 dBm with an SNR of 10 dB for a 1 MHz channel. An adjacent channel interferer is present at -27 dB channel to interferer ratio at an offset of 3 MHz. How much phase noise can the LO have to meet the sensitivity target?</p>
+<p>From the sensitivity target and the SNR requirement, we can calculate the maximum allowable noise floor in the RX. We add a margin of 3 dB to account for implementation losses:</p>
+<p><span class="math display">\[
+P_\mathrm{noise,max} = P_\mathrm{sens} - \text{SNR} - P_\mathrm{margin} = -70\,\text{dBm} - 10\,\text{dB} - 3\,\text{dB} = -83\,\text{dBm}
+\]</span></p>
+<p>The interferer power is:</p>
+<p><span class="math display">\[
+P_\mathrm{interferer} = P_\mathrm{sens} - \text{C/I} = -70\,\text{dBm} + 27\,\text{dB} = -43\,\text{dBm}
+\]</span></p>
+<p>Using <a href="#eq-reciprocal-mixing-noise" class="quarto-xref">Equation&nbsp;42</a>, we can express the maximum allowable phase noise at 3 MHz offset at 2.4 GHz as:</p>
+<p><span class="math display">\[
+\mathcal{L}\{3\,\text{MHz}\} = P_\mathrm{noise,max} - P_\mathrm{interferer} - 10 \log_{10}(B) = -83\,\text{dBm} + 43\,\text{dBm} - 60\,\text{dB} = -100\,\text{dBc/Hz}
+\]</span></p>
+</div>
+</div>
+<p>The reciprocal mixing scenario described in <a href="#nte-reciprocal-mixing" class="quarto-xref">Note&nbsp;7</a> is visualized in <a href="#fig-reciprocal-mixing" class="quarto-xref">Figure&nbsp;59</a>.</p>
+<div id="cell-fig-reciprocal-mixing" class="cell" data-execution_count="59">
+<div class="cell-output cell-output-display">
+<div id="fig-reciprocal-mixing" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reciprocal-mixing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-reciprocal-mixing-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-59" title="Figure&nbsp;59: Reciprocal mixing in a receiver: A strong interferer at offset frequency mixes with LO phase noise sidebands, creating in-band noise that degrades the desired signal SNR. The desired signal shows the same, scaled phase noise profile around it as the interferer, as both mix with the same LO phase noise."><img src="rfic_files/figure-html/fig-reciprocal-mixing-output-1.png" width="657" height="465" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reciprocal-mixing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;59: Reciprocal mixing in a receiver: A strong interferer at offset frequency mixes with LO phase noise sidebands, creating in-band noise that degrades the desired signal SNR. The desired signal shows the same, scaled phase noise profile around it as the interferer, as both mix with the same LO phase noise.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-single-ended-oscillators" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="sec-single-ended-oscillators"><span class="header-section-number">6.3</span> Single-Ended Oscillators</h2>
+<p>Single-ended oscillators are commonly used in RF applications due to their simplicity and ease of integration, especially in quartz oscillators. A negative resistance is implemented using a single transistor amplifier as is shown in <a href="#fig-neg-r-single-ended" class="quarto-xref">Figure&nbsp;60</a>. The transistor is configured with two capacitors <span class="math inline">\(C_1\)</span> and <span class="math inline">\(C_2\)</span> to provide a phase-shifted feedback path.</p>
+<div id="cell-fig-neg-r-single-ended" class="cell" data-execution_count="60">
+<div class="cell-output cell-output-display">
+<div id="fig-neg-r-single-ended" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-neg-r-single-ended-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-neg-r-single-ended-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-60" title="Figure&nbsp;60: Circuit diagram of a single-ended negative resistance implementation."><img src="rfic_files/figure-html/fig-neg-r-single-ended-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-neg-r-single-ended-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;60: Circuit diagram of a single-ended negative resistance implementation.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>It can be shown that the differential input impedance looking into the transistor gate and drain is given by</p>
+<p><span class="math display">\[
+Z_\mathrm{in}(s) = -\frac{g_\mathrm{m}}{\omega^2 C_1 C_2} + \frac{C_1 + C_2}{s C_1 C_2} = -R_\mathrm{amp} + \frac{1}{s C_\mathrm{amp}}
+\]</span></p>
+<p>which consists of the series combination of a negative resistance <span class="math inline">\(-R_\mathrm{amp}\)</span> and a capacitance <span class="math inline">\(C_\mathrm{amp}\)</span>. Note that the circuit in <a href="#fig-neg-r-single-ended" class="quarto-xref">Figure&nbsp;60</a> does not show a ground symbol. In fact, any of the three nodes marked with blue numbers can be used as a reference node (ground), and this results in the following well-known oscillator topologies:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Reference Node</th>
+<th>Oscillator Topology</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Node 1 (Gate)</td>
+<td><a href="https://en.wikipedia.org/wiki/Colpitts_oscillator">Colpitts oscillator</a></td>
+</tr>
+<tr class="even">
+<td>Node 2 (Source)</td>
+<td><a href="https://en.wikipedia.org/wiki/Pierce_oscillator">Pierce oscillator</a></td>
+</tr>
+<tr class="odd">
+<td>Node 3 (Drain)</td>
+<td><a href="https://en.wikipedia.org/wiki/Clapp_oscillator">Clapp oscillator</a></td>
+</tr>
+</tbody>
+</table>
+<p>When we investigate the equivalent electrical circuit of a quartz crystal, we find that it has inductive behavior between its series resonance frequency and its parallel resonance frequency, which are very close together. The quartz crystal equivalent circuit is shown in <a href="#fig-crystal-equivalent-circuit" class="quarto-xref">Figure&nbsp;61</a>.</p>
+<div id="cell-fig-crystal-equivalent-circuit" class="cell" data-execution_count="61">
+<div class="cell-output cell-output-display">
+<div id="fig-crystal-equivalent-circuit" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-crystal-equivalent-circuit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-crystal-equivalent-circuit-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-61" title="Figure&nbsp;61: Quartz crystal equivalent circuit."><img src="rfic_files/figure-html/fig-crystal-equivalent-circuit-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-crystal-equivalent-circuit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;61: Quartz crystal equivalent circuit.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>This means we can operate the quartz crystal as a high-Q inductor in an oscillator circuit, which results in the single-ended quartz crystal oscillator shown in <a href="#fig-crystal-oscillator" class="quarto-xref">Figure&nbsp;62</a>, which is a very popular choice for high-performance crystal oscillators. Note that in a simple implementation the current-bias MOSFET can be replaced by an inverter stage biased in the linear region.</p>
+<div id="cell-fig-crystal-oscillator" class="cell" data-execution_count="62">
+<div class="cell-output cell-output-display">
+<div id="fig-crystal-oscillator" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-crystal-oscillator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-crystal-oscillator-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-62" title="Figure&nbsp;62: Circuit diagram of a single-ended Pierce crystal oscillator operating the quartz between series and parallel resonance where it acts as a large high-Q inductor. Note that the quartz crystal has no dc path, hence we need a high-ohmic bias resistor to connect M1 into a diode configuration."><img src="rfic_files/figure-html/fig-crystal-oscillator-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-crystal-oscillator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;62: Circuit diagram of a single-ended Pierce crystal oscillator operating the quartz between series and parallel resonance where it acts as a large high-Q inductor. Note that the quartz crystal has no dc path, hence we need a high-ohmic bias resistor to connect M1 into a diode configuration.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The series combination of <span class="math inline">\(C_1\)</span> and <span class="math inline">\(C_2\)</span> provides the load capacitance required by the crystal to oscillate at its specified frequency. The oscillation frequency can be approximated by (<span class="math inline">\(C_\mathrm{load}^{-1} = 1/C_1 + 1/C_2\)</span>):</p>
+<p><span class="math display">\[
+f_0 \approx \frac{1}{2 \pi \sqrt{L_\mathrm{m} C_\mathrm{load}}}
+\]</span></p>
+</section>
+<section id="sec-differential-oscillators" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="sec-differential-oscillators"><span class="header-section-number">6.4</span> Differential Oscillators</h2>
+<p>After discussing single-ended oscillators in <a href="#sec-single-ended-oscillators" class="quarto-xref">Section&nbsp;6.3</a>, we now turn to differential oscillator topologies, which are widely used in integrated LC oscillators due to their superior common-mode noise rejection and reduced even-order harmonics. A popular way to create a differential negative resistance is to use a cross-coupled pair of transistors as shown in <a href="#fig-cross-coupled-pair" class="quarto-xref">Figure&nbsp;63</a>.</p>
+<div id="cell-fig-cross-coupled-pair" class="cell" data-execution_count="63">
+<div class="cell-output cell-output-display">
+<div id="fig-cross-coupled-pair" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cross-coupled-pair-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-cross-coupled-pair-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-63" title="Figure&nbsp;63: A cross-coupled differential pair."><img src="rfic_files/figure-html/fig-cross-coupled-pair-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cross-coupled-pair-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;63: A cross-coupled differential pair.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We assume a symmetrical circuit by setting <span class="math inline">\(g_\mathrm{m1} = g_\mathrm{m2} = g_\mathrm{m}\)</span>. By analyzing the small-signal equivalent circuit, we can derive the differential input impedance looking into the gates of the transistors:</p>
+<p><span class="math display">\[
+Z_\mathrm{in} = -\frac{2}{g_\mathrm{m}}
+\]</span></p>
+<p>A practical implementation of a differential LC oscillator using the cross-coupled pair is shown in <a href="#fig-oscillator-lc-nmos" class="quarto-xref">Figure&nbsp;64</a> using a so-called “NMOS core”, as it is using an NMOS-based differential pair.</p>
+<div id="cell-fig-oscillator-lc-nmos" class="cell" data-execution_count="64">
+<div class="cell-output cell-output-display">
+<div id="fig-oscillator-lc-nmos" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-oscillator-lc-nmos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-oscillator-lc-nmos-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-64" title="Figure&nbsp;64: An LC differential oscillator using an NMOS cross-coupled differential pair. L_1 and L_2 are usually implemented as a single on-chip spiral inductor with a center tap."><img src="rfic_files/figure-html/fig-oscillator-lc-nmos-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-oscillator-lc-nmos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;64: An LC differential oscillator using an NMOS cross-coupled differential pair. <span class="math inline">\(L_1\)</span> and <span class="math inline">\(L_2\)</span> are usually implemented as a single on-chip spiral inductor with a center tap.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>By putting the circuit in <a href="#fig-oscillator-lc-nmos" class="quarto-xref">Figure&nbsp;64</a> onto its head we obtain a “PMOS core” oscillator, which is also widely used in integrated LC oscillators. This configuration is shown in <a href="#fig-oscillator-lc-pmos" class="quarto-xref">Figure&nbsp;65</a>.</p>
+<div id="cell-fig-oscillator-lc-pmos" class="cell" data-execution_count="65">
+<div class="cell-output cell-output-display">
+<div id="fig-oscillator-lc-pmos" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-oscillator-lc-pmos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-oscillator-lc-pmos-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-65" title="Figure&nbsp;65: An LC differential oscillator using a PMOS cross-coupled differential pair. L_1 and L_2 are usually implemented as a single on-chip spiral inductor with a center tap."><img src="rfic_files/figure-html/fig-oscillator-lc-pmos-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-oscillator-lc-pmos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;65: An LC differential oscillator using a PMOS cross-coupled differential pair. <span class="math inline">\(L_1\)</span> and <span class="math inline">\(L_2\)</span> are usually implemented as a single on-chip spiral inductor with a center tap.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In both oscillator topologies, the oscillation frequency is determined by the LC tank circuit formed by <span class="math inline">\(L = L_1 + L_2\)</span> and <span class="math inline">\(C\)</span>. The oscillation frequency can be approximated by</p>
+<p><span class="math display">\[
+f_0 = \frac{1}{2 \pi \sqrt{L C}}
+\]</span></p>
+<p>As both technologies have their inductor middle point tied to a supply rail (ground for NMOS core, <span class="math inline">\(V_\mathrm{DD}\)</span> for PMOS core), the voltage swing across the tank can go well beyond the supply voltage, which is an advantage of these topologies. However, note that the maximum voltage swing is still limited by the device breakdown voltages of <span class="math inline">\(M_1\)</span> and <span class="math inline">\(M_2\)</span>, which can be critical in advanced CMOS technologies with low breakdown voltages. To utilize both an NMOS and a PMOS cross-coupled pair in parallel, a so-called “complementary (or CMOS) LC oscillator” can be used, which is shown in <a href="#fig-oscillator-lc-cmos" class="quarto-xref">Figure&nbsp;66</a>. Here, the voltage swing across the tank is limited to the supply voltage, so it is inherently safe regarding device breakdown. Also, the transconductance of both NMOS and PMOS devices contribute to the negative resistance, which can reduce power consumption for a given oscillation amplitude.</p>
+<div id="cell-fig-oscillator-lc-cmos" class="cell" data-execution_count="66">
+<div class="cell-output cell-output-display">
+<div id="fig-oscillator-lc-cmos" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-oscillator-lc-cmos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-oscillator-lc-cmos-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-66" title="Figure&nbsp;66: An LC differential oscillator using a PMOS and an NMOS cross-coupled differential pair."><img src="rfic_files/figure-html/fig-oscillator-lc-cmos-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-oscillator-lc-cmos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;66: An LC differential oscillator using a PMOS and an NMOS cross-coupled differential pair.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that no bias current sources are shown in <a href="#fig-oscillator-lc-cmos" class="quarto-xref">Figure&nbsp;66</a>, but can be added in practice. However, they require some voltage headroom, which lowers the maximum voltage swing across the tank, which is negative for phase noise performance according to Leeson’s equation in <a href="#eq-lesson-equation" class="quarto-xref">Equation&nbsp;41</a>.</p>
+<p>The inductor <span class="math inline">\(L\)</span> used in LC tanks is often implemented as a differential spiral inductor, which can be realized on-chip using the top metal layers of the CMOS process. If higher <span class="math inline">\(Q\)</span> is sought, then off-chip inductors must be used, which is more expensive and uses package pins to connect the inductor. Alternatively, bondwire inductors can be used, which utilize the bondwires connecting the die to the package leads as inductors. Bondwire inductors can provide high <span class="math inline">\(Q\)</span> values and are a cost-effective solution for improving oscillator performance without requiring off-chip components. For mm-wave frequencies, transmission line stubs can be used as inductors, which can be implemented on-chip using coplanar waveguide (CPW) or microstrip structures.</p>
+</section>
+<section id="sec-frequency-tuning-of-oscillators" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="sec-frequency-tuning-of-oscillators"><span class="header-section-number">6.5</span> Frequency Tuning of Oscillators</h2>
+<p>Note that all three LC oscillator topologies shown in <a href="#sec-differential-oscillators" class="quarto-xref">Section&nbsp;6.4</a> have a fixed oscillation frequency determined by the LC tank circuit. In practice, it is often desirable to be able to tune the oscillation frequency over a certain range. There are only two ways to achieve this, either by tuning the inductance <span class="math inline">\(L\)</span> or the capacitance <span class="math inline">\(C\)</span> of the tank circuit. In integrated LC oscillators, it is common to use a fixed inductor and a tunable capacitor, which is shown in <a href="#fig-oscillator-lc-nmos" class="quarto-xref">Figure&nbsp;64</a>, <a href="#fig-oscillator-lc-pmos" class="quarto-xref">Figure&nbsp;65</a>, and <a href="#fig-oscillator-lc-cmos" class="quarto-xref">Figure&nbsp;66</a>.</p>
+<p>The need to change the oscillator frequency can arise from various requirements:</p>
+<ol type="1">
+<li>We need to precisely tune the oscillator frequency to match a desired carrier frequency.</li>
+<li>The oscillator frequency needs to be adjusted to compensate for process, voltage, and temperature (PVT) variations that can affect the resonant frequency of the LC tank.</li>
+</ol>
+<p>In order to achieve a tunable capacitance, a so-called “varactor” (variable capacitor) is often used. A varactor is a semiconductor device that exhibits a capacitance that varies with the applied voltage. Common ways to implement a varactor in integrated circuits are:</p>
+<ol type="1">
+<li>Use the gate-to-channel capacitance of a MOSFET operated in reverse bias. By changing the voltage applied to the gate, the depletion region width in the channel changes, which in turn changes the capacitance.</li>
+<li>Use a PN-junction diode operated in reverse bias. The depletion region width of the diode changes with the applied voltage, leading to a change in capacitance.</li>
+<li>Use a gate-to-channel capacitance of special MOSFET structure in accumulation mode, which can be achieved by using a NMOS situated in an n-well (in contrast to the usual operation in a p-well). Changing the gate-to-channel voltage changes the accumulation capacitance <span class="citation" data-cites="Andreani.2000">(<a href="#ref-Andreani.2000" role="doc-biblioref">Andreani and Mattisson 2000</a>)</span>.</li>
+<li>Use a switched capacitor bank, where multiple capacitors are connected in parallel or series using switches (usually MOSFETs) to achieve discrete capacitance values.</li>
+</ol>
+<p>In order to characterize the tuning sensitivity of an oscillator, the metric <span class="math inline">\(K_\mathrm{VCO}\)</span> (voltage-controlled oscillator gain) is often used, which is defined as</p>
+<p><span class="math display">\[
+K_\mathrm{VCO} = \frac{d f_0}{d V_\mathrm{tune}}
+\]</span></p>
+<p>with <span class="math inline">\(V_\mathrm{tune}\)</span> being the control voltage applied to the varactor. The unit of <span class="math inline">\(K_\mathrm{VCO}\)</span> is usually expressed in MHz/V or GHz/V. A high <span class="math inline">\(K_\mathrm{VCO}\)</span> means that a small change in tuning voltage results in a large change in oscillation frequency, which can be beneficial for wide tuning ranges but can also make the oscillator more sensitive to noise on the tuning voltage line.</p>
+<p>Note that the tuning sensitivity <span class="math inline">\(K_\mathrm{VCO}\)</span> is usually quite nonlinear over the tuning range, so it is common to specify <span class="math inline">\(K_\mathrm{VCO}\)</span> at a certain operating point or as an average value over the tuning range.</p>
+<p>In order to achieve a wide tuning range while maintaining a sufficiently small <span class="math inline">\(K_\mathrm{VCO}\)</span> for phase noise reasons, a combination of coarse and fine tuning mechanisms can be used <span class="citation" data-cites="Kral.1998">(<a href="#ref-Kral.1998" role="doc-biblioref">Kral, Behbahani, and Abidi 1998</a>)</span>. For example, a switched capacitor bank can provide coarse tuning steps, while a varactor can provide fine tuning within each step. It is important to ensure that the overall tuning range is free of dead zones, where the oscillator cannot be tuned to certain frequencies due to non-overlapping tuning ranges of the coarse and fine tuning elements.</p>
+<p>While there are many ways to implement a switched capacitor for use in an oscillator tuning circuit, one popular way is shown in <a href="#fig-switched-capacitor" class="quarto-xref">Figure&nbsp;67</a>. Many such switched capacitors with different values of <span class="math inline">\(C\)</span> (often binary weighted) can be combined to form a capacitor bank for coarse frequency tuning.</p>
+<div id="cell-fig-switched-capacitor" class="cell" data-execution_count="67">
+<div class="cell-output cell-output-display">
+<div id="fig-switched-capacitor" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-switched-capacitor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-switched-capacitor-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-67" title="Figure&nbsp;67: An switched capacitor for use in an oscillator switched capacitor tuning bank. The bias resistors tie the drain/source nodes to ground during turn on of M_1 (for low on resistance), while they tie the drain/source nodes to VDD during turn off of M_1 to prevent accidential turn on of the drain/source to bulk diodes of M_1."><img src="rfic_files/figure-html/fig-switched-capacitor-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-switched-capacitor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;67: An switched capacitor for use in an oscillator switched capacitor tuning bank. The bias resistors tie the drain/source nodes to ground during turn on of <span class="math inline">\(M_1\)</span> (for low on resistance), while they tie the drain/source nodes to VDD during turn off of <span class="math inline">\(M_1\)</span> to prevent accidential turn on of the drain/source to bulk diodes of <span class="math inline">\(M_1\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Here, when the control signal <span class="math inline">\(S\)</span> is high, the effective capacitance is <span class="math inline">\(C/2\)</span>, with a parasitic series resistance <span class="math inline">\(R_\mathrm{on}\)</span> due to the switch. When <span class="math inline">\(S\)</span> is low, the effective capacitance is <span class="math inline">\(C_\mathrm{off}\)</span>, which is the parasitic drain-source capacitance of the MOSFET switch.</p>
+<p>Note that there exists a trade-off when designing the switched capacitor: A larger switch (with increased <span class="math inline">\(W\)</span>) reduces <span class="math inline">\(R_\mathrm{on}\)</span>, but increases <span class="math inline">\(C_\mathrm{off}\)</span>. A large <span class="math inline">\(R_\mathrm{on}\)</span> leads to increased losses in the tank circuit, which degrades the quality factor <span class="math inline">\(Q\)</span> and increases phase noise according to <a href="#eq-lesson-equation" class="quarto-xref">Equation&nbsp;41</a>. On the other hand, a large <span class="math inline">\(C_\mathrm{off}\)</span> reduces the effective tuning range of the switched capacitor, which can be detrimental if a wide tuning range is required.</p>
+<p>In <strong>digitally-controlled oscillators (DCOs)</strong>, the tuning voltage <span class="math inline">\(V_\mathrm{tune}\)</span> is replaced by a digital control word that selects different capacitance values from a capacitor bank. This approach allows for precise and repeatable frequency tuning, which is beneficial in applications requiring frequency synthesis or channel selection. These fine tuning steps can also be implemented according to <a href="#fig-switched-capacitor" class="quarto-xref">Figure&nbsp;67</a>, however, the value of <span class="math inline">\(C\)</span> must be sufficiently small.</p>
+</section>
+<section id="sec-oscillator-modeling" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="sec-oscillator-modeling"><span class="header-section-number">6.6</span> Oscillator Modelling</h2>
+<p>The instantaneous frequency of an oscillator can be expressed as</p>
+<p><span class="math display">\[
+\omega_\mathrm{VCO}(t) = \omega_0 t + K_\mathrm{VCO} \cdot V_\mathrm{tune}(t)
+\]</span></p>
+<p>where <span class="math inline">\(\omega_0\)</span> is the nominal oscillation frequency, <span class="math inline">\(K_\mathrm{VCO}\)</span> is the tuning sensitivity, and <span class="math inline">\(V_\mathrm{tune}(t)\)</span> is the tuning voltage applied to the varactor. Looking at the instantaneous phase <span class="math inline">\(\varphi_\mathrm{VCO}(t)\)</span> of the oscillator, we can integrate the instantaneous frequency <span class="math inline">\(\omega_\mathrm{VCO}(t)\)</span> to obtain</p>
+<p><span class="math display">\[
+\varphi_\mathrm{VCO}(t) = \int_0^t \omega_\mathrm{VCO}(\tau) d\tau = \omega_0 t + K_\mathrm{VCO} \int_0^t V_\mathrm{tune}(\tau) d\tau.
+\]</span></p>
+<p>Inspecting this equation, we see that with respect to phase, an oscillator is a <strong>perfect</strong> integrator of the tuning voltage over time! For simulation purposes, we can therefore model an oscillator as an integrator block as shown in <a href="#fig-oscillator-model" class="quarto-xref">Figure&nbsp;68</a>.</p>
+<div id="cell-fig-oscillator-model" class="cell" data-execution_count="68">
+<div class="cell-output cell-output-display">
+<div id="fig-oscillator-model" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-oscillator-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-oscillator-model-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-68" title="Figure&nbsp;68: A model of a VCO as a perfect integrator for the excess phase in the s-domain."><img src="rfic_files/figure-html/fig-oscillator-model-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-oscillator-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;68: A model of a VCO as a perfect integrator for the excess phase in the <span class="math inline">\(s\)</span>-domain.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In this model we look at the phase output of the oscillator as an <em>excess phase</em> with respect to the nominal phase <span class="math inline">\(\omega_0 t\)</span>. This delta phase is obtained by integrating the tuning voltage <span class="math inline">\(V_\mathrm{tune}(t)\)</span> scaled by <span class="math inline">\(K_\mathrm{VCO}\)</span>.</p>
+</section>
 </section>
 <section id="sec-pll" class="level1" data-number="7">
 <h1 data-number="7"><span class="header-section-number">7</span> Phase-Locked Loops</h1>
@@ -2533,6 +2964,9 @@ Figure&nbsp;53: LO multiphase generation by delay-locked loop (DLL). An extensio
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Andreani.2000" class="csl-entry" role="listitem">
+Andreani, P., and S. Mattisson. 2000. <span>“<span class="nocase">On the use of MOS varactors in RF VCOs</span>.”</span> <em>IEEE Journal of Solid-State Circuits</em> 35 (6): 905–10. <a href="https://doi.org/10.1109/4.845194">https://doi.org/10.1109/4.845194</a>.
+</div>
 <div id="ref-Bird.2009" class="csl-entry" role="listitem">
 Bird, Trevor S. 2009. <span>“<span class="nocase">Definition and Misuse of Return Loss [Report of the Transactions Editor-in-Chief]</span>.”</span> <em>IEEE Antennas and Propagation Magazine</em> 51 (2): 166–67. <a href="https://doi.org/10.1109/map.2009.5162049">https://doi.org/10.1109/map.2009.5162049</a>.
 </div>
@@ -2545,6 +2979,12 @@ Gray, Paul R., Paul J. Hurst, Stephen H. Lewis, and Robert G. Meyer. 2009. <em><
 <div id="ref-Kaukovuori.2008" class="csl-entry" role="listitem">
 Kaukovuori, Jouni, Kari Stadius, Jussi Ryynänen, and Kari A. I. Halonen. 2008. <span>“<span class="nocase">Analysis and Design of Passive Polyphase Filters</span>.”</span> <em>IEEE Transactions on Circuits and Systems–I: Regular Papers</em> 55 (10): 3023–37. <a href="https://doi.org/10.1109/tcsi.2008.917990">https://doi.org/10.1109/tcsi.2008.917990</a>.
 </div>
+<div id="ref-Kral.1998" class="csl-entry" role="listitem">
+Kral, A., F. Behbahani, and A. A. Abidi. 1998. <span>“<span class="nocase">RF-CMOS oscillators with switched tuning</span>.”</span> In, 555–58. Proceedings of the IEEE 1998 Custom Integrated Circuits Conference (Cat. No.98CH36143). IEEE. <a href="https://doi.org/10.1109/cicc.1998.695039">https://doi.org/10.1109/cicc.1998.695039</a>.
+</div>
+<div id="ref-Leeson.1966" class="csl-entry" role="listitem">
+Leeson, D. B. 1966. <span>“<span class="nocase">A simple model of feedback oscillator noise spectrum</span>.”</span> <em>Proceedings of the IEEE</em> 54 (2): 329–30. <a href="https://doi.org/10.1109/proc.1966.4682">https://doi.org/10.1109/proc.1966.4682</a>.
+</div>
 <div id="ref-Lepage.1953" class="csl-entry" role="listitem">
 Lepage, W. R., C. R. Cahn, and J. S. Brown. 1953. <span>“<span class="nocase">Analysis of a comb filter using synchronously commutated capacitors</span>.”</span> <em>Transactions of the American Institute of Electrical Engineers, Part I: Communication and Electronics</em> 72 (1): 63–68. <a href="https://doi.org/10.1109/tce.1953.6371974">https://doi.org/10.1109/tce.1953.6371974</a>.
 </div>
@@ -2553,6 +2993,9 @@ Molisch, Andreas F. 2022. <em>Wireless Communications: From Fundamentals to Beyo
 </div>
 <div id="ref-Pozar_RF" class="csl-entry" role="listitem">
 Pozar, David M. 2011. <em>Microwave Engineering</em>. Wiley.
+</div>
+<div id="ref-Razavi.1996" class="csl-entry" role="listitem">
+Razavi, B. 1996. <span>“<span class="nocase">A study of phase noise in CMOS oscillators</span>.”</span> <em>IEEE Journal of Solid-State Circuits</em> 31 (3): 331–43. <a href="https://doi.org/10.1109/4.494195">https://doi.org/10.1109/4.494195</a>.
 </div>
 <div id="ref-Razavi_RFIC" class="csl-entry" role="listitem">
 Razavi, Behzad. 2011. <em>RF Microelectronics</em>. 2nd edition. Pearson.
