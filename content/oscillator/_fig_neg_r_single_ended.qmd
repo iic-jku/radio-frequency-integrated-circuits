@@ -1,0 +1,46 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-neg-r-single-ended
+#| echo: false
+#| fig-cap: "Circuit diagram of a single-ended negative resistance implementation." 
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    M1 = elm.AnalogNFet(offset_gate=False).label(r'$g_\mathrm{m}$', loc='right').reverse().anchor('source').drop('gate').theta(0)
+    l1 = elm.Line().up(d.unit/4).dot().at(M1.drain)
+    elm.Line().left(d.unit/2).dot(open=True).label(r'$Z_\mathrm{in}$', loc='left', ofst=(+d.unit/4,-d.unit*0))
+
+    elm.Line().left(d.unit/2).dot().at(M1.gate).label('1', color='blue', loc='top')
+    d.push()
+    elm.Line().up(d.unit/4).dot(open=True)
+    d.pop()
+    C1 = elm.Capacitor().label('$C_1$').down() 
+    elm.Line().right().tox(M1.source).dot().label('2', color='blue', loc='bottom')
+    d.push()
+    elm.Line().up().to(M1.source)
+    d.pop()
+    elm.Line().right(d.unit)
+    C2 = elm.Capacitor().label('$C_2$').up().toy(l1.end)
+    elm.Line().left().tox(l1.start).label('3', color='blue', loc='top')
+```

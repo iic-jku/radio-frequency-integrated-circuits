@@ -1,0 +1,47 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-switched-capacitor
+#| echo: false
+#| fig-cap: "An switched capacitor for use in an oscillator switched capacitor tuning bank. The bias resistors tie the drain/source nodes to ground during turn on of $M_1$ (for low on resistance), while they tie the drain/source nodes to VDD during turn off of $M_1$ to prevent accidential turn on of the drain/source to bulk diodes of $M_1$."
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.logic as lgc
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    elm.Capacitor().label('$C$', loc='top').right().idot(open=True).dot()
+    l1 = elm.Line().right(d.unit/2)
+    M1 = elm.AnalogNFet(offset_gate=False).label('$M_1$', loc='right').reverse().anchor('source').theta(270).reverse().drop('drain')
+    l2 = elm.Line().right(d.unit/2)
+    elm.Capacitor().label('$C$', loc='top').right().idot().dot(open=True)
+
+    R1 = elm.Resistor().at(l1.start).down(d.unit*1.5).label(r'$R_\mathrm{bias}$', loc='top')
+    R2 = elm.Resistor().at(l2.end).down(d.unit*1.5).label(r'$R_\mathrm{bias}$', loc='bottom')
+    elm.Line().at(R1.end).right().tox(M1.gate).dot()
+    d.push()
+    lgc.Not().up().to(M1.gate)
+    d.pop()
+    d.push()
+    elm.Line().to(R2.end)
+    d.pop()
+    lgc.Not().down().reverse()
+    elm.Dot(open=True).label('$S$', loc='bottom')
+```

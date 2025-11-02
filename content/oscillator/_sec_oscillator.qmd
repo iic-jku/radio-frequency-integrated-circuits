@@ -16,4 +16,299 @@ limitations under the License.
 
 # Oscillators {#sec-oscillator}
 
-To be added.
+For the generation of the LO frequency to be used in a mixer for frequency conversion, oscillators are used. Ideally, oscillators produce a stable, noise-free sinusoidal signal, independent of environmental conditions like temperature or supply voltage variations. The circuit symbol of an oscillator is shown in @fig-oscillator-symbol.
+
+{{< include /content/oscillator/_fig_oscillator_block.qmd >}}
+
+The question is how to construct an oscillator. In summary, we need to build something that oscillates, i.e., produces a sustained periodic signal with frequency $\omega_0$. One way to achieve this is to construct a feedback loop where $|H(s = j \omega_0)| = 1$ and $\angle H(s = j \omega_0) = n \cdot 2 \pi$; these conditions are called the "[Barkhausen criterion](https://en.wikipedia.org/wiki/Barkhausen_criterion)" (here, $H(s)$ is the loop gain around the feedback loop). A ring oscillator is one example of such a feedback oscillator. For the 3-stage single-ended *ring oscillator* shown in @fig-ring-oscillator, each inverter provides a phase shift of $2 \pi / 3$ at the oscillation frequency $\omega_0$, resulting in a total phase shift of $2 \pi$ for the three inverters. The gain condition is fulfilled by the gain of the inverters, which must be larger than unity to compensate for losses in the loop. By using an odd number of inverters, a stable locking point at dc is avoided.
+
+{{< include /content/oscillator/_fig_ring_oscillator.qmd >}}
+
+Note that the output frequency of the ring oscillator shown above is ill-controlled, as it only depends on the delay (i.e., phase shift) of the inverters, which are usually dependent on process, voltage, and temperature (PVT) variations. Also, the inherent quality factor of such an oscillator is low, as exemplified by the definition of the quality factor $Q$ as [@Razavi.1996]
+
+$$
+Q = 2 \pi \frac{\text{Average energy stored}}{\text{Energy loss per cycle}} = \frac{\omega_0}{\Delta \omega} = \frac{\omega_0}{2} \sqrt{ \left( \frac{d A}{d \omega} \right)^2 + \left( \frac{d \varphi}{d \omega} \right)^2 }
+$$ {#eq-definition-q}
+
+with a ring oscillator having very low $dA / d \omega$ and $d \varphi / d \omega$ slopes ($A(\omega)$ and $\varphi(\omega)$ are the open loop gain and phase shift, respectively). It can be shown that $Q \approx 1.3$ for a 3-stage ring oscillator [@Razavi.1996]. For some applications, this might be sufficient, but in many cases, a higher $Q$ is desired to reduce phase noise and improve frequency stability (as we will see later in this chapter).
+
+According to @eq-definition-q, a high $Q$ can be achieved by using a resonator with high energy storage capability and low energy loss per cycle. We then add an amplifier in a feedback loop to compensate for the losses of the resonator. This principle is shown in @fig-lc-oscillator for a parallel LC tank circuit as the resonator. Sometimes the action of the feedback loop around the amplifier is modelled as a negative resistance $-R_\mathrm{amp}$ that compensates for the losses of the tank circuit represented by the resistor $R_\mathrm{p}$. The single parallel resistor $R_\mathrm{p}$ models the losses of the inductor $L$ and the capacitor $C$.
+
+{{< include /content/oscillator/_fig_lc_oscillator.qmd >}}
+
+When $|-R_\mathrm{amp}| = R_\mathrm{p}$, the losses of the tank circuit are fully compensated, and we have a sustained oscillation at the resonance frequency $\omega_0 = 1 / \sqrt{L C}$. In practice, the amplifier gain is usually set slightly higher than required for loss compensation to **start the oscillation from noise**. Then, as the oscillation amplitude increases, some **non-linear mechanism in the amplifier reduces the effective gain** until a stable oscillation amplitude is reached. Various implementations of such LC oscillators exist, which will be discussed in the following sections.
+
+- An alternative implementation of setting the oscillation amplitude is to use an *automatic level control* (ALC) loop, which measures the oscillation amplitude and adjusts the amplifier gain accordingly to maintain a constant output amplitude. This approach can improve the stability of the oscillation amplitude over process, voltage, and temperature variations.
+
+- As an alternative to start the oscillation from thermal noise (which can take considerable time depending on the $Q$ of the resonator) is to provide a known initial condition to the resonator, e.g., by pre-charging the capacitor $C$ to a certain voltage before enabling the amplifier. This way, the oscillation can start immediately from this initial energy stored in the resonator.
+
+As a first hint on how to optimize an LC oscillator for low phase noise, we can try to maximize $Q$ according to @eq-definition-q. The energy stored in the capacitor at peak voltage is
+
+$$
+E_\mathrm{stored} = \frac{C V_\mathrm{osc,p}^2}{2}
+$$
+
+so to maximize this we should maximize both $C$ and the peak oscillation voltage $V_\mathrm{osc,p}$. On the other hand, the energy loss per cycle is related to the power dissipated in the resistor $R_\mathrm{p}$ by
+
+$$
+E_\mathrm{loss} = \frac{V_\mathrm{osc,p}^2}{2 R_\mathrm{p}} \cdot \frac{1}{f_0}
+$$
+
+which we can minimize by maximizing $R_\mathrm{p}$. In summary, to maximize $Q$ we should use a large capacitance $C$, a high oscillation amplitude $V_\mathrm{osc,p}$, and a high tank resistance $R_\mathrm{p}$. Note that increasing $C$ will reduce $L$ for a given $\omega_0$. Calculating $Q$ from these expressions yields
+
+$$
+Q = 2 \pi \frac{E_\mathrm{stored}}{E_\mathrm{loss}} = \omega_0 C R_\mathrm{p} 
+$$
+
+which confirms the above observations.
+
+Fundamentally, if we describe the output voltage of the oscillator as
+
+$$
+v_\mathrm{osc}(t) = V_\mathrm{osc,p}(t) \cdot \cos[ \omega_0(t) t + \varphi(t) ]
+$$
+
+we want to keep the amplitude variations small, i.e., $V_\mathrm{osc,p}(t) = V_\mathrm{osc,p}$, and also the frequency variations small, i.e., $\omega_0(t) = \omega_0$. We further want to minimize any phase fluctuations, i.e., $\varphi(t) = \varphi_0$.
+
+As a side note, the definition of $Q$ in @eq-definition-q can also be understood as describing how many oscillation cycles it takes until the energy stored in the resonator is dissipated. For example, if $Q = 1000$ at $f_0 = 1\,\text{GHz}$, the energy stored in the resonator will last for approximately 1000 cycles, which is 1 µs. This time duration is sometimes called the "ring-down time" of the resonator.
+
+## Oscillator Noise {#sec-oscillator-noise}
+
+For calculating the noise of an oscillator, we assume that an LC-based oscillator as shown in @fig-lc-oscillator is used. We assume that the oscillator is in steady-state operation, i.e., $-R_\mathrm{amp} = R_\mathrm{p}$. We can then simplify the circuit to the one shown in @fig-lc-oscillator-noise-model.
+
+{{< include /content/oscillator/_fig_lc_oscillator_noise.qmd >}}
+
+We can calculate
+
+$$
+Z_\mathrm{tank}(s) = \frac{s L \frac{1}{s C}}{s L + \frac{1}{s C}} = \frac{s L}{1 + s^2 L C}.
+$$
+
+At $s = j \omega_0$, we have $Z_\mathrm{tank}(s) \to \infty$, so let's approximate around $\omega_0$:
+
+$$
+Z_\mathrm{tank}(j \omega_0 + j \Delta \omega) =\frac{j (\omega_0 + \Delta \omega) L}{1 - (\omega_0 + \Delta \omega)^2 L C}
+$$
+
+For $\Delta \omega \ll \omega_0$, we can approximate $(\omega_0 + \Delta \omega)^2 \approx \omega_0^2 + 2 \omega_0 \Delta \omega$ and $\omega_0 + \Delta \omega \approx \omega_0$, which yields (using $\omega_0^2 L C = 1$)
+
+$$
+Z_\mathrm{tank}(j \omega_0 + j \Delta \omega) = -\frac{j}{2 \Delta \omega C}.
+$$
+
+We now use the correspondence $C = 1 / \omega_0^2 L$ and express $L = R_\mathrm{p} / \omega_0 Q$ to get
+
+$$
+|Z_\mathrm{tank}(j \omega_0 + j \Delta \omega)| = \frac{R_\mathrm{p}}{2 Q} \left( \frac{\omega_0}{\Delta \omega} \right)
+$$
+
+which provides us with an expression for the magnitude of the tank impedance around resonance. We now calculate the noise power if a noise current is injected into this impedance. We use the single-sided noise current of $R_\mathrm{p}$ (see @sec-noise-types), increased by a factor $F$ contributed by the active circuit providing $-R_\mathrm{amp}$:
+
+$$
+\overline{I_n^2} = \frac{4 k T F}{R_\mathrm{p}} 
+$$
+
+The noise voltage across the tank at a frequency offset $\Delta \omega$ from $\omega_0$ is then
+
+$$
+\overline{V_n^2}(\Delta \omega) = |Z_\mathrm{tank}(j \omega_0 + j \Delta \omega)|^2 \cdot \frac{4 k T F}{R_\mathrm{p}} = \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2
+$$
+
+This absolute noise voltage is not of much interest per se. We normalize it to the oscillation amplitude $V_\mathrm{p}$, and only account for 1/2 of the noise, as the total noise power is split equally into amplitude noise and phase noise [@Razavi.1996], and we are only interested in the **phase noise**. This is because we assume the amplitude noise is removed by amplitude clipping in the LO chain routing the oscillator signal to the mixer. This is often a valid assumption. We introduce the symbol $\phn(\cdot)$ to denote this normalized phase noise of the oscillator:
+
+$$
+\phn\{\Delta \omega\} = \frac{\frac{1}{2} \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2}{\left( \frac{V_\mathrm{p}}{\sqrt{2}} \right)^2} = \frac{k T F R_\mathrm{p}}{V_\mathrm{p}^2} \cdot \frac{1}{Q^2} \cdot \left( \frac{\omega_0}{\Delta \omega} \right)^2
+$$ {#eq-lesson-equation}
+
+This equation is known as "**Leeson's equation**" [@Leeson.1966], and it provides us with important insights on how to design low phase noise oscillators:
+
+1. Use a resonator with high quality factor $Q$ to reduce phase noise. On-chip LC tanks usually provide moderate $Q$ values (e.g., 10 to 30), while off-chip crystals can provide very high $Q$ values (e.g., 10,000 to 100,000).
+2. Maximize the oscillation amplitude $V_\mathrm{p}$ to increase the stored energy in the resonator. In CMOS implementations, this is often limited by the supply voltage and/or device breakdown voltages.
+3. Use an active circuit with low noise factor $F$ to minimize the noise contribution of the negative resistance $-R_\mathrm{amp}$. A good value to aim for is $F \approx 2$ or lower.
+4. Maximize the tank resistance $R_\mathrm{p}$ to minimize the thermal noise contribution. This can be achieved by using high-Q inductors and low-loss capacitors.
+
+The phase noise $\phn\{\Delta \omega\}$ is expressed in the unit of dBc/Hz, i.e., in decibels of phase noise relative to the carrier power per 1 Hz of bandwidth. When expressing the phase noise of an oscillator in dBc/Hz it is important to state both the oscillation frequency $\omega_0$ and the offset frequency $\Delta \omega$ at which the phase noise is evaluated. For example, we could say that an oscillator has a phase noise of -137 dBc/Hz at 3 MHz offset from a carrier frequency of 2 GHz.
+
+The phase noise expressed with @eq-lesson-equation describes an important region of the total oscillator phase noise where the phase noise decreases with $1 / (\Delta \omega)^2$, i.e., with 20 dB per decade. This region is often called the "thermal noise region" as it is dominated by thermal noise from the tank resistor and the active circuit. However, at lower offset frequencies, other noise mechanisms (like flicker noise) can dominate, leading to different slopes of the phase noise vs. offset frequency curve. At larger offset frequencies, the phase noise can flatten out due to thermal noise floor limitation of buffer amplifiers following the oscillator. A typical phase noise plot of an LC oscillator is shown in @fig-phase-noise-spectrum.
+
+{{< include /content/oscillator/_fig_phase_noise_spectrum.qmd >}}
+
+It is important to note that the phase noise does not go to infinity as $\Delta \omega$ approaches zero, as @eq-lesson-equation might suggest. This is an artifact of the simplified model used to derive Leeson's equation. In reality, the phase noise has the form of a Lorentzian spectrum around the carrier frequency, which means that it flattens out at very low offset frequencies with a trend described by
+
+$$
+\phn \{ \Delta \omega \ll \} \propto \frac{1}{\omega_\mathrm{B}^2 + \Delta \omega^2}
+$$
+
+with $\omega_\mathrm{B}$ being the half-power bandwidth of the oscillator spectrum.
+
+Why is phase noise important?
+
+1. In RX and TX the phase noise of the LO creates jitter, which degrades signal quality and contributes to EVM degradation.
+2. In TX, phase noise of the LO creates noise sidebands around the carrier, which can lead to adjacent channel interference together with spectral regrowth due to nonlinearities and thermal noise.
+3. In RX, reciprocal mixing of the phase noise sidebands with the desired signal creates in-band noise, which degrades the SNR and sensitivity of the RX.
+4. In systems using multiple carriers or carriers with high-order modulation schemes (like in OFDM), phase noise can lead to inter-carrier interference (ICI) and symbol misinterpretation, further degrading system performance.
+
+## Reciprocal Mixing {#sec-oscillator-reciprocal-mixing}
+
+Reciprocal mixing is a phenomenon that occurs in receivers when the phase noise sidebands of the local oscillator mix with strong adjacent channel signals, resulting in in-band noise that degrades the signal-to-noise ratio of the desired signal. This effect is particularly pronounced in systems with high-order modulation schemes or closely spaced channels, where even small amounts of phase noise can lead to significant performance degradation.
+
+To analyze reciprocal mixing, we consider a scenario where a strong interferer is present at a frequency offset $\Delta f$ from the desired signal. The phase noise of the local oscillator at this offset frequency can be characterized by its power spectral density $\phn\{\Delta f\}$. When the local oscillator mixes with the interferer, the phase noise sidebands effectively "fold" into the desired signal band, creating additional noise. This noise level can be estimated by multiplying the power of the interferer by the phase noise level at the offset frequency and considering the channel bandwidth $B$ of the RX
+
+$$
+P_\mathrm{RM} = P_\mathrm{interferer} + \phn\{ \Delta f\} + 10 \log_{10}(B)
+$$ {#eq-reciprocal-mixing-noise}
+
+where $P_\mathrm{RM}$ is the power of the reciprocal mixing noise introduced into the desired signal band.
+
+::: {#nte-reciprocal-mixing .callout-note}
+## Reciprocal Mixing Example
+Let us assume the following example from a Bluetooth LE receiver: The sensitivity target for the RX is -70 dBm with an SNR of 10 dB for a 1 MHz channel. An adjacent channel interferer is present at -27 dB channel to interferer ratio at an offset of 3 MHz. How much phase noise can the LO have to meet the sensitivity target?
+
+From the sensitivity target and the SNR requirement, we can calculate the maximum allowable noise floor in the RX. We add a margin of 3 dB to account for implementation losses:
+
+$$
+P_\mathrm{noise,max} = P_\mathrm{sens} - \text{SNR} - P_\mathrm{margin} = -70\,\text{dBm} - 10\,\text{dB} - 3\,\text{dB} = -83\,\text{dBm}
+$$
+
+The interferer power is:
+
+$$
+P_\mathrm{interferer} = P_\mathrm{sens} - \text{C/I} = -70\,\text{dBm} + 27\,\text{dB} = -43\,\text{dBm}
+$$
+
+Using @eq-reciprocal-mixing-noise, we can express the maximum allowable phase noise at 3 MHz offset at 2.4 GHz as:
+
+$$
+\phn\{3\,\text{MHz}\} = P_\mathrm{noise,max} - P_\mathrm{interferer} - 10 \log_{10}(B) = -83\,\text{dBm} + 43\,\text{dBm} - 60\,\text{dB} = -100\,\text{dBc/Hz}
+$$
+:::
+
+The reciprocal mixing scenario described in @nte-reciprocal-mixing is visualized in @fig-reciprocal-mixing.
+
+{{< include /content/oscillator/_fig_reciprocal_mixing.qmd >}}
+
+## Single-Ended Oscillators {#sec-single-ended-oscillators}
+
+Single-ended oscillators are commonly used in RF applications due to their simplicity and ease of integration, especially in quartz oscillators. A negative resistance is implemented using a single transistor amplifier as is shown in @fig-neg-r-single-ended. The transistor is configured with two capacitors $C_1$ and $C_2$ to provide a phase-shifted feedback path.
+
+{{< include /content/oscillator/_fig_neg_r_single_ended.qmd >}}
+
+It can be shown that the differential input impedance looking into the transistor gate and drain is given by
+
+$$
+Z_\mathrm{in}(s) = -\frac{\gm}{\omega^2 C_1 C_2} + \frac{C_1 + C_2}{s C_1 C_2} = -R_\mathrm{amp} + \frac{1}{s C_\mathrm{amp}}
+$$
+
+which consists of the series combination of a negative resistance $-R_\mathrm{amp}$ and a capacitance $C_\mathrm{amp}$. Note that the circuit in @fig-neg-r-single-ended does not show a ground symbol. In fact, any of the three nodes marked with blue numbers can be used as a reference node (ground), and this results in the following well-known oscillator topologies:
+
+| Reference Node | Oscillator Topology                                                      |
+|----------------|--------------------------------------------------------------------------|
+| Node 1 (Gate)  | [Colpitts oscillator](https://en.wikipedia.org/wiki/Colpitts_oscillator) |
+| Node 2 (Source)| [Pierce oscillator](https://en.wikipedia.org/wiki/Pierce_oscillator)     |
+| Node 3 (Drain) | [Clapp oscillator](https://en.wikipedia.org/wiki/Clapp_oscillator)       |
+
+When we investigate the equivalent electrical circuit of a quartz crystal, we find that it has inductive behavior between its series resonance frequency and its parallel resonance frequency, which are very close together. The quartz crystal equivalent circuit is shown in @fig-crystal-equivalent-circuit.
+
+{{< include /content/oscillator/_fig_crystal_equivalent_circuit.qmd >}}
+
+This means we can operate the quartz crystal as a high-Q inductor in an oscillator circuit, which results in the single-ended quartz crystal oscillator shown in @fig-crystal-oscillator, which is a very popular choice for high-performance crystal oscillators. Note that in a simple implementation the current-bias MOSFET can be replaced by an inverter stage biased in the linear region.
+
+{{< include /content/oscillator/_fig_crystal_oscillator.qmd >}}
+
+The series combination of $C_1$ and $C_2$ provides the load capacitance required by the crystal to oscillate at its specified frequency. The oscillation frequency can be approximated by ($C_\mathrm{load}^{-1} = 1/C_1 + 1/C_2$):
+
+$$
+f_0 \approx \frac{1}{2 \pi \sqrt{L_\mathrm{m} C_\mathrm{load}}}
+$$
+
+## Differential Oscillators {#sec-differential-oscillators}
+
+After discussing single-ended oscillators in @sec-single-ended-oscillators, we now turn to differential oscillator topologies, which are widely used in integrated LC oscillators due to their superior common-mode noise rejection and reduced even-order harmonics. A popular way to create a differential negative resistance is to use a cross-coupled pair of transistors as shown in @fig-cross-coupled-pair.
+
+{{< include /content/oscillator/_fig_cross_coupled_pair.qmd >}}
+
+We assume a symmetrical circuit by setting $\gm[1] = \gm[2] = \gm$. By analyzing the small-signal equivalent circuit, we can derive the differential input impedance looking into the gates of the transistors:
+
+$$
+Z_\mathrm{in} = -\frac{2}{\gm}
+$$
+
+A practical implementation of a differential LC oscillator using the cross-coupled pair is shown in @fig-oscillator-lc-nmos using a so-called "NMOS core", as it is using an NMOS-based differential pair.
+
+{{< include /content/oscillator/_fig_oscillator_lc_nmos.qmd >}}
+
+By putting the circuit in @fig-oscillator-lc-nmos onto its head we obtain a "PMOS core" oscillator, which is also widely used in integrated LC oscillators. This configuration is shown in @fig-oscillator-lc-pmos.
+
+{{< include /content/oscillator/_fig_oscillator_lc_pmos.qmd >}}
+
+In both oscillator topologies, the oscillation frequency is determined by the LC tank circuit formed by $L = L_1 + L_2$ and $C$. The oscillation frequency can be approximated by
+
+$$
+f_0 = \frac{1}{2 \pi \sqrt{L C}}
+$$
+
+As both technologies have their inductor middle point tied to a supply rail (ground for NMOS core, $V_\mathrm{DD}$ for PMOS core), the voltage swing across the tank can go well beyond the supply voltage, which is an advantage of these topologies. However, note that the maximum voltage swing is still limited by the device breakdown voltages of $M_1$ and $M_2$, which can be critical in advanced CMOS technologies with low breakdown voltages. To utilize both an NMOS and a PMOS cross-coupled pair in parallel, a so-called "complementary (or CMOS) LC oscillator" can be used, which is shown in @fig-oscillator-lc-cmos. Here, the voltage swing across the tank is limited to the supply voltage, so it is inherently safe regarding device breakdown. Also, the transconductance of both NMOS and PMOS devices contribute to the negative resistance, which can reduce power consumption for a given oscillation amplitude.
+
+{{< include /content/oscillator/_fig_oscillator_lc_cmos.qmd >}}
+
+Note that no bias current sources are shown in @fig-oscillator-lc-cmos, but can be added in practice. However, they require some voltage headroom, which lowers the maximum voltage swing across the tank, which is negative for phase noise performance according to Leeson's equation in @eq-lesson-equation.
+
+The inductor $L$ used in LC tanks is often implemented as a differential spiral inductor, which can be realized on-chip using the top metal layers of the CMOS process. If higher $Q$ is sought, then off-chip inductors must be used, which is more expensive and uses package pins to connect the inductor. Alternatively, bondwire inductors can be used, which utilize the bondwires connecting the die to the package leads as inductors. Bondwire inductors can provide high $Q$ values and are a cost-effective solution for improving oscillator performance without requiring off-chip components. For mm-wave frequencies, transmission line stubs can be used as inductors, which can be implemented on-chip using coplanar waveguide (CPW) or microstrip structures.
+
+## Frequency Tuning of Oscillators {#sec-frequency-tuning-of-oscillators}
+
+Note that all three LC oscillator topologies shown in @sec-differential-oscillators have a fixed oscillation frequency determined by the LC tank circuit. In practice, it is often desirable to be able to tune the oscillation frequency over a certain range. There are only two ways to achieve this, either by tuning the inductance $L$ or the capacitance $C$ of the tank circuit. In integrated LC oscillators, it is common to use a fixed inductor and a tunable capacitor, which is shown in @fig-oscillator-lc-nmos, @fig-oscillator-lc-pmos, and @fig-oscillator-lc-cmos.
+
+The need to change the oscillator frequency can arise from various requirements:
+
+1. We need to precisely tune the oscillator frequency to match a desired carrier frequency.
+2. The oscillator frequency needs to be adjusted to compensate for process, voltage, and temperature (PVT) variations that can affect the resonant frequency of the LC tank.
+
+In order to achieve a tunable capacitance, a so-called "varactor" (variable capacitor) is often used. A varactor is a semiconductor device that exhibits a capacitance that varies with the applied voltage. Common ways to implement a varactor in integrated circuits are:
+
+1. Use the gate-to-channel capacitance of a MOSFET operated in reverse bias. By changing the voltage applied to the gate, the depletion region width in the channel changes, which in turn changes the capacitance.
+2. Use a PN-junction diode operated in reverse bias. The depletion region width of the diode changes with the applied voltage, leading to a change in capacitance.
+3. Use a gate-to-channel capacitance of special MOSFET structure in accumulation mode, which can be achieved by using a NMOS situated in an n-well (in contrast to the usual operation in a p-well). Changing the gate-to-channel voltage changes the accumulation capacitance [@Andreani.2000].
+4. Use a switched capacitor bank, where multiple capacitors are connected in parallel or series using switches (usually MOSFETs) to achieve discrete capacitance values.
+
+In order to characterize the tuning sensitivity of an oscillator, the metric $K_\mathrm{VCO}$ (voltage-controlled oscillator gain) is often used, which is defined as
+
+$$
+K_\mathrm{VCO} = \frac{d f_0}{d V_\mathrm{tune}}
+$$
+
+with $V_\mathrm{tune}$ being the control voltage applied to the varactor. The unit of $K_\mathrm{VCO}$ is usually expressed in MHz/V or GHz/V. A high $K_\mathrm{VCO}$ means that a small change in tuning voltage results in a large change in oscillation frequency, which can be beneficial for wide tuning ranges but can also make the oscillator more sensitive to noise on the tuning voltage line.
+
+Note that the tuning sensitivity $K_\mathrm{VCO}$ is usually quite nonlinear over the tuning range, so it is common to specify $K_\mathrm{VCO}$ at a certain operating point or as an average value over the tuning range.
+
+In order to achieve a wide tuning range while maintaining a sufficiently small $K_\mathrm{VCO}$ for phase noise reasons, a combination of coarse and fine tuning mechanisms can be used [@Kral.1998]. For example, a switched capacitor bank can provide coarse tuning steps, while a varactor can provide fine tuning within each step. It is important to ensure that the overall tuning range is free of dead zones, where the oscillator cannot be tuned to certain frequencies due to non-overlapping tuning ranges of the coarse and fine tuning elements.
+
+While there are many ways to implement a switched capacitor for use in an oscillator tuning circuit, one popular way is shown in @fig-switched-capacitor. Many such switched capacitors with different values of $C$ (often binary weighted) can be combined to form a capacitor bank for coarse frequency tuning.
+
+{{< include /content/oscillator/_fig_switched_capacitor.qmd >}}
+
+Here, when the control signal $S$ is high, the effective capacitance is $C/2$, with a parasitic series resistance $R_\mathrm{on}$ due to the switch. When $S$ is low, the effective capacitance is $C_\mathrm{off}$, which is the parasitic drain-source capacitance of the MOSFET switch.
+
+Note that there exists a trade-off when designing the switched capacitor: A larger switch (with increased $W$) reduces $R_\mathrm{on}$, but increases $C_\mathrm{off}$. A large $R_\mathrm{on}$ leads to increased losses in the tank circuit, which degrades the quality factor $Q$ and increases phase noise according to @eq-lesson-equation. On the other hand, a large $C_\mathrm{off}$ reduces the effective tuning range of the switched capacitor, which can be detrimental if a wide tuning range is required.
+
+In **digitally-controlled oscillators (DCOs)**, the tuning voltage $V_\mathrm{tune}$ is replaced by a digital control word that selects different capacitance values from a capacitor bank. This approach allows for precise and repeatable frequency tuning, which is beneficial in applications requiring frequency synthesis or channel selection. These fine tuning steps can also be implemented according to @fig-switched-capacitor, however, the value of $C$ must be sufficiently small.
+
+## Oscillator Modelling {#sec-oscillator-modeling}
+
+The instantaneous frequency of an oscillator can be expressed as
+
+$$
+\omega_\mathrm{VCO}(t) = \omega_0 t + K_\mathrm{VCO} \cdot V_\mathrm{tune}(t)
+$$
+
+where $\omega_0$ is the nominal oscillation frequency, $K_\mathrm{VCO}$ is the tuning sensitivity, and $V_\mathrm{tune}(t)$ is the tuning voltage applied to the varactor. Looking at the instantaneous phase $\varphi_\mathrm{VCO}(t)$ of the oscillator, we can integrate the instantaneous frequency $\omega_\mathrm{VCO}(t)$ to obtain
+
+$$
+\varphi_\mathrm{VCO}(t) = \int_0^t \omega_\mathrm{VCO}(\tau) d\tau = \omega_0 t + K_\mathrm{VCO} \int_0^t V_\mathrm{tune}(\tau) d\tau.
+$$
+
+Inspecting this equation, we see that with respect to phase, an oscillator is a **perfect** integrator of the tuning voltage over time! For simulation purposes, we can therefore model an oscillator as an integrator block as shown in @fig-oscillator-model.
+
+{{< include /content/oscillator/_fig_oscillator_model.qmd >}}
+
+In this model we look at the phase output of the oscillator as an *excess phase* with respect to the nominal phase $\omega_0 t$. This delta phase is obtained by integrating the tuning voltage $V_\mathrm{tune}(t)$ scaled by $K_\mathrm{VCO}$.

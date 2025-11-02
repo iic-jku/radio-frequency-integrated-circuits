@@ -1,0 +1,79 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-phase-noise-spectrum
+#| echo: false
+#| fig-cap: "Phase noise spectrum of a typical LC oscillator showing characteristic 1/f³ and 1/f² slopes vs. frequency offset from carrier. The flicker noise corner (where the 1/f³ region transitions to the 1/f² region) is around 10 kHz, and the thermal noise floor onset is marked at 10 MHz."
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define frequency offset range (Hz)
+f_offset = np.logspace(3, 8, 1000)  # 1 kHz to 100 MHz
+
+# Phase noise components - simplified approach
+# 1/f³ region (close-in phase noise, dominated by flicker noise)
+L_1f3 = -70 - 30 * np.log10(f_offset / 1e3)  # -70 dBc/Hz @ 1 kHz with 1/f³ slope
+
+# 1/f² region (thermal noise region) 
+L_1f2 = -120 - 20 * np.log10(f_offset / 1e5)  # -120 dBc/Hz @ 100 kHz with 1/f² slope
+
+# Flat noise floor (thermal + quantization noise)
+L_floor = -160 * np.ones_like(f_offset)  # -160 dBc/Hz noise floor
+
+# Combine phase noise sources correctly in linear domain
+# Convert dBc/Hz to linear, add the noise powers, then convert back to dBc/Hz
+
+# Convert log (dBc/Hz) to linear scale
+L_1f3_linear = 10**(L_1f3 / 10)  # Convert dBc/Hz to linear
+L_1f2_linear = 10**(L_1f2 / 10)  # Convert dBc/Hz to linear  
+L_floor_linear = 10**(L_floor / 10)  # Convert dBc/Hz to linear
+
+# Add all noise sources in linear domain (RSS - Root Sum Square)
+L_total_linear = L_1f3_linear + L_1f2_linear + L_floor_linear
+
+# Convert back to logarithmic scale (dBc/Hz)
+L_total = 10 * np.log10(L_total_linear)
+
+# Create the plot
+fig, ax = plt.subplots(1, 1)
+
+# Plot phase noise spectrum
+ax.semilogx(f_offset, L_total, 'b-', linewidth=3, label='Total Phase Noise')
+
+# Plot individual components (dashed lines)
+ax.semilogx(f_offset, L_1f3, 'r--', linewidth=2, alpha=0.7, label='1/f³ region (flicker)')
+ax.semilogx(f_offset, L_1f2, 'g--', linewidth=2, alpha=0.7, label='1/f² region (thermal)')
+ax.semilogx(f_offset, L_floor, 'm--', linewidth=2, alpha=0.7, label='Noise floor')
+
+# Mark characteristic frequencies
+ax.axvline(1e4, color='gray', linestyle=':', alpha=0.7, linewidth=1)
+ax.axvline(1e6, color='gray', linestyle=':', alpha=0.7, linewidth=1)
+
+# Formatting
+ax.set_xlabel('Frequency Offset from Carrier (Hz)')
+ax.set_ylabel('Phase Noise L(f) (dBc/Hz)')
+ax.grid(True, alpha=0.3, which='both')
+ax.legend(loc='upper right')
+
+# Set axis limits
+ax.set_xlim(1e3, 1e8)
+ax.set_ylim(-180, -60)
+
+plt.tight_layout()
+plt.show()
+```
