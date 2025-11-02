@@ -16,7 +16,7 @@ limitations under the License.
 
 # Oscillators {#sec-oscillator}
 
-For the generation of the LO frequency to be used by in a mixer for frequency conversion, oscillators are used. Ideally, oscillators produce a stable, noise-free sinusoidal signal, independent of environmental conditions like temperature or supply voltage variations. The circuit symbol of an oscillator is shown in @fig-oscillator-symbol.
+For the generation of the LO frequency to be used in a mixer for frequency conversion, oscillators are used. Ideally, oscillators produce a stable, noise-free sinusoidal signal, independent of environmental conditions like temperature or supply voltage variations. The circuit symbol of an oscillator is shown in @fig-oscillator-symbol.
 
 {{< include /content/oscillator/_fig_oscillator_block.qmd >}}
 
@@ -24,7 +24,7 @@ The question is how to construct an oscillator. In summary, we need to build som
 
 {{< include /content/oscillator/_fig_ring_oscillator.qmd >}}
 
-Note that the output frequency of the ring oscillator shown above is ill-controlled, as it only depends on the delay (i.e., phase shift) of the inverters, which are usually dependent on process, voltage, and temperature (PVT) variations. Also the inherent quality factor of such an oscillator is low, as exemplified by the definitions of the quality factor $Q$ as [@Razavi.1996]
+Note that the output frequency of the ring oscillator shown above is ill-controlled, as it only depends on the delay (i.e., phase shift) of the inverters, which are usually dependent on process, voltage, and temperature (PVT) variations. Also, the inherent quality factor of such an oscillator is low, as exemplified by the definition of the quality factor $Q$ as [@Razavi.1996]
 
 $$
 Q = 2 \pi \frac{\text{Average energy stored}}{\text{Energy loss per cycle}} = \frac{\omega_0}{\Delta \omega} = \frac{\omega_0}{2} \sqrt{ \left( \frac{d A}{d \omega} \right)^2 + \left( \frac{d \varphi}{d \omega} \right)^2 }
@@ -70,11 +70,11 @@ $$
 
 we want to keep the amplitude variations small, i.e., $V_\mathrm{osc,p}(t) = V_\mathrm{osc,p}$, and also the frequency variations small, i.e., $\omega_0(t) = \omega_0$. We further want to minimize any phase fluctuations, i.e., $\varphi(t) = \varphi_0$.
 
-As a side note, the definition of $Q$ in @eq-definition-q can be also be understand that it describes how many oscillation cycles it takes until the energy stored in the resonator is dissipated. For example, if $Q = 1000$ at $f_0 = 1\,\text{GHz}$, the energy stored in the resonator will last for approximately 1000 cycles, which is 1 µs. This time duration is sometimes called the "ring-down time" of the resonator.
+As a side note, the definition of $Q$ in @eq-definition-q can also be understood as describing how many oscillation cycles it takes until the energy stored in the resonator is dissipated. For example, if $Q = 1000$ at $f_0 = 1\,\text{GHz}$, the energy stored in the resonator will last for approximately 1000 cycles, which is 1 µs. This time duration is sometimes called the "ring-down time" of the resonator.
 
 ## Oscillator Noise {#sec-oscillator-noise}
 
-For calculating the noise of an oscillator, we assume that an LC-based oscillator as shown in @fig-lc-oscillator is used. We assume that the oscillator is in steady state operation, i.e., $-R_\mathrm{amp} = R_\mathrm{p}$. We can then simplify the circuit to the one shown in @fig-lc-oscillator-noise-model.
+For calculating the noise of an oscillator, we assume that an LC-based oscillator as shown in @fig-lc-oscillator is used. We assume that the oscillator is in steady-state operation, i.e., $-R_\mathrm{amp} = R_\mathrm{p}$. We can then simplify the circuit to the one shown in @fig-lc-oscillator-noise-model.
 
 {{< include /content/oscillator/_fig_lc_oscillator_noise.qmd >}}
 
@@ -114,7 +114,7 @@ $$
 \overline{V_n^2}(\Delta \omega) = |Z_\mathrm{tank}(j \omega_0 + j \Delta \omega)|^2 \cdot \frac{4 k T F}{R_\mathrm{p}} = \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2
 $$
 
-This absolute noise voltage is not of much interest per se. We normalize it to the oscillation amplitude $V_\mathrm{p}$, and only account for 1/2 of the noise, as the total noise power is split equally into amplitude noise and phase noise [@Razavi.1996], and we are only interested in the **phase noise**. This is because we assume the amplitude noise being removed by amplitude clipping in the LO chain routing the oscillator signal to the mixer. This is often a valid assumption. We introduce the symbol $\phn(\cdot)$ to denote this normalized phase noise of the oscillator:
+This absolute noise voltage is not of much interest per se. We normalize it to the oscillation amplitude $V_\mathrm{p}$, and only account for 1/2 of the noise, as the total noise power is split equally into amplitude noise and phase noise [@Razavi.1996], and we are only interested in the **phase noise**. This is because we assume the amplitude noise is removed by amplitude clipping in the LO chain routing the oscillator signal to the mixer. This is often a valid assumption. We introduce the symbol $\phn(\cdot)$ to denote this normalized phase noise of the oscillator:
 
 $$
 \phn\{\Delta \omega\} = \frac{\frac{1}{2} \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2}{\left( \frac{V_\mathrm{p}}{\sqrt{2}} \right)^2} = \frac{k T F R_\mathrm{p}}{V_\mathrm{p}^2} \cdot \frac{1}{Q^2} \cdot \left( \frac{\omega_0}{\Delta \omega} \right)^2
@@ -129,7 +129,7 @@ This equation is known as "**Leeson's equation**" [@Leeson.1966], and it provide
 
 The phase noise $\phn\{\Delta \omega\}$ is expressed in the unit of dBc/Hz, i.e., in decibels of phase noise relative to the carrier power per 1 Hz of bandwidth. When expressing the phase noise of an oscillator in dBc/Hz it is important to state both the oscillation frequency $\omega_0$ and the offset frequency $\Delta \omega$ at which the phase noise is evaluated. For example, we could say that an oscillator has a phase noise of -137 dBc/Hz at 3 MHz offset from a carrier frequency of 2 GHz.
 
-The phase noise expressed with @eq-lesson-equation describes an important region of the total oscillator phase noise where the phase noise decreased with $1 / (\Delta \omega)^2$, i.e., with 20 dB per decade. This region is often called the "thermal noise region" as it is dominated by thermal noise from the tank resistor and the active circuit. However, at lower offset frequencies, other noise mechanisms (like flicker noise) can dominate, leading to different slopes of the phase noise vs. offset frequency curve. At larger offset frequencies, the phase noise can flatten out due to thermal noise floor limitation of bufer amplifiers following the oscillator. A typical phase noise plot of an LC oscillator is shown in @fig-phase-noise-spectrum.
+The phase noise expressed with @eq-lesson-equation describes an important region of the total oscillator phase noise where the phase noise decreases with $1 / (\Delta \omega)^2$, i.e., with 20 dB per decade. This region is often called the "thermal noise region" as it is dominated by thermal noise from the tank resistor and the active circuit. However, at lower offset frequencies, other noise mechanisms (like flicker noise) can dominate, leading to different slopes of the phase noise vs. offset frequency curve. At larger offset frequencies, the phase noise can flatten out due to thermal noise floor limitation of buffer amplifiers following the oscillator. A typical phase noise plot of an LC oscillator is shown in @fig-phase-noise-spectrum.
 
 {{< include /content/oscillator/_fig_phase_noise_spectrum.qmd >}}
 
@@ -183,7 +183,7 @@ $$
 $$
 :::
 
-The reciprocal mixing scenario descibred in @nte-reciprocal-mixing is visualized in @fig-reciprocal-mixing.
+The reciprocal mixing scenario described in @nte-reciprocal-mixing is visualized in @fig-reciprocal-mixing.
 
 {{< include /content/oscillator/_fig_reciprocal_mixing.qmd >}}
 
@@ -211,7 +211,7 @@ When we investigate the equivalent electrical circuit of a quartz crystal, we fi
 
 {{< include /content/oscillator/_fig_crystal_equivalent_circuit.qmd >}}
 
-This means we can operate the quartz crystal as a high-Q inductor in an oscillator circuit, which results in the single-ended quartz crystal oscillator shown in @fig-crystal-oscillator, which is a very popular choice for high-performance crystal oscillators. Note that in simple implementation the current-bias MOSFET can be replaced by an inverter stage biased in the linear region.
+This means we can operate the quartz crystal as a high-Q inductor in an oscillator circuit, which results in the single-ended quartz crystal oscillator shown in @fig-crystal-oscillator, which is a very popular choice for high-performance crystal oscillators. Note that in a simple implementation the current-bias MOSFET can be replaced by an inverter stage biased in the linear region.
 
 {{< include /content/oscillator/_fig_crystal_oscillator.qmd >}}
 
@@ -241,17 +241,17 @@ By putting the circuit in @fig-oscillator-lc-nmos onto its head we obtain a "PMO
 
 {{< include /content/oscillator/_fig_oscillator_lc_pmos.qmd >}}
 
-In both oscillator topolopogies, the oscillation frequency is determined by the LC tank circuit formed by $L = L_1 + L_2$ and $C$. The oscillation frequency can be approximated by
+In both oscillator topologies, the oscillation frequency is determined by the LC tank circuit formed by $L = L_1 + L_2$ and $C$. The oscillation frequency can be approximated by
 
 $$
 f_0 = \frac{1}{2 \pi \sqrt{L C}}
 $$
 
-As both technologies have their inductor middle point tied to a supply rail (ground for NMOS core, $V_\mathrm{DD}$ for PMOS core), the voltage swing across the tank can go well beyond the supply voltage, which is an advantage of these topologies. However, note that the maximum voltage swing is still limited by the device breakdown voltages. of $M_1$ and $M_2$, wich can be critical in advanced CMOS technologies with low breakdown voltages. To utilize both an NMOS and a PMOS cross-coupled pair in parallel, a so-called "complementary (or CMOS) LC oscillator" can be used, which is shown in @fig-oscillator-lc-cmos. Here, the voltage swing across the tank is limited to the supply voltage, so it is inherently safe regarding device breakdown. Also, the transconductance of both NMOS and PMOS devices contribute to the negative resistance, which can reduce power consumption for a given oscillation amplitude.
+As both technologies have their inductor middle point tied to a supply rail (ground for NMOS core, $V_\mathrm{DD}$ for PMOS core), the voltage swing across the tank can go well beyond the supply voltage, which is an advantage of these topologies. However, note that the maximum voltage swing is still limited by the device breakdown voltages of $M_1$ and $M_2$, which can be critical in advanced CMOS technologies with low breakdown voltages. To utilize both an NMOS and a PMOS cross-coupled pair in parallel, a so-called "complementary (or CMOS) LC oscillator" can be used, which is shown in @fig-oscillator-lc-cmos. Here, the voltage swing across the tank is limited to the supply voltage, so it is inherently safe regarding device breakdown. Also, the transconductance of both NMOS and PMOS devices contribute to the negative resistance, which can reduce power consumption for a given oscillation amplitude.
 
 {{< include /content/oscillator/_fig_oscillator_lc_cmos.qmd >}}
 
-Note that no bias current sources are shown in @fig-oscillator-lc-cmos, but can be added in practice. However, they required some voltage headroom, which lowers the maximum voltage swing across the tank, which is negative for phase noise performance according to Leeson's equation in @eq-lesson-equation.
+Note that no bias current sources are shown in @fig-oscillator-lc-cmos, but can be added in practice. However, they require some voltage headroom, which lowers the maximum voltage swing across the tank, which is negative for phase noise performance according to Leeson's equation in @eq-lesson-equation.
 
 The inductor $L$ used in LC tanks is often implemented as a differential spiral inductor, which can be realized on-chip using the top metal layers of the CMOS process. If higher $Q$ is sought, then off-chip inductors must be used, which is more expensive and uses package pins to connect the inductor. Alternatively, bondwire inductors can be used, which utilize the bondwires connecting the die to the package leads as inductors. Bondwire inductors can provide high $Q$ values and are a cost-effective solution for improving oscillator performance without requiring off-chip components. For mm-wave frequencies, transmission line stubs can be used as inductors, which can be implemented on-chip using coplanar waveguide (CPW) or microstrip structures.
 
