@@ -27,9 +27,9 @@ sd.svgconfig.svg2 = False
 with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=14)
 
-    elm.Dot(open=True).label(r'$v_\mathrm{x}$', loc='left')
+    elm.Dot(open=True).label(r'$V_\mathrm{x}$', loc='left')
     wire1 = elm.Line().right().length(d.unit)
-    elm.CurrentLabelInline(ofst=0).at(wire1).label(r'$i_\mathrm{x}$')
+    elm.CurrentLabelInline(ofst=0).at(wire1).label(r'$I_\mathrm{x}$')
     elm.Capacitor().down().label(r'$C_\mathrm{gs}$')
     elm.Line().right().length(d.unit).dot()
     d.push()
@@ -37,6 +37,5 @@ with sd.Drawing(canvas='svg') as d:
     elm.Ground()
 
     d.pop()
-    elm.SourceI().up().label(r'$g_\mathrm{m} v_\mathrm{gs}$', loc='bottom').reverse().dot(open=True)
-    
+    elm.SourceI().up().label(r'$g_\mathrm{m} V_\mathrm{gs}$', loc='bottom').reverse().dot(open=True)
 ```

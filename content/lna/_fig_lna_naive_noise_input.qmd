@@ -42,7 +42,7 @@ with sd.Drawing(canvas='svg') as d:
     elm.Ground()
 
     # load
-    elm.Line().at(M1.drain).right().length(d.unit/2).label(r'$\overline{v_\mathrm{n,out,s}^2}$', loc='right').dot(open=True).idot()
+    elm.Line().at(M1.drain).right().length(d.unit/2).label(r'$\overline{V_\mathrm{n,out,s}^2}$', loc='right').dot(open=True).idot()
     Rd = elm.Resistor().at(M1.drain).up().label(r'$R_\mathrm{D}$')
     elm.Line().at((Rd.end[0]-d.unit/4, Rd.end[1])).to((Rd.end[0]+d.unit/4, Rd.end[1])).label(r'$V_\mathrm{DD}$').linewidth(3)
 ```
