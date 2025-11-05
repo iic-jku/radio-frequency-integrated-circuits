@@ -118,7 +118,7 @@ This absolute noise voltage is not of much interest per se. We normalize it to t
 
 $$
 \phn[\Delta \omega] = \frac{\frac{1}{2} \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2}{\left( \frac{V_\mathrm{p}}{\sqrt{2}} \right)^2} = \frac{k T F R_\mathrm{p}}{V_\mathrm{p}^2} \cdot \frac{1}{Q^2} \cdot \left( \frac{\omega_0}{\Delta \omega} \right)^2
-$$ {#eq-lesson-equation}
+$$ {#eq-leeson-equation}
 
 This equation is known as "**Leeson's equation**" [@Leeson.1966], and it provides us with important insights on how to design low phase noise oscillators:
 
