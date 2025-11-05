@@ -155,13 +155,13 @@ We now extract the small-signal equivalent circuit of @fig-lna-inductive-degener
 We find that
 
 $$
-v_\mathrm{x} = v_\mathrm{gs} + Z_\mathrm{deg} (i_\mathrm{x} + \gm v_\mathrm{gs}), \quad v_\mathrm{gs} = \frac{i_\mathrm{x}}{s C_\mathrm{gs}}
+V_\mathrm{x} = \Vgs + Z_\mathrm{deg} (I_\mathrm{x} + \gm \Vgs), \quad \Vgs = \frac{I_\mathrm{x}}{s C_\mathrm{gs}}
 $$
 
 so that we can write the input impedance as
 
 $$
-Z_\mathrm{in} = \frac{v_\mathrm{x}}{i_\mathrm{x}} = \frac{1}{s C_\mathrm{gs}} + Z_\mathrm{deg} + \frac{\gm Z_\mathrm{deg}}{s C_\mathrm{gs}}. 
+Z_\mathrm{in} = \frac{V_\mathrm{x}}{I_\mathrm{x}} = \frac{1}{s C_\mathrm{gs}} + Z_\mathrm{deg} + \frac{\gm Z_\mathrm{deg}}{s C_\mathrm{gs}}. 
 $$ {#eq-lna-inductive-degeneration-zin}
 
 The final term in @eq-lna-inductive-degeneration-zin is the interesting one: By choosing $Z_\mathrm{deg}$ to be inductive (which we can do by either use an on-chip or off-chip inductor), we can realize a real part of the input impedance. If we choose $Z_\mathrm{deg} = s L$, we find that
