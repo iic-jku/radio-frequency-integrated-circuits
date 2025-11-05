@@ -68,12 +68,12 @@ with sd.Drawing(canvas='svg') as d:
     # input connections
 
     elm.Line().left(d.unit/2).dot().at(R1.start)
-    elm.Line().left(d.unit/2).label(r'$v_\mathrm{in,0}$', 'left').dot(open=True)
+    elm.Line().left(d.unit/2).label(r'$V_\mathrm{in,0}$', 'left').dot(open=True)
     elm.Line().left(d.unit/2).at(R2.start)
     elm.Line().up(d.unit)
 
     elm.Line().left(d.unit/2).dot().at(R3.start)
-    elm.Line().left(d.unit/2).label(r'$v_\mathrm{in,180}$', 'left').dot(open=True)
+    elm.Line().left(d.unit/2).label(r'$V_\mathrm{in,180}$', 'left').dot(open=True)
     elm.Line().left(d.unit/2).at(R4.start)
     elm.Line().up(d.unit)
 
@@ -86,8 +86,8 @@ with sd.Drawing(canvas='svg') as d:
 
     # output connections
 
-    elm.Line().right(d.unit).at(R5.end).label(r'$v_\mathrm{out,0}$', 'right').dot(open=True)
-    elm.Line().right(d.unit).at(R6.end).label(r'$v_\mathrm{out,90}$', 'right').dot(open=True)
-    elm.Line().right(d.unit).at(R7.end).label(r'$v_\mathrm{out,180}$', 'right').dot(open=True)
-    elm.Line().right(d.unit).at(R8.end).label(r'$v_\mathrm{out,270}$', 'right').dot(open=True)
+    elm.Line().right(d.unit).at(R5.end).label(r'$V_\mathrm{out,0}$', 'right').dot(open=True)
+    elm.Line().right(d.unit).at(R6.end).label(r'$V_\mathrm{out,90}$', 'right').dot(open=True)
+    elm.Line().right(d.unit).at(R7.end).label(r'$V_\mathrm{out,180}$', 'right').dot(open=True)
+    elm.Line().right(d.unit).at(R8.end).label(r'$V_\mathrm{out,270}$', 'right').dot(open=True)
 ```
