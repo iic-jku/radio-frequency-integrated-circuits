@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2025-11-02">
+<meta name="dcterms.date" content="2025-11-05">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -461,7 +461,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 2, 2025</p>
+      <p class="date">November 5, 2025</p>
     </div>
   </div>
   
@@ -2091,11 +2091,11 @@ Figure&nbsp;33: Equivalent small-signal circuit of the input stage around <span 
 </div>
 <p>We find that</p>
 <p><span class="math display">\[
-v_\mathrm{x} = v_\mathrm{gs} + Z_\mathrm{deg} (i_\mathrm{x} + g_\mathrm{m}v_\mathrm{gs}), \quad v_\mathrm{gs} = \frac{i_\mathrm{x}}{s C_\mathrm{gs}}
+V_\mathrm{x} = V_\mathrm{gs}+ Z_\mathrm{deg} (I_\mathrm{x} + g_\mathrm{m}V_\mathrm{gs}), \quad V_\mathrm{gs}= \frac{I_\mathrm{x}}{s C_\mathrm{gs}}
 \]</span></p>
 <p>so that we can write the input impedance as</p>
 <p><span id="eq-lna-inductive-degeneration-zin"><span class="math display">\[
-Z_\mathrm{in} = \frac{v_\mathrm{x}}{i_\mathrm{x}} = \frac{1}{s C_\mathrm{gs}} + Z_\mathrm{deg} + \frac{g_\mathrm{m}Z_\mathrm{deg}}{s C_\mathrm{gs}}.
+Z_\mathrm{in} = \frac{V_\mathrm{x}}{I_\mathrm{x}} = \frac{1}{s C_\mathrm{gs}} + Z_\mathrm{deg} + \frac{g_\mathrm{m}Z_\mathrm{deg}}{s C_\mathrm{gs}}.
 \tag{31}\]</span></span></p>
 <p>The final term in <a href="#eq-lna-inductive-degeneration-zin" class="quarto-xref">Equation&nbsp;31</a> is the interesting one: By choosing <span class="math inline">\(Z_\mathrm{deg}\)</span> to be inductive (which we can do by either use an on-chip or off-chip inductor), we can realize a real part of the input impedance. If we choose <span class="math inline">\(Z_\mathrm{deg} = s L\)</span>, we find that</p>
 <p><span class="math display">\[
@@ -2641,9 +2641,9 @@ Z_\mathrm{tank}(j \omega_0 + j \Delta \omega) = -\frac{j}{2 \Delta \omega C}.
 <p><span class="math display">\[
 \overline{V_n^2}(\Delta \omega) = |Z_\mathrm{tank}(j \omega_0 + j \Delta \omega)|^2 \cdot \frac{4 k T F}{R_\mathrm{p}} = \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2
 \]</span></p>
-<p>This absolute noise voltage is not of much interest per se. We normalize it to the oscillation amplitude <span class="math inline">\(V_\mathrm{p}\)</span>, and only account for 1/2 of the noise, as the total noise power is split equally into amplitude noise and phase noise <span class="citation" data-cites="Razavi.1996">(<a href="#ref-Razavi.1996" role="doc-biblioref">B. Razavi 1996</a>)</span>, and we are only interested in the <strong>phase noise</strong>. This is because we assume the amplitude noise is removed by amplitude clipping in the LO chain routing the oscillator signal to the mixer. This is often a valid assumption. We introduce the symbol <span class="math inline">\(\mathcal{L}(\cdot)\)</span> to denote this normalized phase noise of the oscillator:</p>
+<p>This absolute noise voltage is not of much interest per se. We normalize it to the oscillation amplitude <span class="math inline">\(V_\mathrm{p}\)</span>, and only account for 1/2 of the noise, as the total noise power is split equally into amplitude noise and phase noise <span class="citation" data-cites="Razavi.1996">(<a href="#ref-Razavi.1996" role="doc-biblioref">B. Razavi 1996</a>)</span>, and we are only interested in the <strong>phase noise</strong>. This is because we assume the amplitude noise is removed by amplitude clipping in the LO chain routing the oscillator signal to the mixer. This is often a valid assumption. We introduce the symbol <span class="math inline">\(\mathcal{L}\left\{\cdot\right\}\)</span> to denote this normalized phase noise of the oscillator:</p>
 <p><span id="eq-lesson-equation"><span class="math display">\[
-\mathcal{L}\{\Delta \omega\} = \frac{\frac{1}{2} \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2}{\left( \frac{V_\mathrm{p}}{\sqrt{2}} \right)^2} = \frac{k T F R_\mathrm{p}}{V_\mathrm{p}^2} \cdot \frac{1}{Q^2} \cdot \left( \frac{\omega_0}{\Delta \omega} \right)^2
+\mathcal{L}\left\{\Delta \omega\right\} = \frac{\frac{1}{2} \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2}{\left( \frac{V_\mathrm{p}}{\sqrt{2}} \right)^2} = \frac{k T F R_\mathrm{p}}{V_\mathrm{p}^2} \cdot \frac{1}{Q^2} \cdot \left( \frac{\omega_0}{\Delta \omega} \right)^2
 \tag{41}\]</span></span></p>
 <p>This equation is known as “<strong>Leeson’s equation</strong>” <span class="citation" data-cites="Leeson.1966">(<a href="#ref-Leeson.1966" role="doc-biblioref">Leeson 1966</a>)</span>, and it provides us with important insights on how to design low phase noise oscillators:</p>
 <ol type="1">
@@ -2652,7 +2652,7 @@ Z_\mathrm{tank}(j \omega_0 + j \Delta \omega) = -\frac{j}{2 \Delta \omega C}.
 <li>Use an active circuit with low noise factor <span class="math inline">\(F\)</span> to minimize the noise contribution of the negative resistance <span class="math inline">\(-R_\mathrm{amp}\)</span>. A good value to aim for is <span class="math inline">\(F \approx 2\)</span> or lower.</li>
 <li>Maximize the tank resistance <span class="math inline">\(R_\mathrm{p}\)</span> to minimize the thermal noise contribution. This can be achieved by using high-Q inductors and low-loss capacitors.</li>
 </ol>
-<p>The phase noise <span class="math inline">\(\mathcal{L}\{\Delta \omega\}\)</span> is expressed in the unit of dBc/Hz, i.e., in decibels of phase noise relative to the carrier power per 1 Hz of bandwidth. When expressing the phase noise of an oscillator in dBc/Hz it is important to state both the oscillation frequency <span class="math inline">\(\omega_0\)</span> and the offset frequency <span class="math inline">\(\Delta \omega\)</span> at which the phase noise is evaluated. For example, we could say that an oscillator has a phase noise of -137 dBc/Hz at 3 MHz offset from a carrier frequency of 2 GHz.</p>
+<p>The phase noise <span class="math inline">\(\mathcal{L}\left\{\Delta \omega\right\}\)</span> is expressed in the unit of dBc/Hz, i.e., in decibels of phase noise relative to the carrier power per 1 Hz of bandwidth. When expressing the phase noise of an oscillator in dBc/Hz it is important to state both the oscillation frequency <span class="math inline">\(\omega_0\)</span> and the offset frequency <span class="math inline">\(\Delta \omega\)</span> at which the phase noise is evaluated. For example, we could say that an oscillator has a phase noise of -137 dBc/Hz at 3 MHz offset from a carrier frequency of 2 GHz.</p>
 <p>The phase noise expressed with <a href="#eq-lesson-equation" class="quarto-xref">Equation&nbsp;41</a> describes an important region of the total oscillator phase noise where the phase noise decreases with <span class="math inline">\(1 / (\Delta \omega)^2\)</span>, i.e., with 20 dB per decade. This region is often called the “thermal noise region” as it is dominated by thermal noise from the tank resistor and the active circuit. However, at lower offset frequencies, other noise mechanisms (like flicker noise) can dominate, leading to different slopes of the phase noise vs.&nbsp;offset frequency curve. At larger offset frequencies, the phase noise can flatten out due to thermal noise floor limitation of buffer amplifiers following the oscillator. A typical phase noise plot of an LC oscillator is shown in <a href="#fig-phase-noise-spectrum" class="quarto-xref">Figure&nbsp;58</a>.</p>
 <div id="cell-fig-phase-noise-spectrum" class="cell" data-execution_count="58">
 <div class="cell-output cell-output-display">
@@ -2670,7 +2670,7 @@ Figure&nbsp;58: Phase noise spectrum of a typical LC oscillator showing characte
 </div>
 <p>It is important to note that the phase noise does not go to infinity as <span class="math inline">\(\Delta \omega\)</span> approaches zero, as <a href="#eq-lesson-equation" class="quarto-xref">Equation&nbsp;41</a> might suggest. This is an artifact of the simplified model used to derive Leeson’s equation. In reality, the phase noise has the form of a Lorentzian spectrum around the carrier frequency, which means that it flattens out at very low offset frequencies with a trend described by</p>
 <p><span class="math display">\[
-\mathcal{L}\{ \Delta \omega \ll \} \propto \frac{1}{\omega_\mathrm{B}^2 + \Delta \omega^2}
+\mathcal{L}\left\{\Delta \omega \ll\right\} \propto \frac{1}{\omega_\mathrm{B}^2 + \Delta \omega^2}
 \]</span></p>
 <p>with <span class="math inline">\(\omega_\mathrm{B}\)</span> being the half-power bandwidth of the oscillator spectrum.</p>
 <p>Why is phase noise important?</p>
@@ -2684,9 +2684,9 @@ Figure&nbsp;58: Phase noise spectrum of a typical LC oscillator showing characte
 <section id="sec-oscillator-reciprocal-mixing" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="sec-oscillator-reciprocal-mixing"><span class="header-section-number">6.2</span> Reciprocal Mixing</h2>
 <p>Reciprocal mixing is a phenomenon that occurs in receivers when the phase noise sidebands of the local oscillator mix with strong adjacent channel signals, resulting in in-band noise that degrades the signal-to-noise ratio of the desired signal. This effect is particularly pronounced in systems with high-order modulation schemes or closely spaced channels, where even small amounts of phase noise can lead to significant performance degradation.</p>
-<p>To analyze reciprocal mixing, we consider a scenario where a strong interferer is present at a frequency offset <span class="math inline">\(\Delta f\)</span> from the desired signal. The phase noise of the local oscillator at this offset frequency can be characterized by its power spectral density <span class="math inline">\(\mathcal{L}\{\Delta f\}\)</span>. When the local oscillator mixes with the interferer, the phase noise sidebands effectively “fold” into the desired signal band, creating additional noise. This noise level can be estimated by multiplying the power of the interferer by the phase noise level at the offset frequency and considering the channel bandwidth <span class="math inline">\(B\)</span> of the RX</p>
+<p>To analyze reciprocal mixing, we consider a scenario where a strong interferer is present at a frequency offset <span class="math inline">\(\Delta f\)</span> from the desired signal. The phase noise of the local oscillator at this offset frequency can be characterized by its power spectral density <span class="math inline">\(\mathcal{L}\left\{\Delta f\right\}\)</span>. When the local oscillator mixes with the interferer, the phase noise sidebands effectively “fold” into the desired signal band, creating additional noise. This noise level can be estimated by multiplying the power of the interferer by the phase noise level at the offset frequency and considering the channel bandwidth <span class="math inline">\(B\)</span> of the RX</p>
 <p><span id="eq-reciprocal-mixing-noise"><span class="math display">\[
-P_\mathrm{RM} = P_\mathrm{interferer} + \mathcal{L}\{ \Delta f\} + 10 \log_{10}(B)
+P_\mathrm{RM} = P_\mathrm{interferer} + \mathcal{L}\left\{\Delta f\right\} + 10 \log_{10}(B)
 \tag{42}\]</span></span></p>
 <p>where <span class="math inline">\(P_\mathrm{RM}\)</span> is the power of the reciprocal mixing noise introduced into the desired signal band.</p>
 <div id="nte-reciprocal-mixing" class="callout callout-style-default callout-note callout-titled">
@@ -2710,7 +2710,7 @@ P_\mathrm{interferer} = P_\mathrm{sens} - \text{C/I} = -70\,\text{dBm} + 27\,\te
 \]</span></p>
 <p>Using <a href="#eq-reciprocal-mixing-noise" class="quarto-xref">Equation&nbsp;42</a>, we can express the maximum allowable phase noise at 3 MHz offset at 2.4 GHz as:</p>
 <p><span class="math display">\[
-\mathcal{L}\{3\,\text{MHz}\} = P_\mathrm{noise,max} - P_\mathrm{interferer} - 10 \log_{10}(B) = -83\,\text{dBm} + 43\,\text{dBm} - 60\,\text{dB} = -100\,\text{dBc/Hz}
+\mathcal{L}\left\{3\,\text{MHz}\right\} = P_\mathrm{noise,max} - P_\mathrm{interferer} - 10 \log_{10}(B) = -83\,\text{dBm} + 43\,\text{dBm} - 60\,\text{dB} = -100\,\text{dBc/Hz}
 \]</span></p>
 </div>
 </div>
