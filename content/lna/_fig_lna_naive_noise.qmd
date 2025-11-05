@@ -43,7 +43,7 @@ with sd.Drawing(canvas='svg') as d:
     elm.Line().right().length(d.unit/2).label(r'$\overline{V_\mathrm{n,out}^2}$', loc='right').dot(open=True)
     d.pop()
     d.push()
-    elm.SourceI().down().label(r'$4 k T \gamma \gm$', loc='bottom').color('blue')
+    elm.SourceI().down().label(r'$4 k T \gamma g_\mathrm{m}$', loc='bottom').color('blue')
     elm.Line().down().toy(src1.start)
     elm.Ground()
     d.pop()
