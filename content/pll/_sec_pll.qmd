@@ -42,7 +42,7 @@ $$
 V_\mathrm{error} = K_\mathrm{PD} \cdot \Delta \varphi
 $$
 
-where $\Delta \varphi$ is the phase difference (cause by the arrival time difference) in rad, $K_\mathrm{PD}$ is the phase detector gain in V/rad, $\Delta t$ is the time difference between the two signals, and $T_\mathrm{ref}$ is the period of the reference signal.
+where $\Delta \varphi$ is the phase difference (caused by the arrival time difference) in rad, $K_\mathrm{PD}$ is the phase detector gain in V/rad, $\Delta t$ is the time difference between the two signals, and $T_\mathrm{ref}$ is the period of the reference signal.
 
 An important consideration of the PD is its linear operating range. The PD can only provide a linear output voltage for small phase differences, typically within ±180° (±π rad). If the phase difference exceeds this range, the PD characteristic "wraps around," leading to ambiguity in the phase error signal. This can cause the PLL to lose lock or behave unpredictably. Therefore, the PLL design must ensure that the phase difference remains within the linear range of the PD during normal operation, which is especially troublesome if the output frequency $f_\mathrm{out}$ is not yet close enough to its final steady-state value. Note that a simple PD can be implemented by using an XOR gate for digital signals or a mixer for analog signals.
 
@@ -86,7 +86,7 @@ $$
 \varphi_\mathrm{out}(s) = \frac{K_\mathrm{VCO}}{s} \cdot H_\mathrm{LP}(s) \cdot V_\mathrm{PD}(s) = \frac{K_\mathrm{VCO}}{s} \cdot \frac{1}{1 + s T_\mathrm{LP}} \cdot K_\mathrm{PD} \left[ \varphi_\mathrm{ref}(s) - \frac{\varphi_\mathrm{out}(s)}{N} \right].
 $$
 
-Not that this equation as one integrator $1/s$ (which we can also see in @fig-pll-block-diagram-s-domain). We call PLLs with one integrator in the loop a **Type-I PLL**. We can now rearrange to find the closed-loop transfer function $H(s)$ as
+Not that this equation has one integrator $1/s$ (which we can also see in @fig-pll-block-diagram-s-domain). We call PLLs with one integrator in the loop a **Type-I PLL**. We can now rearrange to find the closed-loop transfer function $H(s)$ as
 
 $$
 H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{K_\mathrm{VCO} \cdot K_\mathrm{PD} \cdot \omega_\mathrm{LP} / N}{s^2 + s \cdot \omega_\mathrm{LP} + K_\mathrm{VCO} \cdot K_\mathrm{PD} \cdot \omega_\mathrm{LP} / N}.
@@ -188,9 +188,7 @@ $$
 H_\mathrm{CP}(s) = \frac{I_\mathrm{CP}}{2 \pi} \left( \frac{1}{s C_\mathrm{int}} + R_\mathrm{int} \right)
 $$ {#eq-cp-transfer-function}
 
-where we have added a resistor $R_\mathrm{int}$ in series with the capacitor $C_\mathrm{int}$ to introduce a zero in the loop filter transfer function,
-
-clearly showing the zero introduced by the resistor $R_\mathrm{int}$ in series to the capacitor $C_\mathrm{int}$. The need of this zero will become apparent when we analyze the PLL loop dynamics next.
+where we have added a resistor $R_\mathrm{int}$ in series with the capacitor $C_\mathrm{int}$ to introduce a zero in the loop filter transfer function, clearly showing the zero introduced by the resistor $R_\mathrm{int}$ in series with the capacitor $C_\mathrm{int}$. The need for this zero will become apparent when we analyze the PLL loop dynamics next.
 
 The resulting PLL using a PFD-CP combination is shown in @fig-pll-pfd-cp.
 
@@ -245,7 +243,7 @@ The advantages of the ADPLL are that it can be fully integrated in a digital nm 
 
 ### Time-to-Digital Converter {#sec-pll-tdc}
 
-The TDC is a crucial component of the ADPLL, responsible for measuring the time difference between the reference and feedback signal edges and converting it into a digital phase error word. The TDC operates by sampling the time interval between two events (the rising edges of the reference and feedback signals) and quantizing this interval into discrete levels. TDCs can be implemented using various techniques. One of the popular method is using a digital delay line. An exemplary implementation is shown in @fig-pll-tdc.
+The TDC is a crucial component of the ADPLL, responsible for measuring the time difference between the reference and feedback signal edges and converting it into a digital phase error word. The TDC operates by sampling the time interval between two events (the rising edges of the reference and feedback signals) and quantizing this interval into discrete levels. TDCs can be implemented using various techniques. One popular method is using a digital delay line. An exemplary implementation is shown in @fig-pll-tdc.
 
 {{< include /content/pll/_fig_pll_tdc.qmd >}}
 
