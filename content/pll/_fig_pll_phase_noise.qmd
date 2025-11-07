@@ -1,0 +1,94 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-pll-phase-noise
+#| echo: false
+#| fig-cap: "PLL phase noise contributions at the PLL output showing reference phase noise (increased by 20*log(N) and low-pass shaped), VCO phase noise (high-pass shaped), and total phase noise. The loop bandwidth determines the crossover frequency between reference and VCO phase noise contributions. For effective rejection of the 1/f³ VCO phase noise, a higher-order loop filter (shown is 3rd order) is beneficial."
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define frequency offset range (Hz)
+f_offset = np.logspace(3, 8, 1000)  # 10 Hz to 100 MHz
+
+# PLL parameters
+f_loop = 1e5  # Loop bandwidth = 100 kHz
+N = 100  # Division ratio
+
+# Reference phase noise - unfiltered (free-running reference oscillator)
+L_ref_1MHz = -140  # Reference phase noise at 1 MHz in dBc/Hz
+L_ref_unfiltered = L_ref_1MHz + 20*np.log10(N)  # Scaled by N² (20*log10(N))
+
+# Reference phase noise - filtered through PLL (low-pass shaped)
+# Use higher order filter for steeper rolloff (3rd order)
+H_lp = 1 / (1 + (f_offset/f_loop)**2)**3  # 3rd order low-pass transfer function
+L_ref_filtered = L_ref_unfiltered + 10*np.log10(H_lp)
+
+# VCO phase noise with 1/f³ and 1/f² regions
+L_vco_100kHz = -90  # VCO phase noise at 100 kHz in dBc/Hz
+f_corner = 1e4  # Corner frequency between 1/f³ and 1/f² regions (10 kHz)
+
+# Calculate the level at corner frequency for 1/f² region
+L_vco_corner_1f2 = L_vco_100kHz - 20*np.log10(f_corner/1e5)  # Level at 10 kHz for 1/f² curve
+
+# 1/f³ region (close-in phase noise, flicker noise) - anchored at corner frequency
+L_vco_1f3 = L_vco_corner_1f2 - 30*np.log10(f_offset/f_corner)  # 1/f³ slope (30 dB/decade)
+
+# 1/f² region (thermal noise region)
+L_vco_1f2 = L_vco_100kHz - 20*np.log10(f_offset/1e5)  # 1/f² slope (20 dB/decade)
+
+# Combine 1/f³ and 1/f² regions in linear domain
+L_vco_1f3_linear = 10**(L_vco_1f3 / 10)
+L_vco_1f2_linear = 10**(L_vco_1f2 / 10)
+L_vco_combined_linear = L_vco_1f3_linear + L_vco_1f2_linear
+L_vco = 10 * np.log10(L_vco_combined_linear)
+
+# VCO phase noise - high-pass filtered through PLL (inverse of low-pass)
+H_hp = (f_offset/f_loop)**6 / (1 + (f_offset/f_loop)**2)**3  # 3rd order high-pass transfer function
+L_vco_filtered = L_vco + 10*np.log10(H_hp)
+
+# Total PLL phase noise - combine filtered reference and filtered VCO noise
+L_ref_filtered_linear = 10**(L_ref_filtered / 10)
+L_vco_filtered_linear = 10**(L_vco_filtered / 10)
+L_total_linear = L_ref_filtered_linear + L_vco_filtered_linear
+L_total = 10 * np.log10(L_total_linear)
+
+# Create the plot
+plt.semilogx(f_offset, L_ref_unfiltered * np.ones_like(f_offset), 'b:', linewidth=2, label='Reference phase noise\n(unfiltered)', alpha=0.8)
+plt.semilogx(f_offset, L_ref_filtered, 'b--', linewidth=2, label='Reference phase noise\n(low-pass filtered)', alpha=0.8)
+plt.semilogx(f_offset, L_vco, 'r:', linewidth=2, label='VCO phase noise\n(unfiltered, 1/f³ + 1/f²)', alpha=0.8)
+plt.semilogx(f_offset, L_vco_filtered, 'r--', linewidth=2, label='VCO phase noise\n(high-pass filtered)', alpha=0.8)
+plt.semilogx(f_offset, L_total, 'k-', linewidth=3, label='Total PLL phase noise', alpha=0.9)
+
+# Add vertical line at loop bandwidth
+plt.axvline(f_loop, color='gray', linestyle=':', alpha=0.7, linewidth=2)
+plt.text(f_loop*1.5, -80, f'Loop BW\n{f_loop/1000:.0f} kHz', fontsize=10, ha='left')
+
+# Add vertical line at VCO corner frequency
+plt.axvline(f_corner, color='red', linestyle=':', alpha=0.5, linewidth=1)
+
+# Formatting
+plt.xlabel('Frequency offset from carrier (Hz)')
+plt.ylabel('Phase noise (dBc/Hz)')
+plt.grid(True, alpha=0.3)
+plt.legend(loc='upper right', fontsize=9)
+plt.ylim(-160, -60)
+plt.xlim(1e3, 1e8)
+
+plt.tight_layout()
+plt.show()
+```

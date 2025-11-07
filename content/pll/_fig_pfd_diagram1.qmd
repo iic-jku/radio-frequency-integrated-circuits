@@ -1,0 +1,40 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-pfd-diagram1
+#| echo: false
+#| fig-cap: "Reference leading the VCO feedback signal, frequencies are already aligned."
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.logic as lgc
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    lgc.TimingDiagram(
+    {'signal': [
+        {'name': 'f_ref', 'wave': '01...0...1.'},
+        {'name': 'f_fb', 'wave': '0.1...0...1'},
+        {},
+        {'name': 'up', 'wave': '010......10'},
+        {'name': 'down', 'wave': '0..........'}
+        ]
+    })
+
+```

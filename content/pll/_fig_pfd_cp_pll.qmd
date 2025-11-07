@@ -1,0 +1,122 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-pll-pfd-cp
+#| echo: false
+#| fig-cap: "Diagram of a PFD-CP PLL. Note the added first-order lowpass which has been added to reduce the CP switching ripple."
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+import schemdraw.logic as lgc
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    def draw_cp(pos):
+        d.here = pos
+        elm.Vdd()
+        elm.SourceI().down().label(r'$I_\mathrm{CP}$')
+        S1 = elm.Switch().down().dot().flip().dot()
+        S2 = elm.Switch().down().flip().reverse()
+        elm.SourceI().down().label(r'$I_\mathrm{CP}$')
+        elm.Ground()
+
+        elm.Line().right(d.unit).at(S1.end).dot()
+        d.push()
+        elm.Line().right(d.unit/2)
+        out_lf = d.here
+        d.pop()
+        elm.Resistor().down().label(r'$R_\mathrm{int}$')
+        elm.Capacitor().down().label(r'$C_\mathrm{int}$')
+        elm.Ground()
+
+        d.here = S1.end
+        d.move(dx=-d.unit/4, dy=d.unit/2)
+        elm.Arrow().left(d.unit/2).reverse()
+        in1 = d.here
+
+        d.here = S2.start
+        d.move(dx=-d.unit/4, dy=-d.unit/2)
+        elm.Arrow().left(d.unit/2).reverse()
+        in2 = d.here
+
+        return in1, in2, out_lf
+
+    def draw_pfd(pos):
+        d.here = pos
+        DFF1 = elm.Ic(pins=[elm.IcPin(name='>', side='left'), elm.IcPin(name='D', side='left'),
+        elm.IcPin(name='Q', side='right'), elm.IcPin(name='R', side='bottom')],
+        pinspacing=1).hold()
+        d.move(dx=0, dy=-d.unit)
+        DFF2 = elm.Ic(pins=[elm.IcPin(name='>', side='left'), elm.IcPin(name='D', side='left'),
+            elm.IcPin(name='Q', side='right'), elm.IcPin(name='R', side='bottom')],
+            pinspacing=1).hold().flip()
+
+        elm.Line().left(d.unit/4).at(DFF1['D']).label('1', 'left')
+        elm.Line().left(d.unit/4).at(DFF2['D']).label('1', 'left')
+        elm.Line().left(d.unit/2).at(DFF1['>'])
+        in_ref = d.here
+        elm.Line().left(d.unit).at(DFF2['>'])
+        in_fb = d.here
+
+        elm.Line().at(DFF1['R']).to(DFF2['R'])
+
+        elm.Line().right(d.unit/2).at(DFF1['Q']).dot()
+        pos1 = d.here
+        elm.Line().right(d.unit/2)
+        out1 = d.here
+        elm.Line().right(d.unit/2).at(DFF2['Q']).dot()
+        pos2 = d.here
+        elm.Line().right(d.unit/2)
+        out2 = d.here
+
+        AND1 = lgc.And().at((d.unit,-d.unit/2)).reverse()
+        elm.Wire('|-').at(pos1).to(AND1.in1)
+        elm.Wire('|-').at(pos2).to(AND1.in2)
+        elm.Line().at(AND1.out).left().tox(DFF1['R']).dot()
+
+        return in_ref, in_fb, out1, out2
+
+    (in_ref, in_fb, out1, out2) = draw_pfd((0,0))
+    (in1, in2, out_lf) = draw_cp((d.unit*4,d.unit*1.5))
+
+    elm.Wire('-|').at(out1).to(in1).label('UP', 'top')
+    elm.Wire('-|').at(out2).to(in2).label('DOWN', 'bottom')
+
+    d.here = out_lf
+    elm.Resistor().right().dot().label(r'$R_\mathrm{lp}$', loc='top')
+    d.push()
+    elm.Capacitor().down().label(r'$C_\mathrm{lp}$', loc='top')
+    elm.Ground()
+    d.pop()
+
+    elm.Line().right(d.unit/2)
+
+    dsp.Oscillator().label('VCO', loc='top', ofst=(0, 0.2))
+    dsp.Line().right(d.unit/2).dot()
+    d.push()
+    dsp.Line().right(d.unit/2).dot(open=True).label(r'$f_\mathrm{out}$', 'right')
+    d.pop()
+    dsp.Line().down(d.unit*3)
+    dsp.Line().left(d.unit)
+    dsp.Square().label(':N', loc='center')
+    dsp.Wire('-|').to(in_fb).label(r'$f_\mathrmP{fb} = f_\mathrm{out} / N$', 'bottom')
+
+    elm.Line().at(in_ref).left(d.unit/2).dot(open=True).label(r'$f_\mathrm{ref}$', 'left')
+```

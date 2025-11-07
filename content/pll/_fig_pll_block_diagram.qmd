@@ -41,6 +41,6 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Line().down(d.unit)
     dsp.Arrow().left(d.unit*1.5)
     dsp.Square().label(':N', loc='center')
-    dsp.Line().tox(pfd.S)
+    dsp.Line().tox(pfd.S).label(r'$f_\mathrmP{fb} = f_\mathrm{out} / N$', 'top')
     dsp.Arrow().up().to(pfd.S)
 ```

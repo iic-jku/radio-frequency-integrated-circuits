@@ -1,0 +1,52 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-cp-implementation
+#| echo: false
+#| fig-cap: "Charge pump consisting of two matched current sources and switches. The resistor in series with the capacitor introduces a zero."
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    elm.Vdd()
+    elm.SourceI().down().label(r'$I_\mathrm{CP}$')
+    S1 = elm.Switch().down().dot().flip().dot()
+    S2 = elm.Switch().down().flip().reverse()
+    elm.SourceI().down().label(r'$I_\mathrm{CP}$')
+    elm.Ground()
+
+    elm.Line().right(d.unit).at(S1.end).dot()
+    d.push()
+    elm.Line().right(d.unit/2).dot(open=True).label(r'$V_\mathrm{LF}$', loc='right')
+    d.pop()
+    elm.Resistor().down().label(r'$R_\mathrm{int}$').color('blue')
+    elm.Capacitor().down().label(r'$C_\mathrm{int}$')
+    elm.Ground()
+
+    d.here = S1.end
+    d.move(dx=-d.unit/4, dy=d.unit/2)
+    elm.Arrow().left(d.unit/2).reverse().dot(open=True).label('UP', 'left')
+
+    d.here = S2.start
+    d.move(dx=-d.unit/4, dy=-d.unit/2)
+    elm.Arrow().left(d.unit/2).reverse().dot(open=True).label('DOWN', 'left')
+```
