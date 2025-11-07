@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2025-11-05">
+<meta name="dcterms.date" content="2025-11-07">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -424,7 +424,16 @@ window.Quarto = {
   <li><a href="#sec-frequency-tuning-of-oscillators" id="toc-sec-frequency-tuning-of-oscillators" class="nav-link" data-scroll-target="#sec-frequency-tuning-of-oscillators"><span class="header-section-number">6.5</span> Frequency Tuning of Oscillators</a></li>
   <li><a href="#sec-oscillator-modeling" id="toc-sec-oscillator-modeling" class="nav-link" data-scroll-target="#sec-oscillator-modeling"><span class="header-section-number">6.6</span> Oscillator Modelling</a></li>
   </ul></li>
-  <li><a href="#sec-pll" id="toc-sec-pll" class="nav-link" data-scroll-target="#sec-pll"><span class="header-section-number">7</span> Phase-Locked Loops</a></li>
+  <li><a href="#sec-pll" id="toc-sec-pll" class="nav-link" data-scroll-target="#sec-pll"><span class="header-section-number">7</span> Phase-Locked Loops</a>
+  <ul class="collapse">
+  <li><a href="#sec-pll-basic-architecture" id="toc-sec-pll-basic-architecture" class="nav-link" data-scroll-target="#sec-pll-basic-architecture"><span class="header-section-number">7.1</span> Basic PLL Architecture</a></li>
+  <li><a href="#sec-pll-charge-pump" id="toc-sec-pll-charge-pump" class="nav-link" data-scroll-target="#sec-pll-charge-pump"><span class="header-section-number">7.2</span> Charge-Pump PLL</a></li>
+  <li><a href="#sec-pll-all-digital" id="toc-sec-pll-all-digital" class="nav-link" data-scroll-target="#sec-pll-all-digital"><span class="header-section-number">7.3</span> All-Digital PLL</a>
+  <ul class="collapse">
+  <li><a href="#sec-pll-tdc" id="toc-sec-pll-tdc" class="nav-link" data-scroll-target="#sec-pll-tdc"><span class="header-section-number">7.3.1</span> Time-to-Digital Converter</a></li>
+  <li><a href="#sec-pll-dco" id="toc-sec-pll-dco" class="nav-link" data-scroll-target="#sec-pll-dco"><span class="header-section-number">7.3.2</span> Digitally Controlled Oscillator</a></li>
+  </ul></li>
+  </ul></li>
   <li><a href="#sec-poweramp" id="toc-sec-poweramp" class="nav-link" data-scroll-target="#sec-poweramp"><span class="header-section-number">8</span> Power Amplifiers</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="rfic.pdf"><i class="bi bi-file-pdf"></i>Typst</a></li></ul></div></nav>
@@ -461,7 +470,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 5, 2025</p>
+      <p class="date">November 7, 2025</p>
     </div>
   </div>
   
@@ -2642,7 +2651,7 @@ Z_\mathrm{tank}(j \omega_0 + j \Delta \omega) = -\frac{j}{2 \Delta \omega C}.
 \overline{V_n^2}(\Delta \omega) = |Z_\mathrm{tank}(j \omega_0 + j \Delta \omega)|^2 \cdot \frac{4 k T F}{R_\mathrm{p}} = \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2
 \]</span></p>
 <p>This absolute noise voltage is not of much interest per se. We normalize it to the oscillation amplitude <span class="math inline">\(V_\mathrm{p}\)</span>, and only account for 1/2 of the noise, as the total noise power is split equally into amplitude noise and phase noise <span class="citation" data-cites="Razavi.1996">(<a href="#ref-Razavi.1996" role="doc-biblioref">B. Razavi 1996</a>)</span>, and we are only interested in the <strong>phase noise</strong>. This is because we assume the amplitude noise is removed by amplitude clipping in the LO chain routing the oscillator signal to the mixer. This is often a valid assumption. We introduce the symbol <span class="math inline">\(\mathcal{L}\left\{\cdot\right\}\)</span> to denote this normalized phase noise of the oscillator:</p>
-<p><span id="eq-lesson-equation"><span class="math display">\[
+<p><span id="eq-leeson-equation"><span class="math display">\[
 \mathcal{L}\left\{\Delta \omega\right\} = \frac{\frac{1}{2} \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2}{\left( \frac{V_\mathrm{p}}{\sqrt{2}} \right)^2} = \frac{k T F R_\mathrm{p}}{V_\mathrm{p}^2} \cdot \frac{1}{Q^2} \cdot \left( \frac{\omega_0}{\Delta \omega} \right)^2
 \tag{41}\]</span></span></p>
 <p>This equation is known as “<strong>Leeson’s equation</strong>” <span class="citation" data-cites="Leeson.1966">(<a href="#ref-Leeson.1966" role="doc-biblioref">Leeson 1966</a>)</span>, and it provides us with important insights on how to design low phase noise oscillators:</p>
@@ -2653,7 +2662,7 @@ Z_\mathrm{tank}(j \omega_0 + j \Delta \omega) = -\frac{j}{2 \Delta \omega C}.
 <li>Maximize the tank resistance <span class="math inline">\(R_\mathrm{p}\)</span> to minimize the thermal noise contribution. This can be achieved by using high-Q inductors and low-loss capacitors.</li>
 </ol>
 <p>The phase noise <span class="math inline">\(\mathcal{L}\left\{\Delta \omega\right\}\)</span> is expressed in the unit of dBc/Hz, i.e., in decibels of phase noise relative to the carrier power per 1 Hz of bandwidth. When expressing the phase noise of an oscillator in dBc/Hz it is important to state both the oscillation frequency <span class="math inline">\(\omega_0\)</span> and the offset frequency <span class="math inline">\(\Delta \omega\)</span> at which the phase noise is evaluated. For example, we could say that an oscillator has a phase noise of -137 dBc/Hz at 3 MHz offset from a carrier frequency of 2 GHz.</p>
-<p>The phase noise expressed with <a href="#eq-lesson-equation" class="quarto-xref">Equation&nbsp;41</a> describes an important region of the total oscillator phase noise where the phase noise decreases with <span class="math inline">\(1 / (\Delta \omega)^2\)</span>, i.e., with 20 dB per decade. This region is often called the “thermal noise region” as it is dominated by thermal noise from the tank resistor and the active circuit. However, at lower offset frequencies, other noise mechanisms (like flicker noise) can dominate, leading to different slopes of the phase noise vs.&nbsp;offset frequency curve. At larger offset frequencies, the phase noise can flatten out due to thermal noise floor limitation of buffer amplifiers following the oscillator. A typical phase noise plot of an LC oscillator is shown in <a href="#fig-phase-noise-spectrum" class="quarto-xref">Figure&nbsp;58</a>.</p>
+<p>The phase noise expressed with <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;41</a> describes an important region of the total oscillator phase noise where the phase noise decreases with <span class="math inline">\(1 / (\Delta \omega)^2\)</span>, i.e., with 20 dB per decade. This region is often called the “thermal noise region” as it is dominated by thermal noise from the tank resistor and the active circuit. However, at lower offset frequencies, other noise mechanisms (like flicker noise) can dominate, leading to different slopes of the phase noise vs.&nbsp;offset frequency curve. At larger offset frequencies, the phase noise can flatten out due to thermal noise floor limitation of buffer amplifiers following the oscillator. A typical phase noise plot of an LC oscillator is shown in <a href="#fig-phase-noise-spectrum" class="quarto-xref">Figure&nbsp;58</a>.</p>
 <div id="cell-fig-phase-noise-spectrum" class="cell" data-execution_count="58">
 <div class="cell-output cell-output-display">
 <div id="fig-phase-noise-spectrum" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2668,7 +2677,7 @@ Figure&nbsp;58: Phase noise spectrum of a typical LC oscillator showing characte
 </div>
 </div>
 </div>
-<p>It is important to note that the phase noise does not go to infinity as <span class="math inline">\(\Delta \omega\)</span> approaches zero, as <a href="#eq-lesson-equation" class="quarto-xref">Equation&nbsp;41</a> might suggest. This is an artifact of the simplified model used to derive Leeson’s equation. In reality, the phase noise has the form of a Lorentzian spectrum around the carrier frequency, which means that it flattens out at very low offset frequencies with a trend described by</p>
+<p>It is important to note that the phase noise does not go to infinity as <span class="math inline">\(\Delta \omega\)</span> approaches zero, as <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;41</a> might suggest. This is an artifact of the simplified model used to derive Leeson’s equation. In reality, the phase noise has the form of a Lorentzian spectrum around the carrier frequency, which means that it flattens out at very low offset frequencies with a trend described by</p>
 <p><span class="math display">\[
 \mathcal{L}\left\{\Delta \omega \ll\right\} \propto \frac{1}{\omega_\mathrm{B}^2 + \Delta \omega^2}
 \]</span></p>
@@ -2879,7 +2888,7 @@ Figure&nbsp;66: An LC differential oscillator using a PMOS and an NMOS cross-cou
 </div>
 </div>
 </div>
-<p>Note that no bias current sources are shown in <a href="#fig-oscillator-lc-cmos" class="quarto-xref">Figure&nbsp;66</a>, but can be added in practice. However, they require some voltage headroom, which lowers the maximum voltage swing across the tank, which is negative for phase noise performance according to Leeson’s equation in <a href="#eq-lesson-equation" class="quarto-xref">Equation&nbsp;41</a>.</p>
+<p>Note that no bias current sources are shown in <a href="#fig-oscillator-lc-cmos" class="quarto-xref">Figure&nbsp;66</a>, but can be added in practice. However, they require some voltage headroom, which lowers the maximum voltage swing across the tank, which is negative for phase noise performance according to Leeson’s equation in <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;41</a>.</p>
 <p>The inductor <span class="math inline">\(L\)</span> used in LC tanks is often implemented as a differential spiral inductor, which can be realized on-chip using the top metal layers of the CMOS process. If higher <span class="math inline">\(Q\)</span> is sought, then off-chip inductors must be used, which is more expensive and uses package pins to connect the inductor. Alternatively, bondwire inductors can be used, which utilize the bondwires connecting the die to the package leads as inductors. Bondwire inductors can provide high <span class="math inline">\(Q\)</span> values and are a cost-effective solution for improving oscillator performance without requiring off-chip components. For mm-wave frequencies, transmission line stubs can be used as inductors, which can be implemented on-chip using coplanar waveguide (CPW) or microstrip structures.</p>
 </section>
 <section id="sec-frequency-tuning-of-oscillators" class="level2" data-number="6.5">
@@ -2920,7 +2929,7 @@ Figure&nbsp;67: An switched capacitor for use in an oscillator switched capacito
 </div>
 </div>
 <p>Here, when the control signal <span class="math inline">\(S\)</span> is high, the effective capacitance is <span class="math inline">\(C/2\)</span>, with a parasitic series resistance <span class="math inline">\(R_\mathrm{on}\)</span> due to the switch. When <span class="math inline">\(S\)</span> is low, the effective capacitance is <span class="math inline">\(C_\mathrm{off}\)</span>, which is the parasitic drain-source capacitance of the MOSFET switch.</p>
-<p>Note that there exists a trade-off when designing the switched capacitor: A larger switch (with increased <span class="math inline">\(W\)</span>) reduces <span class="math inline">\(R_\mathrm{on}\)</span>, but increases <span class="math inline">\(C_\mathrm{off}\)</span>. A large <span class="math inline">\(R_\mathrm{on}\)</span> leads to increased losses in the tank circuit, which degrades the quality factor <span class="math inline">\(Q\)</span> and increases phase noise according to <a href="#eq-lesson-equation" class="quarto-xref">Equation&nbsp;41</a>. On the other hand, a large <span class="math inline">\(C_\mathrm{off}\)</span> reduces the effective tuning range of the switched capacitor, which can be detrimental if a wide tuning range is required.</p>
+<p>Note that there exists a trade-off when designing the switched capacitor: A larger switch (with increased <span class="math inline">\(W\)</span>) reduces <span class="math inline">\(R_\mathrm{on}\)</span>, but increases <span class="math inline">\(C_\mathrm{off}\)</span>. A large <span class="math inline">\(R_\mathrm{on}\)</span> leads to increased losses in the tank circuit, which degrades the quality factor <span class="math inline">\(Q\)</span> and increases phase noise according to <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;41</a>. On the other hand, a large <span class="math inline">\(C_\mathrm{off}\)</span> reduces the effective tuning range of the switched capacitor, which can be detrimental if a wide tuning range is required.</p>
 <p>In <strong>digitally-controlled oscillators (DCOs)</strong>, the tuning voltage <span class="math inline">\(V_\mathrm{tune}\)</span> is replaced by a digital control word that selects different capacitance values from a capacitor bank. This approach allows for precise and repeatable frequency tuning, which is beneficial in applications requiring frequency synthesis or channel selection. These fine tuning steps can also be implemented according to <a href="#fig-switched-capacitor" class="quarto-xref">Figure&nbsp;67</a>, however, the value of <span class="math inline">\(C\)</span> must be sufficiently small.</p>
 </section>
 <section id="sec-oscillator-modeling" class="level2" data-number="6.6">
@@ -2953,7 +2962,408 @@ Figure&nbsp;68: A model of a VCO as a perfect integrator for the excess phase in
 </section>
 <section id="sec-pll" class="level1" data-number="7">
 <h1 data-number="7"><span class="header-section-number">7</span> Phase-Locked Loops</h1>
-<p>To be added.</p>
+<p>Thinking about oscillators, we face a dilemma:</p>
+<ul>
+<li>Good phase noise performance is reached with high <span class="math inline">\(Q\)</span> in the resonator (see <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;41</a>).</li>
+<li>Oscillator tunability requires a tunable resonator, which usually results in a low-to-moderate <span class="math inline">\(Q\)</span>.</li>
+<li>Oscillators have inherent frequency stability issues due to temperature variations, device aging, and supply voltage fluctuations.</li>
+</ul>
+<section id="sec-pll-basic-architecture" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="sec-pll-basic-architecture"><span class="header-section-number">7.1</span> Basic PLL Architecture</h2>
+<p>We solve this dilemma by using a <strong>phase-locked loop (PLL)</strong> to stabilize and control the frequency of a tunable oscillator, mostly in the form of a VCO. A PLL is a feedback control system that locks the phase of the VCO output to the phase of a reference signal, typically generated by a crystal oscillator with excellent frequency stability. The block diagram of a basic PLL is shown in <a href="#fig-pll-block-diagram" class="quarto-xref">Figure&nbsp;69</a>.</p>
+<div id="cell-fig-pll-block-diagram" class="cell" data-execution_count="69">
+<div class="cell-output cell-output-display">
+<div id="fig-pll-block-diagram" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pll-block-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pll-block-diagram-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-69" title="Figure&nbsp;69: Block diagram of a PLL. A reference phase signal is compared to the phase of a VCO output signal in a phase detector. The phase error is low-pass filtered and used to tune the VCO frequency."><img src="rfic_files/figure-html/fig-pll-block-diagram-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-block-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;69: Block diagram of a PLL. A reference phase signal is compared to the phase of a VCO output signal in a phase detector. The phase error is low-pass filtered and used to tune the VCO frequency.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A reference frequency (often coming from a high-<span class="math inline">\(Q\)</span> crystal oscillator) is compared to the phase of a VCO output signal in a phase detector (PD). The phase error is low-pass filtered and used to tune the VCO frequency. By continuously adjusting the VCO based on the phase difference, the PLL ensures that the VCO output remains synchronized with the reference signal, effectively combining the stability of the reference with the tunability of the VCO. When the output signal of the VCO is fed back to the phase detector through a frequency divider (with division ratio <span class="math inline">\(N\)</span>), the PLL can generate output frequencies that are integer multiples of the reference frequency, given by <span class="math inline">\(f_\mathrm{out} = N \cdot f_\mathrm{ref}\)</span>.</p>
+<p>The PD compares the phase of the reference signal with the phase of the VCO output signal. It works in the time domain and produces an output voltage proportional to the arrival time difference (phase difference) between the two input signals. This output voltage, known as the phase error signal, indicates whether the VCO is leading or lagging the reference signal in phase expressed as</p>
+<p><span class="math display">\[
+\Delta \varphi = 2 \pi \frac{\Delta t}{T_\mathrm{ref}}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+V_\mathrm{error} = K_\mathrm{PD} \cdot \Delta \varphi
+\]</span></p>
+<p>where <span class="math inline">\(\Delta \varphi\)</span> is the phase difference (caused by the arrival time difference) in rad, <span class="math inline">\(K_\mathrm{PD}\)</span> is the phase detector gain in V/rad, <span class="math inline">\(\Delta t\)</span> is the time difference between the two signals, and <span class="math inline">\(T_\mathrm{ref}\)</span> is the period of the reference signal.</p>
+<p>An important consideration of the PD is its linear operating range. The PD can only provide a linear output voltage for small phase differences, typically within ±180° (±π rad). If the phase difference exceeds this range, the PD characteristic “wraps around,” leading to ambiguity in the phase error signal. This can cause the PLL to lose lock or behave unpredictably. Therefore, the PLL design must ensure that the phase difference remains within the linear range of the PD during normal operation, which is especially troublesome if the output frequency <span class="math inline">\(f_\mathrm{out}\)</span> is not yet close enough to its final steady-state value. Note that a simple PD can be implemented by using an XOR gate for digital signals or a mixer for analog signals.</p>
+<div id="cell-fig-pd-xor-diagram" class="cell" data-execution_count="70">
+<div class="cell-output cell-output-display">
+<div id="fig-pd-xor-diagram" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pd-xor-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pd-xor-diagram-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-70" title="Figure&nbsp;70: Input and output waveforms of an XOR-based phase-detector."><img src="rfic_files/figure-html/fig-pd-xor-diagram-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pd-xor-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;70: Input and output waveforms of an XOR-based phase-detector.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can see in <a href="#fig-pd-xor-diagram" class="quarto-xref">Figure&nbsp;70</a> that the output of the XOR PD is high when the two input signals differ and low when they are the same. The output duty cycle is proportional to the phase difference between the two input signals. Note that this PD has no notion of frequency, only phase! Still, it can be used to lock the frequency of the VCO to the reference frequency, as a constant phase difference implies equal frequencies; however, this only works if the initial frequency difference is small enough. Also, this XOR-based PD does not evaluate the edges of the input signals, only their logic states. Therefore, it is crucial that both input signals are square waves with a 50% duty cycle to ensure proper operation of the PD.</p>
+<p>As the output signal of the PD contains high-frequency components (at least at twice the reference frequency), a low-pass filter (LPF) is used to smooth the phase error signal before it is applied to the VCO tuning input. The LPF also determines the dynamic response of the PLL, affecting its stability and transient behavior. A well-designed LPF ensures that the PLL can quickly respond to changes in the reference signal or disturbances while maintaining stability and minimizing overshoot or oscillations in the output frequency. Often, the LPF has voltage-mode inputs and outputs to connect to the PD and VCO, respectively.</p>
+<p>Using a digital divider in the feedback path to only pass every <span class="math inline">\(N\)</span>-th cycle of the VCO output to the PD allows the PLL to generate output frequencies that are integer multiples of the reference frequency. This is particularly useful in applications such as frequency synthesis, where a wide range of frequencies is required from a single stable reference source. By adjusting the division ratio <span class="math inline">\(N \in \mathbb{N}\)</span>, the PLL can produce various output frequencies while maintaining phase lock with the reference signal. However, note that the frequency resolution of the output frequencies <span class="math inline">\(\Delta f_\mathrm{out}\)</span> is limited to integer multiples of the reference frequency!</p>
+<p>Putting everything together into an <span class="math inline">\(s\)</span>-domain block diagram, the PLL can be modeled as shown in <a href="#fig-pll-block-diagram-s-domain" class="quarto-xref">Figure&nbsp;71</a>.</p>
+<div id="cell-fig-pll-block-diagram-s-domain" class="cell" data-execution_count="71">
+<div class="cell-output cell-output-display">
+<div id="fig-pll-block-diagram-s-domain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pll-block-diagram-s-domain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pll-block-diagram-s-domain-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-71" title="Figure&nbsp;71: Laplace domain model of a PLL. Note that input and output signals are (excess) phase in rad."><img src="rfic_files/figure-html/fig-pll-block-diagram-s-domain-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-block-diagram-s-domain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;71: Laplace domain model of a PLL. Note that input and output signals are (excess) phase in rad.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>For the loop filter transfer function <span class="math inline">\(H(s)\)</span> we assume a simple first-order low-pass filter with a cutoff frequency of <span class="math inline">\(\omega_\mathrm{LP} = 1 / T_\mathrm{LP}\)</span> given by</p>
+<p><span class="math display">\[
+H_\mathrm{LP}(s) = \frac{1}{1 + s T_\mathrm{LP}}.
+\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Why Regulate Phase Instead of Frequency?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before we proceed, it is worth discussing why PLLs regulate the phase of the VCO output rather than its frequency directly. The reason lies in the relationship between phase and frequency: Frequency is the time derivative of phase. By controlling the phase, the PLL inherently controls the frequency as well. Additionally, even if the phase regulation has a steady state phase error <span class="math inline">\(\varphi_\mathrm{err}\)</span>, the frequency error in steady state is <strong>zero</strong>, as can be appreciated when inspecting</p>
+<p><span class="math display">\[
+\omega_\mathrm{out}(t) = \frac{d \varphi_\mathrm{out}(t)}{dt}  = \frac{d}{dt} \left[ N \cdot \varphi_\mathrm{ref}(t) + \varphi_\mathrm{err} \right] = N \cdot \frac{d \varphi_\mathrm{ref}(t)}{dt} = N \cdot \omega_\mathrm{ref}(t).
+\]</span></p>
+</div>
+</div>
+<p>We now derive the closed-loop transfer function of the PLL from reference phase <span class="math inline">\(\varphi_\mathrm{ref}(s)\)</span> to output phase <span class="math inline">\(\varphi_\mathrm{out}(s)\)</span>. First, we note that</p>
+<p><span class="math display">\[
+V_\mathrm{PD}(s) = K_\mathrm{PD} \left[ \varphi_\mathrm{ref}(s) - \frac{\varphi_\mathrm{out}(s)}{N} \right]
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\varphi_\mathrm{out}(s) = \frac{K_\mathrm{VCO}}{s} \cdot H_\mathrm{LP}(s) \cdot V_\mathrm{PD}(s) = \frac{K_\mathrm{VCO}}{s} \cdot \frac{1}{1 + s T_\mathrm{LP}} \cdot K_\mathrm{PD} \left[ \varphi_\mathrm{ref}(s) - \frac{\varphi_\mathrm{out}(s)}{N} \right].
+\]</span></p>
+<p>Not that this equation has one integrator <span class="math inline">\(1/s\)</span> (which we can also see in <a href="#fig-pll-block-diagram-s-domain" class="quarto-xref">Figure&nbsp;71</a>). We call PLLs with one integrator in the loop a <strong>Type-I PLL</strong>. We can now rearrange to find the closed-loop transfer function <span class="math inline">\(H(s)\)</span> as</p>
+<p><span id="eq-pll-transfer-function"><span class="math display">\[
+H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{K_\mathrm{VCO} \cdot K_\mathrm{PD} \cdot \omega_\mathrm{LP} / N}{s^2 + s \cdot \omega_\mathrm{LP} + K_\mathrm{VCO} \cdot K_\mathrm{PD} \cdot \omega_\mathrm{LP} / N}.
+\tag{43}\]</span></span></p>
+<p>We can use all techniques known from control theory to analyze the stability and dynamic response of the PLL based on <a href="#eq-pll-transfer-function" class="quarto-xref">Equation&nbsp;43</a>, however, we have to keep the following in mind:</p>
+<ul>
+<li><span class="math inline">\(H(s)\)</span> is a small-signal model of the PLL around its locked operating point, only valid for small perturbations. Large-signal behavior, such as acquisition and lock range, are not captured by this model.</li>
+<li>A PLL is a sampled system, working at instances of <span class="math inline">\(T_\mathrm{ref}\)</span>. <span class="math inline">\(H(s)\)</span> is a continuous-time approximation, which is valid only if the loop bandwidth is much smaller (typically <span class="math inline">\(1/10\)</span>) than the reference frequency <span class="math inline">\(f_\mathrm{ref}\)</span>. If this approximation is not valid, a discrete-time model of the PLL must be used deriving the <span class="math inline">\(z\)</span>-domain transfer function <span class="math inline">\(H(z)\)</span>.</li>
+</ul>
+<p>If we compare the canonical form of a second-order system given by</p>
+<p><span class="math display">\[
+H(s) = K \cdot \frac{\omega_\mathrm{n}^2}{s^2 + s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2},
+\]</span></p>
+<p>with <a href="#eq-pll-transfer-function" class="quarto-xref">Equation&nbsp;43</a>, we can identify the natural frequency <span class="math inline">\(\omega_n\)</span> and the damping factor <span class="math inline">\(\zeta\)</span> of the PLL as</p>
+<p><span class="math display">\[
+\omega_\mathrm{n} = \sqrt{\frac{K_\mathrm{VCO} \cdot K_\mathrm{PD} \cdot \omega_\mathrm{LP}}{N}}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\zeta = \frac{1}{2} \sqrt{\frac{\omega_\mathrm{LP} \cdot N}{K_\mathrm{VCO} \cdot K_\mathrm{PD}}}.
+\]</span></p>
+<p>This allows us to use standard control theory results to design the PLL parameters <span class="math inline">\(K_\mathrm{PD}\)</span>, <span class="math inline">\(K_\mathrm{VCO}\)</span>, <span class="math inline">\(\omega_\mathrm{LP}\)</span>, and <span class="math inline">\(N\)</span> to achieve the desired dynamic response and stability margins. Note that <span class="math inline">\(\omega_\mathrm{n}\)</span> and <span class="math inline">\(\zeta\)</span> are not independent, as they both depend on the same set of PLL parameters! This seriously limits the design of the loop dynamics, and means that we need a more complex loop filter <span class="math inline">\(H_\mathrm{LP}(s)\)</span> to achieve more freedom in selecting <span class="math inline">\(\omega_\mathrm{n}\)</span> and <span class="math inline">\(\zeta\)</span> independently. Often, we want to choose <span class="math inline">\(\zeta = 1/\sqrt{2} \approx 0.707\)</span> to achieve a Butterworth response for a good step response without overshoot.</p>
+<p>The poles of a second-order system are given by</p>
+<p><span class="math display">\[
+p_{1,2} = -\omega_\mathrm{n} \left( \zeta \pm \sqrt{\zeta^2 - 1} \right)
+\]</span></p>
+<p>with <span class="math inline">\(\zeta = 1/\sqrt{2}\)</span> resulting in complex conjugate poles at</p>
+<p><span class="math display">\[
+p_{1,2} = -\frac{\omega_\mathrm{n}}{\sqrt{2}} \pm j \frac{\omega_\mathrm{n}}{\sqrt{2}}.
+\]</span></p>
+<p>To summarize: We can make a simple PLL using an XOR for a PD, use a first-order LPF, plus a feedback divider to get frequency multiplication of <span class="math inline">\(f_\mathrm{out} = N \cdot f_\mathrm{ref}\)</span>. However, the control over the loop dynamics is very limited, and the locking procedure of the PLL is tricky, as the PD has a limited linear range of ±180°, requiring that the VCO frequency at the start of the locking procedure is already close enough to the desired output frequency. In addition, <span class="math inline">\(N\)</span> is an integer, limiting the frequency resolution of the output frequencies to integer multiples of the reference frequency.</p>
+<p>The question is how to improve the PLL design to overcome these limitations? We will explore advanced PLL architectures and techniques in the following section.</p>
+</section>
+<section id="sec-pll-charge-pump" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="sec-pll-charge-pump"><span class="header-section-number">7.2</span> Charge-Pump PLL</h2>
+<p>The fundamental limitations of the simple PLL architecture presented in <a href="#sec-pll-basic-architecture" class="quarto-xref">Section&nbsp;7.1</a> can be addressed by using a more sophisticated phase detector known as a <strong>charge pump (CP)</strong> in combination with a <strong>phase-frequency detector (PFD)</strong>. This combination allows for better control over the loop dynamics and improved locking behavior.</p>
+<p>In order to drive the CP, we envision a PFD with two digital outputs: An “up” signal that indicates when the VCO phase lags behind the reference phase, and a “down” signal that indicates when the VCO phase leads the reference phase. The PFD compares both the phase and frequency of the reference and feedback signals, providing a more robust locking mechanism. The typical implementation of a PFD is shown in <a href="#fig-pfd-implementation" class="quarto-xref">Figure&nbsp;72</a>.</p>
+<div id="cell-fig-pfd-implementation" class="cell" data-execution_count="72">
+<div class="cell-output cell-output-display">
+<div id="fig-pfd-implementation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pfd-implementation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pfd-implementation-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-72" title="Figure&nbsp;72: Implementation of a phase-frequency detector."><img src="rfic_files/figure-html/fig-pfd-implementation-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pfd-implementation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;72: Implementation of a phase-frequency detector.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The PFD operates as follows:</p>
+<ul>
+<li>If the reference signal leads the feedback signal (its rising edge arrives first), the “UP” output is activated, causing the CP to source current into the integration capacitor, <em>increasing</em> the VCO tuning voltage and thus the VCO frequency.</li>
+<li>If the feedback signal leads the reference signal (its rising edge arrives first), the “DOWN” output is activated, causing the CP to sink current from the integration capacitor, <em>decreasing</em> the VCO tuning voltage and thus the VCO frequency.</li>
+<li>If both signals are aligned in phase and frequency, both are only activated for a short time (the gate delays of the DFF and the AND), and the CP does not source or sink current; the integration capacitor in the loop filter holds its voltage, maintaining the VCO frequency.</li>
+<li>The rising edge that arrives last resets both outputs, ensuring that the CP only sources or sinks current for a duration proportional to the phase difference between the two signals.</li>
+</ul>
+<p>In the following, we will look at four different cases of PFD operation to illustrate its behavior.</p>
+<ol type="1">
+<li><em>Reference leads feedback</em>: The “UP” output is activated, and the CP sources current to the loop filter, increasing the VCO frequency.</li>
+</ol>
+<div id="cell-fig-pfd-diagram1" class="cell" data-execution_count="73">
+<div class="cell-output cell-output-display">
+<div id="fig-pfd-diagram1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pfd-diagram1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pfd-diagram1-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-73" title="Figure&nbsp;73: Reference leading the VCO feedback signal, frequencies are already aligned."><img src="rfic_files/figure-html/fig-pfd-diagram1-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pfd-diagram1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;73: Reference leading the VCO feedback signal, frequencies are already aligned.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
+<li><em>Feedback leads reference</em>: The “DOWN” output is activated, and the CP sinks current from the loop filter, decreasing the VCO frequency.</li>
+</ol>
+<div id="cell-fig-pfd-diagram2" class="cell" data-execution_count="74">
+<div class="cell-output cell-output-display">
+<div id="fig-pfd-diagram2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pfd-diagram2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pfd-diagram2-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-74" title="Figure&nbsp;74: VCO feedback signal leading the reference, frequencies are already aligned."><img src="rfic_files/figure-html/fig-pfd-diagram2-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pfd-diagram2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;74: VCO feedback signal leading the reference, frequencies are already aligned.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ol start="3" type="1">
+<li><em>Both signals aligned</em>: Both outputs are briefly activated, but the CP does not source or sink current, maintaining the VCO frequency.</li>
+</ol>
+<div id="cell-fig-pfd-diagram3" class="cell" data-execution_count="75">
+<div class="cell-output cell-output-display">
+<div id="fig-pfd-diagram3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pfd-diagram3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pfd-diagram3-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-75" title="Figure&nbsp;75: VCO feedback and reference signal are aligned in phase and frequency."><img src="rfic_files/figure-html/fig-pfd-diagram3-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pfd-diagram3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;75: VCO feedback and reference signal are aligned in phase and frequency.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ol start="4" type="1">
+<li><em>Large frequency difference</em>: The PFD continues to source or sink current until the phases align, allowing the PLL to acquire lock even with large initial frequency differences.</li>
+</ol>
+<div id="cell-fig-pfd-diagram4" class="cell" data-execution_count="76">
+<div class="cell-output cell-output-display">
+<div id="fig-pfd-diagram4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pfd-diagram4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pfd-diagram4-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-76" title="Figure&nbsp;76: VCO feedback and reference signal have different frequencies (the VCO frequency is too high). There will be some periods with a wrong output (as shown here in the first cycle), but on average the phase-frequency detector output will indicate that the VCO frequency must be decreased."><img src="rfic_files/figure-html/fig-pfd-diagram4-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pfd-diagram4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;76: VCO feedback and reference signal have different frequencies (the VCO frequency is too high). There will be some periods with a wrong output (as shown here in the first cycle), but on average the phase-frequency detector output will indicate that the VCO frequency must be decreased.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Let us now investigate the circuit of the CP. The UP and DOWN signals from the PFD control two current sources/sinks connected to the loop filter capacitor, as shown in <a href="#fig-cp-implementation" class="quarto-xref">Figure&nbsp;77</a>.</p>
+<div id="cell-fig-cp-implementation" class="cell" data-execution_count="77">
+<div class="cell-output cell-output-display">
+<div id="fig-cp-implementation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cp-implementation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-cp-implementation-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-77" title="Figure&nbsp;77: Charge pump consisting of two matched current sources and switches. The resistor in series with the capacitor introduces a zero."><img src="rfic_files/figure-html/fig-cp-implementation-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cp-implementation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;77: Charge pump consisting of two matched current sources and switches. The resistor in series with the capacitor introduces a zero.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>When the UP signal is high, the CP <em>sources</em> a constant current <span class="math inline">\(I_\mathrm{CP}\)</span> into the loop filter capacitor <span class="math inline">\(C_\mathrm{int}\)</span>, increasing its voltage linearly over time according to the phase error. Conversely, when the DOWN signal is high, the CP <em>sinks</em> a constant current <span class="math inline">\(I_\mathrm{CP}\)</span> from the capacitor, decreasing its voltage linearly.</p>
+<p>Note that the top and bottom current sources must be well matched to ensure symmetric operation of the CP and should have a wide operating range. The output impedance of the CP is ideally very high so that the charge pump current does not depend on the voltage across the loop filter capacitor. Further, the switches introduce charge injection and clock feedthrough, which can cause unwanted ripples on the loop filter voltage, leading to spurious signals in the PLL output. Careful design of the switches and layout techniques are necessary to minimize these effects.</p>
+<p>The voltage change on the capacitor can be expressed as</p>
+<p><span id="eq-cp-voltage-change"><span class="math display">\[
+\Delta V_\mathrm{LF} = \frac{1}{C_\mathrm{LF}} \int_0^{t_\mathrm{on}} I_\mathrm{int} \cdot dt
+\tag{44}\]</span></span></p>
+<p>where <span class="math inline">\(t_\mathrm{on}\)</span> is the duration for which the UP or DOWN signal is active, proportional to the phase difference between the reference and feedback signals.</p>
+<p>Taking the Laplace transform of <a href="#eq-cp-voltage-change" class="quarto-xref">Equation&nbsp;44</a>, we find the transfer function of the CP from the UP/DOWN control signals to the loop filter voltage as</p>
+<p><span id="eq-cp-transfer-function"><span class="math display">\[
+H_\mathrm{CP}(s) = \frac{I_\mathrm{CP}}{2 \pi} \left( \frac{1}{s C_\mathrm{int}} + R_\mathrm{int} \right)
+\tag{45}\]</span></span></p>
+<p>where we have added a resistor <span class="math inline">\(R_\mathrm{int}\)</span> in series with the capacitor <span class="math inline">\(C_\mathrm{int}\)</span> to introduce a zero in the loop filter transfer function, clearly showing the zero introduced by the resistor <span class="math inline">\(R_\mathrm{int}\)</span> in series with the capacitor <span class="math inline">\(C_\mathrm{int}\)</span>. The need for this zero will become apparent when we analyze the PLL loop dynamics next.</p>
+<p>The resulting PLL using a PFD-CP combination is shown in <a href="#fig-pll-pfd-cp" class="quarto-xref">Figure&nbsp;78</a>.</p>
+<div id="cell-fig-pll-pfd-cp" class="cell" data-execution_count="78">
+<div class="cell-output cell-output-display">
+<div id="fig-pll-pfd-cp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pll-pfd-cp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pll-pfd-cp-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-78" title="Figure&nbsp;78: Diagram of a PFD-CP PLL. Note the added first-order lowpass which has been added to reduce the CP switching ripple."><img src="rfic_files/figure-html/fig-pll-pfd-cp-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-pfd-cp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;78: Diagram of a PFD-CP PLL. Note the added first-order lowpass which has been added to reduce the CP switching ripple.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Neglecting <span class="math inline">\(R_\mathrm{lp}\)</span> and <span class="math inline">\(C_\mathrm{lp}\)</span> for now, we can derive the closed-loop transfer function of the PLL from reference phase <span class="math inline">\(\varphi_\mathrm{ref}(s)\)</span> to output phase <span class="math inline">\(\varphi_\mathrm{out}(s)\)</span> as</p>
+<p><span id="eq-cp-pll-transfer-function"><span class="math display">\[
+H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{\frac{I_\mathrm{CP} K_\mathrm{VCO}}{2 \pi C_\mathrm{int} N} (1 + s C_\mathrm{int} R_\mathrm{int})}{s^2 + s \frac{I_\mathrm{CP} K_\mathrm{VCO} R_\mathrm{int}}{2 \pi N} + \frac{I_\mathrm{CP} K_\mathrm{VCO}}{2 \pi C_\mathrm{int} N}} = N \cdot \frac{s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2}{s^2 + s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2}
+\tag{46}\]</span></span></p>
+<p>with</p>
+<p><span id="eq-cp-pll-natural-frequency"><span class="math display">\[
+\omega_\mathrm{n} = \sqrt{\frac{I_\mathrm{CP} K_\mathrm{VCO}}{2 \pi C_\mathrm{int} N}}
+\tag{47}\]</span></span></p>
+<p>and</p>
+<p><span id="eq-cp-pll-damping-factor"><span class="math display">\[
+\zeta = \frac{R_\mathrm{int}}{2} \sqrt{\frac{I_\mathrm{CP} K_\mathrm{VCO} C_\mathrm{int}}{2 \pi N}}.
+\tag{48}\]</span></span></p>
+<p>Looking at <a href="#eq-cp-pll-natural-frequency" class="quarto-xref">Equation&nbsp;47</a> and <a href="#eq-cp-pll-damping-factor" class="quarto-xref">Equation&nbsp;48</a>, we can see that we now have one <em>independent</em> parameter (<span class="math inline">\(R_\mathrm{int}\)</span>) to set the natural frequency <span class="math inline">\(\omega_\mathrm{n}\)</span> and the damping factor <span class="math inline">\(\zeta\)</span> of the PLL independently. This allows us to design the loop dynamics more flexibly to achieve the desired performance.</p>
+<p>With <a href="#eq-cp-pll-damping-factor" class="quarto-xref">Equation&nbsp;48</a>, we can now appreciate the need for the resistor <span class="math inline">\(R_\mathrm{int}\)</span> in series with the capacitor <span class="math inline">\(C_\mathrm{int}\)</span> in the loop filter. Without this resistor, the damping factor <span class="math inline">\(\zeta\)</span> would be zero, leading to an undamped system with oscillatory behavior and poor transient response. The resistor introduces a zero in the loop filter transfer function, providing the necessary damping to stabilize the PLL and improve its dynamic response.</p>
+<p>Looking at <a href="#fig-pll-pfd-cp" class="quarto-xref">Figure&nbsp;78</a> and <a href="#eq-cp-transfer-function" class="quarto-xref">Equation&nbsp;45</a>, we can also see that the PFD-CP introduces another integrator in the loop. This integrator, together with the integrator from the VCO, makes the PLL a <strong>Type-II PLL</strong>. A Type-II PLL can achieve zero steady-state phase error for step changes in the reference phase and zero steady-state frequency error for ramp changes in the reference frequency.</p>
+<p>In conclusion:</p>
+<ul>
+<li>The PLL regulates the phase of a VCO to match the phase of a reference signal, using feedback control. Even with a steady-state phase error, the frequency error is zero (Type-I PLL). In a Type-II PLL, both phase and frequency errors are zero in steady state.</li>
+<li>The lowpass behavior of the loop filter determines the dynamic response and stability of the PLL.</li>
+<li>Further, the PLL transfer function from reference phase to output phase has the form of a lowpass, which passes the reference oscillator phase noise to the output inside the passband. The phase noise of the VCO is suppressed inside the loop bandwidth, as the PLL corrects for phase deviations.</li>
+<li>Outside the PLL loop bandwidth, the VCO phase noise dominates, as the PLL cannot correct for phase deviations fast enough.</li>
+</ul>
+<p>This phase noise shaping behavior is illustrated in <a href="#fig-pll-phase-noise" class="quarto-xref">Figure&nbsp;79</a>, which shows how the reference and VCO phase noise contributions combine to form the total PLL output phase noise.</p>
+<div id="cell-fig-pll-phase-noise" class="cell" data-execution_count="79">
+<div class="cell-output cell-output-display">
+<div id="fig-pll-phase-noise" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pll-phase-noise-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pll-phase-noise-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-79" title="Figure&nbsp;79: PLL phase noise contributions at the PLL output showing reference phase noise (increased by 20*log(N) and low-pass shaped), VCO phase noise (high-pass shaped), and total phase noise. The loop bandwidth determines the crossover frequency between reference and VCO phase noise contributions. For effective rejection of the 1/f³ VCO phase noise, a higher-order loop filter (shown is 3rd order) is beneficial."><img src="rfic_files/figure-html/fig-pll-phase-noise-output-1.png" width="656" height="463" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-phase-noise-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;79: PLL phase noise contributions at the PLL output showing reference phase noise (increased by 20*log(N) and low-pass shaped), VCO phase noise (high-pass shaped), and total phase noise. The loop bandwidth determines the crossover frequency between reference and VCO phase noise contributions. For effective rejection of the 1/f³ VCO phase noise, a higher-order loop filter (shown is 3rd order) is beneficial.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that inside the PLL loop bandwidth the reference phase noise is multiplied by the division ratio <span class="math inline">\(N\)</span> in power, i.e., <span class="math inline">\(20 \log_{10}(N)\)</span> in dB, as the PLL output frequency is <span class="math inline">\(N\)</span> times the reference frequency. In <a href="#fig-pll-phase-noise" class="quarto-xref">Figure&nbsp;79</a>, <span class="math inline">\(N = 100\)</span> and a reference phase noise of -140 dBc/Hz is used. Large values of <span class="math inline">\(N\)</span> can significantly increase the reference phase noise contribution at the PLL output, which is why low phase noise references are essential for high-performance PLLs.</p>
+</section>
+<section id="sec-pll-all-digital" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="sec-pll-all-digital"><span class="header-section-number">7.3</span> All-Digital PLL</h2>
+<p>In the PLL implementations discussed so far, we have used analog components such as the VCO, loop filter, and charge pump. While these analog PLLs can achieve excellent performance, they also come with challenges such as component variability, temperature sensitivity, and integration complexity in modern digital processes. The question arises: Can we implement a PLL using only digital components to overcome these challenges? The answer is yes, leading to the concept of the <strong>all-digital phase-locked loop (ADPLL)</strong> <span class="citation" data-cites="Staszewski.2003">(<a href="#ref-Staszewski.2003" role="doc-biblioref">Staszewski et al. 2003</a>)</span>, where a block diagram is shown in <a href="#fig-adpll-block-diagram" class="quarto-xref">Figure&nbsp;80</a>.</p>
+<div id="cell-fig-adpll-block-diagram" class="cell" data-execution_count="80">
+<div class="cell-output cell-output-display">
+<div id="fig-adpll-block-diagram" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-adpll-block-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-adpll-block-diagram-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-80" title="Figure&nbsp;80: Block diagram of an all-digital PLL. A reference phase signal is compared to the phase of a VCO output signal in a time-to-digital converter. The phase error word is digitally low-pass filtered and used to tune the DCO frequency via a frequency control word."><img src="rfic_files/figure-html/fig-adpll-block-diagram-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-adpll-block-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;80: Block diagram of an all-digital PLL. A reference phase signal is compared to the phase of a VCO output signal in a time-to-digital converter. The phase error word is digitally low-pass filtered and used to tune the DCO frequency via a frequency control word.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Conceptionally, the ADPLL in <a href="#fig-adpll-block-diagram" class="quarto-xref">Figure&nbsp;80</a> is similar to the analog PLL in <a href="#fig-pll-block-diagram" class="quarto-xref">Figure&nbsp;69</a>, with the key difference being that all components are implemented digitally. The phase detector is replaced by a time-to-digital converter (TDC), which measures the time difference between the reference and feedback signal edges and converts it into a digital phase error word. The loop filter is implemented as a digital filter (FIR, IIR, or similar), processing the phase error word to generate a tuning word for the digitally controlled oscillator (DCO). The DCO generates the output frequency based on the tuning word, completing the feedback loop.</p>
+<p>The advantages of the ADPLL are that it can be fully integrated in a digital nm CMOS process, benefiting from scalability, low power consumption, small chip area, and immunity to analog component variations. Additionally, the digital nature of the ADPLL allows for easy programmability and adaptability to different applications. However, the ADPLL also faces challenges such as quantization noise from the TDC and DCO.</p>
+<section id="sec-pll-tdc" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="sec-pll-tdc"><span class="header-section-number">7.3.1</span> Time-to-Digital Converter</h3>
+<p>The TDC is a crucial component of the ADPLL, responsible for measuring the time difference between the reference and feedback signal edges and converting it into a digital phase error word. The TDC operates by sampling the time interval between two events (the rising edges of the reference and feedback signals) and quantizing this interval into discrete levels. TDCs can be implemented using various techniques. One popular method is using a digital delay line. An exemplary implementation is shown in <a href="#fig-pll-tdc" class="quarto-xref">Figure&nbsp;81</a>.</p>
+<div id="cell-fig-pll-tdc" class="cell" data-execution_count="81">
+<div class="cell-output cell-output-display">
+<div id="fig-pll-tdc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pll-tdc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pll-tdc-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-81" title="Figure&nbsp;81: Basic TDC implementation as a delay line with parallel capture flip-flops. The TDC delay resolution is limited two inverter delays."><img src="rfic_files/figure-html/fig-pll-tdc-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-tdc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;81: Basic TDC implementation as a delay line with parallel capture flip-flops. The TDC delay resolution is limited two inverter delays.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In <a href="#fig-pll-tdc" class="quarto-xref">Figure&nbsp;81</a>, the reference signal edge runs through a series of buffers (delay elements) connected in a delay line configuration. The feedback signal edge is used to sample the state of the delay line at the moment it arrives. The outputs of the DFFs represent the time difference between the reference and feedback signals, which can be encoded into a digital phase error word. The resolution of the TDC is determined by the delay between each stage in the delay line, with finer delays providing higher resolution. However, increasing the resolution also increases the complexity and power consumption of the TDC.</p>
+<p>The phase noise of the TDC (at the output of the ADPLL) arising from this time measurement quantization can be modeled as</p>
+<p><span class="math display">\[
+\mathcal{L}\left\{f\right\} = 10 \cdot \log \left[ \frac{(2 \pi)^2}{12 f_\mathrm{ref}} \cdot \left(  \frac{\Delta T_\mathrm{TDC}}{T_\mathrm{DCO}} \right)^2 \right]
+\]</span></p>
+<p>where <span class="math inline">\(\Delta T_\mathrm{TDC}\)</span> is the time resolution of the TDC, <span class="math inline">\(T_\mathrm{DCO}\)</span> is the period of the DCO output frequency, and <span class="math inline">\(f_\mathrm{ref}\)</span> is the reference frequency. This equation shows that improving the TDC resolution (reducing <span class="math inline">\(\Delta T_\mathrm{TDC}\)</span>) and increasing the reference frequency can help reduce the phase noise contribution from the TDC.</p>
+<div id="nte-channel-limit" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note&nbsp;8: TDC Resolution Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To get an idea of the performance requirements for the TDC, we assume a DCO output frequency of 2.4 GHz (e.g., for a Bluetooth application) and a reference frequency of 40 MHz. If we aim for a TDC phase noise contribution of -100 dBc/Hz at the DCO output, we can rearrange the above equation to find the required TDC time resolution:</p>
+<p><span class="math display">\[
+\Delta T_\mathrm{TDC} = T_\mathrm{DCO} \cdot \sqrt{\frac{12 f_\mathrm{ref} \cdot 10^{\mathcal{L}\left\{f\right\}/10}}{(2 \pi)^2}} = \frac{1}{2.4 \times 10^9} \cdot \sqrt{\frac{12 \cdot 40 \times 10^6 \cdot 10^{-10}}{(2 \pi)^2}} \approx 15\,\text{ps}
+\]</span></p>
+<p>This number is challenging but achievable with modern TDC designs.</p>
+</div>
+</div>
+</section>
+<section id="sec-pll-dco" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="sec-pll-dco"><span class="header-section-number">7.3.2</span> Digitally Controlled Oscillator</h3>
+<p>With the implementation of the TDC clarified in <a href="#sec-pll-tdc" class="quarto-xref">Section&nbsp;7.3.1</a>, we now turn our attention to the digitally controlled oscillator (DCO), which generates the output frequency of the ADPLL based on a digital tuning word. The DCO is a digital equivalent of the VCO used in analog PLLs, and its frequency is adjusted by changing the digital input value. Fundamentally, two possible implementations exist:</p>
+<ol type="1">
+<li>An analog-controlled oscillator (e.g., a VCO) is combined with a digital-to-analog converter (DAC) to convert the digital tuning word into an analog control voltage. This approach is shown in <a href="#fig-pll-dco-dac" class="quarto-xref">Figure&nbsp;82</a>.</li>
+</ol>
+<div id="cell-fig-pll-dco-dac" class="cell" data-execution_count="82">
+<div class="cell-output cell-output-display">
+<div id="fig-pll-dco-dac" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pll-dco-dac-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pll-dco-dac-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-82" title="Figure&nbsp;82: Digitally controlled oscillator using a DAC."><img src="rfic_files/figure-html/fig-pll-dco-dac-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-dco-dac-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;82: Digitally controlled oscillator using a DAC.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
+<li>A digitally-controlled oscillator is using a large number of small varactors or switched capacitor banks to adjust the oscillation frequency directly based on the digital tuning word. An example implementation of a switched varactor is shown in <a href="#fig-dco-switched-varactor" class="quarto-xref">Figure&nbsp;83</a>, or a switched capacitor like shown in <a href="#fig-switched-capacitor" class="quarto-xref">Figure&nbsp;67</a> is used.</li>
+</ol>
+<div id="cell-fig-dco-switched-varactor" class="cell" data-execution_count="83">
+<div class="cell-output cell-output-display">
+<div id="fig-dco-switched-varactor" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dco-switched-varactor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-dco-switched-varactor-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-83" title="Figure&nbsp;83: A switched differential varactor used for fine frequency control in a DCO."><img src="rfic_files/figure-html/fig-dco-switched-varactor-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dco-switched-varactor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;83: A switched differential varactor used for fine frequency control in a DCO.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>It has to be noted that while an ADPLL seems conceptually simpler than an analog PLL, the design of high-performance TDCs and DCOs can be quite complex and requires careful consideration of quantization noise, linearity, and power consumption. Coupling effects between different circuit blocks can also introduce unwanted spurs and phase noise folding in the ADPLL output. Therefore, while ADPLLs offer many advantages, they also present unique design challenges that must be addressed to achieve optimal performance.</p>
+</section>
+</section>
 </section>
 <section id="sec-poweramp" class="level1" data-number="8">
 <h1 data-number="8"><span class="header-section-number">8</span> Power Amplifiers</h1>
@@ -3008,6 +3418,9 @@ Sarpeshkar, R., T. Delbruck, and C. A. Mead. 1993. <span>“<span class="nocase"
 </div>
 <div id="ref-Sklar_Digital_Communications" class="csl-entry" role="listitem">
 Sklar, Bernard, and Fredric J. Harris. 2020. <em>Digital Communications: Fundamentals and Applications</em>. 3rd edition. Pearson.
+</div>
+<div id="ref-Staszewski.2003" class="csl-entry" role="listitem">
+Staszewski, R. B., D. Leipold, K. Muhammad, and P. T. Balsara. 2003. <span>“<span class="nocase">Digitally controlled oscillator (DCO)-based architecture for RF frequency synthesis in a deep-submicrometer CMOS Process</span>.”</span> <em>IEEE Transactions on Circuits and Systems II: Analog and Digital Signal Processing</em> 50 (11): 815–28. <a href="https://doi.org/10.1109/tcsii.2003.819128">https://doi.org/10.1109/tcsii.2003.819128</a>.
 </div>
 <div id="ref-Vazny.2010" class="csl-entry" role="listitem">
 Vazny, Rastislav, Werner Schelmbauer, Harald Pretl, Stefan Herzinger, and Robert Weigel. 2010. <span>“<span class="nocase">An Interstage Filter-Free Mobile Radio Receiver with Integrated TX Leakage Filtering</span>.”</span> In, 21–24. 2010 IEEE Radio Frequency Integrated Circuits Symposium. IEEE. <a href="https://doi.org/10.1109/rfic.2010.5477294">https://doi.org/10.1109/rfic.2010.5477294</a>.
