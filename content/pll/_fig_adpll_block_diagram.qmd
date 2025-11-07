@@ -1,0 +1,46 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-adpll-block-diagram
+#| echo: false
+#| fig-cap: "Block diagram of an all-digital PLL. A reference phase signal is compared to the phase of a VCO output signal in a time-to-digital converter. The phase error word is digitally low-pass filtered and used to tune the DCO frequency via a frequency control word."
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    dsp.Oscillator()
+    dsp.Arrow().right(d.unit).label(r'$f_\mathrm{ref}$', 'top')
+    pfd = dsp.Square().label(r'TDC', loc='center')
+    elm.DataBusLine().length(d.unit).label('phase error\nword', 'top')
+    dsp.Filter(response='lp')
+    elm.DataBusLine().length(d.unit).label('tuning\nword', 'top')
+    dsp.Oscillator().label('DCO', loc='top', ofst=(0, 0.2))
+    dsp.Line().right(d.unit/2).dot()
+    d.push()
+    dsp.Arrow().right(d.unit/2).label(r'$f_\mathrm{out}$', 'right')
+    d.pop()
+    dsp.Line().down(d.unit)
+    dsp.Arrow().left(d.unit*1.5)
+    dsp.Square().label(':N', loc='center')
+    dsp.Line().tox(pfd.S).label(r'$f_\mathrmP{fb} = f_\mathrm{out} / N$', 'top')
+    dsp.Arrow().up().to(pfd.S)
+```

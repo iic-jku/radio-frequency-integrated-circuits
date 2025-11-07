@@ -29,7 +29,7 @@ with sd.Drawing(canvas='svg') as d:
 
     elm.Capacitor().label('$C$', loc='top').right().idot(open=True).dot()
     l1 = elm.Line().right(d.unit/2)
-    M1 = elm.AnalogNFet(offset_gate=False).label('$M_1$', loc='right').reverse().anchor('source').theta(270).reverse().drop('drain')
+    M1 = elm.AnalogNFet(offset_gate=False, arrow=False).label('$M_1$', loc='right').reverse().anchor('source').theta(270).reverse().drop('drain')
     l2 = elm.Line().right(d.unit/2)
     elm.Capacitor().label('$C$', loc='top').right().idot().dot(open=True)
 
