@@ -135,7 +135,7 @@ The question is how to improve the PLL design to overcome these limitations? We 
 
 ## Charge-Pump PLL {#sec-pll-charge-pump}
 
-The fundamental limitations of the simple PLL architecture presented in @sec-pll-basic-architecture can be addressed by using a more sophisticated phase detector known as a **charge pump (CP)** in combination with a **phase-frequency detector (PFD)**. This combination allows for better control over the loop dynamics and improved locking behavior.
+The fundamental limitations of the simple PLL architecture presented in @sec-pll-basic-architecture can be addressed by using a more sophisticated phase detector known as a a **phase-frequency detector (PFD)** in combination with a **charge pump (CP)** [@Gardner.1980]. This combination allows for better control over the loop dynamics and improved locking behavior.
 
 In order to drive the CP, we envision a PFD with two digital outputs: An "up" signal that indicates when the VCO phase lags behind the reference phase, and a "down" signal that indicates when the VCO phase leads the reference phase. The PFD compares both the phase and frequency of the reference and feedback signals, providing a more robust locking mechanism. The typical implementation of a PFD is shown in @fig-pfd-implementation.
 
