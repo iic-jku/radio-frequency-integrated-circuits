@@ -1,0 +1,45 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-pll-block-diagram-s-domain
+#| echo: false
+#| fig-cap: "Laplace domain model of a PLL. Note that input and output signals are (excess) phase in rad."
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    dsp.Arrow().right(d.unit/2).label(r'$\varphi_\mathrm{ref}(s)$', 'left')
+    pfd = dsp.Square().label(r'$K_\mathrm{PD}$', loc='center')
+    dsp.Arrow().length(d.unit).label(r'$V_\mathrm{PD}(s)$', 'top')
+    dsp.Square().label(r'$H_\mathrm{LP}$', loc='center')
+    dsp.Arrow().length(d.unit).label(r'$V_\mathrm{tune}(s)$', 'top')
+    dsp.Square().label(r'$\frac{K_\mathrm{VCO}}{s}$', loc='center')
+    dsp.Line().right(d.unit/2).dot()
+    d.push()
+    dsp.Arrow().right(d.unit/2).label(r'$\varphi_\mathrm{out}(s)$', 'right')
+    d.pop()
+    dsp.Line().down(d.unit)
+    dsp.Arrow().left(d.unit*1.5)
+    dsp.Square().label(':N', loc='center')
+    dsp.Line().tox(pfd.S).label(r'$\varphi_\mathrm{out}(s)/N$', 'top')
+    dsp.Arrow().up().to(pfd.S)
+```

@@ -118,7 +118,7 @@ This absolute noise voltage is not of much interest per se. We normalize it to t
 
 $$
 \phn[\Delta \omega] = \frac{\frac{1}{2} \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2}{\left( \frac{V_\mathrm{p}}{\sqrt{2}} \right)^2} = \frac{k T F R_\mathrm{p}}{V_\mathrm{p}^2} \cdot \frac{1}{Q^2} \cdot \left( \frac{\omega_0}{\Delta \omega} \right)^2
-$$ {#eq-lesson-equation}
+$$ {#eq-leeson-equation}
 
 This equation is known as "**Leeson's equation**" [@Leeson.1966], and it provides us with important insights on how to design low phase noise oscillators:
 
@@ -129,11 +129,11 @@ This equation is known as "**Leeson's equation**" [@Leeson.1966], and it provide
 
 The phase noise $\phn[\Delta \omega]$ is expressed in the unit of dBc/Hz, i.e., in decibels of phase noise relative to the carrier power per 1 Hz of bandwidth. When expressing the phase noise of an oscillator in dBc/Hz it is important to state both the oscillation frequency $\omega_0$ and the offset frequency $\Delta \omega$ at which the phase noise is evaluated. For example, we could say that an oscillator has a phase noise of -137 dBc/Hz at 3 MHz offset from a carrier frequency of 2 GHz.
 
-The phase noise expressed with @eq-lesson-equation describes an important region of the total oscillator phase noise where the phase noise decreases with $1 / (\Delta \omega)^2$, i.e., with 20 dB per decade. This region is often called the "thermal noise region" as it is dominated by thermal noise from the tank resistor and the active circuit. However, at lower offset frequencies, other noise mechanisms (like flicker noise) can dominate, leading to different slopes of the phase noise vs. offset frequency curve. At larger offset frequencies, the phase noise can flatten out due to thermal noise floor limitation of buffer amplifiers following the oscillator. A typical phase noise plot of an LC oscillator is shown in @fig-phase-noise-spectrum.
+The phase noise expressed with @eq-leeson-equation describes an important region of the total oscillator phase noise where the phase noise decreases with $1 / (\Delta \omega)^2$, i.e., with 20 dB per decade. This region is often called the "thermal noise region" as it is dominated by thermal noise from the tank resistor and the active circuit. However, at lower offset frequencies, other noise mechanisms (like flicker noise) can dominate, leading to different slopes of the phase noise vs. offset frequency curve. At larger offset frequencies, the phase noise can flatten out due to thermal noise floor limitation of buffer amplifiers following the oscillator. A typical phase noise plot of an LC oscillator is shown in @fig-phase-noise-spectrum.
 
 {{< include /content/oscillator/_fig_phase_noise_spectrum.qmd >}}
 
-It is important to note that the phase noise does not go to infinity as $\Delta \omega$ approaches zero, as @eq-lesson-equation might suggest. This is an artifact of the simplified model used to derive Leeson's equation. In reality, the phase noise has the form of a Lorentzian spectrum around the carrier frequency, which means that it flattens out at very low offset frequencies with a trend described by
+It is important to note that the phase noise does not go to infinity as $\Delta \omega$ approaches zero, as @eq-leeson-equation might suggest. This is an artifact of the simplified model used to derive Leeson's equation. In reality, the phase noise has the form of a Lorentzian spectrum around the carrier frequency, which means that it flattens out at very low offset frequencies with a trend described by
 
 $$
 \phn[\Delta \omega \ll] \propto \frac{1}{\omega_\mathrm{B}^2 + \Delta \omega^2}
@@ -251,7 +251,7 @@ As both technologies have their inductor middle point tied to a supply rail (gro
 
 {{< include /content/oscillator/_fig_oscillator_lc_cmos.qmd >}}
 
-Note that no bias current sources are shown in @fig-oscillator-lc-cmos, but can be added in practice. However, they require some voltage headroom, which lowers the maximum voltage swing across the tank, which is negative for phase noise performance according to Leeson's equation in @eq-lesson-equation.
+Note that no bias current sources are shown in @fig-oscillator-lc-cmos, but can be added in practice. However, they require some voltage headroom, which lowers the maximum voltage swing across the tank, which is negative for phase noise performance according to Leeson's equation in @eq-leeson-equation.
 
 The inductor $L$ used in LC tanks is often implemented as a differential spiral inductor, which can be realized on-chip using the top metal layers of the CMOS process. If higher $Q$ is sought, then off-chip inductors must be used, which is more expensive and uses package pins to connect the inductor. Alternatively, bondwire inductors can be used, which utilize the bondwires connecting the die to the package leads as inductors. Bondwire inductors can provide high $Q$ values and are a cost-effective solution for improving oscillator performance without requiring off-chip components. For mm-wave frequencies, transmission line stubs can be used as inductors, which can be implemented on-chip using coplanar waveguide (CPW) or microstrip structures.
 
@@ -289,7 +289,7 @@ While there are many ways to implement a switched capacitor for use in an oscill
 
 Here, when the control signal $S$ is high, the effective capacitance is $C/2$, with a parasitic series resistance $R_\mathrm{on}$ due to the switch. When $S$ is low, the effective capacitance is $C_\mathrm{off}$, which is the parasitic drain-source capacitance of the MOSFET switch.
 
-Note that there exists a trade-off when designing the switched capacitor: A larger switch (with increased $W$) reduces $R_\mathrm{on}$, but increases $C_\mathrm{off}$. A large $R_\mathrm{on}$ leads to increased losses in the tank circuit, which degrades the quality factor $Q$ and increases phase noise according to @eq-lesson-equation. On the other hand, a large $C_\mathrm{off}$ reduces the effective tuning range of the switched capacitor, which can be detrimental if a wide tuning range is required.
+Note that there exists a trade-off when designing the switched capacitor: A larger switch (with increased $W$) reduces $R_\mathrm{on}$, but increases $C_\mathrm{off}$. A large $R_\mathrm{on}$ leads to increased losses in the tank circuit, which degrades the quality factor $Q$ and increases phase noise according to @eq-leeson-equation. On the other hand, a large $C_\mathrm{off}$ reduces the effective tuning range of the switched capacitor, which can be detrimental if a wide tuning range is required.
 
 In **digitally-controlled oscillators (DCOs)**, the tuning voltage $V_\mathrm{tune}$ is replaced by a digital control word that selects different capacitance values from a capacitor bank. This approach allows for precise and repeatable frequency tuning, which is beneficial in applications requiring frequency synthesis or channel selection. These fine tuning steps can also be implemented according to @fig-switched-capacitor, however, the value of $C$ must be sufficiently small.
 

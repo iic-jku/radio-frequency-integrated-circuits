@@ -1,0 +1,52 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-pll-tdc
+#| echo: false
+#| fig-cap: "Basic TDC implementation as a delay line with parallel capture flip-flops. The TDC delay resolution is limited two inverter delays."
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.logic as lgc
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    elm.Line().right(d.unit/2).idot(open=True).label(r'$f_\mathrm{ref}$', loc='left')
+
+    N_STAGES = 4 
+    DFF = {}
+    pos = {}
+    for i in range(4):
+        elm.Dot()
+        d.push()
+        elm.Line().down(d.unit)
+        elm.Line().right(d.unit/4)
+        DFF[i] = elm.DFlipFlop().anchor('D')
+        elm.Line().left(d.unit/4).at(DFF[i].CLK)
+        elm.Line().down(d.unit).dot()
+        pos[i] = d.here
+        d.pop()
+        lgc.Buf().right(d.unit*2)
+
+    elm.DotDotDot()
+
+    elm.Line().at(pos[N_STAGES-1]).to(pos[0])
+    elm.Line().at(pos[N_STAGES-1]).right(d.unit*2)
+    elm.DotDotDot()
+    elm.Line().at(pos[0]).left(d.unit/2).dot(open=True).label(r'$f_\mathrm{fb}$', loc='left')
+```
