@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2025-11-07">
+<meta name="dcterms.date" content="2025-11-08">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -433,6 +433,11 @@ window.Quarto = {
   <li><a href="#sec-pll-tdc" id="toc-sec-pll-tdc" class="nav-link" data-scroll-target="#sec-pll-tdc"><span class="header-section-number">7.3.1</span> Time-to-Digital Converter</a></li>
   <li><a href="#sec-pll-dco" id="toc-sec-pll-dco" class="nav-link" data-scroll-target="#sec-pll-dco"><span class="header-section-number">7.3.2</span> Digitally Controlled Oscillator</a></li>
   </ul></li>
+  <li><a href="#sec-pll-frac-n" id="toc-sec-pll-frac-n" class="nav-link" data-scroll-target="#sec-pll-frac-n"><span class="header-section-number">7.4</span> Fractional-N PLL</a>
+  <ul class="collapse">
+  <li><a href="#sec-pll-delta-sigma" id="toc-sec-pll-delta-sigma" class="nav-link" data-scroll-target="#sec-pll-delta-sigma"><span class="header-section-number">7.4.1</span> Delta-Sigma Modulator</a></li>
+  <li><a href="#sec-pll-frac-n-implementation" id="toc-sec-pll-frac-n-implementation" class="nav-link" data-scroll-target="#sec-pll-frac-n-implementation"><span class="header-section-number">7.4.2</span> Fractional-N PLL Implementation</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#sec-poweramp" id="toc-sec-poweramp" class="nav-link" data-scroll-target="#sec-poweramp"><span class="header-section-number">8</span> Power Amplifiers</a></li>
   </ul>
@@ -470,7 +475,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 7, 2025</p>
+      <p class="date">November 8, 2025</p>
     </div>
   </div>
   
@@ -2986,7 +2991,7 @@ Figure&nbsp;69: Block diagram of a PLL. A reference phase signal is compared to 
 </div>
 </div>
 <p>A reference frequency (often coming from a high-<span class="math inline">\(Q\)</span> crystal oscillator) is compared to the phase of a VCO output signal in a phase detector (PD). The phase error is low-pass filtered and used to tune the VCO frequency. By continuously adjusting the VCO based on the phase difference, the PLL ensures that the VCO output remains synchronized with the reference signal, effectively combining the stability of the reference with the tunability of the VCO. When the output signal of the VCO is fed back to the phase detector through a frequency divider (with division ratio <span class="math inline">\(N\)</span>), the PLL can generate output frequencies that are integer multiples of the reference frequency, given by <span class="math inline">\(f_\mathrm{out} = N \cdot f_\mathrm{ref}\)</span>.</p>
-<p>The PD compares the phase of the reference signal with the phase of the VCO output signal. It works in the time domain and produces an output voltage proportional to the arrival time difference (phase difference) between the two input signals. This output voltage, known as the phase error signal, indicates whether the VCO is leading or lagging the reference signal in phase expressed as</p>
+<p>The PD compares the phase of the reference signal with the phase of the VCO output signal. It works in the time domain and produces an output voltage proportional to the arrival time difference (phase difference) between the two input signals. This output voltage, known as the phase error signal, indicates whether the VCO is leading or lagging the reference signal in phase, expressed as</p>
 <p><span class="math display">\[
 \Delta \varphi = 2 \pi \frac{\Delta t}{T_\mathrm{ref}}
 \]</span></p>
@@ -3042,7 +3047,7 @@ H_\mathrm{LP}(s) = \frac{1}{1 + s T_\mathrm{LP}}.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Before we proceed, it is worth discussing why PLLs regulate the phase of the VCO output rather than its frequency directly. The reason lies in the relationship between phase and frequency: Frequency is the time derivative of phase. By controlling the phase, the PLL inherently controls the frequency as well. Additionally, even if the phase regulation has a steady state phase error <span class="math inline">\(\varphi_\mathrm{err}\)</span>, the frequency error in steady state is <strong>zero</strong>, as can be appreciated when inspecting</p>
+<p>Before we proceed, it is worth discussing why PLLs regulate the phase of the VCO output rather than its frequency directly. The reason lies in the relationship between phase and frequency: Frequency is the time derivative of phase. By controlling the phase, the PLL inherently controls the frequency as well. Additionally, even if the phase regulation has a steady-state phase error <span class="math inline">\(\varphi_\mathrm{err}\)</span>, the frequency error in steady state is <strong>zero</strong>, as can be appreciated when inspecting</p>
 <p><span class="math display">\[
 \omega_\mathrm{out}(t) = \frac{d \varphi_\mathrm{out}(t)}{dt}  = \frac{d}{dt} \left[ N \cdot \varphi_\mathrm{ref}(t) + \varphi_\mathrm{err} \right] = N \cdot \frac{d \varphi_\mathrm{ref}(t)}{dt} = N \cdot \omega_\mathrm{ref}(t).
 \]</span></p>
@@ -3063,7 +3068,7 @@ H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{K
 <p>We can use all techniques known from control theory to analyze the stability and dynamic response of the PLL based on <a href="#eq-pll-transfer-function" class="quarto-xref">Equation&nbsp;43</a>, however, we have to keep the following in mind:</p>
 <ul>
 <li><span class="math inline">\(H(s)\)</span> is a small-signal model of the PLL around its locked operating point, only valid for small perturbations. Large-signal behavior, such as acquisition and lock range, are not captured by this model.</li>
-<li>A PLL is a sampled system, working at instances of <span class="math inline">\(T_\mathrm{ref}\)</span>. <span class="math inline">\(H(s)\)</span> is a continuous-time approximation, which is valid only if the loop bandwidth is much smaller (typically <span class="math inline">\(1/10\)</span>) than the reference frequency <span class="math inline">\(f_\mathrm{ref}\)</span>. If this approximation is not valid, a discrete-time model of the PLL must be used deriving the <span class="math inline">\(z\)</span>-domain transfer function <span class="math inline">\(H(z)\)</span>.</li>
+<li>A PLL is a sampled system, working at instances of <span class="math inline">\(T_\mathrm{ref}\)</span>. <span class="math inline">\(H(s)\)</span> is a continuous-time approximation, which is valid only if the loop bandwidth is much smaller (typically <span class="math inline">\(1/10\)</span>) than the reference frequency <span class="math inline">\(f_\mathrm{ref}\)</span>. If this approximation is not valid, a discrete-time model of the PLL must be used, deriving the <span class="math inline">\(z\)</span>-domain transfer function <span class="math inline">\(H(z)\)</span>.</li>
 </ul>
 <p>If we compare the canonical form of a second-order system given by</p>
 <p><span class="math display">\[
@@ -3091,7 +3096,7 @@ p_{1,2} = -\frac{\omega_\mathrm{n}}{\sqrt{2}} \pm j \frac{\omega_\mathrm{n}}{\sq
 </section>
 <section id="sec-pll-charge-pump" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="sec-pll-charge-pump"><span class="header-section-number">7.2</span> Charge-Pump PLL</h2>
-<p>The fundamental limitations of the simple PLL architecture presented in <a href="#sec-pll-basic-architecture" class="quarto-xref">Section&nbsp;7.1</a> can be addressed by using a more sophisticated phase detector known as a <strong>charge pump (CP)</strong> in combination with a <strong>phase-frequency detector (PFD)</strong>. This combination allows for better control over the loop dynamics and improved locking behavior.</p>
+<p>The fundamental limitations of the simple PLL architecture presented in <a href="#sec-pll-basic-architecture" class="quarto-xref">Section&nbsp;7.1</a> can be addressed by using a more sophisticated phase detector known as a <strong>phase-frequency detector (PFD)</strong> in combination with a <strong>charge pump (CP)</strong> <span class="citation" data-cites="Gardner.1980">(<a href="#ref-Gardner.1980" role="doc-biblioref">Gardner 1980</a>)</span>. This combination allows for better control over the loop dynamics and improved locking behavior.</p>
 <p>In order to drive the CP, we envision a PFD with two digital outputs: An “up” signal that indicates when the VCO phase lags behind the reference phase, and a “down” signal that indicates when the VCO phase leads the reference phase. The PFD compares both the phase and frequency of the reference and feedback signals, providing a more robust locking mechanism. The typical implementation of a PFD is shown in <a href="#fig-pfd-implementation" class="quarto-xref">Figure&nbsp;72</a>.</p>
 <div id="cell-fig-pfd-implementation" class="cell" data-execution_count="72">
 <div class="cell-output cell-output-display">
@@ -3111,7 +3116,7 @@ Figure&nbsp;72: Implementation of a phase-frequency detector.
 <ul>
 <li>If the reference signal leads the feedback signal (its rising edge arrives first), the “UP” output is activated, causing the CP to source current into the integration capacitor, <em>increasing</em> the VCO tuning voltage and thus the VCO frequency.</li>
 <li>If the feedback signal leads the reference signal (its rising edge arrives first), the “DOWN” output is activated, causing the CP to sink current from the integration capacitor, <em>decreasing</em> the VCO tuning voltage and thus the VCO frequency.</li>
-<li>If both signals are aligned in phase and frequency, both are only activated for a short time (the gate delays of the DFF and the AND), and the CP does not source or sink current; the integration capacitor in the loop filter holds its voltage, maintaining the VCO frequency.</li>
+<li>If both signals are aligned in phase and frequency, both outputs are only activated for a short time (the gate delays of the DFF and the AND), and the CP does not source or sink current; the integration capacitor in the loop filter holds its voltage, maintaining the VCO frequency.</li>
 <li>The rising edge that arrives last resets both outputs, ensuring that the CP only sources or sinks current for a duration proportional to the phase difference between the two signals.</li>
 </ul>
 <p>In the following, we will look at four different cases of PFD operation to illustrate its behavior.</p>
@@ -3281,7 +3286,7 @@ Figure&nbsp;80: Block diagram of an all-digital PLL. A reference phase signal is
 </div>
 </div>
 </div>
-<p>Conceptionally, the ADPLL in <a href="#fig-adpll-block-diagram" class="quarto-xref">Figure&nbsp;80</a> is similar to the analog PLL in <a href="#fig-pll-block-diagram" class="quarto-xref">Figure&nbsp;69</a>, with the key difference being that all components are implemented digitally. The phase detector is replaced by a time-to-digital converter (TDC), which measures the time difference between the reference and feedback signal edges and converts it into a digital phase error word. The loop filter is implemented as a digital filter (FIR, IIR, or similar), processing the phase error word to generate a tuning word for the digitally controlled oscillator (DCO). The DCO generates the output frequency based on the tuning word, completing the feedback loop.</p>
+<p>Conceptually, the ADPLL in <a href="#fig-adpll-block-diagram" class="quarto-xref">Figure&nbsp;80</a> is similar to the analog PLL in <a href="#fig-pll-block-diagram" class="quarto-xref">Figure&nbsp;69</a>, with the key difference being that all components are implemented digitally. The phase detector is replaced by a time-to-digital converter (TDC), which measures the time difference between the reference and feedback signal edges and converts it into a digital phase error word. The loop filter is implemented as a digital filter (FIR, IIR, or similar), processing the phase error word to generate a tuning word for the digitally controlled oscillator (DCO). The DCO generates the output frequency based on the tuning word, completing the feedback loop.</p>
 <p>The advantages of the ADPLL are that it can be fully integrated in a digital nm CMOS process, benefiting from scalability, low power consumption, small chip area, and immunity to analog component variations. Additionally, the digital nature of the ADPLL allows for easy programmability and adaptability to different applications. However, the ADPLL also faces challenges such as quantization noise from the TDC and DCO.</p>
 <section id="sec-pll-tdc" class="level3" data-number="7.3.1">
 <h3 data-number="7.3.1" class="anchored" data-anchor-id="sec-pll-tdc"><span class="header-section-number">7.3.1</span> Time-to-Digital Converter</h3>
@@ -3364,6 +3369,196 @@ Figure&nbsp;83: A switched differential varactor used for fine frequency control
 <p>It has to be noted that while an ADPLL seems conceptually simpler than an analog PLL, the design of high-performance TDCs and DCOs can be quite complex and requires careful consideration of quantization noise, linearity, and power consumption. Coupling effects between different circuit blocks can also introduce unwanted spurs and phase noise folding in the ADPLL output. Therefore, while ADPLLs offer many advantages, they also present unique design challenges that must be addressed to achieve optimal performance.</p>
 </section>
 </section>
+<section id="sec-pll-frac-n" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="sec-pll-frac-n"><span class="header-section-number">7.4</span> Fractional-N PLL</h2>
+<p>With the PLL architectures discussed so far, the output frequency resolution is limited to integer multiples of the reference frequency, i.e., <span class="math inline">\(f_\mathrm{out} = N \cdot f_\mathrm{ref}\)</span> with <span class="math inline">\(N \in \mathbb{N}\)</span>. For a fine output frequency resolution, this requires a very low reference frequency. With the rule of thumb that the PLL loop bandwidth should be less than <span class="math inline">\(f_\mathrm{ref}/10\)</span> to ensure stable operation, a low reference frequency also limits the achievable loop bandwidth, which is detrimental to phase noise performance and settling time. Further, we have learned in <a href="#sec-pll-charge-pump" class="quarto-xref">Section&nbsp;7.2</a> that large values of <span class="math inline">\(N\)</span> increase the reference phase noise contribution at the PLL output by <span class="math inline">\(20 \log_{10}(N)\)</span> dB, making it challenging to achieve low phase noise performance with high frequency resolution.</p>
+<p>How to break these fundamental limitations? The answer lies in the concept of the <strong>fractional-N PLL</strong>, which allows for non-integer frequency multiplication.</p>
+<p>Assume we want to generate an output frequency of <span class="math inline">\(f_\mathrm{out} = 2.45\,\text{GHz}\)</span> from a reference frequency of <span class="math inline">\(f_\mathrm{ref} = 40\,\text{MHz}\)</span>. This requires a frequency multiplication factor of <span class="math inline">\(N = 61.25\)</span>, which is not an integer. To achieve this, the fractional-N PLL employs a feedback divider that can switch between two integer division ratios, <span class="math inline">\(N_1\)</span> and <span class="math inline">\(N_2\)</span>, such that the average division ratio over time equals the desired fractional value (the averaging is performed by the lowpass loopfilter, providing the averaged tuning voltage to the VCO / the tuning word to the DCO). In this case, we can choose <span class="math inline">\(N_1 = 61\)</span> and <span class="math inline">\(N_2 = 62\)</span>. By alternating between these two division ratios in a controlled manner, the PLL can effectively achieve an average division ratio of 61.25, allowing it to generate the desired output frequency of 2.45 GHz. The following sequence illustrates this concept over four reference cycles:</p>
+<p><span class="math display">\[
+N = N_1, N_1, N_1, N_2 \implies \text{Average } N = \frac{61 + 61 + 61 + 62}{4} = 61.25
+\]</span></p>
+<p>A simple sequence like the one above works, but would lead to significant spurs in the PLL output spectrum due to the periodic nature of the division ratio switching, especially when the fractionality is close to an integer, and thus the sequence is long. Consider the case of <span class="math inline">\(N = 61.01\)</span>, where we would need to switch to <span class="math inline">\(N_2 = 62\)</span> only once every 100 cycles of <span class="math inline">\(N_1 = 61\)</span>:</p>
+<p><span class="math display">\[
+N = \frac{99 \cdot 61 + 1 \cdot 62}{100} = 61.01
+\]</span></p>
+<p>This periodic switching introduces spurious tones in the PLL output spectrum at multiples of <span class="math inline">\(f_\mathrm{ref}/100\)</span>, which can potentially pass through the loop filter and appear in the output spectrum, degrading the signal quality.</p>
+<p>To minimize these spurs, more sophisticated techniques such as <em>delta-sigma modulation</em> are employed to <em>randomize</em> the switching sequence, spreading the quantization noise over a wider frequency range and reducing its impact on the PLL output. Additionally, the quantization noise introduced by the fractional division is <em>pushed to higher frequencies</em> where it can be more easily filtered out by the loop filter.</p>
+<section id="sec-pll-delta-sigma" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="sec-pll-delta-sigma"><span class="header-section-number">7.4.1</span> Delta-Sigma Modulator</h3>
+<p>For an in-depth understanding of delta-sigma modulation, we refer to <span class="citation" data-cites="Schreier_DSM">(<a href="#ref-Schreier_DSM" role="doc-biblioref">Schreier, Pavan, and Temes 2017</a>)</span>. Here, we briefly summarize the key concepts relevant to fractional-N PLLs. In a nutshell, a delta-sigma modulator (DSM) is a feedback system that shapes quantization noise to higher frequencies, allowing for high-resolution digital-to-analog conversion or frequency synthesis. The basic structure of a first-order DSM is shown in <a href="#fig-pll-dsm-first-order" class="quarto-xref">Figure&nbsp;84</a>.</p>
+<div id="cell-fig-pll-dsm-first-order" class="cell" data-execution_count="84">
+<div class="cell-output cell-output-display">
+<div id="fig-pll-dsm-first-order" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pll-dsm-first-order-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pll-dsm-first-order-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-84" title="Figure&nbsp;84: A first-order continuous time delta-sigma modulator."><img src="rfic_files/figure-html/fig-pll-dsm-first-order-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-dsm-first-order-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;84: A first-order continuous time delta-sigma modulator.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In <a href="#fig-pll-dsm-first-order" class="quarto-xref">Figure&nbsp;84</a>, the input signal <span class="math inline">\(X(s)\)</span> is transferred to the output <span class="math inline">\(Y(s)\)</span> with the following transfer function (we set <span class="math inline">\(Q = 0\)</span>):</p>
+<p><span class="math display">\[
+Y(s) = X(s) \cdot \frac{1}{1 + s T} = X(s) \cdot H_\mathrm{LP}(s)
+\]</span></p>
+<p>The quantization noise <span class="math inline">\(Q(s)\)</span> introduced by the quantizer is shaped by the feedback loop, resulting in the following output contribution:</p>
+<p><span class="math display">\[
+Y(s) = Q(s) \cdot \frac{s T}{1 + s T} = Q(s) \cdot H_\mathrm{HP}(s)
+\]</span></p>
+<p>We can see that the quantization noise is highpass filtered, pushing it to higher frequencies, where it can be more easily filtered out by a subsequent lowpass filter.</p>
+<p>The digital implementation of a first-order DSM is straightforward and one possible form is shown in <a href="#fig-pll-dsm-digital-first-order" class="quarto-xref">Figure&nbsp;85</a>. At the point of truncation from <span class="math inline">\(N+2\)</span> bit to 1 bit (the MSB) we imagine the quantization noise <span class="math inline">\(q[n]\)</span> being added to the signal.</p>
+<div id="cell-fig-pll-dsm-digital-first-order" class="cell" data-execution_count="85">
+<div class="cell-output cell-output-display">
+<div id="fig-pll-dsm-digital-first-order" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pll-dsm-digital-first-order-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pll-dsm-digital-first-order-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-85" title="Figure&nbsp;85: A first-order digital delta-sigma modulator."><img src="rfic_files/figure-html/fig-pll-dsm-digital-first-order-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-dsm-digital-first-order-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;85: A first-order digital delta-sigma modulator.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Calculating the <span class="math inline">\(z\)</span>-domain transfer functions from input <span class="math inline">\(X(z)\)</span> to the output <span class="math inline">\(Y(z)\)</span> (the signal transfer function, STF) and quantization noise <span class="math inline">\(Q(z)\)</span> to <span class="math inline">\(Y(z)\)</span> (the noise transfer function, NTF), we find</p>
+<p><span class="math display">\[
+\frac{Y(z)}{X(z)} = \text{STF}(z) = z^{-1} \implies \text{STF}(z) = z^{-1}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\frac{Y(z)}{Q(z)} = \text{NTF}(z) = (1 - z^{-1}) \implies \text{NTF} = 1 - z^{-1}.
+\]</span></p>
+<p>We see that the STF is a simple delay, while the NTF has a zero at DC, pushing the quantization noise to higher frequencies. Taking the Laplace transform of the NTF to find the frequency shaped PSD of the quantization noise, we find</p>
+<p><span class="math display">\[
+S_\mathrm{y}(f) = S_\mathrm{q}(f) |H(f)|^2 = S_\mathrm{q}(f) \cdot 2 \left| 1 - \cos(2 \pi f T_\mathrm{s}) \right| \implies H(f) = \sqrt{ 2 \left| 1 - \cos(2 \pi f T_\mathrm{s}) \right| }.
+\]</span></p>
+<p>with <span class="math inline">\(T_\mathrm{s}\)</span> being the sampling period of the DSM. The resulting <span class="math inline">\(H(f)\)</span> is shown in <a href="#fig-pll-dsm-ntf-plot" class="quarto-xref">Figure&nbsp;86</a>. With the assumed PLL loop bandwidth of 100 kHz and a reference frequency of 40 MHz, we can see that the quantization noise is significantly attenuated inside the PLL loop bandwidth, minimizing its impact on the PLL output phase noise. The general trend is that higher-order DSMs and faster sampling frequencies lead to better noise shaping and lower in-band quantization noise.</p>
+<div id="cell-fig-pll-dsm-ntf-plot" class="cell" data-execution_count="86">
+<div class="cell-output cell-output-display">
+<div id="fig-pll-dsm-ntf-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pll-dsm-ntf-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pll-dsm-ntf-plot-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-86" title="Figure&nbsp;86: NTF H(f) of a first-order delta-sigma modulator showing the high-pass noise shaping characteristic. The quantization noise is suppressed at low frequencies and increases towards the Nyquist frequency. An exemplary loop filter bandwidth of 300 kHz for a 40 MHz reference frequency is indicated."><img src="rfic_files/figure-html/fig-pll-dsm-ntf-plot-output-1.png" width="656" height="464" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-dsm-ntf-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;86: NTF H(f) of a first-order delta-sigma modulator showing the high-pass noise shaping characteristic. The quantization noise is suppressed at low frequencies and increases towards the Nyquist frequency. An exemplary loop filter bandwidth of 300 kHz for a 40 MHz reference frequency is indicated.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>If we analyze the signal properties of the number sequence generated by the first-order DSM in <a href="#fig-pll-dsm-digital-first-order" class="quarto-xref">Figure&nbsp;85</a>, we find that its randomization properties are not ideal, leading to spurs in the PLL output spectrum. To improve the randomization properties, higher-order DSMs are used in fractional-N PLLs, especially 2nd or 3rd order. A consequence of a higher-order DSM is that the produced sequence can take more values than just <span class="math inline">\(N\)</span> and <span class="math inline">\(N+1\)</span>. The range of produced values is shown in <a href="#tbl-pll-dsm-orders" class="quarto-xref">Table&nbsp;5</a>.</p>
+<div id="tbl-pll-dsm-orders" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-pll-dsm-orders-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: DSM output ranges and characteristics for different orders
+</figcaption>
+<div aria-describedby="tbl-pll-dsm-orders-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>DSM Order</th>
+<th>Output Range</th>
+<th>Noise Shaping</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><span class="math inline">\(N, N+1\)</span></td>
+<td>20 dB/decade</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><span class="math inline">\(N-1 \ldots N+2\)</span></td>
+<td>40 dB/decade</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><span class="math inline">\(N-3 \ldots N+4\)</span></td>
+<td>60 dB/decade</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="sec-pll-frac-n-implementation" class="level3" data-number="7.4.2">
+<h3 data-number="7.4.2" class="anchored" data-anchor-id="sec-pll-frac-n-implementation"><span class="header-section-number">7.4.2</span> Fractional-N PLL Implementation</h3>
+<p>A block diagram of a fractional-N PLL using a DSM and a multi-modulus divider (MMD) is shown in <a href="#fig-pll-frac-n-block" class="quarto-xref">Figure&nbsp;87</a>. In order to ease the timing loop of the jittered clock coming from the MMD, the DSM is typically clocked by the MMD output.</p>
+<div id="cell-fig-pll-frac-n-block" class="cell" data-execution_count="87">
+<div class="cell-output cell-output-display">
+<div id="fig-pll-frac-n-block" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pll-frac-n-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pll-frac-n-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-87" title="Figure&nbsp;87: Block diagram of a fractional-N PLL. The VCO signal is divided by a sequence of integer divider values div[k] with (on average) is given by N.f, where N is the integer part of the divider value, and f the fractional part of the divider."><img src="rfic_files/figure-html/fig-pll-frac-n-block-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-frac-n-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;87: Block diagram of a fractional-N PLL. The VCO signal is divided by a sequence of integer divider values div[k] with (on average) is given by <span class="math inline">\(N.f\)</span>, where <span class="math inline">\(N\)</span> is the integer part of the divider value, and <span class="math inline">\(f\)</span> the fractional part of the divider.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>For a practical implementation of a fractional-N PLL it is of utmost importance that the path from the MMD output to the loop filter output is linear, as only the averaging/lowpass filtering of the noise-shaped quantization noise reduces the noise. Any <em>nonlinearity</em> in this path will lead to distortion of the quantization noise, causing quantization noise folding back into the PLL loop bandwidth, degrading the PLL output phase noise!</p>
+<p>One prominent source of nonlinearity is the difference between the source and sink currents of the charge pump, as well as any nonlinearity present in the PFD/CP operating point of <span class="math inline">\(\Delta \varphi \approx 0\)</span> (like a deadzone). Since a Type-II PLL ideally operates at exactly this point, with random excursions around it due to the DSM-induced jitter, any nonlinearity here will seriously degrade the PLL performance. There are predominantly two options to mitigate this issue:</p>
+<ol type="1">
+<li>Use a Type-I PLL architecture with <span class="math inline">\(\Delta \varphi \neq 0\)</span>.</li>
+<li>Introduce a phase offset in a Type-II PLL to operate away from <span class="math inline">\(\Delta \varphi = 0\)</span>.</li>
+</ol>
+<p>A simple way to introduce a phase offset is to add a fixed current source/sink to the charge pump, as shown in <a href="#fig-pll-cp-offset" class="quarto-xref">Figure&nbsp;88</a>.</p>
+<div id="cell-fig-pll-cp-offset" class="cell" data-execution_count="88">
+<div class="cell-output cell-output-display">
+<div id="fig-pll-cp-offset" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pll-cp-offset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pll-cp-offset-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-88" title="Figure&nbsp;88: Charge pump with offset current for use in a fractional-N Type-II PLL."><img src="rfic_files/figure-html/fig-pll-cp-offset-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-cp-offset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;88: Charge pump with offset current for use in a fractional-N Type-II PLL.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>As we have seen multiple times in the PLL discussion, using a higher <span class="math inline">\(f_\mathrm{ref}\)</span> is beneficial for phase noise performance, loop bandwidth, and TDC resolution (in an ADPLL). However, in many applications the choice of reference frequency is constrained by other factors. One way to achieve a higher reference frequency is by using a <strong>frequency doubler</strong>. As shown in <a href="#fig-ref-doubler" class="quarto-xref">Figure&nbsp;89</a>, a frequency doubler can be implemented using an XOR gate and a delay line. The delay line is set to a quarter of the period of the reference frequency, i.e., <span class="math inline">\(T_\mathrm{d} = T_\mathrm{ref}/4\)</span>. The XOR gate then produces an output frequency of <span class="math inline">\(f_\mathrm{double} = 2 \cdot f_\mathrm{ref}\)</span>. For stable operation, this delay line must be designed to be relatively insensitive to process, voltage, and temperature (PVT) variations, or must be adjusted with a control loop.</p>
+<div id="cell-fig-ref-doubler" class="cell" data-execution_count="89">
+<div class="cell-output cell-output-display">
+<div id="fig-ref-doubler" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ref-doubler-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-ref-doubler-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-89" title="Figure&nbsp;89: Implementation of reference frequency doubler."><img src="rfic_files/figure-html/fig-ref-doubler-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ref-doubler-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;89: Implementation of reference frequency doubler.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>As a final remark, we note that the output of the MMD in <a href="#fig-pll-frac-n-block" class="quarto-xref">Figure&nbsp;87</a> is a jittered clock due to the changing division ratio and the multiple gates and flip-flops making up the MMD. This jitter degrades the PLL phase noise performance. Fortunately, there is an easy fix to this issue by using a retiming flip-flop after the MMD, clocked by the oscillator output, as shown in <a href="#fig-pll-frac-n-block-retiming" class="quarto-xref">Figure&nbsp;90</a>.</p>
+<div id="cell-fig-pll-frac-n-block-retiming" class="cell" data-execution_count="90">
+<div class="cell-output cell-output-display">
+<div id="fig-pll-frac-n-block-retiming" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pll-frac-n-block-retiming-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-pll-frac-n-block-retiming-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-90" title="Figure&nbsp;90: Block diagram of a fractional-N PLL including a retiming flip flop to reduce the MMD-related jitter."><img src="rfic_files/figure-html/fig-pll-frac-n-block-retiming-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-frac-n-block-retiming-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;90: Block diagram of a fractional-N PLL including a retiming flip flop to reduce the MMD-related jitter.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>This retiming flip-flop effectively synchronizes the MMD output to the oscillator clock domain, significantly reducing the jitter seen by the loop filter and improving the overall phase noise performance of the fractional-N PLL.</p>
+</section>
+</section>
 </section>
 <section id="sec-poweramp" class="level1" data-number="8">
 <h1 data-number="8"><span class="header-section-number">8</span> Power Amplifiers</h1>
@@ -3382,6 +3577,9 @@ Bird, Trevor S. 2009. <span>“<span class="nocase">Definition and Misuse of Ret
 </div>
 <div id="ref-Darabi_RFIC" class="csl-entry" role="listitem">
 Darabi, Hooman. 2020. <em>Radio Frequency Integrated Circuits and Systems</em>. 2nd edition. Cambridge University Press.
+</div>
+<div id="ref-Gardner.1980" class="csl-entry" role="listitem">
+Gardner, F. 1980. <span>“<span>Charge-Pump Phase-Lock Loops</span>.”</span> <em>IEEE Transactions on Communications</em> 28 (11): 1849–58. <a href="https://doi.org/10.1109/TCOM.1980.1094619">https://doi.org/10.1109/TCOM.1980.1094619</a>.
 </div>
 <div id="ref-Gray_Meyer_5th_ed" class="csl-entry" role="listitem">
 Gray, Paul R., Paul J. Hurst, Stephen H. Lewis, and Robert G. Meyer. 2009. <em><span class="nocase">Analysis and Design of Analog Integrated Circuits</span></em>. Fifth. Wiley.
@@ -3415,6 +3613,9 @@ Razavi, Behzad. 2011. <em>RF Microelectronics</em>. 2nd edition. Pearson.
 </div>
 <div id="ref-Sarpeshkar_1993" class="csl-entry" role="listitem">
 Sarpeshkar, R., T. Delbruck, and C. A. Mead. 1993. <span>“<span class="nocase">White noise in MOS transistors and resistors</span>.”</span> <em>IEEE Circuits and Devices Magazine</em> 9 (6): 23–29. <a href="https://doi.org/10.1109/101.261888">https://doi.org/10.1109/101.261888</a>.
+</div>
+<div id="ref-Schreier_DSM" class="csl-entry" role="listitem">
+Schreier, Richard, Shanthi Pavan, and Gabor C. Temes. 2017. <em>Understanding Delta-Sigma Data Converters</em>. John Wiley &amp; Sons, Ltd.
 </div>
 <div id="ref-Sklar_Digital_Communications" class="csl-entry" role="listitem">
 Sklar, Bernard, and Fredric J. Harris. 2020. <em>Digital Communications: Fundamentals and Applications</em>. 3rd edition. Pearson.
