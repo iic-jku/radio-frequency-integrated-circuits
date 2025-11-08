@@ -1,0 +1,65 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-pll-dsm-ntf-plot
+#| echo: false
+#| fig-cap: "NTF H(f) of a first-order delta-sigma modulator showing the high-pass noise shaping characteristic. The quantization noise is suppressed at low frequencies and increases towards the Nyquist frequency. An exemplary loop filter bandwidth of 300 kHz for a 40 MHz reference frequency is indicated."
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define frequency range
+f_s = 40e6  # Sampling frequency in Hz (40 MHz)
+T_s = 1 / f_s  # Sampling period
+
+# Normalized frequency range (0 to Nyquist frequency)
+f_norm = np.linspace(1e-4, 0.5, 1000)  # Normalized frequency (avoid f=0)
+f = f_norm * f_s  # Actual frequency in Hz
+
+# Calculate H(f) for first-order DSM
+# From NTF = 1 - z^(-1), with z = exp(j*2*pi*f*T_s)
+# |NTF(f)|^2 = |1 - exp(-j*2*pi*f*T_s)|^2 = 2(1 - cos(2*pi*f*T_s))
+# Therefore: |H(f)| = sqrt(2(1 - cos(2*pi*f*T_s)))
+H_f_magnitude = np.sqrt(2 * (1 - np.cos(2 * np.pi * f_norm)))
+
+# Convert to dB
+H_f_dB = 20 * np.log10(H_f_magnitude)
+
+# For low frequencies, approximate: H(f) ≈ 2*pi*f*T_s = 2*pi*f_norm
+# This gives a 20 dB/decade slope
+f_low = f_norm[f_norm < 0.1]
+H_approx_dB = 20 * np.log10(2 * np.pi * f_low)
+
+# Create the plot
+plt.figure()
+plt.plot(f_norm, H_f_magnitude, 'b-', linewidth=2, label='First-order DSM NTF |H(f)|')
+
+# Add vertical line for loop filter bandwidth (100 kHz)
+f_loop_bw = 300e3  # Loop filter bandwidth in Hz
+f_loop_norm = f_loop_bw / f_s  # Normalized loop filter bandwidth
+plt.axvline(f_loop_norm, color='red', linestyle=':', linewidth=2, label='Loop filter BW (300 kHz)')
+
+# Formatting
+plt.xlabel('Normalized frequency (f/f_s)')
+plt.ylabel('|H(f)| (linear scale)')
+plt.grid(True, alpha=0.3)
+plt.xlim(0, 0.5)
+plt.ylim(0, 2)
+
+plt.tight_layout()
+plt.show()
+```

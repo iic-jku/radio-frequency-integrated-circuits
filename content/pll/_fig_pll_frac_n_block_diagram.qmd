@@ -15,9 +15,9 @@ limitations under the License.
 :::
 
 ```{python}
-#| label: fig-pll-block-diagram
+#| label: fig-pll-frac-n-block
 #| echo: false
-#| fig-cap: "Block diagram of a PLL. A reference phase signal is compared to the phase of a VCO output signal in a phase detector. The phase error is low-pass filtered and used to tune the VCO frequency."
+#| fig-cap: "Block diagram of a fractional-N PLL. The VCO signal is divided by a sequence of integer divider values div[k] with (on average) is given by $N.f$, where $N$ is the integer part of the divider value, and $f$ the fractional part of the divider."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -29,7 +29,7 @@ with sd.Drawing(canvas='svg') as d:
 
     dsp.Oscillator()
     dsp.Arrow().right(d.unit).label(r'$f_\mathrm{ref}$', 'top')
-    pfd = dsp.Square().label(r'PD', loc='center')
+    pfd = dsp.Square().label('PFD\nCP', loc='center')
     dsp.Arrow().length(d.unit).label('phase\nerror', 'top')
     dsp.Filter(response='lp')
     dsp.Arrow().length(d.unit).label('tuning\nvoltage', 'top')
@@ -40,7 +40,15 @@ with sd.Drawing(canvas='svg') as d:
     d.pop()
     dsp.Line().down(d.unit)
     dsp.Arrow().left(d.unit*1.5)
-    dsp.Square().label(':N', loc='center')
-    dsp.Line().tox(pfd.S).label(r'$f_\mathrm{fb} = f_\mathrm{out} / N$', 'top')
+    mmd = dsp.Square().label('MMD', loc='center')
+    dsp.Line().tox(pfd.S).label(r'$f_\mathrm{out} / \text{div}[k-1]$', 'top').dot()
+    d.push()
     dsp.Arrow().up().to(pfd.S)
+    d.pop()
+    elm.Line().down(d.unit*3/4)
+    elm.Arrow().right(d.unit/2)
+    dsm = dsp.Square().label('DSM')
+    elm.Line().tox(mmd.S).label(r'$\text{div}[k]$')
+    elm.Arrow().up().to(mmd.N)
+    elm.Arrow().down(d.unit/4).at(dsm.S).reverse().label(r'$N.f$', 'left')
 ```
