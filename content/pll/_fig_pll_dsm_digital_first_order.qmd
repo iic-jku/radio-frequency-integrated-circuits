@@ -1,0 +1,52 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-pll-dsm-digital-first-order
+#| echo: false
+#| fig-cap: "A first-order digital delta-sigma modulator."
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    elm.Line().right(d.unit/4).label(r'$x[n]$', 'left')
+    elm.DataBusLine().right(d.unit/2).label(r'$N$', 'top')
+    sum1 = dsp.Sum()
+    elm.DataBusLine().right(d.unit).label(r'$N+1$', 'top')
+    sum2 = dsp.Sum()
+    elm.DataBusLine().right(d.unit).label(r'$N+2$', 'top')
+    dsp.Square().label(r'$z^{-1}$') 
+    elm.DataBusLine().right(d.unit).label(r'$N+2$', 'top').dot()
+    d.push()
+    elm.DataBusLine().right(d.unit).label(r'$N+2$', 'top')
+    sum3 = dsp.Sum().color('red')
+    elm.DataBusLine().right(d.unit).label('MSB', 'top').dot()
+    pos = d.here
+    elm.Arrow().right(d.unit/2).label(r'$y[n]$', 'right')
+    d.pop()
+    elm.Line().down(d.unit)
+    elm.DataBusLine().left().tox(sum2.S).label(r'$N+1$', 'top')
+    elm.Arrow().up().to(sum2.S)
+    elm.Line().down(d.unit*1.5).at(pos)
+    elm.Line().left().tox(sum1.S)
+    elm.Arrow().up().to(sum1.S).label('--', 'bottom')
+    elm.Arrow().up(d.unit/2).at(sum3.N).reverse().label(r'$q[n]$', 'right').color('red')
+```

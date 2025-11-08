@@ -116,7 +116,7 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Line().down(d.unit*3)
     dsp.Line().left(d.unit)
     dsp.Square().label(':N', loc='center')
-    dsp.Wire('-|').to(in_fb).label(r'$f_\mathrmP{fb} = f_\mathrm{out} / N$', 'bottom')
+    dsp.Wire('-|').to(in_fb).label(r'$f_\mathrm{fb} = f_\mathrm{out} / N$', 'bottom')
 
     elm.Line().at(in_ref).left(d.unit/2).dot(open=True).label(r'$f_\mathrm{ref}$', 'left')
 ```
