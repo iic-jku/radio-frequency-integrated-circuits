@@ -17,7 +17,6 @@ copyright:
   holder: "Harald Pretl and co-authors, Johannes Kepler University."
   year: 2025
 citation:
-  doi: "citation:
   doi: "10.5281/zenodo.17563943"
   url: https://iic-jku.github.io/radio-frequency-integrated-circuits
 bibliography: references.bib
