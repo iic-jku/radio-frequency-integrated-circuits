@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2025-11-08">
+<meta name="dcterms.date" content="2025-11-09">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -439,7 +439,11 @@ window.Quarto = {
   <li><a href="#sec-pll-frac-n-implementation" id="toc-sec-pll-frac-n-implementation" class="nav-link" data-scroll-target="#sec-pll-frac-n-implementation"><span class="header-section-number">7.4.2</span> Fractional-N PLL Implementation</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#sec-poweramp" id="toc-sec-poweramp" class="nav-link" data-scroll-target="#sec-poweramp"><span class="header-section-number">8</span> Power Amplifiers</a></li>
+  <li><a href="#sec-poweramp" id="toc-sec-poweramp" class="nav-link" data-scroll-target="#sec-poweramp"><span class="header-section-number">8</span> Power Amplifiers</a>
+  <ul class="collapse">
+  <li><a href="#sec-poweramp-classes" id="toc-sec-poweramp-classes" class="nav-link" data-scroll-target="#sec-poweramp-classes"><span class="header-section-number">8.1</span> Amplifier Classes</a></li>
+  <li><a href="#sec-poweramp-advanced" id="toc-sec-poweramp-advanced" class="nav-link" data-scroll-target="#sec-poweramp-advanced"><span class="header-section-number">8.2</span> PA Advanced Techniques</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="rfic.pdf"><i class="bi bi-file-pdf"></i>Typst</a></li></ul></div></nav>
     </div>
@@ -475,7 +479,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 8, 2025</p>
+      <p class="date">November 9, 2025</p>
     </div>
   </div>
   
@@ -3562,10 +3566,195 @@ Figure&nbsp;90: Block diagram of a fractional-N PLL including a retiming flip fl
 </section>
 <section id="sec-poweramp" class="level1" data-number="8">
 <h1 data-number="8"><span class="header-section-number">8</span> Power Amplifiers</h1>
-<p>To be added.</p>
+<p>Power amplifiers (PAs) are essential components in wireless communication systems, as they boost the signal power from (usually) a few milliwatts up to several watts to ensure reliable transmission over the air. While PAs are simple in concept, their design and operation involve several trade-offs between efficiency, linearity, bandwidth, and cost.</p>
+<p>A basic PA based on a single common-source stage is shown in <a href="#fig-poweramp-basic" class="quarto-xref">Figure&nbsp;91</a>. The input signal is applied to the gate of the transistor via a matching network, which amplifies the signal at the drain terminal. The output matching network transforms the 50 Ohm load to the optimal load impedance for the desired output power under linearity and efficiency constraints.</p>
+<div id="cell-fig-poweramp-basic" class="cell" data-execution_count="91">
+<div class="cell-output cell-output-display">
+<div id="fig-poweramp-basic" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-poweramp-basic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-poweramp-basic-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-91" title="Figure&nbsp;91: A basic single stage single-ended common-source power amplifier with input and output matching."><img src="rfic_files/figure-html/fig-poweramp-basic-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-poweramp-basic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;91: A basic single stage single-ended common-source power amplifier with input and output matching.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The RF choke at the drain allows the drain node to swing above the supply voltage, enabling higher output power. However, the transistor <span class="math inline">\(M_1\)</span> must be able to handle the high voltages and currents involved. Unfortunately, in Silicon technologies the Johnson limit, which is the product of the breakdown voltage and the transit frequency of the transistor, is limited to around 200 GHz·V. This often requires the use of different semiconductor technologies for the PAs, such as GaAs, InP, or GaN. Implementing the PA in a different technology than the rest of the RFIC means to implement it off-chip.</p>
+<p>Assuming the output voltage swing is limited only by the supply voltage <span class="math inline">\(V_\mathrm{DD}\)</span>, the maximum output power delivered to a load <span class="math inline">\(R_\mathrm{L}\)</span> is given by</p>
+<p><span class="math display">\[
+P_\mathrm{out,max} = \frac{V_\mathrm{DD}^2}{2 R_\mathrm{L}}.
+\]</span></p>
+<p>For a typical supply voltage of <span class="math inline">\(V_\mathrm{DD} = 3\,\mathrm{V}\)</span> and a load of <span class="math inline">\(R_\mathrm{L} = 50\,\Omega\)</span>, this results in a maximum output power of <span class="math inline">\(P_\mathrm{out,max} = 90\,\mathrm{mW}\)</span> or <span class="math inline">\(19.5\,\mathrm{dBm}\)</span>. Higher output powers require either higher supply voltages (which may not be available in battery-powered systems) or lower load impedances. The output matching network is thus designed in such a way as to present a lower impedance to the PA, e.g., <span class="math inline">\(R_\mathrm{L} = 5\,\Omega\)</span>, which increases the maximum output power to <span class="math inline">\(P_\mathrm{out,max} = 900\,\mathrm{mW}\)</span> or <span class="math inline">\(29.5\,\mathrm{dBm}\)</span>. The matching networks are usually implemented as LC networks or transmission line sections, often using transformers to achieve the required impedance transformation.</p>
+<p>In order to drive the large output transistor <span class="math inline">\(M_1\)</span> in <a href="#fig-poweramp-basic" class="quarto-xref">Figure&nbsp;91</a>, a driver stage is often required. This driver stage provides the necessary voltage and current gain to ensure that the PA operates in its optimal region. If needed, even another pre-driver stage can be added, but higher gain might cause stability issues and increased output noise. A two-stage power amplifier is shown in <a href="#fig-poweramp-twostage" class="quarto-xref">Figure&nbsp;92</a>.</p>
+<div id="cell-fig-poweramp-twostage" class="cell" data-execution_count="92">
+<div class="cell-output cell-output-display">
+<div id="fig-poweramp-twostage" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-poweramp-twostage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-poweramp-twostage-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-92" title="Figure&nbsp;92: A basic two-stage single-ended common-source power amplifier with input and output matching."><img src="rfic_files/figure-html/fig-poweramp-twostage-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-poweramp-twostage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;92: A basic two-stage single-ended common-source power amplifier with input and output matching.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>One of the main characteristics of a PA is its <strong>drain efficiency</strong>, which is defined as the ratio of the output RF power to the total DC power consumed from the supply:</p>
+<p><span class="math display">\[
+\eta = \frac{P_\mathrm{out}}{P_\mathrm{dc}}
+\]</span></p>
+<p>Since <span class="math inline">\(\eta\)</span> does not take into account the required input power to drive the PA, a more comprehensive metric is the <strong>power-added efficiency (PAE)</strong>:</p>
+<p><span class="math display">\[
+\text{PAE} = \frac{P_\mathrm{out} - P_\mathrm{in}}{P_\mathrm{dc}}
+\]</span></p>
+<p>Ideally, we want both efficiency metrics as high as possible, but in practice there is a trade-off between efficiency and linearity (for linearity metrics refer to <a href="#sec-linearity" class="quarto-xref">Section&nbsp;2.2</a>). High efficiency is often achieved by operating the PA in saturation, which leads to signal distortion and spectral regrowth. Various techniques exist to improve the linearity of PAs, such as <strong>predistortion</strong>, <strong>feedback</strong>, and <strong>envelope tracking</strong>.</p>
+<p>For describing PA nonlinearity, various models can be used. One simple model is the <strong>Saleh model</strong> (originally developed for trawelling-wave tube amplifiers), which describes the AM/AM and AM/PM conversion of the PA using a smooth transition from linear operation to saturation <span class="citation" data-cites="Saleh.1981">(<a href="#ref-Saleh.1981" role="doc-biblioref">Saleh 1981</a>)</span>. This model is defined by the following equations in the polar domain (<span class="math inline">\(r(t)\)</span> and <span class="math inline">\(\psi(t)\)</span> are the modulated input signal amplitude and phase, respectively; <span class="math inline">\(y(t)\)</span> is the output signal):</p>
+<p><span class="math display">\[
+y(t) = A[r(t)] \cos\{ \omega_0 t + \psi(t) + \varphi[r(t)] \}
+\]</span></p>
+<p>with</p>
+<p><span class="math display">\[
+A(r) = \frac{\alpha_1 r}{1 + \beta_1 r^2} \quad \text{and} \quad \varphi(r) = \frac{\alpha_2 r^2}{1 + \beta_2 r^2}
+\]</span></p>
+<p>where <span class="math inline">\(\alpha_1\)</span>, <span class="math inline">\(\beta_1\)</span>, <span class="math inline">\(\alpha_2\)</span>, and <span class="math inline">\(\beta_2\)</span> are the Saleh model parameters that define the PA characteristics. The AM/AM conversion <span class="math inline">\(A(r)\)</span> describes how the output amplitude saturates with increasing input amplitude, while the AM/PM conversion <span class="math inline">\(\varphi(r)\)</span> describes the phase distortion introduced by the PA. While this simple model does not capture memory effects or frequency-dependent behavior, it provides a good starting point for understanding PA nonlinearity.</p>
+<p>Note that most discrete PAs are implemented similar to <a href="#fig-poweramp-twostage" class="quarto-xref">Figure&nbsp;92</a>. For RFIC-integrated PAs, a single-ended implementation is problematic due to power supply parasitics and coupling issues. Therefore, integrated PAs are very often implemented in a differential configuration, which improves power supply rejection and reduces even-order harmonics <span class="citation" data-cites="Moreira.2015">Fuhrmann et al. (<a href="#ref-Fuhrmann.2017" role="doc-biblioref">2017</a>)</span>. A generic differential PA implementation is shown in <a href="#fig-poweramp-differential" class="quarto-xref">Figure&nbsp;93</a>.</p>
+<div id="cell-fig-poweramp-differential" class="cell" data-execution_count="93">
+<div class="cell-output cell-output-display">
+<div id="fig-poweramp-differential" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-poweramp-differential-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-poweramp-differential-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-93" title="Figure&nbsp;93: A generic differential power amplifier with cascode stages for peak voltage handling. Inductors L1, L_2, and L_3 are implemented as a transformer, and form the load and output matching network together with C_1 and C_2. Note that the load transformer allows a differential to single-ended conversion, as well as a dc block."><img src="rfic_files/figure-html/fig-poweramp-differential-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-poweramp-differential-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;93: A generic differential power amplifier with cascode stages for peak voltage handling. Inductors <span class="math inline">\(L1\)</span>, <span class="math inline">\(L_2\)</span>, and <span class="math inline">\(L_3\)</span> are implemented as a transformer, and form the load and output matching network together with <span class="math inline">\(C_1\)</span> and <span class="math inline">\(C_2\)</span>. Note that the load transformer allows a differential to single-ended conversion, as well as a dc block.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The cascode transistors <span class="math inline">\(M_2\)</span> and <span class="math inline">\(M_4\)</span> allow higher output voltage swings by stacking the transistors, thus reducing the voltage stress on each individual transistor. They can be implemented as thick-oxide transistors to further increase the breakdown voltage.</p>
+<p>While the power amplifier circuits look simple in principle, their design and optimization require large-signal models and extensive electromagnetic (EM) simulations to accurately capture the behavior of the matching networks and parasitic effects. Additionally, thermal management is crucial in PA design, as high power dissipation can lead to device degradation and failure.</p>
+<p>In order to accurately capture and model large-signal effects, load-pull measurements are often performed during PA design. In a <strong>load-pull measurement</strong> setup, the PA is driven with a known input signal while the output load impedance is varied systematically using impedance tuners. By measuring the output power, efficiency, and linearity metrics at different load impedances, the optimal load conditions for the PA can be determined. This information is then used to design the output matching network to achieve the desired performance.</p>
+<section id="sec-poweramp-classes" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="sec-poweramp-classes"><span class="header-section-number">8.1</span> Amplifier Classes</h2>
+<p>Power amplifiers can be classified into different <a href="https://en.wikipedia.org/wiki/Power_amplifier_classes">classes</a> based on their conduction angle, which is the portion of the input signal cycle during which the transistor conducts current. The most common classes are Class A, Class B, Class AB, Class C, Class D, Class E, and Class F. Each class has its own trade-offs between efficiency, linearity, and complexity. The following table summarizes the main characteristics of each amplifier class:</p>
+<div id="tbl-poweramp-classes" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-poweramp-classes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6: Amplifier Classes
+</figcaption>
+<div aria-describedby="tbl-poweramp-classes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 18%">
+<col style="width: 12%">
+<col style="width: 11%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Class</th>
+<th>Conduction Angle</th>
+<th>Efficiency</th>
+<th>Linearity</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>360°</td>
+<td>Low</td>
+<td>High</td>
+<td style="text-align: left;">Bias current is larger than peak output current</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>180°</td>
+<td>Medium</td>
+<td>Medium</td>
+<td style="text-align: left;">Conducts half the cycle (zero bias current)</td>
+</tr>
+<tr class="odd">
+<td>AB</td>
+<td>180°-360°</td>
+<td>Medium</td>
+<td>Medium-high</td>
+<td style="text-align: left;">Between A and B (a little bit of bias current)</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>&lt;180°</td>
+<td>High</td>
+<td>Low</td>
+<td style="text-align: left;">Conducts less than half the cycle</td>
+</tr>
+<tr class="odd">
+<td>D</td>
+<td>N/A</td>
+<td>Very high</td>
+<td>Low-high</td>
+<td style="text-align: left;">Switching amplifier, uses PWM or similar</td>
+</tr>
+<tr class="even">
+<td>E</td>
+<td>N/A</td>
+<td>Very high</td>
+<td>Low</td>
+<td style="text-align: left;">Switching amplifier with tuned load</td>
+</tr>
+<tr class="odd">
+<td>F</td>
+<td>N/A</td>
+<td>Very high</td>
+<td>Low</td>
+<td style="text-align: left;">Uses harmonic tuning for efficiency</td>
+</tr>
+<tr class="even">
+<td>G</td>
+<td>N/A</td>
+<td>Very high</td>
+<td>Medium</td>
+<td style="text-align: left;">Multi-level supply voltage for efficiency</td>
+</tr>
+<tr class="odd">
+<td>H</td>
+<td>N/A</td>
+<td>Very high</td>
+<td>Medium</td>
+<td style="text-align: left;">Adaptive supply voltage for efficiency</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<ul>
+<li><strong>Class A</strong> amplifiers are the most linear but also the least efficient, as they conduct current throughout the entire input signal cycle. They are typically used in applications where linearity is critical, such as low power analog signal processing. Drain efficiency is limited to <span class="math inline">\(\eta \leq 50\%\)</span>.</li>
+<li><strong>Class B</strong> amplifiers are more efficient than Class A, as they conduct current only during half of the input signal cycle. However, they suffer from crossover distortion at the zero-crossing point of the input signal. The upper limit for drain efficiency is <span class="math inline">\(\eta \leq 78.5\%\)</span>.</li>
+<li><strong>Class AB</strong> amplifiers are a compromise between Class A and Class B, providing better linearity than Class B while still being more efficient than Class A. They are widely used in small-signal applications and linear RF power amplifiers, where better efficiency than Class A is desired.</li>
+<li><strong>Class C</strong> amplifiers are highly efficient but exhibit significant distortion, as they conduct current for only a part of the input signal cycle. They are typically used in applications where efficiency is more important than linearity, such as RF transmitters for constant-envelope modulation schemes (e.g., FM, FSK). Drain efficiency can reach up to <span class="math inline">\(\eta \leq 100\%\)</span>, but only as the output power falls to zero.</li>
+<li><strong>Class D, E, and F</strong> amplifiers are switching amplifiers that achieve very high efficiencies by operating the transistor as a switch, either fully on or fully off. They use various techniques such as pulse-width modulation (PWM), tuned loads, and harmonic tuning to optimize efficiency. These classes are commonly used in high-power applications, such as audio amplifiers and RF transmitters.</li>
+<li><strong>Class G and H</strong> amplifiers use multiple supply voltages or adaptive supply voltages to improve efficiency, and can be combined with the other classes. They are often used in applications where power consumption is a concern, such as battery-powered devices. Class AB combined with Class G or H techniques is state-of-the-art in mobile device PAs. Class G and H are sometimes also referred to as “<strong>envelope tracking</strong>” techniques.</li>
+</ul>
+</section>
+<section id="sec-poweramp-advanced" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="sec-poweramp-advanced"><span class="header-section-number">8.2</span> PA Advanced Techniques</h2>
+<p>To further improve the performance of power amplifiers, several advanced techniques can be employed:</p>
+<ul>
+<li><strong>Predistortion</strong>: This technique involves applying an inverse distortion to the input signal before it enters the PA, effectively canceling out the nonlinearity of the PA. Digital predistortion (DPD) is commonly used in modern communication systems to improve linearity and reduce spectral regrowth.</li>
+<li><strong>Envelope Tracking</strong>: This technique dynamically adjusts the supply voltage of the PA based on the envelope of the input signal, improving efficiency by reducing power consumption during low signal levels (see Class G and Class H).</li>
+<li><strong>Load Modulation</strong>: This technique involves varying the load impedance seen by the PA to optimize performance for different signal conditions. This can be achieved using tunable matching networks or switched load networks. An active method is the <strong>Doherty amplifier</strong> architecture, which uses two amplifiers (a main and a peaking amplifier) to improve efficiency at back-off power levels.</li>
+</ul>
 
 
 
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
@@ -3577,6 +3766,9 @@ Bird, Trevor S. 2009. <span>“<span class="nocase">Definition and Misuse of Ret
 </div>
 <div id="ref-Darabi_RFIC" class="csl-entry" role="listitem">
 Darabi, Hooman. 2020. <em>Radio Frequency Integrated Circuits and Systems</em>. 2nd edition. Cambridge University Press.
+</div>
+<div id="ref-Fuhrmann.2017" class="csl-entry" role="listitem">
+Fuhrmann, J., J. Moreira, P. Oβmann, A. Springer, R. Weigel, and H. Pretl. 2017. <span>“<span class="nocase">A 15-Bit 28nm CMOS Fully-Integrated 1.6W Digital Power Amplifier for LTE IoT</span>.”</span> In, 199–202. ESSCIRC 2017 - 43rd IEEE European Solid State Circuits Conference. IEEE. <a href="https://doi.org/10.1109/esscirc.2017.8094560">https://doi.org/10.1109/esscirc.2017.8094560</a>.
 </div>
 <div id="ref-Gardner.1980" class="csl-entry" role="listitem">
 Gardner, F. 1980. <span>“<span>Charge-Pump Phase-Lock Loops</span>.”</span> <em>IEEE Transactions on Communications</em> 28 (11): 1849–58. <a href="https://doi.org/10.1109/TCOM.1980.1094619">https://doi.org/10.1109/TCOM.1980.1094619</a>.
@@ -3599,6 +3791,9 @@ Lepage, W. R., C. R. Cahn, and J. S. Brown. 1953. <span>“<span class="nocase">
 <div id="ref-Molisch_Wireless_Communications" class="csl-entry" role="listitem">
 Molisch, Andreas F. 2022. <em>Wireless Communications: From Fundamentals to Beyond 5G</em>. 3rd edition. Wiley-IEEE Press.
 </div>
+<div id="ref-Moreira.2015" class="csl-entry" role="listitem">
+Moreira, José, Stephan Leuschner, Nenad Stevanovic, Harald Pretl, Peter Pfann, Ronald Thüringer, Martin Kastner¹, et al. 2015. <span>“<span class="nocase">9.2 A Single-Chip HSPA Transceiver with Fully Integrated 3G CMOS Power Amplifiers</span>.”</span> <em>2015 IEEE International Solid-State Circuits Conference - (ISSCC) Digest of Technical Papers</em>, February, 162–64. <a href="https://doi.org/10.1109/isscc.2015.7062976">https://doi.org/10.1109/isscc.2015.7062976</a>.
+</div>
 <div id="ref-Pozar_RF" class="csl-entry" role="listitem">
 Pozar, David M. 2011. <em>Microwave Engineering</em>. Wiley.
 </div>
@@ -3610,6 +3805,9 @@ Razavi, Behzad. 2011. <em>RF Microelectronics</em>. 2nd edition. Pearson.
 </div>
 <div id="ref-Razavi_Analog_CMOS" class="csl-entry" role="listitem">
 ———. 2017. <em><span class="nocase">Design of Analog CMOS Integrated Circuits</span></em>. McGraw-Hill.
+</div>
+<div id="ref-Saleh.1981" class="csl-entry" role="listitem">
+Saleh, A A M. 1981. <span>“<span class="nocase">Frequency-Independent and Frequency-Dependent Nonlinear Models of TWT Amplifiers</span>.”</span> <em>IEEE Transactions on Communications</em> 29 (11): 1715–20. <a href="https://doi.org/10.1109/tcom.1981.1094911">https://doi.org/10.1109/tcom.1981.1094911</a>.
 </div>
 <div id="ref-Sarpeshkar_1993" class="csl-entry" role="listitem">
 Sarpeshkar, R., T. Delbruck, and C. A. Mead. 1993. <span>“<span class="nocase">White noise in MOS transistors and resistors</span>.”</span> <em>IEEE Circuits and Devices Magazine</em> 9 (6): 23–29. <a href="https://doi.org/10.1109/101.261888">https://doi.org/10.1109/101.261888</a>.
