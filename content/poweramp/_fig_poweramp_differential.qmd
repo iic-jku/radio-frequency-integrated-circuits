@@ -1,0 +1,63 @@
+::: {.content-hidden}
+Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-poweramp-differential
+#| echo: false
+#| fig-cap: "A generic differential power amplifier with cascode stages for peak voltage handling. Inductors $L1$, $L_2$, and $L_3$ are implemented as a transformer, and form the load and output matching network together with $C_1$ and $C_2$. Note that the load transformer allows a differential to single-ended conversion, as well as a dc block."
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    # draw transistors
+    elm.Line().right(d.unit/4).idot(open=True).label(r'$s_\mathrm{in,p}$', loc='left')
+    M1 = elm.AnalogNFet(offset_gate=False).anchor('gate').drop('source').label('$M_1$', loc='right').reverse()
+    elm.Ground()
+    M2 = elm.AnalogNFet(offset_gate=False).at(M1.drain).anchor('source').drop('gate').label('$M_2$', loc='left')
+    elm.Line().right(d.unit*2).label(r'$V_\mathrm{bias}$', loc='top')
+    M4 = elm.AnalogNFet(offset_gate=False).anchor('gate').drop('source').label('$M_4$', loc='right').reverse()
+    M3 = elm.AnalogNFet(offset_gate=False).anchor('drain').drop('source').label('$M_3$', loc='left')
+    elm.Ground()
+    elm.Line().at(M3.gate).right(d.unit/4).dot(open=True).label(r'$s_\mathrm{in,n}$', loc='right')
+
+    # draw load
+    l1 = elm.Line().up(d.unit/2).at(M2.drain).dot()
+    l2 = elm.Line().up(d.unit/2).at(M4.drain).dot()
+    elm.Capacitor().at(l1.end).to(l2.end).label('$C_1$', loc='top')
+    l3 = elm.Line().up(d.unit).at(l1.end)
+    l4 = elm.Line().up(d.unit).at(l2.end)
+    l5 = elm.Line().up(d.unit/2).at(l3.end)
+    l6 = elm.Line().up(d.unit/2).at(l4.end)
+    elm.Inductor2(loops=2).at(l5.end).right(d.unit*1.5).label('$L_1$', loc='bottom').dot()
+    elm.Vdd().label(r'$V_\mathrm{DD}$', loc='top')
+    elm.Inductor2(loops=2).to(l6.end).label('$L_2$', loc='bottom')
+
+    d.here=l3.end
+    d.move(dx=d.unit, dy=0)
+    lout = elm.Inductor2(loops=2).right().label('$L_3$', loc='bottom')
+    elm.Ground().at(lout.start)
+    elm.Line().at(lout.end).right(d.unit*1.5).dot()
+    d.push()
+    elm.Line().right(d.unit/2).dot(open=True).label(r'$s_\mathrm{out}$', loc='right')
+    d.pop()
+    elm.Capacitor().down().label('$C_2$', loc='top')
+    elm.Ground()
+```

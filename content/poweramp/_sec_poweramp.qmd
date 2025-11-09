@@ -16,4 +16,92 @@ limitations under the License.
 
 # Power Amplifiers {#sec-poweramp}
 
-To be added.
+Power amplifiers (PAs) are essential components in wireless communication systems, as they boost the signal power from (usually) a few milliwatts up to several watts to ensure reliable transmission over the air. While PAs are simple in concept, their design and operation involve several trade-offs between efficiency, linearity, bandwidth, and cost.
+
+A basic PA based on a single common-source stage is shown in @fig-poweramp-basic. The input signal is applied to the gate of the transistor via a matching network, which amplifies the signal at the drain terminal. The output matching network transforms the 50 Ohm load to the optimal load impedance for the desired output power under linearity and efficiency constraints.
+
+{{< include /content/poweramp/_fig_poweramp_basic.qmd >}}
+
+The RF choke at the drain allows the drain node to swing above the supply voltage, enabling higher output power. However, the transistor $M_1$ must be able to handle the high voltages and currents involved. Unfortunately, in Silicon technologies the Johnson limit, which is the product of the breakdown voltage and the transit frequency of the transistor, is limited to around 200 GHz·V. This often requires the use of different semiconductor technologies for the PAs, such as GaAs, InP, or GaN. Implementing the PA in a different technology than the rest of the RFIC means to implement it off-chip.
+
+Assuming the output voltage swing is limited only by the supply voltage $V_\mathrm{DD}$, the maximum output power delivered to a load $R_\mathrm{L}$ is given by
+
+$$
+P_\mathrm{out,max} = \frac{V_\mathrm{DD}^2}{2 R_\mathrm{L}}.
+$$
+
+For a typical supply voltage of $V_\mathrm{DD} = 3\,\mathrm{V}$ and a load of $R_\mathrm{L} = 50\,\Omega$, this results in a maximum output power of $P_\mathrm{out,max} = 90\,\mathrm{mW}$ or $19.5\,\mathrm{dBm}$. Higher output powers require either higher supply voltages (which may not be available in battery-powered systems) or lower load impedances. The output matching network is thus designed in such a way as to present a lower impedance to the PA, e.g., $R_\mathrm{L} = 5\,\Omega$, which increases the maximum output power to $P_\mathrm{out,max} = 900\,\mathrm{mW}$ or $29.5\,\mathrm{dBm}$. The matching networks are usually implemented as LC networks or transmission line sections, often using transformers to achieve the required impedance transformation.
+
+In order to drive the large output transistor $M_1$ in @fig-poweramp-basic, a driver stage is often required. This driver stage provides the necessary voltage and current gain to ensure that the PA operates in its optimal region. If needed, even another pre-driver stage can be added, but higher gain might cause stability issues and increased output noise. A two-stage power amplifier is shown in @fig-poweramp-twostage.
+
+{{< include /content/poweramp/_fig_poweramp_twostage.qmd >}}
+
+One of the main characteristics of a PA is its **drain efficiency**, which is defined as the ratio of the output RF power to the total DC power consumed from the supply:
+
+$$
+\eta = \frac{P_\mathrm{out}}{P_\mathrm{dc}}
+$$
+
+Since $\eta$ does not take into account the required input power to drive the PA, a more comprehensive metric is the **power-added efficiency (PAE)**:
+
+$$
+\text{PAE} = \frac{P_\mathrm{out} - P_\mathrm{in}}{P_\mathrm{dc}}
+$$
+
+Ideally, we want both efficiency metrics as high as possible, but in practice there is a trade-off between efficiency and linearity (for linearity metrics refer to @sec-linearity). High efficiency is often achieved by operating the PA in saturation, which leads to signal distortion and spectral regrowth. Various techniques exist to improve the linearity of PAs, such as **predistortion**, **feedback**, and **envelope tracking**.
+
+For describing PA nonlinearity, various models can be used. One simple model is the **Saleh model** (originally developed for trawelling-wave tube amplifiers), which describes the AM/AM and AM/PM conversion of the PA using a smooth transition from linear operation to saturation [@Saleh.1981]. This model is defined by the following equations in the polar domain ($r(t)$ and $\psi(t)$ are the modulated input signal amplitude and phase, respectively; $y(t)$ is the output signal):
+
+$$
+y(t) = A[r(t)] \cos\{ \omega_0 t + \psi(t) + \varphi[r(t)] \}
+$$
+
+with
+
+$$
+A(r) = \frac{\alpha_1 r}{1 + \beta_1 r^2} \quad \text{and} \quad \varphi(r) = \frac{\alpha_2 r^2}{1 + \beta_2 r^2}
+$$
+
+where $\alpha_1$, $\beta_1$, $\alpha_2$, and $\beta_2$ are the Saleh model parameters that define the PA characteristics. The AM/AM conversion $A(r)$ describes how the output amplitude saturates with increasing input amplitude, while the AM/PM conversion $\varphi(r)$ describes the phase distortion introduced by the PA. While this simple model does not capture memory effects or frequency-dependent behavior, it provides a good starting point for understanding PA nonlinearity.
+
+Note that most discrete PAs are implemented similar to @fig-poweramp-twostage. For RFIC-integrated PAs, a single-ended implementation is problematic due to power supply parasitics and coupling issues. Therefore, integrated PAs are very often implemented in a differential configuration, which improves power supply rejection and reduces even-order harmonics [@Moreira.2015, @Fuhrmann.2017]. A generic differential PA implementation is shown in @fig-poweramp-differential.
+
+{{< include /content/poweramp/_fig_poweramp_differential.qmd >}}
+
+The cascode transistors $M_2$ and $M_4$ allow higher output voltage swings by stacking the transistors, thus reducing the voltage stress on each individual transistor. They can be implemented as thick-oxide transistors to further increase the breakdown voltage.
+
+While the power amplifier circuits look simple in principle, their design and optimization require large-signal models and extensive electromagnetic (EM) simulations to accurately capture the behavior of the matching networks and parasitic effects. Additionally, thermal management is crucial in PA design, as high power dissipation can lead to device degradation and failure.
+
+In order to accurately capture and model large-signal effects, load-pull measurements are often performed during PA design. In a **load-pull measurement** setup, the PA is driven with a known input signal while the output load impedance is varied systematically using impedance tuners. By measuring the output power, efficiency, and linearity metrics at different load impedances, the optimal load conditions for the PA can be determined. This information is then used to design the output matching network to achieve the desired performance.
+
+## Amplifier Classes {#sec-poweramp-classes}
+
+Power amplifiers can be classified into different [classes](https://en.wikipedia.org/wiki/Power_amplifier_classes) based on their conduction angle, which is the portion of the input signal cycle during which the transistor conducts current. The most common classes are Class A, Class B, Class AB, Class C, Class D, Class E, and Class F. Each class has its own trade-offs between efficiency, linearity, and complexity. The following table summarizes the main characteristics of each amplifier class:
+
+| Class | Conduction Angle | Efficiency | Linearity | Description                                     |
+|-------|------------------|------------|-----------|:------------------------------------------------|
+| A     | 360°             | Low        | High      | Bias current is larger than peak output current |     
+| B     | 180°             | Medium     | Medium    | Conducts half the cycle (zero bias current)     |
+| AB    | 180°-360°        | Medium     | Medium-high | Between A and B (a little bit of bias current)  |
+| C     | <180°            | High       | Low       | Conducts less than half the cycle               |
+| D     | N/A              | Very high  | Low-high  | Switching amplifier, uses PWM or similar        |
+| E     | N/A              | Very high  | Low       | Switching amplifier with tuned load             |
+| F     | N/A              | Very high  | Low       | Uses harmonic tuning for efficiency             |
+| G     | N/A              | Very high  | Medium    | Multi-level supply voltage for efficiency       |
+| H     | N/A              | Very high  | Medium    | Adaptive supply voltage for efficiency          |
+: Amplifier Classes {#tbl-poweramp-classes}
+
+- **Class A** amplifiers are the most linear but also the least efficient, as they conduct current throughout the entire input signal cycle. They are typically used in applications where linearity is critical, such as low power analog signal processing. Drain efficiency is limited to $\eta \leq 50\%$.
+- **Class B** amplifiers are more efficient than Class A, as they conduct current only during half of the input signal cycle. However, they suffer from crossover distortion at the zero-crossing point of the input signal. The upper limit for drain efficiency is $\eta \leq 78.5\%$.
+- **Class AB** amplifiers are a compromise between Class A and Class B, providing better linearity than Class B while still being more efficient than Class A. They are widely used in small-signal applications and linear RF power amplifiers, where better efficiency than Class A is desired.
+- **Class C** amplifiers are highly efficient but exhibit significant distortion, as they conduct current for only a part of the input signal cycle. They are typically used in applications where efficiency is more important than linearity, such as RF transmitters for constant-envelope modulation schemes (e.g., FM, FSK). Drain efficiency can reach up to $\eta \leq 100\%$, but only as the output power falls to zero.
+- **Class D, E, and F** amplifiers are switching amplifiers that achieve very high efficiencies by operating the transistor as a switch, either fully on or fully off. They use various techniques such as pulse-width modulation (PWM), tuned loads, and harmonic tuning to optimize efficiency. These classes are commonly used in high-power applications, such as audio amplifiers and RF transmitters.
+- **Class G and H** amplifiers use multiple supply voltages or adaptive supply voltages to improve efficiency, and can be combined with the other classes. They are often used in applications where power consumption is a concern, such as battery-powered devices. Class AB combined with Class G or H techniques is state-of-the-art in mobile device PAs. Class G and H are sometimes also referred to as "**envelope tracking**" techniques.
+
+## PA Advanced Techniques {#sec-poweramp-advanced}
+
+To further improve the performance of power amplifiers, several advanced techniques can be employed:
+
+- **Predistortion**: This technique involves applying an inverse distortion to the input signal before it enters the PA, effectively canceling out the nonlinearity of the PA. Digital predistortion (DPD) is commonly used in modern communication systems to improve linearity and reduce spectral regrowth.
+- **Envelope Tracking**: This technique dynamically adjusts the supply voltage of the PA based on the envelope of the input signal, improving efficiency by reducing power consumption during low signal levels (see Class G and Class H).
+- **Load Modulation**: This technique involves varying the load impedance seen by the PA to optimize performance for different signal conditions. This can be achieved using tunable matching networks or switched load networks. An active method is the **Doherty amplifier** architecture, which uses two amplifiers (a main and a peaking amplifier) to improve efficiency at back-off power levels.
