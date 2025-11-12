@@ -56,7 +56,7 @@ with sd.Drawing(canvas='svg') as d:
     elm.Line().right(d.unit/4)
     elm.Capacitor().down().length(d.unit*3/4).label(r'$C$')
     elm.Ground()
-    elm.Line().up(d.unit/4).at(M3.gate).label(r'$\text{LO}_{180}$', 'right').dot(open=True)
+    elm.Line().up(d.unit/4).at(M3.gate).label(r'$\text{LO}_{270}$', 'right').dot(open=True)
     d.pop()
 
     elm.Line().right(d.unit/2)
@@ -64,5 +64,5 @@ with sd.Drawing(canvas='svg') as d:
     elm.Line().right(d.unit/4)
     elm.Capacitor().down().length(d.unit*3/4).label(r'$C$')
     elm.Ground()
-    elm.Line().up(d.unit/4).at(M4.gate).label(r'$\text{LO}_{270}$', 'right').dot(open=True)
+    elm.Line().up(d.unit/4).at(M4.gate).label(r'$\text{LO}_{180}$', 'right').dot(open=True)
 ```
