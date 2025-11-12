@@ -47,7 +47,7 @@ with sd.Drawing(canvas='svg') as d:
     d.pop()
     d.push()
     elm.Line().left().length(d.unit/2)
-    L1 = elm.Inductor().up().label(r'$L$')
+    L1 = elm.Inductor2(loops=2).up().label(r'$L$')
     d.pop()
     elm.Line().right().length(d.unit/2).dot()
     d.push()
