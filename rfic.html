@@ -2192,16 +2192,16 @@ Y_\mathrm{in} = \frac{1}{Z_\mathrm{in}} = \frac{g_\mathrm{m}C_\mathrm{F}}{C_\mat
 </section>
 <section id="sec-mixer" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Mixers</h1>
-<p>As we have seen in <a href="#sec-trx-mod-demod" class="quarto-xref">Section&nbsp;3.2</a>, we are using mixers to “upconvert” and “downconvert” signals, i.e., we shift the frequency of a signal to a higher or lower frequency with the help of an auxiliary signal, called the “<strong>local oscillator</strong>” (LO) signal. The block diagram of a mixer is shown in <a href="#fig-mixer-block" class="quarto-xref">Figure&nbsp;37</a>.</p>
-<div id="cell-fig-mixer-square" class="cell" data-execution_count="36">
+<p>As we have seen in <a href="#sec-trx-mod-demod" class="quarto-xref">Section&nbsp;3.2</a>, we are using mixers to “upconvert” and “downconvert” signals, i.e., we shift the frequency of a signal to a higher or lower frequency with the help of an auxiliary signal, called the “<strong>local oscillator</strong>” (LO) signal. The block diagram of a mixer is shown in <a href="#fig-mixer-block" class="quarto-xref">Figure&nbsp;36</a>.</p>
+<div id="cell-fig-mixer-block" class="cell" data-execution_count="36">
 <div class="cell-output cell-output-display">
-<div id="fig-mixer-square" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-mixer-block" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-mixer-square-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-mixer-square-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-36" title="Figure&nbsp;36: A squarer as a nonlinear mixer."><img src="rfic_files/figure-html/fig-mixer-square-output-1.svg" class="img-fluid figure-img"></a>
+<div aria-describedby="fig-mixer-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-mixer-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-36" title="Figure&nbsp;36: Mixer block diagram."><img src="rfic_files/figure-html/fig-mixer-block-output-1.svg" class="img-fluid figure-img"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mixer-square-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;36: A squarer as a nonlinear mixer.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mixer-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;36: Mixer block diagram.
 </figcaption>
 </figure>
 </div>
@@ -2220,16 +2220,16 @@ Figure&nbsp;36: A squarer as a nonlinear mixer.
 <p>Next we will look at two options on how to implement a mixer.</p>
 <section id="sec-mixer-nonlinear" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="sec-mixer-nonlinear"><span class="header-section-number">5.1</span> Non-Linear Mixer</h2>
-<p>Generally speaking, we can use any non-linear device to implement a mixer (often, this generation of new frequency components in a nonlinear system is highly undesired; in a mixer, we want this effect). As a simple example we look at the case of a square function, shown in <a href="#fig-mixer-square" class="quarto-xref">Figure&nbsp;36</a>.</p>
-<div id="cell-fig-mixer-block" class="cell" data-execution_count="37">
+<p>Generally speaking, we can use any non-linear device to implement a mixer (often, this generation of new frequency components in a nonlinear system is highly undesired; in a mixer, we want this effect). As a simple example we look at the case of a square function, shown in <a href="#fig-mixer-square" class="quarto-xref">Figure&nbsp;37</a>.</p>
+<div id="cell-fig-mixer-square" class="cell" data-execution_count="37">
 <div class="cell-output cell-output-display">
-<div id="fig-mixer-block" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-mixer-square" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-mixer-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-mixer-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-37" title="Figure&nbsp;37: Mixer block diagram."><img src="rfic_files/figure-html/fig-mixer-block-output-1.svg" class="img-fluid figure-img"></a>
+<div aria-describedby="fig-mixer-square-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-mixer-square-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-37" title="Figure&nbsp;37: A squarer as a nonlinear mixer."><img src="rfic_files/figure-html/fig-mixer-square-output-1.svg" class="img-fluid figure-img"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mixer-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;37: Mixer block diagram.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mixer-square-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;37: A squarer as a nonlinear mixer.
 </figcaption>
 </figure>
 </div>
