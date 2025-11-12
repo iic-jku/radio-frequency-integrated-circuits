@@ -2279,9 +2279,12 @@ Figure&nbsp;39: A switch as a time-variant mixer.
 </div>
 <p>When the switch is closed (<span class="math inline">\(s_\mathrm{LO} \ge 0\)</span>), the input signal is passed to the output, i.e., <span class="math inline">\(s_\mathrm{out}(t) = s_\mathrm{in}(t)\)</span>; when the switch is open (<span class="math inline">\(s_\mathrm{LO} &lt; 0\)</span>), no signal is passed, i.e., <span class="math inline">\(s_\mathrm{out}(t) = 0\)</span>. The output signal can be expressed as</p>
 <p><span class="math display">\[
-s_\mathrm{out}(t) = s_\mathrm{in}(t) \cdot \frac{1}{2} \left\{ 1 + \mathrm{sgn}[ s_\mathrm{LO}(t) ] \right\},
+\begin{split}
+s_\mathrm{out}(t) &amp;= s_\mathrm{in}(t) \cdot \underbrace{\frac{1}{2} \left\{ 1 + \mathrm{sgn}[ s_\mathrm{LO}(t) ] \right\}}_\text{Fourier series} \\
+&amp;= s_\mathrm{in}(t) \cdot \left[ \frac{1}{2} + \frac{2}{\pi} \sin(\omega_\mathrm{LO} t) + \frac{2}{3 \pi} \sin(3 \omega_\mathrm{LO} t) + \frac{2}{5 \pi} \sin(5 \omega_\mathrm{LO} t) + \ldots\right]
+\end{split}
 \]</span></p>
-<p>where <span class="math inline">\(\mathrm{sgn}(\cdot)\)</span> is the sign function. The term in curly brackets is a square wave that switches between 0 and 1 at the LO frequency. This square wave can be expressed as a Fourier series, which contains the fundamental frequency at <span class="math inline">\(\omega_\mathrm{LO}\)</span> and all odd harmonics <span class="math inline">\(3 \omega_\mathrm{LO}\)</span>, <span class="math inline">\(5 \omega_\mathrm{LO}\)</span>, and so on. In conclusion, if the input signal is expressed as <span class="math inline">\(\cos(\omega_\mathrm{in} t)\)</span>, we get the output signal</p>
+<p>where <span class="math inline">\(\mathrm{sgn}(\cdot)\)</span> is the signum function. The term in curly brackets is a square wave that switches between 0 and 1 at the LO frequency. This square wave can be expressed as a Fourier series, which contains the fundamental frequency at <span class="math inline">\(\omega_\mathrm{LO}\)</span> and all odd harmonics <span class="math inline">\(3 \omega_\mathrm{LO}\)</span>, <span class="math inline">\(5 \omega_\mathrm{LO}\)</span>, and so on. In conclusion, if the input signal is expressed as <span class="math inline">\(\cos(\omega_\mathrm{in} t)\)</span>, we get the output signal</p>
 <p><span id="eq-mixer-single-output"><span class="math display">\[
 s_\mathrm{out}(t) = \frac{1}{\pi} \cos(\omega_\mathrm{in} t \pm \omega_\mathrm{LO} t) + \ldots
 \tag{37}\]</span></span></p>
