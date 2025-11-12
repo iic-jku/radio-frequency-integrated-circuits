@@ -67,10 +67,13 @@ In contrast to the non-linear mixer, a time-variant mixer uses an ideally **line
 When the switch is closed ($s_\mathrm{LO} \ge 0$), the input signal is passed to the output, i.e., $s_\mathrm{out}(t) = s_\mathrm{in}(t)$; when the switch is open ($s_\mathrm{LO} < 0$), no signal is passed, i.e., $s_\mathrm{out}(t) = 0$. The output signal can be expressed as
 
 $$
-s_\mathrm{out}(t) = s_\mathrm{in}(t) \cdot \frac{1}{2} \left\{ 1 + \mathrm{sgn}[ s_\mathrm{LO}(t) ] \right\},
+\begin{split}
+s_\mathrm{out}(t) &= s_\mathrm{in}(t) \cdot \underbrace{\frac{1}{2} \left\{ 1 + \mathrm{sgn}[ s_\mathrm{LO}(t) ] \right\}}_\text{Fourier series} \\
+&= s_\mathrm{in}(t) \cdot \left[ \frac{1}{2} + \frac{2}{\pi} \sin(\omega_\mathrm{LO} t) + \frac{2}{3 \pi} \sin(3 \omega_\mathrm{LO} t) + \frac{2}{5 \pi} \sin(5 \omega_\mathrm{LO} t) + \ldots\right]
+\end{split}
 $$
 
-where $\mathrm{sgn}(\cdot)$ is the sign function. The term in curly brackets is a square wave that switches between 0 and 1 at the LO frequency. This square wave can be expressed as a Fourier series, which contains the fundamental frequency at $\omega_\mathrm{LO}$ and all odd harmonics $3 \omega_\mathrm{LO}$, $5 \omega_\mathrm{LO}$, and so on. In conclusion, if the input signal is expressed as $\cos(\omega_\mathrm{in} t)$, we get the output signal
+where $\mathrm{sgn}(\cdot)$ is the signum function. The term in curly brackets is a square wave that switches between 0 and 1 at the LO frequency. This square wave can be expressed as a Fourier series, which contains the fundamental frequency at $\omega_\mathrm{LO}$ and all odd harmonics $3 \omega_\mathrm{LO}$, $5 \omega_\mathrm{LO}$, and so on. In conclusion, if the input signal is expressed as $\cos(\omega_\mathrm{in} t)$, we get the output signal
 
 $$
 s_\mathrm{out}(t) = \frac{1}{\pi} \cos(\omega_\mathrm{in} t \pm \omega_\mathrm{LO} t) + \ldots
