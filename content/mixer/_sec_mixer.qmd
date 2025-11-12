@@ -18,7 +18,7 @@ limitations under the License.
 
 As we have seen in @sec-trx-mod-demod, we are using mixers to "upconvert" and "downconvert" signals, i.e., we shift the frequency of a signal to a higher or lower frequency with the help of an auxiliary signal, called the "**local oscillator**" (LO) signal. The block diagram of a mixer is shown in @fig-mixer-block.
 
-{{< include /content/mixer/_fig_mixer_block.qmd >}}
+{{< include /content/mixer/_fig_mixer_square.qmd >}}
 
 What we usually want in a mixer is that the input signal at $\omega_\mathrm{in}$ is shifted by $\omega_\mathrm{LO}$, so that the output signal is located at
 
@@ -39,7 +39,7 @@ Next we will look at two options on how to implement a mixer.
 
 Generally speaking, we can use any non-linear device to implement a mixer (often, this generation of new frequency components in a nonlinear system is highly undesired; in a mixer, we want this effect). As a simple example we look at the case of a square function, shown in @fig-mixer-square.
 
-{{< include /content/mixer/_fig_mixer_square.qmd >}}
+{{< include /content/mixer/_fig_mixer_block.qmd >}}
 
 When we apply the sum of the signals $s_\mathrm{in}(t) = \cos( \omega_\mathrm{in} t)$ and $s_\mathrm{LO}(t) = \cos(\omega_\mathrm{LO} t)$ to the input of a squarer, we get the output signal
 
