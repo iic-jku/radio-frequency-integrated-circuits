@@ -36,5 +36,5 @@ with sd.Drawing(canvas='svg') as d:
     elm.Resistor().right().dot(open=True).label(r'$V_\mathrm{bias}$', loc='right')
     d.pop()
     elm.Capacitor().up(d.unit)
-    lgc.Not().up(d.unit).reverse().dot(open=True).label(r'$v_\mathrm{LO}(t)$', loc='right')
+    lgc.Buf().up(d.unit).reverse().dot(open=True).label(r'$v_\mathrm{LO}(t)$', loc='right')
 ```
