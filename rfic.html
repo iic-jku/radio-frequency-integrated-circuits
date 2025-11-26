@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2025-11-12">
+<meta name="dcterms.date" content="2025-11-26">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -59,9 +59,9 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b758ccaa5987ceb1b75504551e579abf.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-b66d9f3da4d84aca26cc7cc1c94b0445.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
@@ -299,8 +299,6 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Radio-Frequency Integrated Circuits</span>
     </a>
@@ -418,11 +416,12 @@ window.Quarto = {
   <li><a href="#sec-oscillator" id="toc-sec-oscillator" class="nav-link" data-scroll-target="#sec-oscillator"><span class="header-section-number">6</span> Oscillators</a>
   <ul class="collapse">
   <li><a href="#sec-oscillator-noise" id="toc-sec-oscillator-noise" class="nav-link" data-scroll-target="#sec-oscillator-noise"><span class="header-section-number">6.1</span> Oscillator Noise</a></li>
-  <li><a href="#sec-oscillator-reciprocal-mixing" id="toc-sec-oscillator-reciprocal-mixing" class="nav-link" data-scroll-target="#sec-oscillator-reciprocal-mixing"><span class="header-section-number">6.2</span> Reciprocal Mixing</a></li>
-  <li><a href="#sec-single-ended-oscillators" id="toc-sec-single-ended-oscillators" class="nav-link" data-scroll-target="#sec-single-ended-oscillators"><span class="header-section-number">6.3</span> Single-Ended Oscillators</a></li>
-  <li><a href="#sec-differential-oscillators" id="toc-sec-differential-oscillators" class="nav-link" data-scroll-target="#sec-differential-oscillators"><span class="header-section-number">6.4</span> Differential Oscillators</a></li>
-  <li><a href="#sec-frequency-tuning-of-oscillators" id="toc-sec-frequency-tuning-of-oscillators" class="nav-link" data-scroll-target="#sec-frequency-tuning-of-oscillators"><span class="header-section-number">6.5</span> Frequency Tuning of Oscillators</a></li>
-  <li><a href="#sec-oscillator-modeling" id="toc-sec-oscillator-modeling" class="nav-link" data-scroll-target="#sec-oscillator-modeling"><span class="header-section-number">6.6</span> Oscillator Modelling</a></li>
+  <li><a href="#sec-oscillator-jitter" id="toc-sec-oscillator-jitter" class="nav-link" data-scroll-target="#sec-oscillator-jitter"><span class="header-section-number">6.2</span> Jitter</a></li>
+  <li><a href="#sec-oscillator-reciprocal-mixing" id="toc-sec-oscillator-reciprocal-mixing" class="nav-link" data-scroll-target="#sec-oscillator-reciprocal-mixing"><span class="header-section-number">6.3</span> Reciprocal Mixing</a></li>
+  <li><a href="#sec-single-ended-oscillators" id="toc-sec-single-ended-oscillators" class="nav-link" data-scroll-target="#sec-single-ended-oscillators"><span class="header-section-number">6.4</span> Single-Ended Oscillators</a></li>
+  <li><a href="#sec-differential-oscillators" id="toc-sec-differential-oscillators" class="nav-link" data-scroll-target="#sec-differential-oscillators"><span class="header-section-number">6.5</span> Differential Oscillators</a></li>
+  <li><a href="#sec-frequency-tuning-of-oscillators" id="toc-sec-frequency-tuning-of-oscillators" class="nav-link" data-scroll-target="#sec-frequency-tuning-of-oscillators"><span class="header-section-number">6.6</span> Frequency Tuning of Oscillators</a></li>
+  <li><a href="#sec-oscillator-modeling" id="toc-sec-oscillator-modeling" class="nav-link" data-scroll-target="#sec-oscillator-modeling"><span class="header-section-number">6.7</span> Oscillator Modelling</a></li>
   </ul></li>
   <li><a href="#sec-pll" id="toc-sec-pll" class="nav-link" data-scroll-target="#sec-pll"><span class="header-section-number">7</span> Phase-Locked Loops</a>
   <ul class="collapse">
@@ -479,7 +478,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 12, 2025</p>
+      <p class="date">November 26, 2025</p>
     </div>
   </div>
   
@@ -2701,14 +2700,35 @@ Figure&nbsp;58: Phase noise spectrum of a typical LC oscillator showing characte
 <li>In RX, reciprocal mixing of the phase noise sidebands with the desired signal creates in-band noise, which degrades the SNR and sensitivity of the RX.</li>
 <li>In systems using multiple carriers or carriers with high-order modulation schemes (like in OFDM), phase noise can lead to inter-carrier interference (ICI) and symbol misinterpretation, further degrading system performance.</li>
 </ol>
+<div id="nte-phnoise_division" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note&nbsp;7: Phase Noise and Frequency Division
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When using a frequency divider to generate a lower-frequency LO signal from a higher-frequency oscillator (e.g., to generate IQ phases), the phase noise of the divided signal is affected by the division ratio <span class="math inline">\(N\)</span> <span class="citation" data-cites="DaDalt_PHN">(<a href="#ref-DaDalt_PHN" role="doc-biblioref">Da Dalt and Sheikholeslami 2018</a>)</span>. Specifically, the phase noise of the divided signal improves by <span class="math inline">\(20 \log_{10}(N)\)</span> dB compared to the original oscillator phase noise. This means that if you divide the frequency by a factor of 2, the phase noise will be lowered by 6 dB!</p>
+<p>The statement above is related to the phase noise at the output coming from the input of the divider. Of course, the frequency divider itself also contributes some additional phase noise, which can degrade the overall phase noise performance. However, in many practical cases, the improvement due to frequency division outweighs the additional noise introduced by the divider.</p>
+</div>
+</div>
 </section>
-<section id="sec-oscillator-reciprocal-mixing" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="sec-oscillator-reciprocal-mixing"><span class="header-section-number">6.2</span> Reciprocal Mixing</h2>
+<section id="sec-oscillator-jitter" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="sec-oscillator-jitter"><span class="header-section-number">6.2</span> Jitter</h2>
+<p>Jitter is a time-domain representation of phase noise. It quantifies the timing variations of a periodic signal, such as the zero-crossings or rising edges of a clock signal. Jitter is typically measured in seconds (or fractions thereof) and can be expressed as root mean square (RMS) jitter or peak-to-peak jitter. The relationship between phase noise and RMS jitter can be approximated by the following equation <span class="citation" data-cites="DaDalt_PHN">(<a href="#ref-DaDalt_PHN" role="doc-biblioref">Da Dalt and Sheikholeslami 2018</a>)</span>: <span id="eq-jitter-phase-noise"><span class="math display">\[
+\sigma_\mathrm{a} = \frac{1}{2 \pi f_0} \sqrt{2 \int_{f_1}^{f_2} \mathcal{L}\left\{f\right\} df}
+\tag{42}\]</span></span></p>
+<p>where <span class="math inline">\(\sigma_\mathrm{a}\)</span> is the absolute RMS jitter, <span class="math inline">\(f_0\)</span> is the carrier frequency, and the integral is taken over the frequency offset range from <span class="math inline">\(f_1\)</span> to <span class="math inline">\(f_2\)</span>. This equation shows that higher phase noise levels lead to increased jitter, which can adversely affect the performance of digital communication systems by causing timing errors and signal integrity issues. Note that the phase noise <span class="math inline">\(\mathcal{L}\left\{f\right\}\)</span> in <a href="#eq-jitter-phase-noise" class="quarto-xref">Equation&nbsp;42</a> must be expressed in linear scale (not dBc/Hz) when using this equation.</p>
+</section>
+<section id="sec-oscillator-reciprocal-mixing" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="sec-oscillator-reciprocal-mixing"><span class="header-section-number">6.3</span> Reciprocal Mixing</h2>
 <p>Reciprocal mixing is a phenomenon that occurs in receivers when the phase noise sidebands of the local oscillator mix with strong adjacent channel signals, resulting in in-band noise that degrades the signal-to-noise ratio of the desired signal. This effect is particularly pronounced in systems with high-order modulation schemes or closely spaced channels, where even small amounts of phase noise can lead to significant performance degradation.</p>
 <p>To analyze reciprocal mixing, we consider a scenario where a strong interferer is present at a frequency offset <span class="math inline">\(\Delta f\)</span> from the desired signal. The phase noise of the local oscillator at this offset frequency can be characterized by its power spectral density <span class="math inline">\(\mathcal{L}\left\{\Delta f\right\}\)</span>. When the local oscillator mixes with the interferer, the phase noise sidebands effectively “fold” into the desired signal band, creating additional noise. This noise level can be estimated by multiplying the power of the interferer by the phase noise level at the offset frequency and considering the channel bandwidth <span class="math inline">\(B\)</span> of the RX</p>
 <p><span id="eq-reciprocal-mixing-noise"><span class="math display">\[
 P_\mathrm{RM} = P_\mathrm{interferer} + \mathcal{L}\left\{\Delta f\right\} + 10 \log_{10}(B)
-\tag{42}\]</span></span></p>
+\tag{43}\]</span></span></p>
 <p>where <span class="math inline">\(P_\mathrm{RM}\)</span> is the power of the reciprocal mixing noise introduced into the desired signal band.</p>
 <div id="nte-reciprocal-mixing" class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -2716,7 +2736,7 @@ P_\mathrm{RM} = P_\mathrm{interferer} + \mathcal{L}\left\{\Delta f\right\} + 10 
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note&nbsp;7: Reciprocal Mixing Example
+Note&nbsp;8: Reciprocal Mixing Example
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2729,13 +2749,13 @@ P_\mathrm{noise,max} = P_\mathrm{sens} - \text{SNR} - P_\mathrm{margin} = -70\,\
 <p><span class="math display">\[
 P_\mathrm{interferer} = P_\mathrm{sens} - \text{C/I} = -70\,\text{dBm} + 27\,\text{dB} = -43\,\text{dBm}
 \]</span></p>
-<p>Using <a href="#eq-reciprocal-mixing-noise" class="quarto-xref">Equation&nbsp;42</a>, we can express the maximum allowable phase noise at 3 MHz offset at 2.4 GHz as:</p>
+<p>Using <a href="#eq-reciprocal-mixing-noise" class="quarto-xref">Equation&nbsp;43</a>, we can express the maximum allowable phase noise at 3 MHz offset at 2.4 GHz as:</p>
 <p><span class="math display">\[
 \mathcal{L}\left\{3\,\text{MHz}\right\} = P_\mathrm{noise,max} - P_\mathrm{interferer} - 10 \log_{10}(B) = -83\,\text{dBm} + 43\,\text{dBm} - 60\,\text{dB} = -100\,\text{dBc/Hz}
 \]</span></p>
 </div>
 </div>
-<p>The reciprocal mixing scenario described in <a href="#nte-reciprocal-mixing" class="quarto-xref">Note&nbsp;7</a> is visualized in <a href="#fig-reciprocal-mixing" class="quarto-xref">Figure&nbsp;59</a>.</p>
+<p>The reciprocal mixing scenario described in <a href="#nte-reciprocal-mixing" class="quarto-xref">Note&nbsp;8</a> is visualized in <a href="#fig-reciprocal-mixing" class="quarto-xref">Figure&nbsp;59</a>.</p>
 <div id="cell-fig-reciprocal-mixing" class="cell" data-execution_count="59">
 <div class="cell-output cell-output-display">
 <div id="fig-reciprocal-mixing" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2751,8 +2771,8 @@ Figure&nbsp;59: Reciprocal mixing in a receiver: A strong interferer at offset f
 </div>
 </div>
 </section>
-<section id="sec-single-ended-oscillators" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="sec-single-ended-oscillators"><span class="header-section-number">6.3</span> Single-Ended Oscillators</h2>
+<section id="sec-single-ended-oscillators" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="sec-single-ended-oscillators"><span class="header-section-number">6.4</span> Single-Ended Oscillators</h2>
 <p>Single-ended oscillators are commonly used in RF applications due to their simplicity and ease of integration, especially in quartz oscillators. A negative resistance is implemented using a single transistor amplifier as is shown in <a href="#fig-neg-r-single-ended" class="quarto-xref">Figure&nbsp;60</a>. The transistor is configured with two capacitors <span class="math inline">\(C_1\)</span> and <span class="math inline">\(C_2\)</span> to provide a phase-shifted feedback path.</p>
 <div id="cell-fig-neg-r-single-ended" class="cell" data-execution_count="60">
 <div class="cell-output cell-output-display">
@@ -2830,9 +2850,9 @@ Figure&nbsp;62: Circuit diagram of a single-ended Pierce crystal oscillator oper
 f_0 \approx \frac{1}{2 \pi \sqrt{L_\mathrm{m} C_\mathrm{load}}}
 \]</span></p>
 </section>
-<section id="sec-differential-oscillators" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="sec-differential-oscillators"><span class="header-section-number">6.4</span> Differential Oscillators</h2>
-<p>After discussing single-ended oscillators in <a href="#sec-single-ended-oscillators" class="quarto-xref">Section&nbsp;6.3</a>, we now turn to differential oscillator topologies, which are widely used in integrated LC oscillators due to their superior common-mode noise rejection and reduced even-order harmonics. A popular way to create a differential negative resistance is to use a cross-coupled pair of transistors as shown in <a href="#fig-cross-coupled-pair" class="quarto-xref">Figure&nbsp;63</a>.</p>
+<section id="sec-differential-oscillators" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="sec-differential-oscillators"><span class="header-section-number">6.5</span> Differential Oscillators</h2>
+<p>After discussing single-ended oscillators in <a href="#sec-single-ended-oscillators" class="quarto-xref">Section&nbsp;6.4</a>, we now turn to differential oscillator topologies, which are widely used in integrated LC oscillators due to their superior common-mode noise rejection and reduced even-order harmonics. A popular way to create a differential negative resistance is to use a cross-coupled pair of transistors as shown in <a href="#fig-cross-coupled-pair" class="quarto-xref">Figure&nbsp;63</a>.</p>
 <div id="cell-fig-cross-coupled-pair" class="cell" data-execution_count="63">
 <div class="cell-output cell-output-display">
 <div id="fig-cross-coupled-pair" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2903,9 +2923,9 @@ Figure&nbsp;66: An LC differential oscillator using a PMOS and an NMOS cross-cou
 <p>Note that no bias current sources are shown in <a href="#fig-oscillator-lc-cmos" class="quarto-xref">Figure&nbsp;66</a>, but can be added in practice. However, they require some voltage headroom, which lowers the maximum voltage swing across the tank, which is negative for phase noise performance according to Leeson’s equation in <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;41</a>.</p>
 <p>The inductor <span class="math inline">\(L\)</span> used in LC tanks is often implemented as a differential spiral inductor, which can be realized on-chip using the top metal layers of the CMOS process. If higher <span class="math inline">\(Q\)</span> is sought, then off-chip inductors must be used, which is more expensive and uses package pins to connect the inductor. Alternatively, bondwire inductors can be used, which utilize the bondwires connecting the die to the package leads as inductors. Bondwire inductors can provide high <span class="math inline">\(Q\)</span> values and are a cost-effective solution for improving oscillator performance without requiring off-chip components. For mm-wave frequencies, transmission line stubs can be used as inductors, which can be implemented on-chip using coplanar waveguide (CPW) or microstrip structures.</p>
 </section>
-<section id="sec-frequency-tuning-of-oscillators" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="sec-frequency-tuning-of-oscillators"><span class="header-section-number">6.5</span> Frequency Tuning of Oscillators</h2>
-<p>Note that all three LC oscillator topologies shown in <a href="#sec-differential-oscillators" class="quarto-xref">Section&nbsp;6.4</a> have a fixed oscillation frequency determined by the LC tank circuit. In practice, it is often desirable to be able to tune the oscillation frequency over a certain range. There are only two ways to achieve this, either by tuning the inductance <span class="math inline">\(L\)</span> or the capacitance <span class="math inline">\(C\)</span> of the tank circuit. In integrated LC oscillators, it is common to use a fixed inductor and a tunable capacitor, which is shown in <a href="#fig-oscillator-lc-nmos" class="quarto-xref">Figure&nbsp;64</a>, <a href="#fig-oscillator-lc-pmos" class="quarto-xref">Figure&nbsp;65</a>, and <a href="#fig-oscillator-lc-cmos" class="quarto-xref">Figure&nbsp;66</a>.</p>
+<section id="sec-frequency-tuning-of-oscillators" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="sec-frequency-tuning-of-oscillators"><span class="header-section-number">6.6</span> Frequency Tuning of Oscillators</h2>
+<p>Note that all three LC oscillator topologies shown in <a href="#sec-differential-oscillators" class="quarto-xref">Section&nbsp;6.5</a> have a fixed oscillation frequency determined by the LC tank circuit. In practice, it is often desirable to be able to tune the oscillation frequency over a certain range. There are only two ways to achieve this, either by tuning the inductance <span class="math inline">\(L\)</span> or the capacitance <span class="math inline">\(C\)</span> of the tank circuit. In integrated LC oscillators, it is common to use a fixed inductor and a tunable capacitor, which is shown in <a href="#fig-oscillator-lc-nmos" class="quarto-xref">Figure&nbsp;64</a>, <a href="#fig-oscillator-lc-pmos" class="quarto-xref">Figure&nbsp;65</a>, and <a href="#fig-oscillator-lc-cmos" class="quarto-xref">Figure&nbsp;66</a>.</p>
 <p>The need to change the oscillator frequency can arise from various requirements:</p>
 <ol type="1">
 <li>We need to precisely tune the oscillator frequency to match a desired carrier frequency.</li>
@@ -2944,8 +2964,8 @@ Figure&nbsp;67: An switched capacitor for use in an oscillator switched capacito
 <p>Note that there exists a trade-off when designing the switched capacitor: A larger switch (with increased <span class="math inline">\(W\)</span>) reduces <span class="math inline">\(R_\mathrm{on}\)</span>, but increases <span class="math inline">\(C_\mathrm{off}\)</span>. A large <span class="math inline">\(R_\mathrm{on}\)</span> leads to increased losses in the tank circuit, which degrades the quality factor <span class="math inline">\(Q\)</span> and increases phase noise according to <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;41</a>. On the other hand, a large <span class="math inline">\(C_\mathrm{off}\)</span> reduces the effective tuning range of the switched capacitor, which can be detrimental if a wide tuning range is required.</p>
 <p>In <strong>digitally-controlled oscillators (DCOs)</strong>, the tuning voltage <span class="math inline">\(V_\mathrm{tune}\)</span> is replaced by a digital control word that selects different capacitance values from a capacitor bank. This approach allows for precise and repeatable frequency tuning, which is beneficial in applications requiring frequency synthesis or channel selection. These fine tuning steps can also be implemented according to <a href="#fig-switched-capacitor" class="quarto-xref">Figure&nbsp;67</a>, however, the value of <span class="math inline">\(C\)</span> must be sufficiently small.</p>
 </section>
-<section id="sec-oscillator-modeling" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="sec-oscillator-modeling"><span class="header-section-number">6.6</span> Oscillator Modelling</h2>
+<section id="sec-oscillator-modeling" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="sec-oscillator-modeling"><span class="header-section-number">6.7</span> Oscillator Modelling</h2>
 <p>The instantaneous frequency of an oscillator can be expressed as</p>
 <p><span class="math display">\[
 \omega_\mathrm{VCO}(t) = \omega_0 t + K_\mathrm{VCO} \cdot V_\mathrm{tune}(t)
@@ -3071,8 +3091,8 @@ V_\mathrm{PD}(s) = K_\mathrm{PD} \left[ \varphi_\mathrm{ref}(s) - \frac{\varphi_
 <p>Not that this equation has one integrator <span class="math inline">\(1/s\)</span> (which we can also see in <a href="#fig-pll-block-diagram-s-domain" class="quarto-xref">Figure&nbsp;71</a>). We call PLLs with one integrator in the loop a <strong>Type-I PLL</strong>. We can now rearrange to find the closed-loop transfer function <span class="math inline">\(H(s)\)</span> as</p>
 <p><span id="eq-pll-transfer-function"><span class="math display">\[
 H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{K_\mathrm{VCO} \cdot K_\mathrm{PD} \cdot \omega_\mathrm{LP} / N}{s^2 + s \cdot \omega_\mathrm{LP} + K_\mathrm{VCO} \cdot K_\mathrm{PD} \cdot \omega_\mathrm{LP} / N}.
-\tag{43}\]</span></span></p>
-<p>We can use all techniques known from control theory to analyze the stability and dynamic response of the PLL based on <a href="#eq-pll-transfer-function" class="quarto-xref">Equation&nbsp;43</a>, however, we have to keep the following in mind:</p>
+\tag{44}\]</span></span></p>
+<p>We can use all techniques known from control theory to analyze the stability and dynamic response of the PLL based on <a href="#eq-pll-transfer-function" class="quarto-xref">Equation&nbsp;44</a>, however, we have to keep the following in mind:</p>
 <ul>
 <li><span class="math inline">\(H(s)\)</span> is a small-signal model of the PLL around its locked operating point, only valid for small perturbations. Large-signal behavior, such as acquisition and lock range, are not captured by this model.</li>
 <li>A PLL is a sampled system, working at instances of <span class="math inline">\(T_\mathrm{ref}\)</span>. <span class="math inline">\(H(s)\)</span> is a continuous-time approximation, which is valid only if the loop bandwidth is much smaller (typically <span class="math inline">\(1/10\)</span>) than the reference frequency <span class="math inline">\(f_\mathrm{ref}\)</span>. If this approximation is not valid, a discrete-time model of the PLL must be used, deriving the <span class="math inline">\(z\)</span>-domain transfer function <span class="math inline">\(H(z)\)</span>.</li>
@@ -3081,7 +3101,7 @@ H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{K
 <p><span class="math display">\[
 H(s) = K \cdot \frac{\omega_\mathrm{n}^2}{s^2 + s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2},
 \]</span></p>
-<p>with <a href="#eq-pll-transfer-function" class="quarto-xref">Equation&nbsp;43</a>, we can identify the natural frequency <span class="math inline">\(\omega_n\)</span> and the damping factor <span class="math inline">\(\zeta\)</span> of the PLL as</p>
+<p>with <a href="#eq-pll-transfer-function" class="quarto-xref">Equation&nbsp;44</a>, we can identify the natural frequency <span class="math inline">\(\omega_n\)</span> and the damping factor <span class="math inline">\(\zeta\)</span> of the PLL as</p>
 <p><span class="math display">\[
 \omega_\mathrm{n} = \sqrt{\frac{K_\mathrm{VCO} \cdot K_\mathrm{PD} \cdot \omega_\mathrm{LP}}{N}}
 \]</span></p>
@@ -3215,12 +3235,12 @@ Figure&nbsp;77: Charge pump consisting of two matched current sources and switch
 <p>The voltage change on the capacitor can be expressed as</p>
 <p><span id="eq-cp-voltage-change"><span class="math display">\[
 \Delta V_\mathrm{LF} = \frac{1}{C_\mathrm{LF}} \int_0^{t_\mathrm{on}} I_\mathrm{int} \cdot dt
-\tag{44}\]</span></span></p>
+\tag{45}\]</span></span></p>
 <p>where <span class="math inline">\(t_\mathrm{on}\)</span> is the duration for which the UP or DOWN signal is active, proportional to the phase difference between the reference and feedback signals.</p>
-<p>Taking the Laplace transform of <a href="#eq-cp-voltage-change" class="quarto-xref">Equation&nbsp;44</a>, we find the transfer function of the CP from the UP/DOWN control signals to the loop filter voltage as</p>
+<p>Taking the Laplace transform of <a href="#eq-cp-voltage-change" class="quarto-xref">Equation&nbsp;45</a>, we find the transfer function of the CP from the UP/DOWN control signals to the loop filter voltage as</p>
 <p><span id="eq-cp-transfer-function"><span class="math display">\[
 H_\mathrm{CP}(s) = \frac{I_\mathrm{CP}}{2 \pi} \left( \frac{1}{s C_\mathrm{int}} + R_\mathrm{int} \right)
-\tag{45}\]</span></span></p>
+\tag{46}\]</span></span></p>
 <p>where we have added a resistor <span class="math inline">\(R_\mathrm{int}\)</span> in series with the capacitor <span class="math inline">\(C_\mathrm{int}\)</span> to introduce a zero in the loop filter transfer function, clearly showing the zero introduced by the resistor <span class="math inline">\(R_\mathrm{int}\)</span> in series with the capacitor <span class="math inline">\(C_\mathrm{int}\)</span>. The need for this zero will become apparent when we analyze the PLL loop dynamics next.</p>
 <p>The resulting PLL using a PFD-CP combination is shown in <a href="#fig-pll-pfd-cp" class="quarto-xref">Figure&nbsp;78</a>.</p>
 <div id="cell-fig-pll-pfd-cp" class="cell" data-execution_count="78">
@@ -3240,18 +3260,18 @@ Figure&nbsp;78: Diagram of a PFD-CP PLL. Note the added first-order lowpass whic
 <p>Neglecting <span class="math inline">\(R_\mathrm{lp}\)</span> and <span class="math inline">\(C_\mathrm{lp}\)</span> for now, we can derive the closed-loop transfer function of the PLL from reference phase <span class="math inline">\(\varphi_\mathrm{ref}(s)\)</span> to output phase <span class="math inline">\(\varphi_\mathrm{out}(s)\)</span> as</p>
 <p><span id="eq-cp-pll-transfer-function"><span class="math display">\[
 H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{\frac{I_\mathrm{CP} K_\mathrm{VCO}}{2 \pi C_\mathrm{int} N} (1 + s C_\mathrm{int} R_\mathrm{int})}{s^2 + s \frac{I_\mathrm{CP} K_\mathrm{VCO} R_\mathrm{int}}{2 \pi N} + \frac{I_\mathrm{CP} K_\mathrm{VCO}}{2 \pi C_\mathrm{int} N}} = N \cdot \frac{s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2}{s^2 + s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2}
-\tag{46}\]</span></span></p>
+\tag{47}\]</span></span></p>
 <p>with</p>
 <p><span id="eq-cp-pll-natural-frequency"><span class="math display">\[
 \omega_\mathrm{n} = \sqrt{\frac{I_\mathrm{CP} K_\mathrm{VCO}}{2 \pi C_\mathrm{int} N}}
-\tag{47}\]</span></span></p>
+\tag{48}\]</span></span></p>
 <p>and</p>
 <p><span id="eq-cp-pll-damping-factor"><span class="math display">\[
 \zeta = \frac{R_\mathrm{int}}{2} \sqrt{\frac{I_\mathrm{CP} K_\mathrm{VCO} C_\mathrm{int}}{2 \pi N}}.
-\tag{48}\]</span></span></p>
-<p>Looking at <a href="#eq-cp-pll-natural-frequency" class="quarto-xref">Equation&nbsp;47</a> and <a href="#eq-cp-pll-damping-factor" class="quarto-xref">Equation&nbsp;48</a>, we can see that we now have one <em>independent</em> parameter (<span class="math inline">\(R_\mathrm{int}\)</span>) to set the natural frequency <span class="math inline">\(\omega_\mathrm{n}\)</span> and the damping factor <span class="math inline">\(\zeta\)</span> of the PLL independently. This allows us to design the loop dynamics more flexibly to achieve the desired performance.</p>
-<p>With <a href="#eq-cp-pll-damping-factor" class="quarto-xref">Equation&nbsp;48</a>, we can now appreciate the need for the resistor <span class="math inline">\(R_\mathrm{int}\)</span> in series with the capacitor <span class="math inline">\(C_\mathrm{int}\)</span> in the loop filter. Without this resistor, the damping factor <span class="math inline">\(\zeta\)</span> would be zero, leading to an undamped system with oscillatory behavior and poor transient response. The resistor introduces a zero in the loop filter transfer function, providing the necessary damping to stabilize the PLL and improve its dynamic response.</p>
-<p>Looking at <a href="#fig-pll-pfd-cp" class="quarto-xref">Figure&nbsp;78</a> and <a href="#eq-cp-transfer-function" class="quarto-xref">Equation&nbsp;45</a>, we can also see that the PFD-CP introduces another integrator in the loop. This integrator, together with the integrator from the VCO, makes the PLL a <strong>Type-II PLL</strong>. A Type-II PLL can achieve zero steady-state phase error for step changes in the reference phase and zero steady-state frequency error for ramp changes in the reference frequency.</p>
+\tag{49}\]</span></span></p>
+<p>Looking at <a href="#eq-cp-pll-natural-frequency" class="quarto-xref">Equation&nbsp;48</a> and <a href="#eq-cp-pll-damping-factor" class="quarto-xref">Equation&nbsp;49</a>, we can see that we now have one <em>independent</em> parameter (<span class="math inline">\(R_\mathrm{int}\)</span>) to set the natural frequency <span class="math inline">\(\omega_\mathrm{n}\)</span> and the damping factor <span class="math inline">\(\zeta\)</span> of the PLL independently. This allows us to design the loop dynamics more flexibly to achieve the desired performance.</p>
+<p>With <a href="#eq-cp-pll-damping-factor" class="quarto-xref">Equation&nbsp;49</a>, we can now appreciate the need for the resistor <span class="math inline">\(R_\mathrm{int}\)</span> in series with the capacitor <span class="math inline">\(C_\mathrm{int}\)</span> in the loop filter. Without this resistor, the damping factor <span class="math inline">\(\zeta\)</span> would be zero, leading to an undamped system with oscillatory behavior and poor transient response. The resistor introduces a zero in the loop filter transfer function, providing the necessary damping to stabilize the PLL and improve its dynamic response.</p>
+<p>Looking at <a href="#fig-pll-pfd-cp" class="quarto-xref">Figure&nbsp;78</a> and <a href="#eq-cp-transfer-function" class="quarto-xref">Equation&nbsp;46</a>, we can also see that the PFD-CP introduces another integrator in the loop. This integrator, together with the integrator from the VCO, makes the PLL a <strong>Type-II PLL</strong>. A Type-II PLL can achieve zero steady-state phase error for step changes in the reference phase and zero steady-state frequency error for ramp changes in the reference frequency.</p>
 <p>In conclusion:</p>
 <ul>
 <li>The PLL regulates the phase of a VCO to match the phase of a reference signal, using feedback control. Even with a steady-state phase error, the frequency error is zero (Type-I PLL). In a Type-II PLL, both phase and frequency errors are zero in steady state.</li>
@@ -3324,7 +3344,7 @@ Figure&nbsp;81: Basic TDC implementation as a delay line with parallel capture f
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note&nbsp;8: TDC Resolution Example
+Note&nbsp;9: TDC Resolution Example
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -3767,6 +3787,9 @@ Andreani, P., and S. Mattisson. 2000. <span>“<span class="nocase">On the use o
 <div id="ref-Bird.2009" class="csl-entry" role="listitem">
 Bird, Trevor S. 2009. <span>“<span class="nocase">Definition and Misuse of Return Loss [Report of the Transactions Editor-in-Chief]</span>.”</span> <em>IEEE Antennas and Propagation Magazine</em> 51 (2): 166–67. <a href="https://doi.org/10.1109/map.2009.5162049">https://doi.org/10.1109/map.2009.5162049</a>.
 </div>
+<div id="ref-DaDalt_PHN" class="csl-entry" role="listitem">
+Da Dalt, Luca, and Ali Sheikholeslami. 2018. <em>Understanding Jitter and Phase Noise</em>. Cambridge University Press.
+</div>
 <div id="ref-Darabi_RFIC" class="csl-entry" role="listitem">
 Darabi, Hooman. 2020. <em>Radio Frequency Integrated Circuits and Systems</em>. 2nd edition. Cambridge University Press.
 </div>
@@ -3830,14 +3853,14 @@ Vazny, Rastislav, Werner Schelmbauer, Harald Pretl, Stefan Herzinger, and Robert
 </div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div>Apache-2.0 license</div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{pretl2025,
   author = {Pretl, Harald},
   title = {Radio-Frequency {Integrated} {Circuits}},
-  date = {2025-11-12},
+  date = {2025-11-26},
   url = {https://iic-jku.github.io/radio-frequency-integrated-circuits},
   doi = {10.5281/zenodo.17563943},
   langid = {en-US}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-pretl2025" class="csl-entry quarto-appendix-citeas" role="listitem">
 Pretl, Harald. 2025. <span>“Radio-Frequency Integrated Circuits.”</span>
-November 12, 2025. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
+November 26, 2025. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
