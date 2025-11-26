@@ -148,6 +148,22 @@ Why is phase noise important?
 3. In RX, reciprocal mixing of the phase noise sidebands with the desired signal creates in-band noise, which degrades the SNR and sensitivity of the RX.
 4. In systems using multiple carriers or carriers with high-order modulation schemes (like in OFDM), phase noise can lead to inter-carrier interference (ICI) and symbol misinterpretation, further degrading system performance.
 
+::: {#nte-phnoise_division .callout-note}
+## Phase Noise and Frequency Division
+When using a frequency divider to generate a lower-frequency LO signal from a higher-frequency oscillator (e.g., to generate IQ phases), the phase noise of the divided signal is affected by the division ratio $N$ [@DaDalt_PHN]. Specifically, the phase noise of the divided signal improves by $20 \log_{10}(N)$ dB compared to the original oscillator phase noise. This means that if you divide the frequency by a factor of 2, the phase noise will be lowered by 6 dB!
+
+The statement above is related to the phase noise at the output coming from the input of the divider. Of course, the frequency divider itself also contributes some additional phase noise, which can degrade the overall phase noise performance. However, in many practical cases, the improvement due to frequency division outweighs the additional noise introduced by the divider.
+:::
+
+## Jitter {#sec-oscillator-jitter}
+
+Jitter is a time-domain representation of phase noise. It quantifies the timing variations of a periodic signal, such as the zero-crossings or rising edges of a clock signal. Jitter is typically measured in seconds (or fractions thereof) and can be expressed as root mean square (RMS) jitter or peak-to-peak jitter. The relationship between phase noise and RMS jitter can be approximated by the following equation [@DaDalt_PHN]:
+$$
+\sigma_\mathrm{a} = \frac{1}{2 \pi f_0} \sqrt{2 \int_{f_1}^{f_2} \phn[f] df}
+$$ {#eq-jitter-phase-noise}
+
+where $\sigma_\mathrm{a}$ is the absolute RMS jitter, $f_0$ is the carrier frequency, and the integral is taken over the frequency offset range from $f_1$ to $f_2$. This equation shows that higher phase noise levels lead to increased jitter, which can adversely affect the performance of digital communication systems by causing timing errors and signal integrity issues. Note that the phase noise $\phn[f]$ in @eq-jitter-phase-noise must be expressed in linear scale (not dBc/Hz) when using this equation.
+
 ## Reciprocal Mixing {#sec-oscillator-reciprocal-mixing}
 
 Reciprocal mixing is a phenomenon that occurs in receivers when the phase noise sidebands of the local oscillator mix with strong adjacent channel signals, resulting in in-band noise that degrades the signal-to-noise ratio of the desired signal. This effect is particularly pronounced in systems with high-order modulation schemes or closely spaced channels, where even small amounts of phase noise can lead to significant performance degradation.
