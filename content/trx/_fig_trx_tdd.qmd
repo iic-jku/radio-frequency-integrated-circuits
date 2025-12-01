@@ -32,13 +32,13 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Filter(response='bp').label(r'$f_\mathrm{RX} = f_\mathrm{TX}$', loc='top', ofst=0.15)
     dsp.Line().right(d.unit/2)
 
-    sw = elm.SwitchSpdt2()
+    sw = elm.SwitchSpdt2(contacts=False)
     dsp.Line().up(d.unit).at(sw.b).length(d.unit/2)
     dsp.Arrow().right(d.unit/2).label(r'RX')
     dsp.Amp()
     dsp.Arrow().right(d.unit/2).linestyle('--').label(r'$s_\mathrm{RX}$', 'right')
 
-    dsp.Arrow().down(d.unit).at(sw.c).length(d.unit/2).reverse()
+    dsp.Line().down(d.unit).at(sw.c).length(d.unit/2).reverse()
     dsp.Line().right(d.unit/2).label(r'TX')
     dsp.Amp().reverse()
     dsp.Arrow().right(d.unit/2).reverse().linestyle('--').label(r'$s_\mathrm{TX}$', 'right')

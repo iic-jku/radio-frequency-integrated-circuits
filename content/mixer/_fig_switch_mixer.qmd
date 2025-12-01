@@ -28,7 +28,7 @@ with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=14)
 
     dsp.Line().right(d.unit/2).label(r'$s_\mathrm{in}(t)$', 'left')
-    mix1 = elm.Switch()
+    mix1 = elm.Switch(contacts=False)
     elm.Line().right(d.unit/4).dot()
     d.push()
     elm.Resistor().down()

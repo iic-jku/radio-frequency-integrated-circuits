@@ -29,8 +29,8 @@ with sd.Drawing(canvas='svg') as d:
 
     elm.Vdd()
     elm.SourceI().down().label(r'$I_\mathrm{CP}$')
-    S1 = elm.Switch().down().dot().flip().dot()
-    S2 = elm.Switch().down().flip().reverse()
+    S1 = elm.Switch(contacts=False).down().dot().flip().dot()
+    S2 = elm.Switch(contacts=False).down().flip().reverse()
     elm.SourceI().down().label(r'$I_\mathrm{CP}$')
     elm.Ground()
 
