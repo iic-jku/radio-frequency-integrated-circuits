@@ -71,7 +71,7 @@ Generally speaking, the size of an electromagnetic antenna is proportional to th
 | GNSS            | 1.575 GHz   | 19 cm       |
 : Typical RF applications with their operating frequencies and corresponding wavelengths {#tbl-rf-applications}
 
-As you can see in [@tbl-rf-applications] many of these antennas would not fit into the used device form factors, i.e., often we have to use electrically small antennas.
+As you can see in [@tbl-rf-applications] many of these antennas would not fit into the used device form factors, i.e., often we have to use electrically small antennas. As antenna design is not part of this course but critically important for wireless systems, please refer to [@Balanis_Antenna] or [this website](https://www.antenna-theory.com/) for more information on antenna design.
 
 ::: {#nte-wavelength-calculation .callout-note}
 ## Wavelength Calculation
