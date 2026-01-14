@@ -3043,6 +3043,19 @@ Figure&nbsp;70: Input and output waveforms of an XOR-based phase-detector.
 </div>
 </div>
 <p>We can see in <a href="#fig-pd-xor-diagram" class="quarto-xref">Figure&nbsp;70</a> that the output of the XOR PD is high when the two input signals differ and low when they are the same. The output duty cycle is proportional to the phase difference between the two input signals. Note that this PD has no notion of frequency, only phase! Still, it can be used to lock the frequency of the VCO to the reference frequency, as a constant phase difference implies equal frequencies; however, this only works if the initial frequency difference is small enough. Also, this XOR-based PD does not evaluate the edges of the input signals, only their logic states. Therefore, it is crucial that both input signals are square waves with a 50% duty cycle to ensure proper operation of the PD.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>JK Flip-Flop Phase Detector
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Instead of an XOR gate, which requires 50% duty cycle input signals, an edge-triggered JK flip-flop can be used. While the overall behavior is similar, the JK flip-flop-based PD is insensitive to duty cycle variations of the input signals, as it only evaluates the rising edges of the reference and feedback signals <span class="citation" data-cites="Best_PLL">(<a href="#ref-Best_PLL" role="doc-biblioref">Best 1999</a>)</span>.</p>
+</div>
+</div>
 <p>As the output signal of the PD contains high-frequency components (at least at twice the reference frequency), a low-pass filter (LPF) is used to smooth the phase error signal before it is applied to the VCO tuning input. The LPF also determines the dynamic response of the PLL, affecting its stability and transient behavior. A well-designed LPF ensures that the PLL can quickly respond to changes in the reference signal or disturbances while maintaining stability and minimizing overshoot or oscillations in the output frequency. Often, the LPF has voltage-mode inputs and outputs to connect to the PD and VCO, respectively.</p>
 <p>Using a digital divider in the feedback path to only pass every <span class="math inline">\(N\)</span>-th cycle of the VCO output to the PD allows the PLL to generate output frequencies that are integer multiples of the reference frequency. This is particularly useful in applications such as frequency synthesis, where a wide range of frequencies is required from a single stable reference source. By adjusting the division ratio <span class="math inline">\(N \in \mathbb{N}\)</span>, the PLL can produce various output frequencies while maintaining phase lock with the reference signal. However, note that the frequency resolution of the output frequencies <span class="math inline">\(\Delta f_\mathrm{out}\)</span> is limited to integer multiples of the reference frequency!</p>
 <p>Putting everything together into an <span class="math inline">\(s\)</span>-domain block diagram, the PLL can be modeled as shown in <a href="#fig-pll-block-diagram-s-domain" class="quarto-xref">Figure&nbsp;71</a>.</p>
@@ -3786,6 +3799,9 @@ Andreani, P., and S. Mattisson. 2000. <span>“<span class="nocase">On the use o
 </div>
 <div id="ref-Balanis_Antenna" class="csl-entry" role="listitem">
 Balanis, Constantine A. 2005. <em>Antenna Theory: Analysis and Design</em>. USA: Wiley-Interscience.
+</div>
+<div id="ref-Best_PLL" class="csl-entry" role="listitem">
+Best, Roland E. 1999. <em>Phase-Locked Loops: Design, Simulation, and Applications</em>. McGraw-Hill Education.
 </div>
 <div id="ref-Bird.2009" class="csl-entry" role="listitem">
 Bird, Trevor S. 2009. <span>“<span class="nocase">Definition and Misuse of Return Loss [Report of the Transactions Editor-in-Chief]</span>.”</span> <em>IEEE Antennas and Propagation Magazine</em> 51 (2): 166–67. <a href="https://doi.org/10.1109/map.2009.5162049">https://doi.org/10.1109/map.2009.5162049</a>.
