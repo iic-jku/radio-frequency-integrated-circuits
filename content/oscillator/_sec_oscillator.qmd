@@ -314,7 +314,7 @@ In **digitally-controlled oscillators (DCOs)**, the tuning voltage $V_\mathrm{tu
 The instantaneous frequency of an oscillator can be expressed as
 
 $$
-\omega_\mathrm{VCO}(t) = \omega_0 t + K_\mathrm{VCO} \cdot V_\mathrm{tune}(t)
+\omega_\mathrm{VCO}(t) = \omega_0 + K_\mathrm{VCO} \cdot V_\mathrm{tune}(t)
 $$
 
 where $\omega_0$ is the nominal oscillation frequency, $K_\mathrm{VCO}$ is the tuning sensitivity, and $V_\mathrm{tune}(t)$ is the tuning voltage applied to the varactor. Looking at the instantaneous phase $\varphi_\mathrm{VCO}(t)$ of the oscillator, we can integrate the instantaneous frequency $\omega_\mathrm{VCO}(t)$ to obtain
