@@ -498,7 +498,7 @@ To further improve the robustness against multi-path propagation, a CP is added 
 In LTE OFDM is used for the downlink (base station to user equipment) with the following parameters:
 
 - Subcarrier spacing: 15 kHz
-- CP length: 5.2 µs (normal), 4.7 µs (extended)
+- CP length: 5.2 µs (normal), 16.67 µs (extended)
 - Number of subcarriers: 1200 (for 20 MHz bandwidth)
 - Modulation: QPSK, 16-QAM, 64-QAM, 256-QAM
 
