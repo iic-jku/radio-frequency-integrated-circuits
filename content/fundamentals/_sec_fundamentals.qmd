@@ -498,7 +498,7 @@ To further improve the robustness against multi-path propagation, a CP is added 
 In LTE OFDM is used for the downlink (base station to user equipment) with the following parameters:
 
 - Subcarrier spacing: 15 kHz
-- CP length: 5.2 µs (normal), 4.7 µs (extended)
+- CP length: 5.2 µs (first symbol) resp. 4.7 µs (following symbols), and 16.67 µs as extended CP for scenarious with large delay spreads
 - Number of subcarriers: 1200 (for 20 MHz bandwidth)
 - Modulation: QPSK, 16-QAM, 64-QAM, 256-QAM
 
@@ -507,7 +507,7 @@ From the subcarrier spacing we can calculate the symbol duration as $T_\mathrm{b
 We can calculate the raw bitrate for a 20 MHz LTE channel as
 
 $$
-\text{Bitrate} = N_\mathrm{sc} \cdot N_\mathrm{sym} \cdot \frac{1}{T_\mathrm{b} + T_\mathrm{CP}} = 1200 \cdot 8 \cdot \frac{1}{66.7\,\mu\text{s} + 5.2\,\mu\text{s}} \approx 133\,\text{Mbps}
+\text{Bitrate} = N_\mathrm{sc} \cdot N_\mathrm{sym} \cdot \frac{1}{T_\mathrm{b} + T_\mathrm{CP}} = 1200 \cdot 8 \cdot \frac{1}{66.7\,\mu\text{s} + 4.7\,\mu\text{s}} \approx 134\,\text{Mbps}
 $$
 
 Without the overhead for control channels and error correction coding a user datarate of approximately 100 Mbps can be achieved in a 20 MHz LTE channel.
