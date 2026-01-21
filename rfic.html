@@ -3567,16 +3567,16 @@ Figure&nbsp;88: Charge pump with offset current for use in a fractional-N Type-I
 </div>
 </div>
 </div>
-<p>As we have seen multiple times in the PLL discussion, using a higher <span class="math inline">\(f_\mathrm{ref}\)</span> is beneficial for phase noise performance, loop bandwidth, and TDC resolution (in an ADPLL). However, in many applications the choice of reference frequency is constrained by other factors. One way to achieve a higher reference frequency is by using a <strong>frequency doubler</strong>. As shown in <a href="#fig-ref-doubler" class="quarto-xref">Figure&nbsp;89</a>, a frequency doubler can be implemented using an XOR gate and a delay line. The delay line is set to a quarter of the period of the reference frequency, i.e., <span class="math inline">\(T_\mathrm{d} = T_\mathrm{ref}/4\)</span>. The XOR gate then produces an output frequency of <span class="math inline">\(f_\mathrm{double} = 2 \cdot f_\mathrm{ref}\)</span>. For stable operation, this delay line must be designed to be relatively insensitive to process, voltage, and temperature (PVT) variations, or must be adjusted with a control loop.</p>
+<p>As we have seen multiple times in the PLL discussion, using a higher <span class="math inline">\(f_\mathrm{ref}\)</span> is beneficial for phase noise performance, loop bandwidth, and TDC resolution (in an ADPLL). However, in many applications the choice of reference frequency is constrained by other factors. One way to achieve a higher reference frequency is by using a <strong>frequency doubler</strong>. As shown in <a href="#fig-ref-doubler" class="quarto-xref">Figure&nbsp;89</a>, a frequency doubler can be implemented using an XOR gate and a delay line. The delay line is set to a quarter of the period of the reference frequency, i.e., <span class="math inline">\(T_\mathrm{d} = T_\mathrm{ref} / 4\)</span>. The XOR gate then produces an output frequency of <span class="math inline">\(f_\mathrm{double} = 2 \cdot f_\mathrm{ref}\)</span>. For stable operation, this delay line must be designed to be relatively insensitive to process, voltage, and temperature (PVT) variations, or must be adjusted with a control loop.</p>
 <div id="cell-fig-ref-doubler" class="cell" data-execution_count="89">
 <div class="cell-output cell-output-display">
 <div id="fig-ref-doubler" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ref-doubler-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-ref-doubler-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-89" title="Figure&nbsp;89: Implementation of reference frequency doubler."><img src="rfic_files/figure-html/fig-ref-doubler-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-ref-doubler-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-89" title="Figure&nbsp;89: Implementation of reference frequency doubler. Ideally, T_\mathrm{d} should be set to T_\mathrm{ref} / 4."><img src="rfic_files/figure-html/fig-ref-doubler-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ref-doubler-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;89: Implementation of reference frequency doubler.
+Figure&nbsp;89: Implementation of reference frequency doubler. Ideally, <span class="math inline">\(T_\mathrm{d}\)</span> should be set to <span class="math inline">\(T_\mathrm{ref} / 4\)</span>.
 </figcaption>
 </figure>
 </div>
