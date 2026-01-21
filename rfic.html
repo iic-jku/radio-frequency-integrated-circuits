@@ -444,7 +444,7 @@ window.Quarto = {
   <li><a href="#sec-poweramp-advanced" id="toc-sec-poweramp-advanced" class="nav-link" data-scroll-target="#sec-poweramp-advanced"><span class="header-section-number">8.2</span> PA Advanced Techniques</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="rfic.pdf"><i class="bi bi-file-pdf"></i>Typst</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="rfic.pdf"><i class="bi bi-file-pdf"></i>Typst</a></li></ul></div><div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="content/pll/delta_sigma_modulator-preview.html"><i class="bi bi-journal-code"></i>MASH Modulator (3rd Order)</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -3123,7 +3123,7 @@ H(s) = K \cdot \frac{\omega_\mathrm{n}^2}{s^2 + s \cdot 2 \zeta \omega_\mathrm{n
 <p><span id="eq-pd-pll-damping-factor"><span class="math display">\[
 \zeta = \frac{1}{2} \sqrt{\frac{\omega_\mathrm{LP} \cdot N}{K_\mathrm{VCO} \cdot K_\mathrm{PD}}}.
 \tag{46}\]</span></span></p>
-<p>This allows us to use standard control theory results to design the PLL parameters <span class="math inline">\(K_\mathrm{PD}\)</span>, <span class="math inline">\(K_\mathrm{VCO}\)</span>, <span class="math inline">\(\omega_\mathrm{LP}\)</span>, and <span class="math inline">\(N\)</span> to achieve the desired dynamic response and stability margins. Note that <span class="math inline">\(\omega_\mathrm{n}\)</span> and <span class="math inline">\(\zeta\)</span> are not independent, as they both depend on the same set of PLL parameters! This seriously limits the design of the loop dynamics, and means that we need a more complex loop filter <span class="math inline">\(H_\mathrm{LP}(s)\)</span> to achieve more freedom in selecting <span class="math inline">\(\omega_\mathrm{n}\)</span> and <span class="math inline">\(\zeta\)</span> independently. Often, we want to choose <span class="math inline">\(\zeta = 1/\sqrt{2} \approx 0.707\)</span> to achieve a Butterworth response for a good step response without overshoot.</p>
+<p>This allows us to use standard control theory results to design the PLL parameters <span class="math inline">\(K_\mathrm{PD}\)</span>, <span class="math inline">\(K_\mathrm{VCO}\)</span>, <span class="math inline">\(\omega_\mathrm{LP}\)</span>, and <span class="math inline">\(N\)</span> to achieve the desired dynamic response and stability margins. Note that <span class="math inline">\(\omega_\mathrm{n}\)</span> and <span class="math inline">\(\zeta\)</span> are not independent, as they both depend on the same set of PLL parameters! This seriously limits the design of the loop dynamics and means that we need a more complex loop filter <span class="math inline">\(H_\mathrm{LP}(s)\)</span> to achieve more freedom in selecting <span class="math inline">\(\omega_\mathrm{n}\)</span> and <span class="math inline">\(\zeta\)</span> independently. Often, we want to choose <span class="math inline">\(\zeta = 1/\sqrt{2} \approx 0.707\)</span> to achieve a Butterworth response for a good step response without overshoot.</p>
 <p>The poles of a second-order system are given by</p>
 <p><span class="math display">\[
 p_{1,2} = -\omega_\mathrm{n} \left( \zeta \pm \sqrt{\zeta^2 - 1} \right)
@@ -3391,7 +3391,7 @@ Figure&nbsp;82: Digitally controlled oscillator using a DAC.
 </div>
 </div>
 <ol start="2" type="1">
-<li>A digitally-controlled oscillator is using a large number of small varactors or switched capacitor banks to adjust the oscillation frequency directly based on the digital tuning word. An example implementation of a switched varactor is shown in <a href="#fig-dco-switched-varactor" class="quarto-xref">Figure&nbsp;83</a>, or a switched capacitor like shown in <a href="#fig-switched-capacitor" class="quarto-xref">Figure&nbsp;67</a> is used.</li>
+<li>A digitally-controlled oscillator uses a large number of small varactors or switched capacitor banks to adjust the oscillation frequency directly based on the digital tuning word. An example implementation of a switched varactor is shown in <a href="#fig-dco-switched-varactor" class="quarto-xref">Figure&nbsp;83</a>, or a switched capacitor like shown in <a href="#fig-switched-capacitor" class="quarto-xref">Figure&nbsp;67</a> is used.</li>
 </ol>
 <div id="cell-fig-dco-switched-varactor" class="cell" data-execution_count="83">
 <div class="cell-output cell-output-display">
@@ -3528,19 +3528,68 @@ Table&nbsp;5: DSM output ranges and characteristics for different orders
 </div>
 </figure>
 </div>
+<p>A standard 3rd-order DSM implementation has issues with stability due to the phase shift of three integrators in the feedback loop. To mitigate this, a well-known architecture called the <strong>MASH (multi-stage noise shaping) DSM</strong> is often used <span class="citation" data-cites="Matsuya.1989">(<a href="#ref-Matsuya.1989" role="doc-biblioref">Matsuya et al. 1989</a>)</span>, which consists of multiple first-order DSM stages cascaded together. An example Python implementation of a 3rd-order MASH DSM is shown in <a href="#fig-mash-nodither" class="quarto-xref">Figure&nbsp;87</a>, showing a snippet of the time-domain output and the resulting frequency spectrum, showing the noise shaping. As can be clearly seen, even using a 3rd-order MASH, there are strong spurious signals showing up in the spectrum. The time series shows that for some static input values (like here 0.125) patterns with short period can exist.</p>
+<div class="quarto-embed-nb-cell">
+<div id="cell-fig-mash-nodither" class="cell" data-tags="[&quot;fig-mash-nodither&quot;]" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<div id="fig-mash-nodither" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mash-nodither-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/.-content-pll-delta_sigma_modulator-fig-mash-nodither-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-87" title="Figure&nbsp;87: Time series and the spectrum of a MASH 3rd-order modulator."><img src="rfic_files/figure-html/.-content-pll-delta_sigma_modulator-fig-mash-nodither-output-1.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mash-nodither-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;87: Time series and the spectrum of a MASH 3rd-order modulator.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<a class="quarto-notebook-link" id="nblink-1" href="content/pll/delta_sigma_modulator-preview.html#cell-fig-mash-nodither">Source: MASH Modulator (3rd Order)</a></div>
+<p>As potential solution, we can add a very small dithering signal (i.e., adding a random signal to the input), which breaks these patterns. As shown in <a href="#fig-mash-dither" class="quarto-xref">Figure&nbsp;88</a>, dithering indeed causes enough randomization so that the noise shaping can be clearly seen without noticable spurs (this is evident when comparing the time series of <a href="#fig-mash-nodither" class="quarto-xref">Figure&nbsp;87</a> and <a href="#fig-mash-dither" class="quarto-xref">Figure&nbsp;88</a>). Care has to be taken that the added random noise is small enough to not cause issues with inband noise.</p>
+<div class="quarto-embed-nb-cell">
+<div id="cell-fig-mash-dither" class="cell" data-tags="[&quot;fig-mash-dither&quot;]" data-execution_count="7">
+<div class="cell-output cell-output-display">
+<div id="fig-mash-dither" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mash-dither-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/.-content-pll-delta_sigma_modulator-fig-mash-dither-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-88" title="Figure&nbsp;88: Time series and the spectrum of a MASH 3rd-order modulator with added dither."><img src="rfic_files/figure-html/.-content-pll-delta_sigma_modulator-fig-mash-dither-output-1.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mash-dither-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;88: Time series and the spectrum of a MASH 3rd-order modulator with added dither.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>A block diagram of a 3rd-order <a href="http://www.aholme.co.uk/Frac2/Mash.htm">MASH 1-1-1</a> implementation including dither injection (shown in blue) is depicted in <a href="#fig-mash-third-order" class="quarto-xref">Figure&nbsp;89</a>.</p>
+<div id="cell-fig-mash-third-order" class="cell" data-execution_count="87">
+<div class="cell-output cell-output-display">
+<div id="fig-mash-third-order" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mash-third-order-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-mash-third-order-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-89" title="Figure&nbsp;89: Block diagram of a 3rd-order MASH 1-1-1 delta-sigma modulator with three cascaded first-order stages and digital noise cancellation logic including dither injection."><img src="rfic_files/figure-html/fig-mash-third-order-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mash-third-order-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;89: Block diagram of a 3rd-order MASH 1-1-1 delta-sigma modulator with three cascaded first-order stages and digital noise cancellation logic including dither injection.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="sec-pll-frac-n-implementation" class="level3" data-number="7.4.2">
 <h3 data-number="7.4.2" class="anchored" data-anchor-id="sec-pll-frac-n-implementation"><span class="header-section-number">7.4.2</span> Fractional-N PLL Implementation</h3>
-<p>A block diagram of a fractional-N PLL using a DSM and a multi-modulus divider (MMD) is shown in <a href="#fig-pll-frac-n-block" class="quarto-xref">Figure&nbsp;87</a>. In order to ease the timing loop of the jittered clock coming from the MMD, the DSM is typically clocked by the MMD’s output.</p>
-<div id="cell-fig-pll-frac-n-block" class="cell" data-execution_count="87">
+<p>A block diagram of a fractional-N PLL using a DSM and a multi-modulus divider (MMD) is shown in <a href="#fig-pll-frac-n-block" class="quarto-xref">Figure&nbsp;90</a>. In order to ease the timing loop of the jittered clock coming from the MMD, the DSM is typically clocked by the MMD’s output.</p>
+<div id="cell-fig-pll-frac-n-block" class="cell" data-execution_count="88">
 <div class="cell-output cell-output-display">
 <div id="fig-pll-frac-n-block" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pll-frac-n-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-pll-frac-n-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-87" title="Figure&nbsp;87: Block diagram of a fractional-N PLL. The VCO signal is divided by a sequence of integer divider values div[k] with (on average) is given by N.f, where N is the integer part of the divider value, and f the fractional part of the divider."><img src="rfic_files/figure-html/fig-pll-frac-n-block-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-pll-frac-n-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-90" title="Figure&nbsp;90: Block diagram of a fractional-N PLL. The VCO signal is divided by a sequence of integer divider values div[k] with (on average) is given by N.f, where N is the integer part of the divider value, and f the fractional part of the divider."><img src="rfic_files/figure-html/fig-pll-frac-n-block-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-frac-n-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;87: Block diagram of a fractional-N PLL. The VCO signal is divided by a sequence of integer divider values div[k] with (on average) is given by <span class="math inline">\(N.f\)</span>, where <span class="math inline">\(N\)</span> is the integer part of the divider value, and <span class="math inline">\(f\)</span> the fractional part of the divider.
+Figure&nbsp;90: Block diagram of a fractional-N PLL. The VCO signal is divided by a sequence of integer divider values div[k] with (on average) is given by <span class="math inline">\(N.f\)</span>, where <span class="math inline">\(N\)</span> is the integer part of the divider value, and <span class="math inline">\(f\)</span> the fractional part of the divider.
 </figcaption>
 </figure>
 </div>
@@ -3552,46 +3601,46 @@ Figure&nbsp;87: Block diagram of a fractional-N PLL. The VCO signal is divided b
 <li>Use a Type-I PLL architecture with <span class="math inline">\(\Delta \varphi \neq 0\)</span>.</li>
 <li>Introduce a phase offset in a Type-II PLL to operate away from <span class="math inline">\(\Delta \varphi = 0\)</span>.</li>
 </ol>
-<p>A simple way to introduce a phase offset is to add a fixed current source/sink to the charge pump, as shown in <a href="#fig-pll-cp-offset" class="quarto-xref">Figure&nbsp;88</a>.</p>
-<div id="cell-fig-pll-cp-offset" class="cell" data-execution_count="88">
+<p>A simple way to introduce a phase offset is to add a fixed current source/sink to the charge pump, as shown in <a href="#fig-pll-cp-offset" class="quarto-xref">Figure&nbsp;91</a>.</p>
+<div id="cell-fig-pll-cp-offset" class="cell" data-execution_count="89">
 <div class="cell-output cell-output-display">
 <div id="fig-pll-cp-offset" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pll-cp-offset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-pll-cp-offset-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-88" title="Figure&nbsp;88: Charge pump with offset current for use in a fractional-N Type-II PLL."><img src="rfic_files/figure-html/fig-pll-cp-offset-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-pll-cp-offset-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-91" title="Figure&nbsp;91: Charge pump with offset current for use in a fractional-N Type-II PLL."><img src="rfic_files/figure-html/fig-pll-cp-offset-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-cp-offset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;88: Charge pump with offset current for use in a fractional-N Type-II PLL.
+Figure&nbsp;91: Charge pump with offset current for use in a fractional-N Type-II PLL.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>As we have seen multiple times in the PLL discussion, using a higher <span class="math inline">\(f_\mathrm{ref}\)</span> is beneficial for phase noise performance, loop bandwidth, and TDC resolution (in an ADPLL). However, in many applications the choice of reference frequency is constrained by other factors. One way to achieve a higher reference frequency is by using a <strong>frequency doubler</strong>. As shown in <a href="#fig-ref-doubler" class="quarto-xref">Figure&nbsp;89</a>, a frequency doubler can be implemented using an XOR gate and a delay line. The delay line is set to a quarter of the period of the reference frequency, i.e., <span class="math inline">\(T_\mathrm{d} = T_\mathrm{ref} / 4\)</span>. The XOR gate then produces an output frequency of <span class="math inline">\(f_\mathrm{double} = 2 \cdot f_\mathrm{ref}\)</span>. For stable operation, this delay line must be designed to be relatively insensitive to process, voltage, and temperature (PVT) variations, or must be adjusted with a control loop.</p>
-<div id="cell-fig-ref-doubler" class="cell" data-execution_count="89">
+<p>As we have seen multiple times in the PLL discussion, using a higher <span class="math inline">\(f_\mathrm{ref}\)</span> is beneficial for phase noise performance, loop bandwidth, and TDC resolution (in an ADPLL). However, in many applications the choice of reference frequency is constrained by other factors. One way to achieve a higher reference frequency is by using a <strong>frequency doubler</strong>. As shown in <a href="#fig-ref-doubler" class="quarto-xref">Figure&nbsp;92</a>, a frequency doubler can be implemented using an XOR gate and a delay line. The delay line is set to a quarter of the period of the reference frequency, i.e., <span class="math inline">\(T_\mathrm{d} = T_\mathrm{ref} / 4\)</span>. The XOR gate then produces an output frequency of <span class="math inline">\(f_\mathrm{double} = 2 \cdot f_\mathrm{ref}\)</span>. For stable operation, this delay line must be designed to be relatively insensitive to process, voltage, and temperature (PVT) variations, or must be adjusted with a control loop.</p>
+<div id="cell-fig-ref-doubler" class="cell" data-execution_count="90">
 <div class="cell-output cell-output-display">
 <div id="fig-ref-doubler" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ref-doubler-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-ref-doubler-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-89" title="Figure&nbsp;89: Implementation of reference frequency doubler. Ideally, T_\mathrm{d} should be set to T_\mathrm{ref} / 4."><img src="rfic_files/figure-html/fig-ref-doubler-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-ref-doubler-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-92" title="Figure&nbsp;92: Implementation of reference frequency doubler. Ideally, T_\mathrm{d} should be set to T_\mathrm{ref} / 4."><img src="rfic_files/figure-html/fig-ref-doubler-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ref-doubler-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;89: Implementation of reference frequency doubler. Ideally, <span class="math inline">\(T_\mathrm{d}\)</span> should be set to <span class="math inline">\(T_\mathrm{ref} / 4\)</span>.
+Figure&nbsp;92: Implementation of reference frequency doubler. Ideally, <span class="math inline">\(T_\mathrm{d}\)</span> should be set to <span class="math inline">\(T_\mathrm{ref} / 4\)</span>.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>As a final remark, we note that the output of the MMD in <a href="#fig-pll-frac-n-block" class="quarto-xref">Figure&nbsp;87</a> is a jittered clock due to the changing division ratio and the multiple gates and flip-flops that make up the MMD. This jitter degrades the PLL phase noise performance. Fortunately, there is an easy fix for this issue by using a retiming flip-flop after the MMD, clocked by the oscillator output, as shown in <a href="#fig-pll-frac-n-block-retiming" class="quarto-xref">Figure&nbsp;90</a>.</p>
-<div id="cell-fig-pll-frac-n-block-retiming" class="cell" data-execution_count="90">
+<p>As a final remark, we note that the output of the MMD in <a href="#fig-pll-frac-n-block" class="quarto-xref">Figure&nbsp;90</a> is a jittered clock due to the changing division ratio and the multiple gates and flip-flops that make up the MMD. This jitter degrades the PLL phase noise performance. Fortunately, there is an easy fix for this issue by using a retiming flip-flop after the MMD, clocked by the oscillator output, as shown in <a href="#fig-pll-frac-n-block-retiming" class="quarto-xref">Figure&nbsp;93</a>.</p>
+<div id="cell-fig-pll-frac-n-block-retiming" class="cell" data-execution_count="91">
 <div class="cell-output cell-output-display">
 <div id="fig-pll-frac-n-block-retiming" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pll-frac-n-block-retiming-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-pll-frac-n-block-retiming-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-90" title="Figure&nbsp;90: Block diagram of a fractional-N PLL including a retiming flip flop to reduce the MMD-related jitter."><img src="rfic_files/figure-html/fig-pll-frac-n-block-retiming-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-pll-frac-n-block-retiming-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-93" title="Figure&nbsp;93: Block diagram of a fractional-N PLL including a retiming flip flop to reduce the MMD-related jitter."><img src="rfic_files/figure-html/fig-pll-frac-n-block-retiming-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-frac-n-block-retiming-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;90: Block diagram of a fractional-N PLL including a retiming flip flop to reduce the MMD-related jitter.
+Figure&nbsp;93: Block diagram of a fractional-N PLL including a retiming flip flop to reduce the MMD-related jitter.
 </figcaption>
 </figure>
 </div>
@@ -3604,16 +3653,16 @@ Figure&nbsp;90: Block diagram of a fractional-N PLL including a retiming flip fl
 <section id="sec-poweramp" class="level1" data-number="8">
 <h1 data-number="8"><span class="header-section-number">8</span> Power Amplifiers</h1>
 <p>Power amplifiers (PAs) are essential components in wireless communication systems, as they boost the signal power from (usually) a few milliwatts up to several watts to ensure reliable transmission over the air. While PAs are simple in concept, their design and operation involve several trade-offs between efficiency, linearity, bandwidth, and cost.</p>
-<p>A basic PA based on a single common-source stage is shown in <a href="#fig-poweramp-basic" class="quarto-xref">Figure&nbsp;91</a>. The input signal is applied to the gate of the transistor via a matching network, which amplifies the signal at the drain terminal. The output matching network transforms the 50 Ohm load to the optimal load impedance for the desired output power under linearity and efficiency constraints.</p>
-<div id="cell-fig-poweramp-basic" class="cell" data-execution_count="91">
+<p>A basic PA based on a single common-source stage is shown in <a href="#fig-poweramp-basic" class="quarto-xref">Figure&nbsp;94</a>. The input signal is applied to the gate of the transistor via a matching network, which amplifies the signal at the drain terminal. The output matching network transforms the 50 Ohm load to the optimal load impedance for the desired output power under linearity and efficiency constraints.</p>
+<div id="cell-fig-poweramp-basic" class="cell" data-execution_count="92">
 <div class="cell-output cell-output-display">
 <div id="fig-poweramp-basic" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-poweramp-basic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-poweramp-basic-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-91" title="Figure&nbsp;91: A basic single stage single-ended common-source power amplifier with input and output matching."><img src="rfic_files/figure-html/fig-poweramp-basic-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-poweramp-basic-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-94" title="Figure&nbsp;94: A basic single stage single-ended common-source power amplifier with input and output matching."><img src="rfic_files/figure-html/fig-poweramp-basic-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-poweramp-basic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;91: A basic single stage single-ended common-source power amplifier with input and output matching.
+Figure&nbsp;94: A basic single stage single-ended common-source power amplifier with input and output matching.
 </figcaption>
 </figure>
 </div>
@@ -3625,16 +3674,16 @@ Figure&nbsp;91: A basic single stage single-ended common-source power amplifier 
 P_\mathrm{out,max} = \frac{V_\mathrm{DD}^2}{2 R_\mathrm{L}}.
 \]</span></p>
 <p>For a typical supply voltage of <span class="math inline">\(V_\mathrm{DD} = 3\,\mathrm{V}\)</span> and a load of <span class="math inline">\(R_\mathrm{L} = 50\,\Omega\)</span>, this results in a maximum output power of <span class="math inline">\(P_\mathrm{out,max} = 90\,\mathrm{mW}\)</span> or <span class="math inline">\(19.5\,\mathrm{dBm}\)</span>. Higher output powers require either higher supply voltages (which may not be available in battery-powered systems) or lower load impedances. The output matching network is thus designed in such a way as to present a lower impedance to the PA, e.g., <span class="math inline">\(R_\mathrm{L} = 5\,\Omega\)</span>, which increases the maximum output power to <span class="math inline">\(P_\mathrm{out,max} = 900\,\mathrm{mW}\)</span> or <span class="math inline">\(29.5\,\mathrm{dBm}\)</span>. The matching networks are usually implemented as LC networks or transmission line sections, often using transformers to achieve the required impedance transformation.</p>
-<p>In order to drive the large output transistor <span class="math inline">\(M_1\)</span> in <a href="#fig-poweramp-basic" class="quarto-xref">Figure&nbsp;91</a>, a driver stage is often required. This driver stage provides the necessary voltage and current gain to ensure that the PA operates in its optimal region. If needed, even another pre-driver stage can be added, but higher gain might cause stability issues and increased output noise. A two-stage power amplifier is shown in <a href="#fig-poweramp-twostage" class="quarto-xref">Figure&nbsp;92</a>.</p>
-<div id="cell-fig-poweramp-twostage" class="cell" data-execution_count="92">
+<p>In order to drive the large output transistor <span class="math inline">\(M_1\)</span> in <a href="#fig-poweramp-basic" class="quarto-xref">Figure&nbsp;94</a>, a driver stage is often required. This driver stage provides the necessary voltage and current gain to ensure that the PA operates in its optimal region. If needed, even another pre-driver stage can be added, but higher gain might cause stability issues and increased output noise. A two-stage power amplifier is shown in <a href="#fig-poweramp-twostage" class="quarto-xref">Figure&nbsp;95</a>.</p>
+<div id="cell-fig-poweramp-twostage" class="cell" data-execution_count="93">
 <div class="cell-output cell-output-display">
 <div id="fig-poweramp-twostage" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-poweramp-twostage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-poweramp-twostage-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-92" title="Figure&nbsp;92: A basic two-stage single-ended common-source power amplifier with input and output matching."><img src="rfic_files/figure-html/fig-poweramp-twostage-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-poweramp-twostage-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-95" title="Figure&nbsp;95: A basic two-stage single-ended common-source power amplifier with input and output matching."><img src="rfic_files/figure-html/fig-poweramp-twostage-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-poweramp-twostage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;92: A basic two-stage single-ended common-source power amplifier with input and output matching.
+Figure&nbsp;95: A basic two-stage single-ended common-source power amplifier with input and output matching.
 </figcaption>
 </figure>
 </div>
@@ -3658,16 +3707,16 @@ y(t) = A[r(t)] \cos\{ \omega_0 t + \psi(t) + \varphi[r(t)] \}
 A(r) = \frac{\alpha_1 r}{1 + \beta_1 r^2} \quad \text{and} \quad \varphi(r) = \frac{\alpha_2 r^2}{1 + \beta_2 r^2}
 \]</span></p>
 <p>where <span class="math inline">\(\alpha_1\)</span>, <span class="math inline">\(\beta_1\)</span>, <span class="math inline">\(\alpha_2\)</span>, and <span class="math inline">\(\beta_2\)</span> are the Saleh model parameters that define the PA characteristics. The AM/AM conversion <span class="math inline">\(A(r)\)</span> describes how the output amplitude saturates with increasing input amplitude, while the AM/PM conversion <span class="math inline">\(\varphi(r)\)</span> describes the phase distortion introduced by the PA. While this simple model does not capture memory effects or frequency-dependent behavior, it provides a good starting point for understanding PA nonlinearity.</p>
-<p>Note that most discrete PAs are implemented similar to <a href="#fig-poweramp-twostage" class="quarto-xref">Figure&nbsp;92</a>. For RFIC-integrated PAs, a single-ended implementation is problematic due to power supply parasitics and coupling issues. Therefore, integrated PAs are very often implemented in a differential configuration, which improves power supply rejection and reduces even-order harmonics <span class="citation" data-cites="Moreira.2015">Fuhrmann et al. (<a href="#ref-Fuhrmann.2017" role="doc-biblioref">2017</a>)</span>. A generic differential PA implementation is shown in <a href="#fig-poweramp-differential" class="quarto-xref">Figure&nbsp;93</a>.</p>
-<div id="cell-fig-poweramp-differential" class="cell" data-execution_count="93">
+<p>Note that most discrete PAs are implemented similar to <a href="#fig-poweramp-twostage" class="quarto-xref">Figure&nbsp;95</a>. For RFIC-integrated PAs, a single-ended implementation is problematic due to power supply parasitics and coupling issues. Therefore, integrated PAs are very often implemented in a differential configuration, which improves power supply rejection and reduces even-order harmonics <span class="citation" data-cites="Moreira.2015">Fuhrmann et al. (<a href="#ref-Fuhrmann.2017" role="doc-biblioref">2017</a>)</span>. A generic differential PA implementation is shown in <a href="#fig-poweramp-differential" class="quarto-xref">Figure&nbsp;96</a>.</p>
+<div id="cell-fig-poweramp-differential" class="cell" data-execution_count="94">
 <div class="cell-output cell-output-display">
 <div id="fig-poweramp-differential" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-poweramp-differential-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-poweramp-differential-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-93" title="Figure&nbsp;93: A generic differential power amplifier with cascode stages for peak voltage handling. Inductors L1, L_2, and L_3 are implemented as a transformer, and form the load and output matching network together with C_1 and C_2. Note that the load transformer allows a differential to single-ended conversion, as well as a dc block."><img src="rfic_files/figure-html/fig-poweramp-differential-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-poweramp-differential-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-96" title="Figure&nbsp;96: A generic differential power amplifier with cascode stages for peak voltage handling. Inductors L1, L_2, and L_3 are implemented as a transformer, and form the load and output matching network together with C_1 and C_2. Note that the load transformer allows a differential to single-ended conversion, as well as a dc block."><img src="rfic_files/figure-html/fig-poweramp-differential-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-poweramp-differential-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;93: A generic differential power amplifier with cascode stages for peak voltage handling. Inductors <span class="math inline">\(L1\)</span>, <span class="math inline">\(L_2\)</span>, and <span class="math inline">\(L_3\)</span> are implemented as a transformer, and form the load and output matching network together with <span class="math inline">\(C_1\)</span> and <span class="math inline">\(C_2\)</span>. Note that the load transformer allows a differential to single-ended conversion, as well as a dc block.
+Figure&nbsp;96: A generic differential power amplifier with cascode stages for peak voltage handling. Inductors <span class="math inline">\(L1\)</span>, <span class="math inline">\(L_2\)</span>, and <span class="math inline">\(L_3\)</span> are implemented as a transformer, and form the load and output matching network together with <span class="math inline">\(C_1\)</span> and <span class="math inline">\(C_2\)</span>. Note that the load transformer allows a differential to single-ended conversion, as well as a dc block.
 </figcaption>
 </figure>
 </div>
@@ -3833,6 +3882,9 @@ Leeson, D. B. 1966. <span>“<span class="nocase">A simple model of feedback osc
 </div>
 <div id="ref-Lepage.1953" class="csl-entry" role="listitem">
 Lepage, W. R., C. R. Cahn, and J. S. Brown. 1953. <span>“<span class="nocase">Analysis of a comb filter using synchronously commutated capacitors</span>.”</span> <em>Transactions of the American Institute of Electrical Engineers, Part I: Communication and Electronics</em> 72 (1): 63–68. <a href="https://doi.org/10.1109/tce.1953.6371974">https://doi.org/10.1109/tce.1953.6371974</a>.
+</div>
+<div id="ref-Matsuya.1989" class="csl-entry" role="listitem">
+Matsuya, Y., K. Uchimura, A. Iwata, and T. Kaneko. 1989. <span>“<span class="nocase">A 17 bit oversampling D-A conversion technology using multistage noise shaping</span>.”</span> <em>IEEE Journal of Solid-State Circuits</em> 24 (4): 969–75. <a href="https://doi.org/10.1109/4.34079">https://doi.org/10.1109/4.34079</a>.
 </div>
 <div id="ref-Molisch_Wireless_Communications" class="csl-entry" role="listitem">
 Molisch, Andreas F. 2022. <em>Wireless Communications: From Fundamentals to Beyond 5G</em>. 3rd edition. Wiley-IEEE Press.
