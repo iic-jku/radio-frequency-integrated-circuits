@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-adpll-block-diagram
 #| echo: false
-#| fig-cap: "Block diagram of an all-digital PLL. A reference phase signal is compared to the phase of a VCO output signal in a time-to-digital converter. The phase error word is digitally low-pass filtered and used to tune the DCO frequency via a frequency control word."
+#| fig-cap: "Block diagram of an all-digital PLL. A reference phase signal is compared to the phase of a digitally-controlled oscillator (DCO) output signal in a time-to-digital converter (TDC). The phase error word is digitally low-pass filtered and used to tune the DCO frequency via a frequency control word."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -36,7 +36,7 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Oscillator().label('DCO', loc='top', ofst=(0, 0.2))
     dsp.Line().right(d.unit/2).dot()
     d.push()
-    dsp.Arrow().right(d.unit/2).label(r'$f_\mathrm{out}$', 'right')
+    dsp.Arrow().right(d.unit/2).label(r'$f_\mathrm{out} = N \cdot f_\mathrm{ref}$', 'right')
     d.pop()
     dsp.Line().down(d.unit)
     dsp.Arrow().left(d.unit*1.5)

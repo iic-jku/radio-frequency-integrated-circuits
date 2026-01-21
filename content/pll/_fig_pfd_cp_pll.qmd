@@ -111,7 +111,7 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Oscillator().label('VCO', loc='top', ofst=(0, 0.2))
     dsp.Line().right(d.unit/2).dot()
     d.push()
-    dsp.Line().right(d.unit/2).dot(open=True).label(r'$f_\mathrm{out}$', 'right')
+    dsp.Line().right(d.unit/2).dot(open=True).label(r'$f_\mathrm{out} = N \cdot f_\mathrm{ref}$', 'right')
     d.pop()
     dsp.Line().down(d.unit*3)
     dsp.Line().left(d.unit)
