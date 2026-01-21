@@ -1,0 +1,92 @@
+::: {.content-hidden}
+Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-mash-third-order
+#| fig-cap: "Block diagram of a 3rd-order MASH 1-1-1 delta-sigma modulator with three cascaded first-order stages and digital noise cancellation logic including dither injection."
+#| echo: false
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+    
+    def integ():
+        _sum = dsp.Sum()
+        elm.Line().right(d.unit*3/4)
+        d.push()
+        elm.Line().down(d.unit)
+        elm.Arrow().left(d.unit/4)
+        dsp.Square().label(r'$z^{-1}$').left()
+        elm.Line().left().tox(_sum.S)
+        elm.Arrow().up().to(_sum.S)
+        d.pop()
+        return _sum
+
+    elm.Arrow().right(d.unit/2).label(r'$F$', 'left')
+    sum0 = dsp.Sum().color('blue')
+    d.push()
+    elm.Arrow().down(d.unit/2).at(sum0.S).reverse().color('blue')
+    dsp.Square().label('dither').color('blue')
+    d.pop()
+
+
+    elm.Arrow().right(d.unit/2)
+
+    sum1 = integ()
+    elm.Arrow().right(d.unit/2).idot()
+    sum2 = integ()
+    elm.Arrow().right(d.unit/2).idot()
+    sum3 = integ()
+
+    elm.Arrow().up(d.unit/2).at(sum1.N).label('carry')
+    sum4 = dsp.Sum().up()
+
+    elm.Arrow().up(d.unit/2).at(sum2.N).label('carry')
+    sum5 = dsp.Sum().up()
+
+    elm.Line().up(d.unit*3/4).at(sum3.N).label('carry')
+    elm.Line().left(d.unit/2).dot()
+    d.push()
+    elm.Arrow().to(sum5.S)
+    d.pop()
+
+    elm.Line().up(d.unit)
+    elm.Arrow().left(d.unit/4)
+    dsp.Square().label(r'$z^{-1}$').left()
+    elm.Line().left().tox(sum5.E)
+    elm.Arrow().to(sum5.E).label('--')
+
+    elm.Line().left(d.unit/2).dot().at(sum5.N)
+    d.push()
+    elm.Arrow().to(sum4.S)
+    d.pop()
+
+    elm.Line().up(d.unit)
+    elm.Arrow().left(d.unit/4)
+    dsp.Square().label(r'$z^{-1}$').left()
+    elm.Line().left().tox(sum4.E)
+    elm.Arrow().to(sum4.E).label('--')
+
+    elm.Line().left(d.unit/2).at(sum4.N)
+    elm.Arrow().up(d.unit*1.5)
+    sum6 = dsp.Sum().drop('S')
+    elm.Arrow().right(d.unit).label(r'$N + \Delta N$', 'right')
+    elm.Arrow().left(d.unit*3/4).at(sum6.N).reverse().label(r'$N$', 'left')
+```
