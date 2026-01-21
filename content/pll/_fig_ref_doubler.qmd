@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-ref-doubler
 #| echo: false
-#| fig-cap: "Implementation of reference frequency doubler."
+#| fig-cap: "Implementation of reference frequency doubler. Ideally, $T_\\mathrm{d}$ should be set to $T_\\mathrm{ref} / 4$."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -32,7 +32,7 @@ with sd.Drawing(canvas='svg') as d:
     d.push()
     elm.Line().right(d.unit*2)
     xor1 = lgc.Xor().anchor('in1').drop('out')
-    elm.Line().right(d.unit/2).dot(open=True).label(r'$f_\mathrm{double} = 2 f_\mathrm{ref}$', 'right')
+    elm.Line().right(d.unit/2).dot(open=True).label(r'$f_\mathrm{double} = 2 \cdot f_\mathrm{ref}$', 'right')
     d.pop()
     elm.Line().down(d.unit/2)
     elm.Line().right(d.unit/2)
