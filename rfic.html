@@ -3262,16 +3262,16 @@ H_\mathrm{CP}(s) = \frac{I_\mathrm{CP}}{2 \pi} \left( \frac{1}{s C_\mathrm{int}}
 <div id="fig-pll-pfd-cp" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pll-pfd-cp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-pll-pfd-cp-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-78" title="Figure&nbsp;78: Diagram of a PFD-CP PLL. Note the added first-order lowpass which has been added to reduce the CP switching ripple."><img src="rfic_files/figure-html/fig-pll-pfd-cp-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-pll-pfd-cp-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-78" title="Figure&nbsp;78: Diagram of a PFD-CP PLL. Note that the capacitor C_3 has been added to reduce the CP switching ripple, and its presence makes the loop filter 3rd order."><img src="rfic_files/figure-html/fig-pll-pfd-cp-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-pfd-cp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;78: Diagram of a PFD-CP PLL. Note the added first-order lowpass which has been added to reduce the CP switching ripple.
+Figure&nbsp;78: Diagram of a PFD-CP PLL. Note that the capacitor <span class="math inline">\(C_3\)</span> has been added to reduce the CP switching ripple, and its presence makes the loop filter 3rd order.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Neglecting <span class="math inline">\(R_\mathrm{lp}\)</span> and <span class="math inline">\(C_\mathrm{lp}\)</span> for now, we can derive the closed-loop transfer function of the PLL from reference phase <span class="math inline">\(\varphi_\mathrm{ref}(s)\)</span> to output phase <span class="math inline">\(\varphi_\mathrm{out}(s)\)</span> as</p>
+<p>Neglecting <span class="math inline">\(C_3\)</span> for now, we can derive the closed-loop transfer function of the PLL from reference phase <span class="math inline">\(\varphi_\mathrm{ref}(s)\)</span> to output phase <span class="math inline">\(\varphi_\mathrm{out}(s)\)</span> as</p>
 <p><span id="eq-cp-pll-transfer-function"><span class="math display">\[
 H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{\frac{I_\mathrm{CP} K_\mathrm{VCO}}{2 \pi C_\mathrm{int} N} (1 + s C_\mathrm{int} R_\mathrm{int})}{s^2 + s \frac{I_\mathrm{CP} K_\mathrm{VCO} R_\mathrm{int}}{2 \pi N} + \frac{I_\mathrm{CP} K_\mathrm{VCO}}{2 \pi C_\mathrm{int} N}} = N \cdot \frac{s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2}{s^2 + s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2}
 \tag{49}\]</span></span></p>
