@@ -3138,7 +3138,7 @@ p_{1,2} = -\frac{\omega_\mathrm{n}}{\sqrt{2}} \pm j \frac{\omega_\mathrm{n}}{\sq
 <section id="sec-pll-charge-pump" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="sec-pll-charge-pump"><span class="header-section-number">7.2</span> Charge-Pump PLL</h2>
 <p>The fundamental limitations of the simple PLL architecture presented in <a href="#sec-pll-basic-architecture" class="quarto-xref">Section&nbsp;7.1</a> can be addressed by using a more sophisticated phase detector known as a <strong>phase-frequency detector (PFD)</strong> in combination with a <strong>charge pump (CP)</strong> <span class="citation" data-cites="Gardner.1980">(<a href="#ref-Gardner.1980" role="doc-biblioref">Gardner 1980</a>)</span>. This combination allows for better control over the loop dynamics and improved locking behavior.</p>
-<p>In order to drive the CP, we envision a PFD with two digital outputs: An “up” signal that indicates when the VCO phase lags behind the reference phase, and a “down” signal that indicates when the VCO phase leads the reference phase. The PFD compares both the phase and frequency of the reference and feedback signals, providing a more robust locking mechanism. The typical implementation of a PFD is shown in <a href="#fig-pfd-implementation" class="quarto-xref">Figure&nbsp;72</a>.</p>
+<p>In order to drive the CP, we envision a PFD with two digital outputs: An “up” signal that indicates when the VCO phase lags behind the reference phase, and a “down” signal that indicates when the VCO phase leads the reference phase <span class="citation" data-cites="Brown.1971">(<a href="#ref-Brown.1971" role="doc-biblioref">Brown 1971</a>)</span>. The PFD compares both the phase and frequency of the reference and feedback signals, providing a more robust locking mechanism. The typical implementation of a PFD is shown in <a href="#fig-pfd-implementation" class="quarto-xref">Figure&nbsp;72</a>.</p>
 <div id="cell-fig-pfd-implementation" class="cell" data-execution_count="72">
 <div class="cell-output cell-output-display">
 <div id="fig-pfd-implementation" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -3855,6 +3855,9 @@ Best, Roland E. 1999. <em>Phase-Locked Loops: Design, Simulation, and Applicatio
 </div>
 <div id="ref-Bird.2009" class="csl-entry" role="listitem">
 Bird, Trevor S. 2009. <span>“<span class="nocase">Definition and Misuse of Return Loss [Report of the Transactions Editor-in-Chief]</span>.”</span> <em>IEEE Antennas and Propagation Magazine</em> 51 (2): 166–67. <a href="https://doi.org/10.1109/map.2009.5162049">https://doi.org/10.1109/map.2009.5162049</a>.
+</div>
+<div id="ref-Brown.1971" class="csl-entry" role="listitem">
+Brown, J. I. 1971. <span>“<span class="nocase">A digital phase and frequency-sensitive detector</span>.”</span> <em>Proceedings of the IEEE</em> 59 (4): 717–18. <a href="https://doi.org/10.1109/proc.1971.8246">https://doi.org/10.1109/proc.1971.8246</a>.
 </div>
 <div id="ref-DaDalt_PHN" class="csl-entry" role="listitem">
 Da Dalt, Luca, and Ali Sheikholeslami. 2018. <em>Understanding Jitter and Phase Noise</em>. Cambridge University Press.
