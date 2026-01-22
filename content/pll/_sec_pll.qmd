@@ -373,7 +373,7 @@ As potential solution, we can add a very small dithering signal (i.e., adding a 
 
 {{< embed ./content/pll/delta_sigma_modulator.ipynb#fig-mash-dither >}}
 
-A block diagram of a 3rd-order [MASH 1-1-1](http://www.aholme.co.uk/Frac2/Mash.htm) implementation including dither injection (shown in blue) is depicted in @fig-mash-third-order.
+A block diagram of a 3rd-order [MASH 1-1-1](http://www.aholme.co.uk/Frac2/Mash.htm) implementation including dither injection (shown in blue) is depicted in @fig-mash-third-order. The dither is typically implemented digitally as a pseudo-random bit sequence (PRBS) generator, often in the form of a [linear-feedback shift register](https://en.wikipedia.org/wiki/Linear-feedback_shift_register) (LFSR).
 
 {{< include /content/pll/_fig_mash_third_order.qmd >}}
 
