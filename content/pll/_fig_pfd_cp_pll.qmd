@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-pll-pfd-cp
 #| echo: false
-#| fig-cap: "Diagram of a PFD-CP PLL. Note the added first-order lowpass which has been added to reduce the CP switching ripple."
+#| fig-cap: "Diagram of a PFD-CP PLL. Note that the capacitor $C_3$ has been added to reduce the CP switching ripple, and its presence makes the loop filter 3rd order."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -42,8 +42,8 @@ with sd.Drawing(canvas='svg') as d:
         elm.Line().right(d.unit/2)
         out_lf = d.here
         d.pop()
-        elm.Resistor().down().label(r'$R_\mathrm{int}$')
-        elm.Capacitor().down().label(r'$C_\mathrm{int}$')
+        rint = elm.Resistor().down().label(r'$R_\mathrm{int}$')
+        cint = elm.Capacitor().down().label(r'$C_\mathrm{int}$')
         elm.Ground()
 
         d.here = S1.end
@@ -56,7 +56,7 @@ with sd.Drawing(canvas='svg') as d:
         elm.Arrow().left(d.unit/2).reverse()
         in2 = d.here
 
-        return in1, in2, out_lf
+        return in1, in2, out_lf, cint
 
     def draw_pfd(pos):
         d.here = pos
@@ -94,15 +94,15 @@ with sd.Drawing(canvas='svg') as d:
         return in_ref, in_fb, out1, out2
 
     (in_ref, in_fb, out1, out2) = draw_pfd((0,0))
-    (in1, in2, out_lf) = draw_cp((d.unit*4,d.unit*1.5))
+    (in1, in2, out_lf, cint) = draw_cp((d.unit*4,d.unit*1.5))
 
     elm.Wire('-|').at(out1).to(in1).label('UP', 'top')
     elm.Wire('-|').at(out2).to(in2).label('DOWN', 'bottom')
 
     d.here = out_lf
-    elm.Resistor().right().dot().label(r'$R_\mathrm{lp}$', loc='top')
+    elm.Line().right(d.unit/2).dot()
     d.push()
-    elm.Capacitor().down().label(r'$C_\mathrm{lp}$', loc='top')
+    elm.Capacitor().down().toy(cint.end).label(r'$C_3$', loc='top')
     elm.Ground()
     d.pop()
 

@@ -200,7 +200,7 @@ The resulting PLL using a PFD-CP combination is shown in @fig-pll-pfd-cp.
 
 {{< include /content/pll/_fig_pfd_cp_pll.qmd >}}
 
-Neglecting $R_\mathrm{lp}$ and $C_\mathrm{lp}$ for now, we can derive the closed-loop transfer function of the PLL from reference phase $\varphi_\mathrm{ref}(s)$ to output phase $\varphi_\mathrm{out}(s)$ as
+Neglecting $C_3$ for now, we can derive the closed-loop transfer function of the PLL from reference phase $\varphi_\mathrm{ref}(s)$ to output phase $\varphi_\mathrm{out}(s)$ as
 
 $$
 H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{\frac{I_\mathrm{CP} K_\mathrm{VCO}}{2 \pi C_\mathrm{int} N} (1 + s C_\mathrm{int} R_\mathrm{int})}{s^2 + s \frac{I_\mathrm{CP} K_\mathrm{VCO} R_\mathrm{int}}{2 \pi N} + \frac{I_\mathrm{CP} K_\mathrm{VCO}}{2 \pi C_\mathrm{int} N}} = N \cdot \frac{s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2}{s^2 + s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2}
