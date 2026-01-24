@@ -70,7 +70,7 @@ Always use custom macros from `_macros.qmd` for consistency:
 Every `.qmd` file includes Apache 2.0 license in hidden block:
 ```markdown
 ::: {.content-hidden}
-Copyright (C) 2024-2025 Harald Pretl and co-authors
+Copyright (C) 2024-2026 Harald Pretl and co-authors
 Licensed under the Apache License, Version 2.0
 :::
 ```

@@ -3,7 +3,7 @@
 [![Quarto Publish](https://github.com/iic-jku/radio-frequency-integrated-circuits/actions/workflows/quarto-publish.yml/badge.svg?branch=main)](https://github.com/iic-jku/radio-frequency-integrated-circuits/actions/workflows/quarto-publish.yml)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17563943.svg)](https://doi.org/10.5281/zenodo.17563943)
 
-**(c) 2025 Harald Pretl and co-authors, Department for Integrated Circuits (ICD), Johannes Kepler University, Linz (JKU)**
+**(c) 2025-2026 Harald Pretl and co-authors, Department for Integrated Circuits (ICD), Johannes Kepler University, Linz (JKU)**
 
 This is the material for a graduate-level radio-frequency integrated circuit course, held at JKU under course number 336.023 ("VO Integrierte Hochfrequenz-Schaltungstechnik"). Follow this [link to access the material](https://iic-jku.github.io/radio-frequency-integrated-circuits/rfic.html).
 
