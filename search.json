@@ -277,7 +277,7 @@
     "href": "index.html",
     "title": "Radio-Frequency Integrated Circuits",
     "section": "",
-    "text": "Radio-Frequency Integrated Circuits\n\n\n\nQuarto Publish\n\n\n(c) 2025 Harald Pretl and co-authors, Department for Integrated Circuits (ICD), Johannes Kepler University, Linz (JKU)\nThis is the material for a graduate-level radio-frequency integrated circuit course, held at JKU under course number 336.023 (“VO Integrierte Hochfrequenz-Schaltungstechnik”). Follow this link to access the material.\nAll course material is made publicly available and shared under the Apache-2.0 license.\nWe happily accept pull requests to fix typos or add content! If you want to discuss something that is not clear, please open an issue!"
+    "text": "Radio-Frequency Integrated Circuits\n\n\n\nQuarto Publish\n\n\n(c) 2025-2026 Harald Pretl and co-authors, Department for Integrated Circuits (ICD), Johannes Kepler University, Linz (JKU)\nThis is the material for a graduate-level radio-frequency integrated circuit course, held at JKU under course number 336.023 (“VO Integrierte Hochfrequenz-Schaltungstechnik”). Follow this link to access the material.\nAll course material is made publicly available and shared under the Apache-2.0 license.\nWe happily accept pull requests to fix typos or add content! If you want to discuss something that is not clear, please open an issue!"
   },
   {
     "objectID": "content/pll/delta_sigma_modulator.html",
