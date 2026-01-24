@@ -189,7 +189,7 @@ $$
 \text{IIP3} = P_\mathrm{in} + \frac{P_\mathrm{in} - P_\mathrm{IM3}}{2}
 $$ {#eq-iip3}
 
-Further, for midly nonlinear systems (i.e., $\alpha_3$ is dominating), the IIP3 can be approximated from the 1dB compression point as
+Further, for mildly nonlinear systems (i.e., $\alpha_3$ is dominating), the IIP3 can be approximated from the 1dB compression point as
 
 $$
 \text{IIP3}|_\mathrm{dBm} \approx P_\mathrm{1dB}|_\mathrm{dBm} + 9.6\,\text{dB}.
@@ -242,7 +242,7 @@ The PSD of noise can be flat vs. frequency (which is called "white noise"), or c
 
 ::: {.callout-important}
 ## Thermal Noise
-Note that the simple approximation given above is only valid for reasonably high frequencies and typical temperatures, and is known as the Rayleigh-Jeans approximation of Planck's blackbody radiation accounting for quantum effects and is given by [@Pozar_RF]
+Note that the simple approximation given above is only valid for reasonably low frequencies and typical temperatures, and is known as the Rayleigh-Jeans approximation of Planck's blackbody radiation accounting for quantum effects and is given by [@Pozar_RF]
 
 $$
 \text{PSD} = \frac{4 R h f}{e^{{h f}/{k T}} - 1}
@@ -498,7 +498,7 @@ To further improve the robustness against multi-path propagation, a CP is added 
 In LTE OFDM is used for the downlink (base station to user equipment) with the following parameters:
 
 - Subcarrier spacing: 15 kHz
-- CP length: 5.2 µs (first symbol) resp. 4.7 µs (following symbols), and 16.67 µs as extended CP for scenarious with large delay spreads
+- CP length: 5.2 µs (first symbol) resp. 4.7 µs (following symbols), and 16.67 µs as extended CP for scenarios with large delay spreads
 - Number of subcarriers: 1200 (for 20 MHz bandwidth)
 - Modulation: QPSK, 16-QAM, 64-QAM, 256-QAM
 

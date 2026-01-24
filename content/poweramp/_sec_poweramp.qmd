@@ -50,7 +50,7 @@ $$
 
 Ideally, we want both efficiency metrics as high as possible, but in practice there is a trade-off between efficiency and linearity (for linearity metrics refer to @sec-linearity). High efficiency is often achieved by operating the PA in saturation, which leads to signal distortion and spectral regrowth. Various techniques exist to improve the linearity of PAs, such as **predistortion**, **feedback**, and **envelope tracking**.
 
-For describing PA nonlinearity, various models can be used. One simple model is the **Saleh model** (originally developed for trawelling-wave tube amplifiers), which describes the AM/AM and AM/PM conversion of the PA using a smooth transition from linear operation to saturation [@Saleh.1981]. This model is defined by the following equations in the polar domain ($r(t)$ and $\psi(t)$ are the modulated input signal amplitude and phase, respectively; $y(t)$ is the output signal):
+For describing PA nonlinearity, various models can be used. One simple model is the **Saleh model** (originally developed for travelling-wave tube amplifiers), which describes the AM/AM and AM/PM conversion of the PA using a smooth transition from linear operation to saturation [@Saleh.1981]. This model is defined by the following equations in the polar domain ($r(t)$ and $\psi(t)$ are the modulated input signal amplitude and phase, respectively; $y(t)$ is the output signal):
 
 $$
 y(t) = A[r(t)] \cos\{ \omega_0 t + \psi(t) + \varphi[r(t)] \}

@@ -92,7 +92,7 @@ We now need to find the output noise coming from the source only. For this we ca
 We find that
 
 $$
-\overline{V_\mathrm{n,out,s}^2} = A_\mathrm{v}^2 \cdot 4 k T R_\mathrm{s} \cdot \left(\frac{R_\mathrm{p}}{R_\mathrm{s} + R_\mathrm{p}}{} \right)^2.
+\overline{V_\mathrm{n,out,s}^2} = A_\mathrm{v}^2 \cdot 4 k T R_\mathrm{s} \cdot \left(\frac{R_\mathrm{p}}{R_\mathrm{s} + R_\mathrm{p}} \right)^2.
 $$ {#eq-lna-naive-noise-input}
 
 Finally, we can use @eq-lna-naive-noise-total and @eq-lna-naive-noise-input with @eq-lna-noise-factor to calculate the noise figure of the simple resistively matched common-source LNA as
