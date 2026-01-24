@@ -1,5 +1,5 @@
 ::: {.content-hidden}
-Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+Copyright (C) 2025-2026 Harald Pretl and co-authors (harald.pretl@jku.at)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -445,11 +445,17 @@ The table below shows the **SNR requirements for different modulation formats** 
 
 When we modulate symbols onto a carrier, we usually do not transmit the symbols as pure sinusoids, but rather as pulses with a certain shape. The pulse shape determines the bandwidth of the transmitted signal and its spectral efficiency. A common pulse shape is the **rectangular pulse**, which has a sinc-shaped spectrum. However, the sinc function $\sin(\pi x)/ \pi x$ has side lobes that extend to infinity, which can cause interference with adjacent channels.
 
-For reference, the spectrum of a random binary sequence with equal probability of 0s and 1s, using rectangular pulses with a duration of $T_\mathrm{b}$ is given by ($S(f)$ is the two-sided power spectral density):
+For reference, the two-sided power spectral density $S(f)$ of a random binary sequence with equal probability of -1 and 1, using rectangular pulses with a duration of $T_\mathrm{b}$, is given by
 
 $$
-S(f) = \frac{T_\mathrm{b}}{4} \text{sinc}^2(fT_\mathrm{b}) + \frac{1}{4} \delta(f) = \frac{T_\mathrm{b}}{4} \left( \frac{\sin(\pi f T_\mathrm{b})}{\pi f T_\mathrm{b}} \right)^2 + \frac{1}{4} \delta(f)
-$$
+S(f) = T_\mathrm{b} \cdot \text{sinc}^2(fT_\mathrm{b}) = T_\mathrm{b} \cdot \left[ \frac{\sin(\pi f T_\mathrm{b})}{\pi f T_\mathrm{b}} \right]^2
+$$ {#eq-rect-pulse-spectrum}
+
+and visualized in @fig-rect-pulse-spectrum.
+
+{{< include /content/fundamentals/_fig_rect_pulse_spectrum.qmd >}}
+
+As can be seen in @fig-rect-pulse-spectrum, the main lobe of the sinc function has a bandwidth of $2/T_\mathrm{b}$, but the side lobes are quite pronounced with a slow roll-off. This means that a significant amount of power is present outside the main lobe, which can cause interference with adjacent channels.
 
 To avoid this, we can use pulse shapes that have better spectral properties, such as the raised cosine pulse or the root-raised cosine pulse. The **raised-cosine pulse** has a roll-off factor $\alpha$ that determines the excess bandwidth beyond the Nyquist bandwidth. The root-raised cosine (RRC) pulse is used in practical systems (with half the pulse filter implemented at the TX, and half at the RX), as it can be implemented with a matched filter at the receiver.
 
