@@ -528,3 +528,22 @@ In wireless communication systems, multiple users need to share the same frequen
 5. **Spatial division multiple access (SDMA)**: Uses multiple antennas to create spatially separated channels, allowing multiple users to transmit simultaneously in the same frequency band.
 
 In addition, all of these techniques can be combined to create more efficient and flexible communication systems. For example, OFDMA can be used in conjunction with SDMA to allow multiple users to share the same frequency resources while also taking advantage of spatial diversity. Also, TDMA can be combined with FDMA to create a hybrid multiple access scheme (which has been used in 2G GSM).
+
+## Modulation and Coding Schemes {#sec-fundamentals-mcs}
+
+In modern wireless communication systems several parameters can be adapted to the current channel conditions to optimize the data rate and reliability. These parameters include the modulation format (e.g., QPSK, 16-QAM, 64-QAM, etc.) and the error correction coding scheme (e.g., convolutional codes, turbo codes, LDPC codes, etc.). The combination of modulation format and coding scheme is called the **modulation and coding scheme (MCS)**. The MCS determines the number of bits per symbol and the level of error correction, which in turn affects the data rate and reliability of the communication link.
+
+Since there are many different MCS options available, and the receiver needs to be informed by the transmitter which MCS is used, a standardized set of MCS options is defined in most wireless communication standards. For example, the MCS options for WiFi can be seen in this [table](https://mcsindex.net), while the MCS calculation for 5G NR can be found [here](https://www.sqimway.com/nr_pdsch.php).
+
+::: {.callout-note}
+## Exemplary MCS in WiFi
+
+Some operating systems and drivers show the MCS (and other parameters of the Wi-Fi link) which are currently used. A typical output might be:
+
+- MCS: 7
+- RSSI: -53 dBm
+- Interference: -92 dBm
+- Bandwidth: 160 MHz
+
+Looking up MCS 7 in the WiFi MCS table linked above shows that this corresponds to 64-QAM with a coding rate of 5/6. With a bandwidth of 160 MHz, 2x MIMO and a guard interval (GI) of 0.8 µs, the maximum data rate is a whopping 1441 Mbps.
+:::
