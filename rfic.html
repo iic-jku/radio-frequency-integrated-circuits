@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2026-01-22">
+<meta name="dcterms.date" content="2026-01-24">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -371,6 +371,7 @@ window.Quarto = {
   <li><a href="#sec-fundamentals-pulse-shaping" id="toc-sec-fundamentals-pulse-shaping" class="nav-link" data-scroll-target="#sec-fundamentals-pulse-shaping"><span class="header-section-number">2.5</span> Pulse Shaping and Spectral Efficiency</a></li>
   <li><a href="#sec-fundamentals-ofdm" id="toc-sec-fundamentals-ofdm" class="nav-link" data-scroll-target="#sec-fundamentals-ofdm"><span class="header-section-number">2.6</span> Orthogonal Frequency-Division Multiplexing (OFDM)</a></li>
   <li><a href="#sec-fundamentals-multiple-access" id="toc-sec-fundamentals-multiple-access" class="nav-link" data-scroll-target="#sec-fundamentals-multiple-access"><span class="header-section-number">2.7</span> Multiple Access Techniques</a></li>
+  <li><a href="#sec-fundamentals-mcs" id="toc-sec-fundamentals-mcs" class="nav-link" data-scroll-target="#sec-fundamentals-mcs"><span class="header-section-number">2.8</span> Modulation and Coding Schemes</a></li>
   </ul></li>
   <li><a href="#sec-trx" id="toc-sec-trx" class="nav-link" data-scroll-target="#sec-trx"><span class="header-section-number">3</span> Transceivers</a>
   <ul class="collapse">
@@ -478,7 +479,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 22, 2026</p>
+      <p class="date">January 24, 2026</p>
     </div>
   </div>
   
@@ -1062,7 +1063,7 @@ Figure&nbsp;8: Two-tone IM3 test showing fundamental and IM3 product power vs.&n
 <p><span id="eq-iip3"><span class="math display">\[
 \text{IIP3} = P_\mathrm{in} + \frac{P_\mathrm{in} - P_\mathrm{IM3}}{2}
 \tag{11}\]</span></span></p>
-<p>Further, for midly nonlinear systems (i.e., <span class="math inline">\(\alpha_3\)</span> is dominating), the IIP3 can be approximated from the 1dB compression point as</p>
+<p>Further, for mildly nonlinear systems (i.e., <span class="math inline">\(\alpha_3\)</span> is dominating), the IIP3 can be approximated from the 1dB compression point as</p>
 <p><span id="eq-iip3-approx"><span class="math display">\[
 \text{IIP3}|_\mathrm{dBm} \approx P_\mathrm{1dB}|_\mathrm{dBm} + 9.6\,\text{dB}.
 \tag{12}\]</span></span></p>
@@ -1130,7 +1131,7 @@ P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \le
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Note that the simple approximation given above is only valid for reasonably high frequencies and typical temperatures, and is known as the Rayleigh-Jeans approximation of Planck’s blackbody radiation accounting for quantum effects and is given by <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span></p>
+<p>Note that the simple approximation given above is only valid for reasonably low frequencies and typical temperatures, and is known as the Rayleigh-Jeans approximation of Planck’s blackbody radiation accounting for quantum effects and is given by <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span></p>
 <p><span class="math display">\[
 \text{PSD} = \frac{4 R h f}{e^{{h f}/{k T}} - 1}
 \]</span></p>
@@ -1490,7 +1491,7 @@ Note&nbsp;6: OFDM in LTE
 <p>In LTE OFDM is used for the downlink (base station to user equipment) with the following parameters:</p>
 <ul>
 <li>Subcarrier spacing: 15 kHz</li>
-<li>CP length: 5.2 µs (first symbol) resp. 4.7 µs (following symbols), and 16.67 µs as extended CP for scenarious with large delay spreads</li>
+<li>CP length: 5.2 µs (first symbol) resp. 4.7 µs (following symbols), and 16.67 µs as extended CP for scenarios with large delay spreads</li>
 <li>Number of subcarriers: 1200 (for 20 MHz bandwidth)</li>
 <li>Modulation: QPSK, 16-QAM, 64-QAM, 256-QAM</li>
 </ul>
@@ -1514,6 +1515,31 @@ Note&nbsp;6: OFDM in LTE
 <li><p><strong>Spatial division multiple access (SDMA)</strong>: Uses multiple antennas to create spatially separated channels, allowing multiple users to transmit simultaneously in the same frequency band.</p></li>
 </ol>
 <p>In addition, all of these techniques can be combined to create more efficient and flexible communication systems. For example, OFDMA can be used in conjunction with SDMA to allow multiple users to share the same frequency resources while also taking advantage of spatial diversity. Also, TDMA can be combined with FDMA to create a hybrid multiple access scheme (which has been used in 2G GSM).</p>
+</section>
+<section id="sec-fundamentals-mcs" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="sec-fundamentals-mcs"><span class="header-section-number">2.8</span> Modulation and Coding Schemes</h2>
+<p>In modern wireless communication systems several parameters can be adapted to the current channel conditions to optimize the data rate and reliability. These parameters include the modulation format (e.g., QPSK, 16-QAM, 64-QAM, etc.) and the error correction coding scheme (e.g., convolutional codes, turbo codes, LDPC codes, etc.). The combination of modulation format and coding scheme is called the <strong>modulation and coding scheme (MCS)</strong>. The MCS determines the number of bits per symbol and the level of error correction, which in turn affects the data rate and reliability of the communication link.</p>
+<p>Since there are many different MCS options available, and the receiver needs to be informed by the transmitter which MCS is used, a standardized set of MCS options is defined in most wireless communication standards. For example, the MCS options for WiFi can be seen in this <a href="https://mcsindex.net">table</a>, while the MCS calculation for 5G NR can be found <a href="https://www.sqimway.com/nr_pdsch.php">here</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exemplary MCS in WiFi
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Some operating systems and drivers show the MCS (and other parameters of the Wi-Fi link) which are currently used. A typical output might be:</p>
+<ul>
+<li>MCS: 7</li>
+<li>RSSI: -53 dBm</li>
+<li>Interference: -92 dBm</li>
+<li>Bandwidth: 160 MHz</li>
+</ul>
+<p>Looking up MCS 7 in the WiFi MCS table linked above shows that this corresponds to 64-QAM with a coding rate of 5/6. With a bandwidth of 160 MHz, 2x MIMO and a guard interval (GI) of 0.8 µs, the maximum data rate is a whopping 1441 Mbps.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="sec-trx" class="level1" data-number="3">
@@ -2017,7 +2043,7 @@ Figure&nbsp;30: Eqivalent circuit to calculate the output noise from the input.
 </div>
 <p>We find that</p>
 <p><span id="eq-lna-naive-noise-input"><span class="math display">\[
-\overline{V_\mathrm{n,out,s}^2} = A_\mathrm{v}^2 \cdot 4 k T R_\mathrm{s} \cdot \left(\frac{R_\mathrm{p}}{R_\mathrm{s} + R_\mathrm{p}}{} \right)^2.
+\overline{V_\mathrm{n,out,s}^2} = A_\mathrm{v}^2 \cdot 4 k T R_\mathrm{s} \cdot \left(\frac{R_\mathrm{p}}{R_\mathrm{s} + R_\mathrm{p}} \right)^2.
 \tag{26}\]</span></span></p>
 <p>Finally, we can use <a href="#eq-lna-naive-noise-total" class="quarto-xref">Equation&nbsp;25</a> and <a href="#eq-lna-naive-noise-input" class="quarto-xref">Equation&nbsp;26</a> with <a href="#eq-lna-noise-factor" class="quarto-xref">Equation&nbsp;24</a> to calculate the noise figure of the simple resistively matched common-source LNA as</p>
 <p><span id="eq-lna-naive-noise-factor"><span class="math display">\[
@@ -2376,7 +2402,7 @@ Figure&nbsp;44: A 4-phase N-path filter.
 </div>
 </div>
 </div>
-<p>The key observation to make is that a switch that is opened and closed at a certain frequency (the LO frequency) can be seen as a time-variant resistor. This time-variant resistor converts impedance seen at one one to the other end, and also changes the frequency of this apparent impedance. In other words, if we connect grounded capacitors at one end of the mixer switches and look into the other end, we see a <strong>bandpass filter centered at the LO</strong> frequency! In this way we can build bandpass filters (and also bandstop filters <span class="citation" data-cites="Vazny.2010">(<a href="#ref-Vazny.2010" role="doc-biblioref">Vazny et al. 2010</a>)</span>) at very high frequencies which are precisely centered (without component variations) around <span class="math inline">\(\omega_\mathrm{LO}\)</span>.</p>
+<p>The key observation to make is that a switch that is opened and closed at a certain frequency (the LO frequency) can be seen as a time-variant resistor. This time-variant resistor converts impedance seen at one end to the other end, and also changes the frequency of this apparent impedance. In other words, if we connect grounded capacitors at one end of the mixer switches and look into the other end, we see a <strong>bandpass filter centered at the LO</strong> frequency! In this way we can build bandpass filters (and also bandstop filters <span class="citation" data-cites="Vazny.2010">(<a href="#ref-Vazny.2010" role="doc-biblioref">Vazny et al. 2010</a>)</span>) at very high frequencies which are precisely centered (without component variations) around <span class="math inline">\(\omega_\mathrm{LO}\)</span>.</p>
 <p>The impedance characteristics of such a tank circuit exhibit first-order bandpass behavior, as shown in <a href="#fig-tank-bandpass" class="quarto-xref">Figure&nbsp;45</a>. The peak impedance reaches 5.3 times the switch resistance (<span class="math inline">\(R_\mathrm{sw}\)</span>), and importantly, the bandwidth is inversely proportional to the capacitance value, i.e., <span class="math inline">\(\mathrm{BW} \propto 1/C\)</span>. This relationship allows for precise control of the filter bandwidth by adjusting the capacitor values.</p>
 <div id="cell-fig-tank-bandpass" class="cell" data-execution_count="45">
 <div class="cell-output cell-output-display">
@@ -3698,7 +3724,7 @@ Figure&nbsp;95: A basic two-stage single-ended common-source power amplifier wit
 \text{PAE} = \frac{P_\mathrm{out} - P_\mathrm{in}}{P_\mathrm{dc}}
 \]</span></p>
 <p>Ideally, we want both efficiency metrics as high as possible, but in practice there is a trade-off between efficiency and linearity (for linearity metrics refer to <a href="#sec-linearity" class="quarto-xref">Section&nbsp;2.2</a>). High efficiency is often achieved by operating the PA in saturation, which leads to signal distortion and spectral regrowth. Various techniques exist to improve the linearity of PAs, such as <strong>predistortion</strong>, <strong>feedback</strong>, and <strong>envelope tracking</strong>.</p>
-<p>For describing PA nonlinearity, various models can be used. One simple model is the <strong>Saleh model</strong> (originally developed for trawelling-wave tube amplifiers), which describes the AM/AM and AM/PM conversion of the PA using a smooth transition from linear operation to saturation <span class="citation" data-cites="Saleh.1981">(<a href="#ref-Saleh.1981" role="doc-biblioref">Saleh 1981</a>)</span>. This model is defined by the following equations in the polar domain (<span class="math inline">\(r(t)\)</span> and <span class="math inline">\(\psi(t)\)</span> are the modulated input signal amplitude and phase, respectively; <span class="math inline">\(y(t)\)</span> is the output signal):</p>
+<p>For describing PA nonlinearity, various models can be used. One simple model is the <strong>Saleh model</strong> (originally developed for travelling-wave tube amplifiers), which describes the AM/AM and AM/PM conversion of the PA using a smooth transition from linear operation to saturation <span class="citation" data-cites="Saleh.1981">(<a href="#ref-Saleh.1981" role="doc-biblioref">Saleh 1981</a>)</span>. This model is defined by the following equations in the polar domain (<span class="math inline">\(r(t)\)</span> and <span class="math inline">\(\psi(t)\)</span> are the modulated input signal amplitude and phase, respectively; <span class="math inline">\(y(t)\)</span> is the output signal):</p>
 <p><span class="math display">\[
 y(t) = A[r(t)] \cos\{ \omega_0 t + \psi(t) + \varphi[r(t)] \}
 \]</span></p>
@@ -3928,14 +3954,14 @@ Vazny, Rastislav, Werner Schelmbauer, Harald Pretl, Stefan Herzinger, and Robert
 </div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div>Apache-2.0 license</div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{pretl2026,
   author = {Pretl, Harald},
   title = {Radio-Frequency {Integrated} {Circuits}},
-  date = {2026-01-22},
+  date = {2026-01-24},
   url = {https://iic-jku.github.io/radio-frequency-integrated-circuits},
   doi = {10.5281/zenodo.17563943},
   langid = {en-US}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-pretl2026" class="csl-entry quarto-appendix-citeas" role="listitem">
 Pretl, Harald. 2026. <span>“Radio-Frequency Integrated Circuits.”</span>
-January 22, 2026. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
+January 24, 2026. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
