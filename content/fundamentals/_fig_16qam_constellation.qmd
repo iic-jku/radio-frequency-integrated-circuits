@@ -23,7 +23,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Create figure and axis
-fig, ax = plt.subplots(1, 1)
+fig, ax = plt.subplots(1, 1, figsize=(5, 5))
 
 # Define 16-QAM constellation points
 # Standard 16-QAM has points at ±1, ±3 for both I and Q

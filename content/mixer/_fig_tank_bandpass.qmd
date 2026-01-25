@@ -55,7 +55,7 @@ f_3dB_upper = f[idx_3dB_upper]
 bandwidth = f_3dB_upper - f_3dB_lower
 
 # Create the plot
-fig, ax = plt.subplots(1, 1)
+fig, ax = plt.subplots(1, 1, figsize=(6, 4))
 
 # Plot impedance magnitude
 ax.plot(f, Z_magnitude, 'b-', linewidth=2.5, label='|Z(ω)|')

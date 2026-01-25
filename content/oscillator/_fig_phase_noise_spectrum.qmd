@@ -50,7 +50,7 @@ L_total_linear = L_1f3_linear + L_1f2_linear + L_floor_linear
 L_total = 10 * np.log10(L_total_linear)
 
 # Create the plot
-fig, ax = plt.subplots(1, 1)
+fig, ax = plt.subplots(1, 1, figsize=(6, 4))
 
 # Plot phase noise spectrum
 ax.semilogx(f_offset, L_total, 'b-', linewidth=3, label='Total Phase Noise')

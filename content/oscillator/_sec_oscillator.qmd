@@ -183,19 +183,28 @@ Let us assume the following example from a Bluetooth LE receiver: The sensitivit
 From the sensitivity target and the SNR requirement, we can calculate the maximum allowable noise floor in the RX. We add a margin of 3 dB to account for implementation losses:
 
 $$
-P_\mathrm{noise,max} = P_\mathrm{sens} - \text{SNR} - P_\mathrm{margin} = -70\,\text{dBm} - 10\,\text{dB} - 3\,\text{dB} = -83\,\text{dBm}
+\begin{split}
+P_\mathrm{noise,max} &= P_\mathrm{sens} - \text{SNR} - P_\mathrm{margin} \\
+&= -70\,\text{dBm} - 10\,\text{dB} - 3\,\text{dB} = -83\,\text{dBm}
+\end{split}
 $$
 
 The interferer power is:
 
 $$
-P_\mathrm{interferer} = P_\mathrm{sens} - \text{C/I} = -70\,\text{dBm} + 27\,\text{dB} = -43\,\text{dBm}
+\begin{split}
+P_\mathrm{interferer} &= P_\mathrm{sens} - \text{C/I} \\
+&= -70\,\text{dBm} + 27\,\text{dB} = -43\,\text{dBm}
+\end{split}
 $$
 
 Using @eq-reciprocal-mixing-noise, we can express the maximum allowable phase noise at 3 MHz offset at 2.4 GHz as:
 
 $$
-\phn[3\,\text{MHz}] = P_\mathrm{noise,max} - P_\mathrm{interferer} - 10 \log_{10}(B) = -83\,\text{dBm} + 43\,\text{dBm} - 60\,\text{dB} = -100\,\text{dBc/Hz}
+\begin{split}
+\phn[3\,\text{MHz}] &= P_\mathrm{noise,max} - P_\mathrm{interferer} - 10 \log_{10}(B) \\
+&= -83\,\text{dBm} + 43\,\text{dBm} - 60\,\text{dB} = -100\,\text{dBc/Hz}
+\end{split}
 $$
 :::
 

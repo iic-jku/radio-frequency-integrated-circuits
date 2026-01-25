@@ -45,7 +45,7 @@ f_low = f_norm[f_norm < 0.1]
 H_approx_dB = 20 * np.log10(2 * np.pi * f_low)
 
 # Create the plot
-plt.figure()
+plt.figure(figsize=(6, 4))
 plt.plot(f_norm, H_f_magnitude, 'b-', linewidth=2, label='First-order DSM NTF |H(f)|')
 
 # Add vertical line for loop filter bandwidth (100 kHz)

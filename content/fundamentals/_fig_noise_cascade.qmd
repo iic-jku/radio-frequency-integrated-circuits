@@ -24,8 +24,7 @@ import schemdraw.dsp as dsp
 
 sd.svgconfig.svg2 = False
 with sd.Drawing(canvas='svg') as d:
-    d.config(unit=2)
-    d.config(fontsize=14)
+    d.config(unit=2, fontsize=14)
 
     elm.Ground()
     Vn = elm.SourceSin().up().label(r'$S_\mathrm{in}$')

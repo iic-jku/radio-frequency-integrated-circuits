@@ -23,8 +23,7 @@ import schemdraw.elements as elm
 import schemdraw.dsp as dsp
 sd.svgconfig.svg2 = False
 with sd.Drawing(canvas='svg') as d:
-    d.config(unit=2)
-    d.config(fontsize=16)
+    d.config(unit=2, fontsize=14)
    
     elm.Dot(open=True).label(r'data_in')
     elm.Line().right().length(d.unit*0.5)

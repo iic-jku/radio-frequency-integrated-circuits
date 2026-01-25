@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 import pysmithchart
 
 # Create a subplot that will use the Smith projection and include the minor grid
-plt.figure(figsize=(6,6))
+plt.figure(figsize=(5, 5))
 plt.subplot(1, 1, 1, projection="smith", axes_impedance=50, grid_minor_enable=True)
 
 plt.plot([50 + 0j], markersize=10)

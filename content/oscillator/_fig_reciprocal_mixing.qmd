@@ -23,7 +23,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Create figure with single plot
-fig, ax = plt.subplots(1, 1)
+fig, ax = plt.subplots(1, 1, figsize=(6, 4))
 
 # RF frequencies (in GHz for BLE example)
 f_lo = 2.401  # LO frequency (GHz)  
@@ -94,7 +94,7 @@ ax.fill_between(freq_rf[overlap_region_1], -170,
 
 # Add frequency annotations
 ax.text(f_desired, desired_power + 8, 'Desired Signal\n(-70 dBm)', ha='center', va='bottom', color='green')
-ax.text(f_interferer, interferer_power + 8, 'Strong Interferer\n(-43 dBm)', ha='center', va='bottom', color='red')
+ax.text(f_interferer, interferer_power + 8, 'Strong Interferer (-43 dBm)', ha='center', va='bottom', color='red')
 
 # Add distance annotation
 ax.annotate('', xy=(f_desired, -100), xytext=(f_interferer, -100),

@@ -61,7 +61,7 @@ IP3_in_dBm = (G_dB - IM3_offset) / 2
 IP3_out_dBm = IP3_in_dBm + G_dB
 
 # Create the plot
-fig, ax = plt.subplots(1, 1)
+fig, ax = plt.subplots(1, 1, figsize=(6, 4))
 
 # Plot fundamental tone
 valid_fund = (Pout_fund_dBm > -100) & (Pin_dBm <= 5)  # Filter values and limit x-axis to 5 dBm
@@ -98,7 +98,7 @@ ax.text(-20, -63, '3 dB/dB slope', color='red', rotation=46,
 ax.set_xlabel('Input Power per Tone (dBm)')
 ax.set_ylabel('Output Power (dBm)')
 ax.grid(True, alpha=0.3)
-ax.legend(loc='lower right')
+ax.legend(loc='lower right', fontsize=9)
 
 # Set axis limits for better visualization
 ax.set_xlim(-40, 20)

@@ -24,7 +24,7 @@ import matplotlib.patches as patches
 import numpy as np
 
 # Create figure and axis
-fig, ax = plt.subplots(1, 1, figsize=(8, 7))
+fig, ax = plt.subplots(1, 1, figsize=(6, 5))
 
 # Define dimensions and positions
 line_length = 4

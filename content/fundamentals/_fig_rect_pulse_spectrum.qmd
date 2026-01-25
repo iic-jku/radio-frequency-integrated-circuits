@@ -38,7 +38,7 @@ S_f = T_b * sinc_val**2
 S_f_dB = 10 * np.log10(S_f / np.max(S_f))
 
 # Create figure
-fig, ax = plt.subplots(figsize=(6, 3))
+fig, ax = plt.subplots(figsize=(6, 4))
 
 # Plot spectrum
 ax.plot(f_norm, S_f_dB, linewidth=2)

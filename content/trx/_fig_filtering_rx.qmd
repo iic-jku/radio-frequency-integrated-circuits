@@ -23,7 +23,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Create figure with two subplots
-fig, (ax1, ax2) = plt.subplots(2, 1)
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(6, 6))
 
 # Define frequency range
 f_center = 900  # MHz - wanted channel center frequency
@@ -58,16 +58,15 @@ for freq, amp, color, label, style in signals:
     # Add signal labels with power levels
     if 'Wanted' in label:
         ax1.text(freq, amp + 10, f'{label}\n{amp} dBm', ha='center', va='bottom', 
-                color=color,
+                color=color, fontsize=9,
                 bbox=dict(boxstyle="round,pad=0.3", facecolor='lightgreen', alpha=0.7))
     elif 'Blocker 1' in label or 'Blocker 2' in label:
         ax1.text(freq, amp + 10, f'{label}\n{amp} dBm', 
-                ha='center', va='bottom', color=color,
+                ha='center', va='bottom', color=color, fontsize=9,
                 bbox=dict(boxstyle="round,pad=0.2", facecolor='lightcoral', alpha=0.7))
     else:
         ax1.text(freq, amp + 10, f'{label}\n{amp} dBm', ha='center', va='bottom', 
-                color=color, bbox=dict(boxstyle="round,pad=0.2", facecolor='moccasin', alpha=0.7))
-
+                color=color, fontsize=9, bbox=dict(boxstyle="round,pad=0.2", facecolor='moccasin', alpha=0.7))
 ax1.set_xlabel('Frequency (MHz)')
 ax1.set_ylabel('Power (dBm)')
 ax1.grid(True, alpha=0.3)
@@ -106,10 +105,10 @@ for freq, amp, color, label, style in signals:
         
         if 'Wanted' in label:
             ax2.text(freq, filtered_amp_dbm + 5, f'Wanted\n{filtered_amp_dbm:.0f} dBm', 
-                    ha='center', va='bottom', color=color)
+                    ha='center', va='bottom', color=color, fontsize=9)
         elif filtered_amp_dbm > -90:  # Show blocker levels if significant
             ax2.text(freq, filtered_amp_dbm + 3, f'{filtered_amp_dbm:.0f} dBm', 
-                    ha='center', va='bottom', color=color)
+                    ha='center', va='bottom', color=color, fontsize=9)
 
 ax2.set_xlabel('Frequency (MHz)')
 ax2.set_ylabel('Output Power (dBm)')

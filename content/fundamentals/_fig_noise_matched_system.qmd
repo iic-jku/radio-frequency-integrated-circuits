@@ -22,8 +22,7 @@ import schemdraw as sd
 import schemdraw.elements as elm
 sd.svgconfig.svg2 = False
 with sd.Drawing(canvas='svg') as d:
-    d.config(unit=2)
-    d.config(fontsize=16)
+    d.config(unit=2, fontsize=14)
 
     elm.Ground()
     Vn = elm.SourceSin().up().label(r'$\overline{V_\mathrm{n,s}^2}$')

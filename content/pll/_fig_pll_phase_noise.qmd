@@ -68,26 +68,27 @@ L_total_linear = L_ref_filtered_linear + L_vco_filtered_linear
 L_total = 10 * np.log10(L_total_linear)
 
 # Create the plot
-plt.semilogx(f_offset, L_ref_unfiltered * np.ones_like(f_offset), 'b:', linewidth=2, label='Reference phase noise\n(unfiltered)', alpha=0.8)
-plt.semilogx(f_offset, L_ref_filtered, 'b--', linewidth=2, label='Reference phase noise\n(low-pass filtered)', alpha=0.8)
-plt.semilogx(f_offset, L_vco, 'r:', linewidth=2, label='VCO phase noise\n(unfiltered, 1/f³ + 1/f²)', alpha=0.8)
-plt.semilogx(f_offset, L_vco_filtered, 'r--', linewidth=2, label='VCO phase noise\n(high-pass filtered)', alpha=0.8)
-plt.semilogx(f_offset, L_total, 'k-', linewidth=3, label='Total PLL phase noise', alpha=0.9)
+fig, ax = plt.subplots(1, 1, figsize=(6, 4))
+ax.semilogx(f_offset, L_ref_unfiltered * np.ones_like(f_offset), 'b:', linewidth=2, label='Reference phase noise\n(unfiltered)', alpha=0.8)
+ax.semilogx(f_offset, L_ref_filtered, 'b--', linewidth=2, label='Reference phase noise\n(low-pass filtered)', alpha=0.8)
+ax.semilogx(f_offset, L_vco, 'r:', linewidth=2, label='VCO phase noise\n(unfiltered, 1/f³ + 1/f²)', alpha=0.8)
+ax.semilogx(f_offset, L_vco_filtered, 'r--', linewidth=2, label='VCO phase noise\n(high-pass filtered)', alpha=0.8)
+ax.semilogx(f_offset, L_total, 'k-', linewidth=3, label='Total PLL phase noise', alpha=0.9)
 
 # Add vertical line at loop bandwidth
-plt.axvline(f_loop, color='gray', linestyle=':', alpha=0.7, linewidth=2)
-plt.text(f_loop*1.5, -80, f'Loop BW\n{f_loop/1000:.0f} kHz', fontsize=10, ha='left')
+ax.axvline(f_loop, color='gray', linestyle=':', alpha=0.7, linewidth=2)
+ax.text(f_loop*1.5, -80, f'Loop BW\n{f_loop/1000:.0f} kHz', fontsize=10, ha='left')
 
 # Add vertical line at VCO corner frequency
-plt.axvline(f_corner, color='red', linestyle=':', alpha=0.5, linewidth=1)
+ax.axvline(f_corner, color='red', linestyle=':', alpha=0.5, linewidth=1)
 
 # Formatting
-plt.xlabel('Frequency offset from carrier (Hz)')
-plt.ylabel('Phase noise (dBc/Hz)')
-plt.grid(True, alpha=0.3)
-plt.legend(loc='upper right', fontsize=9)
-plt.ylim(-160, -60)
-plt.xlim(1e3, 1e8)
+ax.set_xlabel('Frequency offset from carrier (Hz)')
+ax.set_ylabel('Phase noise (dBc/Hz)')
+ax.grid(True, alpha=0.3)
+ax.legend(loc='upper right', fontsize=9)
+ax.set_ylim(-160, -60)
+ax.set_xlim(1e3, 1e8)
 
 plt.tight_layout()
 plt.show()
