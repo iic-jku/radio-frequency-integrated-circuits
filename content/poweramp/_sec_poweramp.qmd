@@ -22,7 +22,7 @@ A basic PA based on a single common-source stage is shown in @fig-poweramp-basic
 
 {{< include /content/poweramp/_fig_poweramp_basic.qmd >}}
 
-The RF choke at the drain allows the drain node to swing above the supply voltage, enabling higher output power. However, the transistor $M_1$ must be able to handle the high voltages and currents involved. Unfortunately, in Silicon technologies the Johnson limit, which is the product of the breakdown voltage and the transit frequency of the transistor, is limited to around 200 GHz·V. This often requires the use of different semiconductor technologies for the PAs, such as GaAs, InP, or GaN. Implementing the PA in a different technology than the rest of the RFIC means to implement it off-chip.
+The RF choke at the drain allows the drain node to swing above the supply voltage, enabling higher output power. However, the transistor $M_1$ must be able to handle the high voltages and currents involved. Unfortunately, in silicon technologies the Johnson limit, which is the product of the breakdown voltage and the transit frequency of the transistor, is limited to around 200 GHz·V. This often requires the use of different semiconductor technologies for the PAs, such as GaAs, InP, or GaN. Implementing the PA in a different technology than the rest of the RFIC means implementing it off-chip.
 
 Assuming the output voltage swing is limited only by the supply voltage $V_\mathrm{DD}$, the maximum output power delivered to a load $R_\mathrm{L}$ is given by
 
@@ -35,6 +35,8 @@ For a typical supply voltage of $V_\mathrm{DD} = 3\,\mathrm{V}$ and a load of $R
 In order to drive the large output transistor $M_1$ in @fig-poweramp-basic, a driver stage is often required. This driver stage provides the necessary voltage and current gain to ensure that the PA operates in its optimal region. If needed, even another pre-driver stage can be added, but higher gain might cause stability issues and increased output noise. A two-stage power amplifier is shown in @fig-poweramp-twostage.
 
 {{< include /content/poweramp/_fig_poweramp_twostage.qmd >}}
+
+## PA Efficiency {#sec-poweramp-efficiency}
 
 One of the main characteristics of a PA is its **drain efficiency**, which is defined as the ratio of the output RF power to the total DC power consumed from the supply:
 
@@ -50,6 +52,8 @@ $$
 
 Ideally, we want both efficiency metrics as high as possible, but in practice there is a trade-off between efficiency and linearity (for linearity metrics refer to @sec-linearity). High efficiency is often achieved by operating the PA in saturation, which leads to signal distortion and spectral regrowth. Various techniques exist to improve the linearity of PAs, such as **predistortion**, **feedback**, and **envelope tracking**.
 
+## PA Nonlinearity {#sec-poweramp-nonlinearity}
+
 For describing PA nonlinearity, various models can be used. One simple model is the **Saleh model** (originally developed for travelling-wave tube amplifiers), which describes the AM/AM and AM/PM conversion of the PA using a smooth transition from linear operation to saturation [@Saleh.1981]. This model is defined by the following equations in the polar domain ($r(t)$ and $\psi(t)$ are the modulated input signal amplitude and phase, respectively; $y(t)$ is the output signal):
 
 $$
@@ -64,7 +68,7 @@ $$
 
 where $\alpha_1$, $\beta_1$, $\alpha_2$, and $\beta_2$ are the Saleh model parameters that define the PA characteristics. The AM/AM conversion $A(r)$ describes how the output amplitude saturates with increasing input amplitude, while the AM/PM conversion $\varphi(r)$ describes the phase distortion introduced by the PA. While this simple model does not capture memory effects or frequency-dependent behavior, it provides a good starting point for understanding PA nonlinearity.
 
-Note that most discrete PAs are implemented similar to @fig-poweramp-twostage. For RFIC-integrated PAs, a single-ended implementation is problematic due to power supply parasitics and coupling issues. Therefore, integrated PAs are very often implemented in a differential configuration, which improves power supply rejection and reduces even-order harmonics [@Moreira.2015, @Fuhrmann.2017]. A generic differential PA implementation is shown in @fig-poweramp-differential.
+Note that most discrete PAs are implemented similarly to @fig-poweramp-twostage. For RFIC-integrated PAs, a single-ended implementation is problematic due to power supply parasitics and coupling issues. Therefore, integrated PAs are very often implemented in a differential configuration, which improves power supply rejection and reduces even-order harmonics [@Moreira.2015, @Fuhrmann.2017]. A generic differential PA implementation is shown in @fig-poweramp-differential.
 
 {{< include /content/poweramp/_fig_poweramp_differential.qmd >}}
 
@@ -98,9 +102,28 @@ Power amplifiers can be classified into different [classes](https://en.wikipedia
 - **Class D, E, and F** amplifiers are switching amplifiers that achieve very high efficiencies by operating the transistor as a switch, either fully on or fully off. They use various techniques such as pulse-width modulation (PWM), tuned loads, and harmonic tuning to optimize efficiency. These classes are commonly used in high-power applications, such as audio amplifiers and RF transmitters.
 - **Class G and H** amplifiers use multiple supply voltages or adaptive supply voltages to improve efficiency, and can be combined with the other classes. They are often used in applications where power consumption is a concern, such as battery-powered devices. Class AB combined with Class G or H techniques is state-of-the-art in mobile device PAs. Class G and H are sometimes also referred to as "**envelope tracking**" techniques.
 
+## PA Stability and Neutralization {#sec-poweramp-stability}
+
+Looking at the basic PA circuit in @fig-poweramp-basic, it becomes apparent that a PA can easily become unstable due to the high gain and large signal swings involved. Parasitic capacitances and inductances in the layout and packaging can create feedback paths that lead to oscillations, especially the Miller capacitance $C_\mathrm{m}$ between the gate and drain of the transistor, as shown in @fig-poweramp-miller.
+
+{{< include /content/poweramp/_fig_poweramp_miller.qmd >}}
+
+The Miller capacitance effectively creates a feedback loop from the output to the input, which can lead to instability, as also shown in @sec-amp-stability. Lowering $S_{12}$ (and thus getting rid of the Miller effect due to $C_\mathrm{m}$) is thus crucial for PA stability. This can be mainly achieved in two ways:
+
+- Adding a cascode stage, which isolates the input from the output and reduces the effect of $C_\mathrm{m}$ significantly (see @fig-poweramp-differential).
+- Adding a **neutralization** capacitor between the gate and drain, which cancels out the effect of $C_\mathrm{m}$. Alternatively, feedback networks or additional circuitry can be used to stabilize the PA.
+
+In order to implement neutralization, we add in parallel to the (intrinsic) Miller capacitance $C_\mathrm{m}$ a capacitor $C_\mathrm{n}$, driven by an inverted version of the output signal. The neutralization capacitor $C_\mathrm{n}$ is chosen such that it cancels out the effect of $C_\mathrm{m}$, i.e., $C_\mathrm{n} = C_\mathrm{m}$. This effectively eliminates the feedback path from the output to the input, improving stability. However, implementing neutralization requires careful design and tuning, as any mismatch between $C_\mathrm{m}$ and $C_\mathrm{n}$ can lead to residual feedback and potential instability. This arrangement is shown in @fig-poweramp-neutralization.
+
+{{< include /content/poweramp/_fig_poweramp_neutralization.qmd >}}
+
+In a differential PA implementation, the neutralization capacitors can be connected cross-coupled between the drains and gates of the two transistors, further improving stability, as shown in @fig-poweramp-differential-neutralization. The cancellation of the Miller effect also leads to improved bandwidth, which is beneficial for wideband applications.
+
+{{< include /content/poweramp/_fig_poweramp_differential_neutralization.qmd >}}
+
 ## PA Advanced Techniques {#sec-poweramp-advanced}
 
-To further improve the performance of power amplifiers, several advanced techniques can be employed:
+To further improve the performance of power amplifiers (but outside the scope of these lecture notes), several advanced techniques can be employed:
 
 - **Predistortion**: This technique involves applying an inverse distortion to the input signal before it enters the PA, effectively canceling out the nonlinearity of the PA. Digital predistortion (DPD) is commonly used in modern communication systems to improve linearity and reduce spectral regrowth.
 - **Envelope Tracking**: This technique dynamically adjusts the supply voltage of the PA based on the envelope of the input signal, improving efficiency by reducing power consumption during low signal levels (see Class G and Class H).

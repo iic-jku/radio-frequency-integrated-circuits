@@ -1,0 +1,48 @@
+::: {.content-hidden}
+Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-poweramp-miller
+#| echo: false
+#| fig-cap: "A basic single stage single-ended common-source power amplifier showing the Miller capacitance $C_\\mathrm{m}$ between input and output (in blue)."
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=14)
+
+    elm.Line().right(d.unit/2).idot(open=True).label(r'$s_\mathrm{in}$', loc='left')
+    dsp.Square().label('Input\nmatch', loc='top', ofst=0.2)
+    elm.Line().right(d.unit)
+    M1 = elm.AnalogNFet(offset_gate=False).anchor('gate').drop('source').label('$M_1$', loc='right').reverse()
+    elm.Ground()
+    elm.Line().up(d.unit/4).at(M1.drain).dot()
+    d.push()
+    elm.Line().right(d.unit/2)
+    dsp.Square().label('Output\nmatch', loc='top', ofst=0.2)
+    elm.Line().right(d.unit/2).dot(open=True).label(r'$s_\mathrm{out}$', loc='right')
+    d.pop() 
+    d.push()
+    elm.Inductor2().up().label(r'RF choke')
+    elm.Vdd().label(r'$V_\mathrm{DD}$', loc='top')
+    d.pop()
+    elm.Capacitor().left().label(r'$C_\mathrm{m}$', loc='bottom').color('blue')
+    elm.Line().down().toy(M1.gate).color('blue')
+    elm.Dot()
+```
