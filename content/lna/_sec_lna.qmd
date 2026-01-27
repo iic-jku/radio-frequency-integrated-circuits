@@ -46,6 +46,38 @@ $$
 
 A higher return loss indicates a better impedance match.  A return loss of 10 dB indicates that 10% of the signal power is reflected back, while a return loss of 20 dB indicates that only 1% of the signal power is reflected back. In practice, a return loss of at least 10 dB is desired, with higher (positive) values being better [@Bird.2009].
 
+## Amplifier Stability {#sec-amp-stability}
+
+When designing amplifiers, it is important to ensure that the amplifier is stable, i.e., that it does not oscillate. Under well-defined conditions, this is already complicated enough, but in RF design, the situation is even more complex, as the stability usually is a function of source and load impedances, which, especially when going off-chip, are often not well defined. Hence, we have a two-port network, where we need to ensure that the amplifier is stable for all possible source and load impedances. Luckily, there are well-defined criteria to check the stability of a two-port network.
+
+One test for unconditional stability is the Rollet stability factor $K$, which is defined as [@Pozar_RF]:
+
+$$
+K = \frac{1 - |S_{11}|^2 - |S_{22}|^2 + |\Delta|^2}{2 |S_{12} S_{21}|}, \quad \text{with} \quad \Delta = S_{11} S_{22} - S_{12} S_{21}.
+$$ {#eq-rollet-stability-factor}
+
+For unconditional stability, the following conditions must be met:
+
+$$
+K > 1 \quad \text{and} \quad |\Delta| < 1.
+$$
+
+If these conditions are not met, the amplifier is potentially unstable, i.e., it might oscillate for some source and load impedances. In this case, further analysis is required to determine the stability of the amplifier. Unfortunately, the $K$-factor test only provides a binary answer (stable/unstable) and does not provide any information about how close the amplifier is to instability. For this purpose, the so-called $\mu$ stability factor is used, which is defined as [@Edwards.1992]:
+
+$$
+\mu = \frac{1 - |S_{11}|^2}{|S_{22} - S_{11}^* \Delta| + |S_{12} S_{21}|}
+$$ {#eq-mu-stability-factor}
+
+For unconditional stability, the following condition must be met:
+
+$$
+\mu > 1
+$$
+
+The $\mu$-factor provides a measure of how close the amplifier is to instability; the larger the $\mu$-factor, the more stable the amplifier is. A $\mu$-factor of 1.5 or higher is usually considered sufficient for practical applications.
+
+What we can learn from @eq-rollet-stability-factor and @eq-mu-stability-factor is that to achieve a *stable* amplifier, we need to *minimize* the reverse gain $S_{12}$ (also called isolation) and the input and output reflection coefficients $S_{11}$ and $S_{22}$. In practice, this means that we need to design the amplifier with high gain and good input and output matching. Cascode stages are often used in RF amplifiers to achieve high gain and good isolation.
+
 ## Resistively Matched Common-Source LNA {#sec-lna-resistive-matching}
 
 The key question is now how to design an LNA with low noise figure and an input impedance matched to 50 Ω? In order to appreciate this design challenge, we will first try a naive approach, using a common-source amplifier with resistive termination, as shown in @fig-lna-naive.
