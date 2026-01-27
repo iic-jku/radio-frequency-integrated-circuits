@@ -442,8 +442,11 @@ window.Quarto = {
   </ul></li>
   <li><a href="#sec-poweramp" id="toc-sec-poweramp" class="nav-link" data-scroll-target="#sec-poweramp"><span class="header-section-number">8</span> Power Amplifiers</a>
   <ul class="collapse">
-  <li><a href="#sec-poweramp-classes" id="toc-sec-poweramp-classes" class="nav-link" data-scroll-target="#sec-poweramp-classes"><span class="header-section-number">8.1</span> Amplifier Classes</a></li>
-  <li><a href="#sec-poweramp-advanced" id="toc-sec-poweramp-advanced" class="nav-link" data-scroll-target="#sec-poweramp-advanced"><span class="header-section-number">8.2</span> PA Advanced Techniques</a></li>
+  <li><a href="#sec-poweramp-efficiency" id="toc-sec-poweramp-efficiency" class="nav-link" data-scroll-target="#sec-poweramp-efficiency"><span class="header-section-number">8.1</span> PA Efficiency</a></li>
+  <li><a href="#sec-poweramp-nonlinearity" id="toc-sec-poweramp-nonlinearity" class="nav-link" data-scroll-target="#sec-poweramp-nonlinearity"><span class="header-section-number">8.2</span> PA Nonlinearity</a></li>
+  <li><a href="#sec-poweramp-classes" id="toc-sec-poweramp-classes" class="nav-link" data-scroll-target="#sec-poweramp-classes"><span class="header-section-number">8.3</span> Amplifier Classes</a></li>
+  <li><a href="#sec-poweramp-stability" id="toc-sec-poweramp-stability" class="nav-link" data-scroll-target="#sec-poweramp-stability"><span class="header-section-number">8.4</span> PA Stability and Neutralization</a></li>
+  <li><a href="#sec-poweramp-advanced" id="toc-sec-poweramp-advanced" class="nav-link" data-scroll-target="#sec-poweramp-advanced"><span class="header-section-number">8.5</span> PA Advanced Techniques</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="rfic.pdf"><i class="bi bi-file-pdf"></i>Typst</a></li></ul></div><div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="content/pll/delta_sigma_modulator-preview.html"><i class="bi bi-journal-code"></i>MASH Modulator (3rd Order)</a></li></ul></div></nav>
@@ -3742,7 +3745,7 @@ Figure&nbsp;95: A basic single stage single-ended common-source power amplifier 
 </div>
 </div>
 </div>
-<p>The RF choke at the drain allows the drain node to swing above the supply voltage, enabling higher output power. However, the transistor <span class="math inline">\(M_1\)</span> must be able to handle the high voltages and currents involved. Unfortunately, in Silicon technologies the Johnson limit, which is the product of the breakdown voltage and the transit frequency of the transistor, is limited to around 200 GHz·V. This often requires the use of different semiconductor technologies for the PAs, such as GaAs, InP, or GaN. Implementing the PA in a different technology than the rest of the RFIC means to implement it off-chip.</p>
+<p>The RF choke at the drain allows the drain node to swing above the supply voltage, enabling higher output power. However, the transistor <span class="math inline">\(M_1\)</span> must be able to handle the high voltages and currents involved. Unfortunately, in silicon technologies the Johnson limit, which is the product of the breakdown voltage and the transit frequency of the transistor, is limited to around 200 GHz·V. This often requires the use of different semiconductor technologies for the PAs, such as GaAs, InP, or GaN. Implementing the PA in a different technology than the rest of the RFIC means implementing it off-chip.</p>
 <p>Assuming the output voltage swing is limited only by the supply voltage <span class="math inline">\(V_\mathrm{DD}\)</span>, the maximum output power delivered to a load <span class="math inline">\(R_\mathrm{L}\)</span> is given by</p>
 <p><span class="math display">\[
 P_\mathrm{out,max} = \frac{V_\mathrm{DD}^2}{2 R_\mathrm{L}}.
@@ -3763,6 +3766,8 @@ Figure&nbsp;96: A basic two-stage single-ended common-source power amplifier wit
 </div>
 </div>
 </div>
+<section id="sec-poweramp-efficiency" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="sec-poweramp-efficiency"><span class="header-section-number">8.1</span> PA Efficiency</h2>
 <p>One of the main characteristics of a PA is its <strong>drain efficiency</strong>, which is defined as the ratio of the output RF power to the total DC power consumed from the supply:</p>
 <p><span class="math display">\[
 \eta = \frac{P_\mathrm{out}}{P_\mathrm{dc}}
@@ -3772,6 +3777,9 @@ Figure&nbsp;96: A basic two-stage single-ended common-source power amplifier wit
 \text{PAE} = \frac{P_\mathrm{out} - P_\mathrm{in}}{P_\mathrm{dc}}
 \]</span></p>
 <p>Ideally, we want both efficiency metrics as high as possible, but in practice there is a trade-off between efficiency and linearity (for linearity metrics refer to <a href="#sec-linearity" class="quarto-xref">Section&nbsp;2.2</a>). High efficiency is often achieved by operating the PA in saturation, which leads to signal distortion and spectral regrowth. Various techniques exist to improve the linearity of PAs, such as <strong>predistortion</strong>, <strong>feedback</strong>, and <strong>envelope tracking</strong>.</p>
+</section>
+<section id="sec-poweramp-nonlinearity" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="sec-poweramp-nonlinearity"><span class="header-section-number">8.2</span> PA Nonlinearity</h2>
 <p>For describing PA nonlinearity, various models can be used. One simple model is the <strong>Saleh model</strong> (originally developed for travelling-wave tube amplifiers), which describes the AM/AM and AM/PM conversion of the PA using a smooth transition from linear operation to saturation <span class="citation" data-cites="Saleh.1981">(<a href="#ref-Saleh.1981" role="doc-biblioref">Saleh 1981</a>)</span>. This model is defined by the following equations in the polar domain (<span class="math inline">\(r(t)\)</span> and <span class="math inline">\(\psi(t)\)</span> are the modulated input signal amplitude and phase, respectively; <span class="math inline">\(y(t)\)</span> is the output signal):</p>
 <p><span class="math display">\[
 y(t) = A[r(t)] \cos\{ \omega_0 t + \psi(t) + \varphi[r(t)] \}
@@ -3781,7 +3789,7 @@ y(t) = A[r(t)] \cos\{ \omega_0 t + \psi(t) + \varphi[r(t)] \}
 A(r) = \frac{\alpha_1 r}{1 + \beta_1 r^2} \quad \text{and} \quad \varphi(r) = \frac{\alpha_2 r^2}{1 + \beta_2 r^2}
 \]</span></p>
 <p>where <span class="math inline">\(\alpha_1\)</span>, <span class="math inline">\(\beta_1\)</span>, <span class="math inline">\(\alpha_2\)</span>, and <span class="math inline">\(\beta_2\)</span> are the Saleh model parameters that define the PA characteristics. The AM/AM conversion <span class="math inline">\(A(r)\)</span> describes how the output amplitude saturates with increasing input amplitude, while the AM/PM conversion <span class="math inline">\(\varphi(r)\)</span> describes the phase distortion introduced by the PA. While this simple model does not capture memory effects or frequency-dependent behavior, it provides a good starting point for understanding PA nonlinearity.</p>
-<p>Note that most discrete PAs are implemented similar to <a href="#fig-poweramp-twostage" class="quarto-xref">Figure&nbsp;96</a>. For RFIC-integrated PAs, a single-ended implementation is problematic due to power supply parasitics and coupling issues. Therefore, integrated PAs are very often implemented in a differential configuration, which improves power supply rejection and reduces even-order harmonics <span class="citation" data-cites="Moreira.2015">Fuhrmann et al. (<a href="#ref-Fuhrmann.2017" role="doc-biblioref">2017</a>)</span>. A generic differential PA implementation is shown in <a href="#fig-poweramp-differential" class="quarto-xref">Figure&nbsp;97</a>.</p>
+<p>Note that most discrete PAs are implemented similarly to <a href="#fig-poweramp-twostage" class="quarto-xref">Figure&nbsp;96</a>. For RFIC-integrated PAs, a single-ended implementation is problematic due to power supply parasitics and coupling issues. Therefore, integrated PAs are very often implemented in a differential configuration, which improves power supply rejection and reduces even-order harmonics <span class="citation" data-cites="Moreira.2015">Fuhrmann et al. (<a href="#ref-Fuhrmann.2017" role="doc-biblioref">2017</a>)</span>. A generic differential PA implementation is shown in <a href="#fig-poweramp-differential" class="quarto-xref">Figure&nbsp;97</a>.</p>
 <div id="cell-fig-poweramp-differential" class="cell" data-execution_count="95">
 <div class="cell-output cell-output-display">
 <div id="fig-poweramp-differential" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -3799,8 +3807,9 @@ Figure&nbsp;97: A generic differential power amplifier with cascode stages for p
 <p>The cascode transistors <span class="math inline">\(M_2\)</span> and <span class="math inline">\(M_4\)</span> allow higher output voltage swings by stacking the transistors, thus reducing the voltage stress on each individual transistor. They can be implemented as thick-oxide transistors to further increase the breakdown voltage.</p>
 <p>While the power amplifier circuits look simple in principle, their design and optimization require large-signal models and extensive electromagnetic (EM) simulations to accurately capture the behavior of the matching networks and parasitic effects. Additionally, thermal management is crucial in PA design, as high power dissipation can lead to device degradation and failure.</p>
 <p>In order to accurately capture and model large-signal effects, load-pull measurements are often performed during PA design. In a <strong>load-pull measurement</strong> setup, the PA is driven with a known input signal while the output load impedance is varied systematically using impedance tuners. By measuring the output power, efficiency, and linearity metrics at different load impedances, the optimal load conditions for the PA can be determined. This information is then used to design the output matching network to achieve the desired performance.</p>
-<section id="sec-poweramp-classes" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="sec-poweramp-classes"><span class="header-section-number">8.1</span> Amplifier Classes</h2>
+</section>
+<section id="sec-poweramp-classes" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="sec-poweramp-classes"><span class="header-section-number">8.3</span> Amplifier Classes</h2>
 <p>Power amplifiers can be classified into different <a href="https://en.wikipedia.org/wiki/Power_amplifier_classes">classes</a> based on their conduction angle, which is the portion of the input signal cycle during which the transistor conducts current. The most common classes are Class A, Class B, Class AB, Class C, Class D, Class E, and Class F. Each class has its own trade-offs between efficiency, linearity, and complexity. The following table summarizes the main characteristics of each amplifier class:</p>
 <div id="tbl-poweramp-classes" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -3903,9 +3912,62 @@ Table&nbsp;6: Amplifier Classes
 <li><strong>Class G and H</strong> amplifiers use multiple supply voltages or adaptive supply voltages to improve efficiency, and can be combined with the other classes. They are often used in applications where power consumption is a concern, such as battery-powered devices. Class AB combined with Class G or H techniques is state-of-the-art in mobile device PAs. Class G and H are sometimes also referred to as “<strong>envelope tracking</strong>” techniques.</li>
 </ul>
 </section>
-<section id="sec-poweramp-advanced" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="sec-poweramp-advanced"><span class="header-section-number">8.2</span> PA Advanced Techniques</h2>
-<p>To further improve the performance of power amplifiers, several advanced techniques can be employed:</p>
+<section id="sec-poweramp-stability" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="sec-poweramp-stability"><span class="header-section-number">8.4</span> PA Stability and Neutralization</h2>
+<p>Looking at the basic PA circuit in <a href="#fig-poweramp-basic" class="quarto-xref">Figure&nbsp;95</a>, it becomes apparent that a PA can easily become unstable due to the high gain and large signal swings involved. Parasitic capacitances and inductances in the layout and packaging can create feedback paths that lead to oscillations, especially the Miller capacitance <span class="math inline">\(C_\mathrm{m}\)</span> between the gate and drain of the transistor, as shown in <a href="#fig-poweramp-miller" class="quarto-xref">Figure&nbsp;98</a>.</p>
+<div id="cell-fig-poweramp-miller" class="cell" data-execution_count="96">
+<div class="cell-output cell-output-display">
+<div id="fig-poweramp-miller" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-poweramp-miller-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-poweramp-miller-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-98" title="Figure&nbsp;98: A basic single stage single-ended common-source power amplifier showing the Miller capacitance C_\mathrm{m} between input and output (in blue)."><img src="rfic_files/figure-html/fig-poweramp-miller-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-poweramp-miller-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;98: A basic single stage single-ended common-source power amplifier showing the Miller capacitance <span class="math inline">\(C_\mathrm{m}\)</span> between input and output (in blue).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The Miller capacitance effectively creates a feedback loop from the output to the input, which can lead to instability, as also shown in <a href="#sec-amp-stability" class="quarto-xref">Section&nbsp;4.1</a>. Lowering <span class="math inline">\(S_{12}\)</span> (and thus getting rid of the Miller effect due to <span class="math inline">\(C_\mathrm{m}\)</span>) is thus crucial for PA stability. This can be mainly achieved in two ways:</p>
+<ul>
+<li>Adding a cascode stage, which isolates the input from the output and reduces the effect of <span class="math inline">\(C_\mathrm{m}\)</span> significantly (see <a href="#fig-poweramp-differential" class="quarto-xref">Figure&nbsp;97</a>).</li>
+<li>Adding a <strong>neutralization</strong> capacitor between the gate and drain, which cancels out the effect of <span class="math inline">\(C_\mathrm{m}\)</span>. Alternatively, feedback networks or additional circuitry can be used to stabilize the PA.</li>
+</ul>
+<p>In order to implement neutralization, we add in parallel to the (intrinsic) Miller capacitance <span class="math inline">\(C_\mathrm{m}\)</span> a capacitor <span class="math inline">\(C_\mathrm{n}\)</span>, driven by an inverted version of the output signal. The neutralization capacitor <span class="math inline">\(C_\mathrm{n}\)</span> is chosen such that it cancels out the effect of <span class="math inline">\(C_\mathrm{m}\)</span>, i.e., <span class="math inline">\(C_\mathrm{n} = C_\mathrm{m}\)</span>. This effectively eliminates the feedback path from the output to the input, improving stability. However, implementing neutralization requires careful design and tuning, as any mismatch between <span class="math inline">\(C_\mathrm{m}\)</span> and <span class="math inline">\(C_\mathrm{n}\)</span> can lead to residual feedback and potential instability. This arrangement is shown in <a href="#fig-poweramp-neutralization" class="quarto-xref">Figure&nbsp;99</a>.</p>
+<div id="cell-fig-poweramp-neutralization" class="cell" data-execution_count="97">
+<div class="cell-output cell-output-display">
+<div id="fig-poweramp-neutralization" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-poweramp-neutralization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-poweramp-neutralization-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-99" title="Figure&nbsp;99: A basic single stage single-ended common-source power amplifier showing the Miller capacitance C_\mathrm{m} between input and output (in blue) and the neutralization capacitor C_\mathrm{n}."><img src="rfic_files/figure-html/fig-poweramp-neutralization-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-poweramp-neutralization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;99: A basic single stage single-ended common-source power amplifier showing the Miller capacitance <span class="math inline">\(C_\mathrm{m}\)</span> between input and output (in blue) and the neutralization capacitor <span class="math inline">\(C_\mathrm{n}\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In a differential PA implementation, the neutralization capacitors can be connected cross-coupled between the drains and gates of the two transistors, further improving stability, as shown in <a href="#fig-poweramp-differential-neutralization" class="quarto-xref">Figure&nbsp;100</a>. The cancellation of the Miller effect also leads to improved bandwidth, which is beneficial for wideband applications.</p>
+<div id="cell-fig-poweramp-differential-neutralization" class="cell" data-execution_count="98">
+<div class="cell-output cell-output-display">
+<div id="fig-poweramp-differential-neutralization" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-poweramp-differential-neutralization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-poweramp-differential-neutralization-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-100" title="Figure&nbsp;100: A generic differential power amplifier with neutralization for wide-band operation and improved stability."><img src="rfic_files/figure-html/fig-poweramp-differential-neutralization-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-poweramp-differential-neutralization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;100: A generic differential power amplifier with neutralization for wide-band operation and improved stability.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-poweramp-advanced" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="sec-poweramp-advanced"><span class="header-section-number">8.5</span> PA Advanced Techniques</h2>
+<p>To further improve the performance of power amplifiers (but outside the scope of these lecture notes), several advanced techniques can be employed:</p>
 <ul>
 <li><strong>Predistortion</strong>: This technique involves applying an inverse distortion to the input signal before it enters the PA, effectively canceling out the nonlinearity of the PA. Digital predistortion (DPD) is commonly used in modern communication systems to improve linearity and reduce spectral regrowth.</li>
 <li><strong>Envelope Tracking</strong>: This technique dynamically adjusts the supply voltage of the PA based on the envelope of the input signal, improving efficiency by reducing power consumption during low signal levels (see Class G and Class H).</li>
