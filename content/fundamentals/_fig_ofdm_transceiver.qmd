@@ -28,8 +28,7 @@ sd.svgconfig.svg2 = False
 with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=14)
 
-    elm.Dot(open=True).label(r'Bitrate $T_\mathrm{b}$', loc='left')
-    dsp.Arrow().right(d.unit/2)
+    dsp.Arrow().right(d.unit/2).label(r'Bitrate $T_\mathrm{b}$', loc='left')
     dsp.Square().label('S/P')
     dsp.Arrow().right(d.unit/2).label(r'$T_\mathrm{b} / N$')
     dsp.Square().label('QAM\nMap')
@@ -63,6 +62,5 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Square().label('QAM\nDem.')
     dsp.Arrow().right(d.unit/2).label(r'$T_\mathrm{b} / N$')
     dsp.Square().label('P/S')
-    dsp.Arrow().right(d.unit/2)
-    elm.Dot(open=True).label(r'Bitrate $T_\mathrm{b}$', loc='right')
+    dsp.Arrow().right(d.unit/2).label(r'Bitrate $T_\mathrm{b}$', loc='right')
 ```
