@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2026-01-27">
+<meta name="dcterms.date" content="2026-01-28">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -448,6 +448,20 @@ window.Quarto = {
   <li><a href="#sec-poweramp-stability" id="toc-sec-poweramp-stability" class="nav-link" data-scroll-target="#sec-poweramp-stability"><span class="header-section-number">8.4</span> PA Stability and Neutralization</a></li>
   <li><a href="#sec-poweramp-advanced" id="toc-sec-poweramp-advanced" class="nav-link" data-scroll-target="#sec-poweramp-advanced"><span class="header-section-number">8.5</span> PA Advanced Techniques</a></li>
   </ul></li>
+  <li><a href="#sec-exam-questions" id="toc-sec-exam-questions" class="nav-link" data-scroll-target="#sec-exam-questions"><span class="header-section-number">9</span> Appendix: Examination Questions</a>
+  <ul class="collapse">
+  <li><a href="#sec-exam-intro" id="toc-sec-exam-intro" class="nav-link" data-scroll-target="#sec-exam-intro"><span class="header-section-number">9.1</span> Introduction and Wireless Basics</a></li>
+  <li><a href="#sec-exam-linearity" id="toc-sec-exam-linearity" class="nav-link" data-scroll-target="#sec-exam-linearity"><span class="header-section-number">9.2</span> Linearity</a></li>
+  <li><a href="#sec-exam-noise" id="toc-sec-exam-noise" class="nav-link" data-scroll-target="#sec-exam-noise"><span class="header-section-number">9.3</span> Noise</a></li>
+  <li><a href="#sec-exam-modulation" id="toc-sec-exam-modulation" class="nav-link" data-scroll-target="#sec-exam-modulation"><span class="header-section-number">9.4</span> Modulation and Communication Concepts</a></li>
+  <li><a href="#sec-exam-trx" id="toc-sec-exam-trx" class="nav-link" data-scroll-target="#sec-exam-trx"><span class="header-section-number">9.5</span> Transceiver Architectures</a></li>
+  <li><a href="#sec-exam-lna" id="toc-sec-exam-lna" class="nav-link" data-scroll-target="#sec-exam-lna"><span class="header-section-number">9.6</span> Low Noise Amplifiers</a></li>
+  <li><a href="#sec-exam-mixer" id="toc-sec-exam-mixer" class="nav-link" data-scroll-target="#sec-exam-mixer"><span class="header-section-number">9.7</span> Mixers</a></li>
+  <li><a href="#sec-exam-oscillator" id="toc-sec-exam-oscillator" class="nav-link" data-scroll-target="#sec-exam-oscillator"><span class="header-section-number">9.8</span> Oscillators</a></li>
+  <li><a href="#sec-exam-pll" id="toc-sec-exam-pll" class="nav-link" data-scroll-target="#sec-exam-pll"><span class="header-section-number">9.9</span> Phase-Locked Loops</a></li>
+  <li><a href="#sec-exam-poweramp" id="toc-sec-exam-poweramp" class="nav-link" data-scroll-target="#sec-exam-poweramp"><span class="header-section-number">9.10</span> Power Amplifiers</a></li>
+  <li><a href="#sec-exam-calculations" id="toc-sec-exam-calculations" class="nav-link" data-scroll-target="#sec-exam-calculations"><span class="header-section-number">9.11</span> Calculation Problems</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="rfic.pdf"><i class="bi bi-file-pdf"></i>Typst</a></li></ul></div><div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="content/pll/delta_sigma_modulator-preview.html"><i class="bi bi-journal-code"></i>MASH Modulator (3rd Order)</a></li></ul></div></nav>
     </div>
@@ -483,7 +497,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 27, 2026</p>
+      <p class="date">January 28, 2026</p>
     </div>
   </div>
   
@@ -3973,6 +3987,145 @@ Figure&nbsp;100: A generic differential power amplifier with neutralization for 
 <li><strong>Envelope Tracking</strong>: This technique dynamically adjusts the supply voltage of the PA based on the envelope of the input signal, improving efficiency by reducing power consumption during low signal levels (see Class G and Class H).</li>
 <li><strong>Load Modulation</strong>: This technique involves varying the load impedance seen by the PA to optimize performance for different signal conditions. This can be achieved using tunable matching networks or switched load networks. An active method is the <strong>Doherty amplifier</strong> architecture, which uses two amplifiers (a main and a peaking amplifier) to improve efficiency at back-off power levels.</li>
 </ul>
+</section>
+</section>
+<section id="sec-exam-questions" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Appendix: Examination Questions</h1>
+<p>This chapter contains a collection of potential questions covering the topics discussed in this course. The questions are organized by topic and are intended to help students prepare for examinations.</p>
+<section id="sec-exam-intro" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="sec-exam-intro"><span class="header-section-number">9.1</span> Introduction and Wireless Basics</h2>
+<ol type="1">
+<li><p>What is the basic function of a radio-frequency transceiver? Describe the main components and their roles.</p></li>
+<li><p>Explain Friis’ transmission formula (<a href="#eq-friis-transmission" class="quarto-xref">Equation&nbsp;1</a>). What factors determine the received power in a wireless link? How does the free-space path loss (FSPL) change with distance and frequency?</p></li>
+<li><p>What are the main challenges of wireless communication? Name at least four properties of a wireless channel that make RF design difficult.</p></li>
+<li><p>What is the definition of “dBm”? Why are logarithmic metrics commonly used in RF systems?</p></li>
+<li><p>What is the Shannon-Hartley theorem (<a href="#eq-shannon-hartley" class="quarto-xref">Equation&nbsp;4</a>)? Calculate the channel capacity for a system with 10 MHz bandwidth and an SNR of 20 dB. What factors can be changed to increase the channel capacity?</p></li>
+<li><p>Name at least five different wireless standards. For each, state the approximate frequency range and typical application.</p></li>
+</ol>
+</section>
+<section id="sec-exam-linearity" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="sec-exam-linearity"><span class="header-section-number">9.2</span> Linearity</h2>
+<ol start="7" type="1">
+<li><p>Describe the nonlinear model used in RF systems (<a href="#eq-nonlinear-model" class="quarto-xref">Equation&nbsp;5</a>). What happens when a single sinusoidal signal passes through a weakly nonlinear system? What frequency components are generated?</p></li>
+<li><p>What is gain compression? Draw a simple transfer characteristic and show the 1 dB compression point (<span class="math inline">\(P_\mathrm{1dB}\)</span>). Explain the difference between compressive and expansive behavior.</p></li>
+<li><p>Explain the concept of intermodulation. Using a two-tone test and assuming third-order nonlinearity, which intermodulation products are created? Why are the IM3 products at <span class="math inline">\(2\omega_1 - \omega_2\)</span> and <span class="math inline">\(2\omega_2 - \omega_1\)</span> particularly problematic?</p></li>
+<li><p>What is the third-order intercept point (IP3)? Draw a diagram showing the relationship between input power, fundamental output power, and IM3 products. How can IIP3 be calculated from measurement data using <a href="#eq-iip3" class="quarto-xref">Equation&nbsp;11</a>?</p></li>
+<li><p>How can nonlinearities be cascaded in a calculation? Given an LNA with IIP3 = –10 dBm and gain = 20 dB followed by a mixer with IIP3 = 5 dBm, what is the overall approximate IIP3 of the cascade? Which block dominates?</p></li>
+<li><p>What is the approximate relationship between <span class="math inline">\(P_\mathrm{1dB}\)</span> and IIP3 for mildly nonlinear systems?</p></li>
+</ol>
+</section>
+<section id="sec-exam-noise" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="sec-exam-noise"><span class="header-section-number">9.3</span> Noise</h2>
+<ol start="13" type="1">
+<li><p>What are the main types of noise relevant for electronic circuits? Describe thermal noise, shot noise, and flicker noise with their governing equations.</p></li>
+<li><p>What is the thermal noise voltage of a resistor with value <span class="math inline">\(R\)</span>? Calculate the noise voltage spectral density of a 1 kΩ resistor at room temperature.</p></li>
+<li><p>What is the maximum noise power that can be extracted from a resistor? Derive the result using the maximum power transfer theorem and explain why it equals <span class="math inline">\(kT\)</span> per Hz.</p></li>
+<li><p>What are the main noise sources in a MOSFET? How can the input-referred noise voltage be minimized? How does flicker noise depend on transistor dimensions?</p></li>
+<li><p>What is the noise figure (NF)? State the definition using SNR at input and output (<a href="#eq-noise-figure" class="quarto-xref">Equation&nbsp;17</a>). What is the noise figure of an ideal noiseless amplifier? What is the noise figure of a passive lossy element with loss <span class="math inline">\(L\)</span>?</p></li>
+<li><p>What is the Friis equation (<a href="#eq-friis" class="quarto-xref">Equation&nbsp;18</a>)? For a system with two cascaded blocks (Block 1: NF<span class="math inline">\(_1\)</span> = 2 dB, G<span class="math inline">\(_1\)</span> = 15 dB; Block 2: NF<span class="math inline">\(_2\)</span> = 10 dB), calculate the total noise figure. Why is the noise figure of the first block so important?</p></li>
+<li><p>What is the sensitivity of a wireless receiver? A receiver requires an SNR of 12 dB, has a channel bandwidth of 200 kHz, and a total noise figure of 5 dB. Calculate the sensitivity.</p></li>
+</ol>
+</section>
+<section id="sec-exam-modulation" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="sec-exam-modulation"><span class="header-section-number">9.4</span> Modulation and Communication Concepts</h2>
+<ol start="20" type="1">
+<li><p>What is modulation? Describe the basic types: amplitude modulation (AM/ASK), frequency modulation (FM/FSK), and phase modulation (PM/PSK). What is QAM?</p></li>
+<li><p>Draw the constellation diagram of a QPSK or 16-QAM modulated signal. What impairments can affect the constellation, and how would they manifest in the diagram? What is Error Vector Magnitude (EVM)?</p></li>
+<li><p>Explain the concept of pulse shaping. Why is the sinc pulse important, and what is its relationship to the rect function in the frequency domain?</p></li>
+<li><p>What is Orthogonal Frequency Division Multiplexing (OFDM)? How are symbol period and sub-carrier spacing related? What are the advantages of OFDM?</p></li>
+<li><p>What is the difference between Frequency Division Duplex (FDD) and Time Division Duplex (TDD)? What are the advantages and disadvantages of each? How does this affect transceiver design?</p></li>
+<li><p>How can multiple users access a radio channel simultaneously? Describe FDMA, TDMA, and CDMA.</p></li>
+</ol>
+</section>
+<section id="sec-exam-trx" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="sec-exam-trx"><span class="header-section-number">9.5</span> Transceiver Architectures</h2>
+<ol start="26" type="1">
+<li><p>Draw a block diagram of a direct-conversion (zero-IF) receiver. Explain the function of each block. What are the advantages and disadvantages of this architecture?</p></li>
+<li><p>What is the “image frequency” problem in a heterodyne receiver? How can it be addressed?</p></li>
+<li><p>Describe the differences between direct-conversion and heterodyne receiver architectures. What are LO leakage, dc offsets, and flicker noise problems in direct-conversion receivers?</p></li>
+<li><p>Draw a block diagram of a direct-conversion transmitter. What is oscillator pulling, and how can it be minimized?</p></li>
+<li><p>What is a duplexer? When is it needed? Compare the requirements for duplexers vs.&nbsp;TX/RX switches.</p></li>
+</ol>
+</section>
+<section id="sec-exam-lna" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="sec-exam-lna"><span class="header-section-number">9.6</span> Low Noise Amplifiers</h2>
+<ol start="31" type="1">
+<li><p>What are the key performance parameters of an LNA? List at least five important specifications and describe their typical values.</p></li>
+<li><p>What is impedance matching? What is the return loss, and how is it related to the reflection coefficient <span class="math inline">\(\Gamma\)</span>? What return loss is typically considered acceptable?</p></li>
+<li><p>What is amplifier stability? Explain the <span class="math inline">\(\mu\)</span> stability factor. What conditions must be satisfied for unconditional stability?</p></li>
+<li><p>Draw the schematic of a resistively matched common-source LNA. Derive its noise figure and explain why this topology is limited to a minimum NF of 3 dB.</p></li>
+<li><p>Draw the schematic of a common-gate LNA. What is its input impedance? Explain why the noise factor is limited by <span class="math inline">\(F = 1 + \gamma\)</span>.</p></li>
+<li><p>Draw the schematic of an inductively-degenerated common-source LNA. Derive the input impedance (<a href="#eq-lna-inductive-degeneration-zin" class="quarto-xref">Equation&nbsp;34</a>). How can a purely resistive input impedance be achieved?</p></li>
+<li><p>What is the advantage of the inductively-degenerated LNA over the common-gate LNA in terms of noise figure? How can the noise figure be minimized?</p></li>
+<li><p>Describe the shunt-feedback LNA topology. What are its advantages, and how does the input impedance depend on the feedback and load impedances?</p></li>
+</ol>
+</section>
+<section id="sec-exam-mixer" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="sec-exam-mixer"><span class="header-section-number">9.7</span> Mixers</h2>
+<ol start="39" type="1">
+<li><p>What are the two fundamental approaches to implementing frequency conversion in a mixer? Explain the difference between nonlinear and time-variant mixers.</p></li>
+<li><p>Draw the block diagram of a single-balanced passive mixer using a MOSFET switch. Derive the output signal expression and identify the conversion loss.</p></li>
+<li><p>What is a double-balanced mixer? Draw its circuit diagram. What are the advantages over a single-balanced mixer? What is the conversion gain/loss of an ideal double-balanced mixer?</p></li>
+<li><p>Draw and explain the Gilbert cell mixer. How does it work? What is the advantage of using a bipolar or CMOS Gilbert cell?</p></li>
+<li><p>What is an N-path filter? Explain how it can create a high-Q bandpass filter centered at the LO frequency. Why is this useful for RF receivers?</p></li>
+<li><p>Describe three different methods to generate quadrature (I/Q) LO signals. What are the advantages and disadvantages of each method?</p></li>
+<li><p>Explain the flip-flop based I/Q generation method. How can 25% duty cycle LO signals be generated?</p></li>
+</ol>
+</section>
+<section id="sec-exam-oscillator" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="sec-exam-oscillator"><span class="header-section-number">9.8</span> Oscillators</h2>
+<ol start="46" type="1">
+<li><p>What is the Barkhausen criterion for oscillation? Describe the conditions for sustained oscillation in a feedback system.</p></li>
+<li><p>Draw an LC tank circuit with loss. What is the resonance frequency? How is the quality factor <span class="math inline">\(Q\)</span> defined? What is the relationship between <span class="math inline">\(Q\)</span> and the energy stored vs.&nbsp;energy dissipated per cycle?</p></li>
+<li><p>Describe the concept of phase noise. What is its physical meaning? In what unit is it typically specified? Calculate the phase noise for an oscillator with 10 dBm output power and –80 dBm noise at 1 MHz offset measured with 1 kHz bandwidth.</p></li>
+<li><p>What is Leeson’s equation (<a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;44</a>)? Which factors influence the phase noise of an oscillator? How can phase noise be minimized?</p></li>
+<li><p>What is reciprocal mixing? Why is it problematic in wireless receivers? Derive the maximum allowable phase noise given a blocker power and sensitivity requirement.</p></li>
+<li><p>Draw a cross-coupled LC oscillator (NMOS, PMOS, or CMOS topology). What is the negative resistance provided by the cross-coupled pair? How does oscillation start and stabilize?</p></li>
+<li><p>How can frequency tuning of an LC oscillator be achieved? Describe different varactor implementations (MOS varactor, switched capacitor, PN junction).</p></li>
+</ol>
+</section>
+<section id="sec-exam-pll" class="level2" data-number="9.9">
+<h2 data-number="9.9" class="anchored" data-anchor-id="sec-exam-pll"><span class="header-section-number">9.9</span> Phase-Locked Loops</h2>
+<ol start="53" type="1">
+<li><p>Draw a simple block diagram of a Type-I phase-locked loop and explain the function of each component (PD, LPF, VCO, divider). What is the steady-state phase and frequency error?</p></li>
+<li><p>What is a phase-frequency detector (PFD)? How does it differ from a simple XOR phase detector? Draw its implementation and timing diagrams for different input conditions.</p></li>
+<li><p>Draw a simple charge-pump circuit. How does it work? Why is the resistor in the loop filter necessary?</p></li>
+<li><p>What is the difference between a Type-I and a Type-II PLL? What are the steady-state errors for phase and frequency in each case?</p></li>
+<li><p>Write the closed-loop transfer function of a charge-pump PLL with a simple RC loop filter. Identify the natural frequency <span class="math inline">\(\omega_n\)</span> and damping factor <span class="math inline">\(\zeta\)</span>. What is a reasonable value for <span class="math inline">\(\zeta\)</span>?</p></li>
+<li><p>Describe the phase noise profile of a PLL output. How do the reference oscillator phase noise and VCO phase noise contribute at different offset frequencies? What determines the crossover frequency?</p></li>
+<li><p>What is an all-digital PLL (ADPLL)? Draw its block diagram. What are the advantages and challenges compared to analog PLLs?</p></li>
+<li><p>Describe the operation of a time-to-digital converter (TDC). How does quantization noise affect the PLL phase noise?</p></li>
+<li><p>What is a fractional-N PLL? Why is it useful? How does delta-sigma modulation help reduce spurious tones?</p></li>
+<li><p>What is the noise transfer function (NTF) of a first-order delta-sigma modulator? How does it shape quantization noise?</p></li>
+</ol>
+</section>
+<section id="sec-exam-poweramp" class="level2" data-number="9.10">
+<h2 data-number="9.10" class="anchored" data-anchor-id="sec-exam-poweramp"><span class="header-section-number">9.10</span> Power Amplifiers</h2>
+<ol start="63" type="1">
+<li><p>Draw a simple single-ended power amplifier. What is the trade-off between supply voltage, load impedance, and output power? Calculate the maximum output power for <span class="math inline">\(V_\mathrm{DD}\)</span> = 3 V and <span class="math inline">\(R_\mathrm{L}\)</span> = 50 Ω.</p></li>
+<li><p>What is the definition of drain efficiency and power-added efficiency (PAE) of a PA?</p></li>
+<li><p>What are the different classes of operation for power amplifiers (Class A, B, AB, C)? Describe the conduction angle and theoretical maximum efficiency for each class.</p></li>
+<li><p>What are Class D, E, and F amplifiers? How do they achieve high efficiency?</p></li>
+<li><p>What is envelope tracking (Class G/H operation)? Why is it beneficial for power amplifiers used with non-constant envelope modulation schemes?</p></li>
+<li><p>What is the AM/AM and AM/PM distortion in a power amplifier? How can the Saleh model be used to characterize PA nonlinearity?</p></li>
+<li><p>What is neutralization in power amplifier design? Why is it needed, and how is it implemented in a differential PA?</p></li>
+<li><p>Describe load-pull measurements. Why are they important for PA design?</p></li>
+</ol>
+</section>
+<section id="sec-exam-calculations" class="level2" data-number="9.11">
+<h2 data-number="9.11" class="anchored" data-anchor-id="sec-exam-calculations"><span class="header-section-number">9.11</span> Calculation Problems</h2>
+<ol start="71" type="1">
+<li><p><strong>FSPL Calculation</strong>: Calculate the free-space path loss for a 5.8 GHz WiFi link over a distance of 100 m. Express your answer in dB.</p></li>
+<li><p><strong>Sensitivity Calculation</strong>: A Bluetooth LE receiver has a noise figure of 8 dB, channel bandwidth of 2 MHz, and requires an SNR of 15 dB. Calculate the receiver sensitivity.</p></li>
+<li><p><strong>Cascade Noise Figure</strong>: An RF front-end consists of: RF filter (loss 2 dB), LNA (NF = 1.5 dB, gain = 18 dB), mixer (NF = 8 dB, gain = 6 dB). Calculate the total noise figure.</p></li>
+<li><p><strong>IIP3 Cascade</strong>: Calculate the overall approximate IIP3 for the following cascade: LNA (IIP3 = –5 dBm, gain = 15 dB), Mixer (IIP3 = 8 dBm, gain = 10 dB), IF amplifier (IIP3 = 15 dBm, gain = 40 dB).</p></li>
+<li><p><strong>Phase Noise</strong>: An oscillator operates at 2.4 GHz with a tank <span class="math inline">\(Q\)</span> of 15, tank resistance <span class="math inline">\(R_p\)</span> = 500 Ω, oscillation amplitude of 0.8 V peak, and noise factor <span class="math inline">\(F\)</span> = 2. Calculate the phase noise at 1 MHz offset using Leeson’s equation.</p></li>
+<li><p><strong>Reciprocal Mixing</strong>: A receiver has a desired sensitivity of –90 dBm with an adjacent channel blocker at –30 dBm located 3 MHz from the carrier. The channel bandwidth is 100 kHz. What is the maximum allowable LO phase noise at 3 MHz offset?</p></li>
+<li><p><strong>PA Efficiency</strong>: A power amplifier delivers 27 dBm output power and draws 400 mA from a 3.3 V supply. Calculate the drain efficiency and the PAE if the input power is 0 dBm.</p></li>
+<li><p><strong>PLL Loop Parameters</strong>: A charge-pump PLL has <span class="math inline">\(I_\mathrm{CP}\)</span> = 100 µA, <span class="math inline">\(K_\mathrm{VCO}\)</span> = 100 MHz/V, <span class="math inline">\(C_\mathrm{int}\)</span> = 10 nF, and <span class="math inline">\(N\)</span> = 100. Calculate the natural frequency <span class="math inline">\(\omega_n\)</span> and the required <span class="math inline">\(R_\mathrm{int}\)</span> for a damping factor <span class="math inline">\(\zeta\)</span> = 0.707.</p></li>
+<li><p><strong>LNA Input Impedance</strong>: An inductively-degenerated common-source LNA has <span class="math inline">\(C_\mathrm{gs}\)</span> = 200 fF, <span class="math inline">\(g_m\)</span> = 40 mS, and <span class="math inline">\(L_\mathrm{deg}\)</span> = 1 nH. Calculate the real part of the input impedance. What additional inductance is needed to resonate with <span class="math inline">\(C_\mathrm{gs}\)</span> at 2.4 GHz?</p></li>
+<li><p><strong>Channel Capacity</strong>: A mobile communication system operates with a 20 MHz channel bandwidth. The SNR at the receiver is 15 dB. Calculate the theoretical maximum data rate according to the Shannon-Hartley theorem. If the actual data rate is 75 Mbps, what is the spectral efficiency in bits/s/Hz?</p></li>
+</ol>
 
 
 
@@ -4067,14 +4220,14 @@ Vazny, Rastislav, Werner Schelmbauer, Harald Pretl, Stefan Herzinger, and Robert
 </div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div>Apache-2.0 license</div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{pretl2026,
   author = {Pretl, Harald},
   title = {Radio-Frequency {Integrated} {Circuits}},
-  date = {2026-01-27},
+  date = {2026-01-28},
   url = {https://iic-jku.github.io/radio-frequency-integrated-circuits},
   doi = {10.5281/zenodo.17563943},
   langid = {en-US}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-pretl2026" class="csl-entry quarto-appendix-citeas" role="listitem">
 Pretl, Harald. 2026. <span>“Radio-Frequency Integrated Circuits.”</span>
-January 27, 2026. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
+January 28, 2026. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
