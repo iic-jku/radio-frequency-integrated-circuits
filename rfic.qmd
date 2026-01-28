@@ -45,3 +45,4 @@ format:
 {{< include /content/oscillator/_sec_oscillator.qmd >}}
 {{< include /content/pll/_sec_pll.qmd >}}
 {{< include /content/poweramp/_sec_poweramp.qmd >}}
+{{< include /content/exam/_sec_exam_questions.qmd >}}
