@@ -5,4 +5,4 @@ numpy
 pandas
 matplotlib
 pygmid
-pysmithchart
+pysmithchart==0.5.0
