@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2026-02-09">
+<meta name="dcterms.date" content="2026-02-19">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -64,9 +64,9 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-b66d9f3da4d84aca26cc7cc1c94b0445.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-d3daa1d1ef55350d6f5c3e6cec97cbbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-b66d9f3da4d84aca26cc7cc1c94b0445.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-db8412935377c476a6a34876e811a251.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-d075c25e60777822068c2219745b13b0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-db8412935377c476a6a34876e811a251.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -497,7 +497,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 9, 2026</p>
+      <p class="date">February 19, 2026</p>
     </div>
   </div>
   
@@ -905,7 +905,7 @@ C = B \cdot \log_2(1 + \text{SNR}) = 2\,\text{MHz} \cdot \log_2(1 + 5) = 2\,\tex
 </section>
 <section id="sec-linearity" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="sec-linearity"><span class="header-section-number">2.2</span> Linearity</h2>
-<p>As we have already seen in <a href="#sec-intro-wireless" class="quarto-xref">Section&nbsp;1.1</a> the transmitter has to process large signals without distorting them, while the receiver has to process small signals in the presence of large signals. Both situations mean we need metrics and models to quantify and discuss linearity properties.</p>
+<p>As we have already seen in <a href="#sec-intro-wireless" class="quarto-xref">Section&nbsp;1.1</a>, the transmitter has to process large signals without distorting them, while the receiver has to process small signals in the presence of large signals. Both situations mean we need metrics and models to quantify and discuss linearity properties.</p>
 <p>We are going to use a very simple, time-invariant model to study linearity, based on a Taylor polynomial.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -925,7 +925,7 @@ C = B \cdot \log_2(1 + \text{SNR}) = 2\,\text{MHz} \cdot \log_2(1 + 5) = 2\,\tex
 <p><span id="eq-nonlinear-model"><span class="math display">\[
 y(t) = \alpha_0 + \alpha_1 x(t) + \alpha_2 x(t)^2 + \alpha_3 x(t)^3 + \ldots
 \tag{5}\]</span></span></p>
-<p>Usually, the blocks under study will have higher order nonlinear terms but we often stop at 3rd order to keep things simple. For practical work, higher order terms should be included if necessary.</p>
+<p>Usually, the blocks under study will have higher order nonlinear terms, but we often stop at 3rd order to keep things simple. For practical work, higher order terms should be included if necessary.</p>
 <p>Which <span class="math inline">\(x(t)\)</span> should we use to study wireless systems? Often, the bandwidth <span class="math inline">\(f_\mathrm{BW}\)</span> of a transmit signal is much smaller than the center frequency <span class="math inline">\(f_0\)</span>, i.e., <span class="math inline">\(f_\mathrm{BW} \ll f_0\)</span>. In this case using a sinusoidal signal as a model is both simple to handle and approximately correct.</p>
 <section id="sec-linearity-single" class="level3" data-number="2.2.1">
 <h3 data-number="2.2.1" class="anchored" data-anchor-id="sec-linearity-single"><span class="header-section-number">2.2.1</span> Single-Tone Linearity</h3>
@@ -946,11 +946,11 @@ y(t) &amp;=
 \underbrace{ \frac{1}{4} \alpha_3 A^3 \cos(3 \omega t) }_\text{3rd harmonic}
 \end{split}
 \tag{6}\]</span></span></p>
-<p>Looking at <a href="#eq-linearity-single" class="quarto-xref">Equation&nbsp;6</a> we can make a few interesting observations:</p>
+<p>Looking at <a href="#eq-linearity-single" class="quarto-xref">Equation&nbsp;6</a>, we can make a few interesting observations:</p>
 <ul>
 <li>Even-order nonlinearity (<span class="math inline">\(\alpha_2\)</span>) creates low-frequency components; it effectively adds frequency components related to the envelope <span class="math inline">\(A\)</span>. If <span class="math inline">\(A\)</span> is a constant then this results in a dc term; if <span class="math inline">\(A(t)\)</span> is time variant it will create a squared version of it at low frequencies.</li>
 <li>The <span class="math inline">\(\alpha_1\)</span> term is the gain of the circuit block.</li>
-<li>Odd-order nonlinearity (<span class="math inline">\(\alpha_3\)</span>) can impact the gain of the fundamental term passing through the block. Depending on the sign of <span class="math inline">\(\alpha_3\)</span> this can lead to gain contraction or expansion.</li>
+<li>Odd-order nonlinearity (<span class="math inline">\(\alpha_3\)</span>) can impact the gain of the fundamental term passing through the block. Depending on the sign of <span class="math inline">\(\alpha_3\)</span>, this can lead to gain contraction or expansion.</li>
 <li>Even- and odd-order nonlinearities create additional frequency components, so-called harmonics of the fundamental frequency. These harmonics are often unwanted, as they are far outside the wanted transmission frequency range, and need to be minimized, by either
 <ol type="1">
 <li>use a lowpass filter to filter these harmonics, or</li>
@@ -972,7 +972,7 @@ Figure&nbsp;5: Single-tone test showing created harmonics at 2ω and 3ω.
 </div>
 </div>
 </div>
-<p>How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal <span class="math inline">\(x(t)\)</span> in amplitude, and observe the output <span class="math inline">\(y(t)\)</span>. If the observed gain drops by 1 dB from the small-signal value we note the input power, and call this point the <strong>1dB compression point</strong> (<span class="math inline">\(P_\mathrm{1dB}\)</span>). We should always add whether this 1dB compression point is input- or output-referred to avoid ambiguity. The diagram in <a href="#fig-1db-compression-point" class="quarto-xref">Figure&nbsp;6</a> shows this test (<span class="math inline">\(\alpha_1 = 100\)</span>, <span class="math inline">\(\alpha_3 = -0.2\)</span>).</p>
+<p>How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal <span class="math inline">\(x(t)\)</span> in amplitude, and observe the output <span class="math inline">\(y(t)\)</span>. If the observed gain drops by 1 dB from the small-signal value, we note the input power and call this point the <strong>1dB compression point</strong> (<span class="math inline">\(P_\mathrm{1dB}\)</span>). We should always add whether this 1dB compression point is input- or output-referred to avoid ambiguity. The diagram in <a href="#fig-1db-compression-point" class="quarto-xref">Figure&nbsp;6</a> shows this test (<span class="math inline">\(\alpha_1 = 100\)</span>, <span class="math inline">\(\alpha_3 = -0.2\)</span>).</p>
 <div id="cell-fig-1db-compression-point" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div id="fig-1db-compression-point" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1012,7 +1012,7 @@ x(t) = A_1 \cos(\omega_1 t) + A_2 \cos(\omega_2 t)
 <p><span id="eq-linearity-double"><span class="math display">\[
 y(t) = y'(t) + y''(t) + y'''(t)
 \tag{7}\]</span></span></p>
-<p>As many different frequency components are created by this simple two-tone test (and nonlinearity only up to 3rd order) we split the result into different equations and look at the result separately.</p>
+<p>As many different frequency components are created by this simple two-tone test (and nonlinearity only up to 3rd order), we split the result into different equations and look at the result separately.</p>
 <p>First, we start with the fundamental tones:</p>
 <p><span id="eq-linearity-double-a"><span class="math display">\[
 \begin{split}
@@ -1034,7 +1034,7 @@ y(t) = y'(t) + y''(t) + y'''(t)
     &amp;+ \alpha_2 A_1 A_2 \cos[ (\omega_1 + \omega_2) t]
 \end{split}
 \tag{9}\]</span></span></p>
-<p>As we can see in <a href="#eq-linearity-double-b" class="quarto-xref">Equation&nbsp;9</a> new tones are created (besides the low frequency components we already know from the single-tone test) at the sum and difference of <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>. These new frequency components are called “<strong>intermodulation products of second order</strong>” (IM2). These tones are created by the even-order nonlinearity (<span class="math inline">\(\alpha_2\)</span>). These IM2 products are far away from the wanted tones, so are often not very problematic in amplifiers (but there can be exceptions!). However, they can be very problematic in frequency conversion blocks like mixers. We will come back to this point when discussing zero-IF receivers.</p>
+<p>As we can see in <a href="#eq-linearity-double-b" class="quarto-xref">Equation&nbsp;9</a>, new tones are created (besides the low frequency components we already know from the single-tone test) at the sum and difference of <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>. These new frequency components are called “<strong>intermodulation products of second order</strong>” (IM2). These tones are created by the even-order nonlinearity (<span class="math inline">\(\alpha_2\)</span>). These IM2 products are far away from the wanted tones, so they are often not very problematic in amplifiers (but there can be exceptions!). However, they can be very problematic in frequency conversion blocks like mixers. We will come back to this point when discussing zero-IF receivers.</p>
 <p>We now investigate the next couple of tones:</p>
 <p><span id="eq-linearity-double-c"><span class="math display">\[
 \begin{split}
@@ -1045,7 +1045,7 @@ y(t) = y'(t) + y''(t) + y'''(t)
 \end{split}
 \tag{10}\]</span></span></p>
 <p>The tones shown in <a href="#eq-linearity-double-c" class="quarto-xref">Equation&nbsp;10</a> are called “<strong>intermodulation products of third order</strong>” (IM3), and are caused by the odd nonlinearities (like <span class="math inline">\(\alpha_3\)</span>). While the IM3 tones located at <span class="math inline">\(2 \omega_1 + \omega_2\)</span> and <span class="math inline">\(\omega_1 + 2 \omega_2\)</span> are similar to the sum IM2 tone and far away from <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>, the other two tones are concerning.</p>
-<p>Expressing <span class="math inline">\(\Delta \omega = \omega_2 - \omega_1\)</span> (and assuming <span class="math inline">\(\omega_1 &lt; \omega_2\)</span>), the building law of <span class="math inline">\(2 \omega_1 - \omega_2 = \omega_1 - \Delta \omega\)</span> and <span class="math inline">\(2 \omega_2 - \omega_1 = \omega_2 + \Delta \omega\)</span> results in new tones right besides <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>, with a frequency separation only defined by <span class="math inline">\(\Delta \omega\)</span>. This situation is illustrated in <a href="#fig-im3-tones" class="quarto-xref">Figure&nbsp;7</a>.</p>
+<p>Expressing <span class="math inline">\(\Delta \omega = \omega_2 - \omega_1\)</span> (and assuming <span class="math inline">\(\omega_1 &lt; \omega_2\)</span>), the building law of <span class="math inline">\(2 \omega_1 - \omega_2 = \omega_1 - \Delta \omega\)</span> and <span class="math inline">\(2 \omega_2 - \omega_1 = \omega_2 + \Delta \omega\)</span> results in new tones right beside <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>, with a frequency separation only defined by <span class="math inline">\(\Delta \omega\)</span>. This situation is illustrated in <a href="#fig-im3-tones" class="quarto-xref">Figure&nbsp;7</a>.</p>
 <div id="cell-fig-im3-tones" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div id="fig-im3-tones" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1060,7 +1060,7 @@ Figure&nbsp;7: Two-tone test showing fundamental frequencies ω₁, ω₂ and th
 </div>
 </div>
 </div>
-<p>This close localization of the IM3 tones can also be utilized to characterize nonlinear performance. Using gain compression or harmonic generation (H3) it can be very difficult to extract nonlinearity of third order (<span class="math inline">\(\alpha_3\)</span>). However, using a two-tone test, the IM3 tones can be readily measured, even if the measured signal path shows a <strong>bandpass characteristic</strong>! As RF systems frequently employ bandpass filters to suppress out-of-band signals, this is a very important property of the two-tone test.</p>
+<p>This close localization of the IM3 tones can also be utilized to characterize nonlinear performance. Using gain compression or harmonic generation (H3), it can be very difficult to extract nonlinearity of third order (<span class="math inline">\(\alpha_3\)</span>). However, using a two-tone test, the IM3 tones can be readily measured, even if the measured signal path shows a <strong>bandpass characteristic</strong>! As RF systems frequently employ bandpass filters to suppress out-of-band signals, this is a very important property of the two-tone test.</p>
 <p>The resulting test is called a two-tone test yielding the third-order intercept point (IP3). This test is widely used in RF design to characterize the linearity of amplifiers, mixers, and complete transceiver systems. The power relationship between fundamental tones and IM3 products as a function of input power is shown in <a href="#fig-im3-power-sweep" class="quarto-xref">Figure&nbsp;8</a>.</p>
 <div id="cell-fig-im3-power-sweep" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
@@ -1077,7 +1077,7 @@ Figure&nbsp;8: Two-tone IM3 test showing fundamental and IM3 product power vs.&n
 </div>
 </div>
 <p>Note that, as shown in <a href="#fig-im3-power-sweep" class="quarto-xref">Figure&nbsp;8</a>, the IM3 products rise with a slope of 3 dB/dB, i.e., if the input power is increased by 1 dB, the IM3 products increase by 3 dB. The fundamental tones rise with a slope of 1 dB/dB (as long as we are in the linear region). The IP3 point is defined as the intersection of the <strong>extrapolated</strong> linear lines of fundamental and IM3 products. As both lines have different slopes, this intersection point is usually far outside the actual operating range of the circuit block under test!</p>
-<p>When calculating the IIP3 (input-referred IP3) we can use the following formula, assuming equal input power per tone. It is important to always check the slope of the IM3 products to ensure that we are indeed in the third-order region! If the input power per tone is <span class="math inline">\(P_\mathrm{in}\)</span> (in dBm) and the input-referred power of one IM3 tone is <span class="math inline">\(P_\mathrm{IM3}\)</span> (in dBm), then the input-referred IP3 is given by</p>
+<p>When calculating the IIP3 (input-referred IP3), we can use the following formula, assuming equal input power per tone. It is important to always check the slope of the IM3 products to ensure that we are indeed in the third-order region! If the input power per tone is <span class="math inline">\(P_\mathrm{in}\)</span> (in dBm) and the input-referred power of one IM3 tone is <span class="math inline">\(P_\mathrm{IM3}\)</span> (in dBm), then the input-referred IP3 is given by</p>
 <p><span id="eq-iip3"><span class="math display">\[
 \text{IIP3} = P_\mathrm{in} + \frac{P_\mathrm{in} - P_\mathrm{IM3}}{2}
 \tag{11}\]</span></span></p>
@@ -1165,7 +1165,7 @@ P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \le
 <p>The thermal noise of the channel can be modeled as a current noise source between drain and source with a PSD of <span class="math inline">\(\overline{I_\mathrm{n}^2} = 4 k T \gamma g_{d0}\)</span> (in A<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(\gamma\)</span> is a process-dependent parameter (usually between 2/3 and 2). The parameter <span class="math inline">\(g_{d0}\)</span> is the small-signal output conductance of the MOSFET in triode, i.e., <span class="math inline">\(g_{d0} = g_\mathrm{ds}\)</span>, or equal to <span class="math inline">\(g_{d0} = g_\mathrm{m}\)</span> when in saturation.</p>
 <p>In saturation, it is often useful to express the thermal noise as a voltage noise source at the gate with a PSD of <span class="math inline">\(\overline{V_\mathrm{n}^2} = 4 k T \gamma / g_\mathrm{m}\)</span> (in V<span class="math inline">\(^2\)</span>/Hz). We can see that we can lower this noise of the MOSFET by increasing the transconductance <span class="math inline">\(g_\mathrm{m}\)</span>, which can be achieved by increasing the bias current.</p>
 <p>In addition, at high frequencies, the MOSFET also has induced gate-current noise, which is correlated with the channel thermal noise. A detailed discussion of this noise source can be found in <span class="citation" data-cites="Razavi_Analog_CMOS">(<a href="#ref-Razavi_Analog_CMOS" role="doc-biblioref">Behzad Razavi 2017</a>)</span>.</p>
-<p>Flicker noise is usually modeled as a voltage noise source at the gate with a PSD of <span class="math inline">\(K_f / (C'_\mathrm{ox}W L f)\)</span> (in V<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(K_f\)</span> is a process-dependent parameter, <span class="math inline">\(C'_\mathrm{ox}\)</span> is the oxide capacitance per unit area, <span class="math inline">\(L\)</span> and <span class="math inline">\(W\)</span> are the length and width of the MOSFET, and <span class="math inline">\(f\)</span> is the frequency. Note that we can lower the flicker noise by increasing the area of the MOSFET (<span class="math inline">\(W L\)</span>), however, this increases the parasitic capacitances associated with the MOSFET, and this often prohibitive for RF operation!</p>
+<p>Flicker noise is usually modeled as a voltage noise source at the gate with a PSD of <span class="math inline">\(K_f / (C'_\mathrm{ox}W L f)\)</span> (in V<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(K_f\)</span> is a process-dependent parameter, <span class="math inline">\(C'_\mathrm{ox}\)</span> is the oxide capacitance per unit area, <span class="math inline">\(L\)</span> and <span class="math inline">\(W\)</span> are the length and width of the MOSFET, and <span class="math inline">\(f\)</span> is the frequency. Note that we can lower the flicker noise by increasing the area of the MOSFET (<span class="math inline">\(W L\)</span>), however, this increases the parasitic capacitances associated with the MOSFET, and this is often prohibitive for RF operation!</p>
 <p>In <strong>bipolar junction transistors (BJTs)</strong>, the most important noise source is the shot noise due to the diffusion current in the base-emitter junction. Its PSD can be modeled as a current noise source between collector and emitter with a PSD of <span class="math inline">\(2 q I_\mathrm{C}\)</span> (in A<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(q\)</span> is the elementary charge (<span class="math inline">\(q = 1.6 \times 10^{-19}\)</span> C) and <span class="math inline">\(I_\mathrm{C}\)</span> is the DC collector current.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1181,7 +1181,7 @@ P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \le
 </div>
 </div>
 <p>Ideal <strong>capacitors</strong> and <strong>inductors</strong> do not generate noise, however, real capacitors and inductors have parasitic resistances which generate thermal noise.</p>
-<p>In RF systems additional noise sources can be present. One noteworthy example is the <a href="https://en.wikipedia.org/wiki/Cosmic_microwave_background"><strong>cosmic microwave background</strong></a> radiation, which can be modeled as a noise temperature of approximately 3 K. While this is negligible compared to thermal noise at room temperature (approximately 290 K), it can be significant in very low-noise systems, such as radio telescopes pointing to the sky. Another important noise source in RF systems is the <strong>atmospheric noise</strong>, which is generated by natural phenomena like lightning or in the ionosphere.</p>
+<p>In RF systems, additional noise sources can be present. One noteworthy example is the <a href="https://en.wikipedia.org/wiki/Cosmic_microwave_background"><strong>cosmic microwave background</strong></a> radiation, which can be modeled as a noise temperature of approximately 3 K. While this is negligible compared to thermal noise at room temperature (approximately 290 K), it can be significant in very low-noise systems, such as radio telescopes pointing to the sky. Another important noise source in RF systems is the <strong>atmospheric noise</strong>, which is generated by natural phenomena like lightning or in the ionosphere.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1250,7 +1250,7 @@ F = \frac{\text{SNR}_\mathrm{in}}{\text{SNR}_\mathrm{out}} = \frac{(P_\mathrm{s}
 <p>Note that the SNR can be improved by filtering, as filtering reduces the noise power. If the noise bandwidth is larger than the signal bandwidth, then the SNR can be improved without affecting the signal. However, this is not considered in the noise factor, as the noise factor assumes that both signal and noise pass through the same bandwidth.</p>
 </div>
 </div>
-<p>Let us look at a simple model of a noise circuit block as shown in <a href="#fig-noise-block" class="quarto-xref">Figure&nbsp;11</a>. The input signal <span class="math inline">\(S_\mathrm{in}\)</span> is accompanied by noise <span class="math inline">\(N_\mathrm{in}\)</span>. By definition it is assumed that the input noise power results from a matched resistor at <span class="math inline">\(T_0 = 290\,\text{K}\)</span>, so that <span class="math inline">\(N_\mathrm{in} = k T_0\)</span>. The circuit block has a power gain <span class="math inline">\(G\)</span> and adds its own noise <span class="math inline">\(N_\mathrm{dut}\)</span> to the output signal. For simplicity, we assume that the input and output of the circuit block are <strong>impedance matched</strong> to avoid reflections.</p>
+<p>Let us look at a simple model of a noisy circuit block as shown in <a href="#fig-noise-block" class="quarto-xref">Figure&nbsp;11</a>. The input signal <span class="math inline">\(S_\mathrm{in}\)</span> is accompanied by noise <span class="math inline">\(N_\mathrm{in}\)</span>. By definition, it is assumed that the input noise power results from a matched resistor at <span class="math inline">\(T_0 = 290\,\text{K}\)</span>, so that <span class="math inline">\(N_\mathrm{in} = k T_0\)</span>. The circuit block has a power gain <span class="math inline">\(G\)</span> and adds its own noise <span class="math inline">\(N_\mathrm{dut}\)</span> to the output signal. For simplicity, we assume that the input and output of the circuit block are <strong>impedance matched</strong> to avoid reflections.</p>
 <div id="cell-fig-noise-block" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div id="fig-noise-block" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1301,7 +1301,7 @@ F_\mathrm{total} = 1 + (F_1 - 1) + \frac{F_2 - 1}{G_1} + \frac{F_3 - 1}{G_1 G_2}
 <li>The noise factor of the first block is the most important one, as the noise factors of the following blocks are reduced by the gain of all preceding blocks. This is especially important in RF receivers, where the first block is usually a low-noise amplifier (LNA) with a very low noise figure (e.g., 1 dB or less) and a high gain (e.g., 10 dB or more). This ensures that the noise of the following blocks is negligible.</li>
 <li>The noise factor of the last block is reduced by the gain of all preceding blocks, so it is usually not very important.</li>
 </ul>
-<p>Here we also see a trade-off between noise and linearity, as shown by <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;13</a> and <a href="#eq-friis" class="quarto-xref">Equation&nbsp;18</a>. For low noise, we should try to maximize <span class="math inline">\(G_1\)</span>, however, this will affect linearity (IIP3) in a negative way. As in many other situation in RF design, we have to find a good compromise between conflicting requirements.</p>
+<p>Here we also see a trade-off between noise and linearity, as shown by <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;13</a> and <a href="#eq-friis" class="quarto-xref">Equation&nbsp;18</a>. For low noise, we should try to maximize <span class="math inline">\(G_1\)</span>, however, this will affect linearity (IIP3) in a negative way. As in many other situations in RF design, we have to find a good compromise between conflicting requirements.</p>
 </section>
 <section id="sec-sensitivity" class="level3" data-number="2.3.4">
 <h3 data-number="2.3.4" class="anchored" data-anchor-id="sec-sensitivity"><span class="header-section-number">2.3.4</span> Sensitivity</h3>
@@ -1351,7 +1351,7 @@ s(t) = A \cos(\omega_0 t + \varphi)
 <li>Amplitude <span class="math inline">\(A(t)\)</span> and phase <span class="math inline">\(\varphi(t)\)</span> (quadrature amplitude modulation, <strong>QAM</strong>)</li>
 </ul>
 <p>The modulation formats FM and PM have the advantage that the carrier amplitude is constant, which makes them more robust against nonlinear distortion.</p>
-<p>QAM is widely used in modern communication systems, as it allows to transmit more bits per symbol by combining amplitude and phase modulation. The form with 4 different symbols is called QPSK. Higher-order modulation like 16-QAM, for example, uses 16 different symbols, which can encode 4 bits per symbol (as <span class="math inline">\(2^4 = 16\)</span>). Even higher-order QAM formats like 64-QAM (6 bits per symbol), 256-QAM (8 bits per symbol), 1024-QAM (10 bits per symbol), or 4096-QAM (12 bits per symbol) are also used in modern systems like WiFi or LTE.</p>
+<p>QAM is widely used in modern communication systems, as it allows transmitting more bits per symbol by combining amplitude and phase modulation. The form with 4 different symbols is called QPSK. Higher-order modulation like 16-QAM, for example, uses 16 different symbols, which can encode 4 bits per symbol (as <span class="math inline">\(2^4 = 16\)</span>). Even higher-order QAM formats like 64-QAM (6 bits per symbol), 256-QAM (8 bits per symbol), 1024-QAM (10 bits per symbol), or 4096-QAM (12 bits per symbol) are also used in modern systems like WiFi or LTE.</p>
 <div id="cell-fig-16qam-constellation" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div id="fig-16qam-constellation" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1366,7 +1366,7 @@ Figure&nbsp;13: 16-QAM constellation diagram with Gray code labeling of constell
 </div>
 </div>
 </div>
-<p>Shown in <a href="#fig-16qam-constellation" class="quarto-xref">Figure&nbsp;13</a> is the “constellation diagram” of a 16-QAM modulation format. The constellation points are arranged in a square grid, with each point representing a unique combination of amplitude and phase. The distance between the constellation points determines the robustness against noise and interference; larger distances result in better performance, but also require more bandwidth. The mapping of bits to constellation points is called “bit mapping” or “symbol mapping”. The example in <a href="#fig-16qam-constellation" class="quarto-xref">Figure&nbsp;13</a> uses a Gray code mapping, which minimizes the number of bit errors in case of a symbol error.</p>
+<p>Shown in <a href="#fig-16qam-constellation" class="quarto-xref">Figure&nbsp;13</a> is the “constellation diagram” of a 16-QAM modulation format. The constellation points are arranged in a square grid, with each point representing a unique combination of amplitude and phase. The distance between the constellation points determines the robustness against noise and interference; larger distances result in better performance, but also require more power. The mapping of bits to constellation points is called “bit mapping” or “symbol mapping”. The example in <a href="#fig-16qam-constellation" class="quarto-xref">Figure&nbsp;13</a> uses a Gray code mapping, which minimizes the number of bit errors in case of a symbol error (assuming that a symbol will be wrongly decoded as one of its neighbors).</p>
 <p>The constellation diagram can be imagined as a complex plane, where the x-axis represents the in-phase component (I) and the y-axis represents the quadrature component (Q) of the modulated signal. During transmission of a specific symbol, the RF carrier is modulated to the corresponding amplitude and phase, resulting in a specific point in the constellation diagram. In <a href="#fig-16qam-constellation" class="quarto-xref">Figure&nbsp;13</a>, the amplitude and phase information for two consecutive symbols, <span class="math inline">\(A_i\)</span>/<span class="math inline">\(\varphi_i\)</span> and <span class="math inline">\(A_{i+1}\)</span>/<span class="math inline">\(\varphi_{i+1}\)</span>, is shown. If we have a bitrate with a bit duration of <span class="math inline">\(T_\mathrm{b}\)</span>, the symbol duration for 16-QAM (4 bits per symbol) is <span class="math inline">\(T_\mathrm{s} = 4 T_\mathrm{b}\)</span>. During the first <span class="math inline">\(T_\mathrm{s}\)</span>, the carrier is modulated to <span class="math inline">\(A_i\)</span>/<span class="math inline">\(\varphi_i\)</span>, and during the next <span class="math inline">\(T_\mathrm{s}\)</span>, it is modulated to <span class="math inline">\(A_{i+1}\)</span>/<span class="math inline">\(\varphi_{i+1}\)</span>.</p>
 <p>The table below shows the <strong>SNR requirements for different modulation formats</strong> to achieve a bit error rate (BER) of <span class="math inline">\(10^{-5}\)</span> in an additive white Gaussian noise (AWGN) channel. As we can see, higher-order modulation formats require higher SNR to achieve the same BER. Note that for the SNR values of this table <strong>no error correction coding</strong> is assumed; with error correction coding the required SNR can be significantly reduced!</p>
 <div id="tbl-modulation-snr" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1508,8 +1508,8 @@ Figure&nbsp;17: OFDM transmission system block diagram showing transmitter and r
 </div>
 </div>
 </div>
-<p>The OFDM transmitter takes a block of <span class="math inline">\(N\)</span> symbols (e.g., 64-QAM symbols) and maps them onto <span class="math inline">\(N\)</span> subcarriers, thereby reducing the symbol rate for each subcarrier to <span class="math inline">\(T_\mathrm{b} / N\)</span>. The IFFT then generates the time-domain OFDM signal, which is transmitted over the wireless channel. Before transmission the <strong>cyclic prefix (CP)</strong> is added to each OFDM symbol.</p>
-<p>At the receiver, first the CP is removed, and then the FFT recovers the frequency-domain symbols, which can then be equalized (fairly simply by multiplying each subcarrier with a complex factor to correct amplitude and phase) and demodulated.</p>
+<p>The OFDM transmitter takes a block of <span class="math inline">\(N\)</span> symbols (e.g., 64-QAM symbols) and maps them onto <span class="math inline">\(N\)</span> subcarriers, thereby reducing the symbol rate for each subcarrier to <span class="math inline">\(T_\mathrm{b} / N\)</span>. The IFFT then generates the time-domain OFDM signal, which is transmitted over the wireless channel. Before transmission, the <strong>cyclic prefix (CP)</strong> is added to each OFDM symbol.</p>
+<p>At the receiver, the CP is first removed, and then the FFT recovers the frequency-domain symbols, which can then be equalized (fairly simply by multiplying each subcarrier with a complex factor to correct amplitude and phase) and demodulated.</p>
 <p>A key property of OFDM is that the subcarriers are <strong>orthogonal</strong> to each other, which means that they do not interfere with each other, even if they overlap in frequency. This is achieved by choosing the subcarrier spacing <span class="math inline">\(\Delta f\)</span> such that it is equal to the symbol rate <span class="math inline">\(1/T_\mathrm{b}\)</span>, i.e., <span class="math inline">\(\Delta f = 1/T_\mathrm{b}\)</span>. This way, the integral of the product of two different subcarriers over one symbol period is zero, which means that they are orthogonal.</p>
 <p>To further improve the robustness against multi-path propagation, a CP is added to each OFDM symbol. The CP is a copy of the last part of the OFDM symbol, which is added to the beginning of the symbol. This way, if there are delayed copies of the OFDM symbol due to multi-path propagation, they will still fall within the CP and will not cause inter-symbol interference (ISI). The length of the CP should be longer than the maximum delay spread of the channel.</p>
 <div id="nte-lte-ofdm" class="callout callout-style-default callout-note callout-titled">
@@ -4220,14 +4220,14 @@ Vazny, Rastislav, Werner Schelmbauer, Harald Pretl, Stefan Herzinger, and Robert
 </div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div>Apache-2.0 license</div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{pretl2026,
   author = {Pretl, Harald},
   title = {Radio-Frequency {Integrated} {Circuits}},
-  date = {2026-02-09},
+  date = {2026-02-19},
   url = {https://iic-jku.github.io/radio-frequency-integrated-circuits},
   doi = {10.5281/zenodo.17563943},
   langid = {en-US}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-pretl2026" class="csl-entry quarto-appendix-citeas" role="listitem">
 Pretl, Harald. 2026. <span>“Radio-Frequency Integrated Circuits.”</span>
-February 9, 2026. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
+February 19, 2026. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
