@@ -1,0 +1,26 @@
+/*-- scss:defaults --*/
+
+/*-- scss:rules --*/
+
+/* Dark mode figure adaptations */
+/* Quarto adds the .quarto-dark class to body when dark mode is active */
+/* Since matplotlib figures use transparent backgrounds and schemdraw SVGs */
+/* have black strokes, we invert colors and restore hue for dark mode */
+
+.quarto-dark {
+  /* Invert colors of figure images for better visibility in dark mode */
+  /* Using hue-rotate(180deg) with invert(1) preserves colors: */
+  /* - Black lines/text become white */
+  /* - Color hues are restored after inversion */
+  /* - Transparent backgrounds remain transparent */
+  .quarto-figure img,
+  .cell-output-display img,
+  figure img {
+    filter: invert(1) hue-rotate(180deg);
+  }
+}
+
+/* Ensure lightbox previews also respect the inversion */
+.quarto-dark .lightbox img {
+  filter: invert(1) hue-rotate(180deg);
+}
