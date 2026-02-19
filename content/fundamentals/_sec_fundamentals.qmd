@@ -47,7 +47,7 @@ This sounds reasonable, as the user data rate for Bluetooth LE is 1 Mbps for the
 
 ## Linearity {#sec-linearity}
 
-As we have already seen in @sec-intro-wireless the transmitter has to process large signals without distorting them, while the receiver has to process small signals in the presence of large signals. Both situations mean we need metrics and models to quantify and discuss linearity properties.
+As we have already seen in @sec-intro-wireless, the transmitter has to process large signals without distorting them, while the receiver has to process small signals in the presence of large signals. Both situations mean we need metrics and models to quantify and discuss linearity properties.
 
 We are going to use a very simple, time-invariant model to study linearity, based on a Taylor polynomial.
 
@@ -64,7 +64,7 @@ $$
 y(t) = \alpha_0 + \alpha_1 x(t) + \alpha_2 x(t)^2 + \alpha_3 x(t)^3 + \ldots
 $$ {#eq-nonlinear-model}
 
-Usually, the blocks under study will have higher order nonlinear terms but we often stop at 3rd order to keep things simple. For practical work, higher order terms should be included if necessary.
+Usually, the blocks under study will have higher order nonlinear terms, but we often stop at 3rd order to keep things simple. For practical work, higher order terms should be included if necessary.
 
 Which $x(t)$ should we use to study wireless systems? Often, the bandwidth $f_\mathrm{BW}$ of a transmit signal is much smaller than the center frequency $f_0$, i.e., $f_\mathrm{BW} \ll f_0$. In this case using a sinusoidal signal as a model is both simple to handle and approximately correct.
 
@@ -91,11 +91,11 @@ y(t) &=
 \end{split}
 $$ {#eq-linearity-single}
 
-Looking at @eq-linearity-single we can make a few interesting observations:
+Looking at @eq-linearity-single, we can make a few interesting observations:
 
 - Even-order nonlinearity ($\alpha_2$) creates low-frequency components; it effectively adds frequency components related to the envelope $A$. If $A$ is a constant then this results in a dc term; if $A(t)$ is time variant it will create a squared version of it at low frequencies.
 - The $\alpha_1$ term is the gain of the circuit block.
-- Odd-order nonlinearity ($\alpha_3$) can impact the gain of the fundamental term passing through the block. Depending on the sign of $\alpha_3$ this can lead to gain contraction or expansion.
+- Odd-order nonlinearity ($\alpha_3$) can impact the gain of the fundamental term passing through the block. Depending on the sign of $\alpha_3$, this can lead to gain contraction or expansion.
 - Even- and odd-order nonlinearities create additional frequency components, so-called harmonics of the fundamental frequency. These harmonics are often unwanted, as they are far outside the wanted transmission frequency range, and need to be minimized, by either
   1. use a lowpass filter to filter these harmonics, or
   2. increase the linearity, i.e., make the $\alpha_2$, $\alpha_3$, etc., small enough.
@@ -104,7 +104,7 @@ The created harmonics are illustrated in @fig-harmonics. Note that measuring har
 
 {{< include /content/fundamentals/_fig_harmonics.qmd >}}
 
-How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal $x(t)$ in amplitude, and observe the output $y(t)$. If the observed gain drops by 1 dB from the small-signal value we note the input power, and call this point the **1dB compression point** ($P_\mathrm{1dB}$). We should always add whether this 1dB compression point is input- or output-referred to avoid ambiguity. The diagram in @fig-1db-compression-point shows this test ($\alpha_1 = 100$, $\alpha_3 = -0.2$).
+How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal $x(t)$ in amplitude, and observe the output $y(t)$. If the observed gain drops by 1 dB from the small-signal value, we note the input power and call this point the **1dB compression point** ($P_\mathrm{1dB}$). We should always add whether this 1dB compression point is input- or output-referred to avoid ambiguity. The diagram in @fig-1db-compression-point shows this test ($\alpha_1 = 100$, $\alpha_3 = -0.2$).
 
 {{< include /content/fundamentals/_fig_1db_compression.qmd >}}
 
@@ -129,7 +129,7 @@ $$
 y(t) = y'(t) + y''(t) + y'''(t)
 $$ {#eq-linearity-double}
 
-As many different frequency components are created by this simple two-tone test (and nonlinearity only up to 3rd order) we split the result into different equations and look at the result separately.
+As many different frequency components are created by this simple two-tone test (and nonlinearity only up to 3rd order), we split the result into different equations and look at the result separately.
 
 First, we start with the fundamental tones:
 
@@ -156,7 +156,7 @@ $$
 \end{split}
 $$ {#eq-linearity-double-b}
 
-As we can see in @eq-linearity-double-b new tones are created (besides the low frequency components we already know from the single-tone test) at the sum and difference of $\omega_1$ and $\omega_2$. These new frequency components are called "**intermodulation products of second order**" (IM2). These tones are created by the even-order nonlinearity ($\alpha_2$). These IM2 products are far away from the wanted tones, so are often not very problematic in amplifiers (but there can be exceptions!). However, they can be very problematic in frequency conversion blocks like mixers. We will come back to this point when discussing zero-IF receivers.
+As we can see in @eq-linearity-double-b, new tones are created (besides the low frequency components we already know from the single-tone test) at the sum and difference of $\omega_1$ and $\omega_2$. These new frequency components are called "**intermodulation products of second order**" (IM2). These tones are created by the even-order nonlinearity ($\alpha_2$). These IM2 products are far away from the wanted tones, so they are often not very problematic in amplifiers (but there can be exceptions!). However, they can be very problematic in frequency conversion blocks like mixers. We will come back to this point when discussing zero-IF receivers.
 
 We now investigate the next couple of tones:
 
@@ -171,11 +171,11 @@ $$ {#eq-linearity-double-c}
 
 The tones shown in @eq-linearity-double-c are called "**intermodulation products of third order**" (IM3), and are caused by the odd nonlinearities (like $\alpha_3$). While the IM3 tones located at $2 \omega_1 + \omega_2$ and $\omega_1 + 2 \omega_2$ are similar to the sum IM2 tone and far away from $\omega_1$ and $\omega_2$, the other two tones are concerning.
 
-Expressing $\Delta \omega = \omega_2 - \omega_1$ (and assuming $\omega_1 < \omega_2$), the building law of $2 \omega_1 - \omega_2 = \omega_1 - \Delta \omega$ and $2 \omega_2 - \omega_1 = \omega_2 + \Delta \omega$ results in new tones right besides $\omega_1$ and $\omega_2$, with a frequency separation only defined by $\Delta \omega$. This situation is illustrated in @fig-im3-tones.
+Expressing $\Delta \omega = \omega_2 - \omega_1$ (and assuming $\omega_1 < \omega_2$), the building law of $2 \omega_1 - \omega_2 = \omega_1 - \Delta \omega$ and $2 \omega_2 - \omega_1 = \omega_2 + \Delta \omega$ results in new tones right beside $\omega_1$ and $\omega_2$, with a frequency separation only defined by $\Delta \omega$. This situation is illustrated in @fig-im3-tones.
 
 {{< include /content/fundamentals/_fig_im3_tones.qmd >}}
 
-This close localization of the IM3 tones can also be utilized to characterize nonlinear performance. Using gain compression or harmonic generation (H3) it can be very difficult to extract nonlinearity of third order ($\alpha_3$). However, using a two-tone test, the IM3 tones can be readily measured, even if the measured signal path shows a **bandpass characteristic**! As RF systems frequently employ bandpass filters to suppress out-of-band signals, this is a very important property of the two-tone test.
+This close localization of the IM3 tones can also be utilized to characterize nonlinear performance. Using gain compression or harmonic generation (H3), it can be very difficult to extract nonlinearity of third order ($\alpha_3$). However, using a two-tone test, the IM3 tones can be readily measured, even if the measured signal path shows a **bandpass characteristic**! As RF systems frequently employ bandpass filters to suppress out-of-band signals, this is a very important property of the two-tone test.
 
 The resulting test is called a two-tone test yielding the third-order intercept point (IP3). This test is widely used in RF design to characterize the linearity of amplifiers, mixers, and complete transceiver systems. The power relationship between fundamental tones and IM3 products as a function of input power is shown in @fig-im3-power-sweep.
 
@@ -183,7 +183,7 @@ The resulting test is called a two-tone test yielding the third-order intercept 
 
 Note that, as shown in @fig-im3-power-sweep, the IM3 products rise with a slope of 3 dB/dB, i.e., if the input power is increased by 1 dB, the IM3 products increase by 3 dB. The fundamental tones rise with a slope of 1 dB/dB (as long as we are in the linear region). The IP3 point is defined as the intersection of the **extrapolated** linear lines of fundamental and IM3 products. As both lines have different slopes, this intersection point is usually far outside the actual operating range of the circuit block under test!
 
-When calculating the IIP3 (input-referred IP3) we can use the following formula, assuming equal input power per tone. It is important to always check the slope of the IM3 products to ensure that we are indeed in the third-order region! If the input power per tone is $P_\mathrm{in}$ (in dBm) and the input-referred power of one IM3 tone is $P_\mathrm{IM3}$ (in dBm), then the input-referred IP3 is given by
+When calculating the IIP3 (input-referred IP3), we can use the following formula, assuming equal input power per tone. It is important to always check the slope of the IM3 products to ensure that we are indeed in the third-order region! If the input power per tone is $P_\mathrm{in}$ (in dBm) and the input-referred power of one IM3 tone is $P_\mathrm{IM3}$ (in dBm), then the input-referred IP3 is given by
 
 $$
 \text{IIP3} = P_\mathrm{in} + \frac{P_\mathrm{in} - P_\mathrm{IM3}}{2}
@@ -267,7 +267,7 @@ In saturation, it is often useful to express the thermal noise as a voltage nois
 
 In addition, at high frequencies, the MOSFET also has induced gate-current noise, which is correlated with the channel thermal noise. A detailed discussion of this noise source can be found in [@Razavi_Analog_CMOS].
 
-Flicker noise is usually modeled as a voltage noise source at the gate with a PSD of $K_f / (\Cox W L f)$ (in V$^2$/Hz), where $K_f$ is a process-dependent parameter, $\Cox$ is the oxide capacitance per unit area, $L$ and $W$ are the length and width of the MOSFET, and $f$ is the frequency. Note that we can lower the flicker noise by increasing the area of the MOSFET ($W L$), however, this increases the parasitic capacitances associated with the MOSFET, and this often prohibitive for RF operation!
+Flicker noise is usually modeled as a voltage noise source at the gate with a PSD of $K_f / (\Cox W L f)$ (in V$^2$/Hz), where $K_f$ is a process-dependent parameter, $\Cox$ is the oxide capacitance per unit area, $L$ and $W$ are the length and width of the MOSFET, and $f$ is the frequency. Note that we can lower the flicker noise by increasing the area of the MOSFET ($W L$), however, this increases the parasitic capacitances associated with the MOSFET, and this is often prohibitive for RF operation!
 
 In **bipolar junction transistors (BJTs)**, the most important noise source is the shot noise due to the diffusion current in the base-emitter junction. Its PSD can be modeled as a current noise source between collector and emitter with a PSD of $2 q I_\mathrm{C}$ (in A$^2$/Hz), where $q$ is the elementary charge ($q = 1.6 \times 10^{-19}$ C) and $I_\mathrm{C}$ is the DC collector current.
 
@@ -278,7 +278,7 @@ Note that it has been shown in [@Sarpeshkar_1993] that thermal noise and shot no
 
 Ideal **capacitors** and **inductors** do not generate noise, however, real capacitors and inductors have parasitic resistances which generate thermal noise.
 
-In RF systems additional noise sources can be present. One noteworthy example is the [**cosmic microwave background**](https://en.wikipedia.org/wiki/Cosmic_microwave_background) radiation, which can be modeled as a noise temperature of approximately 3 K. While this is negligible compared to thermal noise at room temperature (approximately 290 K), it can be significant in very low-noise systems, such as radio telescopes pointing to the sky. Another important noise source in RF systems is the **atmospheric noise**, which is generated by natural phenomena like lightning or in the ionosphere.
+In RF systems, additional noise sources can be present. One noteworthy example is the [**cosmic microwave background**](https://en.wikipedia.org/wiki/Cosmic_microwave_background) radiation, which can be modeled as a noise temperature of approximately 3 K. While this is negligible compared to thermal noise at room temperature (approximately 290 K), it can be significant in very low-noise systems, such as radio telescopes pointing to the sky. Another important noise source in RF systems is the **atmospheric noise**, which is generated by natural phenomena like lightning or in the ionosphere.
 
 ::: {.callout-note}
 ##  A Note on Circuit Noise Calculations
@@ -330,7 +330,7 @@ where $P_\mathrm{s}$ is the signal power and $P_\mathrm{n}$ is the noise power. 
 Note that the SNR can be improved by filtering, as filtering reduces the noise power. If the noise bandwidth is larger than the signal bandwidth, then the SNR can be improved without affecting the signal. However, this is not considered in the noise factor, as the noise factor assumes that both signal and noise pass through the same bandwidth.
 :::
 
-Let us look at a simple model of a noise circuit block as shown in @fig-noise-block. The input signal $S_\mathrm{in}$ is accompanied by noise $N_\mathrm{in}$. By definition it is assumed that the input noise power results from a matched resistor at $T_0 = 290\,\text{K}$, so that $N_\mathrm{in} = k T_0$. The circuit block has a power gain $G$ and adds its own noise $N_\mathrm{dut}$ to the output signal. For simplicity, we assume that the input and output of the circuit block are **impedance matched** to avoid reflections.
+Let us look at a simple model of a noisy circuit block as shown in @fig-noise-block. The input signal $S_\mathrm{in}$ is accompanied by noise $N_\mathrm{in}$. By definition, it is assumed that the input noise power results from a matched resistor at $T_0 = 290\,\text{K}$, so that $N_\mathrm{in} = k T_0$. The circuit block has a power gain $G$ and adds its own noise $N_\mathrm{dut}$ to the output signal. For simplicity, we assume that the input and output of the circuit block are **impedance matched** to avoid reflections.
 
 {{< include /content/fundamentals/_fig_noise_block.qmd >}}
 
@@ -367,7 +367,7 @@ where $F_i$ and $G_i$ are the noise factor and power gain of the $i$-th block, r
 - The noise factor of the first block is the most important one, as the noise factors of the following blocks are reduced by the gain of all preceding blocks. This is especially important in RF receivers, where the first block is usually a low-noise amplifier (LNA) with a very low noise figure (e.g., 1 dB or less) and a high gain (e.g., 10 dB or more). This ensures that the noise of the following blocks is negligible.
 - The noise factor of the last block is reduced by the gain of all preceding blocks, so it is usually not very important.
 
-Here we also see a trade-off between noise and linearity, as shown by @eq-iip3-cascade and @eq-friis. For low noise, we should try to maximize $G_1$, however, this will affect linearity (IIP3) in a negative way. As in many other situation in RF design, we have to find a good compromise between conflicting requirements.
+Here we also see a trade-off between noise and linearity, as shown by @eq-iip3-cascade and @eq-friis. For low noise, we should try to maximize $G_1$, however, this will affect linearity (IIP3) in a negative way. As in many other situations in RF design, we have to find a good compromise between conflicting requirements.
 
 ### Sensitivity {#sec-sensitivity}
 
@@ -420,11 +420,11 @@ we see that we can change one or more of the following parameters to encode info
 
 The modulation formats FM and PM have the advantage that the carrier amplitude is constant, which makes them more robust against nonlinear distortion.
 
-QAM is widely used in modern communication systems, as it allows to transmit more bits per symbol by combining amplitude and phase modulation. The form with 4 different symbols is called QPSK. Higher-order modulation like 16-QAM, for example, uses 16 different symbols, which can encode 4 bits per symbol (as $2^4 = 16$). Even higher-order QAM formats like 64-QAM (6 bits per symbol), 256-QAM (8 bits per symbol), 1024-QAM (10 bits per symbol), or 4096-QAM (12 bits per symbol) are also used in modern systems like WiFi or LTE.
+QAM is widely used in modern communication systems, as it allows transmitting more bits per symbol by combining amplitude and phase modulation. The form with 4 different symbols is called QPSK. Higher-order modulation like 16-QAM, for example, uses 16 different symbols, which can encode 4 bits per symbol (as $2^4 = 16$). Even higher-order QAM formats like 64-QAM (6 bits per symbol), 256-QAM (8 bits per symbol), 1024-QAM (10 bits per symbol), or 4096-QAM (12 bits per symbol) are also used in modern systems like WiFi or LTE.
 
 {{< include /content/fundamentals/_fig_16qam_constellation.qmd >}}
 
-Shown in @fig-16qam-constellation is the "constellation diagram" of a 16-QAM modulation format. The constellation points are arranged in a square grid, with each point representing a unique combination of amplitude and phase. The distance between the constellation points determines the robustness against noise and interference; larger distances result in better performance, but also require more bandwidth. The mapping of bits to constellation points is called "bit mapping" or "symbol mapping". The example in @fig-16qam-constellation uses a Gray code mapping, which minimizes the number of bit errors in case of a symbol error.
+Shown in @fig-16qam-constellation is the "constellation diagram" of a 16-QAM modulation format. The constellation points are arranged in a square grid, with each point representing a unique combination of amplitude and phase. The distance between the constellation points determines the robustness against noise and interference; larger distances result in better performance, but also require more power. The mapping of bits to constellation points is called "bit mapping" or "symbol mapping". The example in @fig-16qam-constellation uses a Gray code mapping, which minimizes the number of bit errors in case of a symbol error (assuming that a symbol will be wrongly decoded as one of its neighbors).
 
 The constellation diagram can be imagined as a complex plane, where the x-axis represents the in-phase component (I) and the y-axis represents the quadrature component (Q) of the modulated signal. During transmission of a specific symbol, the RF carrier is modulated to the corresponding amplitude and phase, resulting in a specific point in the constellation diagram. In @fig-16qam-constellation, the amplitude and phase information for two consecutive symbols, $A_i$/$\varphi_i$ and $A_{i+1}$/$\varphi_{i+1}$, is shown. If we have a bitrate with a bit duration of $T_\mathrm{b}$, the symbol duration for 16-QAM (4 bits per symbol) is $T_\mathrm{s} = 4 T_\mathrm{b}$. During the first $T_\mathrm{s}$, the carrier is modulated to $A_i$/$\varphi_i$, and during the next $T_\mathrm{s}$, it is modulated to $A_{i+1}$/$\varphi_{i+1}$.
 
@@ -491,9 +491,9 @@ The key question is now how to implement this idea efficiently, as we now have t
 
 {{< include /content/fundamentals/_fig_ofdm_transceiver.qmd >}}
 
-The OFDM transmitter takes a block of $N$ symbols (e.g., 64-QAM symbols) and maps them onto $N$ subcarriers, thereby reducing the symbol rate for each subcarrier to $T_\mathrm{b} / N$. The IFFT then generates the time-domain OFDM signal, which is transmitted over the wireless channel. Before transmission the **cyclic prefix (CP)** is added to each OFDM symbol.
+The OFDM transmitter takes a block of $N$ symbols (e.g., 64-QAM symbols) and maps them onto $N$ subcarriers, thereby reducing the symbol rate for each subcarrier to $T_\mathrm{b} / N$. The IFFT then generates the time-domain OFDM signal, which is transmitted over the wireless channel. Before transmission, the **cyclic prefix (CP)** is added to each OFDM symbol.
 
-At the receiver, first the CP is removed, and then the FFT recovers the frequency-domain symbols, which can then be equalized (fairly simply by multiplying each subcarrier with a complex factor to correct amplitude and phase) and demodulated.
+At the receiver, the CP is first removed, and then the FFT recovers the frequency-domain symbols, which can then be equalized (fairly simply by multiplying each subcarrier with a complex factor to correct amplitude and phase) and demodulated.
 
 A key property of OFDM is that the subcarriers are **orthogonal** to each other, which means that they do not interfere with each other, even if they overlap in frequency. This is achieved by choosing the subcarrier spacing $\Delta f$ such that it is equal to the symbol rate $1/T_\mathrm{b}$, i.e., $\Delta f = 1/T_\mathrm{b}$. This way, the integral of the product of two different subcarriers over one symbol period is zero, which means that they are orthogonal.
 
