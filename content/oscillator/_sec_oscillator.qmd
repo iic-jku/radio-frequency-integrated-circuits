@@ -40,7 +40,7 @@ When $|-R_\mathrm{amp}| = R_\mathrm{p}$, the losses of the tank circuit are full
 
 - An alternative implementation of setting the oscillation amplitude is to use an *automatic level control* (ALC) loop, which measures the oscillation amplitude and adjusts the amplifier gain accordingly to maintain a constant output amplitude. This approach can improve the stability of the oscillation amplitude over process, voltage, and temperature variations.
 
-- As an alternative to start the oscillation from thermal noise (which can take considerable time depending on the $Q$ of the resonator) is to provide a known initial condition to the resonator, e.g., by pre-charging the capacitor $C$ to a certain voltage before enabling the amplifier. This way, the oscillation can start immediately from this initial energy stored in the resonator.
+- An alternative to starting the oscillation from thermal noise (which can take considerable time depending on the $Q$ of the resonator) is to provide a known initial condition to the resonator, e.g., by pre-charging the capacitor $C$ to a certain voltage before enabling the amplifier. This way, the oscillation can start immediately from this initial energy stored in the resonator.
 
 As a first hint on how to optimize an LC oscillator for low phase noise, we can try to maximize $Q$ according to @eq-definition-q. The energy stored in the capacitor at peak voltage is
 
@@ -143,9 +143,9 @@ with $\omega_\mathrm{B}$ being the half-power bandwidth of the oscillator spectr
 
 Why is phase noise important?
 
-1. In RX and TX the phase noise of the LO creates jitter, which degrades signal quality and contributes to EVM degradation.
+1. In RX and TX, the phase noise of the LO creates jitter, which degrades signal quality and contributes to EVM degradation.
 2. In TX, phase noise of the LO creates noise sidebands around the carrier, which can lead to adjacent channel interference together with spectral regrowth due to nonlinearities and thermal noise.
-3. In RX, reciprocal mixing of the phase noise sidebands with the desired signal creates in-band noise, which degrades the SNR and sensitivity of the RX.
+3. In RX, reciprocal mixing of the phase noise sidebands of the LO with strong adjacent channel signals creates in-band noise, which degrades the SNR and sensitivity of the RX.
 4. In systems using multiple carriers or carriers with high-order modulation schemes (like in OFDM), phase noise can lead to inter-carrier interference (ICI) and symbol misinterpretation, further degrading system performance.
 
 ::: {#nte-phnoise_division .callout-note}
@@ -262,7 +262,7 @@ A practical implementation of a differential LC oscillator using the cross-coupl
 
 {{< include /content/oscillator/_fig_oscillator_lc_nmos.qmd >}}
 
-By putting the circuit in @fig-oscillator-lc-nmos onto its head we obtain a "PMOS core" oscillator, which is also widely used in integrated LC oscillators. This configuration is shown in @fig-oscillator-lc-pmos.
+By putting the circuit in @fig-oscillator-lc-nmos on its head, we obtain a "PMOS core" oscillator, which is also widely used in integrated LC oscillators. This configuration is shown in @fig-oscillator-lc-pmos.
 
 {{< include /content/oscillator/_fig_oscillator_lc_pmos.qmd >}}
 
@@ -272,7 +272,7 @@ $$
 f_0 = \frac{1}{2 \pi \sqrt{L C}}
 $$
 
-As both technologies have their inductor middle point tied to a supply rail ($\VDD$ for the NMOS core, $\VSS$ for the PMOS core), the voltage swing across the tank can go well beyond the supply voltage, which is an advantage of these topologies. However, note that the maximum voltage swing is still limited by the device breakdown voltages of $M_1$ and $M_2$, which can be critical in advanced CMOS technologies with low breakdown voltages. To utilize both an NMOS and a PMOS cross-coupled pair in parallel, a so-called "complementary (or CMOS) LC oscillator" can be used, which is shown in @fig-oscillator-lc-cmos. Here, the voltage swing across the tank is limited to the supply voltage, so it is inherently safe regarding device breakdown. Also, the transconductance of both NMOS and PMOS devices contribute to the negative resistance, which can reduce power consumption for a given oscillation amplitude.
+As both topologies have their inductor center tap tied to a supply rail ($\VDD$ for the NMOS core, $\VSS$ for the PMOS core), the voltage swing across the tank can go well beyond the supply voltage, which is an advantage of these topologies. However, note that the maximum voltage swing is still limited by the device breakdown voltages of $M_1$ and $M_2$, which can be critical in advanced CMOS technologies with low breakdown voltages. To utilize both an NMOS and a PMOS cross-coupled pair in parallel, a so-called "complementary (or CMOS) LC oscillator" can be used, which is shown in @fig-oscillator-lc-cmos. Here, the voltage swing across the tank is limited to the supply voltage, so it is inherently safe regarding device breakdown. Also, the transconductance of both NMOS and PMOS devices contributes to the negative resistance, which can reduce power consumption for a given oscillation amplitude.
 
 {{< include /content/oscillator/_fig_oscillator_lc_cmos.qmd >}}
 
@@ -293,7 +293,7 @@ In order to achieve a tunable capacitance, a so-called "varactor" (variable capa
 
 1. Use the gate-to-channel capacitance of a MOSFET operated in reverse bias. By changing the voltage applied to the gate, the depletion region width in the channel changes, which in turn changes the capacitance.
 2. Use a PN-junction diode operated in reverse bias. The depletion region width of the diode changes with the applied voltage, leading to a change in capacitance.
-3. Use a gate-to-channel capacitance of special MOSFET structure in accumulation mode, which can be achieved by using a NMOS situated in an n-well (in contrast to the usual operation in a p-well). Changing the gate-to-channel voltage changes the accumulation capacitance [@Andreani.2000].
+3. Use the gate-to-channel capacitance of a special MOSFET structure in accumulation mode, which can be achieved by using an NMOS situated in an n-well (in contrast to the usual operation in a p-well). Changing the gate-to-channel voltage changes the accumulation capacitance [@Andreani.2000].
 4. Use a switched capacitor bank, where multiple capacitors are connected in parallel or series using switches (usually MOSFETs) to achieve discrete capacitance values.
 
 In order to characterize the tuning sensitivity of an oscillator, the metric $K_\mathrm{VCO}$ (voltage-controlled oscillator gain) is often used, which is defined as
@@ -316,7 +316,7 @@ Here, when the control signal $S$ is high, the effective capacitance is $C/2$, w
 
 Note that there exists a trade-off when designing the switched capacitor: A larger switch (with increased $W$) reduces $R_\mathrm{on}$, but increases $C_\mathrm{off}$. A large $R_\mathrm{on}$ leads to increased losses in the tank circuit, which degrades the quality factor $Q$ and increases phase noise according to @eq-leeson-equation. On the other hand, a large $C_\mathrm{off}$ reduces the effective tuning range of the switched capacitor, which can be detrimental if a wide tuning range is required.
 
-In **digitally-controlled oscillators (DCOs)**, the tuning voltage $V_\mathrm{tune}$ is replaced by a digital control word that selects different capacitance values from a capacitor bank. This approach allows for precise and repeatable frequency tuning, which is beneficial in applications requiring frequency synthesis or channel selection. These fine tuning steps can also be implemented according to @fig-switched-capacitor, however, the value of $C$ must be sufficiently small.
+In **digitally-controlled oscillators (DCOs)**, the tuning voltage $V_\mathrm{tune}$ is replaced by a digital control word that selects different capacitance values from a capacitor bank. This approach allows for precise and repeatable frequency tuning, which is beneficial in applications requiring frequency synthesis or channel selection. These fine tuning steps can also be implemented according to @fig-switched-capacitor; however, the value of $C$ must be sufficiently small.
 
 ## Oscillator Modelling {#sec-oscillator-modeling}
 

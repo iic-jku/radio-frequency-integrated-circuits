@@ -18,7 +18,7 @@ limitations under the License.
 
 Power amplifiers (PAs) are essential components in wireless communication systems, as they boost the signal power from (usually) a few milliwatts up to several watts to ensure reliable transmission over the air. While PAs are simple in concept, their design and operation involve several trade-offs between efficiency, linearity, bandwidth, and cost.
 
-A basic PA based on a single common-source stage is shown in @fig-poweramp-basic. The input signal is applied to the gate of the transistor via a matching network, which amplifies the signal at the drain terminal. The output matching network transforms the 50 Ohm load to the optimal load impedance for the desired output power under linearity and efficiency constraints.
+A basic PA based on a single common-source stage is shown in @fig-poweramp-basic. The input signal is applied to the gate of the transistor via an input matching network. The transistor amplifies the signal at the drain terminal, and the output matching network transforms the $50\,\Omega$ load to the optimal load impedance for the desired output power under linearity and efficiency constraints.
 
 {{< include /content/poweramp/_fig_poweramp_basic.qmd >}}
 
@@ -54,7 +54,7 @@ Ideally, we want both efficiency metrics as high as possible, but in practice th
 
 ## PA Nonlinearity {#sec-poweramp-nonlinearity}
 
-For describing PA nonlinearity, various models can be used. One simple model is the **Saleh model** (originally developed for travelling-wave tube amplifiers), which describes the AM/AM and AM/PM conversion of the PA using a smooth transition from linear operation to saturation [@Saleh.1981]. This model is defined by the following equations in the polar domain ($r(t)$ and $\psi(t)$ are the modulated input signal amplitude and phase, respectively; $y(t)$ is the output signal):
+For describing PA nonlinearity, various models can be used. One simple model is the **Saleh model** (originally developed for traveling-wave tube amplifiers), which describes the AM/AM and AM/PM conversion of the PA using a smooth transition from linear operation to saturation [@Saleh.1981]. This model is defined by the following equations in the polar domain ($r(t)$ and $\psi(t)$ are the modulated input signal amplitude and phase, respectively; $y(t)$ is the output signal):
 
 $$
 y(t) = A[r(t)] \cos\{ \omega_0 t + \psi(t) + \varphi[r(t)] \}
@@ -98,17 +98,17 @@ Power amplifiers can be classified into different [classes](https://en.wikipedia
 - **Class A** amplifiers are the most linear but also the least efficient, as they conduct current throughout the entire input signal cycle. They are typically used in applications where linearity is critical, such as low power analog signal processing. Drain efficiency is limited to $\eta \leq 50\%$.
 - **Class B** amplifiers are more efficient than Class A, as they conduct current only during half of the input signal cycle. However, they suffer from crossover distortion at the zero-crossing point of the input signal. The upper limit for drain efficiency is $\eta \leq 78.5\%$.
 - **Class AB** amplifiers are a compromise between Class A and Class B, providing better linearity than Class B while still being more efficient than Class A. They are widely used in small-signal applications and linear RF power amplifiers, where better efficiency than Class A is desired.
-- **Class C** amplifiers are highly efficient but exhibit significant distortion, as they conduct current for only a part of the input signal cycle. They are typically used in applications where efficiency is more important than linearity, such as RF transmitters for constant-envelope modulation schemes (e.g., FM, FSK). Drain efficiency can reach up to $\eta \leq 100\%$, but only as the output power falls to zero.
+- **Class C** amplifiers are highly efficient but exhibit significant distortion, as they conduct current for only a part of the input signal cycle. They are typically used in applications where efficiency is more important than linearity, such as RF transmitters for constant-envelope modulation schemes (e.g., FM, FSK). Drain efficiency can theoretically approach $\eta = 100\%$, but only as the output power falls to zero.
 - **Class D, E, and F** amplifiers are switching amplifiers that achieve very high efficiencies by operating the transistor as a switch, either fully on or fully off. They use various techniques such as pulse-width modulation (PWM), tuned loads, and harmonic tuning to optimize efficiency. These classes are commonly used in high-power applications, such as audio amplifiers and RF transmitters.
 - **Class G and H** amplifiers use multiple supply voltages or adaptive supply voltages to improve efficiency, and can be combined with the other classes. They are often used in applications where power consumption is a concern, such as battery-powered devices. Class AB combined with Class G or H techniques is state-of-the-art in mobile device PAs. Class G and H are sometimes also referred to as "**envelope tracking**" techniques.
 
 ## PA Stability and Neutralization {#sec-poweramp-stability}
 
-Looking at the basic PA circuit in @fig-poweramp-basic, it becomes apparent that a PA can easily become unstable due to the high gain and large signal swings involved. Parasitic capacitances and inductances in the layout and packaging can create feedback paths that lead to oscillations, especially the Miller capacitance $C_\mathrm{m}$ between the gate and drain of the transistor, as shown in @fig-poweramp-miller.
+Looking at the basic PA circuit in @fig-poweramp-basic, it becomes apparent that a PA can easily become unstable due to the high gain and large signal swings involved. The Miller capacitance $C_\mathrm{m}$ between the gate and drain of the transistor creates a feedback path that can lead to oscillations, as shown in @fig-poweramp-miller. Additionally, parasitic capacitances and inductances in the layout and packaging can exacerbate the problem.
 
 {{< include /content/poweramp/_fig_poweramp_miller.qmd >}}
 
-The Miller capacitance effectively creates a feedback loop from the output to the input, which can lead to instability, as also shown in @sec-amp-stability. Lowering $S_{12}$ (and thus getting rid of the Miller effect due to $C_\mathrm{m}$) is thus crucial for PA stability. This can be mainly achieved in two ways:
+The Miller capacitance effectively creates a feedback loop from the output to the input, which can lead to instability, as also shown in @sec-amp-stability. Lowering $S_{12}$ (and thus getting rid of the Miller effect due to $C_\mathrm{m}$) is crucial for PA stability. This can be mainly achieved in two ways:
 
 - Adding a cascode stage, which isolates the input from the output and reduces the effect of $C_\mathrm{m}$ significantly (see @fig-poweramp-differential).
 - Adding a **neutralization** capacitor between the gate and drain, which cancels out the effect of $C_\mathrm{m}$. Alternatively, feedback networks or additional circuitry can be used to stabilize the PA.

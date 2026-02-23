@@ -53,7 +53,7 @@ We are going to use a very simple, time-invariant model to study linearity, base
 
 ::: {.callout-important}
 ## Linearity and Time Invariance in RF Systems
-We use time invariance to simplify the mathematics. In practice, many circuits and systems will show time variant behavior which leads to quite a few very interesting and important phenomena! A time-invariant nonlinear system is also called a "memoryless" system, as the output at time $t$ only depends on the input at time $t$.
+We use time invariance to simplify the mathematics. In practice, many circuits and systems will show time-variant behavior which leads to quite a few very interesting and important phenomena! A time-invariant nonlinear system is also called a "memoryless" system, as the output at time $t$ only depends on the input at time $t$.
 
 In contrast, a system with memory (i.e., time-variant) will have an output at time $t$ which depends on the input at time $t$ and also on past inputs (e.g., at times $t - \Delta T$, $t - 2 \Delta T$, etc.). Examples of systems with memory are filters, which have a frequency-dependent response, or power amplifiers with thermal memory effects.
 :::
@@ -64,9 +64,9 @@ $$
 y(t) = \alpha_0 + \alpha_1 x(t) + \alpha_2 x(t)^2 + \alpha_3 x(t)^3 + \ldots
 $$ {#eq-nonlinear-model}
 
-Usually, the blocks under study will have higher order nonlinear terms, but we often stop at 3rd order to keep things simple. For practical work, higher order terms should be included if necessary.
+Usually, the blocks under study will have higher-order nonlinear terms, but we often stop at 3rd order to keep things simple. For practical work, higher-order terms should be included if necessary.
 
-Which $x(t)$ should we use to study wireless systems? Often, the bandwidth $f_\mathrm{BW}$ of a transmit signal is much smaller than the center frequency $f_0$, i.e., $f_\mathrm{BW} \ll f_0$. In this case using a sinusoidal signal as a model is both simple to handle and approximately correct.
+Which $x(t)$ should we use to study wireless systems? Often, the bandwidth $f_\mathrm{BW}$ of a transmit signal is much smaller than the center frequency $f_0$, i.e., $f_\mathrm{BW} \ll f_0$. In this case, using a sinusoidal signal as a model is both simple to handle and approximately correct.
 
 ### Single-Tone Linearity {#sec-linearity-single}
 
@@ -93,24 +93,24 @@ $$ {#eq-linearity-single}
 
 Looking at @eq-linearity-single, we can make a few interesting observations:
 
-- Even-order nonlinearity ($\alpha_2$) creates low-frequency components; it effectively adds frequency components related to the envelope $A$. If $A$ is a constant then this results in a dc term; if $A(t)$ is time variant it will create a squared version of it at low frequencies.
+- Even-order nonlinearity ($\alpha_2$) creates low-frequency components; it effectively adds frequency components related to the envelope $A$. If $A$ is a constant then this results in a dc term; if $A(t)$ is time-variant, it will create a squared version of it at low frequencies.
 - The $\alpha_1$ term is the gain of the circuit block.
 - Odd-order nonlinearity ($\alpha_3$) can impact the gain of the fundamental term passing through the block. Depending on the sign of $\alpha_3$, this can lead to gain contraction or expansion.
 - Even- and odd-order nonlinearities create additional frequency components, so-called harmonics of the fundamental frequency. These harmonics are often unwanted, as they are far outside the wanted transmission frequency range, and need to be minimized, by either
-  1. use a lowpass filter to filter these harmonics, or
-  2. increase the linearity, i.e., make the $\alpha_2$, $\alpha_3$, etc., small enough.
+  1. using a lowpass filter to filter these harmonics, or
+  2. increasing the linearity, i.e., making the $\alpha_2$, $\alpha_3$, etc., small enough.
 
 The created harmonics are illustrated in @fig-harmonics. Note that measuring harmonics to quantify the nonlinearity metrics like $\alpha_2$ and $\alpha_3$ is often not very accurate, as these harmonics are often filtered in bandwidth-limited systems.
 
 {{< include /content/fundamentals/_fig_harmonics.qmd >}}
 
-How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal $x(t)$ in amplitude, and observe the output $y(t)$. If the observed gain drops by 1 dB from the small-signal value, we note the input power and call this point the **1dB compression point** ($P_\mathrm{1dB}$). We should always add whether this 1dB compression point is input- or output-referred to avoid ambiguity. The diagram in @fig-1db-compression-point shows this test ($\alpha_1 = 100$, $\alpha_3 = -0.2$).
+How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal $x(t)$ in amplitude, and observe the output $y(t)$. If the observed gain drops by 1 dB from the small-signal value, we note the input power and call this point the **1 dB compression point** ($P_\mathrm{1dB}$). We should always add whether this 1 dB compression point is input- or output-referred to avoid ambiguity. The diagram in @fig-1db-compression-point shows this test ($\alpha_1 = 100$, $\alpha_3 = -0.2$).
 
 {{< include /content/fundamentals/_fig_1db_compression.qmd >}}
 
 ::: {.callout-important}
 ## Compressive vs. Expansive Behavior
-Note that for compressive behaviour, $\alpha_3$ and $\alpha_1$ have different signs, while for expansive behaviour, they have the same sign.
+Note that for compressive behavior, $\alpha_3$ and $\alpha_1$ have different signs, while for expansive behavior, they have the same sign.
 
 At some point, every circuit block will show compressive behavior, as the maximum signal amplitude will be limited by power supply voltages, device breakdown voltages, etc.
 :::
@@ -144,7 +144,7 @@ As shown in @eq-linearity-double-a, interesting things happen:
 
 - We (again) have the gain compression/expansion effect as already discussed in @sec-linearity-single.
 - In addition, we have **cross-modulation**, i.e., the envelope of one tone (e.g., $A_2(t)$ of the tone at $\omega_2$) impacts the envelope of the other tone at $\omega_1$. This can lead to unwanted signal distortion, even if there is a large frequency separation between $\omega_1$ and $\omega_2$!
-- Further, since the sign of $\alpha_3$ is usually opposite to $\alpha_1$, this can also lead to **desensitization** ("desens"). If, for example, $A_2 \gg A_1$, then there would be no compression due to the tone $\omega_1$ itself, however, the large tone at $\omega_2$ will lead to gain compression of the tone at $\omega_1$; this effect is called desense.
+- Further, since the sign of $\alpha_3$ is usually opposite to $\alpha_1$, this can also lead to **desensitization** ("desens"). If, for example, $A_2 \gg A_1$, then there would be no compression due to the tone $\omega_1$ itself, however, the large tone at $\omega_2$ will lead to gain compression of the tone at $\omega_1$; this effect is called desens.
 
 We now look at the next class of generated tones:
 
@@ -175,7 +175,7 @@ Expressing $\Delta \omega = \omega_2 - \omega_1$ (and assuming $\omega_1 < \omeg
 
 {{< include /content/fundamentals/_fig_im3_tones.qmd >}}
 
-This close localization of the IM3 tones can also be utilized to characterize nonlinear performance. Using gain compression or harmonic generation (H3), it can be very difficult to extract nonlinearity of third order ($\alpha_3$). However, using a two-tone test, the IM3 tones can be readily measured, even if the measured signal path shows a **bandpass characteristic**! As RF systems frequently employ bandpass filters to suppress out-of-band signals, this is a very important property of the two-tone test.
+This close proximity of the IM3 tones can also be utilized to characterize nonlinear performance. Using gain compression or harmonic generation (H3), it can be very difficult to extract nonlinearity of third order ($\alpha_3$). However, using a two-tone test, the IM3 tones can be readily measured, even if the measured signal path shows a **bandpass characteristic**! As RF systems frequently employ bandpass filters to suppress out-of-band signals, this is a very important property of the two-tone test.
 
 The resulting test is called a two-tone test yielding the third-order intercept point (IP3). This test is widely used in RF design to characterize the linearity of amplifiers, mixers, and complete transceiver systems. The power relationship between fundamental tones and IM3 products as a function of input power is shown in @fig-im3-power-sweep.
 
@@ -189,13 +189,13 @@ $$
 \text{IIP3} = P_\mathrm{in} + \frac{P_\mathrm{in} - P_\mathrm{IM3}}{2}
 $$ {#eq-iip3}
 
-Further, for mildly nonlinear systems (i.e., $\alpha_3$ is dominating), the IIP3 can be approximated from the 1dB compression point as
+Further, for mildly nonlinear systems (i.e., $\alpha_3$ is dominant), the IIP3 can be approximated from the 1 dB compression point as
 
 $$
 \text{IIP3}|_\mathrm{dBm} \approx P_\mathrm{1dB}|_\mathrm{dBm} + 9.6\,\text{dB}.
 $$ {#eq-iip3-approx}
 
-If we have two blocks which are cascaded, and we know the gain and IIP3 of both blocks, we can calculate the overall IIP3 of the cascade with the following approximation. An exact calculation is very involved, as the nonlinearities of the first block (and the resulting tones) will be processed by the second block, creating even more tones; this process escalates very quickly. However, for practical purposes, the following approximation is often sufficient:
+If we have multiple blocks which are cascaded, and we know the gain and IIP3 of each block, we can calculate the overall IIP3 of the cascade with the following approximation. An exact calculation is very involved, as the nonlinearities of the first block (and the resulting tones) will be processed by the second block, creating even more tones; this process escalates very quickly. However, for practical purposes, the following approximation is often sufficient:
 
 $$
 \frac{1}{\text{IIP3}_\text{total}} \approx \frac{1}{\text{IIP3}_1} + \frac{G_1}{\text{IIP3}_2} + \frac{G_1 G_2}{\text{IIP3}_3} 
@@ -228,7 +228,7 @@ We see that the overall IIP3 is limited by the linearity of the second block, as
 
 Just as nonlinearity is a limiting factor for large signals, noise is the limiting factor for small signals. Noise is present in all electronic circuits and systems, and it is impossible to avoid it. However, we can try to minimize its impact on system performance.
 
-Noise is usually characterized by its power spectral density (PSD) in units of Watts per Hertz (W/Hz). For example, thermal noise at room temperature has a PSD of approximately $k T = 4 \times 10^{-21}$ W/Hz, or --174 dBm/Hz (with the Boltzmann constant $k = 1.38 \times 10^{-23}\,\text{J/K}$). This means that if we have a bandwidth of 1 MHz, the total thermal noise power would be:
+Noise is usually characterized by its power spectral density (PSD) in units of Watts per Hertz (W/Hz). For example, thermal noise at room temperature has a PSD of approximately $k T = 4 \times 10^{-21}$ W/Hz, or $-174$ dBm/Hz (with the Boltzmann constant $k = 1.38 \times 10^{-23}\,\text{J/K}$). This means that if we have a bandwidth of 1 MHz, the total thermal noise power would be:
 
 $$
 P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \left( \frac{1\,\text{MHz}}{1\,\text{Hz}} \right) = -114\,\text{dBm}
@@ -242,7 +242,7 @@ The PSD of noise can be flat vs. frequency (which is called "white noise"), or c
 
 ::: {.callout-important}
 ## Thermal Noise
-Note that the simple approximation given above is only valid for reasonably low frequencies and typical temperatures, and is known as the Rayleigh-Jeans approximation of Planck's blackbody radiation accounting for quantum effects and is given by [@Pozar_RF]
+Note that the simple approximation given above is only valid for reasonably low frequencies and typical temperatures, and is known as the Rayleigh-Jeans approximation. The full expression of Planck's blackbody radiation, accounting for quantum effects, is given by [@Pozar_RF]
 
 $$
 \text{PSD} = \frac{4 R h f}{e^{{h f}/{k T}} - 1}
@@ -276,7 +276,7 @@ In **bipolar junction transistors (BJTs)**, the most important noise source is t
 Note that it has been shown in [@Sarpeshkar_1993] that thermal noise and shot noise are actually equivalent, as both are generated by the random, thermally agitated motion of charge carriers!
 :::
 
-Ideal **capacitors** and **inductors** do not generate noise, however, real capacitors and inductors have parasitic resistances which generate thermal noise.
+Ideal **capacitors** and **inductors** do not generate noise; however, real capacitors and inductors have parasitic resistances which generate thermal noise.
 
 In RF systems, additional noise sources can be present. One noteworthy example is the [**cosmic microwave background**](https://en.wikipedia.org/wiki/Cosmic_microwave_background) radiation, which can be modeled as a noise temperature of approximately 3 K. While this is negligible compared to thermal noise at room temperature (approximately 290 K), it can be significant in very low-noise systems, such as radio telescopes pointing to the sky. Another important noise source in RF systems is the **atmospheric noise**, which is generated by natural phenomena like lightning or in the ionosphere.
 
@@ -284,7 +284,7 @@ In RF systems, additional noise sources can be present. One noteworthy example i
 ##  A Note on Circuit Noise Calculations
 When doing circuit noise calculations, it is instructive to keep the following points in mind:
 
-- For circuit calculations involving noise sources it is convenient to replace the power spectral
+- For circuit calculations involving noise sources, it is convenient to replace the power spectral
 density by equivalent sinusoidal generators in small bandwidths.
 - The noise power spectral density in a small bandwidth $\Delta f$ is given by $\overline{V_\mathrm{n}^2} = \overline{v_\mathrm{n}^2} / \Delta f$ and $\overline{I_\mathrm{n}^2} = \overline{i_\mathrm{n}^2} / \Delta f$.
 - The quantities $\overline{V_\mathrm{n}^2}$ and $\overline{I_\mathrm{n}^2}$ can be considered the mean-square value of sinusoidal generators. Using these values, network noise calculations reduce to familiar sinusoidal circuit-analysis calculations using $V_\mathrm{n}$ and $I_\mathrm{n}$.
@@ -443,7 +443,7 @@ The table below shows the **SNR requirements for different modulation formats** 
 
 ## Pulse Shaping and Spectral Efficiency {#sec-fundamentals-pulse-shaping}
 
-When we modulate symbols onto a carrier, we usually do not transmit the symbols as pure sinusoids, but rather as pulses with a certain shape. The pulse shape determines the bandwidth of the transmitted signal and its spectral efficiency. A common pulse shape is the **rectangular pulse**, which has a sinc-shaped spectrum. However, the sinc function $\sin(\pi x)/ \pi x$ has side lobes that extend to infinity, which can cause interference with adjacent channels.
+When we modulate symbols onto a carrier, we usually do not transmit the symbols as pure sinusoids, but rather as pulses with a certain shape. The pulse shape determines the bandwidth of the transmitted signal and its spectral efficiency. A common pulse shape is the **rectangular pulse**, which has a sinc-shaped spectrum. However, the sinc function $\sin(\pi x)/(\pi x)$ has side lobes that extend to infinity, which can cause interference with adjacent channels.
 
 For reference, the two-sided power spectral density $S(f)$ of a random binary sequence with equal probability of -1 and 1, using rectangular pulses with a duration of $T_\mathrm{b}$, is given by
 
@@ -477,7 +477,7 @@ $$
 
 where $B T_\mathrm{b}$ controls the width of the pulse. The spectrum of the Gaussian pulse is also Gaussian-shaped, which helps to minimize inter-symbol interference (ISI). 
 
-The Gaussian pulse for $BT=0.5$ as used in Bluetooth is shown in @fig-gaussian-pulse.
+The Gaussian pulse for $B T_\mathrm{b} = 0.5$ as used in Bluetooth is shown in @fig-gaussian-pulse.
 
 {{< include /content/fundamentals/_fig_gaussian_pulse.qmd >}}
 
@@ -491,7 +491,7 @@ The key question is now how to implement this idea efficiently, as we now have t
 
 {{< include /content/fundamentals/_fig_ofdm_transceiver.qmd >}}
 
-The OFDM transmitter takes a block of $N$ symbols (e.g., 64-QAM symbols) and maps them onto $N$ subcarriers, thereby reducing the symbol rate for each subcarrier to $T_\mathrm{b} / N$. The IFFT then generates the time-domain OFDM signal, which is transmitted over the wireless channel. Before transmission, the **cyclic prefix (CP)** is added to each OFDM symbol.
+The OFDM transmitter takes a block of $N$ symbols (e.g., 64-QAM symbols) and maps them onto $N$ subcarriers, thereby increasing the symbol duration for each subcarrier to $N \cdot T_\mathrm{b}$. The IFFT then generates the time-domain OFDM signal, which is transmitted over the wireless channel. Before transmission, the **cyclic prefix (CP)** is added to each OFDM symbol.
 
 At the receiver, the CP is first removed, and then the FFT recovers the frequency-domain symbols, which can then be equalized (fairly simply by multiplying each subcarrier with a complex factor to correct amplitude and phase) and demodulated.
 
@@ -516,7 +516,7 @@ $$
 \text{Bitrate} = N_\mathrm{sc} \cdot N_\mathrm{sym} \cdot \frac{1}{T_\mathrm{b} + T_\mathrm{CP}} = 1200 \cdot 8 \cdot \frac{1}{66.7\,\mu\text{s} + 4.7\,\mu\text{s}} \approx 134\,\text{Mbps}
 $$
 
-Without the overhead for control channels and error correction coding a user datarate of approximately 100 Mbps can be achieved in a 20 MHz LTE channel.
+Without the overhead for control channels and error correction coding a user data rate of approximately 100 Mbps can be achieved in a 20 MHz LTE channel.
 :::
 
 ## Multiple Access Techniques {#sec-fundamentals-multiple-access}

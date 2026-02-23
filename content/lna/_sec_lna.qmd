@@ -144,7 +144,7 @@ $$
 F = 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} = 2
 $$
 
-so we see that we are limited to a minimum noise figure of 3 dB, even if we spend the bias current to make $\gm$ very large. We can go below 3 dB noise figure only if we choose $R_\mathrm{p} > R_\mathrm{s}$, however, this means that the input is no longer matched to 50 Ω, which is usually not acceptable. Hence, this simple resistively matched common-source LNA is not a good choice for a low-noise amplifier, with one exception: For very wideband amplifiers, where a NF of larger than 3 dB is acceptable, this configuration might be a good choice.
+so we see that we are limited to a minimum noise figure of 3 dB, even if we spend the bias current to make $\gm$ very large. We can go below 3 dB noise figure only if we choose $R_\mathrm{p} > R_\mathrm{s}$, however, this means that the input is no longer matched to 50 Ω, which is usually not acceptable. Hence, this simple resistively matched common-source LNA is not a good choice for a low-noise amplifier, with one exception: For very wideband amplifiers, where an NF larger than 3 dB is acceptable, this configuration might be a good choice.
 
 We see that we are stuck at high noise figures if we realize the real part of the input impedance with a resistor. This leaves us with the question of how to realize a real part of the input impedance then. We will answer this question in the next section.
 
@@ -176,7 +176,7 @@ With a classical long-channel $\gamma = 2/3$, we can achieve a minimum noise fig
 
 ## Inductively-Degenerated Common-Source LNA {#sec-lna-inductive-degeneration}
 
-As we have seen in @sec-lna-common-gate, using circuit techniques can realize a real part of an input impedance without the associated thermal noise of a resistor. We now try something different, in the hope that it will result in an even lower noise figure. We construct an LNA based on a common-source MOSFET amplifier, but we add an impedance $Z_\mathrm{deg}$ into the source line. This arrangement is shown in @fig-lna-inductive-degeneration.
+As we have seen in @sec-lna-common-gate, circuit techniques can be used to realize a real part of an input impedance without the associated thermal noise of a resistor. We now try something different, in the hope that it will result in an even lower noise figure. We construct an LNA based on a common-source MOSFET amplifier, but we add an impedance $Z_\mathrm{deg}$ into the source line. This arrangement is shown in @fig-lna-inductive-degeneration.
 
 {{< include /content/lna/_fig_lna_inductive_degeneration.qmd >}}
 
@@ -208,19 +208,19 @@ $$
 \Re \{ Z_\mathrm{in} \} = \frac{\gm L}{C_\mathrm{gs}}
 $$
 
-Without proof (refer to [@Razavi_RFIC] or [@Darabi_RFIC] for a derivation) we find for the noise factor of this input stage (with some simplification) as
+Without proof (refer to [@Razavi_RFIC] or [@Darabi_RFIC] for a derivation), we state the noise factor of this input stage (with some simplification) as
 
 $$
 F = 1 + \frac{\gamma R_\mathrm{s} \omega_0^2 C_\mathrm{gs}^2}{\gm}.
 $$ {#eq-lna-inductive-degeneration-noise-factor}
 
-Finally, we have an LNA input stage configuration that allows us to achieve a noise figure below 3 dB, even with $\gamma > 1$, by proper choice of $\gm$. Making $\gm$ large (by spending more bias current) results in (to first order) arbitrarily low noise figure. The inductively-degenerated common-source LNA is a widely used LNA input stage configuration in modern RFICs. A somewhat detailed schematic is shown in @fig-lna-inductive-degeneration-detailed.
+Finally, we have an LNA input stage configuration that allows us to achieve a noise figure below 3 dB, even with $\gamma > 1$, by proper choice of $\gm$. Making $\gm$ large (by spending more bias current) results in (to first order) an arbitrarily low noise figure. The inductively-degenerated common-source LNA is a widely used LNA input stage configuration in modern RFICs. A somewhat detailed schematic is shown in @fig-lna-inductive-degeneration-detailed.
 
 {{< include /content/lna/_fig_lna_inductive_degeneration_detailed.qmd >}}
 
 The inductor $L_\mathrm{match}$ is used to match the input impedance to 50 Ω at the desired frequency, $L_\mathrm{deg}$ is used to realize the real part of the input impedance, $R_\mathrm{bias}$ is used to bias the gate of $M_1$, $M_2$ is a cascode transistor which increases the output impedance and thus the gain of the stage (plus it improves the reverse isolation), and $R_\mathrm{D}$, $L_\mathrm{D}$, and $C_\mathrm{D}$ form a load tank which provides high gain at the desired frequency. A dc block is used at the input so that the bias point of $M_1$ is not corrupted by the input signal source. The bias voltage $V_\mathrm{bias2}$ sets the operating point of the cascode transistor $M_2$.
 
-What is missing in @fig-lna-inductive-degeneration-detailed is any form of frequency tuning of the load to the frequency of interest, and support for different gain modes. Apart from these details this LNA circuit is a good starting point for a practical LNA design.
+What is missing in @fig-lna-inductive-degeneration-detailed is any form of frequency tuning of the load to the frequency of interest, and support for different gain modes. Apart from these details, this LNA circuit is a good starting point for a practical LNA design.
 
 ## Feedback LNA {#sec-lna-feedback}
 
@@ -242,7 +242,7 @@ $$
 F = 1 + \left| \frac{Z_\mathrm{F} + R_\mathrm{s}}{\gm Z_\mathrm{F} + 1} \right|^2 \cdot \frac{\gamma \gm + \Re \{ Y_\mathrm{L} \} }{\Re \{ Z_\mathrm{in} \}}
 $$ {#eq-lna-shunt-fb-noise-factor}
 
-As you can see from @eq-lna-shunt-fb-noise-factor, by making $\gm$ large (by spending more bias current) the noise figure can be made arbitrarily small! Depending on the choice of $Z_\mathrm{F}$ and $Z_\mathrm{L}$, the input impedance of this LNA can be changed in interesting ways.
+As you can see from @eq-lna-shunt-fb-noise-factor, by making $\gm$ large (by spending more bias current), the noise figure can be made arbitrarily small! Depending on the choice of $Z_\mathrm{F}$ and $Z_\mathrm{L}$, the input impedance of this LNA can be changed in interesting ways.
 
 By setting $Z_\mathrm{L} \rightarrow \infty$ (e.g., by biasing with a current source and high-impedance loading), we find that
 

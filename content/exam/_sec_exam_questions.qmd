@@ -140,7 +140,7 @@ This chapter contains a collection of potential questions covering the topics di
 
 ## Phase-Locked Loops {#sec-exam-pll}
 
-53. Draw a simple block diagram of a Type-I phase-locked loop and explain the function of each component (PD, LPF, VCO, divider). What is the steady-state phase and frequency error?
+53. Draw a simple block diagram of a Type-I phase-locked loop and explain the function of each component (PD, LPF, VCO, divider). What are the steady-state phase and frequency errors?
 
 54. What is a phase-frequency detector (PFD)? How does it differ from a simple XOR phase detector? Draw its implementation and timing diagrams for different input conditions.
 
@@ -180,7 +180,7 @@ This chapter contains a collection of potential questions covering the topics di
 
 ## Calculation Problems {#sec-exam-calculations}
 
-71. **FSPL Calculation**: Calculate the free-space path loss for a 5.8 GHz WiFi link over a distance of 100 m. Express your answer in dB.
+71. **FSPL Calculation**: Calculate the free-space path loss for a 5.8 GHz Wi-Fi link over a distance of 100 m. Express your answer in dB.
 
 72. **Sensitivity Calculation**: A Bluetooth LE receiver has a noise figure of 8 dB, channel bandwidth of 2 MHz, and requires an SNR of 15 dB. Calculate the receiver sensitivity.
 

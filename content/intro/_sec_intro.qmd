@@ -16,7 +16,7 @@ limitations under the License.
 
 # Introduction {#sec-intro}
 
-This is the material for an introductory radio-frequency integrated circuits course. The contents are largely based on [@Razavi_RFIC] and [@Darabi_RFIC]; these two books are an excellent introduction into this topic and are highly recommended! For a general introduction into RF and microwave [@Pozar_RF] is a great read!
+This is the material for an introductory radio-frequency integrated circuits course. The contents are largely based on [@Razavi_RFIC] and [@Darabi_RFIC]; these two books are an excellent introduction to this topic and are highly recommended! For a general introduction to RF and microwave, [@Pozar_RF] is a great read!
 
 It is assumed that readers are familiar with the contents of this [Analog Circuit Design](https://iic-jku.github.io/analog-circuit-design/analog_circuit_design.html) course.
 
@@ -41,7 +41,7 @@ Unfortunately, wireless transmission is hard. The wireless channel, i.e., the us
 - The wireless channel has significant losses.
 - The channel is time variant, as usually the transmitter and/or the receiver move, and/or the environment changes.
 
-In order to estimate the power $P_\mathrm{R}$ of the wireless transmission at the receiver we can use Friis' transmission formula [@Pozar_RF]:
+In order to estimate the power $P_\mathrm{R}$ of the wireless transmission at the receiver, we can use Friis' transmission formula [@Pozar_RF]:
 
 $$
 P_\mathrm{R} = \frac{P_\mathrm{T}}{4 \pi d^2} \cdot A_\mathrm{R} = P_\mathrm{T} \cdot \frac{A_\mathrm{R} \cdot A_\mathrm{T}}{d^2 \lambda^2}
@@ -63,15 +63,15 @@ Generally speaking, the size of an electromagnetic antenna is proportional to th
 
 | Application     | Frequency   | Wavelength  |
 |:----------------|-------------|-------------|
-| FM Radio        | 88--108 MHz | 2.8-3.4 m   |
+| FM Radio        | 88--108 MHz | 2.8--3.4 m  |
 | WiFi (lowband)  | 2.4 GHz     | 12.5 cm     |
 | WiFi (highband) | 5 GHz       | 6 cm        |
 | Bluetooth       | 2.4 GHz     | 12.5 cm     |
-| Cellular        | 0.6--5 GHz  | 6-50 cm     |
+| Cellular        | 0.6--5 GHz  | 6--50 cm    |
 | GNSS            | 1.575 GHz   | 19 cm       |
 : Typical RF applications with their operating frequencies and corresponding wavelengths {#tbl-rf-applications}
 
-As you can see in [@tbl-rf-applications] many of these antennas would not fit into the used device form factors, i.e., often we have to use electrically small antennas. As antenna design is not part of this course but critically important for wireless systems, please refer to [@Balanis_Antenna] or [this website](https://www.antenna-theory.com/) for more information on antenna design.
+As you can see in [@tbl-rf-applications], many of these antennas would not fit into typical device form factors, i.e., often we have to use electrically small antennas. As antenna design is not part of this course but critically important for wireless systems, please refer to [@Balanis_Antenna] or [this website](https://www.antenna-theory.com/) for more information on antenna design.
 
 ::: {#nte-wavelength-calculation .callout-note}
 ## Wavelength Calculation
@@ -87,7 +87,7 @@ $$\lambda = \frac{c}{f} = \frac{3 \times 10^8 \text{ m/s}}{2.4 \times 10^9 \text
 This means that a quarter-wavelength monopole antenna for 2.4 GHz Bluetooth would be approximately 3.1 cm long, which easily fits into most mobile devices.
 :::
 
-In order to get a feeling for the attenuation experienced in wireless communication, we now calculate the following exemplary transmission. We will use the unit of dBm which is often used in RF design and is defined as
+In order to get a feeling for the attenuation experienced in wireless communication, we now calculate the following example transmission. We will use the unit of dBm which is often used in RF design and is defined as
 
 $$
 P|_\text{dBm} = 10 \cdot \log_{10} \left( \frac{P|_\text{W}}{1\,\text{mW}} \right)
@@ -122,7 +122,7 @@ $$ {#eq-fspl}
 
 {{< include /content/intro/_fig_free_space_path_loss.qmd >}}
 
-As dire as the situation of @fig-free-space-path-loss already looks, this is not even all factors considered:
+As dire as the situation of @fig-free-space-path-loss already looks, these are not even all the factors to consider:
 
 - The given attenuation is for line-of-sight paths; often, the attenuation is significantly higher than this due to blockage by buildings, mountains, rain, or foliage.
 - In the absence of a direct line-of-sight path, the EM wave is redirected by reflections, causing additional attenuation, and potential destructive interference by multi-path reception.
@@ -158,7 +158,7 @@ In order to allow communication between different devices, different operators, 
 
 During this course, we will learn what these terms mean and how they impact the design of RF integrated circuits.
 
-As you can see in @tbl-wireless-standards, since LTE (4G) and 5G NR, many additional bands have been defined in the sub-6 GHz range (FR1) and also in the mm-wave range (FR2, 24.25 to 52.6 GHz). This means that modern wireless devices have to support many different frequency bands, which makes the design of RF frontends even more challenging. A good overview of the different frequency bands is given here for [LTE](https://www.sqimway.com/lte_band.php) and [5G NR](https://www.sqimway.com/nr_band.php).
+As you can see in @tbl-wireless-standards, since LTE (4G) and 5G NR, many additional bands have been defined in the sub-6 GHz range (FR1) and also in the mm-wave range (FR2, 24.25 to 52.6 GHz). This means that modern wireless devices have to support many different frequency bands, which makes the design of RF front ends even more challenging. A good overview of the different frequency bands is given here for [LTE](https://www.sqimway.com/lte_band.php) and [5G NR](https://www.sqimway.com/nr_band.php).
 
 RFIC design is a multidisciplinary field, requiring knowledge from various engineering domains, as shown in @fig-rf-design-multidisciplinary. This makes RFIC design challenging, but also very interesting!
 
