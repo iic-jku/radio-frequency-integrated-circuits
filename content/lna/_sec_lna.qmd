@@ -34,7 +34,7 @@ $$
 \Gamma = \frac{Z_{\mathrm{in}} - Z_0}{Z_{\mathrm{in}} + Z_0}
 $$
 
-where $Z_0$ is the characteristic impedance of the system (usually 50 Ω) and $Z_{\mathrm{in}}$ is the input impedance of the LNA. The reflection coefficient $\Gamma$ is a complex number with a magnitude between 0 and 1, where 0 indicates a perfect match and 1 indicates a complete mismatch. This reflection coefficient can be represented on a Smith chart shown in @fig-smith-chart. A useful interactive tool to draft a matching network and visualize it on a Smith chart is this [website](https://onlinesmithchart.com).
+where $Z_0$ is the characteristic impedance of the system (usually 50 Ω) and $Z_{\mathrm{in}}$ is the input impedance of the LNA. The reflection coefficient $\Gamma$ is a complex number with a magnitude between 0 and 1, where 0 indicates a perfect match and 1 indicates a complete mismatch. This reflection coefficient can be represented on the Smith chart shown in @fig-smith-chart. A useful interactive tool to draft a matching network and visualize it on a Smith chart is this [website](https://onlinesmithchart.com).
 
 {{< include /content/lna/_fig_smith_chart.qmd >}}
 
@@ -48,7 +48,7 @@ A higher return loss indicates a better impedance match.  A return loss of 10 dB
 
 ## Amplifier Stability {#sec-amp-stability}
 
-When designing amplifiers, it is important to ensure that the amplifier is stable, i.e., that it does not oscillate. Under well-defined conditions, this is already complicated enough, but in RF design, the situation is even more complex, as the stability usually is a function of source and load impedances, which, especially when going off-chip, are often not well defined. Hence, we have a two-port network, where we need to ensure that the amplifier is stable for all possible source and load impedances. Luckily, there are well-defined criteria to check the stability of a two-port network.
+When designing amplifiers, it is important to ensure that the amplifier is stable, i.e., that it does not oscillate. Under well-defined conditions, this is already complicated enough, but in RF design, the situation is even more complex, as the stability is usually a function of source and load impedances, which, especially when going off-chip, are often not well defined. Hence, we have a two-port network, where we need to ensure that the amplifier is stable for all possible source and load impedances. Luckily, there are well-defined criteria to check the stability of a two-port network.
 
 One test for unconditional stability is the Rollet stability factor $K$, which is defined as [@Pozar_RF]:
 
@@ -196,7 +196,7 @@ $$
 Z_\mathrm{in} = \frac{V_\mathrm{x}}{I_\mathrm{x}} = \frac{1}{s C_\mathrm{gs}} + Z_\mathrm{deg} + \frac{\gm Z_\mathrm{deg}}{s C_\mathrm{gs}}. 
 $$ {#eq-lna-inductive-degeneration-zin}
 
-The final term in @eq-lna-inductive-degeneration-zin is the interesting one: By choosing $Z_\mathrm{deg}$ to be inductive (which we can do by either use an on-chip or off-chip inductor), we can realize a real part of the input impedance. If we choose $Z_\mathrm{deg} = s L$, we find that
+The final term in @eq-lna-inductive-degeneration-zin is the interesting one: By choosing $Z_\mathrm{deg}$ to be inductive (which we can do by using either an on-chip or an off-chip inductor), we can realize a real part of the input impedance. If we choose $Z_\mathrm{deg} = s L$, we find that
 
 $$
 Z_\mathrm{in} = \frac{1}{s C_\mathrm{gs}} + s L + \frac{\gm L}{C_\mathrm{gs}}.
@@ -218,13 +218,13 @@ Finally, we have an LNA input stage configuration that allows us to achieve a no
 
 {{< include /content/lna/_fig_lna_inductive_degeneration_detailed.qmd >}}
 
-The inductor $L_\mathrm{match}$ is used to match the input impedance to 50 Ω at the desired frequency, $L_\mathrm{deg}$ is used to realize the real part of the input impedance, $R_\mathrm{bias}$ is used to set the bias current of $M_1$, $M_2$ is a cascode transistor which increases the output impedance and thus the gain of the stage (plus it improves the reverse isolation), and $R_\mathrm{D}$, $L_\mathrm{D}$, and $C_\mathrm{D}$ form a load tank which provides high gain at the desired frequency. A dc block is used at the input so that the bias point of $M_1$ is not corrupted by the input signal source. The bias voltage $V_\mathrm{bias2}$ sets the operating point of the cascode transistor $M_2$.
+The inductor $L_\mathrm{match}$ is used to match the input impedance to 50 Ω at the desired frequency, $L_\mathrm{deg}$ is used to realize the real part of the input impedance, $R_\mathrm{bias}$ is used to bias the gate of $M_1$, $M_2$ is a cascode transistor which increases the output impedance and thus the gain of the stage (plus it improves the reverse isolation), and $R_\mathrm{D}$, $L_\mathrm{D}$, and $C_\mathrm{D}$ form a load tank which provides high gain at the desired frequency. A dc block is used at the input so that the bias point of $M_1$ is not corrupted by the input signal source. The bias voltage $V_\mathrm{bias2}$ sets the operating point of the cascode transistor $M_2$.
 
-What is missing in @fig-lna-inductive-degeneration-detailed is any form of frequency tuning of the load to the frequency of interest, and the support of different gain modes. Apart from these details this LNA circuit is a good starting point for a practical LNA design.
+What is missing in @fig-lna-inductive-degeneration-detailed is any form of frequency tuning of the load to the frequency of interest, and support for different gain modes. Apart from these details this LNA circuit is a good starting point for a practical LNA design.
 
 ## Feedback LNA {#sec-lna-feedback}
 
-One drawback of the inductively-degenerated common-source LNA is the usage of at least one inductor. If the inductor is placed on-chip, it has a comparatively large size, and if it is implemented in the package (via a bondwire) or on the PCB, it adds to the bill-of-materials (BOM) cost.
+One drawback of the inductively-degenerated common-source LNA is the use of at least one inductor. If the inductor is placed on-chip, it has a comparatively large size, and if it is implemented in the package (via a bondwire) or on the PCB, it adds to the bill-of-materials (BOM) cost.
 
 If the CMOS technology is sufficiently fast, a shunt feedback LNA, as shown in @fig-lna-shunt-fb, might be a good choice.
 
