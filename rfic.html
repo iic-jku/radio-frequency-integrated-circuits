@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2026-02-19">
+<meta name="dcterms.date" content="2026-02-23">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -64,9 +64,9 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-b2da0f6ae1934b5813cb471985be9436.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-17ecf28cea740e3bd93d46e14894f554.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-b2da0f6ae1934b5813cb471985be9436.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ea66b35f6488426738467f189c900bcc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-83298f2c84c295f0ab05aacb8893b59a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-ea66b35f6488426738467f189c900bcc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -497,7 +497,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 19, 2026</p>
+      <p class="date">February 23, 2026</p>
     </div>
   </div>
   
@@ -1989,7 +1989,7 @@ Figure&nbsp;27: Block diagram of an LNA. Typically, the LNA input is impedance m
 <p><span class="math display">\[
 \Gamma = \frac{Z_{\mathrm{in}} - Z_0}{Z_{\mathrm{in}} + Z_0}
 \]</span></p>
-<p>where <span class="math inline">\(Z_0\)</span> is the characteristic impedance of the system (usually 50 Ω) and <span class="math inline">\(Z_{\mathrm{in}}\)</span> is the input impedance of the LNA. The reflection coefficient <span class="math inline">\(\Gamma\)</span> is a complex number with a magnitude between 0 and 1, where 0 indicates a perfect match and 1 indicates a complete mismatch. This reflection coefficient can be represented on a Smith chart shown in <a href="#fig-smith-chart" class="quarto-xref">Figure&nbsp;28</a>. A useful interactive tool to draft a matching network and visualize it on a Smith chart is this <a href="https://onlinesmithchart.com">website</a>.</p>
+<p>where <span class="math inline">\(Z_0\)</span> is the characteristic impedance of the system (usually 50 Ω) and <span class="math inline">\(Z_{\mathrm{in}}\)</span> is the input impedance of the LNA. The reflection coefficient <span class="math inline">\(\Gamma\)</span> is a complex number with a magnitude between 0 and 1, where 0 indicates a perfect match and 1 indicates a complete mismatch. This reflection coefficient can be represented on the Smith chart shown in <a href="#fig-smith-chart" class="quarto-xref">Figure&nbsp;28</a>. A useful interactive tool to draft a matching network and visualize it on a Smith chart is this <a href="https://onlinesmithchart.com">website</a>.</p>
 <div id="cell-fig-smith-chart" class="cell" data-execution_count="28">
 <div class="cell-output cell-output-display">
 <div id="fig-smith-chart" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2011,7 +2011,7 @@ Figure&nbsp;28: Smith chart showing constant resistance and reactance circles fo
 <p>A higher return loss indicates a better impedance match. A return loss of 10 dB indicates that 10% of the signal power is reflected back, while a return loss of 20 dB indicates that only 1% of the signal power is reflected back. In practice, a return loss of at least 10 dB is desired, with higher (positive) values being better <span class="citation" data-cites="Bird.2009">(<a href="#ref-Bird.2009" role="doc-biblioref">Bird 2009</a>)</span>.</p>
 <section id="sec-amp-stability" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="sec-amp-stability"><span class="header-section-number">4.1</span> Amplifier Stability</h2>
-<p>When designing amplifiers, it is important to ensure that the amplifier is stable, i.e., that it does not oscillate. Under well-defined conditions, this is already complicated enough, but in RF design, the situation is even more complex, as the stability usually is a function of source and load impedances, which, especially when going off-chip, are often not well defined. Hence, we have a two-port network, where we need to ensure that the amplifier is stable for all possible source and load impedances. Luckily, there are well-defined criteria to check the stability of a two-port network.</p>
+<p>When designing amplifiers, it is important to ensure that the amplifier is stable, i.e., that it does not oscillate. Under well-defined conditions, this is already complicated enough, but in RF design, the situation is even more complex, as the stability is usually a function of source and load impedances, which, especially when going off-chip, are often not well defined. Hence, we have a two-port network, where we need to ensure that the amplifier is stable for all possible source and load impedances. Luckily, there are well-defined criteria to check the stability of a two-port network.</p>
 <p>One test for unconditional stability is the Rollet stability factor <span class="math inline">\(K\)</span>, which is defined as <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span>:</p>
 <p><span id="eq-rollet-stability-factor"><span class="math display">\[
 K = \frac{1 - |S_{11}|^2 - |S_{22}|^2 + |\Delta|^2}{2 |S_{12} S_{21}|}, \quad \text{with} \quad \Delta = S_{11} S_{22} - S_{12} S_{21}.
@@ -2148,7 +2148,7 @@ Figure&nbsp;32: Circuit diagram of a common-gate LNA.
 \tag{31}\]</span></span></p>
 <p>The output noise due to the source only is given by</p>
 <p><span id="eq-lna-cg-noise-source"><span class="math display">\[
-\overline{V_\mathrm{n,out,s}^2} = \frac{R_\mathrm{D}^2}{R_\mathrm{s}}.
+\overline{V_\mathrm{n,out,s}^2} = k T \frac{R_\mathrm{D}^2}{R_\mathrm{s}}.
 \tag{32}\]</span></span></p>
 <p>Finally, we can use <a href="#eq-lna-cg-noise-total" class="quarto-xref">Equation&nbsp;31</a> and <a href="#eq-lna-cg-noise-source" class="quarto-xref">Equation&nbsp;32</a> with <a href="#eq-lna-noise-factor" class="quarto-xref">Equation&nbsp;27</a> to calculate the noise figure of the common-gate LNA as</p>
 <p><span id="eq-lna-cg-noise-factor"><span class="math display">\[
@@ -2196,7 +2196,7 @@ V_\mathrm{x} = V_\mathrm{gs}+ Z_\mathrm{deg} (I_\mathrm{x} + g_\mathrm{m}V_\math
 <p><span id="eq-lna-inductive-degeneration-zin"><span class="math display">\[
 Z_\mathrm{in} = \frac{V_\mathrm{x}}{I_\mathrm{x}} = \frac{1}{s C_\mathrm{gs}} + Z_\mathrm{deg} + \frac{g_\mathrm{m}Z_\mathrm{deg}}{s C_\mathrm{gs}}.
 \tag{34}\]</span></span></p>
-<p>The final term in <a href="#eq-lna-inductive-degeneration-zin" class="quarto-xref">Equation&nbsp;34</a> is the interesting one: By choosing <span class="math inline">\(Z_\mathrm{deg}\)</span> to be inductive (which we can do by either use an on-chip or off-chip inductor), we can realize a real part of the input impedance. If we choose <span class="math inline">\(Z_\mathrm{deg} = s L\)</span>, we find that</p>
+<p>The final term in <a href="#eq-lna-inductive-degeneration-zin" class="quarto-xref">Equation&nbsp;34</a> is the interesting one: By choosing <span class="math inline">\(Z_\mathrm{deg}\)</span> to be inductive (which we can do by using either an on-chip or an off-chip inductor), we can realize a real part of the input impedance. If we choose <span class="math inline">\(Z_\mathrm{deg} = s L\)</span>, we find that</p>
 <p><span class="math display">\[
 Z_\mathrm{in} = \frac{1}{s C_\mathrm{gs}} + s L + \frac{g_\mathrm{m}L}{C_\mathrm{gs}}.
 \]</span></p>
@@ -2223,12 +2223,12 @@ Figure&nbsp;35: An (almost complete) common-source MOSFET stage with degeneratio
 </div>
 </div>
 </div>
-<p>The inductor <span class="math inline">\(L_\mathrm{match}\)</span> is used to match the input impedance to 50 Ω at the desired frequency, <span class="math inline">\(L_\mathrm{deg}\)</span> is used to realize the real part of the input impedance, <span class="math inline">\(R_\mathrm{bias}\)</span> is used to set the bias current of <span class="math inline">\(M_1\)</span>, <span class="math inline">\(M_2\)</span> is a cascode transistor which increases the output impedance and thus the gain of the stage (plus it improves the reverse isolation), and <span class="math inline">\(R_\mathrm{D}\)</span>, <span class="math inline">\(L_\mathrm{D}\)</span>, and <span class="math inline">\(C_\mathrm{D}\)</span> form a load tank which provides high gain at the desired frequency. A dc block is used at the input so that the bias point of <span class="math inline">\(M_1\)</span> is not corrupted by the input signal source. The bias voltage <span class="math inline">\(V_\mathrm{bias2}\)</span> sets the operating point of the cascode transistor <span class="math inline">\(M_2\)</span>.</p>
-<p>What is missing in <a href="#fig-lna-inductive-degeneration-detailed" class="quarto-xref">Figure&nbsp;35</a> is any form of frequency tuning of the load to the frequency of interest, and the support of different gain modes. Apart from these details this LNA circuit is a good starting point for a practical LNA design.</p>
+<p>The inductor <span class="math inline">\(L_\mathrm{match}\)</span> is used to match the input impedance to 50 Ω at the desired frequency, <span class="math inline">\(L_\mathrm{deg}\)</span> is used to realize the real part of the input impedance, <span class="math inline">\(R_\mathrm{bias}\)</span> is used to bias the gate of <span class="math inline">\(M_1\)</span>, <span class="math inline">\(M_2\)</span> is a cascode transistor which increases the output impedance and thus the gain of the stage (plus it improves the reverse isolation), and <span class="math inline">\(R_\mathrm{D}\)</span>, <span class="math inline">\(L_\mathrm{D}\)</span>, and <span class="math inline">\(C_\mathrm{D}\)</span> form a load tank which provides high gain at the desired frequency. A dc block is used at the input so that the bias point of <span class="math inline">\(M_1\)</span> is not corrupted by the input signal source. The bias voltage <span class="math inline">\(V_\mathrm{bias2}\)</span> sets the operating point of the cascode transistor <span class="math inline">\(M_2\)</span>.</p>
+<p>What is missing in <a href="#fig-lna-inductive-degeneration-detailed" class="quarto-xref">Figure&nbsp;35</a> is any form of frequency tuning of the load to the frequency of interest, and support for different gain modes. Apart from these details this LNA circuit is a good starting point for a practical LNA design.</p>
 </section>
 <section id="sec-lna-feedback" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="sec-lna-feedback"><span class="header-section-number">4.5</span> Feedback LNA</h2>
-<p>One drawback of the inductively-degenerated common-source LNA is the usage of at least one inductor. If the inductor is placed on-chip, it has a comparatively large size, and if it is implemented in the package (via a bondwire) or on the PCB, it adds to the bill-of-materials (BOM) cost.</p>
+<p>One drawback of the inductively-degenerated common-source LNA is the use of at least one inductor. If the inductor is placed on-chip, it has a comparatively large size, and if it is implemented in the package (via a bondwire) or on the PCB, it adds to the bill-of-materials (BOM) cost.</p>
 <p>If the CMOS technology is sufficiently fast, a shunt feedback LNA, as shown in <a href="#fig-lna-shunt-fb" class="quarto-xref">Figure&nbsp;36</a>, might be a good choice.</p>
 <div id="cell-fig-lna-shunt-fb" class="cell" data-execution_count="36">
 <div class="cell-output cell-output-display">
@@ -4220,14 +4220,14 @@ Vazny, Rastislav, Werner Schelmbauer, Harald Pretl, Stefan Herzinger, and Robert
 </div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div>Apache-2.0 license</div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{pretl2026,
   author = {Pretl, Harald},
   title = {Radio-Frequency {Integrated} {Circuits}},
-  date = {2026-02-19},
+  date = {2026-02-23},
   url = {https://iic-jku.github.io/radio-frequency-integrated-circuits},
   doi = {10.5281/zenodo.17563943},
   langid = {en-US}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-pretl2026" class="csl-entry quarto-appendix-citeas" role="listitem">
 Pretl, Harald. 2026. <span>“Radio-Frequency Integrated Circuits.”</span>
-February 19, 2026. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
+February 23, 2026. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
