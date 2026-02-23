@@ -163,7 +163,7 @@ $$ {#eq-lna-cg-noise-total}
 The output noise due to the source only is given by
 
 $$
-\overline{V_\mathrm{n,out,s}^2} = \frac{R_\mathrm{D}^2}{R_\mathrm{s}}.
+\overline{V_\mathrm{n,out,s}^2} = k T \frac{R_\mathrm{D}^2}{R_\mathrm{s}}.
 $$ {#eq-lna-cg-noise-source}
 
 Finally, we can use @eq-lna-cg-noise-total and @eq-lna-cg-noise-source with @eq-lna-noise-factor to calculate the noise figure of the common-gate LNA as
