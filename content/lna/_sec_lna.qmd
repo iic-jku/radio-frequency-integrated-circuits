@@ -150,7 +150,7 @@ We see that we are stuck at high noise figures if we realize the real part of th
 
 ## Common-Gate LNA {#sec-lna-common-gate}
 
-We remember from our [analog circuit design lecture](https://iic-jku.github.io/analog-circuit-design/analog_circuit_design.html) that the common-gate configuration has an input impedance of $1/\gm$, neglecting parasitic capacitances. Hence, if we choose $\gm = 1/50\,\Omega = 20\,\text{mS}$, we can achieve input matching to 50 Ω without using a resistor at the input. This is the key idea of the common-gate LNA, which is shown in @fig-lna-cg.
+We remember from our [analog circuit design lecture](https://iic-jku.github.io/analog-circuit-design/aicd.html) that the common-gate configuration has an input impedance of $1/\gm$, neglecting parasitic capacitances. Hence, if we choose $\gm = 1/50\,\Omega = 20\,\text{mS}$, we can achieve input matching to 50 Ω without using a resistor at the input. This is the key idea of the common-gate LNA, which is shown in @fig-lna-cg.
 
 {{< include /content/lna/_fig_lna_cg.qmd >}}
 

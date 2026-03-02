@@ -18,7 +18,7 @@ limitations under the License.
 
 This is the material for an introductory radio-frequency integrated circuits course. The contents are largely based on [@Razavi_RFIC] and [@Darabi_RFIC]; these two books are an excellent introduction to this topic and are highly recommended! For a general introduction to RF and microwave, [@Pozar_RF] is a great read!
 
-It is assumed that readers are familiar with the contents of this [Analog Circuit Design](https://iic-jku.github.io/analog-circuit-design/analog_circuit_design.html) course.
+It is assumed that readers are familiar with the contents of this [Analog Circuit Design](https://iic-jku.github.io/analog-circuit-design/aicd.html) course.
 
 ::: {.callout-important}
 All course material (source code of this document, Jupyter notebooks for calculations, Xschem circuits, etc.) is made publicly available on GitHub ([follow this link](https://github.com/iic-jku/radio-frequency-integrated-circuits)) and shared under the Apache-2.0 license.
