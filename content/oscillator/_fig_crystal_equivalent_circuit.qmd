@@ -26,7 +26,7 @@ import schemdraw.dsp as dsp
 sd.svgconfig.svg2 = False
 
 with sd.Drawing(canvas='svg') as d:
-    d.config(unit=2, fontsize=14)
+    d.config(unit=2, fontsize=14, margin=0.5)
 
     elm.Crystal().right().idot(open=True).dot(open=True)
     d.move(dx = d.unit, dy=0)

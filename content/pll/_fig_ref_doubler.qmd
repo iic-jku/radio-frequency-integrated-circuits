@@ -26,7 +26,7 @@ import schemdraw.logic as lgc
 sd.svgconfig.svg2 = False
 
 with sd.Drawing(canvas='svg') as d:
-    d.config(unit=2, fontsize=14)
+    d.config(unit=2, fontsize=14, margin=0.5)
 
     elm.Line().right(d.unit/2).dot().idot(open=True).label(r'$f_\mathrm{ref}$', 'left')
     d.push()

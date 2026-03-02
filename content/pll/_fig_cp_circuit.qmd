@@ -25,7 +25,7 @@ import schemdraw.dsp as dsp
 sd.svgconfig.svg2 = False
 
 with sd.Drawing(canvas='svg') as d:
-    d.config(unit=2, fontsize=14)
+    d.config(unit=2, fontsize=14, margin=0.5)
 
     elm.Vdd()
     elm.SourceI().down().label(r'$I_\mathrm{CP}$')

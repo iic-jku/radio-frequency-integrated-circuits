@@ -25,7 +25,7 @@ import schemdraw.logic as lgc
 sd.svgconfig.svg2 = False
 
 with sd.Drawing(canvas='svg') as d:
-    d.config(unit=2, fontsize=14)
+    d.config(unit=2, fontsize=14, margin=0.5)
 
     M1 = elm.AnalogNFet(offset_gate=False, arrow=False).theta(180)
     elm.Line().at(M1.gate).left(d.unit/4).dot(open=True)

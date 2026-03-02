@@ -26,7 +26,7 @@ import schemdraw.logic as lgc
 sd.svgconfig.svg2 = False
 
 with sd.Drawing(canvas='svg') as d:
-    d.config(unit=2, fontsize=14)
+    d.config(unit=2, fontsize=14, margin=0.5)
 
     DFF1 = elm.Ic(pins=[elm.IcPin(name='>', side='left'), elm.IcPin(name='D', side='left'),
         elm.IcPin(name='Q', side='right'), elm.IcPin(name='R', side='bottom')],
