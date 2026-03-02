@@ -75,7 +75,7 @@ $$
 with
 
 $$
-A(t) = \sqrt{s_\mathrm{I}^2(t) + s_\mathrm{Q}^2(t)}, \quad \varphi(t) = \tan^{-1} \left[ \frac{s_\mathrm{I}(t)}{s_\mathrm{Q}(t)} \right].
+A(t) = \sqrt{s_\mathrm{I}^2(t) + s_\mathrm{Q}^2(t)}, \quad \varphi(t) = \tan^{-1} \left[ \frac{s_\mathrm{Q}(t)}{s_\mathrm{I}(t)} \right].
 $$
 
 As the mathematical operations required for the Cartesian to polar transformation are quite nonlinear, the $A(t)$ and $\varphi(t)$ signals are wideband. Some wireless standards allow efficient use of polar modulation, for example Bluetooth, where basically all TX are realized as polar modulators.
