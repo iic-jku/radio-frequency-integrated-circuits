@@ -68,7 +68,7 @@ $$
 
 where $\alpha_1$, $\beta_1$, $\alpha_2$, and $\beta_2$ are the Saleh model parameters that define the PA characteristics. The AM/AM conversion $A(r)$ describes how the output amplitude saturates with increasing input amplitude, while the AM/PM conversion $\varphi(r)$ describes the phase distortion introduced by the PA. While this simple model does not capture memory effects or frequency-dependent behavior, it provides a good starting point for understanding PA nonlinearity.
 
-Note that most discrete PAs are implemented similarly to @fig-poweramp-twostage. For RFIC-integrated PAs, a single-ended implementation is problematic due to power supply parasitics and coupling issues. Therefore, integrated PAs are very often implemented in a differential configuration, which improves power supply rejection and reduces even-order harmonics [@Moreira.2015, @Fuhrmann.2017]. A generic differential PA implementation is shown in @fig-poweramp-differential.
+Note that most discrete PAs are implemented similarly to @fig-poweramp-twostage. For RFIC-integrated PAs, a single-ended implementation is problematic due to power supply parasitics and coupling issues. Therefore, integrated PAs are very often implemented in a differential configuration, which improves power supply rejection and reduces even-order harmonics [@Moreira.2015; @Fuhrmann.2017]. A generic differential PA implementation is shown in @fig-poweramp-differential.
 
 {{< include /content/poweramp/_fig_poweramp_differential.qmd >}}
 
