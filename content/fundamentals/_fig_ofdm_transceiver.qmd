@@ -28,9 +28,9 @@ sd.svgconfig.svg2 = False
 with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=14, margin=0.5)
 
-    dsp.Arrow().right(d.unit/2).label(r'Bitrate $T_\mathrm{b}$', loc='left')
+    dsp.Arrow().right(d.unit/2).label(r'$T_\mathrm{b}$')
     dsp.Square().label('S/P')
-    dsp.Arrow().right(d.unit/2).label(r'$T_\mathrm{b} / N$')
+    dsp.Arrow().right(d.unit/2).label(r'$T_\mathrm{sym}$')
     dsp.Square().label('QAM\nMap')
     dsp.Arrow().right(d.unit/2)
     dsp.Square().label('IFFT')
@@ -60,7 +60,7 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Square().label('EQ')
     dsp.Arrow().right(d.unit/2)
     dsp.Square().label('QAM\nDem.')
-    dsp.Arrow().right(d.unit/2).label(r'$T_\mathrm{b} / N$')
+    dsp.Arrow().right(d.unit/2).label(r'$T_\mathrm{sym}$')
     dsp.Square().label('P/S')
-    dsp.Arrow().right(d.unit/2).label(r'Bitrate $T_\mathrm{b}$', loc='right')
+    dsp.Arrow().right(d.unit/2).label(r'$T_\mathrm{b}$')
 ```
