@@ -63,11 +63,11 @@ Generally speaking, the size of an electromagnetic antenna is proportional to th
 
 | Application     | Frequency   | Wavelength  |
 |:----------------|-------------|-------------|
-| FM Radio        | 88--108 MHz | 2.8--3.4 m  |
+| FM Radio        | 88--108 MHz | 3.4--2.8 m  |
 | WiFi (lowband)  | 2.4 GHz     | 12.5 cm     |
 | WiFi (highband) | 5 GHz       | 6 cm        |
 | Bluetooth       | 2.4 GHz     | 12.5 cm     |
-| Cellular        | 0.6--5 GHz  | 6--50 cm    |
+| Cellular        | 0.6--5 GHz  | 50--6 cm    |
 | GNSS            | 1.575 GHz   | 19 cm       |
 : Typical RF applications with their operating frequencies and corresponding wavelengths {#tbl-rf-applications}
 

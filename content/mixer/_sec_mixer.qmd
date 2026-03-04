@@ -115,7 +115,7 @@ The idea is that an input transconductor creates currents, which are switched in
 
 ## N-Path Filter {#sec-mixer-npath}
 
-Without much deliberation or diving into the background, it has to be stated that passive mixers (based on MOSFET switches) have a few very interesting properties. One of them is that they can be used to implement very high-quality bandpass filters, called "**N-path filters**" [@Lepage.1953]. The basic idea is shown in @fig-npath-filter. We use 4 phases of an LO signal to switch the 4 capacitors to ground in a round-robin fashion. The duty cycle of each LO phase is 25% to have a non-overlapping clock.
+Without much deliberation or diving into the background, it has to be stated that passive mixers (based on MOSFET switches) have a few very interesting properties. One of them is that they can be used to implement very high-quality bandpass filters, called "**N-path filters**" [@Lepage.1953]. The basic idea is shown in @fig-npath-filter. We use four phases of an LO signal to switch the four capacitors to ground in a round-robin fashion. The duty cycle of each LO phase is 25% to have a non-overlapping clock.
 
 {{< include /content/mixer/_fig_npath_filter.qmd >}}
 
@@ -149,7 +149,7 @@ Note that polyphase filters are popular when we have to create complex signals f
 
 ### Flip-Flop Based Phase Generation {#sec-lo-ff}
 
-The most widely used approach to generate quadrature LO signals is to use digital circuits, as shown in @fig-iq-divider. The idea is to use a flip-flop (or a latch) to divide the frequency of an incoming clock signal by 2. If we drive the two flip-flops (which are connected as toggle flip-flops) by inverted clocks, then the resulting output signals are 90° phase-shifted, as shown in @fig-ff-phase-diagram.
+The most widely used approach to generate quadrature LO signals is to use digital circuits, as shown in @fig-iq-divider. The idea is to use a flip-flop (or a latch) to divide the frequency of an incoming clock signal by two. If we drive the two flip-flops (which are connected as toggle flip-flops) by inverted clocks, then the resulting output signals are 90° phase-shifted, as shown in @fig-ff-phase-diagram.
 
 {{< include /content/mixer/_fig_iq_divider.qmd >}}
 

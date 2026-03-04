@@ -166,36 +166,36 @@ This chapter contains a collection of potential questions covering the topics di
 
 64. What is the definition of drain efficiency and power-added efficiency (PAE) of a PA?
 
-65. What are the different classes of operation for power amplifiers (Class A, B, AB, C)? Describe the conduction angle and theoretical maximum efficiency for each class.
+65. What is the AM/AM and AM/PM distortion in a power amplifier? How can the Saleh model be used to characterize PA nonlinearity?
 
-66. What are Class D, E, and F amplifiers? How do they achieve high efficiency?
+66. Describe load-pull measurements. Why are they important for PA design?
 
-67. What is envelope tracking (Class G/H operation)? Why is it beneficial for power amplifiers used with non-constant envelope modulation schemes?
+67. What are the different classes of operation for power amplifiers (Class A, B, AB, C)? Describe the conduction angle and theoretical maximum efficiency for each class.
 
-68. What is the AM/AM and AM/PM distortion in a power amplifier? How can the Saleh model be used to characterize PA nonlinearity?
+68. What are Class D, E, and F amplifiers? How do they achieve high efficiency?
 
-69. What is neutralization in power amplifier design? Why is it needed, and how is it implemented in a differential PA?
+69. What is envelope tracking (Class G/H operation)? Why is it beneficial for power amplifiers used with non-constant envelope modulation schemes?
 
-70. Describe load-pull measurements. Why are they important for PA design?
+70. What is neutralization in power amplifier design? Why is it needed, and how is it implemented in a differential PA?
 
 ## Calculation Problems {#sec-exam-calculations}
 
 71. **FSPL Calculation**: Calculate the free-space path loss for a 5.8 GHz Wi-Fi link over a distance of 100 m. Express your answer in dB.
 
-72. **Sensitivity Calculation**: A Bluetooth LE receiver has a noise figure of 8 dB, channel bandwidth of 2 MHz, and requires an SNR of 15 dB. Calculate the receiver sensitivity.
+72. **Channel Capacity**: A mobile communication system operates with a 20 MHz channel bandwidth. The SNR at the receiver is 15 dB. Calculate the theoretical maximum data rate according to the Shannon-Hartley theorem. If the actual data rate is 75 Mbps, what is the spectral efficiency in bits/s/Hz?
 
-73. **Cascade Noise Figure**: An RF front-end consists of: RF filter (loss 2 dB), LNA (NF = 1.5 dB, gain = 18 dB), mixer (NF = 8 dB, gain = 6 dB). Calculate the total noise figure.
+73. **IIP3 Cascade**: Calculate the overall approximate IIP3 for the following cascade: LNA (IIP3 = --5 dBm, gain = 15 dB), Mixer (IIP3 = 8 dBm, gain = 10 dB), IF amplifier (IIP3 = 15 dBm, gain = 40 dB).
 
-74. **IIP3 Cascade**: Calculate the overall approximate IIP3 for the following cascade: LNA (IIP3 = --5 dBm, gain = 15 dB), Mixer (IIP3 = 8 dBm, gain = 10 dB), IF amplifier (IIP3 = 15 dBm, gain = 40 dB).
+74. **Cascade Noise Figure**: An RF front-end consists of: RF filter (loss 2 dB), LNA (NF = 1.5 dB, gain = 18 dB), mixer (NF = 8 dB, gain = 6 dB). Calculate the total noise figure.
 
-75. **Phase Noise**: An oscillator operates at 2.4 GHz with a tank $Q$ of 15, tank resistance $R_p$ = 500 Ω, oscillation amplitude of 0.8 V peak, and noise factor $F$ = 2. Calculate the phase noise at 1 MHz offset using Leeson's equation.
+75. **Sensitivity Calculation**: A Bluetooth LE receiver has a noise figure of 8 dB, channel bandwidth of 2 MHz, and requires an SNR of 15 dB. Calculate the receiver sensitivity.
 
-76. **Reciprocal Mixing**: A receiver has a desired sensitivity of --90 dBm with an adjacent channel blocker at --30 dBm located 3 MHz from the carrier. The channel bandwidth is 100 kHz. What is the maximum allowable LO phase noise at 3 MHz offset?
+76. **LNA Input Impedance**: An inductively-degenerated common-source LNA has $C_\mathrm{gs}$ = 200 fF, $g_m$ = 40 mS, and $L_\mathrm{deg}$ = 1 nH. Calculate the real part of the input impedance. What additional inductance is needed to resonate with $C_\mathrm{gs}$ at 2.4 GHz?
 
-77. **PA Efficiency**: A power amplifier delivers 27 dBm output power and draws 400 mA from a 3.3 V supply. Calculate the drain efficiency and the PAE if the input power is 0 dBm.
+77. **Reciprocal Mixing**: A receiver has a desired sensitivity of --90 dBm with an adjacent channel blocker at --30 dBm located 3 MHz from the carrier. The channel bandwidth is 100 kHz. What is the maximum allowable LO phase noise at 3 MHz offset?
 
-78. **PLL Loop Parameters**: A charge-pump PLL has $I_\mathrm{CP}$ = 100 µA, $K_\mathrm{VCO}$ = 100 MHz/V, $C_\mathrm{int}$ = 10 nF, and $N$ = 100. Calculate the natural frequency $\omega_n$ and the required $R_\mathrm{int}$ for a damping factor $\zeta$ = 0.707.
+78. **Phase Noise**: An oscillator operates at 2.4 GHz with a tank $Q$ of 15, tank resistance $R_p$ = 500 Ω, oscillation amplitude of 0.8 V peak, and noise factor $F$ = 2. Calculate the phase noise at 1 MHz offset using Leeson's equation.
 
-79. **LNA Input Impedance**: An inductively-degenerated common-source LNA has $C_\mathrm{gs}$ = 200 fF, $g_m$ = 40 mS, and $L_\mathrm{deg}$ = 1 nH. Calculate the real part of the input impedance. What additional inductance is needed to resonate with $C_\mathrm{gs}$ at 2.4 GHz?
+79. **PLL Loop Parameters**: A charge-pump PLL has $I_\mathrm{CP}$ = 100 µA, $K_\mathrm{VCO}$ = 100 MHz/V, $C_\mathrm{int}$ = 10 nF, and $N$ = 100. Calculate the natural frequency $\omega_n$ and the required $R_\mathrm{int}$ for a damping factor $\zeta$ = 0.707.
 
-80. **Channel Capacity**: A mobile communication system operates with a 20 MHz channel bandwidth. The SNR at the receiver is 15 dB. Calculate the theoretical maximum data rate according to the Shannon-Hartley theorem. If the actual data rate is 75 Mbps, what is the spectral efficiency in bits/s/Hz?
+80. **PA Efficiency**: A power amplifier delivers 27 dBm output power and draws 400 mA from a 3.3 V supply. Calculate the drain efficiency and the PAE if the input power is 0 dBm.

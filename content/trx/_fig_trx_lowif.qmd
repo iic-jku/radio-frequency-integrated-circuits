@@ -50,7 +50,7 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Square().label('DSP')
     dsp.Arrow().length(d.unit/2).label(r'$s_\mathrm{RX,I}$', 'right')
 
-    dsp1 = dsp.Ic(pins=[dsp.IcPin(side='L'), dsp.IcPin(side='L'), dsp.IcPin(side='R')], size=(2.75, 12), leadlen=0).anchor('inL2').label('MODEM')
+    dsp1 = dsp.Ic(pins=[dsp.IcPin(side='L'), dsp.IcPin(side='L'), dsp.IcPin(side='R')], size=(2.75, 12), leadlen=0).anchor('inL2').label('Modem')
 
     d.pop()
 
