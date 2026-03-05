@@ -31,10 +31,10 @@ with sd.Drawing(canvas='svg') as d:
     DFF1 = elm.Ic(pins=[elm.IcPin(name='>', side='left'), elm.IcPin(name='D', side='left'),
         elm.IcPin(name='Q', side='right'), elm.IcPin(name='R', side='bottom')],
         pinspacing=1).hold()
-    d.move(dx=0, dy=-d.unit)
-    DFF2 = elm.Ic(pins=[elm.IcPin(name='>', side='left'), elm.IcPin(name='D', side='left'),
-        elm.IcPin(name='Q', side='right'), elm.IcPin(name='R', side='bottom')],
-        pinspacing=1).hold().flip()
+    d.move(dx=0, dy=-d.unit*2.3)
+    DFF2 = elm.Ic(pins=[elm.IcPin(name='D', side='left'), elm.IcPin(name='>', side='left'),
+        elm.IcPin(name='Q', side='right'), elm.IcPin(name='R', side='top')],
+        pinspacing=1).hold()
 
     elm.Line().left(d.unit/4).at(DFF1['D']).label('1', 'left')
     elm.Line().left(d.unit/4).at(DFF2['D']).label('1', 'left')

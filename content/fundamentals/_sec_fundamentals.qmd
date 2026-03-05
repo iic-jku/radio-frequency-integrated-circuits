@@ -420,7 +420,7 @@ we see that we can change one or more of the following parameters to encode info
 
 The modulation formats FM and PM have the advantage that the carrier amplitude is constant, which makes them more robust against nonlinear distortion.
 
-QAM is widely used in modern communication systems, as it allows transmitting more bits per symbol by combining amplitude and phase modulation. The form with 4 different symbols is called QPSK. Higher-order modulation like 16-QAM, for example, uses 16 different symbols, which can encode 4 bits per symbol (as $2^4 = 16$). Even higher-order QAM formats like 64-QAM (6 bits per symbol), 256-QAM (8 bits per symbol), 1024-QAM (10 bits per symbol), or 4096-QAM (12 bits per symbol) are also used in modern systems like WiFi or LTE.
+QAM is widely used in modern communication systems, as it allows transmitting more bits per symbol by combining amplitude and phase modulation. The form with four different symbols is called QPSK. Higher-order modulation like 16-QAM, for example, uses 16 different symbols, which can encode four bits per symbol (as $2^4 = 16$). Even higher-order QAM formats like 64-QAM (6 bits per symbol), 256-QAM (8 bits per symbol), 1024-QAM (10 bits per symbol), or 4096-QAM (12 bits per symbol) are also used in modern systems like WiFi or LTE.
 
 {{< include /content/fundamentals/_fig_16qam_constellation.qmd >}}
 

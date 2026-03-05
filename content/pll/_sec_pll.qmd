@@ -106,7 +106,7 @@ We can use all techniques known from control theory to analyze the stability and
 If we compare the canonical form of a second-order system given by
 
 $$
-H(s) = K \cdot \frac{\omega_\mathrm{n}^2}{s^2 + s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2},
+H(s) = N \cdot \frac{\omega_\mathrm{n}^2}{s^2 + s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2},
 $$
 
 with @eq-pll-transfer-function, we can identify the natural frequency $\omega_n$ and the damping factor $\zeta$ of the PLL as

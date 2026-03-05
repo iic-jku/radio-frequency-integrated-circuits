@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-poweramp-differential
 #| echo: false
-#| fig-cap: "A generic differential power amplifier with cascode stages for peak voltage handling. Inductors $L1$, $L_2$, and $L_3$ are implemented as a transformer, and form the load and output matching network together with $C_1$ and $C_2$. Note that the load transformer allows a differential to single-ended conversion, as well as a dc block."
+#| fig-cap: "A generic differential power amplifier with cascode stages for peak voltage handling. Inductors $L_1$, $L_2$, and $L_3$ are implemented as a transformer, and form the load and output matching network together with $C_1$ and $C_2$. Note that the load transformer allows a differential to single-ended conversion, as well as a dc block."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
