@@ -6,6 +6,7 @@ var:
 
 website:
   title: "Radio-Frequency Integrated Circuits"
+  favicon: favicon.png
   navbar:
     background: "#447099"
     search: true
