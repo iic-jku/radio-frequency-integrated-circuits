@@ -1509,9 +1509,9 @@ Figure&nbsp;17: OFDM transmission system block diagram showing transmitter and r
 </div>
 </div>
 </div>
-<p>The OFDM transmitter takes a block of <span class="math inline">\(N\)</span> symbols (e.g., 64-QAM symbols) and maps them onto <span class="math inline">\(N\)</span> subcarriers, thereby increasing the symbol duration for each subcarrier to <span class="math inline">\(N \cdot T_\mathrm{b}\)</span>. The IFFT then generates the time-domain OFDM signal, which is transmitted over the wireless channel. Before transmission, the <strong>cyclic prefix (CP)</strong> is added to each OFDM symbol.</p>
+<p>The OFDM transmitter takes a block of <span class="math inline">\(N\)</span> symbols (e.g., 64-QAM symbols) and maps them onto <span class="math inline">\(N\)</span> subcarriers, thereby increasing the symbol duration <span class="math inline">\(T_\mathrm{sym}\)</span> for each subcarrier to <span class="math inline">\(N \cdot T_\mathrm{b}\)</span>. The IFFT then generates the time-domain OFDM signal, which is transmitted over the wireless channel. Before transmission, the <strong>cyclic prefix (CP)</strong> is added to each OFDM symbol.</p>
 <p>At the receiver, the CP is first removed, and then the FFT recovers the frequency-domain symbols, which can then be equalized (fairly simply by multiplying each subcarrier with a complex factor to correct amplitude and phase) and demodulated.</p>
-<p>A key property of OFDM is that the subcarriers are <strong>orthogonal</strong> to each other, which means that they do not interfere with each other, even if they overlap in frequency. This is achieved by choosing the subcarrier spacing <span class="math inline">\(\Delta f\)</span> such that it is equal to the symbol rate <span class="math inline">\(1/T_\mathrm{b}\)</span>, i.e., <span class="math inline">\(\Delta f = 1/T_\mathrm{b}\)</span>. This way, the integral of the product of two different subcarriers over one symbol period is zero, which means that they are orthogonal.</p>
+<p>A key property of OFDM is that the subcarriers are <strong>orthogonal</strong> to each other, which means that they do not interfere with each other, even if they overlap in frequency. This is achieved by choosing the subcarrier spacing <span class="math inline">\(\Delta f\)</span> such that it is equal to the symbol rate <span class="math inline">\(1/T_\mathrm{sym}\)</span>, i.e., <span class="math inline">\(\Delta f = 1/T_\mathrm{sym}\)</span>. This way, the integral of the product of two different subcarriers over one symbol period is zero, which means that they are orthogonal.</p>
 <p>To further improve the robustness against multi-path propagation, a CP is added to each OFDM symbol. The CP is a copy of the last part of the OFDM symbol, which is added to the beginning of the symbol. This way, if there are delayed copies of the OFDM symbol due to multi-path propagation, they will still fall within the CP and will not cause inter-symbol interference (ISI). The length of the CP should be longer than the maximum delay spread of the channel.</p>
 <div id="nte-lte-ofdm" class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1530,10 +1530,10 @@ Note&nbsp;6: OFDM in LTE
 <li>Number of subcarriers: 1200 (for 20 MHz bandwidth)</li>
 <li>Modulation: QPSK, 16-QAM, 64-QAM, 256-QAM</li>
 </ul>
-<p>From the subcarrier spacing we can calculate the symbol duration as <span class="math inline">\(T_\mathrm{b} = 1 / \Delta f = 1 / 15\,\text{kHz} \approx 66.7\,\mu\text{s}\)</span>.</p>
+<p>From the subcarrier spacing we can calculate the symbol duration as <span class="math inline">\(T_\mathrm{sym} = 1 / \Delta f = 1 / 15\,\text{kHz} \approx 66.7\,\mu\text{s}\)</span>.</p>
 <p>We can calculate the raw bitrate for a 20 MHz LTE channel as</p>
 <p><span class="math display">\[
-\text{Bitrate} = N_\mathrm{sc} \cdot N_\mathrm{sym} \cdot \frac{1}{T_\mathrm{b} + T_\mathrm{CP}} = 1200 \cdot 8 \cdot \frac{1}{66.7\,\mu\text{s} + 4.7\,\mu\text{s}} \approx 134\,\text{Mbps}
+\text{Bitrate} = N_\mathrm{sc} \cdot N_\mathrm{sym} \cdot \frac{1}{T_\mathrm{sym} + T_\mathrm{CP}} = 1200 \cdot 8 \cdot \frac{1}{66.7\,\mu\text{s} + 4.7\,\mu\text{s}} \approx 134\,\text{Mbps}
 \]</span></p>
 <p>Without the overhead for control channels and error correction coding a user data rate of approximately 100 Mbps can be achieved in a 20 MHz LTE channel.</p>
 </div>
