@@ -491,11 +491,11 @@ The key question is now how to implement this idea efficiently, as we now have t
 
 {{< include /content/fundamentals/_fig_ofdm_transceiver.qmd >}}
 
-The OFDM transmitter takes a block of $N$ symbols (e.g., 64-QAM symbols) and maps them onto $N$ subcarriers, thereby increasing the symbol duration for each subcarrier to $N \cdot T_\mathrm{b}$. The IFFT then generates the time-domain OFDM signal, which is transmitted over the wireless channel. Before transmission, the **cyclic prefix (CP)** is added to each OFDM symbol.
+The OFDM transmitter takes a block of $N$ symbols (e.g., 64-QAM symbols) and maps them onto $N$ subcarriers, thereby increasing the symbol duration $T_\mathrm{sym}$ for each subcarrier to $N \cdot T_\mathrm{b}$. The IFFT then generates the time-domain OFDM signal, which is transmitted over the wireless channel. Before transmission, the **cyclic prefix (CP)** is added to each OFDM symbol.
 
 At the receiver, the CP is first removed, and then the FFT recovers the frequency-domain symbols, which can then be equalized (fairly simply by multiplying each subcarrier with a complex factor to correct amplitude and phase) and demodulated.
 
-A key property of OFDM is that the subcarriers are **orthogonal** to each other, which means that they do not interfere with each other, even if they overlap in frequency. This is achieved by choosing the subcarrier spacing $\Delta f$ such that it is equal to the symbol rate $1/T_\mathrm{b}$, i.e., $\Delta f = 1/T_\mathrm{b}$. This way, the integral of the product of two different subcarriers over one symbol period is zero, which means that they are orthogonal.
+A key property of OFDM is that the subcarriers are **orthogonal** to each other, which means that they do not interfere with each other, even if they overlap in frequency. This is achieved by choosing the subcarrier spacing $\Delta f$ such that it is equal to the symbol rate $1/T_\mathrm{sym}$, i.e., $\Delta f = 1/T_\mathrm{sym}$. This way, the integral of the product of two different subcarriers over one symbol period is zero, which means that they are orthogonal.
 
 To further improve the robustness against multi-path propagation, a CP is added to each OFDM symbol. The CP is a copy of the last part of the OFDM symbol, which is added to the beginning of the symbol. This way, if there are delayed copies of the OFDM symbol due to multi-path propagation, they will still fall within the CP and will not cause inter-symbol interference (ISI). The length of the CP should be longer than the maximum delay spread of the channel.
 
@@ -508,12 +508,12 @@ In LTE OFDM is used for the downlink (base station to user equipment) with the f
 - Number of subcarriers: 1200 (for 20 MHz bandwidth)
 - Modulation: QPSK, 16-QAM, 64-QAM, 256-QAM
 
-From the subcarrier spacing we can calculate the symbol duration as $T_\mathrm{b} = 1 / \Delta f = 1 / 15\,\text{kHz} \approx 66.7\,\mu\text{s}$.
+From the subcarrier spacing we can calculate the symbol duration as $T_\mathrm{sym} = 1 / \Delta f = 1 / 15\,\text{kHz} \approx 66.7\,\mu\text{s}$.
 
 We can calculate the raw bitrate for a 20 MHz LTE channel as
 
 $$
-\text{Bitrate} = N_\mathrm{sc} \cdot N_\mathrm{sym} \cdot \frac{1}{T_\mathrm{b} + T_\mathrm{CP}} = 1200 \cdot 8 \cdot \frac{1}{66.7\,\mu\text{s} + 4.7\,\mu\text{s}} \approx 134\,\text{Mbps}
+\text{Bitrate} = N_\mathrm{sc} \cdot N_\mathrm{sym} \cdot \frac{1}{T_\mathrm{sym} + T_\mathrm{CP}} = 1200 \cdot 8 \cdot \frac{1}{66.7\,\mu\text{s} + 4.7\,\mu\text{s}} \approx 134\,\text{Mbps}
 $$
 
 Without the overhead for control channels and error correction coding a user data rate of approximately 100 Mbps can be achieved in a 20 MHz LTE channel.
