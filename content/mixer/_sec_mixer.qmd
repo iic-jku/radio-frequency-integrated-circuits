@@ -1,5 +1,5 @@
 ::: {.content-hidden}
-Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+Copyright (C) 2025-2026 Harald Pretl and co-authors (harald.pretl@jku.at)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ limitations under the License.
 
 As we have seen in @sec-trx-mod-demod, we are using mixers to "upconvert" and "downconvert" signals, i.e., we shift the frequency of a signal to a higher or lower frequency with the help of an auxiliary signal, called the "**local oscillator**" (LO) signal. The block diagram of a mixer is shown in @fig-mixer-block.
 
-{{< include /content/mixer/_fig_mixer_block.qmd >}}
+{{< include /content/mixer/_fig_mixer_square.qmd >}}
 
 What we usually want in a mixer is that the input signal at $\omega_\mathrm{in}$ is shifted by $\omega_\mathrm{LO}$, so that the output signal is located at
 
@@ -37,9 +37,9 @@ Next we will look at two options on how to implement a mixer.
 
 ## Non-Linear Mixer {#sec-mixer-nonlinear}
 
-Generally speaking, we can use any non-linear device to implement a mixer (often, this generation of new frequency components in a nonlinear system is highly undesired; in a mixer, we want this effect). As a simple example we look at the case of a square function, shown in @fig-mixer-square.
+Generally speaking, we can use any nonlinear device to implement a mixer (often, this generation of new frequency components in a nonlinear system is highly undesired; in a mixer, we want this effect). As a simple example we look at the case of a square function, shown in @fig-mixer-square.
 
-{{< include /content/mixer/_fig_mixer_square.qmd >}}
+{{< include /content/mixer/_fig_mixer_block.qmd >}}
 
 When we apply the sum of the signals $s_\mathrm{in}(t) = \cos( \omega_\mathrm{in} t)$ and $s_\mathrm{LO}(t) = \cos(\omega_\mathrm{LO} t)$ to the input of a squarer, we get the output signal
 
@@ -56,7 +56,7 @@ A simple example circuit is a diode, which has a non-linear current-voltage char
 
 {{< include /content/mixer/_fig_diode_mixer.qmd >}}
 
-This structure is conceptionally simple, it just requires a (fast) diode, filters to couple the desired frequency components in and out, and an RF choke to provide a dc bias voltage for the diode. However, the performance of such a simple mixer is usually not very good, as the diode is a highly non-linear device, which generates many spurious frequency components. More advanced mixer circuits use more complex non-linear devices (for example, a ring of diodes) to improve the performance. The advantage of these mixers is that they can operate up to very high frequencies (in the mm-wave range and beyond). If you can make a nonlinear device, you can make a mixer (think also of [nonlinear optics](https://en.wikipedia.org/wiki/Nonlinear_optics), for example).
+This structure is conceptually simple; it just requires a (fast) diode, filters to couple the desired frequency components in and out, and an RF choke to provide a dc bias voltage for the diode. However, the performance of such a simple mixer is usually not very good, as the diode is a highly non-linear device, which generates many spurious frequency components. More advanced mixer circuits use more complex non-linear devices (for example, a ring of diodes) to improve the performance. The advantage of these mixers is that they can operate up to very high frequencies (in the mm-wave range and beyond). If you can make a nonlinear device, you can make a mixer (think also of [nonlinear optics](https://en.wikipedia.org/wiki/Nonlinear_optics), for example).
 
 ## Time-Variant Mixer {#sec-mixer-time-variant}
 
@@ -67,10 +67,13 @@ In contrast to the non-linear mixer, a time-variant mixer uses an ideally **line
 When the switch is closed ($s_\mathrm{LO} \ge 0$), the input signal is passed to the output, i.e., $s_\mathrm{out}(t) = s_\mathrm{in}(t)$; when the switch is open ($s_\mathrm{LO} < 0$), no signal is passed, i.e., $s_\mathrm{out}(t) = 0$. The output signal can be expressed as
 
 $$
-s_\mathrm{out}(t) = s_\mathrm{in}(t) \cdot \frac{1}{2} \left\{ 1 + \mathrm{sgn}[ s_\mathrm{LO}(t) ] \right\},
+\begin{split}
+s_\mathrm{out}(t) &= s_\mathrm{in}(t) \cdot \underbrace{\frac{1}{2} \left\{ 1 + \mathrm{sgn}[ s_\mathrm{LO}(t) ] \right\}}_\text{Fourier series} \\
+&= s_\mathrm{in}(t) \cdot \left[ \frac{1}{2} + \frac{2}{\pi} \sin(\omega_\mathrm{LO} t) + \frac{2}{3 \pi} \sin(3 \omega_\mathrm{LO} t) + \frac{2}{5 \pi} \sin(5 \omega_\mathrm{LO} t) + \ldots\right]
+\end{split}
 $$
 
-where $\mathrm{sgn}(\cdot)$ is the sign function. The term in curly brackets is a square wave that switches between 0 and 1 at the LO frequency. This square wave can be expressed as a Fourier series, which contains the fundamental frequency at $\omega_\mathrm{LO}$ and all odd harmonics $3 \omega_\mathrm{LO}$, $5 \omega_\mathrm{LO}$, and so on. In conclusion, if the input signal is expressed as $\cos(\omega_\mathrm{in} t)$, we get the output signal
+where $\mathrm{sgn}(\cdot)$ is the signum function. The term in curly brackets is a square wave that switches between 0 and 1 at the LO frequency. This square wave can be expressed as a Fourier series, which contains the fundamental frequency at $\omega_\mathrm{LO}$ and all odd harmonics $3 \omega_\mathrm{LO}$, $5 \omega_\mathrm{LO}$, and so on. In conclusion, if the input signal is expressed as $\cos(\omega_\mathrm{in} t)$, we get the output signal
 
 $$
 s_\mathrm{out}(t) = \frac{1}{\pi} \cos(\omega_\mathrm{in} t \pm \omega_\mathrm{LO} t) + \ldots
@@ -96,11 +99,11 @@ $$ {#eq-mixer-double-output}
 
 Note that no dc current needs to flow through the mixer structures shown in @fig-cmos-single-mixer and @fig-cmos-double-mixer, which is a huge advantage when thinking of flicker noise. Flicker noise in a MOSFET is proportional to the dc current flowing through the device, so if no dc current flows, no flicker noise is generated!
 
-In order to look at the full picture, we embed the mixer of @fig-cmos-double-mixer in a complete RX front-end, as shown in @fig-rx-mixer-simplified. An LNA (essentially a $\gm$ cell) creates a current signal from the received voltage signal at the antenna. This current signal is then fed to the mixer in the current domain, and further sinked into a transimpedance amplifier (TIA), which also implements a lowpass pole. The simplified circuit is shown in @fig-rx-mixer-simplified [@RedmanWhite.2001].
+In order to look at the full picture, we embed the mixer of @fig-cmos-double-mixer in a complete RX front-end, as shown in @fig-rx-mixer-simplified. An LNA (essentially a $\gm$ cell) creates a current signal from the received voltage signal at the antenna. This current signal is then fed to the mixer in the current domain, and further sunk into a transimpedance amplifier (TIA), which also implements a lowpass pole. The simplified circuit is shown in @fig-rx-mixer-simplified [@RedmanWhite.2001].
 
 {{< include /content/mixer/_fig_rx_mixer.qmd >}}
 
-The capacitors connected directly to ground at the mixer outputs are good practice, as they shunt high-frequency switching noise to ground, and in this way help the performance of the TIA, which otherwise would have to sink these currents. Note that all blocker currents originating at the LNA output and passing through the mixer are shunt by the feedback capacitors to the output of the TIA, and need to be actively driven by the TIA's output stage!
+The capacitors connected directly to ground at the mixer outputs are good practice, as they shunt high-frequency switching noise to ground, and in this way help the performance of the TIA, which otherwise would have to sink these currents. Note that all blocker currents originating at the LNA output and passing through the mixer are shunted by the feedback capacitors to the output of the TIA, and need to be actively driven by the TIA's output stage!
 
 ## Gilbert Cell Mixer {#sec-mixer-gilbert}
 
@@ -108,15 +111,15 @@ As we have seen in @sec-mixer-time-variant, in CMOS we have quite a few options 
 
 {{< include /content/mixer/_fig_gilbert_mixer.qmd >}}
 
-The idea is that an input transconductor creates currents, which are switched in the double differential pair, and converts the mixed currents back to voltage in the load impedances. There are many known variations of this circuit, like skipping the current source at the bottom to increase linearity and headroom, or swap the input transconductor for another structure. It might also be useful to "bleed" some bias current from the LO switching stage to improve noise.
+The idea is that an input transconductor creates currents, which are switched in the double differential pair and converted back to voltage in the load impedances. There are many known variations of this circuit, like skipping the current source at the bottom to increase linearity and headroom, or swapping the input transconductor for another structure. It might also be useful to "bleed" some bias current from the LO switching stage to improve the noise performance.
 
 ## N-Path Filter {#sec-mixer-npath}
 
-Without much deliberation or diving into the background, it has to be stated that passive mixers (based on MOSFET switches) have a few very interesting properties. One of them is that they can be used to implement very high-quality bandpass filters, called "**N-path filters**" [@Lepage.1953]. The basic idea is shown in @fig-npath-filter. We use 4 phases of an LO signal to switch the 4 capacitors to ground in a round-robin fashion. The duty cycle of each LO phase is 25% to have a non-overlapping clock.
+Without much deliberation or diving into the background, it has to be stated that passive mixers (based on MOSFET switches) have a few very interesting properties. One of them is that they can be used to implement very high-quality bandpass filters, called "**N-path filters**" [@Lepage.1953]. The basic idea is shown in @fig-npath-filter. We use four phases of an LO signal to switch the four capacitors to ground in a round-robin fashion. The duty cycle of each LO phase is 25% to have a non-overlapping clock.
 
 {{< include /content/mixer/_fig_npath_filter.qmd >}}
 
-The key observation to make is that a switch that is opened and closed at a certain frequency (the LO frequency) can be seen as a time-variant resistor. This time-variant resistor converts impedance seen at one one to the other end, and also changes the frequency of this apparent impedance. In other words, if we connect grounded capacitors at one end of the mixer switches and look into the other end, we see a **bandpass filter centered at the LO** frequency! In this way we can build bandpass filters (and also bandstop filters [@Vazny.2010]) at very high frequencies which are precisely centered (without component variations) around $\omega_\mathrm{LO}$.
+The key observation to make is that a switch that is opened and closed at a certain frequency (the LO frequency) can be seen as a time-variant resistor. This time-variant resistor converts impedance seen at one end to the other end, and also changes the frequency of this apparent impedance. In other words, if we connect grounded capacitors at one end of the mixer switches and look into the other end, we see a **bandpass filter centered at the LO** frequency! In this way we can build bandpass filters (and also bandstop filters [@Vazny.2010]) at very high frequencies which are precisely centered (without component variations) around $\omega_\mathrm{LO}$.
 
 The impedance characteristics of such a tank circuit exhibit first-order bandpass behavior, as shown in @fig-tank-bandpass. The peak impedance reaches 5.3 times the switch resistance ($R_\mathrm{sw}$), and importantly, the bandwidth is inversely proportional to the capacitance value, i.e., $\mathrm{BW} \propto 1/C$. This relationship allows for precise control of the filter bandwidth by adjusting the capacitor values.
 
@@ -128,11 +131,11 @@ As you have seen in @sec-trx-mod-demod, for complex-valued modulation schemes (l
 
 ### RC/CR Phase Shift Network {#sec-lo-rc}
 
-The probably simplest way to generate quadrature LO signals is to use a simple RC/CR phase shift network, as shown in @fig-rc-cr-phase-shift. The RC network (a first-order lowpass) generates a phase shift between 0° and -90°, while the CR network (a first-order highpass) generates a phase shift between 0° and +90°. By operating the network at $\omega_0 = 1/RC$, we can achieve a 90° phase shift between the two outputs.
+Probably the simplest way to generate quadrature LO signals is to use a simple RC/CR phase shift network, as shown in @fig-rc-cr-phase-shift. The RC network (a first-order lowpass) generates a phase shift between 0° and -90°, while the CR network (a first-order highpass) generates a phase shift between 0° and +90°. By operating the network at $\omega_0 = 1/RC$, we can achieve a 90° phase shift between the two outputs.
 
 {{< include /content/mixer/_fig_rc_cr_phase_shift.qmd >}}
 
-The advantage of this network is its simplicity, as it only requires a few passive components, and it can generate I and Q phases from an incoming signal at the target frequency. The disadvantage is that the phase shift is frequency-dependent, so the quadrature signals are only perfectly in phase at one frequency. Furthermore, the amplitude of the two outputs is not equal, which might require additional gain stages to equalize the amplitudes. Additionally, this passive network has a 3 dB loss, so we need additional gain stages to compensate for this loss.
+The advantage of this network is its simplicity, as it only requires a few passive components, and it can generate I and Q phases from an incoming signal at the target frequency. The disadvantage is that the phase shift is frequency-dependent, so the quadrature signals are only perfectly in quadrature at one frequency. Furthermore, the amplitude of the two outputs is not equal, which might require additional gain stages to equalize the amplitudes. Additionally, this passive network has a 3 dB loss, so we need additional gain stages to compensate for this loss.
 
 ### Polyphase Filter {#sec-lo-polyphase}
 
@@ -142,11 +145,11 @@ We can create a more advanced phase shift network (following the idea of @sec-lo
 
 As shown in the figure above, we can use multiple stages (with $R_1 C_1 \ne R_2 C_2$) in cascade to broaden the frequency range over which we have a good 90° phase shift between the four outputs. The more stages we use, the better the performance, but also the more components are required. Note that this network is still passive, so it has an inherent loss, which also increases with the number of stages. The idea behind this network is that the network is transparent for positive frequencies, and blocks negative frequencies (or vice versa). We enter the network with real signals (having positive and negative frequency components), and at the output we get complex signals (having only positive or negative frequency components). In this sense this network is a complex filter.
 
-Note that polyphase filters are popular when we have to create complex signals from real signals. We can use the polyphase filter in the LO path, or also in the signal path (e.g., in a receiver). The benefit is that we can work with a signal where input frequency is equal to the output frequency. This is in strong contrast to the approach we will discuss next.
+Note that polyphase filters are popular when we have to create complex signals from real signals. We can use the polyphase filter in the LO path, or also in the signal path (e.g., in a receiver). The benefit is that we can work with a signal where the input frequency is equal to the output frequency. This is in strong contrast to the approach we will discuss next.
 
 ### Flip-Flop Based Phase Generation {#sec-lo-ff}
 
-The most widely used approach to generate quadrature LO signals is to use digital circuits, as shown in @fig-iq-divider. The idea is to use a flip-flop (or a latch) to divide the frequency of an incoming clock signal by 2. If we drive the two flip-flops (which are connected as toggle flip-flops) by inverted clocks, then the resulting output signals are 90° phase-shifted, as shown in @fig-ff-phase-diagram.
+The most widely used approach to generate quadrature LO signals is to use digital circuits, as shown in @fig-iq-divider. The idea is to use a flip-flop (or a latch) to divide the frequency of an incoming clock signal by two. If we drive the two flip-flops (which are connected as toggle flip-flops) by inverted clocks, then the resulting output signals are 90° phase-shifted, as shown in @fig-ff-phase-diagram.
 
 {{< include /content/mixer/_fig_iq_divider.qmd >}}
 
@@ -166,11 +169,11 @@ The advantage of using flip-flops to generate multi-phase LO signals is that ver
 
 ### Delay-Based Phase Generation {#sec-lo-delay}
 
-The final approach we want to mention is to use a delay line (or multiple ones) to generate phase shifts. Using transmission lines, this approach is widely used at very high frequencies, where other approaches (like the ones shown in @sec-lo-polyphase or @sec-lo-ff) are difficult to implement. One well-known approach is the 90° hybrid coupler, realized with $\lambda/4$ transmission lines [@Pozar_RF].  When the frequencies are high enough (and the resulting wavelengths short enough), this approach can even be implemented on-chip. The disadvantage is that the phase shift is frequency-dependent, so the quadrature signals are only perfectly in phase at one frequency. Furthermore, this passive network has a 3 dB loss, so we need additional gain stages to compensate for this loss. A branch-line hybrid coupler is shown in @fig-branch-line-coupler.
+The final approach we want to mention is to use a delay line (or multiple ones) to generate phase shifts. Using transmission lines, this approach is widely used at very high frequencies, where other approaches (like the ones shown in @sec-lo-polyphase or @sec-lo-ff) are difficult to implement. One well-known approach is the 90° hybrid coupler, realized with $\lambda/4$ transmission lines [@Pozar_RF].  When the frequencies are high enough (and the resulting wavelengths short enough), this approach can even be implemented on-chip. The disadvantage is that the phase shift is frequency-dependent, so the quadrature signals are only perfectly in quadrature at one frequency. Furthermore, this passive network has a 3 dB loss, so we need additional gain stages to compensate for this loss. A branch-line hybrid coupler is shown in @fig-branch-line-coupler.
 
 {{< include /content/mixer/_fig_branch_line_coupler.qmd >}}
 
-The 3-port S-parameter matrix of an ideal branch-line coupler (assuming port 4 is poperly terminated with $Z_0$) is given by
+The 3-port S-parameter matrix of an ideal branch-line coupler (assuming port 4 is properly terminated with $Z_0$) is given by
 
 $$
 S = \frac{1}{\sqrt{2}} \begin{bmatrix}

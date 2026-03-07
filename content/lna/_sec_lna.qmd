@@ -1,5 +1,5 @@
 ::: {.content-hidden}
-Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+Copyright (C) 2025-2026 Harald Pretl and co-authors (harald.pretl@jku.at)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ $$
 \Gamma = \frac{Z_{\mathrm{in}} - Z_0}{Z_{\mathrm{in}} + Z_0}
 $$
 
-where $Z_0$ is the characteristic impedance of the system (usually 50 Ω) and $Z_{\mathrm{in}}$ is the input impedance of the LNA. The reflection coefficient $\Gamma$ is a complex number with a magnitude between 0 and 1, where 0 indicates a perfect match and 1 indicates a complete mismatch. This reflection coefficient can be represented on a Smith chart shown in @fig-smith-chart.
+where $Z_0$ is the characteristic impedance of the system (usually 50 Ω) and $Z_{\mathrm{in}}$ is the input impedance of the LNA. The reflection coefficient $\Gamma$ is a complex number with a magnitude between 0 and 1, where 0 indicates a perfect match and 1 indicates a complete mismatch. This reflection coefficient can be represented on the Smith chart shown in @fig-smith-chart. A useful interactive tool to draft a matching network and visualize it on a Smith chart is this [website](https://onlinesmithchart.com).
 
 {{< include /content/lna/_fig_smith_chart.qmd >}}
 
@@ -45,6 +45,38 @@ $$
 $$
 
 A higher return loss indicates a better impedance match.  A return loss of 10 dB indicates that 10% of the signal power is reflected back, while a return loss of 20 dB indicates that only 1% of the signal power is reflected back. In practice, a return loss of at least 10 dB is desired, with higher (positive) values being better [@Bird.2009].
+
+## Amplifier Stability {#sec-amp-stability}
+
+When designing amplifiers, it is important to ensure that the amplifier is stable, i.e., that it does not oscillate. Under well-defined conditions, this is already complicated enough, but in RF design, the situation is even more complex, as the stability is usually a function of source and load impedances, which, especially when going off-chip, are often not well defined. Hence, we have a two-port network, where we need to ensure that the amplifier is stable for all possible source and load impedances. Luckily, there are well-defined criteria to check the stability of a two-port network.
+
+One test for unconditional stability is the Rollet stability factor $K$, which is defined as [@Pozar_RF]:
+
+$$
+K = \frac{1 - |S_{11}|^2 - |S_{22}|^2 + |\Delta|^2}{2 |S_{12} S_{21}|}, \quad \text{with} \quad \Delta = S_{11} S_{22} - S_{12} S_{21}.
+$$ {#eq-rollet-stability-factor}
+
+For unconditional stability, the following conditions must be met:
+
+$$
+K > 1 \quad \text{and} \quad |\Delta| < 1.
+$$
+
+If these conditions are not met, the amplifier is potentially unstable, i.e., it might oscillate for some source and load impedances. In this case, further analysis is required to determine the stability of the amplifier. Unfortunately, the $K$-factor test only provides a binary answer (stable/unstable) and does not provide any information about how close the amplifier is to instability. For this purpose, the so-called $\mu$ stability factor is used, which is defined as [@Edwards.1992]:
+
+$$
+\mu = \frac{1 - |S_{11}|^2}{|S_{22} - S_{11}^* \Delta| + |S_{12} S_{21}|}
+$$ {#eq-mu-stability-factor}
+
+For unconditional stability, the following condition must be met:
+
+$$
+\mu > 1
+$$
+
+The $\mu$-factor provides a measure of how close the amplifier is to instability; the larger the $\mu$-factor, the more stable the amplifier is. A $\mu$-factor of 1.5 or higher is usually considered sufficient for practical applications.
+
+What we can learn from @eq-rollet-stability-factor and @eq-mu-stability-factor is that to achieve a *stable* amplifier, we need to *minimize* the reverse gain $S_{12}$ (also called isolation) and the input and output reflection coefficients $S_{11}$ and $S_{22}$. In practice, this means that we need to design the amplifier with high gain and good input and output matching. Cascode stages are often used in RF amplifiers to achieve high gain and good isolation.
 
 ## Resistively Matched Common-Source LNA {#sec-lna-resistive-matching}
 
@@ -92,7 +124,7 @@ We now need to find the output noise coming from the source only. For this we ca
 We find that
 
 $$
-\overline{V_\mathrm{n,out,s}^2} = A_\mathrm{v}^2 \cdot 4 k T R_\mathrm{s} \cdot \left(\frac{R_\mathrm{p}}{R_\mathrm{s} + R_\mathrm{p}}{} \right)^2.
+\overline{V_\mathrm{n,out,s}^2} = A_\mathrm{v}^2 \cdot 4 k T R_\mathrm{s} \cdot \left(\frac{R_\mathrm{p}}{R_\mathrm{s} + R_\mathrm{p}} \right)^2.
 $$ {#eq-lna-naive-noise-input}
 
 Finally, we can use @eq-lna-naive-noise-total and @eq-lna-naive-noise-input with @eq-lna-noise-factor to calculate the noise figure of the simple resistively matched common-source LNA as
@@ -112,13 +144,13 @@ $$
 F = 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} = 2
 $$
 
-so we see that we are limited to a minimum noise figure of 3 dB, even if we spend the bias current to make $\gm$ very large. We can go below 3 dB noise figure only if we choose $R_\mathrm{p} > R_\mathrm{s}$, however, this means that the input is no longer matched to 50 Ω, which is usually not acceptable. Hence, this simple resistively matched common-source LNA is not a good choice for a low-noise amplifier, with one exception: For very wideband amplifiers, where a NF of larger than 3 dB is acceptable, this configuration might be a good choice.
+so we see that we are limited to a minimum noise figure of 3 dB, even if we spend the bias current to make $\gm$ very large. We can go below 3 dB noise figure only if we choose $R_\mathrm{p} > R_\mathrm{s}$, however, this means that the input is no longer matched to 50 Ω, which is usually not acceptable. Hence, this simple resistively matched common-source LNA is not a good choice for a low-noise amplifier, with one exception: For very wideband amplifiers, where an NF larger than 3 dB is acceptable, this configuration might be a good choice.
 
 We see that we are stuck at high noise figures if we realize the real part of the input impedance with a resistor. This leaves us with the question of how to realize a real part of the input impedance then. We will answer this question in the next section.
 
 ## Common-Gate LNA {#sec-lna-common-gate}
 
-We remember from our [analog circuit design lecture](https://iic-jku.github.io/analog-circuit-design/analog_circuit_design.html) that the common-gate configuration has an input impedance of $1/\gm$, neglecting parasitic capacitances. Hence, if we choose $\gm = 1/50\,\Omega = 20\,\text{mS}$, we can achieve input matching to 50 Ω without using a resistor at the input. This is the key idea of the common-gate LNA, which is shown in @fig-lna-cg.
+We remember from our [analog circuit design lecture](https://iic-jku.github.io/analog-circuit-design/aicd.html) that the common-gate configuration has an input impedance of $1/\gm$, neglecting parasitic capacitances. Hence, if we choose $\gm = 1/50\,\Omega = 20\,\text{mS}$, we can achieve input matching to 50 Ω without using a resistor at the input. This is the key idea of the common-gate LNA, which is shown in @fig-lna-cg.
 
 {{< include /content/lna/_fig_lna_cg.qmd >}}
 
@@ -131,7 +163,7 @@ $$ {#eq-lna-cg-noise-total}
 The output noise due to the source only is given by
 
 $$
-\overline{V_\mathrm{n,out,s}^2} = \frac{R_\mathrm{D}^2}{R_\mathrm{s}}.
+\overline{V_\mathrm{n,out,s}^2} = k T \frac{R_\mathrm{D}^2}{R_\mathrm{s}}.
 $$ {#eq-lna-cg-noise-source}
 
 Finally, we can use @eq-lna-cg-noise-total and @eq-lna-cg-noise-source with @eq-lna-noise-factor to calculate the noise figure of the common-gate LNA as
@@ -144,7 +176,7 @@ With a classical long-channel $\gamma = 2/3$, we can achieve a minimum noise fig
 
 ## Inductively-Degenerated Common-Source LNA {#sec-lna-inductive-degeneration}
 
-As we have seen in @sec-lna-common-gate, using circuit techniques can realize a real part of an input impedance without the associated thermal noise of a resistor. We now try something different, in the hope that it will result in an even lower noise figure. We construct an LNA based on a common-source MOSFET amplifier, but we add an impedance $Z_\mathrm{deg}$ into the source line. This arrangement is shown in @fig-lna-inductive-degeneration.
+As we have seen in @sec-lna-common-gate, circuit techniques can be used to realize a real part of an input impedance without the associated thermal noise of a resistor. We now try something different, in the hope that it will result in an even lower noise figure. We construct an LNA based on a common-source MOSFET amplifier, but we add an impedance $Z_\mathrm{deg}$ into the source line. This arrangement is shown in @fig-lna-inductive-degeneration.
 
 {{< include /content/lna/_fig_lna_inductive_degeneration.qmd >}}
 
@@ -155,16 +187,16 @@ We now extract the small-signal equivalent circuit of @fig-lna-inductive-degener
 We find that
 
 $$
-v_\mathrm{x} = v_\mathrm{gs} + Z_\mathrm{deg} (i_\mathrm{x} + \gm v_\mathrm{gs}), \quad v_\mathrm{gs} = \frac{i_\mathrm{x}}{s C_\mathrm{gs}}
+V_\mathrm{x} = \Vgs + Z_\mathrm{deg} (I_\mathrm{x} + \gm \Vgs), \quad \Vgs = \frac{I_\mathrm{x}}{s C_\mathrm{gs}}
 $$
 
 so that we can write the input impedance as
 
 $$
-Z_\mathrm{in} = \frac{v_\mathrm{x}}{i_\mathrm{x}} = \frac{1}{s C_\mathrm{gs}} + Z_\mathrm{deg} + \frac{\gm Z_\mathrm{deg}}{s C_\mathrm{gs}}. 
+Z_\mathrm{in} = \frac{V_\mathrm{x}}{I_\mathrm{x}} = \frac{1}{s C_\mathrm{gs}} + Z_\mathrm{deg} + \frac{\gm Z_\mathrm{deg}}{s C_\mathrm{gs}}. 
 $$ {#eq-lna-inductive-degeneration-zin}
 
-The final term in @eq-lna-inductive-degeneration-zin is the interesting one: By choosing $Z_\mathrm{deg}$ to be inductive (which we can do by either use an on-chip or off-chip inductor), we can realize a real part of the input impedance. If we choose $Z_\mathrm{deg} = s L$, we find that
+The final term in @eq-lna-inductive-degeneration-zin is the interesting one: By choosing $Z_\mathrm{deg}$ to be inductive (which we can do by using either an on-chip or an off-chip inductor), we can realize a real part of the input impedance. If we choose $Z_\mathrm{deg} = s L$, we find that
 
 $$
 Z_\mathrm{in} = \frac{1}{s C_\mathrm{gs}} + s L + \frac{\gm L}{C_\mathrm{gs}}.
@@ -176,23 +208,23 @@ $$
 \Re \{ Z_\mathrm{in} \} = \frac{\gm L}{C_\mathrm{gs}}
 $$
 
-Without proof (refer to [@Razavi_RFIC] or [@Darabi_RFIC] for a derivation) we find for the noise factor of this input stage (with some simplification) as
+Without proof (refer to [@Razavi_RFIC] or [@Darabi_RFIC] for a derivation), we state the noise factor of this input stage (with some simplification) as
 
 $$
 F = 1 + \frac{\gamma R_\mathrm{s} \omega_0^2 C_\mathrm{gs}^2}{\gm}.
 $$ {#eq-lna-inductive-degeneration-noise-factor}
 
-Finally, we have an LNA input stage configuration that allows us to achieve a noise figure below 3 dB, even with $\gamma > 1$, by proper choice of $\gm$. Making $\gm$ large (by spending more bias current) results in (to first order) arbitrarily low noise figure. The inductively-degenerated common-source LNA is a widely used LNA input stage configuration in modern RFICs. A somewhat detailed schematic is shown in @fig-lna-inductive-degeneration-detailed.
+Finally, we have an LNA input stage configuration that allows us to achieve a noise figure below 3 dB, even with $\gamma > 1$, by proper choice of $\gm$. Making $\gm$ large (by spending more bias current) results in (to first order) an arbitrarily low noise figure. The inductively-degenerated common-source LNA is a widely used LNA input stage configuration in modern RFICs. A somewhat detailed schematic is shown in @fig-lna-inductive-degeneration-detailed.
 
 {{< include /content/lna/_fig_lna_inductive_degeneration_detailed.qmd >}}
 
-The inductor $L_\mathrm{match}$ is used to match the input impedance to 50 Ω at the desired frequency, $L_\mathrm{deg}$ is used to realize the real part of the input impedance, $R_\mathrm{bias}$ is used to set the bias current of $M_1$, $M_2$ is a cascode transistor which increases the output impedance and thus the gain of the stage (plus it improves the reverse isolation), and $R_\mathrm{D}$, $L_\mathrm{D}$, and $C_\mathrm{D}$ form a load tank which provides high gain at the desired frequency. A dc block is used at the input so that the bias point of $M_1$ is not corrupted by the input signal source. The bias voltage $V_\mathrm{bias2}$ sets the operating point of the cascode transistor $M_2$.
+The inductor $L_\mathrm{match}$ is used to match the input impedance to 50 Ω at the desired frequency, $L_\mathrm{deg}$ is used to realize the real part of the input impedance, $R_\mathrm{bias}$ is used to bias the gate of $M_1$, $M_2$ is a cascode transistor which increases the output impedance and thus the gain of the stage (plus it improves the reverse isolation), and $R_\mathrm{D}$, $L_\mathrm{D}$, and $C_\mathrm{D}$ form a load tank which provides high gain at the desired frequency. A dc block is used at the input so that the bias point of $M_1$ is not corrupted by the input signal source. The bias voltage $V_\mathrm{bias2}$ sets the operating point of the cascode transistor $M_2$.
 
-What is missing in @fig-lna-inductive-degeneration-detailed is any form of frequency tuning of the load to the frequency of interest, and the support of different gain modes. Apart from these details this LNA circuit is a good starting point for a practical LNA design.
+What is missing in @fig-lna-inductive-degeneration-detailed is any form of frequency tuning of the load to the frequency of interest, and support for different gain modes. Apart from these details, this LNA circuit is a good starting point for a practical LNA design.
 
 ## Feedback LNA {#sec-lna-feedback}
 
-One drawback of the inductively-degenerated common-source LNA is the usage of at least one inductor. If the inductor is placed on-chip, it has a comparatively large size, and if it is implemented in the package (via a bondwire) or on the PCB, it adds to the bill-of-materials (BOM) cost.
+One drawback of the inductively-degenerated common-source LNA is the use of at least one inductor. If the inductor is placed on-chip, it has a comparatively large size, and if it is implemented in the package (via a bondwire) or on the PCB, it adds to the bill-of-materials (BOM) cost.
 
 If the CMOS technology is sufficiently fast, a shunt feedback LNA, as shown in @fig-lna-shunt-fb, might be a good choice.
 
@@ -210,7 +242,7 @@ $$
 F = 1 + \left| \frac{Z_\mathrm{F} + R_\mathrm{s}}{\gm Z_\mathrm{F} + 1} \right|^2 \cdot \frac{\gamma \gm + \Re \{ Y_\mathrm{L} \} }{\Re \{ Z_\mathrm{in} \}}
 $$ {#eq-lna-shunt-fb-noise-factor}
 
-As you can see from @eq-lna-shunt-fb-noise-factor, by making $\gm$ large (by spending more bias current) the noise figure can be made arbitrarily small! Depending on the choice of $Z_\mathrm{F}$ and $Z_\mathrm{L}$, the input impedance of this LNA can be changed in interesting ways.
+As you can see from @eq-lna-shunt-fb-noise-factor, by making $\gm$ large (by spending more bias current), the noise figure can be made arbitrarily small! Depending on the choice of $Z_\mathrm{F}$ and $Z_\mathrm{L}$, the input impedance of this LNA can be changed in interesting ways.
 
 By setting $Z_\mathrm{L} \rightarrow \infty$ (e.g., by biasing with a current source and high-impedance loading), we find that
 

@@ -1,5 +1,5 @@
 ::: {.content-hidden}
-Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+Copyright (C) 2025-2026 Harald Pretl and co-authors (harald.pretl@jku.at)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import schemdraw.dsp as dsp
 sd.svgconfig.svg2 = False
 
 with sd.Drawing(canvas='svg') as d:
-    d.config(unit=2, fontsize=14)
+    d.config(unit=2, fontsize=14, margin=0.5)
 
     elm.Ground()
     elm.SourceSin().up().label(r'$v_\mathrm{in}$')
@@ -48,7 +48,7 @@ with sd.Drawing(canvas='svg') as d:
     d.pop()
     d.push()
     elm.Line().left().length(d.unit/2)
-    L1 = elm.Inductor().up().label(r'$L$')
+    L1 = elm.Inductor2(loops=2).up().label(r'$L$')
     d.pop()
     elm.Line().right().length(d.unit/2).dot()
     d.push()

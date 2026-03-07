@@ -6,6 +6,7 @@ var:
 
 website:
   title: "Radio-Frequency Integrated Circuits"
+  favicon: favicon.png
   navbar:
     background: "#447099"
     search: true
@@ -34,8 +35,8 @@ execute:
 format:
   html:
     theme:
-      light: cosmo
-      dark: solar
+      light: [cosmo, custom.scss]
+      dark: [solar, custom.scss]
     fig-align: center
     lang: en-US
     lightbox: true

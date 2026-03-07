@@ -1,5 +1,5 @@
 ::: {.content-hidden}
-Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+Copyright (C) 2025-2026 Harald Pretl and co-authors (harald.pretl@jku.at)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ f_3dB_upper = f[idx_3dB_upper]
 bandwidth = f_3dB_upper - f_3dB_lower
 
 # Create the plot
-fig, ax = plt.subplots(1, 1)
+fig, ax = plt.subplots(1, 1, figsize=(6, 4))
 
 # Plot impedance magnitude
 ax.plot(f, Z_magnitude, 'b-', linewidth=2.5, label='|Z(ω)|')

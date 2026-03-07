@@ -1,5 +1,5 @@
 ::: {.content-hidden}
-Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+Copyright (C) 2025-2026 Harald Pretl and co-authors (harald.pretl@jku.at)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import schemdraw.logic as lgc
 sd.svgconfig.svg2 = False
 
 with sd.Drawing(canvas='svg') as d:
-    d.config(unit=2, fontsize=14)
+    d.config(unit=2, fontsize=14, margin=0.5)
 
     elm.Line().right(d.unit/2).label(r'$v_\mathrm{in}(t)$', 'left')
     M1 = elm.AnalogNFet(offset_gate=False).reverse().anchor('source').drop('drain').theta(270)
@@ -36,5 +36,5 @@ with sd.Drawing(canvas='svg') as d:
     elm.Resistor().right().dot(open=True).label(r'$V_\mathrm{bias}$', loc='right')
     d.pop()
     elm.Capacitor().up(d.unit)
-    lgc.Not().up(d.unit).reverse().dot(open=True).label(r'$v_\mathrm{LO}(t)$', loc='right')
+    lgc.Buf().up(d.unit).reverse().dot(open=True).label(r'$v_\mathrm{LO}(t)$', loc='right')
 ```

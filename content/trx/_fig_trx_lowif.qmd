@@ -1,5 +1,5 @@
 ::: {.content-hidden}
-Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+Copyright (C) 2025-2026 Harald Pretl and co-authors (harald.pretl@jku.at)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import schemdraw.dsp as dsp
 sd.svgconfig.svg2 = False
 
 with sd.Drawing(canvas='svg') as d:
-    d.config(unit=2, fontsize=14)
+    d.config(unit=2, fontsize=14, margin=0.5)
 
     rf_pos=d.here
 
@@ -50,7 +50,7 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Square().label('DSP')
     dsp.Arrow().length(d.unit/2).label(r'$s_\mathrm{RX,I}$', 'right')
 
-    dsp1 = dsp.Ic(pins=[dsp.IcPin(side='L'), dsp.IcPin(side='L'), dsp.IcPin(side='R')], size=(2.75, 12), leadlen=0).anchor('inL2').label('MODEM')
+    dsp1 = dsp.Ic(pins=[dsp.IcPin(side='L'), dsp.IcPin(side='L'), dsp.IcPin(side='R')], size=(2.75, 12), leadlen=0).anchor('inL2').label('Modem')
 
     d.pop()
 

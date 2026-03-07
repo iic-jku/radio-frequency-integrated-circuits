@@ -1,5 +1,5 @@
 ::: {.content-hidden}
-Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+Copyright (C) 2025-2026 Harald Pretl and co-authors (harald.pretl@jku.at)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ P1dB_in = Pin_dBm[idx_1dB]
 P1dB_out = Pout_dBm[idx_1dB]
 
 # Create the plot
-fig, ax = plt.subplots(1, 1)
+fig, ax = plt.subplots(1, 1, figsize=(6, 4))
 
 # Plot ideal and actual responses
 ax.plot(Pin_dBm, Pout_ideal_dBm, 'b--', linewidth=2, label='Ideal Linear Response', alpha=0.7)

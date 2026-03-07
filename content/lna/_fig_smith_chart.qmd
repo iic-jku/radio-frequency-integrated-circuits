@@ -1,5 +1,5 @@
 ::: {.content-hidden}
-Copyright (C) 2025 Harald Pretl and co-authors (harald.pretl@jku.at)
+Copyright (C) 2025-2026 Harald Pretl and co-authors (harald.pretl@jku.at)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,8 +23,8 @@ import matplotlib.pyplot as plt
 import pysmithchart
 
 # Create a subplot that will use the Smith projection and include the minor grid
-plt.figure(figsize=(6,6))
-plt.subplot(1, 1, 1, projection="smith", axes_impedance=50, grid_minor_enable=True)
+plt.figure(figsize=(5, 5))
+plt.subplot(1, 1, 1, projection="smith", Z0=50)
 
 plt.plot([50 + 0j], markersize=10)
 plt.show()

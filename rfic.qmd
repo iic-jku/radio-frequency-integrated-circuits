@@ -15,7 +15,10 @@ date: last-modified
 license: "Apache-2.0 license"
 copyright:
   holder: "Harald Pretl and co-authors, Johannes Kepler University."
-  year: 2025
+  year: 2025-2026
+citation:
+  doi: "10.5281/zenodo.17563943"
+  url: https://iic-jku.github.io/radio-frequency-integrated-circuits
 bibliography: references.bib
 format:
   html:
@@ -42,3 +45,4 @@ format:
 {{< include /content/oscillator/_sec_oscillator.qmd >}}
 {{< include /content/pll/_sec_pll.qmd >}}
 {{< include /content/poweramp/_sec_poweramp.qmd >}}
+{{< include /content/exam/_sec_exam_questions.qmd >}}
