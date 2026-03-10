@@ -58,47 +58,53 @@ We use time invariance to simplify the mathematics. In practice, many circuits a
 In contrast, a system with memory (i.e., time-variant) will have an output at time $t$ which depends on the input at time $t$ and also on past inputs (e.g., at times $t - \Delta T$, $t - 2 \Delta T$, etc.). Examples of systems with memory are filters, which have a frequency-dependent response, or power amplifiers with thermal memory effects.
 :::
 
-We model a nonlinear circuit block with the following Taylor polynomial:
+We model a nonlinear circuit block with the input $x(t)$ and the output $y(t)$ with the following Taylor polynomial:
 
 $$
-v_\text{out} = a_0 + a_1 v_\text{in} + a_2 v_\text{in}^2 + a_3 v_\text{in}^3 + a_4 v_\text{in}^4 + a_5 v_\text{in}^5 +\cdots
+\begin{split}
+y(t) &= \alpha_0 + \alpha_1 x(t) + \alpha_2 x(t)^2 + \alpha_3 x(t)^3\\
+& + \alpha_4 x(t)^4 + \alpha_5 x(t)^5 + \ldots
+\end{split}
 $$ {#eq-nonlinear-model}
 
-Usually, the blocks under study will have higher-order nonlinear terms, but we often stop at 5rd order to keep things simple. For practical work, higher-order terms should be included if necessary.
+Usually, the blocks under study will have higher-order nonlinear terms, but we often stop at 5th order to keep things simple. For practical work, higher-order terms should be included if necessary.
 
-Which $x(t)$ should we use to study wireless systems? Often, the bandwidth $f_\mathrm{BW}$ of a transmit signal is much smaller than the center frequency $f_0$, i.e., $f_\mathrm{BW} \ll f_0$. In this case, using a sinusoidal signal as a model is both simple to handle and approximately correct.
+Which $x(t)$ should we use to study wireless systems? Often, the bandwidth $\Delta f_\mathrm{BW}$ of a transmit signal is much smaller than the center frequency $f_0$, i.e., $\Delta f_\mathrm{BW} \ll f_0$. In this case, using a sinusoidal signal as a model is both simple to handle and approximately correct.
 
 ### Single-Tone Linearity {#sec-linearity-single}
 
-We thus set (with $A$ being the amplitude of the input signal and $\omega = 2 \pi f$ the angular frequency)
+We thus use (with $A_0$ being the amplitude of the input signal and $\omega_0 = 2 \pi f_0$ the angular frequency)
 
 $$
-v_\text{in} = V_0 \cos \omega_0 t
+x(t) = A_0 \cos(\omega_0 t)
 $$
 
 and insert it into @eq-nonlinear-model. After some simple trigonometric manipulations we are at
 
 $$
-\begin{align}
-	v_\text{out} & = \underbrace{a_0 + \frac{a_2 V_0^2}{2} + \frac{3 a_4 V_0^4}{8}}_{\text{DC (}\omega=0\text{)}}
-	+ \underbrace{\left(a_1 V_0 + \frac{3 a_3 V_0^3}{4}+ \frac{5 a_5 V_0^5}{8}\right)\cos\omega_0 t}_{\text{fundamental }(\omega_0)} \nonumber\\
-	&\quad + \underbrace{\left(\frac{a_2 V_0^2}{2}+\frac{a_4 V_0^4}{2}\right)\cos2\omega_0 t}_{\text{2nd harmonic }(2\omega_0)}
-	+ \underbrace{\left(\frac{a_3 V_0^3}{4}+\frac{5 a_5 V_0^5}{16}\right)\cos3\omega_0 t}_{\text{3rd harmonic }(3\omega_0)} \nonumber\\
-	&\quad + \underbrace{\frac{a_4 V_0^4}{8}\cos4\omega_0 t}_{\text{4th harmonic }(4\omega_0)}
-	+ \underbrace{\frac{a_5 V_0^5}{16}\cos5\omega_0 t}_{\text{5th harmonic }(5\omega_0)}\cdots .
-\end{align}
+\begin{split}
+	y(t) & = \underbrace{\alpha_0 + \frac{1}{2} \alpha_2 A_0^2 + \frac{3}{8} \alpha_4 A_0^4}_{\text{dc component }(\omega=0)}\\
+	& + \underbrace{\left( \alpha_1 A_0 + \frac{3}{4} \alpha_3 A_0^3 + \frac{5}{8} \alpha_5 A_0^5 \right) \cos(\omega_0 t)}_{\text{fundamental }(\omega_0)}\\
+	& + \underbrace{\left( \frac{1}{2} \alpha_2 A_0^2 + \frac{1}{2} \alpha_4 A_0^4 \right) \cos(2 \omega_0 t)}_{\text{2nd harmonic }(2 \omega_0)}\\
+    & + \underbrace{\left( \frac{1}{4} \alpha_3 A_0^3 + \frac{5}{16} \alpha_5 A_0^5 \right) \cos(3 \omega_0 t)}_{\text{3rd harmonic }(3 \omega_0)}\\
+    & + \underbrace{\frac{1}{8} \alpha_4 A_0^4 \cos(4 \omega_0 t)}_{\text{4th harmonic }(4 \omega_0)}\\
+	& + \underbrace{\frac{1}{16} \alpha_5 A_0^5 \cos(5 \omega_0 t)}_{\text{5th harmonic }(5 \omega_0)} + \ldots
+\end{split}
 $$ {#eq-linearity-single}
-The gain of the fundamental would be
+
+The gain $H^{\omega_0}$ of the fundamental tone at $\omega_0$ would be
+
 $$
-\begin{equation}\label{eq:non-linear-gain}
-	G_v = \frac{v_\text{out}^{\omega_0}}{v_\text{in}^{\omega_0}} = \frac{a_1V_0 + \frac{3}{4} a_3 V_0^3 + \frac{5}{8} a_5 V_0^5}{V_0} =  a_1 + \frac{3}{4} a_3 V_0^2 + \frac{5}{8} a_5 V_0^4.
+\begin{equation}
+	H^{\omega_0} = \frac{y^{\omega_0}}{x^{\omega_0}} = \alpha_1 + \frac{3}{4} \alpha_3 A_0^2 + \frac{5}{8} \alpha_5 A_0^4.
 \end{equation}
 $$ {#eq-linearity-single-gain-fundamental}
+
 Looking at @eq-linearity-single and @eq-linearity-single-gain-fundamental, we can make a few interesting observations:
 
-- Even-order nonlinearity ($\alpha_2$) creates low-frequency components; it effectively adds frequency components related to the envelope $A$. If $A$ is a constant then this results in a dc term; if $A(t)$ is time-variant, it will create a squared version of it at low frequencies.
-- The $\alpha_1$ term is the gain of the circuit block.
-- Odd-order nonlinearity ($\alpha_3$ and $\alpha_5$) can impact the gain of the fundamental term passing through the block. Usually $a_3$ and $a_5$ have the same sign, which is opposite to the sign of $a_1$. This implies that the gain stays by small input powers linear, then the terms with $a_3$ and $a_5$ starts to dominate at higher powers, leading to gain compression or saturation effect, until the amplifier reaches a level of maximum output power. In some cases, $a_3$ has the same sign of $a_1$ but $a_5$ the opposite one, which lead to gain expansion, meaning that the gain would have firstly an overshoot at some input power level, until the the term with $a_5$ is dominant and the gain is compressed again. These effects could be seen in Fig. @fig-gain-nonlinear-compression-expansion, where the output power in \unit{dBm} is plotted over input power in \unit{dBm}.
+- Even-order nonlinearities (due to $\alpha_2$ and $\alpha_4$) create low-frequency components; they effectively add frequency components stemming from the envelope $A_0$. If $A_0$ is a constant then this results in a dc term; if $A_0(t)$ is time-variant, it will create a squared and 4th-order version of it at low frequencies.
+- The $\alpha_1$-term is the gain of the circuit block.
+- Odd-order nonlinearities ($\alpha_3$ and $\alpha_5$) can impact the gain of the fundamental term passing through the block. Often $\alpha_3$ and $\alpha_5$ have the same sign, which is opposite to the sign of $\alpha_1$. This implies that the gain stays linear for small input powers. For larger input signal, the terms with $\alpha_3$ and $\alpha_5$ start to dominate, leading to gain compression or saturation effects, until the circuit block reaches a level of maximum output power. In some cases, $\alpha_3$ has the same sign as $\alpha_1$ but $\alpha_5$ has the opposite one, which leads to gain expansion: The gain would first demonstrate an overshoot at some input power level, until the term with $\alpha_5$ becomes dominant and the gain is compressed again.
 - Even- and odd-order nonlinearities create additional frequency components, so-called harmonics of the fundamental frequency. These harmonics are often unwanted, as they are far outside the wanted transmission frequency range, and need to be minimized, by either
   1. using a lowpass filter to filter these harmonics, or
   2. increasing the linearity, i.e., making the $\alpha_2$, $\alpha_3$, etc., small enough.
@@ -110,19 +116,21 @@ The created harmonics are illustrated in @fig-harmonics. Note that measuring har
 How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal $x(t)$ in amplitude, and observe the output $y(t)$. If the observed gain drops by 1 dB from the small-signal value, we note the input power and call this point the **1 dB compression point** ($P_\mathrm{1dB}$). We should always add whether this 1 dB compression point is input- or output-referred to avoid ambiguity. The diagram in @fig-1db-compression-point shows this test ($\alpha_1 = 100$, $\alpha_3 = -0.2$).
 
 {{< include /content/fundamentals/_fig_1db_compression.qmd >}}
-<!--
-Please see the figure attached t the pull request and add it here
-@fig-gain-nonlinear-compression-expansion
--->
 
 ::: {.callout-important}
 ## Compressive vs. Expansive Behavior
 Note that for compressive behavior, $\alpha_3$ and $\alpha_1$ have different signs, while for expansive behavior, they have the same sign.
 
-Some references uses also similar definitions for gain expansion, where the output power is \qty{1}{\decibel} more than the linear slope.
+Some references also use similar definitions for gain expansion, where the output power is \qty{1}{\decibel} more than the linear slope.
+:::
+
+In the following plot (@fig-gain-nonlinear-compression-expansion) an expansive behavior is also shown, where $\alpha_3$ has the same sign as $\alpha_1$, but $\alpha_5$ has the opposite sign, leading to gain expansion at some input power level, until the term with $\alpha_5$ becomes dominant and the gain is compressed again. This (partly) expansive behavior can be used to linearize the gain of a circuit block over a wider input power range, which is often desirable in RF power amplifiers (see @sec-poweramp-nonlinearity).
+
+{{< include /content/fundamentals/_fig_gain_nonlinear_compression_expansion.qmd >}}
+
 ### Multi-Tone Linearity
 
-We now elevate our investigations and apply two sinusoids with different frequencies and different amplitudes and see which signals we get at the output of the nonlinear block. The two-tone test and resulting third-order intermodulation products (IM3) are illustrated in @fig-im3-tones.
+We now extend our investigations and apply two sinusoids with different frequencies and different amplitudes and see which signals we get at the output of the nonlinear block. The two-tone test and resulting third-order intermodulation products (IM3) are illustrated in @fig-im3-tones.
 
 $$
 x(t) = A_1 \cos(\omega_1 t) + A_2 \cos(\omega_2 t)

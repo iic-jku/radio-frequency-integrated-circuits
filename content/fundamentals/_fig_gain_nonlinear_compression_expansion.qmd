@@ -1,0 +1,78 @@
+::: {.content-hidden}
+Copyright (C) 2026 Harald Pretl and co-authors
+
+Licensed under the Apache License, Version 2.0
+:::
+
+```{python}
+#| label: fig-gain-nonlinear-compression-expansion
+#| echo: false
+#| fig-cap: "Gain of the fundamental tone vs. input power showing compressive and expansive behaviour (1 dB markers)."
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Input power range (dBm)
+Pin_dBm = np.linspace(-40, 25, 2000)
+Pin_mW = 10**(Pin_dBm / 10.0)  # linear power in mW
+
+# ---------- circuit parameters ----------
+alpha1 = 100.0
+# alpha3 same sign as alpha1  -> expansion at moderate powers
+# alpha5 opposite sign         -> compression kicks in at higher powers
+alpha3 = 25.0
+alpha5 = -0.85
+
+# ---------- nonlinear gain of fundamental ----------
+# H(A0) = alpha1 + 3/4 alpha3 A0^2 + 5/8 alpha5 A0^4
+# We use A0^2 proportional to Pin_mW for consistent scaling.
+A2 = Pin_mW
+H = alpha1 + 0.75 * alpha3 * A2 + 0.625 * alpha5 * A2**2
+H = np.maximum(H, 1e-6)  # avoid log of zero
+
+Pout_mW = H * Pin_mW
+Pout_dBm = 10.0 * np.log10(Pout_mW + 1e-30)
+
+# Ideal linear reference
+Pout_ideal = Pin_dBm + 10.0 * np.log10(alpha1)
+
+# Small-signal gain in dB
+G0_dB = 10.0 * np.log10(alpha1)
+gain_actual = Pout_dBm - Pin_dBm
+
+# ---------- find +1 dB (expansion) and -1 dB (compression) points ----------
+idx_exp  = np.argmin(np.abs(gain_actual - (G0_dB + 1.0)))
+idx_comp = np.argmin(np.abs(gain_actual - (G0_dB - 1.0)))
+
+# ---------- plot ----------
+fig, ax = plt.subplots(figsize=(6, 4))
+
+ax.plot(Pin_dBm, Pout_ideal, 'k--', linewidth=1.5, alpha=0.5,
+        label='Linear (ideal)')
+ax.plot(Pin_dBm, Pout_dBm, 'tab:blue', linewidth=2.5,
+        label=r'$\alpha_3 > 0,\; \alpha_5 < 0$')
+
+# +1 dB expansion marker
+if gain_actual[idx_exp] > G0_dB + 0.5:
+    ax.plot(Pin_dBm[idx_exp], Pout_dBm[idx_exp],
+            'o', color='tab:green', markersize=8,
+            markeredgecolor='k', markeredgewidth=1.0,
+            label=f'+1 dB (expansion)')
+
+# -1 dB compression marker
+if gain_actual[idx_comp] < G0_dB - 0.5:
+    ax.plot(Pin_dBm[idx_comp], Pout_dBm[idx_comp],
+            's', color='tab:red', markersize=8,
+            markeredgecolor='k', markeredgewidth=1.0,
+            label=f'−1 dB (compression)')
+
+ax.set_xlabel('Input Power (dBm)')
+ax.set_ylabel('Output Power (dBm)')
+ax.grid(True, alpha=0.25)
+ax.set_xlim(-15, 16)
+ax.set_ylim(-10, 40)
+ax.legend(loc='lower right', fontsize=10)
+
+plt.tight_layout()
+plt.show()
+```
