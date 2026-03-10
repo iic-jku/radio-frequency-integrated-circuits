@@ -52,10 +52,10 @@ As we have already seen in @sec-intro-wireless, the transmitter has to process l
 We are going to use a very simple, time-invariant model to study linearity, based on a Taylor polynomial.
 
 ::: {.callout-important}
-## Linearity and Time Invariance in RF Systems
-We use time invariance to simplify the mathematics. In practice, many circuits and systems will show time-variant behavior which leads to quite a few very interesting and important phenomena! A time-invariant nonlinear system is also called a "memoryless" system, as the output at time $t$ only depends on the input at time $t$.
+## Linearity and Memoryless Systems
+We use a **memoryless** (also called "instantaneous") nonlinear model to simplify the mathematics. A memoryless nonlinear system has the property that the output at time $t$ only depends on the input at time $t$.
 
-In contrast, a system with memory (i.e., time-variant) will have an output at time $t$ which depends on the input at time $t$ and also on past inputs (e.g., at times $t - \Delta T$, $t - 2 \Delta T$, etc.). Examples of systems with memory are filters, which have a frequency-dependent response, or power amplifiers with thermal memory effects.
+In contrast, a system **with memory** will have an output at time $t$ which depends on the input at time $t$ and also on past inputs (e.g., at times $t - \Delta T$, $t - 2 \Delta T$, etc.). Such a system can additionally be **time-variant**, meaning its behavior changes over time, which leads to quite a few very interesting and important phenomena! Examples of systems with memory are filters, which have a frequency-dependent response, or power amplifiers with thermal memory effects.
 :::
 
 We model a nonlinear circuit block with the input $x(t)$ and the output $y(t)$ with the following Taylor polynomial:
