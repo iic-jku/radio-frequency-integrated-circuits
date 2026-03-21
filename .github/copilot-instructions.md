@@ -11,7 +11,7 @@ This is a Quarto-based educational website and PDF document for a graduate-level
   - `_sec_{topic}.qmd` - main section text with theory and equations
   - `_fig_{name}.qmd` - standalone figure files with embedded Python code
   - Naming convention: All content files start with `_` to prevent standalone rendering
-- **Shared macros**: `content/_macros.qmd` defines LaTeX commands (e.g., `\VDD`, `\gm`, `\ID`) used throughout for consistent notation
+- **Shared macros**: `content/_abbrv.qmd` defines LaTeX commands (e.g., `\VDD`, `\gm`, `\ID`) used throughout for consistent notation
 
 ### Multi-Format Output
 - **HTML**: Primary web format with dark/light themes (cosmo/solar)
@@ -60,7 +60,7 @@ with sd.Drawing(canvas='svg') as d:
 ```
 
 ### LaTeX Macro Usage
-Always use custom macros from `_macros.qmd` for consistency:
+Always use custom macros from `_abbrv.qmd` for consistency:
 - Voltages: `\VDD`, `\VSS`, `\VGS{}`, `\VDS{}` (uppercase for DC)
 - Small-signal: `\vgs{}`, `\vds{}` (lowercase v)
 - Parameters: `\gm{}`, `\gds{}`, `\gmid` (gm/ID), `\ID{}`
@@ -118,5 +118,5 @@ Licensed under the Apache License, Version 2.0
 - Don't name content files without leading `_` (will create unwanted standalone pages)
 - Always set `echo: false` in figure chunks (showing code breaks layout)
 - Use raw strings `r'...'` for LaTeX in Python to avoid escaping issues
-- Include macros file first: `{{< include /content/_macros.qmd >}}` in any new document
+- Include macros file first: `{{< include /content/_abbrv.qmd >}}` in any new document
 - Remember schemdraw coordinates are relative; use `.at()` for absolute positioning

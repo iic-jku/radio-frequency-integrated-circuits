@@ -36,7 +36,7 @@ format:
     papersize: a4
 ---
 
-{{< include /content/_macros.qmd >}}
+{{< include /content/_abbrv.qmd >}}
 {{< include /content/intro/_sec_intro.qmd >}}
 {{< include /content/fundamentals/_sec_fundamentals.qmd >}}
 {{< include /content/trx/_sec_trx.qmd >}}

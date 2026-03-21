@@ -43,7 +43,7 @@ limitations under the License.
 \newcommand{\CGD}[1][]{C_\mathrm{GD#1}}
 \newcommand{\Cgd}[1][]{C_\mathrm{gd#1}}
 \newcommand{\CDG}[1][]{C_\mathrm{DG#1}}
-\newcommand{\Cdg}[1][]{C_\mathrm{gd#1}}
+\newcommand{\Cdg}[1][]{C_\mathrm{dg#1}}
 \newcommand{\CDB}[1][]{C_\mathrm{DB#1}}
 \newcommand{\Cdb}[1][]{C_\mathrm{db#1}}
 \newcommand{\CSB}[1][]{C_\mathrm{SB#1}}
@@ -53,5 +53,7 @@ limitations under the License.
 \newcommand{\id}[1][]{i_\mathrm{d#1}}
 \newcommand{\fco}{f_\mathrm{co}}
 \newcommand{\VBE}[1][]{V_\mathrm{BE#1}}
+\newcommand{\var}[1][]{\sigma^2\left\{#1\right\}}
+\newcommand{\sdev}[1][]{\sigma\left\{#1\right\}}
 \newcommand{\phn}[1][]{\mathcal{L}\left\{#1\right\}}
 :::

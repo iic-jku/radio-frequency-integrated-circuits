@@ -35,8 +35,8 @@ execute:
 format:
   html:
     theme:
-      light: [cosmo, custom.scss]
-      dark: [solar, custom.scss]
+      light: cosmo
+      dark: solar
     fig-align: center
     lang: en-US
     lightbox: true
