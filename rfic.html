@@ -2,15 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2026-03-10">
+<meta name="dcterms.date" content="2026-03-21">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -26,7 +29,6 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -55,19 +57,18 @@ div.csl-indent {
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-f418161beb48e0141c760e455f12af2c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-b2da0f6ae1934b5813cb471985be9436.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-17ecf28cea740e3bd93d46e14894f554.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-b2da0f6ae1934b5813cb471985be9436.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-8ec1fb2740a17410fc6227cc0b93a09a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-6fba50ad7caf29492cb2a43abebf4864.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-8ec1fb2740a17410fc6227cc0b93a09a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -100,7 +101,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -498,7 +499,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 10, 2026</p>
+      <p class="date">March 21, 2026</p>
     </div>
   </div>
   
@@ -515,7 +516,7 @@ window.Quarto = {
 </div>
 <section id="sec-intro" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>This is the material for an introductory radio-frequency integrated circuits course. The contents are largely based on <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Behzad Razavi 2011</a>)</span> and <span class="citation" data-cites="Darabi_RFIC">(<a href="#ref-Darabi_RFIC" role="doc-biblioref">Darabi 2020</a>)</span>; these two books are an excellent introduction to this topic and are highly recommended! For a general introduction to RF and microwave, <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span> is a great read!</p>
+<p>This is the material for an introductory radio-frequency integrated circuits course. The contents are largely based on <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span> and <span class="citation" data-cites="Darabi_RFIC">(<a href="#ref-Darabi_RFIC" role="doc-biblioref">Darabi 2020</a>)</span>; these two books are an excellent introduction to this topic and are highly recommended! For a general introduction to RF and microwave, <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span> is a great read!</p>
 <p>It is assumed that readers are familiar with the contents of this <a href="https://iic-jku.github.io/analog-circuit-design/aicd.html">Analog Circuit Design</a> course.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -849,7 +850,7 @@ Table&nbsp;2: Comparison of wireless communication standards
 <a href="rfic_files/figure-html/fig-rf-design-multidisciplinary-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: RF design as a multidisciplinary field requiring knowledge from various engineering domains (adapted from [@Razavi_RFIC])."><img src="rfic_files/figure-html/fig-rf-design-multidisciplinary-output-1.png" width="463" height="463" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rf-design-multidisciplinary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: RF design as a multidisciplinary field requiring knowledge from various engineering domains (adapted from <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Behzad Razavi 2011</a>)</span>).
+Figure&nbsp;3: RF design as a multidisciplinary field requiring knowledge from various engineering domains (adapted from <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span>).
 </figcaption>
 </figure>
 </div>
@@ -864,7 +865,7 @@ Figure&nbsp;3: RF design as a multidisciplinary field requiring knowledge from v
 <a href="rfic_files/figure-html/fig-rf-design-considerations-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: RFIC require careful design considerations and trade-offs (adapted from [@Razavi_RFIC])."><img src="rfic_files/figure-html/fig-rf-design-considerations-output-1.png" width="389" height="389" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rf-design-considerations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: RFIC require careful design considerations and trade-offs (adapted from <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Behzad Razavi 2011</a>)</span>).
+Figure&nbsp;4: RFIC require careful design considerations and trade-offs (adapted from <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span>).
 </figcaption>
 </figure>
 </div>
@@ -1158,7 +1159,7 @@ Note&nbsp;4: Simple IIP3 Cascade Calculation
 <p><span class="math display">\[
 P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \left( \frac{1\,\text{MHz}}{1\,\text{Hz}} \right) = -114\,\text{dBm}
 \]</span></p>
-<p>The PSD of noise can be flat vs.&nbsp;frequency (which is called “white noise”), or can decrease with frequency (e.g., “flicker noise” or “1/f noise”). Further, noise can be generated by resistors (thermal noise), semiconductors (shot noise, generation-recombination noise), etc. A detailed discussion of noise sources can be found in <span class="citation" data-cites="Gray_Meyer_5th_ed">(<a href="#ref-Gray_Meyer_5th_ed" role="doc-biblioref">Gray et al. 2009</a>)</span> or <span class="citation" data-cites="Razavi_Analog_CMOS">(<a href="#ref-Razavi_Analog_CMOS" role="doc-biblioref">Behzad Razavi 2017</a>)</span>.</p>
+<p>The PSD of noise can be flat vs.&nbsp;frequency (which is called “white noise”), or can decrease with frequency (e.g., “flicker noise” or “1/f noise”). Further, noise can be generated by resistors (thermal noise), semiconductors (shot noise, generation-recombination noise), etc. A detailed discussion of noise sources can be found in <span class="citation" data-cites="Gray_Meyer_5th_ed">(<a href="#ref-Gray_Meyer_5th_ed" role="doc-biblioref">Gray et al. 2009</a>)</span> or <span class="citation" data-cites="Razavi_Analog_CMOS">(<a href="#ref-Razavi_Analog_CMOS" role="doc-biblioref">Razavi 2017</a>)</span>.</p>
 <section id="sec-noise-types" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="sec-noise-types"><span class="header-section-number">2.3.1</span> Types of Noise Generation</h3>
 <p><strong>Resistors</strong> generate thermal noise, which is white noise with a PSD of <span class="math inline">\(4 k T R\)</span> (in V<span class="math inline">\(^2\)</span>/Hz) when looking at the voltage across the resistor, or <span class="math inline">\(4 k T / R\)</span> (in A<span class="math inline">\(^2\)</span>/Hz) when looking at the current through the resistor. This noise is generated by the random thermal motion of charge carriers in the resistor.</p>
@@ -1187,7 +1188,7 @@ P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \le
 <p><strong>MOSFETs</strong> generate several types of noise, the most important ones being the thermal noise of the channel and flicker noise.</p>
 <p>The thermal noise of the channel can be modeled as a current noise source between drain and source with a PSD of <span class="math inline">\(\overline{I_\mathrm{n}^2} = 4 k T \gamma g_{d0}\)</span> (in A<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(\gamma\)</span> is a process-dependent parameter (usually between 2/3 and 2). The parameter <span class="math inline">\(g_{d0}\)</span> is the small-signal output conductance of the MOSFET in triode, i.e., <span class="math inline">\(g_{d0} = g_\mathrm{ds}\)</span>, or equal to <span class="math inline">\(g_{d0} = g_\mathrm{m}\)</span> when in saturation.</p>
 <p>In saturation, it is often useful to express the thermal noise as a voltage noise source at the gate with a PSD of <span class="math inline">\(\overline{V_\mathrm{n}^2} = 4 k T \gamma / g_\mathrm{m}\)</span> (in V<span class="math inline">\(^2\)</span>/Hz). We can see that we can lower this noise of the MOSFET by increasing the transconductance <span class="math inline">\(g_\mathrm{m}\)</span>, which can be achieved by increasing the bias current.</p>
-<p>In addition, at high frequencies, the MOSFET also has induced gate-current noise, which is correlated with the channel thermal noise. A detailed discussion of this noise source can be found in <span class="citation" data-cites="Razavi_Analog_CMOS">(<a href="#ref-Razavi_Analog_CMOS" role="doc-biblioref">Behzad Razavi 2017</a>)</span>.</p>
+<p>In addition, at high frequencies, the MOSFET also has induced gate-current noise, which is correlated with the channel thermal noise. A detailed discussion of this noise source can be found in <span class="citation" data-cites="Razavi_Analog_CMOS">(<a href="#ref-Razavi_Analog_CMOS" role="doc-biblioref">Razavi 2017</a>)</span>.</p>
 <p>Flicker noise is usually modeled as a voltage noise source at the gate with a PSD of <span class="math inline">\(K_f / (C'_\mathrm{ox}W L f)\)</span> (in V<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(K_f\)</span> is a process-dependent parameter, <span class="math inline">\(C'_\mathrm{ox}\)</span> is the oxide capacitance per unit area, <span class="math inline">\(L\)</span> and <span class="math inline">\(W\)</span> are the length and width of the MOSFET, and <span class="math inline">\(f\)</span> is the frequency. Note that we can lower the flicker noise by increasing the area of the MOSFET (<span class="math inline">\(W L\)</span>), however, this increases the parasitic capacitances associated with the MOSFET, and this is often prohibitive for RF operation!</p>
 <p>In <strong>bipolar junction transistors (BJTs)</strong>, the most important noise source is the shot noise due to the diffusion current in the base-emitter junction. Its PSD can be modeled as a current noise source between collector and emitter with a PSD of <span class="math inline">\(2 q I_\mathrm{C}\)</span> (in A<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(q\)</span> is the elementary charge (<span class="math inline">\(q = 1.6 \times 10^{-19}\)</span> C) and <span class="math inline">\(I_\mathrm{C}\)</span> is the DC collector current.</p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -1200,7 +1201,7 @@ P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \le
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Note that it has been shown in <span class="citation" data-cites="Sarpeshkar_1993">(<a href="#ref-Sarpeshkar_1993" role="doc-biblioref">Sarpeshkar, Delbruck, and Mead 1993</a>)</span> that thermal noise and shot noise are actually equivalent, as both are generated by the random, thermally agitated motion of charge carriers!</p>
+<p>Note that it has been shown in <span class="citation" data-cites="Sarpeshkar_1993">(<a href="#ref-Sarpeshkar_1993" role="doc-biblioref">Sarpeshkar et al. 1993</a>)</span> that thermal noise and shot noise are actually equivalent, as both are generated by the random, thermally agitated motion of charge carriers!</p>
 </div>
 </div>
 <p>Ideal <strong>capacitors</strong> and <strong>inductors</strong> do not generate noise; however, real capacitors and inductors have parasitic resistances which generate thermal noise.</p>
@@ -2178,7 +2179,7 @@ Figure&nbsp;33: Circuit diagram of a common-gate LNA.
 <p><span id="eq-lna-cg-noise-factor"><span class="math display">\[
 F = 1 + \gamma + \frac{4 R_\mathrm{s}}{R_\mathrm{D}}  \xrightarrow{R_\mathrm{D} \gg R_\mathrm{s}} F = 1 + \gamma .
 \tag{34}\]</span></span></p>
-<p>With a classical long-channel <span class="math inline">\(\gamma = 2/3\)</span>, we can achieve a minimum noise figure of 2.2 dB, which is already better than the resistively matched common-source LNA. However, with modern short-channel devices, <span class="math inline">\(\gamma\)</span> is often larger than 1, so that the minimum noise figure of the common-gate LNA is often larger than 3 dB <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Behzad Razavi 2011</a>)</span>.</p>
+<p>With a classical long-channel <span class="math inline">\(\gamma = 2/3\)</span>, we can achieve a minimum noise figure of 2.2 dB, which is already better than the resistively matched common-source LNA. However, with modern short-channel devices, <span class="math inline">\(\gamma\)</span> is often larger than 1, so that the minimum noise figure of the common-gate LNA is often larger than 3 dB <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span>.</p>
 </section>
 <section id="sec-lna-inductive-degeneration" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="sec-lna-inductive-degeneration"><span class="header-section-number">4.4</span> Inductively-Degenerated Common-Source LNA</h2>
@@ -2228,7 +2229,7 @@ Z_\mathrm{in} = \frac{1}{s C_\mathrm{gs}} + s L + \frac{g_\mathrm{m}L}{C_\mathrm
 <p><span class="math display">\[
 \Re \{ Z_\mathrm{in} \} = \frac{g_\mathrm{m}L}{C_\mathrm{gs}}
 \]</span></p>
-<p>Without proof (refer to <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Behzad Razavi 2011</a>)</span> or <span class="citation" data-cites="Darabi_RFIC">(<a href="#ref-Darabi_RFIC" role="doc-biblioref">Darabi 2020</a>)</span> for a derivation), we state the noise factor of this input stage (with some simplification) as</p>
+<p>Without proof (refer to <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span> or <span class="citation" data-cites="Darabi_RFIC">(<a href="#ref-Darabi_RFIC" role="doc-biblioref">Darabi 2020</a>)</span> for a derivation), we state the noise factor of this input stage (with some simplification) as</p>
 <p><span id="eq-lna-inductive-degeneration-noise-factor"><span class="math display">\[
 F = 1 + \frac{\gamma R_\mathrm{s} \omega_0^2 C_\mathrm{gs}^2}{g_\mathrm{m}}.
 \tag{36}\]</span></span></p>
@@ -2467,7 +2468,7 @@ Figure&nbsp;45: A Gilbert mixer based on bipolar differential pairs.
 </section>
 <section id="sec-mixer-npath" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="sec-mixer-npath"><span class="header-section-number">5.4</span> N-Path Filter</h2>
-<p>Without much deliberation or diving into the background, it has to be stated that passive mixers (based on MOSFET switches) have a few very interesting properties. One of them is that they can be used to implement very high-quality bandpass filters, called “<strong>N-path filters</strong>” <span class="citation" data-cites="Lepage.1953">(<a href="#ref-Lepage.1953" role="doc-biblioref">Lepage, Cahn, and Brown 1953</a>)</span>. The basic idea is shown in <a href="#fig-npath-filter" class="quarto-xref">Figure&nbsp;46</a>. We use four phases of an LO signal to switch the four capacitors to ground in a round-robin fashion. The duty cycle of each LO phase is 25% to have a non-overlapping clock.</p>
+<p>Without much deliberation or diving into the background, it has to be stated that passive mixers (based on MOSFET switches) have a few very interesting properties. One of them is that they can be used to implement very high-quality bandpass filters, called “<strong>N-path filters</strong>” <span class="citation" data-cites="Lepage.1953">(<a href="#ref-Lepage.1953" role="doc-biblioref">Lepage et al. 1953</a>)</span>. The basic idea is shown in <a href="#fig-npath-filter" class="quarto-xref">Figure&nbsp;46</a>. We use four phases of an LO signal to switch the four capacitors to ground in a round-robin fashion. The duty cycle of each LO phase is 25% to have a non-overlapping clock.</p>
 <div id="cell-fig-npath-filter" class="cell" data-execution_count="46">
 <div class="cell-output cell-output-display">
 <div id="fig-npath-filter" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2682,11 +2683,11 @@ Figure&nbsp;57: Three stage single-ended ring oscillator.
 </div>
 </div>
 </div>
-<p>Note that the output frequency of the ring oscillator shown above is ill-controlled, as it only depends on the delay (i.e., phase shift) of the inverters, which are usually dependent on process, voltage, and temperature (PVT) variations. Also, the inherent quality factor of such an oscillator is low, as exemplified by the definition of the quality factor <span class="math inline">\(Q\)</span> as <span class="citation" data-cites="Razavi.1996">(<a href="#ref-Razavi.1996" role="doc-biblioref">B. Razavi 1996</a>)</span></p>
+<p>Note that the output frequency of the ring oscillator shown above is ill-controlled, as it only depends on the delay (i.e., phase shift) of the inverters, which are usually dependent on process, voltage, and temperature (PVT) variations. Also, the inherent quality factor of such an oscillator is low, as exemplified by the definition of the quality factor <span class="math inline">\(Q\)</span> as <span class="citation" data-cites="Razavi.1996">(<a href="#ref-Razavi.1996" role="doc-biblioref">Razavi 1996</a>)</span></p>
 <p><span id="eq-definition-q"><span class="math display">\[
 Q = 2 \pi \frac{\text{Average energy stored}}{\text{Energy loss per cycle}} = \frac{\omega_0}{\Delta \omega} = \frac{\omega_0}{2} \sqrt{ \left( \frac{d A}{d \omega} \right)^2 + \left( \frac{d \varphi}{d \omega} \right)^2 }
 \tag{44}\]</span></span></p>
-<p>with a ring oscillator having very low <span class="math inline">\(dA / d \omega\)</span> and <span class="math inline">\(d \varphi / d \omega\)</span> slopes (<span class="math inline">\(A(\omega)\)</span> and <span class="math inline">\(\varphi(\omega)\)</span> are the open loop gain and phase shift, respectively). It can be shown that <span class="math inline">\(Q \approx 1.3\)</span> for a 3-stage ring oscillator <span class="citation" data-cites="Razavi.1996">(<a href="#ref-Razavi.1996" role="doc-biblioref">B. Razavi 1996</a>)</span>. For some applications, this might be sufficient, but in many cases, a higher <span class="math inline">\(Q\)</span> is desired to reduce phase noise and improve frequency stability (as we will see later in this chapter).</p>
+<p>with a ring oscillator having very low <span class="math inline">\(dA / d \omega\)</span> and <span class="math inline">\(d \varphi / d \omega\)</span> slopes (<span class="math inline">\(A(\omega)\)</span> and <span class="math inline">\(\varphi(\omega)\)</span> are the open loop gain and phase shift, respectively). It can be shown that <span class="math inline">\(Q \approx 1.3\)</span> for a 3-stage ring oscillator <span class="citation" data-cites="Razavi.1996">(<a href="#ref-Razavi.1996" role="doc-biblioref">Razavi 1996</a>)</span>. For some applications, this might be sufficient, but in many cases, a higher <span class="math inline">\(Q\)</span> is desired to reduce phase noise and improve frequency stability (as we will see later in this chapter).</p>
 <p>According to <a href="#eq-definition-q" class="quarto-xref">Equation&nbsp;44</a>, a high <span class="math inline">\(Q\)</span> can be achieved by using a resonator with high energy storage capability and low energy loss per cycle. We then add an amplifier in a feedback loop to compensate for the losses of the resonator. This principle is shown in <a href="#fig-lc-oscillator" class="quarto-xref">Figure&nbsp;58</a> for a parallel LC tank circuit as the resonator. Sometimes the action of the feedback loop around the amplifier is modelled as a negative resistance <span class="math inline">\(-R_\mathrm{amp}\)</span> that compensates for the losses of the tank circuit represented by the resistor <span class="math inline">\(R_\mathrm{p}\)</span>. The single parallel resistor <span class="math inline">\(R_\mathrm{p}\)</span> models the losses of the inductor <span class="math inline">\(L\)</span> and the capacitor <span class="math inline">\(C\)</span>.</p>
 <div id="cell-fig-lc-oscillator" class="cell" data-execution_count="58">
 <div class="cell-output cell-output-display">
@@ -2767,7 +2768,7 @@ Z_\mathrm{tank}(j \omega_0 + j \Delta \omega) = -\frac{j}{2 \Delta \omega C}.
 <p><span class="math display">\[
 \overline{V_n^2}(\Delta \omega) = |Z_\mathrm{tank}(j \omega_0 + j \Delta \omega)|^2 \cdot \frac{4 k T F}{R_\mathrm{p}} = \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2
 \]</span></p>
-<p>This absolute noise voltage is not of much interest per se. We normalize it to the oscillation amplitude <span class="math inline">\(V_\mathrm{p}\)</span>, and only account for 1/2 of the noise, as the total noise power is split equally into amplitude noise and phase noise <span class="citation" data-cites="Razavi.1996">(<a href="#ref-Razavi.1996" role="doc-biblioref">B. Razavi 1996</a>)</span>, and we are only interested in the <strong>phase noise</strong>. This is because we assume the amplitude noise is removed by amplitude clipping in the LO chain routing the oscillator signal to the mixer. This is often a valid assumption. We introduce the symbol <span class="math inline">\(\mathcal{L}\left\{\cdot\right\}\)</span> to denote this normalized phase noise of the oscillator:</p>
+<p>This absolute noise voltage is not of much interest per se. We normalize it to the oscillation amplitude <span class="math inline">\(V_\mathrm{p}\)</span>, and only account for 1/2 of the noise, as the total noise power is split equally into amplitude noise and phase noise <span class="citation" data-cites="Razavi.1996">(<a href="#ref-Razavi.1996" role="doc-biblioref">Razavi 1996</a>)</span>, and we are only interested in the <strong>phase noise</strong>. This is because we assume the amplitude noise is removed by amplitude clipping in the LO chain routing the oscillator signal to the mixer. This is often a valid assumption. We introduce the symbol <span class="math inline">\(\mathcal{L}\left\{\cdot\right\}\)</span> to denote this normalized phase noise of the oscillator:</p>
 <p><span id="eq-leeson-equation"><span class="math display">\[
 \mathcal{L}\left\{\Delta \omega\right\} = \frac{\frac{1}{2} \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2}{\left( \frac{V_\mathrm{p}}{\sqrt{2}} \right)^2} = \frac{k T F R_\mathrm{p}}{V_\mathrm{p}^2} \cdot \frac{1}{Q^2} \cdot \left( \frac{\omega_0}{\Delta \omega} \right)^2
 \tag{45}\]</span></span></p>
@@ -3059,7 +3060,7 @@ K_\mathrm{VCO} = \frac{d f_0}{d V_\mathrm{tune}}
 \]</span></p>
 <p>with <span class="math inline">\(V_\mathrm{tune}\)</span> being the control voltage applied to the varactor. The unit of <span class="math inline">\(K_\mathrm{VCO}\)</span> is usually expressed in MHz/V or GHz/V. A high <span class="math inline">\(K_\mathrm{VCO}\)</span> means that a small change in tuning voltage results in a large change in oscillation frequency, which can be beneficial for wide tuning ranges but can also make the oscillator more sensitive to noise on the tuning voltage line.</p>
 <p>Note that the tuning sensitivity <span class="math inline">\(K_\mathrm{VCO}\)</span> is usually quite nonlinear over the tuning range, so it is common to specify <span class="math inline">\(K_\mathrm{VCO}\)</span> at a certain operating point or as an average value over the tuning range.</p>
-<p>In order to achieve a wide tuning range while maintaining a sufficiently small <span class="math inline">\(K_\mathrm{VCO}\)</span> for phase noise reasons, a combination of coarse and fine tuning mechanisms can be used <span class="citation" data-cites="Kral.1998">(<a href="#ref-Kral.1998" role="doc-biblioref">Kral, Behbahani, and Abidi 1998</a>)</span>. For example, a switched capacitor bank can provide coarse tuning steps, while a varactor can provide fine tuning within each step. It is important to ensure that the overall tuning range is free of dead zones, where the oscillator cannot be tuned to certain frequencies due to non-overlapping tuning ranges of the coarse and fine tuning elements.</p>
+<p>In order to achieve a wide tuning range while maintaining a sufficiently small <span class="math inline">\(K_\mathrm{VCO}\)</span> for phase noise reasons, a combination of coarse and fine tuning mechanisms can be used <span class="citation" data-cites="Kral.1998">(<a href="#ref-Kral.1998" role="doc-biblioref">Kral et al. 1998</a>)</span>. For example, a switched capacitor bank can provide coarse tuning steps, while a varactor can provide fine tuning within each step. It is important to ensure that the overall tuning range is free of dead zones, where the oscillator cannot be tuned to certain frequencies due to non-overlapping tuning ranges of the coarse and fine tuning elements.</p>
 <p>While there are many ways to implement a switched capacitor for use in an oscillator tuning circuit, one popular way is shown in <a href="#fig-switched-capacitor" class="quarto-xref">Figure&nbsp;69</a>. Many such switched capacitors with different values of <span class="math inline">\(C\)</span> (often binary weighted) can be combined to form a capacitor bank for coarse frequency tuning.</p>
 <div id="cell-fig-switched-capacitor" class="cell" data-execution_count="69">
 <div class="cell-output cell-output-display">
@@ -3541,7 +3542,7 @@ N = \frac{99 \cdot 61 + 1 \cdot 62}{100} = 61.01
 <p>To minimize these spurs, more sophisticated techniques such as <em>delta-sigma modulation</em> are employed to <em>randomize</em> the switching sequence, spreading the quantization noise over a wider frequency range and reducing its impact on the PLL output. Additionally, the quantization noise introduced by the fractional division is <em>pushed to higher frequencies</em> where it can be more easily filtered out by the loop filter.</p>
 <section id="sec-pll-delta-sigma" class="level3" data-number="7.4.1">
 <h3 data-number="7.4.1" class="anchored" data-anchor-id="sec-pll-delta-sigma"><span class="header-section-number">7.4.1</span> Delta-Sigma Modulator</h3>
-<p>For an in-depth understanding of delta-sigma modulation, we refer to <span class="citation" data-cites="Schreier_DSM">(<a href="#ref-Schreier_DSM" role="doc-biblioref">Schreier, Pavan, and Temes 2017</a>)</span>. Here, we briefly summarize the key concepts relevant to fractional-N PLLs. In a nutshell, a delta-sigma modulator (DSM) is a feedback system that shapes quantization noise to higher frequencies, allowing for high-resolution digital-to-analog conversion or frequency synthesis. The basic structure of a first-order DSM is shown in <a href="#fig-pll-dsm-first-order" class="quarto-xref">Figure&nbsp;86</a>.</p>
+<p>For an in-depth understanding of delta-sigma modulation, we refer to <span class="citation" data-cites="Schreier_DSM">(<a href="#ref-Schreier_DSM" role="doc-biblioref">Schreier et al. 2017</a>)</span>. Here, we briefly summarize the key concepts relevant to fractional-N PLLs. In a nutshell, a delta-sigma modulator (DSM) is a feedback system that shapes quantization noise to higher frequencies, allowing for high-resolution digital-to-analog conversion or frequency synthesis. The basic structure of a first-order DSM is shown in <a href="#fig-pll-dsm-first-order" class="quarto-xref">Figure&nbsp;86</a>.</p>
 <div id="cell-fig-pll-dsm-first-order" class="cell" data-execution_count="86">
 <div class="cell-output cell-output-display">
 <div id="fig-pll-dsm-first-order" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -4156,12 +4157,12 @@ Figure&nbsp;101: A generic differential power amplifier with neutralization for 
 </section>
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-Andreani.2000" class="csl-entry" role="listitem">
 Andreani, P., and S. Mattisson. 2000. <span>“<span class="nocase">On the use of MOS varactors in RF VCOs</span>.”</span> <em>IEEE Journal of Solid-State Circuits</em> 35 (6): 905–10. <a href="https://doi.org/10.1109/4.845194">https://doi.org/10.1109/4.845194</a>.
 </div>
 <div id="ref-Balanis_Antenna" class="csl-entry" role="listitem">
-Balanis, Constantine A. 2005. <em>Antenna Theory: Analysis and Design</em>. USA: Wiley-Interscience.
+Balanis, Constantine A. 2005. <em>Antenna Theory: Analysis and Design</em>. Wiley-Interscience.
 </div>
 <div id="ref-Best_PLL" class="csl-entry" role="listitem">
 Best, Roland E. 1999. <em>Phase-Locked Loops: Design, Simulation, and Applications</em>. McGraw-Hill Education.
@@ -4182,7 +4183,7 @@ Darabi, Hooman. 2020. <em>Radio Frequency Integrated Circuits and Systems</em>. 
 Edwards, M. L., and J. H. Sinsky. 1992. <span>“<span class="nocase">A new criterion for linear 2-port stability using a single geometrically derived parameter</span>.”</span> <em>IEEE Transactions on Microwave Theory and Techniques</em> 40 (12): 2303–11. <a href="https://doi.org/10.1109/22.179894">https://doi.org/10.1109/22.179894</a>.
 </div>
 <div id="ref-Fuhrmann.2017" class="csl-entry" role="listitem">
-Fuhrmann, J., J. Moreira, P. Oβmann, A. Springer, R. Weigel, and H. Pretl. 2017. <span>“<span class="nocase">A 15-Bit 28nm CMOS Fully-Integrated 1.6W Digital Power Amplifier for LTE IoT</span>.”</span> In, 199–202. ESSCIRC 2017 - 43rd IEEE European Solid State Circuits Conference. IEEE. <a href="https://doi.org/10.1109/esscirc.2017.8094560">https://doi.org/10.1109/esscirc.2017.8094560</a>.
+Fuhrmann, J., J. Moreira, P. Oβmann, A. Springer, R. Weigel, and H. Pretl. 2017. <span>“<span class="nocase">A 15-Bit 28nm CMOS Fully-Integrated 1.6W Digital Power Amplifier for LTE IoT</span>.”</span> ESSCIRC 2017 - 43rd IEEE european solid state circuits conference, September, 199–202. <a href="https://doi.org/10.1109/esscirc.2017.8094560">https://doi.org/10.1109/esscirc.2017.8094560</a>.
 </div>
 <div id="ref-Gardner.1980" class="csl-entry" role="listitem">
 Gardner, F. 1980. <span>“<span>Charge-Pump Phase-Lock Loops</span>.”</span> <em>IEEE Transactions on Communications</em> 28 (11): 1849–58. <a href="https://doi.org/10.1109/TCOM.1980.1094619">https://doi.org/10.1109/TCOM.1980.1094619</a>.
@@ -4194,7 +4195,7 @@ Gray, Paul R., Paul J. Hurst, Stephen H. Lewis, and Robert G. Meyer. 2009. <em><
 Kaukovuori, Jouni, Kari Stadius, Jussi Ryynänen, and Kari A. I. Halonen. 2008. <span>“<span class="nocase">Analysis and Design of Passive Polyphase Filters</span>.”</span> <em>IEEE Transactions on Circuits and Systems–I: Regular Papers</em> 55 (10): 3023–37. <a href="https://doi.org/10.1109/tcsi.2008.917990">https://doi.org/10.1109/tcsi.2008.917990</a>.
 </div>
 <div id="ref-Kral.1998" class="csl-entry" role="listitem">
-Kral, A., F. Behbahani, and A. A. Abidi. 1998. <span>“<span class="nocase">RF-CMOS oscillators with switched tuning</span>.”</span> In, 555–58. Proceedings of the IEEE 1998 Custom Integrated Circuits Conference (Cat. No.98CH36143). IEEE. <a href="https://doi.org/10.1109/cicc.1998.695039">https://doi.org/10.1109/cicc.1998.695039</a>.
+Kral, A., F. Behbahani, and A. A. Abidi. 1998. <span>“<span class="nocase">RF-CMOS oscillators with switched tuning</span>.”</span> Proceedings of the IEEE 1998 custom integrated circuits conference (cat. no.98CH36143), January, 555–58. <a href="https://doi.org/10.1109/cicc.1998.695039">https://doi.org/10.1109/cicc.1998.695039</a>.
 </div>
 <div id="ref-Leeson.1966" class="csl-entry" role="listitem">
 Leeson, D. B. 1966. <span>“<span class="nocase">A simple model of feedback oscillator noise spectrum</span>.”</span> <em>Proceedings of the IEEE</em> 54 (2): 329–30. <a href="https://doi.org/10.1109/proc.1966.4682">https://doi.org/10.1109/proc.1966.4682</a>.
@@ -4209,7 +4210,7 @@ Matsuya, Y., K. Uchimura, A. Iwata, and T. Kaneko. 1989. <span>“<span class="n
 Molisch, Andreas F. 2022. <em>Wireless Communications: From Fundamentals to Beyond 5G</em>. 3rd edition. Wiley-IEEE Press.
 </div>
 <div id="ref-Moreira.2015" class="csl-entry" role="listitem">
-Moreira, José, Stephan Leuschner, Nenad Stevanovic, Harald Pretl, Peter Pfann, Ronald Thüringer, Martin Kastner¹, et al. 2015. <span>“<span class="nocase">9.2 A Single-Chip HSPA Transceiver with Fully Integrated 3G CMOS Power Amplifiers</span>.”</span> <em>2015 IEEE International Solid-State Circuits Conference - (ISSCC) Digest of Technical Papers</em>, February, 162–64. <a href="https://doi.org/10.1109/isscc.2015.7062976">https://doi.org/10.1109/isscc.2015.7062976</a>.
+Moreira, José, Stephan Leuschner, Nenad Stevanovic, et al. 2015. <span>“<span class="nocase">9.2 A Single-Chip HSPA Transceiver with Fully Integrated 3G CMOS Power Amplifiers</span>.”</span> <em>2015 IEEE International Solid-State Circuits Conference - (ISSCC) Digest of Technical Papers</em>, February, 162–64. <a href="https://doi.org/10.1109/isscc.2015.7062976">https://doi.org/10.1109/isscc.2015.7062976</a>.
 </div>
 <div id="ref-Pozar_RF" class="csl-entry" role="listitem">
 Pozar, David M. 2011. <em>Microwave Engineering</em>. Wiley.
@@ -4221,7 +4222,7 @@ Razavi, B. 1996. <span>“<span class="nocase">A study of phase noise in CMOS os
 Razavi, Behzad. 2011. <em>RF Microelectronics</em>. 2nd edition. Pearson.
 </div>
 <div id="ref-Razavi_Analog_CMOS" class="csl-entry" role="listitem">
-———. 2017. <em><span class="nocase">Design of Analog CMOS Integrated Circuits</span></em>. McGraw-Hill.
+Razavi, Behzad. 2017. <em><span class="nocase">Design of Analog CMOS Integrated Circuits</span></em>. McGraw-Hill.
 </div>
 <div id="ref-Saleh.1981" class="csl-entry" role="listitem">
 Saleh, A A M. 1981. <span>“<span class="nocase">Frequency-Independent and Frequency-Dependent Nonlinear Models of TWT Amplifiers</span>.”</span> <em>IEEE Transactions on Communications</em> 29 (11): 1715–20. <a href="https://doi.org/10.1109/tcom.1981.1094911">https://doi.org/10.1109/tcom.1981.1094911</a>.
@@ -4239,19 +4240,19 @@ Sklar, Bernard, and Fredric J. Harris. 2020. <em>Digital Communications: Fundame
 Staszewski, R. B., D. Leipold, K. Muhammad, and P. T. Balsara. 2003. <span>“<span class="nocase">Digitally controlled oscillator (DCO)-based architecture for RF frequency synthesis in a deep-submicrometer CMOS Process</span>.”</span> <em>IEEE Transactions on Circuits and Systems II: Analog and Digital Signal Processing</em> 50 (11): 815–28. <a href="https://doi.org/10.1109/tcsii.2003.819128">https://doi.org/10.1109/tcsii.2003.819128</a>.
 </div>
 <div id="ref-Vazny.2010" class="csl-entry" role="listitem">
-Vazny, Rastislav, Werner Schelmbauer, Harald Pretl, Stefan Herzinger, and Robert Weigel. 2010. <span>“<span class="nocase">An Interstage Filter-Free Mobile Radio Receiver with Integrated TX Leakage Filtering</span>.”</span> In, 21–24. 2010 IEEE Radio Frequency Integrated Circuits Symposium. IEEE. <a href="https://doi.org/10.1109/rfic.2010.5477294">https://doi.org/10.1109/rfic.2010.5477294</a>.
+Vazny, Rastislav, Werner Schelmbauer, Harald Pretl, Stefan Herzinger, and Robert Weigel. 2010. <span>“<span class="nocase">An Interstage Filter-Free Mobile Radio Receiver with Integrated TX Leakage Filtering</span>.”</span> 2010 IEEE radio frequency integrated circuits symposium, January, 21–24. <a href="https://doi.org/10.1109/rfic.2010.5477294">https://doi.org/10.1109/rfic.2010.5477294</a>.
 </div>
 </div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div>Apache-2.0 license</div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{pretl2026,
   author = {Pretl, Harald},
   title = {Radio-Frequency {Integrated} {Circuits}},
-  date = {2026-03-10},
+  date = {2026-03-21},
   url = {https://iic-jku.github.io/radio-frequency-integrated-circuits},
   doi = {10.5281/zenodo.17563943},
   langid = {en-US}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-pretl2026" class="csl-entry quarto-appendix-citeas" role="listitem">
 Pretl, Harald. 2026. <span>“Radio-Frequency Integrated Circuits.”</span>
-March 10, 2026. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
+March 21. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
