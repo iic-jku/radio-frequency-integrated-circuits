@@ -124,7 +124,13 @@ Note that for compressive behavior, $\alpha_3$ and $\alpha_1$ have different sig
 Some references also use similar definitions for gain expansion, where the output power is \qty{1}{\decibel} more than the linear slope.
 :::
 
-In the following plot (@fig-gain-nonlinear-compression-expansion) an expansive behavior is also shown, where $\alpha_3$ has the same sign as $\alpha_1$, but $\alpha_5$ has the opposite sign, leading to gain expansion at some input power level, until the term with $\alpha_5$ becomes dominant and the gain is compressed again. This (partly) expansive behavior can be used to linearize the gain of a circuit block over a wider input power range, which is often desirable in RF power amplifiers (see @sec-poweramp-nonlinearity).
+The following plot (@fig-gain-nonlinear-compression-expansion) also shows an expansive behavior. In contrast to the truncated Taylor-series model above, a closed-form saturating model is used here so that the output power correctly converges to the saturation power $P_\mathrm{sat}$ for large input levels. The model uses the amplitude characteristic
+
+$$
+A_\mathrm{out} = A_\mathrm{sat} \tanh \large[ u \cdot (1 + c \cdot u^2) \large]
+$$
+
+with the normalised amplitude $u = (G_0 P_\mathrm{in} / P_\mathrm{sat})^{-2}$ and an expansion coefficient $c > 1/3$. At small input powers the gain equals the small-signal gain $G_0$; at intermediate powers the gain expands above $G_0$ (because the cubic term in the argument of $\tanh$ adds extra gain before the $\tanh$ saturation takes effect); and at large input powers the output saturates at $P_\mathrm{sat}$ while the gain drops steeply. This (partly) expansive behavior can be used to linearize the gain of a circuit block over a wider input power range, which is often desirable in RF power amplifiers (see @sec-poweramp-nonlinearity).
 
 {{< include /content/fundamentals/_fig_gain_nonlinear_compression_expansion.qmd >}}
 
