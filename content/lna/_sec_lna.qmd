@@ -16,7 +16,7 @@ limitations under the License.
 
 # Low Noise Amplifiers {#sec-lna}
 
-As shown in @sec-sensitivity, the sensitivity of a receiver is determined (besides the channel bandwidth) mainly by the noise figure of the receiver. The noise figure is in turn determined by the noise figure of the first active component in the receive chain, which is usually a low noise amplifier (LNA), as exemplified in @eq-friis. Hence, as shown in @fig-trx-fdd and @fig-trx-tdd, low noise amplifiers (LNAs) are the first active building block in a receiver after the antenna and some initial RF filtering.
+As shown in @sec-sensitivity, the sensitivity of a receiver is determined (besides the channel bandwidth) mainly by the noise figure of the receiver. The noise figure is in turn determined by the noise figure of the first few components in the receive chain, as exemplified in @eq-friis. Hence, as shown in @fig-trx-fdd and @fig-trx-tdd, low noise amplifiers (LNAs) are usually the first active building block in a receiver after the antenna, switches, and initial RF filtering. The main purpose of the LNA is to amplify the received signal with as little additional noise as possible, so that the subsequent stages in the receive chain can operate with a better signal-to-noise ratio (SNR) and do not increase the receiver NF substantially. The LNA is a critical component in the receiver design, and its performance has a significant impact on the overall sensitivity of the receiver.
 
 {{< include /content/lna/_fig_lna_block.qmd >}}
 
