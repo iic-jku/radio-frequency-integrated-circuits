@@ -7,7 +7,7 @@ Licensed under the Apache License, Version 2.0
 ```{python}
 #| label: fig-gain-nonlinear-compression-expansion
 #| echo: false
-#| fig-cap: "Output power and power gain vs. input power showing expansion, compression, and saturation towards $P_\\mathrm{sat}$. The closed-form model uses $P_\\mathrm{out} = P_\\mathrm{sat}\\,\\tanh^2\\!\\bigl(u(1+cu^2)\\bigr)$ with $u=\\sqrt{G_0 P_\\mathrm{in}/P_\\mathrm{sat}}$."
+#| fig-cap: "Output power and power gain vs. input power showing expansion, compression, and saturation towards $P_\\mathrm{sat}$. The closed-form model uses $P_\\mathrm{out} = P_\\mathrm{sat} \\tanh^2 \\large[ u \\cdot (1 + c \\cdot u^2) \\large]$ with $u = (G_0 P_\\mathrm{in} / P_\\mathrm{sat})^{-2}$. For (power) amplifiers the saturating power if often ill-defined, so instead of $P_\\mathrm{sat}$ a compression point like P6dB is used."
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -41,9 +41,10 @@ Psat_dBm   = 10.0 * np.log10(Psat_mW)
 # Power gain in dB
 gain_actual = Pout_dBm - Pin_dBm
 
-# ---------- find +1 dB (expansion) and −1 dB (compression) points ----------
+# ---------- find +1 dB (expansion), −1 dB (compression), and −6 dB (P6dB) points ----------
 idx_exp  = np.argmin(np.abs(gain_actual - (G0_dB + 1.0)))
 idx_comp = np.argmin(np.abs(gain_actual - (G0_dB - 1.0)))
+idx_6dB  = np.argmin(np.abs(gain_actual - (G0_dB - 6.0)))
 
 # ---------- plot ----------
 fig, ax1 = plt.subplots(figsize=(7, 4.5))
@@ -71,6 +72,13 @@ if gain_actual[idx_comp] < G0_dB - 0.5:
              markeredgecolor='k', markeredgewidth=1.0,
              label='−1 dB (compression)')
 
+# −6 dB compression marker (P6dB) on output power curve
+if gain_actual[idx_6dB] < G0_dB - 5.5:
+    ax1.plot(Pin_dBm[idx_6dB], Pout_dBm[idx_6dB],
+             'D', color='tab:purple', markersize=8,
+             markeredgecolor='k', markeredgewidth=1.0,
+             label=r'$P_\mathrm{6dB}$ (−6 dB compression)')
+
 ax1.set_xlabel('Input Power (dBm)')
 ax1.set_ylabel('Output Power (dBm)')
 ax1.grid(True, alpha=0.25)
@@ -87,10 +95,16 @@ ax2.tick_params(axis='y', labelcolor='tab:orange')
 ax2.set_xlim(-15, 25)
 ax2.set_ylim(0, 30)
 
+# −6 dB compression marker (P6dB) on gain curve
+if gain_actual[idx_6dB] < G0_dB - 5.5:
+    ax2.plot(Pin_dBm[idx_6dB], gain_actual[idx_6dB],
+             'D', color='tab:purple', markersize=8,
+             markeredgecolor='k', markeredgewidth=1.0)
+
 # Combined legend (left-axis entries + gain line)
 handles1, labels1 = ax1.get_legend_handles_labels()
-ax1.legend(handles1 + [gain_line], labels1 + ['Power gain'],
-           loc='lower right', fontsize=9)
+leg = ax1.legend(handles1 + [gain_line], labels1 + ['Power gain'],
+                 loc='lower right', fontsize=9, scatterpoints=1, numpoints=1)
 
 plt.tight_layout()
 plt.show()
