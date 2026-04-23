@@ -7,7 +7,7 @@ Licensed under the Apache License, Version 2.0
 ```{python}
 #| label: fig-gain-nonlinear-compression-expansion
 #| echo: false
-#| fig-cap: "Output power and power gain vs. input power showing expansion, compression, and saturation towards $P_\\mathrm{sat}$. The closed-form model uses $P_\\mathrm{out} = P_\\mathrm{sat} \\tanh^2 \\large[ u \\cdot (1 + c \\cdot u^2) \\large]$ with $u = (G_0 P_\\mathrm{in} / P_\\mathrm{sat})^{-2}$. For (power) amplifiers the saturating power if often ill-defined, so instead of $P_\\mathrm{sat}$ a compression point like P6dB is used."
+#| fig-cap: "Output power and power gain vs. input power showing expansion, compression, and saturation towards $P_\\mathrm{sat}$. The closed-form model uses $P_\\mathrm{out} = P_\\mathrm{sat} \\tanh^2 \\left[ u \\cdot (1 + c \\cdot u^2) \\right]$ with $u = (G_0 P_\\mathrm{in} / P_\\mathrm{sat})^{-2}$. For (power) amplifiers the saturating power if often ill-defined, so instead of $P_\\mathrm{sat}$ a compression point like P6dB is used."
 
 import numpy as np
 import matplotlib.pyplot as plt
