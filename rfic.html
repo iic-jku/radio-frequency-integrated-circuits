@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2026-03-22">
+<meta name="dcterms.date" content="2026-04-23">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -61,14 +61,14 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-f418161beb48e0141c760e455f12af2c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8ec1fb2740a17410fc6227cc0b93a09a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-6fba50ad7caf29492cb2a43abebf4864.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-8ec1fb2740a17410fc6227cc0b93a09a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-91544e611bd0e83221240cde35fa504f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-8fe479874ca0985b39699dca03e940ea.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-91544e611bd0e83221240cde35fa504f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -499,7 +499,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 22, 2026</p>
+      <p class="date">April 23, 2026</p>
     </div>
   </div>
   
@@ -1012,7 +1012,7 @@ Figure&nbsp;6: 1dB compression point test showing input vs output power relation
 </div>
 <p>The following plot (<a href="#fig-gain-nonlinear-compression-expansion" class="quarto-xref">Figure&nbsp;7</a>) also shows an expansive behavior. In contrast to the truncated Taylor-series model above, a closed-form saturating model is used here so that the output power correctly converges to the saturation power <span class="math inline">\(P_\mathrm{sat}\)</span> for large input levels. The model uses the amplitude characteristic</p>
 <p><span class="math display">\[
-A_\mathrm{out} = A_\mathrm{sat} \tanh \large[ u \cdot (1 + c \cdot u^2) \large]
+A_\mathrm{out} = A_\mathrm{sat} \tanh \left[ u \cdot (1 + c \cdot u^2) \right]
 \]</span></p>
 <p>with the normalised amplitude <span class="math inline">\(u = (G_0 P_\mathrm{in} / P_\mathrm{sat})^{-2}\)</span> and an expansion coefficient <span class="math inline">\(c &gt; 1/3\)</span>. At small input powers the gain equals the small-signal gain <span class="math inline">\(G_0\)</span>; at intermediate powers the gain expands above <span class="math inline">\(G_0\)</span> (because the cubic term in the argument of <span class="math inline">\(\tanh\)</span> adds extra gain before the <span class="math inline">\(\tanh\)</span> saturation takes effect); and at large input powers the output saturates at <span class="math inline">\(P_\mathrm{sat}\)</span> while the gain drops steeply. This (partly) expansive behavior can be used to linearize the gain of a circuit block over a wider input power range, which is often desirable in RF power amplifiers (see <a href="#sec-poweramp-nonlinearity" class="quarto-xref">Section&nbsp;8.2</a>).</p>
 <div id="cell-fig-gain-nonlinear-compression-expansion" class="cell" data-execution_count="7">
@@ -1020,10 +1020,10 @@ A_\mathrm{out} = A_\mathrm{sat} \tanh \large[ u \cdot (1 + c \cdot u^2) \large]
 <div id="fig-gain-nonlinear-compression-expansion" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gain-nonlinear-compression-expansion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-gain-nonlinear-compression-expansion-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Output power and power gain vs.&nbsp;input power showing expansion, compression, and saturation towards P_\mathrm{sat}. The closed-form model uses P_\mathrm{out} = P_\mathrm{sat} \tanh^2 \large[ u \cdot (1 + c \cdot u^2) \large] with u = (G_0 P_\mathrm{in} / P_\mathrm{sat})^{-2}. For (power) amplifiers the saturating power if often ill-defined, so instead of P_\mathrm{sat} a compression point like P6dB is used."><img src="rfic_files/figure-html/fig-gain-nonlinear-compression-expansion-output-1.png" width="662" height="422" class="figure-img"></a>
+<a href="rfic_files/figure-html/fig-gain-nonlinear-compression-expansion-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Output power and power gain vs.&nbsp;input power showing expansion, compression, and saturation towards P_\mathrm{sat}. The closed-form model uses P_\mathrm{out} = P_\mathrm{sat} \tanh^2 \left[ u \cdot (1 + c \cdot u^2) \right] with u = (G_0 P_\mathrm{in} / P_\mathrm{sat})^{-2}. For (power) amplifiers the saturating power if often ill-defined, so instead of P_\mathrm{sat} a compression point like P6dB is used."><img src="rfic_files/figure-html/fig-gain-nonlinear-compression-expansion-output-1.png" width="662" height="422" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gain-nonlinear-compression-expansion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Output power and power gain vs.&nbsp;input power showing expansion, compression, and saturation towards <span class="math inline">\(P_\mathrm{sat}\)</span>. The closed-form model uses <span class="math inline">\(P_\mathrm{out} = P_\mathrm{sat} \tanh^2 \large[ u \cdot (1 + c \cdot u^2) \large]\)</span> with <span class="math inline">\(u = (G_0 P_\mathrm{in} / P_\mathrm{sat})^{-2}\)</span>. For (power) amplifiers the saturating power if often ill-defined, so instead of <span class="math inline">\(P_\mathrm{sat}\)</span> a compression point like P6dB is used.
+Figure&nbsp;7: Output power and power gain vs.&nbsp;input power showing expansion, compression, and saturation towards <span class="math inline">\(P_\mathrm{sat}\)</span>. The closed-form model uses <span class="math inline">\(P_\mathrm{out} = P_\mathrm{sat} \tanh^2 \left[ u \cdot (1 + c \cdot u^2) \right]\)</span> with <span class="math inline">\(u = (G_0 P_\mathrm{in} / P_\mathrm{sat})^{-2}\)</span>. For (power) amplifiers the saturating power if often ill-defined, so instead of <span class="math inline">\(P_\mathrm{sat}\)</span> a compression point like P6dB is used.
 </figcaption>
 </figure>
 </div>
@@ -4249,14 +4249,14 @@ Vazny, Rastislav, Werner Schelmbauer, Harald Pretl, Stefan Herzinger, and Robert
 </div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div>Apache-2.0 license</div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{pretl2026,
   author = {Pretl, Harald},
   title = {Radio-Frequency {Integrated} {Circuits}},
-  date = {2026-03-22},
+  date = {2026-04-23},
   url = {https://iic-jku.github.io/radio-frequency-integrated-circuits},
   doi = {10.5281/zenodo.17563943},
   langid = {en-US}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-pretl2026" class="csl-entry quarto-appendix-citeas" role="listitem">
 Pretl, Harald. 2026. <span>“Radio-Frequency Integrated Circuits.”</span>
-March 22. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
+April 23. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
