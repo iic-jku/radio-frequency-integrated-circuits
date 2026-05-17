@@ -1,12 +1,5 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Radio-Frequency Integrated Circuits",
-    "section": "",
-    "text": "Radio-Frequency Integrated Circuits\n\n\n\nQuarto Publish\n\n\n(c) 2025-2026 Harald Pretl and co-authors, Department for Integrated Circuits (ICD), Johannes Kepler University, Linz (JKU)\nThis is the material for a graduate-level radio-frequency integrated circuit course, held at JKU under course number 336.023 (“VO Integrierte Hochfrequenz-Schaltungstechnik”). Follow this link to access the material.\nAll course material is made publicly available and shared under the Apache-2.0 license.\nWe happily accept pull requests to fix typos or add content! If you want to discuss something that is not clear, please open an issue!"
-  },
-  {
     "objectID": "content/pll/delta_sigma_modulator.html",
     "href": "content/pll/delta_sigma_modulator.html",
     "title": "MASH Modulator (3rd Order)",
@@ -54,6 +47,13 @@
     "title": "MASH Modulator (3rd Order)",
     "section": "Visualization - Comparison",
     "text": "Visualization - Comparison\nCompare MASH modulator outputs with and without dithering.\n\nfig = plt.figure()\n\ntime = np.arange(min(display_samples, len(mash_combined_no_dither)))\n\n# Plot 1: Time domain (no dither)\nax1 = plt.subplot(1, 2, 1)\nax1.step(time, mash_combined_no_dither[:display_samples], where='post', linewidth=1.5, color='C0')\nax1.axhline(y=input_value, color='r', linestyle='--', linewidth=2, \n            label=f'Expected = {input_value:.4f}')\nax1.set_xlabel('Sample Number')\nax1.set_ylabel('Output (multi-bit)')\nax1.grid(True, alpha=0.3)\nax1.legend()\nax1.set_ylim(-3.5, 4.5)\n\n# Plot 2: Frequency spectrum (no dither)\nax2 = plt.subplot(1, 2, 2)\nN = len(mash_combined_no_dither)\nfft_freq = np.fft.fftfreq(N)\npos_freq = fft_freq &gt;= 0\nfft_no = np.fft.fft(mash_combined_no_dither)\npsd_no = 20 * np.log10(np.abs(fft_no) / N + 1e-12)\nax2.plot(fft_freq[pos_freq], psd_no[pos_freq], linewidth=0.5, color='C0')\nax2.set_xlabel('Normalized Frequency (f/fs)')\nax2.set_ylabel('PSD (dB)')\nax2.grid(True, alpha=0.3)\nax2.set_xlim(0, 0.5)\nax2.set_ylim(-120, 0)\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\nFigure 1: Time series and the spectrum of a MASH 3rd-order modulator.\n\n\n\n\n\n\nfig = plt.figure()\n\ntime = np.arange(min(display_samples, len(mash_combined_with_dither)))\n\n# Plot 1: Time domain (with dither)\nax1 = plt.subplot(1, 2, 1)\nax1.step(time, mash_combined_with_dither[:display_samples], where='post', linewidth=1.5, color='C0')\nax1.axhline(y=input_value, color='r', linestyle='--', linewidth=2, \n            label=f'Expected = {input_value:.4f}')\nax1.set_xlabel('Sample Number')\nax1.set_ylabel('Output (multi-bit)')\nax1.grid(True, alpha=0.3)\nax1.legend()\nax1.set_ylim(-3.5, 4.5)\n\n# Plot 2: Frequency spectrum (with dither)\nax2 = plt.subplot(1, 2, 2)\nN = len(mash_combined_with_dither)\nfft_freq = np.fft.fftfreq(N)\npos_freq = fft_freq &gt;= 0\nfft_no = np.fft.fft(mash_combined_with_dither)\npsd_no = 20 * np.log10(np.abs(fft_no) / N + 1e-12)\nax2.plot(fft_freq[pos_freq], psd_no[pos_freq], linewidth=0.5, color='C0')\nax2.set_xlabel('Normalized Frequency (f/fs)')\nax2.set_ylabel('PSD (dB)')\nax2.grid(True, alpha=0.3)\nax2.set_xlim(0, 0.5)\nax2.set_ylim(-120, 0)\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\nFigure 2: Time series and the spectrum of a MASH 3rd-order modulator with added dither."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Radio-Frequency Integrated Circuits",
+    "section": "",
+    "text": "Radio-Frequency Integrated Circuits\n\n\n\nQuarto Publish\n\n\n(c) 2025-2026 Harald Pretl and co-authors, Department for Integrated Circuits (ICD), Johannes Kepler University, Linz (JKU)\nThis is the material for a graduate-level radio-frequency integrated circuit course, held at JKU under course number 336.023 (“VO Integrierte Hochfrequenz-Schaltungstechnik”). Follow this link to access the material.\nAll course material is made publicly available and shared under the Apache-2.0 license.\nWe happily accept pull requests to fix typos or add content! If you want to discuss something that is not clear, please open an issue!"
   },
   {
     "objectID": "rfic.html#sec-intro-wireless",
