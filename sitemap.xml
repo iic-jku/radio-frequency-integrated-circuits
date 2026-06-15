@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://iic-jku.github.io/radio-frequency-integrated-circuits/content/pll/delta_sigma_modulator.html</loc>
-    <lastmod>2026-05-17T16:16:11.945Z</lastmod>
+    <loc>https://iic-jku.github.io/radio-frequency-integrated-circuits/index.html</loc>
+    <lastmod>2026-06-15T08:19:22.030Z</lastmod>
   </url>
   <url>
-    <loc>https://iic-jku.github.io/radio-frequency-integrated-circuits/index.html</loc>
-    <lastmod>2026-05-17T16:16:11.947Z</lastmod>
+    <loc>https://iic-jku.github.io/radio-frequency-integrated-circuits/content/pll/delta_sigma_modulator.html</loc>
+    <lastmod>2026-06-15T08:19:22.029Z</lastmod>
   </url>
   <url>
     <loc>https://iic-jku.github.io/radio-frequency-integrated-circuits/rfic.html</loc>
-    <lastmod>2026-05-17T16:16:11.947Z</lastmod>
+    <lastmod>2026-06-15T08:19:22.030Z</lastmod>
   </url>
 </urlset>
