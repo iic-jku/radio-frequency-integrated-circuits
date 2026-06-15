@@ -1640,7 +1640,7 @@ Figure&nbsp;19: Block diagram of a typical transceiver (TRX) showing the main fu
 </section>
 <section id="sec-trx-mod-demod" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="sec-trx-mod-demod"><span class="header-section-number">3.2</span> Modulation and Demodulation</h2>
-<p>Modulation is the process of varying a carrier signal at frequency <span class="math inline">\(f_\mathrm{c}\)</span> in order to transmit information. The complex baseband signal (after converting the real-valued digital <span class="math inline">\(s_\mathrm{I}\)</span> and <span class="math inline">\(s_\mathrm{Q}\)</span> signals to analog and pulse-shaping filtering) is represented as (<span class="math inline">\(\tilde{s}_\mathrm{BB} \in \mathbb{C}\)</span>; <span class="math inline">\(s_\mathrm{I}, s_\mathrm{Q} \in \mathbb{R}\)</span>):</p>
+<p>Modulation is the process of varying a carrier signal at frequency <span class="math inline">\(f_\mathrm{c}\)</span> in order to transmit information. The complex baseband signal (after converting the real-valued digital inphase <span class="math inline">\(s_\mathrm{I}\)</span> and quadrature <span class="math inline">\(s_\mathrm{Q}\)</span> signals to analog and pulse-shaping filtering) is represented as (<span class="math inline">\(\tilde{s}_\mathrm{BB} \in \mathbb{C}\)</span>; <span class="math inline">\(s_\mathrm{I}, s_\mathrm{Q} \in \mathbb{R}\)</span>) <span class="citation" data-cites="Martin.2004">(<a href="#ref-Martin.2004" role="doc-biblioref">Martin 2004</a>)</span>:</p>
 <p><span class="math display">\[
 \tilde{s}_\mathrm{BB}(t) = s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t).
 \]</span></p>
@@ -1648,9 +1648,9 @@ Figure&nbsp;19: Block diagram of a typical transceiver (TRX) showing the main fu
 <p><span class="math display">\[
 \tilde{s}_\mathrm{RF}(t) = \tilde{s}_\mathrm{BB}(t) \cdot e^{j \omega_\mathrm{c} t} = [s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t)] \cdot [\cos(\omega_\mathrm{c} t) + j \cdot \sin(\omega_\mathrm{c} t)].
 \]</span></p>
-<p>The real-valued RF signal is obtained by taking the real part of this expression (<span class="math inline">\(s_\mathrm{RF} \in \mathbb{R}\)</span>, <span class="math inline">\(\tilde{s}_\mathrm{RF} \in \mathbb{C}\)</span>):</p>
+<p>The real-valued RF signal <span class="math inline">\(s_\mathrm{RF} \in \mathbb{R}\)</span> is obtained from <span class="math inline">\(\tilde{s}_\mathrm{RF}\)</span> by complex-conjugate symmetry:</p>
 <p><span id="eq-modulation"><span class="math display">\[
-s_\mathrm{RF}(t) = \Re \{ \tilde{s}_\mathrm{RF}(t) \} = s_\mathrm{I}(t) \cos(\omega_\mathrm{c} t) - s_\mathrm{Q}(t) \sin(\omega_\mathrm{c} t).
+s_\mathrm{RF}(t) = \frac{1}{2} \left[ \tilde{s}_\mathrm{RF}(t) + \tilde{s}_\mathrm{RF}^*(t) \right] = s_\mathrm{I}(t) \cos(\omega_\mathrm{c} t) - s_\mathrm{Q}(t) \sin(\omega_\mathrm{c} t).
 \tag{23}\]</span></span></p>
 <p>The process formulated in <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;23</a> is done in the TX, as shown in <a href="#fig-tx-modulation" class="quarto-xref">Figure&nbsp;20</a>.</p>
 <div id="cell-fig-tx-modulation" class="cell" data-execution_count="20">
@@ -1668,11 +1668,11 @@ Figure&nbsp;20: TX modulator.
 </div>
 </div>
 <p>The RF signal generation according to <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;23</a> is called quadrature modulation. This is the modulation used most often in modern communication systems, as it allows one to transmit two independent signals (I and Q) in the same bandwidth. The I and Q signals are also called quadrature components, as they are 90° out of phase with each other.</p>
-<p>Alternatively, a modulation called polar modulation can be used, where the amplitude and phase of the carrier are varied according to the baseband signal. This is done by converting the I and Q signals to polar coordinates</p>
+<p>Alternatively, a modulation type called <strong>polar modulation</strong> can be used, where the amplitude and phase of the carrier are varied according to (again using the complex-conjugate symmetry to obtain a real-valued signal):</p>
 <p><span class="math display">\[
-s_\mathrm{RF}(t) = \Re \{ A(t) \cdot e^{j \varphi(t)} \cdot e^{j \omega_\mathrm{c} t} \}
+s_\mathrm{RF}(t) = \frac{1}{2} \left[ A(t) \cdot e^{j \omega_\mathrm{c} t + j \varphi(t)} + A(t) \cdot e^{-j \omega_\mathrm{c} t -j \varphi(t)} \right] = A(t) \cdot \cos[ \omega_\mathrm{c} t + \varphi(t) ]
 \]</span></p>
-<p>with</p>
+<p>This is done by converting the baseband I and Q signals (<span class="math inline">\(s_\mathrm{I}\)</span> and <span class="math inline">\(s_\mathrm{Q}\)</span>) to polar coordinates with</p>
 <p><span class="math display">\[
 A(t) = \sqrt{s_\mathrm{I}^2(t) + s_\mathrm{Q}^2(t)}, \quad \varphi(t) = \tan^{-1} \left[ \frac{s_\mathrm{Q}(t)}{s_\mathrm{I}(t)} \right].
 \]</span></p>
@@ -1692,7 +1692,7 @@ Figure&nbsp;21: RX demodulator.
 </div>
 </div>
 </div>
-<p>For demodulation we have to shift the RF signal down to baseband, which mathematically is done by multiplying with the complex conjugate of the carrier (<span class="math inline">\(e^{-j \omega_\mathrm{c} t}\)</span>)</p>
+<p>For demodulation we have to shift the RF signal down to baseband, which mathematically is done by multiplying with the negative complex carrier frequency <span class="math inline">\(e^{-j \omega_\mathrm{c} t}\)</span>:</p>
 <p><span id="eq-demodulation"><span class="math display">\[
 \tilde{s}_\mathrm{BB}(t) = s_\mathrm{RF}(t) \cdot e^{-j \omega_\mathrm{c} t} = s_\mathrm{RF}(t) \cdot [\cos(\omega_\mathrm{c} t) - j \cdot \sin(\omega_\mathrm{c} t)]
 \tag{24}\]</span></span></p>
@@ -4235,6 +4235,9 @@ Leeson, D. B. 1966. <span>“<span class="nocase">A simple model of feedback osc
 </div>
 <div id="ref-Lepage.1953" class="csl-entry" role="listitem">
 Lepage, W. R., C. R. Cahn, and J. S. Brown. 1953. <span>“<span class="nocase">Analysis of a comb filter using synchronously commutated capacitors</span>.”</span> <em>Transactions of the American Institute of Electrical Engineers, Part I: Communication and Electronics</em> 72 (1): 63–68. <a href="https://doi.org/10.1109/tce.1953.6371974">https://doi.org/10.1109/tce.1953.6371974</a>.
+</div>
+<div id="ref-Martin.2004" class="csl-entry" role="listitem">
+Martin, Kenneth W. 2004. <span>“Complex Signal Processing Is Not Complex.”</span> <em><span>IEEE</span> Transactions on Circuits and Systems—I: Regular Papers</em> 51 (9): 1823–36. <a href="https://doi.org/10.1109/tcsi.2004.834522">https://doi.org/10.1109/tcsi.2004.834522</a>.
 </div>
 <div id="ref-Matsuya.1989" class="csl-entry" role="listitem">
 Matsuya, Y., K. Uchimura, A. Iwata, and T. Kaneko. 1989. <span>“<span class="nocase">A 17 bit oversampling D-A conversion technology using multistage noise shaping</span>.”</span> <em>IEEE Journal of Solid-State Circuits</em> 24 (4): 969–75. <a href="https://doi.org/10.1109/4.34079">https://doi.org/10.1109/4.34079</a>.
