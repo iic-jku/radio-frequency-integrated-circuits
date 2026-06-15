@@ -42,7 +42,7 @@ The [modem](https://en.wikipedia.org/wiki/Modem) (short for modulator-demodulato
 
 ## Modulation and Demodulation {#sec-trx-mod-demod}
 
-Modulation is the process of varying a carrier signal at frequency $f_\mathrm{c}$ in order to transmit information. The complex baseband signal (after converting the real-valued digital $s_\mathrm{I}$ and $s_\mathrm{Q}$ signals to analog and pulse-shaping filtering) is represented as ($\tilde{s}_\mathrm{BB} \in \mathbb{C}$; $s_\mathrm{I}, s_\mathrm{Q} \in \mathbb{R}$):
+Modulation is the process of varying a carrier signal at frequency $f_\mathrm{c}$ in order to transmit information. The complex baseband signal (after converting the real-valued digital inphase $s_\mathrm{I}$ and quadrature $s_\mathrm{Q}$ signals to analog and pulse-shaping filtering) is represented as ($\tilde{s}_\mathrm{BB} \in \mathbb{C}$; $s_\mathrm{I}, s_\mathrm{Q} \in \mathbb{R}$) [@Martin.2004]:
 
 $$
 \tilde{s}_\mathrm{BB}(t) = s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t).
@@ -54,10 +54,10 @@ $$
 \tilde{s}_\mathrm{RF}(t) = \tilde{s}_\mathrm{BB}(t) \cdot e^{j \omega_\mathrm{c} t} = [s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t)] \cdot [\cos(\omega_\mathrm{c} t) + j \cdot \sin(\omega_\mathrm{c} t)].
 $$
 
-The real-valued RF signal is obtained by taking the real part of this expression ($s_\mathrm{RF} \in \mathbb{R}$, $\tilde{s}_\mathrm{RF} \in \mathbb{C}$):
+The real-valued RF signal $s_\mathrm{RF} \in \mathbb{R}$ is obtained from $\tilde{s}_\mathrm{RF}$ by complex-conjugate symmetry:
 
 $$
-s_\mathrm{RF}(t) = \Re \{ \tilde{s}_\mathrm{RF}(t) \} = s_\mathrm{I}(t) \cos(\omega_\mathrm{c} t) - s_\mathrm{Q}(t) \sin(\omega_\mathrm{c} t).
+s_\mathrm{RF}(t) = \frac{1}{2} \left[ \tilde{s}_\mathrm{RF}(t) + \tilde{s}_\mathrm{RF}^*(t) \right] = s_\mathrm{I}(t) \cos(\omega_\mathrm{c} t) - s_\mathrm{Q}(t) \sin(\omega_\mathrm{c} t).
 $$ {#eq-modulation}
 
 The process formulated in @eq-modulation is done in the TX, as shown in @fig-tx-modulation.
@@ -66,13 +66,13 @@ The process formulated in @eq-modulation is done in the TX, as shown in @fig-tx-
 
 The RF signal generation according to @eq-modulation is called quadrature modulation. This is the modulation used most often in modern communication systems, as it allows one to transmit two independent signals (I and Q) in the same bandwidth. The I and Q signals are also called quadrature components, as they are 90° out of phase with each other.
 
-Alternatively, a modulation called polar modulation can be used, where the amplitude and phase of the carrier are varied according to the baseband signal. This is done by converting the I and Q signals to polar coordinates
+Alternatively, a modulation type called **polar modulation** can be used, where the amplitude and phase of the carrier are varied according to (again using the complex-conjugate symmetry to obtain a real-valued signal):
 
 $$
-s_\mathrm{RF}(t) = \Re \{ A(t) \cdot e^{j \varphi(t)} \cdot e^{j \omega_\mathrm{c} t} \}
+s_\mathrm{RF}(t) = \frac{1}{2} \left[ A(t) \cdot e^{j \omega_\mathrm{c} t + j \varphi(t)} + A(t) \cdot e^{-j \omega_\mathrm{c} t -j \varphi(t)} \right] = A(t) \cdot \cos[ \omega_\mathrm{c} t + \varphi(t) ]
 $$
 
-with
+This is done by converting the baseband I and Q signals ($s_\mathrm{I}$ and $s_\mathrm{Q}$) to polar coordinates with
 
 $$
 A(t) = \sqrt{s_\mathrm{I}^2(t) + s_\mathrm{Q}^2(t)}, \quad \varphi(t) = \tan^{-1} \left[ \frac{s_\mathrm{Q}(t)}{s_\mathrm{I}(t)} \right].
@@ -84,7 +84,7 @@ In the RX, the received RF signal is downconverted to baseband by a similar proc
 
 {{< include /content/trx/_fig_rx_demodulation.qmd >}}
 
-For demodulation we have to shift the RF signal down to baseband, which mathematically is done by multiplying with the complex conjugate of the carrier ($e^{-j \omega_\mathrm{c} t}$)
+For demodulation we have to shift the RF signal down to baseband, which mathematically is done by multiplying with the negative complex carrier frequency $e^{-j \omega_\mathrm{c} t}$:
 
 $$
 \tilde{s}_\mathrm{BB}(t) = s_\mathrm{RF}(t) \cdot e^{-j \omega_\mathrm{c} t} = s_\mathrm{RF}(t) \cdot [\cos(\omega_\mathrm{c} t) - j \cdot \sin(\omega_\mathrm{c} t)]
