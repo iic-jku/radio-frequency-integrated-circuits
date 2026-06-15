@@ -1,7 +1,7 @@
 .DS_Store
 *.fdb_latexmk
 *.html
-*.quarto_ipynb
+*.quarto_ipynb_*
 *.out.ipynb
 _freeze
 figures/_fig_*_files
@@ -28,4 +28,3 @@ _site
 /content/trx/_*_files
 /content/pll/*_files
 /content/exam/*_files
-rfic.quarto_ipynb_1

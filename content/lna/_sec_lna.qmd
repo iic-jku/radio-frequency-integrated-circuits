@@ -22,6 +22,8 @@ As shown in @sec-sensitivity, the sensitivity of a receiver is determined (besid
 
 The LNA as a building block is shown in @fig-lna-block. The main purpose of the LNA is to amplify the received signal with as little additional noise as possible. The LNA is usually designed for a specific frequency band, e.g., the 2.4 GHz ISM band or the 5 GHz WLAN band, and is typically designed for a specific impedance, e.g., 50 Ω, which is the standard impedance for RF systems. Impedance matching is usually required at the input; the output impedance matching is only required if the output of the LNA goes off-chip; if it is kept on-chip, impedance matching is often not required. The LNA is also designed to be sufficiently linear, i.e., to not introduce significant distortion to the amplified signal; however, compared to the noise requirements, linearity is often less critical.
 
+## Impedance Matching {#sec-impedance-matching}
+
 Why is impedance matching at the input of the LNA so important?
 
 - The antenna is usually designed for a specific impedance, e.g., 50 Ω, and if the LNA input is not matched to this impedance, a significant portion of the received signal will be reflected back to the antenna, resulting in a loss of signal power.
@@ -32,7 +34,7 @@ To quantify the "quality" of an impedance match, the reflection coefficient $\Ga
 
 $$
 \Gamma = \frac{Z_{\mathrm{in}} - Z_0}{Z_{\mathrm{in}} + Z_0}
-$$
+$$ {#eq-reflection-coefficient}
 
 where $Z_0$ is the characteristic impedance of the system (usually 50 Ω) and $Z_{\mathrm{in}}$ is the input impedance of the LNA. The reflection coefficient $\Gamma$ is a complex number with a magnitude between 0 and 1, where 0 indicates a perfect match and 1 indicates a complete mismatch. This reflection coefficient can be represented on the Smith chart shown in @fig-smith-chart. A useful interactive tool to draft a matching network and visualize it on a Smith chart is this [website](https://onlinesmithchart.com).
 
@@ -41,10 +43,29 @@ where $Z_0$ is the characteristic impedance of the system (usually 50 Ω) and $
 However, in practice, the more commonly used metric for impedance matching is the return loss (RL), which is defined as [@Pozar_RF]:
 
 $$
-\text{RL} = -20 \log_{10} |\Gamma| = 20 \log_{10} \left| \frac{Z_\mathrm{in} + Z_0}{Z_\mathrm{in} - Z_0} \right|.
-$$
+\text{RL} = -20 \log_{10} |\Gamma| = 20 \log_{10} \left| \frac{Z_\mathrm{in} + Z_0}{Z_\mathrm{in} - Z_0} \right|
+$$ {#eq-return-loss}
 
 A higher return loss indicates a better impedance match.  A return loss of 10 dB indicates that 10% of the signal power is reflected back, while a return loss of 20 dB indicates that only 1% of the signal power is reflected back. In practice, a return loss of at least 10 dB is desired, with higher (positive) values being better [@Bird.2009].
+
+::: {.callout-note}
+## Bode-Fano Criterion
+The Bode-Fano criterion states that for a given load impedance and a given bandwidth, there is a fundamental limit to how well an impedance can be matched over that bandwidth. This criterion is important in the design of LNAs, as it sets a limit on the achievable return loss for a given bandwidth and load impedance. The Bode-Fano criterion can be expressed mathematically as [@Fano.1950; @Pozar_RF, ch. 5.9]:
+
+$$
+\int_{0}^{\infty} \ln \left( \frac{1}{|\Gamma(\omega)|} \right) d\omega \leq \frac{\pi}{R C}
+$$ {#eq-bode-fano-criterion}
+
+where $\Gamma(\omega)$ is the frequency-dependent reflection coefficient, $R$ is the load resistance, and $C$ is the load capacitance (for an $R \parallel C$ load). This criterion implies that achieving a very good impedance match (i.e., a low reflection coefficient) over a wide bandwidth is fundamentally limited by the properties of the load. In practice, this means that there is a trade-off between the bandwidth and the return loss that can be achieved in an LNA design.
+
+If we assume that we strive for match with $\Gamma_\mathrm{m}$ over a fractional bandwidth $\Delta \omega / \omega_0$, we can derive from the Bode-Fano criterion (and using that $Q = \omega_0 R C$ for a parallel $RC$ circuit) that
+
+$$
+\frac{\Delta \omega}{\omega_0} \leq \frac{\pi}{Q} \cdot \frac{1}{\ln(1/|\Gamma_\mathrm{m}|)}
+$$
+
+For example, if we want to achieve a return loss of 20 dB (i.e., $|\Gamma_\mathrm{m}| = 0.1$) over a fractional bandwidth of 30%, we find that the quality factor of the load needs to be $Q \leq 4.5$.
+:::
 
 ## Amplifier Stability {#sec-amp-stability}
 
