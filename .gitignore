@@ -27,4 +27,5 @@ _site
 /content/poweramp/_*_files
 /content/trx/_*_files
 /content/pll/*_files
+/content/spurs/*_files
 /content/exam/*_files
