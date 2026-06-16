@@ -2667,7 +2667,7 @@ S = \frac{1}{\sqrt{2}} \begin{bmatrix}
 -1 &amp; 0 &amp; 0
 \end{bmatrix}.
 \tag{46}\]</span></span></p>
-<p>A feature of the coupler in <a href="#fig-branch-line-coupler" class="quarto-xref">Figure&nbsp;54</a> is that it is single-ended; a differential implementation needs either two couplers or a coupler with subsequent baluns.</p>
+<p>A feature of the coupler in <a href="#fig-branch-line-coupler" class="quarto-xref">Figure&nbsp;54</a> is that it is single-ended; a differential implementation needs either two couplers or a coupler with subsequent baluns. An alternative implementation of a 90° hybrid coupler is the Lange coupler, which uses interdigitated fingers to achieve the required coupling. The Lange coupler can be implemented in a single-ended or differential way, and it can achieve very good performance over a wide frequency range. The disadvantage is that it requires a large number of fingers, which can take up a lot of area on-chip <span class="citation" data-cites="Lange.1969">(<a href="#ref-Lange.1969" role="doc-biblioref">Lange 1969</a>)</span>.</p>
 <p>Another approach, which is similar to the flip-flop based approach, is to use a delay line to generate the required phase shifts. This can be done with a single delay line and multiple taps, or with multiple delay lines. The idea is that we delay the input clock signal by a certain amount of time, which corresponds to a 90° phase shift at the target frequency. This approach is shown in <a href="#fig-logen-dll" class="quarto-xref">Figure&nbsp;55</a>. Since the delay of a delay line is frequency dependent, and the delay will change with process, voltage, and temperature (PVT) variations, we have to implement a tuning mechanism to adjust the delay. This implementation is called a delay-locked loop (DLL), which is similar to a phase-locked loop (PLL, see <a href="#sec-pll" class="quarto-xref">Section&nbsp;7</a>).</p>
 <div id="cell-fig-logen-dll" class="cell" data-execution_count="55">
 <div class="cell-output cell-output-display">
@@ -4284,7 +4284,7 @@ El-Nozahi, Mohamed, Ahmed Amer, Joselyn Torres, Kamran Entesari, and Edgar Sanch
 Fano, R. M. 1950. <span>“Theoretical Limitations on the Broadband Matching of Arbitrary Impedances.”</span> <em>Journal of the Franklin Institute</em> 249 (1): 57–83. <a href="https://doi.org/10.1016/0016-0032(50)90006-8">https://doi.org/10.1016/0016-0032(50)90006-8</a>.
 </div>
 <div id="ref-Fuhrmann.2017" class="csl-entry" role="listitem">
-Fuhrmann, J., J. Moreira, P. Oβmann, A. Springer, R. Weigel, and H. Pretl. 2017. <span>“<span class="nocase">A 15-Bit 28nm CMOS Fully-Integrated 1.6W Digital Power Amplifier for LTE IoT</span>.”</span> ESSCIRC 2017 - 43rd IEEE european solid state circuits conference, September, 199–202. <a href="https://doi.org/10.1109/esscirc.2017.8094560">https://doi.org/10.1109/esscirc.2017.8094560</a>.
+Fuhrmann, J., J. Moreira, P. Oßmann, A. Springer, R. Weigel, and H. Pretl. 2017. <span>“<span class="nocase">A 15-Bit 28nm CMOS Fully-Integrated 1.6W Digital Power Amplifier for LTE IoT</span>.”</span> <em>ESSCIRC 2017 - 43rd IEEE European Solid State Circuits Conference</em>, September, 199–202. <a href="https://doi.org/10.1109/esscirc.2017.8094560">https://doi.org/10.1109/esscirc.2017.8094560</a>.
 </div>
 <div id="ref-Gardner.1980" class="csl-entry" role="listitem">
 Gardner, F. 1980. <span>“<span>Charge-Pump Phase-Lock Loops</span>.”</span> <em>IEEE Transactions on Communications</em> 28 (11): 1849–58. <a href="https://doi.org/10.1109/TCOM.1980.1094619">https://doi.org/10.1109/TCOM.1980.1094619</a>.
@@ -4299,7 +4299,10 @@ Gray, Paul R., Paul J. Hurst, Stephen H. Lewis, and Robert G. Meyer. 2009. <em><
 Kaukovuori, Jouni, Kari Stadius, Jussi Ryynänen, and Kari A. I. Halonen. 2008. <span>“<span class="nocase">Analysis and Design of Passive Polyphase Filters</span>.”</span> <em>IEEE Transactions on Circuits and Systems–I: Regular Papers</em> 55 (10): 3023–37. <a href="https://doi.org/10.1109/tcsi.2008.917990">https://doi.org/10.1109/tcsi.2008.917990</a>.
 </div>
 <div id="ref-Kral.1998" class="csl-entry" role="listitem">
-Kral, A., F. Behbahani, and A. A. Abidi. 1998. <span>“<span class="nocase">RF-CMOS oscillators with switched tuning</span>.”</span> Proceedings of the IEEE 1998 custom integrated circuits conference (cat. no.98CH36143), January, 555–58. <a href="https://doi.org/10.1109/cicc.1998.695039">https://doi.org/10.1109/cicc.1998.695039</a>.
+Kral, A., F. Behbahani, and A. A. Abidi. 1998. <span>“<span class="nocase">RF-CMOS oscillators with switched tuning</span>.”</span> <em>Proceedings of the IEEE 1998 Custom Integrated Circuits Conference (Cat. No.98CH36143)</em>, January, 555–58. <a href="https://doi.org/10.1109/cicc.1998.695039">https://doi.org/10.1109/cicc.1998.695039</a>.
+</div>
+<div id="ref-Lange.1969" class="csl-entry" role="listitem">
+Lange, J. 1969. <span>“Interdigitated Strip-Line Quadrature Hybrid.”</span> <em>1969 g-MTT International Microwave Symposium</em>, 10–13. <a href="https://doi.org/10.1109/GMTT.1969.1122649">https://doi.org/10.1109/GMTT.1969.1122649</a>.
 </div>
 <div id="ref-Leeson.1966" class="csl-entry" role="listitem">
 Leeson, D. B. 1966. <span>“<span class="nocase">A simple model of feedback oscillator noise spectrum</span>.”</span> <em>Proceedings of the IEEE</em> 54 (2): 329–30. <a href="https://doi.org/10.1109/proc.1966.4682">https://doi.org/10.1109/proc.1966.4682</a>.
@@ -4356,7 +4359,7 @@ Sklar, Bernard, and Fredric J. Harris. 2020. <em>Digital Communications: Fundame
 Staszewski, R. B., D. Leipold, K. Muhammad, and P. T. Balsara. 2003. <span>“<span class="nocase">Digitally controlled oscillator (DCO)-based architecture for RF frequency synthesis in a deep-submicrometer CMOS Process</span>.”</span> <em>IEEE Transactions on Circuits and Systems II: Analog and Digital Signal Processing</em> 50 (11): 815–28. <a href="https://doi.org/10.1109/tcsii.2003.819128">https://doi.org/10.1109/tcsii.2003.819128</a>.
 </div>
 <div id="ref-Vazny.2010" class="csl-entry" role="listitem">
-Vazny, Rastislav, Werner Schelmbauer, Harald Pretl, Stefan Herzinger, and Robert Weigel. 2010. <span>“<span class="nocase">An Interstage Filter-Free Mobile Radio Receiver with Integrated TX Leakage Filtering</span>.”</span> 2010 IEEE radio frequency integrated circuits symposium, January, 21–24. <a href="https://doi.org/10.1109/rfic.2010.5477294">https://doi.org/10.1109/rfic.2010.5477294</a>.
+Vazny, Rastislav, Werner Schelmbauer, Harald Pretl, Stefan Herzinger, and Robert Weigel. 2010. <span>“<span class="nocase">An Interstage Filter-Free Mobile Radio Receiver with Integrated TX Leakage Filtering</span>.”</span> <em>2010 IEEE Radio Frequency Integrated Circuits Symposium</em>, January, 21–24. <a href="https://doi.org/10.1109/rfic.2010.5477294">https://doi.org/10.1109/rfic.2010.5477294</a>.
 </div>
 <div id="ref-Verghese.1995" class="csl-entry" role="listitem">
 Verghese, Nishath K., Timothy J. Schmerbeck, and David J. Allstot. 1995. <em>Simulation Techniques and Solutions for Mixed-Signal Coupling in Integrated Circuits</em>. Kluwer Academic Publishers.
