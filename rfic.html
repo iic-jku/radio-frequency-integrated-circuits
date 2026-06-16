@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2026-06-15">
+<meta name="dcterms.date" content="2026-06-16">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -506,7 +506,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 15, 2026</p>
+      <p class="date">June 16, 2026</p>
     </div>
   </div>
   
@@ -869,10 +869,10 @@ Figure&nbsp;3: RF design as a multidisciplinary field requiring knowledge from v
 <div id="fig-rf-design-considerations" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rf-design-considerations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-rf-design-considerations-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: RFIC require careful design considerations and trade-offs (adapted from [@Razavi_RFIC])."><img src="rfic_files/figure-html/fig-rf-design-considerations-output-1.png" width="389" height="389" class="figure-img"></a>
+<a href="rfic_files/figure-html/fig-rf-design-considerations-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: RFICs require careful design considerations and trade-offs (adapted from [@Razavi_RFIC])."><img src="rfic_files/figure-html/fig-rf-design-considerations-output-1.png" width="389" height="389" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rf-design-considerations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: RFIC require careful design considerations and trade-offs (adapted from <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span>).
+Figure&nbsp;4: RFICs require careful design considerations and trade-offs (adapted from <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span>).
 </figcaption>
 </figure>
 </div>
@@ -994,10 +994,10 @@ Figure&nbsp;5: Single-tone test showing created harmonics at 2ω and 3ω.
 <div id="fig-1db-compression-point" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1db-compression-point-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-1db-compression-point-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: 1dB compression point test showing input vs output power relationship and the definition of P1dB."><img src="rfic_files/figure-html/fig-1db-compression-point-output-1.png" width="527" height="362" class="figure-img"></a>
+<a href="rfic_files/figure-html/fig-1db-compression-point-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: 1-dB compression point test showing input vs.&nbsp;output power relationship and the definition of P1dB."><img src="rfic_files/figure-html/fig-1db-compression-point-output-1.png" width="527" height="362" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1db-compression-point-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: 1dB compression point test showing input vs output power relationship and the definition of P1dB.
+Figure&nbsp;6: 1-dB compression point test showing input vs.&nbsp;output power relationship and the definition of P1dB.
 </figcaption>
 </figure>
 </div>
@@ -1021,16 +1021,16 @@ Figure&nbsp;6: 1dB compression point test showing input vs output power relation
 <p><span class="math display">\[
 A_\mathrm{out} = A_\mathrm{sat} \tanh \left[ u \cdot (1 + c \cdot u^2) \right]
 \]</span></p>
-<p>with the normalised amplitude <span class="math inline">\(u = (G_0 P_\mathrm{in} / P_\mathrm{sat})^{-2}\)</span> and an expansion coefficient <span class="math inline">\(c &gt; 1/3\)</span>. At small input powers the gain equals the small-signal gain <span class="math inline">\(G_0\)</span>; at intermediate powers the gain expands above <span class="math inline">\(G_0\)</span> (because the cubic term in the argument of <span class="math inline">\(\tanh\)</span> adds extra gain before the <span class="math inline">\(\tanh\)</span> saturation takes effect); and at large input powers the output saturates at <span class="math inline">\(P_\mathrm{sat}\)</span> while the gain drops steeply. This (partly) expansive behavior can be used to linearize the gain of a circuit block over a wider input power range, which is often desirable in RF power amplifiers (see <a href="#sec-poweramp-nonlinearity" class="quarto-xref">Section&nbsp;8.2</a>).</p>
+<p>with the normalised amplitude <span class="math inline">\(u = \sqrt{G_0 P_\mathrm{in} / P_\mathrm{sat}}\)</span> and an expansion coefficient <span class="math inline">\(c &gt; 1/3\)</span>. At small input powers the gain equals the small-signal gain <span class="math inline">\(G_0\)</span>; at intermediate powers the gain expands above <span class="math inline">\(G_0\)</span> (because the cubic term in the argument of <span class="math inline">\(\tanh\)</span> adds extra gain before the <span class="math inline">\(\tanh\)</span> saturation takes effect); and at large input powers the output saturates at <span class="math inline">\(P_\mathrm{sat}\)</span> while the gain drops steeply. This (partly) expansive behavior can be used to linearize the gain of a circuit block over a wider input power range, which is often desirable in RF power amplifiers (see <a href="#sec-poweramp-nonlinearity" class="quarto-xref">Section&nbsp;8.2</a>).</p>
 <div id="cell-fig-gain-nonlinear-compression-expansion" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div id="fig-gain-nonlinear-compression-expansion" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gain-nonlinear-compression-expansion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-gain-nonlinear-compression-expansion-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Output power and power gain vs.&nbsp;input power showing expansion, compression, and saturation towards P_\mathrm{sat}. The closed-form model uses P_\mathrm{out} = P_\mathrm{sat} \tanh^2 \left[ u \cdot (1 + c \cdot u^2) \right] with u = (G_0 P_\mathrm{in} / P_\mathrm{sat})^{-2}. For (power) amplifiers the saturating power if often ill-defined, so instead of P_\mathrm{sat} a compression point like P6dB is used."><img src="rfic_files/figure-html/fig-gain-nonlinear-compression-expansion-output-1.png" width="664" height="422" class="figure-img"></a>
+<a href="rfic_files/figure-html/fig-gain-nonlinear-compression-expansion-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Output power and power gain vs.&nbsp;input power showing expansion, compression, and saturation towards P_\mathrm{sat}. The closed-form model uses P_\mathrm{out} = P_\mathrm{sat} \tanh^2 \left[ u \cdot (1 + c \cdot u^2) \right] with u = \sqrt{G_0 P_\mathrm{in} / P_\mathrm{sat}}. For (power) amplifiers the saturating power is often ill-defined, so instead of P_\mathrm{sat} a compression point like P6dB is used."><img src="rfic_files/figure-html/fig-gain-nonlinear-compression-expansion-output-1.png" width="664" height="422" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gain-nonlinear-compression-expansion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Output power and power gain vs.&nbsp;input power showing expansion, compression, and saturation towards <span class="math inline">\(P_\mathrm{sat}\)</span>. The closed-form model uses <span class="math inline">\(P_\mathrm{out} = P_\mathrm{sat} \tanh^2 \left[ u \cdot (1 + c \cdot u^2) \right]\)</span> with <span class="math inline">\(u = (G_0 P_\mathrm{in} / P_\mathrm{sat})^{-2}\)</span>. For (power) amplifiers the saturating power if often ill-defined, so instead of <span class="math inline">\(P_\mathrm{sat}\)</span> a compression point like P6dB is used.
+Figure&nbsp;7: Output power and power gain vs.&nbsp;input power showing expansion, compression, and saturation towards <span class="math inline">\(P_\mathrm{sat}\)</span>. The closed-form model uses <span class="math inline">\(P_\mathrm{out} = P_\mathrm{sat} \tanh^2 \left[ u \cdot (1 + c \cdot u^2) \right]\)</span> with <span class="math inline">\(u = \sqrt{G_0 P_\mathrm{in} / P_\mathrm{sat}}\)</span>. For (power) amplifiers the saturating power is often ill-defined, so instead of <span class="math inline">\(P_\mathrm{sat}\)</span> a compression point like P6dB is used.
 </figcaption>
 </figure>
 </div>
@@ -1711,10 +1711,10 @@ Figure&nbsp;21: RX demodulator.
 <div id="fig-filtering-rx" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-filtering-rx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-filtering-rx-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-22" title="Figure&nbsp;22: Filtering of wanted channel amid strong unwanted blockers. Exemplary shown in an RX scenario around 900 MHz. The strong blockers (top figure) are attenuated by an RF bandpass filter (bottom figure) with a bandwidth of 20 MHz, achieving more than 40 dB rejection of the blockers while only slightly attenuating the wanted signal."><img src="rfic_files/figure-html/fig-filtering-rx-output-1.png" width="569" height="566" class="figure-img"></a>
+<a href="rfic_files/figure-html/fig-filtering-rx-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-22" title="Figure&nbsp;22: Filtering of wanted channel amid strong unwanted blockers. An example is shown in an RX scenario around 900 MHz. The strong blockers (top figure) are attenuated by an RF bandpass filter (bottom figure) with a bandwidth of 20 MHz, achieving more than 40 dB rejection of the blockers while only slightly attenuating the wanted signal."><img src="rfic_files/figure-html/fig-filtering-rx-output-1.png" width="569" height="566" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-filtering-rx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;22: Filtering of wanted channel amid strong unwanted blockers. Exemplary shown in an RX scenario around 900 MHz. The strong blockers (top figure) are attenuated by an RF bandpass filter (bottom figure) with a bandwidth of 20 MHz, achieving more than 40 dB rejection of the blockers while only slightly attenuating the wanted signal.
+Figure&nbsp;22: Filtering of wanted channel amid strong unwanted blockers. An example is shown in an RX scenario around 900 MHz. The strong blockers (top figure) are attenuated by an RF bandpass filter (bottom figure) with a bandwidth of 20 MHz, achieving more than 40 dB rejection of the blockers while only slightly attenuating the wanted signal.
 </figcaption>
 </figure>
 </div>
@@ -1961,10 +1961,10 @@ Figure&nbsp;26: Block diagram of a low-IF transceiver (TRX) showing the main fun
 <div id="fig-trx-supersimple" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-trx-supersimple-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-trx-supersimple-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-27" title="Figure&nbsp;27: Block diagram of a super simple TX and RX."><img src="rfic_files/figure-html/fig-trx-supersimple-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-trx-supersimple-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-27" title="Figure&nbsp;27: Block diagram of a super-simple TX and RX."><img src="rfic_files/figure-html/fig-trx-supersimple-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trx-supersimple-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;27: Block diagram of a super simple TX and RX.
+Figure&nbsp;27: Block diagram of a super-simple TX and RX.
 </figcaption>
 </figure>
 </div>
@@ -2005,10 +2005,10 @@ Figure&nbsp;27: Block diagram of a super simple TX and RX.
 <div id="fig-lna-block" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lna-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-lna-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-28" title="Figure&nbsp;28: Block diagram of an LNA. Typically, the LNA input is impedance matched to 50 Ω, while the output is often not matched if the LNA is kept on chip. Often, the LNA gain is adjustable to allow for gain control in the receiver depending on the signal conditions. The LNA also might have a low-power bypass mode to reduce the power consumption of the LNA for sufficiently strong signals."><img src="rfic_files/figure-html/fig-lna-block-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-lna-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-28" title="Figure&nbsp;28: Block diagram of an LNA. Typically, the LNA input is impedance matched to 50 Ω, while the output is often not matched if the LNA is kept on-chip. Often, the LNA gain is adjustable to allow for gain control in the receiver depending on the signal conditions. The LNA also might have a low-power bypass mode to reduce the power consumption of the LNA for sufficiently strong signals."><img src="rfic_files/figure-html/fig-lna-block-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lna-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;28: Block diagram of an LNA. Typically, the LNA input is impedance matched to 50 Ω, while the output is often not matched if the LNA is kept on chip. Often, the LNA gain is adjustable to allow for gain control in the receiver depending on the signal conditions. The LNA also might have a low-power bypass mode to reduce the power consumption of the LNA for sufficiently strong signals.
+Figure&nbsp;28: Block diagram of an LNA. Typically, the LNA input is impedance matched to 50 Ω, while the output is often not matched if the LNA is kept on-chip. Often, the LNA gain is adjustable to allow for gain control in the receiver depending on the signal conditions. The LNA also might have a low-power bypass mode to reduce the power consumption of the LNA for sufficiently strong signals.
 </figcaption>
 </figure>
 </div>
@@ -2149,10 +2149,10 @@ Figure&nbsp;31: Equivalent circuit of resistively matched common-source LNA.
 <div id="fig-lna-naive-noise-input" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lna-naive-noise-input-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-lna-naive-noise-input-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-32" title="Figure&nbsp;32: Eqivalent circuit to calculate the output noise from the input."><img src="rfic_files/figure-html/fig-lna-naive-noise-input-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-lna-naive-noise-input-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-32" title="Figure&nbsp;32: Equivalent circuit to calculate the output noise from the input."><img src="rfic_files/figure-html/fig-lna-naive-noise-input-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lna-naive-noise-input-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;32: Eqivalent circuit to calculate the output noise from the input.
+Figure&nbsp;32: Equivalent circuit to calculate the output noise from the input.
 </figcaption>
 </figure>
 </div>
@@ -2436,10 +2436,10 @@ s_\mathrm{out}(t) = \frac{1}{\pi} \cos(\omega_\mathrm{in} t \pm \omega_\mathrm{L
 <div id="fig-cmos-single-mixer" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cmos-single-mixer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-cmos-single-mixer-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-42" title="Figure&nbsp;42: A MOSFET as a switch used as a mixer, with ac-coupled LO signal."><img src="rfic_files/figure-html/fig-cmos-single-mixer-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-cmos-single-mixer-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-42" title="Figure&nbsp;42: A MOSFET switch used as a mixer with an ac-coupled LO signal."><img src="rfic_files/figure-html/fig-cmos-single-mixer-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cmos-single-mixer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;42: A MOSFET as a switch used as a mixer, with ac-coupled LO signal.
+Figure&nbsp;42: A MOSFET switch used as a mixer with an ac-coupled LO signal.
 </figcaption>
 </figure>
 </div>
@@ -2710,10 +2710,10 @@ Figure&nbsp;56: Oscillator symbol.
 <div id="fig-ring-oscillator" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ring-oscillator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-ring-oscillator-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-57" title="Figure&nbsp;57: Three stage single-ended ring oscillator."><img src="rfic_files/figure-html/fig-ring-oscillator-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-ring-oscillator-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-57" title="Figure&nbsp;57: Three-stage single-ended ring oscillator."><img src="rfic_files/figure-html/fig-ring-oscillator-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ring-oscillator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;57: Three stage single-ended ring oscillator.
+Figure&nbsp;57: Three-stage single-ended ring oscillator.
 </figcaption>
 </figure>
 </div>
@@ -3103,10 +3103,10 @@ K_\mathrm{VCO} = \frac{d f_0}{d V_\mathrm{tune}}
 <div id="fig-switched-capacitor" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-switched-capacitor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-switched-capacitor-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-69" title="Figure&nbsp;69: An switched capacitor for use in an oscillator switched capacitor tuning bank. The bias resistors tie the drain/source nodes to ground during turn on of M_1 (for low on resistance), while they tie the drain/source nodes to VDD during turn off of M_1 to prevent accidential turn on of the drain/source to bulk diodes of M_1."><img src="rfic_files/figure-html/fig-switched-capacitor-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-switched-capacitor-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-69" title="Figure&nbsp;69: A switched capacitor for use in an oscillator’s switched-capacitor tuning bank. The bias resistors tie the drain/source nodes to ground during turn-on of M_1 (for low on resistance), while they tie the drain/source nodes to VDD during turn-off of M_1 to prevent accidental turn-on of the drain/source to bulk diodes of M_1."><img src="rfic_files/figure-html/fig-switched-capacitor-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-switched-capacitor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;69: An switched capacitor for use in an oscillator switched capacitor tuning bank. The bias resistors tie the drain/source nodes to ground during turn on of <span class="math inline">\(M_1\)</span> (for low on resistance), while they tie the drain/source nodes to VDD during turn off of <span class="math inline">\(M_1\)</span> to prevent accidential turn on of the drain/source to bulk diodes of <span class="math inline">\(M_1\)</span>.
+Figure&nbsp;69: A switched capacitor for use in an oscillator’s switched-capacitor tuning bank. The bias resistors tie the drain/source nodes to ground during turn-on of <span class="math inline">\(M_1\)</span> (for low on resistance), while they tie the drain/source nodes to VDD during turn-off of <span class="math inline">\(M_1\)</span> to prevent accidental turn-on of the drain/source to bulk diodes of <span class="math inline">\(M_1\)</span>.
 </figcaption>
 </figure>
 </div>
@@ -3185,10 +3185,10 @@ V_\mathrm{error} = K_\mathrm{PD} \cdot \Delta \varphi
 <div id="fig-pd-xor-diagram" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pd-xor-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-pd-xor-diagram-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-72" title="Figure&nbsp;72: Input and output waveforms of an XOR-based phase-detector."><img src="rfic_files/figure-html/fig-pd-xor-diagram-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-pd-xor-diagram-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-72" title="Figure&nbsp;72: Input and output waveforms of an XOR-based phase detector."><img src="rfic_files/figure-html/fig-pd-xor-diagram-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pd-xor-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;72: Input and output waveforms of an XOR-based phase-detector.
+Figure&nbsp;72: Input and output waveforms of an XOR-based phase detector.
 </figcaption>
 </figure>
 </div>
@@ -3489,10 +3489,10 @@ Figure&nbsp;82: Block diagram of an all-digital PLL. A reference phase signal is
 <div id="fig-pll-tdc" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pll-tdc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-pll-tdc-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-83" title="Figure&nbsp;83: Basic TDC implementation as a delay line with parallel capture flip-flops. The TDC delay resolution is limited two inverter delays."><img src="rfic_files/figure-html/fig-pll-tdc-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-pll-tdc-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-83" title="Figure&nbsp;83: Basic TDC implementation as a delay line with parallel capture flip-flops. The TDC delay resolution is limited to two inverter delays."><img src="rfic_files/figure-html/fig-pll-tdc-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-tdc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;83: Basic TDC implementation as a delay line with parallel capture flip-flops. The TDC delay resolution is limited two inverter delays.
+Figure&nbsp;83: Basic TDC implementation as a delay line with parallel capture flip-flops. The TDC delay resolution is limited to two inverter delays.
 </figcaption>
 </figure>
 </div>
@@ -3584,10 +3584,10 @@ N = \frac{99 \cdot 61 + 1 \cdot 62}{100} = 61.01
 <div id="fig-pll-dsm-first-order" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pll-dsm-first-order-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-pll-dsm-first-order-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-86" title="Figure&nbsp;86: A first-order continuous time delta-sigma modulator."><img src="rfic_files/figure-html/fig-pll-dsm-first-order-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-pll-dsm-first-order-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-86" title="Figure&nbsp;86: A first-order continuous-time delta-sigma modulator."><img src="rfic_files/figure-html/fig-pll-dsm-first-order-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-dsm-first-order-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;86: A first-order continuous time delta-sigma modulator.
+Figure&nbsp;86: A first-order continuous-time delta-sigma modulator.
 </figcaption>
 </figure>
 </div>
@@ -3738,10 +3738,10 @@ Figure&nbsp;91: Block diagram of a 3rd-order MASH 1-1-1 delta-sigma modulator wi
 <div id="fig-pll-frac-n-block" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pll-frac-n-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-pll-frac-n-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-92" title="Figure&nbsp;92: Block diagram of a fractional-N PLL. The VCO signal is divided by a sequence of integer divider values div[k] with (on average) is given by N.f, where N is the integer part of the divider value, and f the fractional part of the divider."><img src="rfic_files/figure-html/fig-pll-frac-n-block-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-pll-frac-n-block-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-92" title="Figure&nbsp;92: Block diagram of a fractional-N PLL. The VCO signal is divided by a sequence of integer divider values div[k] whose average value is given by N.f, where N is the integer part of the divider value and f is the fractional part of the divider."><img src="rfic_files/figure-html/fig-pll-frac-n-block-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-frac-n-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;92: Block diagram of a fractional-N PLL. The VCO signal is divided by a sequence of integer divider values div[k] with (on average) is given by <span class="math inline">\(N.f\)</span>, where <span class="math inline">\(N\)</span> is the integer part of the divider value, and <span class="math inline">\(f\)</span> the fractional part of the divider.
+Figure&nbsp;92: Block diagram of a fractional-N PLL. The VCO signal is divided by a sequence of integer divider values div[k] whose average value is given by <span class="math inline">\(N.f\)</span>, where <span class="math inline">\(N\)</span> is the integer part of the divider value and <span class="math inline">\(f\)</span> is the fractional part of the divider.
 </figcaption>
 </figure>
 </div>
@@ -3789,10 +3789,10 @@ Figure&nbsp;94: Implementation of reference frequency doubler. Ideally, <span cl
 <div id="fig-pll-frac-n-block-retiming" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pll-frac-n-block-retiming-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-pll-frac-n-block-retiming-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-95" title="Figure&nbsp;95: Block diagram of a fractional-N PLL including a retiming flip flop to reduce the MMD-related jitter."><img src="rfic_files/figure-html/fig-pll-frac-n-block-retiming-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-pll-frac-n-block-retiming-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-95" title="Figure&nbsp;95: Block diagram of a fractional-N PLL including a retiming flip-flop to reduce the MMD-related jitter."><img src="rfic_files/figure-html/fig-pll-frac-n-block-retiming-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-frac-n-block-retiming-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;95: Block diagram of a fractional-N PLL including a retiming flip flop to reduce the MMD-related jitter.
+Figure&nbsp;95: Block diagram of a fractional-N PLL including a retiming flip-flop to reduce the MMD-related jitter.
 </figcaption>
 </figure>
 </div>
@@ -4030,10 +4030,10 @@ Figure&nbsp;100: A basic single stage single-ended common-source power amplifier
 <div id="fig-poweramp-differential-neutralization" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-poweramp-differential-neutralization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-poweramp-differential-neutralization-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-101" title="Figure&nbsp;101: A generic differential power amplifier with neutralization for wide-band operation and improved stability."><img src="rfic_files/figure-html/fig-poweramp-differential-neutralization-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-poweramp-differential-neutralization-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-101" title="Figure&nbsp;101: A generic differential power amplifier with neutralization for wideband operation and improved stability."><img src="rfic_files/figure-html/fig-poweramp-differential-neutralization-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-poweramp-differential-neutralization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;101: A generic differential power amplifier with neutralization for wide-band operation and improved stability.
+Figure&nbsp;101: A generic differential power amplifier with neutralization for wideband operation and improved stability.
 </figcaption>
 </figure>
 </div>
@@ -4367,14 +4367,14 @@ Yue, C. P., and S. S. Wong. 1998. <span>“On-Chip Spiral Inductors with Pattern
 </div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div>Apache-2.0 license</div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{pretl2026,
   author = {Pretl, Harald},
   title = {Radio-Frequency {Integrated} {Circuits}},
-  date = {2026-06-15},
+  date = {2026-06-16},
   url = {https://iic-jku.github.io/radio-frequency-integrated-circuits},
   doi = {10.5281/zenodo.17563943},
   langid = {en-US}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-pretl2026" class="csl-entry quarto-appendix-citeas" role="listitem">
 Pretl, Harald. 2026. <span>“Radio-Frequency Integrated Circuits.”</span>
-June 15. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
+June 16. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
