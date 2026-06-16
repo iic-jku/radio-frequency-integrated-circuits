@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-lna-block
 #| echo: false
-#| fig-cap: "Block diagram of an LNA. Typically, the LNA input is impedance matched to 50 Ω, while the output is often not matched if the LNA is kept on chip. Often, the LNA gain is adjustable to allow for gain control in the receiver depending on the signal conditions. The LNA also might have a low-power bypass mode to reduce the power consumption of the LNA for sufficiently strong signals." 
+#| fig-cap: "Block diagram of an LNA. Typically, the LNA input is impedance matched to 50 Ω, while the output is often not matched if the LNA is kept on-chip. Often, the LNA gain is adjustable to allow for gain control in the receiver depending on the signal conditions. The LNA also might have a low-power bypass mode to reduce the power consumption of the LNA for sufficiently strong signals." 
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp

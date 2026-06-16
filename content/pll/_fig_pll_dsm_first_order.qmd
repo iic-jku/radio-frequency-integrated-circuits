@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-pll-dsm-first-order
 #| echo: false
-#| fig-cap: "A first-order continuous time delta-sigma modulator."
+#| fig-cap: "A first-order continuous-time delta-sigma modulator."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp

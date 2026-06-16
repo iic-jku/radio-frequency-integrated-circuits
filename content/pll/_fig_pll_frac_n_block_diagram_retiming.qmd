@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-pll-frac-n-block-retiming
 #| echo: false
-#| fig-cap: "Block diagram of a fractional-N PLL including a retiming flip flop to reduce the MMD-related jitter."
+#| fig-cap: "Block diagram of a fractional-N PLL including a retiming flip-flop to reduce the MMD-related jitter."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp

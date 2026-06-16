@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-cmos-single-mixer
 #| echo: false
-#| fig-cap: "A MOSFET as a switch used as a mixer, with ac-coupled LO signal."
+#| fig-cap: "A MOSFET switch used as a mixer with an ac-coupled LO signal."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp

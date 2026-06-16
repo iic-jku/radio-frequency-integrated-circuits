@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-pll-frac-n-block
 #| echo: false
-#| fig-cap: "Block diagram of a fractional-N PLL. The VCO signal is divided by a sequence of integer divider values div[k] with (on average) is given by $N.f$, where $N$ is the integer part of the divider value, and $f$ the fractional part of the divider."
+#| fig-cap: "Block diagram of a fractional-N PLL. The VCO signal is divided by a sequence of integer divider values div[k] whose average value is given by $N.f$, where $N$ is the integer part of the divider value and $f$ is the fractional part of the divider."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp

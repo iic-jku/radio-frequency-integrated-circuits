@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-filtering-rx
 #| echo: false 
-#| fig-cap: "Filtering of wanted channel amid strong unwanted blockers. Exemplary shown in an RX scenario around 900 MHz. The strong blockers (top figure) are attenuated by an RF bandpass filter (bottom figure) with a bandwidth of 20 MHz, achieving more than 40 dB rejection of the blockers while only slightly attenuating the wanted signal."
+#| fig-cap: "Filtering of wanted channel amid strong unwanted blockers. An example is shown in an RX scenario around 900 MHz. The strong blockers (top figure) are attenuated by an RF bandpass filter (bottom figure) with a bandwidth of 20 MHz, achieving more than 40 dB rejection of the blockers while only slightly attenuating the wanted signal."
 
 import numpy as np
 import matplotlib.pyplot as plt

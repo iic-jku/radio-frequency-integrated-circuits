@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-trx-supersimple
 #| echo: false
-#| fig-cap: "Block diagram of a super simple TX and RX." 
+#| fig-cap: "Block diagram of a super-simple TX and RX." 
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp

@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-1db-compression-point
 #| echo: false
-#| fig-cap: "1dB compression point test showing input vs output power relationship and the definition of P1dB."
+#| fig-cap: "1-dB compression point test showing input vs. output power relationship and the definition of P1dB."
 
 import numpy as np
 import matplotlib.pyplot as plt

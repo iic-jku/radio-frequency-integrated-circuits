@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-pd-xor-diagram
 #| echo: false
-#| fig-cap: "Input and output waveforms of an XOR-based phase-detector."
+#| fig-cap: "Input and output waveforms of an XOR-based phase detector."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.logic as lgc

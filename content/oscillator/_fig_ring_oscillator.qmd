@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-ring-oscillator
 #| echo: false
-#| fig-cap: "Three stage single-ended ring oscillator."
+#| fig-cap: "Three-stage single-ended ring oscillator."
 #| 
 import schemdraw as sd
 import schemdraw.elements as elm

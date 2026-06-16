@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-lna-naive-noise-input
 #| echo: false
-#| fig-cap: "Eqivalent circuit to calculate the output noise from the input."
+#| fig-cap: "Equivalent circuit to calculate the output noise from the input."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp

@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-switched-capacitor
 #| echo: false
-#| fig-cap: "An switched capacitor for use in an oscillator switched capacitor tuning bank. The bias resistors tie the drain/source nodes to ground during turn on of $M_1$ (for low on resistance), while they tie the drain/source nodes to VDD during turn off of $M_1$ to prevent accidential turn on of the drain/source to bulk diodes of $M_1$."
+#| fig-cap: "A switched capacitor for use in an oscillator's switched-capacitor tuning bank. The bias resistors tie the drain/source nodes to ground during turn-on of $M_1$ (for low on resistance), while they tie the drain/source nodes to VDD during turn-off of $M_1$ to prevent accidental turn-on of the drain/source to bulk diodes of $M_1$."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.logic as lgc

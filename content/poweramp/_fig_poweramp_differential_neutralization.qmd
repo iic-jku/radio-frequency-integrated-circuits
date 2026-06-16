@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-poweramp-differential-neutralization
 #| echo: false
-#| fig-cap: "A generic differential power amplifier with neutralization for wide-band operation and improved stability."
+#| fig-cap: "A generic differential power amplifier with neutralization for wideband operation and improved stability."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp

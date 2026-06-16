@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-pll-tdc
 #| echo: false
-#| fig-cap: "Basic TDC implementation as a delay line with parallel capture flip-flops. The TDC delay resolution is limited two inverter delays."
+#| fig-cap: "Basic TDC implementation as a delay line with parallel capture flip-flops. The TDC delay resolution is limited to two inverter delays."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.logic as lgc
