@@ -2,6 +2,7 @@
 
 [![Quarto Publish](https://github.com/iic-jku/radio-frequency-integrated-circuits/actions/workflows/quarto-publish.yml/badge.svg?branch=main)](https://github.com/iic-jku/radio-frequency-integrated-circuits/actions/workflows/quarto-publish.yml)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17563943.svg)](https://doi.org/10.5281/zenodo.17563943)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-online-brightgreen)](https://iic-jku.github.io/radio-frequency-integrated-circuits/)
 
 **(c) 2025-2026 Harald Pretl and co-authors, Department for Integrated Circuits (ICD), Johannes Kepler University, Linz (JKU)**
 
