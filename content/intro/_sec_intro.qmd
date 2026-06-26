@@ -16,7 +16,7 @@ limitations under the License.
 
 # Introduction {#sec-intro}
 
-This is the material for an introductory radio-frequency integrated circuits course. The contents are largely based on [@Razavi_RFIC] and [@Darabi_RFIC]; these two books are an excellent introduction to this topic and are highly recommended! For a general introduction to RF and microwave, [@Pozar_RF] is a great read!
+This is the material for an introductory radio-frequency integrated circuits course. The contents are largely based on [@Razavi_RFIC; @Darabi_RFIC]; these two books are an excellent introduction to this topic and are highly recommended! For a general introduction to RF and microwave, [@Pozar_RF] is a great read!
 
 It is assumed that readers are familiar with the contents of this [Analog Circuit Design](https://iic-jku.github.io/analog-circuit-design/aicd.html) course.
 
@@ -25,49 +25,49 @@ All course material (source code of this document, Jupyter notebooks for calcula
 
 Please feel free to submit [pull requests](https://github.com/iic-jku/radio-frequency-integrated-circuits/pulls) to fix typos or add content! If you want to discuss something that is not clear, please [open an issue](https://github.com/iic-jku/radio-frequency-integrated-circuits/issues/new).
 
-The production of this document would be impossible without these (and many more) great open-source software products: `VS Code`, `Quarto`, `Pandoc`, `LaTeX`, `Typst`, `Jupyter Notebook`, `Python`, `Xschem`, `ngspice`, `CACE`, `pygmid`, `schemdraw`, `Numpy`, `Scipy`, `Matplotlib`, `Pandas`, `Git`, `Docker`, `Ubuntu`, `Linux`, ...
+The production of this document would be impossible without these (and many more) great open-source software products: `VS Code`, `Quarto`, `Pandoc`, `LaTeX`, `Typst`, `Jupyter Notebook`, `Python`, `Xschem`, `ngspice`, `CACE`, `pygmid`, `schemdraw`, `Numpy`, `Scipy`, `Matplotlib`, `Pandas`, `Git`, `Docker`, `Ubuntu`, `GNU/Linux`, ...
 :::
 
 ## Wireless Transmission {#sec-intro-wireless}
 
-In wireless transmission, we usually want to transmit data via a transmitter (TX) and a connected antenna to a receiver (RX) using an electromagnetic (EM) wave. This arrangement is shown in [@fig-simple-wireless-system].
+In wireless transmission, we usually want to transmit data from a transmitter (TX) and its connected antenna towards a receiver (RX) using an electromagnetic (EM) wave. This arrangement is shown in [@fig-simple-wireless-system].
 
 {{< include /content/intro/_fig_wireless_system.qmd >}}
 
-Unfortunately, wireless transmission is hard. The wireless channel, i.e., the usage of electromagnetic waves to transmit information from a transmitter to a receiver, while tremendously useful, unfortunately has quite a few undesired features:
+Unfortunately, wireless transmission is hard. The wireless channel, i.e., the usage of electromagnetic waves to transmit information from a transmitter to a receiver, while tremendously useful, has quite a few undesired features:
 
-- The wireless channel is shared between all users.
+- The wireless channel is shared between _all_ users.
 - As a consequence, the available bandwidth is shared; this means that bandwidth is a scarce resource.
 - The wireless channel has significant losses.
 - The channel is time variant, as usually the transmitter and/or the receiver move, and/or the environment changes.
 
-In order to estimate the power $P_\mathrm{R}$ of the wireless transmission at the receiver, we can use Friis' transmission formula [@Pozar_RF]:
+In order to estimate the received power $P_\mathrm{R}$ from a wireless transmission, we can use **Friis' transmission formula** [@Pozar_RF]:
 
 $$
 P_\mathrm{R} = \frac{P_\mathrm{T}}{4 \pi d^2} \cdot A_\mathrm{R} = P_\mathrm{T} \cdot \frac{A_\mathrm{R} \cdot A_\mathrm{T}}{d^2 \lambda^2}
 $$ {#eq-friis-transmission}
 
-Here, $A_\mathrm{R}$ (and $A_\mathrm{T}$) is the effective area of the receive/transmit antenna, while $d$ is the distance (line of sight) between the two antennas. The effective area of an antenna depends on the type and construction, but generally we can say that
+Here, $A_\mathrm{R}$/$A_\mathrm{T}$ is the effective area of the receive/transmit antenna, while $d$ is the distance (line of sight) between the two antennas, and $\lambda$ is the wavelength of the EM wave. The effective area of an antenna depends on the type and construction, but generally we can say that
 
 $$
 A \propto \lambda^2
 $$
 
-For an isotropic antenna (a theoretical construct where the radiation is equal in all directions) $A = \lambda^2 / (4 \pi)$, while for a $\lambda/2$-dipole $A = 0.13 \lambda^2$. Of course, the speed of light $c$ relates frequency $f$ and wavelength $\lambda$ of an electromagnetic wave by
+For an isotropic antenna (a theoretical construct where the radiation is of equal strength in all directions) $A = \lambda^2 / (4 \pi)$, while for a $\lambda/2$-dipole $A = 0.13 \lambda^2$. Of course, the speed of light $c = 3 \times 10^{8}\,\text{m/s}$ relates frequency $f$ and the wavelength $\lambda$ of an electromagnetic wave by
 
 $$
 c = \lambda f.
 $$
 
-Generally speaking, the size of an electromagnetic antenna is proportional to the wavelength of the EM wave used for transmission. For many devices, we seek antennas on the order of a few centimeters, and this is why frequencies in the hundreds of MHz to GHz are so popular. [@tbl-rf-applications] lists a few typical applications and their frequency and wavelength.
+Generally speaking, the size of an electromagnetic antenna is proportional to the wavelength of the EM wave used for transmission. For many devices, we seek antennas with dimensions on the order of a few centimeters, and this is why frequencies in the hundreds of MHz to GHz are so popular. [@tbl-rf-applications] lists a few typical applications and their frequencies and wavelengths.
 
 | Application     | Frequency         | Wavelength           |
 |:----------------|-------------------|----------------------|
-| FM Radio        | 88 MHz to 108 MHz | 3.4 m downto 2.8 m   |
+| FM Radio        | 88 MHz to 108 MHz | 3.4 m down to 2.8 m  |
 | WiFi (lowband)  | 2.4 GHz           | 12.5 cm              |
 | WiFi (highband) | 5 GHz             | 6 cm                 |
 | Bluetooth       | 2.4 GHz           | 12.5 cm              |
-| Cellular        | 0.6 GHz to 5 GHz  | 50 cm downto 6 cm    |
+| Cellular        | 0.6 GHz to 5 GHz  | 50 cm down to 6 cm   |
 | GNSS            | 1.575 GHz         | 19 cm                |
 : Typical RF applications with their operating frequencies and corresponding wavelengths {#tbl-rf-applications}
 
@@ -77,12 +77,12 @@ As you can see in [@tbl-rf-applications], many of these antennas would not fit i
 ## Wavelength Calculation
 Let's calculate the wavelength for a Bluetooth signal at 2.4 GHz. Given:
 
-- Frequency $f = 2.4$ GHz $= 2.4 \times 10^9$ Hz  
-- Speed of light $c = 3 \times 10^8$ m/s
+- Frequency $f = 2.4\,\text{GHz} = 2.4 \times 10^9\,\text{Hz}$  
+- Speed of light $c = 3 \times 10^8\,\text{m/s}$
 
 Using the relationship $c = \lambda f$, we can solve for wavelength:
 
-$$\lambda = \frac{c}{f} = \frac{3 \times 10^8 \text{ m/s}}{2.4 \times 10^9 \text{ Hz}} = 0.125 \text{ m} = 12.5 \text{ cm}$$
+$$\lambda = \frac{c}{f} = \frac{3 \times 10^8\,\text{m/s}}{2.4 \times 10^9\,\text{Hz}} = 0.125\,\text{m} = 12.5\,\text{cm}$$
 
 This means that a quarter-wavelength monopole antenna for 2.4 GHz Bluetooth would be approximately 3.1 cm long, which easily fits into most mobile devices.
 :::
@@ -93,14 +93,16 @@ $$
 P|_\text{dBm} = 10 \cdot \log_{10} \left( \frac{P|_\text{W}}{1\,\text{mW}} \right)
 $$ {#eq-dbm}
 
+which is a logarithmic measure of power relative to 1 milliwatt. For example, 1 W = 30 dBm, 100 mW = 20 dBm, and 1 mW = 0 dBm.
+
 ::: {#nte-wireless-attenuation .callout-note}
 ## Wireless Transmission
 
 We use the following parameters:
 
-- Transmit power $P_\mathrm{T} = 1$ W
-- Frequency $f = 2.4$ GHz
-- Communication distance $d = 10$ km
+- Transmit power $P_\mathrm{T} = 1\,\text{W}$
+- Frequency $f = 2.4\,\text{GHz}$
+- Communication distance $d = 10\,\text{km}$
 - Using $\lambda/2$ dipoles on both ends
 
 Using [@eq-friis-transmission] we calculate
@@ -112,26 +114,26 @@ $$
 With the transmit power of 1 W = 30 dBm we have an attenuation of 116 dB! This is a very large number!
 :::
 
-The loss we calculated in @nte-wireless-attenuation is called the free-space path loss (FSPL). It is the minimum loss we can expect in a wireless communication system. In reality, the situation is often even worse. The free-space path loss $\text{FSPL}$ (in dB) can be calculated as
+The loss we calculated in @nte-wireless-attenuation is called the **free-space path loss (FSPL)**. It is the minimum loss we can expect in a wireless communication system. In reality, the situation is often even worse. The FSPL (in dB) can be calculated as
 
 $$
 \text{FSPL} = 20 \cdot \log_{10}(d / \text{m}) + 20 \cdot \log_{10}(f / \text{Hz}) + 20 \cdot \log_{10} \left( \frac{4\pi}{c} \text{m/s} \right).
 $$ {#eq-fspl}
 
-@eq-fspl can be readily derived from @eq-friis-transmission and @eq-dbm assuming isotropic antennas at transmitter and receiver. Using @eq-fspl we can easily calculate the FSPL for different distances and frequencies. The results are shown in @fig-free-space-path-loss. It should be noted that the FSPL increases by 20 dB per decade of distance and 20 dB per decade of frequency, making higher frequencies and longer distances very challenging.
+@eq-fspl can be readily derived from @eq-friis-transmission and @eq-dbm assuming isotropic antennas at transmitter and receiver. Using @eq-fspl we can calculate the FSPL for different distances $d$ and frequencies $f$. The results are shown in @fig-free-space-path-loss. It should be noted that the FSPL increases by 20 dB per decade of distance and 20 dB per decade of frequency, making the use of higher frequencies and longer distances very challenging.
 
 {{< include /content/intro/_fig_free_space_path_loss.qmd >}}
 
 As dire as the situation of @fig-free-space-path-loss already looks, these are not even all the factors to consider:
 
 - The given attenuation is for line-of-sight paths; often, the attenuation is significantly higher than this due to blockage by buildings, mountains, rain, or foliage.
-- In the absence of a direct line-of-sight path, the EM wave is redirected by reflections, causing additional attenuation, and potential destructive interference by multi-path reception.
+- In the absence of a direct line-of-sight path, the EM wave is redirected by reflections, causing additional attenuation and potential destructive interference due to multi-path reception.
 
 The consequences of this are (among others):
 
-- The transmitter needs to generate enough **transmit power** to overcome the transmission loss; this has to be done often with high **efficiency**, as the transmit device is battery operated or limited by cooling.
+- The transmitter needs to generate enough **transmit power** to overcome the transmission loss; this has to be done with high **efficiency**, as the transmit device is battery operated or limited by cooling.
 - The receiver has to be able to process **weak signals**, i.e., the **noise** level of the signal processing has to be very low.
-- Often, the receive signal is very weak, while there are strong signals at other frequencies (i.e., other wireless transmitters are located close to the receiver). This means the receiver has to be able to process a weak signal while simultaneously tolerating **large interfering signals** (called blockers).
+- Often, the receive signal is very weak, while there are strong signals at other frequencies (i.e., other wireless transmitters are located close to the receiver). This means the receiver has to be able to process a weak signal while simultaneously tolerating **large interfering signals** (called **blockers**).
 - Since the frequency spectrum is shared among many users and wireless applications, the transmit information has to be packed efficiently into a **small bandwidth**.
 - Very often, wireless devices are battery-operated. This means transmit and receive functions have to be implemented using **minimum power consumption**.
 
@@ -139,7 +141,7 @@ As stated in the beginning, designing wireless systems is hard.
 
 ## Wireless Standards {#sec-intro-standards}
 
-In order to allow communication between different devices, different operators, and different manufacturers, wireless communication is standardized. There are many different standards, each with its own characteristics. Wireless standards define every aspect of wireless communication, and can be documents with hundreds or thousands of pages. Here, we mainly focus on the radio-frequency and analog aspects of wireless standards. Summarized in @tbl-wireless-standards are a few popular wireless standards with their main characteristics.
+In order to allow communication between different devices, different operators, and different manufacturers, wireless communication is usually standardized. There are many different standards, each with its own characteristics. Wireless standards define every aspect of wireless communication, and can be documents of hundreds or thousands of pages. Here, we mainly focus on the radio-frequency and analog aspects of wireless standards. Summarized in @tbl-wireless-standards are a few popular wireless standards with their main characteristics.
 
 | Standard  | GSM (2G) | WCDMA (3G) | LTE (4G)<br>**5G NR** | WiFi | Bluetooth | GNSS |
 |:----------|-----|--------|-----------|-------|-----------|------|
@@ -148,13 +150,15 @@ In order to allow communication between different devices, different operators, 
 | **Transmission/ multiple access** | TDMA, FDMA | DS-CDMA | OFDMA (DL**+UL**), SC-FDMA/**DFT-s-OFDM (UL)** | OFDM, CSMA/CA | FHSS | CDMA |
 | **Duplex** | FDD | FDD | FDD, TDD | TDD | TDD | n/a |
 | **Channel bandwidth** | 200 kHz | 5 MHz | 1.4, 3, 5, 10, 15, 20, ..., **100 MHz (FR1), 400 MHz (FR2)** | 10, 20, 40, 80, 160, 320 MHz | 1 MHz | 16...24 MHz |
-| **Symbol rate** | 270.833 ksym/s | 3.84 Msym/s | 15/**30/60** ksym/s | 312.5 ksym/s | 1 Msym/s | 50 sym/s |
+| **Symbol rate**[^sym-rate] | 270.833 ksym/s | 3.84 Msym/s | 15/**30/60** ksym/s | 312.5 ksym/s | 1 Msym/s | 50 sym/s |
 | **Pulse shaping** | Gaussian (BT=0.3) | Root Raised Cosine ($\alpha$=0.22) | Rectangular | Rectangular | Gaussian (BT=0.5) | Rectangular |
 | **Transmit power** | 1...2 W | 250 mW | 200 mW (FDD), 400 mW (TDD) | 100 mW | 1...100 mW | n/a |
 | **PAR (UL)** | 0 dB (GMSK), 3 dB (8PSK) | 3...8 dB | 6...8 dB | Up to 12 dB | 0 dB (GFSK), 3 dB (8DPSK) | n/a |
 | **MIMO** | no | Not realized (DL 2x2) | DL 4x4 (up to 8x8) | 2x2 (up to 8x8) | no | no |
 | **Channel bond** | no | Up to 4x5 MHz | Up to 7x20/4x100 MHz | Up to 80+80+80+80 MHz | no | no |
 : Comparison of wireless communication standards {#tbl-wireless-standards}
+
+[^sym-rate]: For the OFDM-based standards (LTE/5G NR, WiFi), the listed values correspond to the subcarrier spacing (numerology $\Delta f$), which equals the per-subcarrier symbol rate; they are not the aggregate symbol rate of the full signal.
 
 During this course, we will learn what these terms mean and how they impact the design of RF integrated circuits.
 
