@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2026-06-25">
+<meta name="dcterms.date" content="2026-06-26">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -506,7 +506,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 25, 2026</p>
+      <p class="date">June 26, 2026</p>
     </div>
   </div>
   
@@ -523,7 +523,7 @@ window.Quarto = {
 </div>
 <section id="sec-intro" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>This is the material for an introductory radio-frequency integrated circuits course. The contents are largely based on <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span> and <span class="citation" data-cites="Darabi_RFIC">(<a href="#ref-Darabi_RFIC" role="doc-biblioref">Darabi 2020</a>)</span>; these two books are an excellent introduction to this topic and are highly recommended! For a general introduction to RF and microwave, <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span> is a great read!</p>
+<p>This is the material for an introductory radio-frequency integrated circuits course. The contents are largely based on <span class="citation" data-cites="Razavi_RFIC Darabi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>; <a href="#ref-Darabi_RFIC" role="doc-biblioref">Darabi 2020</a>)</span>; these two books are an excellent introduction to this topic and are highly recommended! For a general introduction to RF and microwave, <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span> is a great read!</p>
 <p>It is assumed that readers are familiar with the contents of this <a href="https://iic-jku.github.io/analog-circuit-design/aicd.html">Analog Circuit Design</a> course.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -537,12 +537,12 @@ Important
 <div class="callout-body-container callout-body">
 <p>All course material (source code of this document, Jupyter notebooks for calculations, Xschem circuits, etc.) is made publicly available on GitHub (<a href="https://github.com/iic-jku/radio-frequency-integrated-circuits">follow this link</a>) and shared under the Apache-2.0 license.</p>
 <p>Please feel free to submit <a href="https://github.com/iic-jku/radio-frequency-integrated-circuits/pulls">pull requests</a> to fix typos or add content! If you want to discuss something that is not clear, please <a href="https://github.com/iic-jku/radio-frequency-integrated-circuits/issues/new">open an issue</a>.</p>
-<p>The production of this document would be impossible without these (and many more) great open-source software products: <code>VS Code</code>, <code>Quarto</code>, <code>Pandoc</code>, <code>LaTeX</code>, <code>Typst</code>, <code>Jupyter Notebook</code>, <code>Python</code>, <code>Xschem</code>, <code>ngspice</code>, <code>CACE</code>, <code>pygmid</code>, <code>schemdraw</code>, <code>Numpy</code>, <code>Scipy</code>, <code>Matplotlib</code>, <code>Pandas</code>, <code>Git</code>, <code>Docker</code>, <code>Ubuntu</code>, <code>Linux</code>, …</p>
+<p>The production of this document would be impossible without these (and many more) great open-source software products: <code>VS Code</code>, <code>Quarto</code>, <code>Pandoc</code>, <code>LaTeX</code>, <code>Typst</code>, <code>Jupyter Notebook</code>, <code>Python</code>, <code>Xschem</code>, <code>ngspice</code>, <code>CACE</code>, <code>pygmid</code>, <code>schemdraw</code>, <code>Numpy</code>, <code>Scipy</code>, <code>Matplotlib</code>, <code>Pandas</code>, <code>Git</code>, <code>Docker</code>, <code>Ubuntu</code>, <code>GNU/Linux</code>, …</p>
 </div>
 </div>
 <section id="sec-intro-wireless" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="sec-intro-wireless"><span class="header-section-number">1.1</span> Wireless Transmission</h2>
-<p>In wireless transmission, we usually want to transmit data via a transmitter (TX) and a connected antenna to a receiver (RX) using an electromagnetic (EM) wave. This arrangement is shown in <a href="#fig-simple-wireless-system" class="quarto-xref">Figure&nbsp;1</a>.</p>
+<p>In wireless transmission, we usually want to transmit data from a transmitter (TX) and its connected antenna towards a receiver (RX) using an electromagnetic (EM) wave. This arrangement is shown in <a href="#fig-simple-wireless-system" class="quarto-xref">Figure&nbsp;1</a>.</p>
 <div id="cell-fig-simple-wireless-system" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div id="fig-simple-wireless-system" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -557,26 +557,26 @@ Figure&nbsp;1: The block diagram of a simple wireless system.
 </div>
 </div>
 </div>
-<p>Unfortunately, wireless transmission is hard. The wireless channel, i.e., the usage of electromagnetic waves to transmit information from a transmitter to a receiver, while tremendously useful, unfortunately has quite a few undesired features:</p>
+<p>Unfortunately, wireless transmission is hard. The wireless channel, i.e., the usage of electromagnetic waves to transmit information from a transmitter to a receiver, while tremendously useful, has quite a few undesired features:</p>
 <ul>
-<li>The wireless channel is shared between all users.</li>
+<li>The wireless channel is shared between <em>all</em> users.</li>
 <li>As a consequence, the available bandwidth is shared; this means that bandwidth is a scarce resource.</li>
 <li>The wireless channel has significant losses.</li>
 <li>The channel is time variant, as usually the transmitter and/or the receiver move, and/or the environment changes.</li>
 </ul>
-<p>In order to estimate the power <span class="math inline">\(P_\mathrm{R}\)</span> of the wireless transmission at the receiver, we can use Friis’ transmission formula <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span>:</p>
+<p>In order to estimate the received power <span class="math inline">\(P_\mathrm{R}\)</span> from a wireless transmission, we can use <strong>Friis’ transmission formula</strong> <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span>:</p>
 <p><span id="eq-friis-transmission"><span class="math display">\[
 P_\mathrm{R} = \frac{P_\mathrm{T}}{4 \pi d^2} \cdot A_\mathrm{R} = P_\mathrm{T} \cdot \frac{A_\mathrm{R} \cdot A_\mathrm{T}}{d^2 \lambda^2}
 \tag{1}\]</span></span></p>
-<p>Here, <span class="math inline">\(A_\mathrm{R}\)</span> (and <span class="math inline">\(A_\mathrm{T}\)</span>) is the effective area of the receive/transmit antenna, while <span class="math inline">\(d\)</span> is the distance (line of sight) between the two antennas. The effective area of an antenna depends on the type and construction, but generally we can say that</p>
+<p>Here, <span class="math inline">\(A_\mathrm{R}\)</span>/<span class="math inline">\(A_\mathrm{T}\)</span> is the effective area of the receive/transmit antenna, while <span class="math inline">\(d\)</span> is the distance (line of sight) between the two antennas, and <span class="math inline">\(\lambda\)</span> is the wavelength of the EM wave. The effective area of an antenna depends on the type and construction, but generally we can say that</p>
 <p><span class="math display">\[
 A \propto \lambda^2
 \]</span></p>
-<p>For an isotropic antenna (a theoretical construct where the radiation is equal in all directions) <span class="math inline">\(A = \lambda^2 / (4 \pi)\)</span>, while for a <span class="math inline">\(\lambda/2\)</span>-dipole <span class="math inline">\(A = 0.13 \lambda^2\)</span>. Of course, the speed of light <span class="math inline">\(c\)</span> relates frequency <span class="math inline">\(f\)</span> and wavelength <span class="math inline">\(\lambda\)</span> of an electromagnetic wave by</p>
+<p>For an isotropic antenna (a theoretical construct where the radiation is of equal strength in all directions) <span class="math inline">\(A = \lambda^2 / (4 \pi)\)</span>, while for a <span class="math inline">\(\lambda/2\)</span>-dipole <span class="math inline">\(A = 0.13 \lambda^2\)</span>. Of course, the speed of light <span class="math inline">\(c = 3 \times 10^{8}\,\text{m/s}\)</span> relates frequency <span class="math inline">\(f\)</span> and the wavelength <span class="math inline">\(\lambda\)</span> of an electromagnetic wave by</p>
 <p><span class="math display">\[
 c = \lambda f.
 \]</span></p>
-<p>Generally speaking, the size of an electromagnetic antenna is proportional to the wavelength of the EM wave used for transmission. For many devices, we seek antennas on the order of a few centimeters, and this is why frequencies in the hundreds of MHz to GHz are so popular. <a href="#tbl-rf-applications" class="quarto-xref">Table&nbsp;1</a> lists a few typical applications and their frequency and wavelength.</p>
+<p>Generally speaking, the size of an electromagnetic antenna is proportional to the wavelength of the EM wave used for transmission. For many devices, we seek antennas with dimensions on the order of a few centimeters, and this is why frequencies in the hundreds of MHz to GHz are so popular. <a href="#tbl-rf-applications" class="quarto-xref">Table&nbsp;1</a> lists a few typical applications and their frequencies and wavelengths.</p>
 <div id="tbl-rf-applications" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-rf-applications-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -595,7 +595,7 @@ Table&nbsp;1: Typical RF applications with their operating frequencies and corre
 <tr class="odd">
 <td style="text-align: left;">FM Radio</td>
 <td>88 MHz to 108 MHz</td>
-<td>3.4 m downto 2.8 m</td>
+<td>3.4 m down to 2.8 m</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">WiFi (lowband)</td>
@@ -615,7 +615,7 @@ Table&nbsp;1: Typical RF applications with their operating frequencies and corre
 <tr class="odd">
 <td style="text-align: left;">Cellular</td>
 <td>0.6 GHz to 5 GHz</td>
-<td>50 cm downto 6 cm</td>
+<td>50 cm down to 6 cm</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">GNSS</td>
@@ -640,12 +640,12 @@ Note&nbsp;1: Wavelength Calculation
 <div class="callout-body-container callout-body">
 <p>Let’s calculate the wavelength for a Bluetooth signal at 2.4 GHz. Given:</p>
 <ul>
-<li>Frequency <span class="math inline">\(f = 2.4\)</span> GHz <span class="math inline">\(= 2.4 \times 10^9\)</span> Hz<br>
+<li>Frequency <span class="math inline">\(f = 2.4\,\text{GHz} = 2.4 \times 10^9\,\text{Hz}\)</span><br>
 </li>
-<li>Speed of light <span class="math inline">\(c = 3 \times 10^8\)</span> m/s</li>
+<li>Speed of light <span class="math inline">\(c = 3 \times 10^8\,\text{m/s}\)</span></li>
 </ul>
 <p>Using the relationship <span class="math inline">\(c = \lambda f\)</span>, we can solve for wavelength:</p>
-<p><span class="math display">\[\lambda = \frac{c}{f} = \frac{3 \times 10^8 \text{ m/s}}{2.4 \times 10^9 \text{ Hz}} = 0.125 \text{ m} = 12.5 \text{ cm}\]</span></p>
+<p><span class="math display">\[\lambda = \frac{c}{f} = \frac{3 \times 10^8\,\text{m/s}}{2.4 \times 10^9\,\text{Hz}} = 0.125\,\text{m} = 12.5\,\text{cm}\]</span></p>
 <p>This means that a quarter-wavelength monopole antenna for 2.4 GHz Bluetooth would be approximately 3.1 cm long, which easily fits into most mobile devices.</p>
 </div>
 </div>
@@ -653,6 +653,7 @@ Note&nbsp;1: Wavelength Calculation
 <p><span id="eq-dbm"><span class="math display">\[
 P|_\text{dBm} = 10 \cdot \log_{10} \left( \frac{P|_\text{W}}{1\,\text{mW}} \right)
 \tag{2}\]</span></span></p>
+<p>which is a logarithmic measure of power relative to 1 milliwatt. For example, 1 W = 30 dBm, 100 mW = 20 dBm, and 1 mW = 0 dBm.</p>
 <div id="nte-wireless-attenuation" class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -665,9 +666,9 @@ Note&nbsp;2: Wireless Transmission
 <div class="callout-body-container callout-body">
 <p>We use the following parameters:</p>
 <ul>
-<li>Transmit power <span class="math inline">\(P_\mathrm{T} = 1\)</span> W</li>
-<li>Frequency <span class="math inline">\(f = 2.4\)</span> GHz</li>
-<li>Communication distance <span class="math inline">\(d = 10\)</span> km</li>
+<li>Transmit power <span class="math inline">\(P_\mathrm{T} = 1\,\text{W}\)</span></li>
+<li>Frequency <span class="math inline">\(f = 2.4\,\text{GHz}\)</span></li>
+<li>Communication distance <span class="math inline">\(d = 10\,\text{km}\)</span></li>
 <li>Using <span class="math inline">\(\lambda/2\)</span> dipoles on both ends</li>
 </ul>
 <p>Using <a href="#eq-friis-transmission" class="quarto-xref">Equation&nbsp;1</a> we calculate</p>
@@ -677,11 +678,11 @@ P_\mathrm{R} = P_\mathrm{T} \cdot \frac{0.13 \lambda^2 \cdot 0.13 \lambda^2}{d^2
 <p>With the transmit power of 1 W = 30 dBm we have an attenuation of 116 dB! This is a very large number!</p>
 </div>
 </div>
-<p>The loss we calculated in <a href="#nte-wireless-attenuation" class="quarto-xref">Note&nbsp;2</a> is called the free-space path loss (FSPL). It is the minimum loss we can expect in a wireless communication system. In reality, the situation is often even worse. The free-space path loss <span class="math inline">\(\text{FSPL}\)</span> (in dB) can be calculated as</p>
+<p>The loss we calculated in <a href="#nte-wireless-attenuation" class="quarto-xref">Note&nbsp;2</a> is called the <strong>free-space path loss (FSPL)</strong>. It is the minimum loss we can expect in a wireless communication system. In reality, the situation is often even worse. The FSPL (in dB) can be calculated as</p>
 <p><span id="eq-fspl"><span class="math display">\[
 \text{FSPL} = 20 \cdot \log_{10}(d / \text{m}) + 20 \cdot \log_{10}(f / \text{Hz}) + 20 \cdot \log_{10} \left( \frac{4\pi}{c} \text{m/s} \right).
 \tag{3}\]</span></span></p>
-<p><a href="#eq-fspl" class="quarto-xref">Equation&nbsp;3</a> can be readily derived from <a href="#eq-friis-transmission" class="quarto-xref">Equation&nbsp;1</a> and <a href="#eq-dbm" class="quarto-xref">Equation&nbsp;2</a> assuming isotropic antennas at transmitter and receiver. Using <a href="#eq-fspl" class="quarto-xref">Equation&nbsp;3</a> we can easily calculate the FSPL for different distances and frequencies. The results are shown in <a href="#fig-free-space-path-loss" class="quarto-xref">Figure&nbsp;2</a>. It should be noted that the FSPL increases by 20 dB per decade of distance and 20 dB per decade of frequency, making higher frequencies and longer distances very challenging.</p>
+<p><a href="#eq-fspl" class="quarto-xref">Equation&nbsp;3</a> can be readily derived from <a href="#eq-friis-transmission" class="quarto-xref">Equation&nbsp;1</a> and <a href="#eq-dbm" class="quarto-xref">Equation&nbsp;2</a> assuming isotropic antennas at transmitter and receiver. Using <a href="#eq-fspl" class="quarto-xref">Equation&nbsp;3</a> we can calculate the FSPL for different distances <span class="math inline">\(d\)</span> and frequencies <span class="math inline">\(f\)</span>. The results are shown in <a href="#fig-free-space-path-loss" class="quarto-xref">Figure&nbsp;2</a>. It should be noted that the FSPL increases by 20 dB per decade of distance and 20 dB per decade of frequency, making the use of higher frequencies and longer distances very challenging.</p>
 <div id="cell-fig-free-space-path-loss" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div id="fig-free-space-path-loss" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -699,13 +700,13 @@ Figure&nbsp;2: Free space path loss vs.&nbsp;distance for different frequencies 
 <p>As dire as the situation of <a href="#fig-free-space-path-loss" class="quarto-xref">Figure&nbsp;2</a> already looks, these are not even all the factors to consider:</p>
 <ul>
 <li>The given attenuation is for line-of-sight paths; often, the attenuation is significantly higher than this due to blockage by buildings, mountains, rain, or foliage.</li>
-<li>In the absence of a direct line-of-sight path, the EM wave is redirected by reflections, causing additional attenuation, and potential destructive interference by multi-path reception.</li>
+<li>In the absence of a direct line-of-sight path, the EM wave is redirected by reflections, causing additional attenuation and potential destructive interference due to multi-path reception.</li>
 </ul>
 <p>The consequences of this are (among others):</p>
 <ul>
-<li>The transmitter needs to generate enough <strong>transmit power</strong> to overcome the transmission loss; this has to be done often with high <strong>efficiency</strong>, as the transmit device is battery operated or limited by cooling.</li>
+<li>The transmitter needs to generate enough <strong>transmit power</strong> to overcome the transmission loss; this has to be done with high <strong>efficiency</strong>, as the transmit device is battery operated or limited by cooling.</li>
 <li>The receiver has to be able to process <strong>weak signals</strong>, i.e., the <strong>noise</strong> level of the signal processing has to be very low.</li>
-<li>Often, the receive signal is very weak, while there are strong signals at other frequencies (i.e., other wireless transmitters are located close to the receiver). This means the receiver has to be able to process a weak signal while simultaneously tolerating <strong>large interfering signals</strong> (called blockers).</li>
+<li>Often, the receive signal is very weak, while there are strong signals at other frequencies (i.e., other wireless transmitters are located close to the receiver). This means the receiver has to be able to process a weak signal while simultaneously tolerating <strong>large interfering signals</strong> (called <strong>blockers</strong>).</li>
 <li>Since the frequency spectrum is shared among many users and wireless applications, the transmit information has to be packed efficiently into a <strong>small bandwidth</strong>.</li>
 <li>Very often, wireless devices are battery-operated. This means transmit and receive functions have to be implemented using <strong>minimum power consumption</strong>.</li>
 </ul>
@@ -713,7 +714,7 @@ Figure&nbsp;2: Free space path loss vs.&nbsp;distance for different frequencies 
 </section>
 <section id="sec-intro-standards" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="sec-intro-standards"><span class="header-section-number">1.2</span> Wireless Standards</h2>
-<p>In order to allow communication between different devices, different operators, and different manufacturers, wireless communication is standardized. There are many different standards, each with its own characteristics. Wireless standards define every aspect of wireless communication, and can be documents with hundreds or thousands of pages. Here, we mainly focus on the radio-frequency and analog aspects of wireless standards. Summarized in <a href="#tbl-wireless-standards" class="quarto-xref">Table&nbsp;2</a> are a few popular wireless standards with their main characteristics.</p>
+<p>In order to allow communication between different devices, different operators, and different manufacturers, wireless communication is usually standardized. There are many different standards, each with its own characteristics. Wireless standards define every aspect of wireless communication, and can be documents of hundreds or thousands of pages. Here, we mainly focus on the radio-frequency and analog aspects of wireless standards. Summarized in <a href="#tbl-wireless-standards" class="quarto-xref">Table&nbsp;2</a> are a few popular wireless standards with their main characteristics.</p>
 <div id="tbl-wireless-standards" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-wireless-standards-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -788,7 +789,7 @@ Table&nbsp;2: Comparison of wireless communication standards
 <td>16…24 MHz</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>Symbol rate</strong></td>
+<td style="text-align: left;"><strong>Symbol rate</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></td>
 <td>270.833 ksym/s</td>
 <td>3.84 Msym/s</td>
 <td>15/<strong>30/60</strong> ksym/s</td>
@@ -4249,6 +4250,7 @@ Figure&nbsp;102: Block diagram of a typical transceiver (TRX) showing the main c
 </section>
 </section>
 
+
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-Andreani.2000" class="csl-entry" role="listitem">
 Andreani, P., and S. Mattisson. 2000. <span>“<span class="nocase">On the use of MOS varactors in RF VCOs</span>.”</span> <em>IEEE Journal of Solid-State Circuits</em> 35 (6): 905–10. <a href="https://doi.org/10.1109/4.845194">https://doi.org/10.1109/4.845194</a>.
@@ -4367,17 +4369,22 @@ Verghese, Nishath K., Timothy J. Schmerbeck, and David J. Allstot. 1995. <em>Sim
 <div id="ref-Yue.1998" class="csl-entry" role="listitem">
 Yue, C. P., and S. S. Wong. 1998. <span>“On-Chip Spiral Inductors with Patterned Ground Shields for <span>Si</span>-Based <span>RF</span> <span>ICs</span>.”</span> <em><span>IEEE</span> Journal of Solid-State Circuits</em> 33 (5): 743–52. <a href="https://doi.org/10.1109/4.668989">https://doi.org/10.1109/4.668989</a>.
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div>Apache-2.0 license</div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{pretl2026,
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>For the OFDM-based standards (LTE/5G NR, WiFi), the listed values correspond to the subcarrier spacing (numerology <span class="math inline">\(\Delta f\)</span>), which equals the per-subcarrier symbol rate; they are not the aggregate symbol rate of the full signal.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div>Apache-2.0 license</div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{pretl2026,
   author = {Pretl, Harald},
   title = {Radio-Frequency {Integrated} {Circuits}},
-  date = {2026-06-25},
+  date = {2026-06-26},
   url = {https://iic-jku.github.io/radio-frequency-integrated-circuits},
   doi = {10.5281/zenodo.17563943},
   langid = {en-US}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-pretl2026" class="csl-entry quarto-appendix-citeas" role="listitem">
 Pretl, Harald. 2026. <span>“Radio-Frequency Integrated Circuits.”</span>
-June 25. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
+June 26. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
