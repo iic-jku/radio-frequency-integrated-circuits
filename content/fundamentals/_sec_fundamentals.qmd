@@ -16,21 +16,21 @@ limitations under the License.
 
 # Fundamentals {#sec-fundamentals}
 
-In this section, we will discuss a few important concepts which will be instrumental in the further study of RF circuits and systems. As signals in RF circuits and systems are often limited on the top end by linearity, and on the bottom end by noise, we will discuss these two topics in some detail.
+In this section, we will discuss a few important concepts which will be instrumental in the further study of RF circuits and systems. As the dynamic range of signals in RF circuits and systems is often limited on the top end by linearity, and on the bottom end by noise, we will discuss these two topics in some detail.
 
 ## Channel Capacity {#sec-channel-capacity}
 
-In @sec-intro we have already discussed the fact that we need to pack information into a minimum bandwidth, as the available spectrum is limited. To appreciate the limits of information transfer, we need to understand how much information can be transmitted over a given bandwidth. This limit is given by the _Shannon-Hartley theorem_, which gives the maximum data rate $C$ (in bit/s) that can be transmitted over a communication channel with bandwidth $B$ (in Hz) and signal-to-noise ratio $\text{SNR}$ (with linear units):
+In @sec-intro we have already discussed the fact that we need to pack information into a minimum bandwidth, as the available spectrum is limited. To appreciate the limits of information transfer, we need to understand how much information can be transmitted over a given bandwidth. This limit is given by the **Shannon-Hartley theorem**, which states the maximum data rate $C$ (in bit/s) that can be transmitted over a communication channel with bandwidth $B$ (in Hz) and signal-to-noise ratio $\text{SNR}$ (in linear units):
 
 $$
 C = B \cdot \log_2(1 + \text{SNR})
 $$ {#eq-shannon-hartley}
 
-This formula gives us a theoretical upper limit on the data rate that can be achieved with a given bandwidth and SNR _under optimal conditions_. It is important to note that this limit is only achievable with ideal coding and modulation schemes, which are not practical in real-world systems. However, it provides a useful benchmark for evaluating the performance of communication systems.
+This formula provides us a theoretical upper limit on the data rate that can be achieved with a given bandwidth and SNR _under optimal conditions_. It is important to note that this limit is only achievable with ideal coding and modulation schemes, which are not practical in real-world systems. However, it provides a useful benchmark for evaluating the performance of communication systems.
 
 ::: {#nte-channel-limit .callout-note}
 ## Channel Capacity Example
-Let us calculate the channel capacity for a system with a bandwidth of 2 MHz and an SNR of 7 dB (the BW and minimum SNR of Bluetooth LE for 1 Mbps). First, we need to convert the SNR from dB to linear units:
+Let us calculate the channel capacity for a system with an RF bandwidth of 2 MHz and an SNR of 7 dB (the BW and minimum SNR of Bluetooth LE for 1 Mbps). First, we need to convert the SNR from dB to linear units:
 
 $$
 \text{SNR} = 10^{{7}/{10}} \approx 5
@@ -55,7 +55,7 @@ We are going to use a very simple, time-invariant model to study linearity, base
 ## Linearity and Memoryless Systems
 We use a **memoryless** (also called "instantaneous") nonlinear model to simplify the mathematics. A memoryless nonlinear system has the property that the output at time $t$ only depends on the input at time $t$.
 
-In contrast, a system **with memory** will have an output at time $t$ which depends on the input at time $t$ and also on past inputs (e.g., at times $t - \Delta T$, $t - 2 \Delta T$, etc.). Such a system can additionally be **time-variant**, meaning its behavior changes over time, which leads to quite a few very interesting and important phenomena! Examples of systems with memory are filters, which have a frequency-dependent response, or power amplifiers with thermal memory effects.
+In contrast, a system **with memory** will have an output at time $t$ which depends on the input at time $t$ and also on past inputs (e.g., at times $t - \Delta T, t - 2 \Delta T, \ldots, t - N \Delta T$). Such a system can additionally be **time-variant**, which means its behavior changes over time, which leads to quite a few very interesting and important phenomena! Examples of systems with memory are filters, which have a frequency-dependent response, or power amplifiers with thermal memory effects.
 :::
 
 We model a nonlinear circuit block with the input $x(t)$ and the output $y(t)$ with the following Taylor polynomial:
@@ -79,7 +79,7 @@ $$
 x(t) = A_0 \cos(\omega_0 t)
 $$
 
-and insert it into @eq-nonlinear-model. After some simple trigonometric manipulations we are at
+and insert it into @eq-nonlinear-model. After some simple trigonometric manipulations we arrive at
 
 $$
 \begin{split}
@@ -102,41 +102,39 @@ $$ {#eq-linearity-single-gain-fundamental}
 
 Looking at @eq-linearity-single and @eq-linearity-single-gain-fundamental, we can make a few interesting observations:
 
-- Even-order nonlinearities (due to $\alpha_2$ and $\alpha_4$) create low-frequency components; they effectively add frequency components stemming from the envelope $A_0$. If $A_0$ is a constant then this results in a dc term; if $A_0(t)$ is time-variant, it will create a squared and 4th-order version of it at low frequencies.
+- Even-order nonlinearities (due to $\alpha_2$ and $\alpha_4$) create low-frequency components; they effectively add frequency components stemming from the envelope $A_0$. If $A_0$ is a constant then this results in a dc term; if $A_0(t)$ is time-variant, it will create a squared and quadrupled version of it at low frequencies.
 - The $\alpha_1$-term is the gain of the circuit block.
 - Odd-order nonlinearities ($\alpha_3$ and $\alpha_5$) can impact the gain of the fundamental term passing through the block. Often $\alpha_3$ and $\alpha_5$ have the same sign, which is opposite to the sign of $\alpha_1$. This implies that the gain stays linear for small input powers. For larger input signal, the terms with $\alpha_3$ and $\alpha_5$ start to dominate, leading to gain compression or saturation effects, until the circuit block reaches a level of maximum output power. In some cases, $\alpha_3$ has the same sign as $\alpha_1$ but $\alpha_5$ has the opposite one, which leads to gain expansion: The gain would first demonstrate an overshoot at some input power level, until the term with $\alpha_5$ becomes dominant and the gain is compressed again.
 - Even- and odd-order nonlinearities create additional frequency components, so-called harmonics of the fundamental frequency. These harmonics are often unwanted, as they are far outside the wanted transmission frequency range, and need to be minimized, by either
-  1. using a lowpass filter to filter these harmonics, or
+  1. using a lowpass to filter these harmonics, or
   2. increasing the linearity, i.e., making the $\alpha_2$, $\alpha_3$, etc., small enough.
 
 The created harmonics are illustrated in @fig-harmonics. Note that measuring harmonics to quantify the nonlinearity metrics like $\alpha_2$ and $\alpha_3$ is often not very accurate, as these harmonics are often filtered in bandwidth-limited systems.
 
 {{< include /content/fundamentals/_fig_harmonics.qmd >}}
 
-How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal $x(t)$ in amplitude, and observe the output $y(t)$. If the observed gain drops by 1 dB from the small-signal value, we note the input power and call this point the **1 dB compression point** ($P_\mathrm{1dB}$). We should always add whether this 1 dB compression point is input- or output-referred to avoid ambiguity. The diagram in @fig-1db-compression-point shows this test ($\alpha_1 = 100$, $\alpha_3 = -0.2$).
+How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal $x(t)$ in amplitude, and observe the output $y(t)$. If the observed gain drops by 1 dB from the small-signal value, we note the input power and call this point the **1 dB compression point** ($P_\mathrm{1dB}$). We should always add whether this 1-dB compression point is input- or output-referred to avoid ambiguity. The diagram in @fig-1db-compression-point shows this test ($\alpha_1 = 100$, $\alpha_3 = -0.2$).
 
 {{< include /content/fundamentals/_fig_1db_compression.qmd >}}
 
 ::: {.callout-important}
 ## Compressive vs. Expansive Behavior
 Note that for compressive behavior, $\alpha_3$ and $\alpha_1$ have different signs, while for expansive behavior, they have the same sign.
-
-Some references also use similar definitions for gain expansion, where the output power is \qty{1}{\decibel} more than the linear slope.
 :::
 
-The following plot (@fig-gain-nonlinear-compression-expansion) also shows an expansive behavior. In contrast to the truncated Taylor-series model above, a closed-form saturating model is used here so that the output power correctly converges to the saturation power $P_\mathrm{sat}$ for large input levels. The model uses the amplitude characteristic
+The following plot (@fig-gain-nonlinear-compression-expansion) in addition shows an expansive behavior. In contrast to the truncated Taylor-series model above, a closed-form saturating model is used here so that the output power correctly converges to the saturation power $P_\mathrm{sat}$ for large input levels. The model uses the amplitude characteristic
 
 $$
-A_\mathrm{out} = A_\mathrm{sat} \tanh \left[ u \cdot (1 + c \cdot u^2) \right]
+A_\mathrm{out} = A_\mathrm{sat} \tanh \left( u + c \cdot u^3 \right)
 $$
 
-with the normalised amplitude $u = \sqrt{G_0 P_\mathrm{in} / P_\mathrm{sat}}$ and an expansion coefficient $c > 1/3$. At small input powers the gain equals the small-signal gain $G_0$; at intermediate powers the gain expands above $G_0$ (because the cubic term in the argument of $\tanh$ adds extra gain before the $\tanh$ saturation takes effect); and at large input powers the output saturates at $P_\mathrm{sat}$ while the gain drops steeply. This (partly) expansive behavior can be used to linearize the gain of a circuit block over a wider input power range, which is often desirable in RF power amplifiers (see @sec-poweramp-nonlinearity).
+with the normalised amplitude $u = \sqrt{G_0 P_\mathrm{in} / P_\mathrm{sat}}$ and an expansion coefficient $c > 1/3$. At small input powers the gain equals the small-signal gain $G_0$; at intermediate powers the gain expands above $G_0$ (because the cubic term in the argument of $\tanh(\cdot)$ adds extra gain before the saturation takes effect); and at large input powers the output saturates at $P_\mathrm{sat}$ while the gain drops steeply. This (partly) expansive behavior can be used to linearize the gain of a circuit block over a wider input power range, which is often desirable in RF power amplifiers (see @sec-poweramp-nonlinearity).
 
 {{< include /content/fundamentals/_fig_gain_nonlinear_compression_expansion.qmd >}}
 
 ### Multi-Tone Linearity
 
-We now extend our investigations and apply two sinusoids with different frequencies and different amplitudes and see which signals we get at the output of the nonlinear block. The two-tone test and resulting third-order intermodulation products (IM3) are illustrated in @fig-im3-tones.
+We now extend our investigations and apply two sinusoids with different frequencies $\omega_1$ and $\omega_2$ and different amplitudes $A_1$ and $A_2$ and see which signals we get at the output of the nonlinear block. The two-tone test and resulting third-order intermodulation products (IM3) are illustrated in @fig-im3-tones.
 
 $$
 x(t) = A_1 \cos(\omega_1 t) + A_2 \cos(\omega_2 t)
@@ -162,7 +160,7 @@ $$ {#eq-linearity-double-a}
 As shown in @eq-linearity-double-a, interesting things happen:
 
 - We (again) have the gain compression/expansion effect as already discussed in @sec-linearity-single.
-- In addition, we have **cross-modulation**, i.e., the envelope of one tone (e.g., $A_2(t)$ of the tone at $\omega_2$) impacts the envelope of the other tone at $\omega_1$. This can lead to unwanted signal distortion, even if there is a large frequency separation between $\omega_1$ and $\omega_2$!
+- In addition, we have **cross-modulation**, i.e., the squared envelope of one tone (e.g., $A_2(t)$ of the tone at $\omega_2$) impacts the envelope of the other tone at $\omega_1$. This can lead to unwanted signal distortion, even if there is a large frequency separation between $\omega_1$ and $\omega_2$!
 - Further, since the sign of $\alpha_3$ is usually opposite to $\alpha_1$, this can also lead to **desensitization** ("desens"). If, for example, $A_2 \gg A_1$, then there would be no compression due to the tone $\omega_1$ itself, however, the large tone at $\omega_2$ will lead to gain compression of the tone at $\omega_1$; this effect is called desens.
 
 We now look at the next class of generated tones:
@@ -208,7 +206,7 @@ $$
 \text{IIP3} = P_\mathrm{in} + \frac{P_\mathrm{in} - P_\mathrm{IM3}}{2}
 $$ {#eq-iip3}
 
-Further, for mildly nonlinear systems (i.e., $\alpha_3$ is dominant), the IIP3 can be approximated from the 1 dB compression point as
+Further, for mildly nonlinear systems (i.e., $\alpha_3$ is dominant), the IIP3 can be approximated from the 1-dB compression point as
 
 $$
 \text{IIP3}|_\mathrm{dBm} \approx P_\mathrm{1dB}|_\mathrm{dBm} + 9.6\,\text{dB}.
@@ -220,7 +218,7 @@ $$
 \frac{1}{\text{IIP3}_\text{total}} \approx \frac{1}{\text{IIP3}_1} + \frac{G_1}{\text{IIP3}_2} + \frac{G_1 G_2}{\text{IIP3}_3} 
 $$ {#eq-iip3-cascade}
 
-Here $G_1$ is the linear gain of the first block, and $\text{IIP3}_1$, $\text{IIP3}_2$ are the input-referred IP3 of the first and second block, respectively. Note that all powers have to be in linear units (i.e., Watts) when using @eq-iip3-cascade. An even more simplified version of @eq-iip3-cascade can be used with all quantities given in dBm and dB, respectively:
+Here $G_1$ is the linear gain of the first block, and $\text{IIP3}_1$, $\text{IIP3}_2$ are the input-referred IP3 of the first and second block, respectively. Note that all powers have to be in _linear units_ when using @eq-iip3-cascade. An even more simplified version of @eq-iip3-cascade can be used with all quantities given in dBm and dB, respectively:
 
 $$
 \text{IIP3}_\text{total} \approx \min \{  \text{IIP3}_1, \text{IIP3}_2 - G_1, \text{IIP3}_3 - G_1 - G_2 \}
@@ -232,7 +230,7 @@ A typical RF system cascade with multiple blocks and their individual IIP3 contr
 
 ::: {#nte-iip3-cascade .callout-note}
 ## Simple IIP3 Cascade Calculation
-Let's calculate the overall IIP3 of two cascaded blocks. The first block is a low-noise amplifier with an IIP3 of -10 dBm and a gain of 20 dB. The second block is a mixer that has a gain of 10 dB and an IIP3 of 5 dBm. What is the overall IIP3?
+Let's calculate the overall IIP3 of two cascaded blocks. The first block is a low-noise amplifier with an IIP3 of -10 dBm and a gain of 20 dB. The second block is a mixer that has a gain of 10 dB and an IIP3 of 5 dBm. What is the value of the overall IIP3?
 
 Using @eq-iip3-cascade-simple we can quickly estimate:
 

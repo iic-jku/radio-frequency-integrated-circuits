@@ -56,7 +56,7 @@ ax.plot(Pin_dBm, Pout_dBm, 'r-', linewidth=2.5, label='Actual Nonlinear Response
 
 # Mark 1dB compression point
 ax.plot(P1dB_in, P1dB_out, 'ko', markersize=8, markerfacecolor='black', 
-        markeredgewidth=2, markeredgecolor='black', label=f'P1dB = {P1dB_in:.1f} dBm')
+        markeredgewidth=2, markeredgecolor='black', label=f'P1dB (input) = {P1dB_in:.1f} dBm')
 
 # Add vertical and horizontal lines for P1dB
 ax.axvline(P1dB_in, color='gray', linestyle=':', alpha=0.7)

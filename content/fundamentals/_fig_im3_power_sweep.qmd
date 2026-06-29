@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-im3-power-sweep
 #| echo: false
-#| fig-cap: "Two-tone IM3 test showing fundamental and IM3 product power vs. input power, with IP3 intercept point definition. Equal input power per tone is assumed."
+#| fig-cap: "Two-tone IM3 test showing fundamental and IM3 product power vs. input power, with IIP3 intercept point definition. Equal input power per tone is assumed."
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -85,7 +85,7 @@ ax.plot(IP3_in_dBm, IP3_out_dBm, 'ko', markersize=8, markerfacecolor='black',
 
 # Add vertical and horizontal lines for IP3
 ax.axvline(IP3_in_dBm, color='gray', linestyle=':', alpha=0.7, 
-           label=f'IP3 = {IP3_in_dBm:.1f} dBm')
+           label=f'IIP3 = {IP3_in_dBm:.1f} dBm')
 ax.axhline(IP3_out_dBm, color='gray', linestyle=':', alpha=0.7)
 
 # Add slope annotations
