@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2026-06-26">
+<meta name="dcterms.date" content="2026-07-02">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -506,7 +506,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 26, 2026</p>
+      <p class="date">July 2, 2026</p>
     </div>
   </div>
   
@@ -883,14 +883,14 @@ Figure&nbsp;4: RFICs require careful design considerations and trade-offs (adapt
 </section>
 <section id="sec-fundamentals" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Fundamentals</h1>
-<p>In this section, we will discuss a few important concepts which will be instrumental in the further study of RF circuits and systems. As signals in RF circuits and systems are often limited on the top end by linearity, and on the bottom end by noise, we will discuss these two topics in some detail.</p>
+<p>In this section, we will discuss a few important concepts which will be instrumental in the further study of RF circuits and systems. As the dynamic range of signals in RF circuits and systems is often limited on the top end by linearity, and on the bottom end by noise, we will discuss these two topics in some detail.</p>
 <section id="sec-channel-capacity" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="sec-channel-capacity"><span class="header-section-number">2.1</span> Channel Capacity</h2>
-<p>In <a href="#sec-intro" class="quarto-xref">Section&nbsp;1</a> we have already discussed the fact that we need to pack information into a minimum bandwidth, as the available spectrum is limited. To appreciate the limits of information transfer, we need to understand how much information can be transmitted over a given bandwidth. This limit is given by the <em>Shannon-Hartley theorem</em>, which gives the maximum data rate <span class="math inline">\(C\)</span> (in bit/s) that can be transmitted over a communication channel with bandwidth <span class="math inline">\(B\)</span> (in Hz) and signal-to-noise ratio <span class="math inline">\(\text{SNR}\)</span> (with linear units):</p>
+<p>In <a href="#sec-intro" class="quarto-xref">Section&nbsp;1</a> we have already discussed the fact that we need to pack information into a minimum bandwidth, as the available spectrum is limited. To appreciate the limits of information transfer, we need to understand how much information can be transmitted over a given bandwidth. This limit is given by the <a href="https://en.wikipedia.org/wiki/Shannon%E2%80%93Hartley_theorem"><strong>Shannon-Hartley theorem</strong></a>, which states the maximum data rate <span class="math inline">\(C\)</span> (in bit/s) that can be transmitted over a communication channel with bandwidth <span class="math inline">\(B\)</span> (in Hz) and signal-to-noise ratio <span class="math inline">\(\text{SNR}\)</span> (in linear units):</p>
 <p><span id="eq-shannon-hartley"><span class="math display">\[
 C = B \cdot \log_2(1 + \text{SNR})
 \tag{4}\]</span></span></p>
-<p>This formula gives us a theoretical upper limit on the data rate that can be achieved with a given bandwidth and SNR <em>under optimal conditions</em>. It is important to note that this limit is only achievable with ideal coding and modulation schemes, which are not practical in real-world systems. However, it provides a useful benchmark for evaluating the performance of communication systems.</p>
+<p>This formula provides us a theoretical upper limit on the data rate that can be achieved with a given bandwidth and SNR <em>under optimal conditions</em>. It is important to note that this limit is only achievable with ideal coding and modulation schemes, which are not practical in real-world systems. However, it provides a useful benchmark for evaluating the performance of communication systems.</p>
 <div id="nte-channel-limit" class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -901,7 +901,7 @@ Note&nbsp;3: Channel Capacity Example
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Let us calculate the channel capacity for a system with a bandwidth of 2 MHz and an SNR of 7 dB (the BW and minimum SNR of Bluetooth LE for 1 Mbps). First, we need to convert the SNR from dB to linear units:</p>
+<p>Let us calculate the channel capacity for a system with an RF bandwidth of 2 MHz and an SNR of 7 dB (the BW and minimum SNR of Bluetooth LE for 1 Mbps). First, we need to convert the SNR from dB to linear units:</p>
 <p><span class="math display">\[
 \text{SNR} = 10^{{7}/{10}} \approx 5
 \]</span></p>
@@ -909,7 +909,7 @@ Note&nbsp;3: Channel Capacity Example
 <p><span class="math display">\[
 C = B \cdot \log_2(1 + \text{SNR}) = 2\,\text{MHz} \cdot \log_2(1 + 5) = 2\,\text{MHz} \cdot 2.585 \approx 5.2\,\text{Mbps}
 \]</span></p>
-<p>This sounds reasonable, as the user data rate for Bluetooth LE is 1 Mbps for the given SNR, which allows for quite some overhead for coding and protocols.</p>
+<p>This sounds reasonable, as the user data rate for Bluetooth LE is 1 Mbps for the given SNR, which allows for considerable overhead for coding and protocols.</p>
 </div>
 </div>
 </section>
@@ -928,7 +928,7 @@ C = B \cdot \log_2(1 + \text{SNR}) = 2\,\text{MHz} \cdot \log_2(1 + 5) = 2\,\tex
 </div>
 <div class="callout-body-container callout-body">
 <p>We use a <strong>memoryless</strong> (also called “instantaneous”) nonlinear model to simplify the mathematics. A memoryless nonlinear system has the property that the output at time <span class="math inline">\(t\)</span> only depends on the input at time <span class="math inline">\(t\)</span>.</p>
-<p>In contrast, a system <strong>with memory</strong> will have an output at time <span class="math inline">\(t\)</span> which depends on the input at time <span class="math inline">\(t\)</span> and also on past inputs (e.g., at times <span class="math inline">\(t - \Delta T\)</span>, <span class="math inline">\(t - 2 \Delta T\)</span>, etc.). Such a system can additionally be <strong>time-variant</strong>, meaning its behavior changes over time, which leads to quite a few very interesting and important phenomena! Examples of systems with memory are filters, which have a frequency-dependent response, or power amplifiers with thermal memory effects.</p>
+<p>In contrast, a system <strong>with memory</strong> will have an output at time <span class="math inline">\(t\)</span> which depends on the input at time <span class="math inline">\(t\)</span> and also on past inputs (e.g., at times <span class="math inline">\(t - \Delta T, t - 2 \Delta T, \ldots, t - N \Delta T\)</span>). Such a system can additionally be <strong>time-variant</strong>, which means its behavior changes over time, which leads to quite a few very interesting and important phenomena! Examples of systems with memory are filters, which have a frequency-dependent response, or power amplifiers with thermal memory effects.</p>
 </div>
 </div>
 <p>We model a nonlinear circuit block with the input <span class="math inline">\(x(t)\)</span> and the output <span class="math inline">\(y(t)\)</span> with the following Taylor polynomial:</p>
@@ -946,7 +946,7 @@ y(t) &amp;= \alpha_0 + \alpha_1 x(t) + \alpha_2 x(t)^2 + \alpha_3 x(t)^3\\
 <p><span class="math display">\[
 x(t) = A_0 \cos(\omega_0 t)
 \]</span></p>
-<p>and insert it into <a href="#eq-nonlinear-model" class="quarto-xref">Equation&nbsp;5</a>. After some simple trigonometric manipulations we are at</p>
+<p>and insert it into <a href="#eq-nonlinear-model" class="quarto-xref">Equation&nbsp;5</a>. After some simple trigonometric manipulations we arrive at</p>
 <p><span id="eq-linearity-single"><span class="math display">\[
 \begin{split}
     y(t) &amp; = \underbrace{\alpha_0 + \frac{1}{2} \alpha_2 A_0^2 + \frac{3}{8} \alpha_4 A_0^4}_{\text{dc component }(\omega=0)}\\
@@ -965,12 +965,12 @@ x(t) = A_0 \cos(\omega_0 t)
 \tag{7}\]</span></span></p>
 <p>Looking at <a href="#eq-linearity-single" class="quarto-xref">Equation&nbsp;6</a> and <a href="#eq-linearity-single-gain-fundamental" class="quarto-xref">Equation&nbsp;7</a>, we can make a few interesting observations:</p>
 <ul>
-<li>Even-order nonlinearities (due to <span class="math inline">\(\alpha_2\)</span> and <span class="math inline">\(\alpha_4\)</span>) create low-frequency components; they effectively add frequency components stemming from the envelope <span class="math inline">\(A_0\)</span>. If <span class="math inline">\(A_0\)</span> is a constant then this results in a dc term; if <span class="math inline">\(A_0(t)\)</span> is time-variant, it will create a squared and 4th-order version of it at low frequencies.</li>
+<li>Even-order nonlinearities (due to <span class="math inline">\(\alpha_2\)</span> and <span class="math inline">\(\alpha_4\)</span>) create low-frequency components; they effectively add frequency components stemming from the envelope <span class="math inline">\(A_0\)</span>. If <span class="math inline">\(A_0\)</span> is a constant then this results in a dc term; if <span class="math inline">\(A_0(t)\)</span> is time-variant, it will create a squared and quadrupled version of it at low frequencies.</li>
 <li>The <span class="math inline">\(\alpha_1\)</span>-term is the gain of the circuit block.</li>
-<li>Odd-order nonlinearities (<span class="math inline">\(\alpha_3\)</span> and <span class="math inline">\(\alpha_5\)</span>) can impact the gain of the fundamental term passing through the block. Often <span class="math inline">\(\alpha_3\)</span> and <span class="math inline">\(\alpha_5\)</span> have the same sign, which is opposite to the sign of <span class="math inline">\(\alpha_1\)</span>. This implies that the gain stays linear for small input powers. For larger input signal, the terms with <span class="math inline">\(\alpha_3\)</span> and <span class="math inline">\(\alpha_5\)</span> start to dominate, leading to gain compression or saturation effects, until the circuit block reaches a level of maximum output power. In some cases, <span class="math inline">\(\alpha_3\)</span> has the same sign as <span class="math inline">\(\alpha_1\)</span> but <span class="math inline">\(\alpha_5\)</span> has the opposite one, which leads to gain expansion: The gain would first demonstrate an overshoot at some input power level, until the term with <span class="math inline">\(\alpha_5\)</span> becomes dominant and the gain is compressed again.</li>
+<li>Odd-order nonlinearities (<span class="math inline">\(\alpha_3\)</span> and <span class="math inline">\(\alpha_5\)</span>) can impact the gain of the fundamental term passing through the block. Often <span class="math inline">\(\alpha_3\)</span> and <span class="math inline">\(\alpha_5\)</span> have the same sign, which is opposite to the sign of <span class="math inline">\(\alpha_1\)</span>. This implies that the gain stays linear for small input powers. For larger input signals, the terms with <span class="math inline">\(\alpha_3\)</span> and <span class="math inline">\(\alpha_5\)</span> start to dominate, leading to gain compression or saturation effects, until the circuit block reaches a level of maximum output power. In some cases, <span class="math inline">\(\alpha_3\)</span> has the same sign as <span class="math inline">\(\alpha_1\)</span> but <span class="math inline">\(\alpha_5\)</span> has the opposite one, which leads to gain expansion: The gain would first demonstrate an overshoot at some input power level, until the term with <span class="math inline">\(\alpha_5\)</span> becomes dominant and the gain is compressed again.</li>
 <li>Even- and odd-order nonlinearities create additional frequency components, so-called harmonics of the fundamental frequency. These harmonics are often unwanted, as they are far outside the wanted transmission frequency range, and need to be minimized, by either
 <ol type="1">
-<li>using a lowpass filter to filter these harmonics, or</li>
+<li>using a lowpass to filter these harmonics, or</li>
 <li>increasing the linearity, i.e., making the <span class="math inline">\(\alpha_2\)</span>, <span class="math inline">\(\alpha_3\)</span>, etc., small enough.</li>
 </ol></li>
 </ul>
@@ -980,16 +980,16 @@ x(t) = A_0 \cos(\omega_0 t)
 <div id="fig-harmonics" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-harmonics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-harmonics-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Single-tone test showing created harmonics at 2ω and 3ω."><img src="rfic_files/figure-html/fig-harmonics-output-1.png" width="515" height="362" class="figure-img"></a>
+<a href="rfic_files/figure-html/fig-harmonics-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Single-tone test showing created harmonics at 2\omega_0 and 3\omega_0."><img src="rfic_files/figure-html/fig-harmonics-output-1.png" width="515" height="362" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-harmonics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Single-tone test showing created harmonics at 2ω and 3ω.
+Figure&nbsp;5: Single-tone test showing created harmonics at <span class="math inline">\(2\omega_0\)</span> and <span class="math inline">\(3\omega_0\)</span>.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal <span class="math inline">\(x(t)\)</span> in amplitude, and observe the output <span class="math inline">\(y(t)\)</span>. If the observed gain drops by 1 dB from the small-signal value, we note the input power and call this point the <strong>1 dB compression point</strong> (<span class="math inline">\(P_\mathrm{1dB}\)</span>). We should always add whether this 1 dB compression point is input- or output-referred to avoid ambiguity. The diagram in <a href="#fig-1db-compression-point" class="quarto-xref">Figure&nbsp;6</a> shows this test (<span class="math inline">\(\alpha_1 = 100\)</span>, <span class="math inline">\(\alpha_3 = -0.2\)</span>).</p>
+<p>How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal <span class="math inline">\(x(t)\)</span> in amplitude, and observe the output <span class="math inline">\(y(t)\)</span>. If the observed gain drops by 1 dB from the small-signal value, we note the input power and call this point the <strong>1 dB compression point</strong> (<span class="math inline">\(P_\mathrm{1dB}\)</span>). We should always add whether this 1-dB compression point is input- or output-referred to avoid ambiguity. The diagram in <a href="#fig-1db-compression-point" class="quarto-xref">Figure&nbsp;6</a> shows this test (<span class="math inline">\(\alpha_1 = 100\)</span>, <span class="math inline">\(\alpha_3 = -0.2\)</span>).</p>
 <div id="cell-fig-1db-compression-point" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div id="fig-1db-compression-point" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1015,23 +1015,22 @@ Figure&nbsp;6: 1-dB compression point test showing input vs.&nbsp;output power r
 </div>
 <div class="callout-body-container callout-body">
 <p>Note that for compressive behavior, <span class="math inline">\(\alpha_3\)</span> and <span class="math inline">\(\alpha_1\)</span> have different signs, while for expansive behavior, they have the same sign.</p>
-<p>Some references also use similar definitions for gain expansion, where the output power is more than the linear slope.</p>
 </div>
 </div>
-<p>The following plot (<a href="#fig-gain-nonlinear-compression-expansion" class="quarto-xref">Figure&nbsp;7</a>) also shows an expansive behavior. In contrast to the truncated Taylor-series model above, a closed-form saturating model is used here so that the output power correctly converges to the saturation power <span class="math inline">\(P_\mathrm{sat}\)</span> for large input levels. The model uses the amplitude characteristic</p>
+<p>The following plot (<a href="#fig-gain-nonlinear-compression-expansion" class="quarto-xref">Figure&nbsp;7</a>) in addition shows an expansive behavior. In contrast to the truncated Taylor-series model above, a closed-form saturating model is used here so that the output power correctly converges to the saturation power <span class="math inline">\(P_\mathrm{sat}\)</span> for large input levels. Such saturating amplitude models are widely used to describe power-amplifier nonlinearity <span class="citation" data-cites="Saleh.1981">(<a href="#ref-Saleh.1981" role="doc-biblioref">Saleh 1981</a>)</span>. The model uses the amplitude characteristic</p>
 <p><span class="math display">\[
-A_\mathrm{out} = A_\mathrm{sat} \tanh \left[ u \cdot (1 + c \cdot u^2) \right]
+A_\mathrm{out} = A_\mathrm{sat} \tanh \left( u + c \cdot u^3 \right)
 \]</span></p>
-<p>with the normalised amplitude <span class="math inline">\(u = \sqrt{G_0 P_\mathrm{in} / P_\mathrm{sat}}\)</span> and an expansion coefficient <span class="math inline">\(c &gt; 1/3\)</span>. At small input powers the gain equals the small-signal gain <span class="math inline">\(G_0\)</span>; at intermediate powers the gain expands above <span class="math inline">\(G_0\)</span> (because the cubic term in the argument of <span class="math inline">\(\tanh\)</span> adds extra gain before the <span class="math inline">\(\tanh\)</span> saturation takes effect); and at large input powers the output saturates at <span class="math inline">\(P_\mathrm{sat}\)</span> while the gain drops steeply. This (partly) expansive behavior can be used to linearize the gain of a circuit block over a wider input power range, which is often desirable in RF power amplifiers (see <a href="#sec-poweramp-nonlinearity" class="quarto-xref">Section&nbsp;8.2</a>).</p>
+<p>with the normalised amplitude <span class="math inline">\(u = \sqrt{G_0 P_\mathrm{in} / P_\mathrm{sat}}\)</span> and an expansion coefficient <span class="math inline">\(c &gt; 1/3\)</span>. At small input powers the gain equals the small-signal gain <span class="math inline">\(G_0\)</span>; at intermediate powers the gain expands above <span class="math inline">\(G_0\)</span> (because the cubic term in the argument of <span class="math inline">\(\tanh(\cdot)\)</span> adds extra gain before the saturation takes effect); and at large input powers the output saturates at <span class="math inline">\(P_\mathrm{sat}\)</span> while the gain drops steeply. This (partly) expansive behavior can be used to linearize the gain of a circuit block over a wider input power range, which is often desirable in RF power amplifiers (see <a href="#sec-poweramp-nonlinearity" class="quarto-xref">Section&nbsp;8.2</a>).</p>
 <div id="cell-fig-gain-nonlinear-compression-expansion" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div id="fig-gain-nonlinear-compression-expansion" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gain-nonlinear-compression-expansion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-gain-nonlinear-compression-expansion-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Output power and power gain vs.&nbsp;input power showing expansion, compression, and saturation towards P_\mathrm{sat}. The closed-form model uses P_\mathrm{out} = P_\mathrm{sat} \tanh^2 \left[ u \cdot (1 + c \cdot u^2) \right] with u = \sqrt{G_0 P_\mathrm{in} / P_\mathrm{sat}}. For (power) amplifiers the saturating power is often ill-defined, so instead of P_\mathrm{sat} a compression point like P6dB is used."><img src="rfic_files/figure-html/fig-gain-nonlinear-compression-expansion-output-1.png" width="664" height="422" class="figure-img"></a>
+<a href="rfic_files/figure-html/fig-gain-nonlinear-compression-expansion-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Output power and power gain vs.&nbsp;input power showing expansion, compression, and saturation towards P_\mathrm{sat}. The closed-form model uses P_\mathrm{out} = P_\mathrm{sat} \tanh^2 \left( u + c \cdot u^3 \right) with u = \sqrt{G_0 P_\mathrm{in} / P_\mathrm{sat}}. For (power) amplifiers the saturating power is often ill-defined, so instead of P_\mathrm{sat} a compression point like P6dB is used."><img src="rfic_files/figure-html/fig-gain-nonlinear-compression-expansion-output-1.png" width="664" height="422" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gain-nonlinear-compression-expansion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Output power and power gain vs.&nbsp;input power showing expansion, compression, and saturation towards <span class="math inline">\(P_\mathrm{sat}\)</span>. The closed-form model uses <span class="math inline">\(P_\mathrm{out} = P_\mathrm{sat} \tanh^2 \left[ u \cdot (1 + c \cdot u^2) \right]\)</span> with <span class="math inline">\(u = \sqrt{G_0 P_\mathrm{in} / P_\mathrm{sat}}\)</span>. For (power) amplifiers the saturating power is often ill-defined, so instead of <span class="math inline">\(P_\mathrm{sat}\)</span> a compression point like P6dB is used.
+Figure&nbsp;7: Output power and power gain vs.&nbsp;input power showing expansion, compression, and saturation towards <span class="math inline">\(P_\mathrm{sat}\)</span>. The closed-form model uses <span class="math inline">\(P_\mathrm{out} = P_\mathrm{sat} \tanh^2 \left( u + c \cdot u^3 \right)\)</span> with <span class="math inline">\(u = \sqrt{G_0 P_\mathrm{in} / P_\mathrm{sat}}\)</span>. For (power) amplifiers the saturating power is often ill-defined, so instead of <span class="math inline">\(P_\mathrm{sat}\)</span> a compression point like P6dB is used.
 </figcaption>
 </figure>
 </div>
@@ -1040,7 +1039,7 @@ Figure&nbsp;7: Output power and power gain vs.&nbsp;input power showing expansio
 </section>
 <section id="multi-tone-linearity" class="level3" data-number="2.2.2">
 <h3 data-number="2.2.2" class="anchored" data-anchor-id="multi-tone-linearity"><span class="header-section-number">2.2.2</span> Multi-Tone Linearity</h3>
-<p>We now extend our investigations and apply two sinusoids with different frequencies and different amplitudes and see which signals we get at the output of the nonlinear block. The two-tone test and resulting third-order intermodulation products (IM3) are illustrated in <a href="#fig-im3-tones" class="quarto-xref">Figure&nbsp;8</a>.</p>
+<p>We now extend our investigations and apply two sinusoids with different frequencies <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span> and different amplitudes <span class="math inline">\(A_1\)</span> and <span class="math inline">\(A_2\)</span> and see which signals we get at the output of the nonlinear block. The two-tone test and resulting third-order intermodulation products (IM3) are illustrated in <a href="#fig-im3-tones" class="quarto-xref">Figure&nbsp;8</a>.</p>
 <p><span class="math display">\[
 x(t) = A_1 \cos(\omega_1 t) + A_2 \cos(\omega_2 t)
 \]</span></p>
@@ -1059,7 +1058,7 @@ y(t) = y'(t) + y''(t) + y'''(t)
 <p>As shown in <a href="#eq-linearity-double-a" class="quarto-xref">Equation&nbsp;9</a>, interesting things happen:</p>
 <ul>
 <li>We (again) have the gain compression/expansion effect as already discussed in <a href="#sec-linearity-single" class="quarto-xref">Section&nbsp;2.2.1</a>.</li>
-<li>In addition, we have <strong>cross-modulation</strong>, i.e., the envelope of one tone (e.g., <span class="math inline">\(A_2(t)\)</span> of the tone at <span class="math inline">\(\omega_2\)</span>) impacts the envelope of the other tone at <span class="math inline">\(\omega_1\)</span>. This can lead to unwanted signal distortion, even if there is a large frequency separation between <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>!</li>
+<li>In addition, we have <strong>cross-modulation</strong>, i.e., the squared envelope of one tone (e.g., <span class="math inline">\(A_2(t)\)</span> of the tone at <span class="math inline">\(\omega_2\)</span>) impacts the envelope of the other tone at <span class="math inline">\(\omega_1\)</span>. This can lead to unwanted signal distortion, even if there is a large frequency separation between <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>!</li>
 <li>Further, since the sign of <span class="math inline">\(\alpha_3\)</span> is usually opposite to <span class="math inline">\(\alpha_1\)</span>, this can also lead to <strong>desensitization</strong> (“desens”). If, for example, <span class="math inline">\(A_2 \gg A_1\)</span>, then there would be no compression due to the tone <span class="math inline">\(\omega_1\)</span> itself, however, the large tone at <span class="math inline">\(\omega_2\)</span> will lead to gain compression of the tone at <span class="math inline">\(\omega_1\)</span>; this effect is called desens.</li>
 </ul>
 <p>We now look at the next class of generated tones:</p>
@@ -1081,7 +1080,7 @@ y(t) = y'(t) + y''(t) + y'''(t)
 \end{split}
 \tag{11}\]</span></span></p>
 <p>The tones shown in <a href="#eq-linearity-double-c" class="quarto-xref">Equation&nbsp;11</a> are called “<strong>intermodulation products of third order</strong>” (IM3), and are caused by the odd nonlinearities (like <span class="math inline">\(\alpha_3\)</span>). While the IM3 tones located at <span class="math inline">\(2 \omega_1 + \omega_2\)</span> and <span class="math inline">\(\omega_1 + 2 \omega_2\)</span> are similar to the sum IM2 tone and far away from <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>, the other two tones are concerning.</p>
-<p>Expressing <span class="math inline">\(\Delta \omega = \omega_2 - \omega_1\)</span> (and assuming <span class="math inline">\(\omega_1 &lt; \omega_2\)</span>), the building law of <span class="math inline">\(2 \omega_1 - \omega_2 = \omega_1 - \Delta \omega\)</span> and <span class="math inline">\(2 \omega_2 - \omega_1 = \omega_2 + \Delta \omega\)</span> results in new tones right beside <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>, with a frequency separation only defined by <span class="math inline">\(\Delta \omega\)</span>. This situation is illustrated in <a href="#fig-im3-tones" class="quarto-xref">Figure&nbsp;8</a>.</p>
+<p>Expressing <span class="math inline">\(\Delta \omega = \omega_2 - \omega_1\)</span> (and assuming <span class="math inline">\(\omega_1 &lt; \omega_2\)</span>), the construction rule <span class="math inline">\(2 \omega_1 - \omega_2 = \omega_1 - \Delta \omega\)</span> and <span class="math inline">\(2 \omega_2 - \omega_1 = \omega_2 + \Delta \omega\)</span> results in new tones right beside <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>, with a frequency separation only defined by <span class="math inline">\(\Delta \omega\)</span>. This situation is illustrated in <a href="#fig-im3-tones" class="quarto-xref">Figure&nbsp;8</a>.</p>
 <div id="cell-fig-im3-tones" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div id="fig-im3-tones" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1103,10 +1102,10 @@ Figure&nbsp;8: Two-tone test showing fundamental frequencies ω₁, ω₂ and th
 <div id="fig-im3-power-sweep" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-im3-power-sweep-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-im3-power-sweep-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: Two-tone IM3 test showing fundamental and IM3 product power vs.&nbsp;input power, with IP3 intercept point definition. Equal input power per tone is assumed."><img src="rfic_files/figure-html/fig-im3-power-sweep-output-1.png" width="531" height="362" class="figure-img"></a>
+<a href="rfic_files/figure-html/fig-im3-power-sweep-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: Two-tone IM3 test showing fundamental and IM3 product power vs.&nbsp;input power, with IIP3 intercept point definition. Equal input power per tone is assumed."><img src="rfic_files/figure-html/fig-im3-power-sweep-output-1.png" width="531" height="362" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-im3-power-sweep-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9: Two-tone IM3 test showing fundamental and IM3 product power vs.&nbsp;input power, with IP3 intercept point definition. Equal input power per tone is assumed.
+Figure&nbsp;9: Two-tone IM3 test showing fundamental and IM3 product power vs.&nbsp;input power, with IIP3 intercept point definition. Equal input power per tone is assumed.
 </figcaption>
 </figure>
 </div>
@@ -1117,7 +1116,7 @@ Figure&nbsp;9: Two-tone IM3 test showing fundamental and IM3 product power vs.&n
 <p><span id="eq-iip3"><span class="math display">\[
 \text{IIP3} = P_\mathrm{in} + \frac{P_\mathrm{in} - P_\mathrm{IM3}}{2}
 \tag{12}\]</span></span></p>
-<p>Further, for mildly nonlinear systems (i.e., <span class="math inline">\(\alpha_3\)</span> is dominant), the IIP3 can be approximated from the 1 dB compression point as</p>
+<p>Further, for mildly nonlinear systems (i.e., <span class="math inline">\(\alpha_3\)</span> is dominant), the IIP3 can be approximated from the 1-dB compression point as <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span></p>
 <p><span id="eq-iip3-approx"><span class="math display">\[
 \text{IIP3}|_\mathrm{dBm} \approx P_\mathrm{1dB}|_\mathrm{dBm} + 9.6\,\text{dB}.
 \tag{13}\]</span></span></p>
@@ -1125,7 +1124,7 @@ Figure&nbsp;9: Two-tone IM3 test showing fundamental and IM3 product power vs.&n
 <p><span id="eq-iip3-cascade"><span class="math display">\[
 \frac{1}{\text{IIP3}_\text{total}} \approx \frac{1}{\text{IIP3}_1} + \frac{G_1}{\text{IIP3}_2} + \frac{G_1 G_2}{\text{IIP3}_3}
 \tag{14}\]</span></span></p>
-<p>Here <span class="math inline">\(G_1\)</span> is the linear gain of the first block, and <span class="math inline">\(\text{IIP3}_1\)</span>, <span class="math inline">\(\text{IIP3}_2\)</span> are the input-referred IP3 of the first and second block, respectively. Note that all powers have to be in linear units (i.e., Watts) when using <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;14</a>. An even more simplified version of <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;14</a> can be used with all quantities given in dBm and dB, respectively:</p>
+<p>Here <span class="math inline">\(G_1\)</span> is the linear gain of the first block, and <span class="math inline">\(\text{IIP3}_1\)</span>, <span class="math inline">\(\text{IIP3}_2\)</span> are the input-referred IP3 of the first and second block, respectively. Note that all powers have to be in <em>linear units</em> when using <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;14</a>. An even more simplified version of <a href="#eq-iip3-cascade" class="quarto-xref">Equation&nbsp;14</a> can be used with all quantities given in dBm and dB, respectively:</p>
 <p><span id="eq-iip3-cascade-simple"><span class="math display">\[
 \text{IIP3}_\text{total} \approx \min \{  \text{IIP3}_1, \text{IIP3}_2 - G_1, \text{IIP3}_3 - G_1 - G_2 \}
 \tag{15}\]</span></span></p>
@@ -1154,7 +1153,7 @@ Note&nbsp;4: Simple IIP3 Cascade Calculation
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Let’s calculate the overall IIP3 of two cascaded blocks. The first block is a low-noise amplifier with an IIP3 of -10 dBm and a gain of 20 dB. The second block is a mixer that has a gain of 10 dB and an IIP3 of 5 dBm. What is the overall IIP3?</p>
+<p>Let’s calculate the overall IIP3 of two cascaded blocks. The first block is a low-noise amplifier with an IIP3 of -10 dBm and a gain of 20 dB. The second block is a mixer that has a gain of 10 dB and an IIP3 of 5 dBm. What is the value of the overall IIP3?</p>
 <p>Using <a href="#eq-iip3-cascade-simple" class="quarto-xref">Equation&nbsp;15</a> we can quickly estimate:</p>
 <p><span class="math display">\[
 \text{IIP3}_\text{total} \approx \min \{ -10\,\text{dBm}, 5\,\text{dBm} - 20\,\text{dB} = -15\,\text{dBm} \} = -15\,\text{dBm}
@@ -1167,14 +1166,14 @@ Note&nbsp;4: Simple IIP3 Cascade Calculation
 <section id="sec-noise" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="sec-noise"><span class="header-section-number">2.3</span> Noise</h2>
 <p>Just as nonlinearity is a limiting factor for large signals, noise is the limiting factor for small signals. Noise is present in all electronic circuits and systems, and it is impossible to avoid it. However, we can try to minimize its impact on system performance.</p>
-<p>Noise is usually characterized by its power spectral density (PSD) in units of Watts per Hertz (W/Hz). For example, thermal noise at room temperature has a PSD of approximately <span class="math inline">\(k T = 4 \times 10^{-21}\)</span> W/Hz, or <span class="math inline">\(-174\)</span> dBm/Hz (with the Boltzmann constant <span class="math inline">\(k = 1.38 \times 10^{-23}\,\text{J/K}\)</span>). This means that if we have a bandwidth of 1 MHz, the total thermal noise power would be:</p>
+<p>Noise is usually characterized by its power spectral density (PSD) in units of Watts per Hertz (W/Hz). For example, thermal noise at room temperature has a one-sided PSD of approximately <span class="math inline">\(k T = 4 \times 10^{-21}\,\text{W/Hz}\)</span>, or <span class="math inline">\(-174\,\text{dBm/Hz}\)</span> (using Boltzmann’s constant <span class="math inline">\(k = 1.38 \times 10^{-23}\,\text{J/K}\)</span>). This means that if we have a bandwidth of 1 MHz, the total thermal noise power would be:</p>
 <p><span class="math display">\[
 P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \left( \frac{1\,\text{MHz}}{1\,\text{Hz}} \right) = -114\,\text{dBm}
 \]</span></p>
-<p>The PSD of noise can be flat vs.&nbsp;frequency (which is called “white noise”), or can decrease with frequency (e.g., “flicker noise” or “1/f noise”). Further, noise can be generated by resistors (thermal noise), semiconductors (shot noise, generation-recombination noise), etc. A detailed discussion of noise sources can be found in <span class="citation" data-cites="Gray_Meyer_5th_ed">(<a href="#ref-Gray_Meyer_5th_ed" role="doc-biblioref">Gray et al. 2009</a>)</span> or <span class="citation" data-cites="Razavi_Analog_CMOS">(<a href="#ref-Razavi_Analog_CMOS" role="doc-biblioref">Razavi 2017</a>)</span>.</p>
+<p>The PSD of noise can be flat vs.&nbsp;frequency (which is called “white noise”), or can decrease with frequency (e.g., “flicker noise” or “1/f noise”). Further, noise can be generated by resistors (thermal noise), semiconductors (shot noise, generation-recombination noise), etc. A detailed discussion of noise sources can be found in <span class="citation" data-cites="Gray_Meyer_5th_ed Razavi_Analog_CMOS">(<a href="#ref-Gray_Meyer_5th_ed" role="doc-biblioref">Gray et al. 2009</a>; <a href="#ref-Razavi_Analog_CMOS" role="doc-biblioref">Razavi 2017</a>)</span>.</p>
 <section id="sec-noise-types" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="sec-noise-types"><span class="header-section-number">2.3.1</span> Types of Noise Generation</h3>
-<p><strong>Resistors</strong> generate thermal noise, which is white noise with a PSD of <span class="math inline">\(4 k T R\)</span> (in V<span class="math inline">\(^2\)</span>/Hz) when looking at the voltage across the resistor, or <span class="math inline">\(4 k T / R\)</span> (in A<span class="math inline">\(^2\)</span>/Hz) when looking at the current through the resistor. This noise is generated by the random thermal motion of charge carriers in the resistor.</p>
+<p><strong>Resistors</strong> generate thermal noise (also called <a href="https://en.wikipedia.org/wiki/Johnson%E2%80%93Nyquist_noise">Johnson-Nyquist noise</a>), which is white noise with a one-sided PSD of <span class="math inline">\(4 k T R\)</span> (in V<span class="math inline">\(^2\)</span>/Hz) when looking at the voltage across the resistor, or <span class="math inline">\(4 k T / R\)</span> (in A<span class="math inline">\(^2\)</span>/Hz) when looking at the current through the resistor. This noise is generated by the random thermal motion of charge carriers in the resistor.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1189,8 +1188,8 @@ P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \le
 <p><span class="math display">\[
 \text{PSD} = \frac{4 R h f}{e^{{h f}/{k T}} - 1}
 \]</span></p>
-<p>where <span class="math inline">\(h\)</span> is the Planck constant (<span class="math inline">\(h = 6.626 \times 10^{-34}\)</span> Js) and <span class="math inline">\(f\)</span> is the frequency. The Rayleigh-Jeans approximation is valid for <span class="math inline">\(f \ll k T / h\)</span>, which is approximately 6 THz at room temperature (290 K).</p>
-<p>We can integrate the above PSD over the full frequency range and show the rms noise voltage of a resistor <span class="math inline">\(R\)</span> is bounded to</p>
+<p>where <span class="math inline">\(h\)</span> is the Planck constant (<span class="math inline">\(h = 6.626 \times 10^{-34}\,\text{J s}\)</span>) and <span class="math inline">\(f\)</span> is the frequency. The Rayleigh-Jeans approximation is valid for <span class="math inline">\(f \ll k T / h\)</span>, which is approximately 6 THz at room temperature (290 K).</p>
+<p>We can integrate the above single-sided PSD over the full frequency range and show that the rms noise voltage of a resistor <span class="math inline">\(R\)</span> is bounded to</p>
 <p><span class="math display">\[
 \overline{v_\mathrm{n}^2} = \int_0^\infty \frac{4 R h f}{e^{{h f}/{k T}} - 1} df = \frac{2 (\pi k T)^2}{3 h} \cdot R
 \]</span></p>
@@ -1198,11 +1197,11 @@ P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \le
 </div>
 </div>
 <p><strong>MOSFETs</strong> generate several types of noise, the most important ones being the thermal noise of the channel and flicker noise.</p>
-<p>The thermal noise of the channel can be modeled as a current noise source between drain and source with a PSD of <span class="math inline">\(\overline{I_\mathrm{n}^2} = 4 k T \gamma g_{d0}\)</span> (in A<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(\gamma\)</span> is a process-dependent parameter (usually between 2/3 and 2). The parameter <span class="math inline">\(g_{d0}\)</span> is the small-signal output conductance of the MOSFET in triode, i.e., <span class="math inline">\(g_{d0} = g_\mathrm{ds}\)</span>, or equal to <span class="math inline">\(g_{d0} = g_\mathrm{m}\)</span> when in saturation.</p>
+<p>The thermal noise of the channel can be modeled as a current noise source between the drain and source terminals with a one-sided PSD of <span class="math inline">\(\overline{I_\mathrm{n}^2} = 4 k T \gamma g_{d0}\)</span> (in A<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(\gamma\)</span> is a process-dependent parameter (usually between 2/3 and 2). The parameter <span class="math inline">\(g_{d0}\)</span> is the drain-source conductance of the MOSFET at <span class="math inline">\(V_\mathrm{DS} = 0\)</span> (i.e., in deep triode); in saturation it is commonly approximated by <span class="math inline">\(g_{d0} \approx g_\mathrm{m}\)</span>.</p>
 <p>In saturation, it is often useful to express the thermal noise as a voltage noise source at the gate with a PSD of <span class="math inline">\(\overline{V_\mathrm{n}^2} = 4 k T \gamma / g_\mathrm{m}\)</span> (in V<span class="math inline">\(^2\)</span>/Hz). We can see that we can lower this noise of the MOSFET by increasing the transconductance <span class="math inline">\(g_\mathrm{m}\)</span>, which can be achieved by increasing the bias current.</p>
 <p>In addition, at high frequencies, the MOSFET also has induced gate-current noise, which is correlated with the channel thermal noise. A detailed discussion of this noise source can be found in <span class="citation" data-cites="Razavi_Analog_CMOS">(<a href="#ref-Razavi_Analog_CMOS" role="doc-biblioref">Razavi 2017</a>)</span>.</p>
-<p>Flicker noise is usually modeled as a voltage noise source at the gate with a PSD of <span class="math inline">\(K_f / (C'_\mathrm{ox}W L f)\)</span> (in V<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(K_f\)</span> is a process-dependent parameter, <span class="math inline">\(C'_\mathrm{ox}\)</span> is the oxide capacitance per unit area, <span class="math inline">\(L\)</span> and <span class="math inline">\(W\)</span> are the length and width of the MOSFET, and <span class="math inline">\(f\)</span> is the frequency. Note that we can lower the flicker noise by increasing the area of the MOSFET (<span class="math inline">\(W L\)</span>), however, this increases the parasitic capacitances associated with the MOSFET, and this is often prohibitive for RF operation!</p>
-<p>In <strong>bipolar junction transistors (BJTs)</strong>, the most important noise source is the shot noise due to the diffusion current in the base-emitter junction. Its PSD can be modeled as a current noise source between collector and emitter with a PSD of <span class="math inline">\(2 q I_\mathrm{C}\)</span> (in A<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(q\)</span> is the elementary charge (<span class="math inline">\(q = 1.6 \times 10^{-19}\)</span> C) and <span class="math inline">\(I_\mathrm{C}\)</span> is the DC collector current.</p>
+<p>Flicker noise is usually modeled as a voltage noise source at the gate with a PSD of <span class="math inline">\(K_f / (C'_\mathrm{ox}W L f)\)</span> (in V<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(K_f\)</span> is a process-dependent parameter, <span class="math inline">\(C'_\mathrm{ox}\)</span> is the oxide capacitance per unit area, <span class="math inline">\(L\)</span> and <span class="math inline">\(W\)</span> are the length and width of the MOSFET, and <span class="math inline">\(f\)</span> is the frequency. Note that we can lower the flicker noise by increasing the area of the MOSFET (<span class="math inline">\(W \cdot L\)</span>), however, this increases the parasitic capacitances associated with the MOSFET, and this is often prohibitive for RF operation!</p>
+<p>In <strong>bipolar junction transistors (BJTs)</strong>, the most important noise source is the shot noise due to the diffusion current in the base-emitter junction. It can be modeled as a current noise source between the collector and emitter terminals with a one-sided PSD of <span class="math inline">\(2 q I_\mathrm{C}\)</span> (in A<span class="math inline">\(^2\)</span>/Hz), where <span class="math inline">\(q\)</span> is the elementary charge (<span class="math inline">\(q = 1.6 \times 10^{-19}\,\text{C}\)</span>) and <span class="math inline">\(I_\mathrm{C}\)</span> is the dc collector current.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1216,7 +1215,7 @@ P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \le
 <p>Note that it has been shown in <span class="citation" data-cites="Sarpeshkar_1993">(<a href="#ref-Sarpeshkar_1993" role="doc-biblioref">Sarpeshkar et al. 1993</a>)</span> that thermal noise and shot noise are actually equivalent, as both are generated by the random, thermally agitated motion of charge carriers!</p>
 </div>
 </div>
-<p>Ideal <strong>capacitors</strong> and <strong>inductors</strong> do not generate noise; however, real capacitors and inductors have parasitic resistances which generate thermal noise.</p>
+<p>Ideal <strong>capacitors</strong> and <strong>inductors</strong> do not generate noise; however, real-world capacitors and inductors have parasitic resistances which generate thermal noise.</p>
 <p>In RF systems, additional noise sources can be present. One noteworthy example is the <a href="https://en.wikipedia.org/wiki/Cosmic_microwave_background"><strong>cosmic microwave background</strong></a> radiation, which can be modeled as a noise temperature of approximately 3 K. While this is negligible compared to thermal noise at room temperature (approximately 290 K), it can be significant in very low-noise systems, such as radio telescopes pointing to the sky. Another important noise source in RF systems is the <strong>atmospheric noise</strong>, which is generated by natural phenomena like lightning or in the ionosphere.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1230,7 +1229,7 @@ P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \le
 <div class="callout-body-container callout-body">
 <p>When doing circuit noise calculations, it is instructive to keep the following points in mind:</p>
 <ul>
-<li>For circuit calculations involving noise sources, it is convenient to replace the power spectral density by equivalent sinusoidal generators in small bandwidths.</li>
+<li>For circuit calculations involving noise sources, it is convenient to replace the power spectral density by equivalent sinusoidal generators in small bandwidths (typically 1 Hz).</li>
 <li>The noise power spectral density in a small bandwidth <span class="math inline">\(\Delta f\)</span> is given by <span class="math inline">\(\overline{V_\mathrm{n}^2} = \overline{v_\mathrm{n}^2} / \Delta f\)</span> and <span class="math inline">\(\overline{I_\mathrm{n}^2} = \overline{i_\mathrm{n}^2} / \Delta f\)</span>.</li>
 <li>The quantities <span class="math inline">\(\overline{V_\mathrm{n}^2}\)</span> and <span class="math inline">\(\overline{I_\mathrm{n}^2}\)</span> can be considered the mean-square value of sinusoidal generators. Using these values, network noise calculations reduce to familiar sinusoidal circuit-analysis calculations using <span class="math inline">\(V_\mathrm{n}\)</span> and <span class="math inline">\(I_\mathrm{n}\)</span>.</li>
 <li>Multiple <em>independent</em> noise sources can be calculated individually at the output, and the total noise in bandwidth <span class="math inline">\(\Delta f\)</span> is calculated as a mean-square value by adding the individual mean-square contributions from each sinusoid.</li>
@@ -1255,16 +1254,16 @@ Figure&nbsp;11: A noise-matched system with source and load impedances.
 </div>
 </div>
 </div>
-<p>We know that the noise of the source resistor is given by <span class="math inline">\(\overline{V_\mathrm{n,s}^2} = 4 k T R_\mathrm{s}\)</span>. We assume the load resistor <span class="math inline">\(R_\mathrm{load}\)</span> as noiseless and matched to the source resistor, i.e., <span class="math inline">\(R_\mathrm{load} = R_\mathrm{s}\)</span> for <a href="https://en.wikipedia.org/wiki/Maximum_power_transfer_theorem">maximum power transfer</a>. The noise power spectral density delivered to the load resistor is then given by</p>
+<p>We know that the noise of the source resistor is given by <span class="math inline">\(\overline{V_\mathrm{n,s}^2} = 4 k T R_\mathrm{s}\)</span>. We assume the load resistor <span class="math inline">\(R_\mathrm{load}\)</span> as <em>noiseless</em> and matched to the source resistor, i.e., <span class="math inline">\(R_\mathrm{load} = R_\mathrm{s}\)</span> for <a href="https://en.wikipedia.org/wiki/Maximum_power_transfer_theorem">maximum power transfer</a>. The noise power spectral density delivered to the load resistor is then given by</p>
 <p><span id="eq-noise-power-matched"><span class="math display">\[
-P_\mathrm{n,load} = \frac{\overline{V_\mathrm{n,load}^2}}{R_\mathrm{load}} = \frac{\overline{V_\mathrm{n,d}^2}}{4 R_\mathrm{s}} = k T
+P_\mathrm{n,load} = \frac{\overline{V_\mathrm{n,load}^2}}{R_\mathrm{load}} = \frac{\overline{V_\mathrm{n,s}^2}}{4 R_\mathrm{s}} = k T
 \tag{16}\]</span></span></p>
 <p>The calculation of <a href="#eq-noise-power-matched" class="quarto-xref">Equation&nbsp;16</a> confirms the initial statement that the maximum noise power spectral density that can be extracted from a noisy source is <span class="math inline">\(k T\)</span> (in W/Hz). This result is independent of the actual value of the source resistance <span class="math inline">\(R_\mathrm{s}\)</span>.</p>
 <p>We can further generalize the thermal noise of any impedance as</p>
 <p><span id="eq-thermal-noise-impedance"><span class="math display">\[
 \overline{V_\mathrm{n}^2} = 4 k T \Re \{ Z \}
 \tag{17}\]</span></span></p>
-<p>as for example in the complex impedance <span class="math inline">\(Z_\mathrm{ant}\)</span> of an antenna. Since an antenna is a reciprocal device, if we measure its radiation impedance <span class="math inline">\(Z_\mathrm{rad}\)</span> (for example with a vector network analyzer), we can calculate its thermal noise with <a href="#eq-thermal-noise-impedance" class="quarto-xref">Equation&nbsp;17</a> to <span class="math inline">\(\overline{V_\mathrm{n}^2} = 4 k T \Re \{ Z_\mathrm{rad} \}\)</span>.</p>
+<p>as for example in the complex impedance <span class="math inline">\(Z_\mathrm{ant}\)</span> of an antenna. Since an antenna is a reciprocal device, if we measure its radiation impedance <span class="math inline">\(Z_\mathrm{rad}\)</span> (for example with a <a href="https://en.wikipedia.org/wiki/Network_analyzer_(electrical)">vector network analyzer</a>), we can calculate its thermal noise with <a href="#eq-thermal-noise-impedance" class="quarto-xref">Equation&nbsp;17</a> to <span class="math inline">\(\overline{V_\mathrm{n}^2} = 4 k T \Re \{ Z_\mathrm{rad} \}\)</span>.</p>
 </section>
 <section id="sec-noise-figure" class="level3" data-number="2.3.3">
 <h3 data-number="2.3.3" class="anchored" data-anchor-id="sec-noise-figure"><span class="header-section-number">2.3.3</span> Noise Figure</h3>
@@ -1345,37 +1344,37 @@ F_\mathrm{total} = 1 + (F_1 - 1) + \frac{F_2 - 1}{G_1} + \frac{F_3 - 1}{G_1 G_2}
 <p><span id="eq-sensitivity"><span class="math display">\[
 P_\mathrm{in, min} = P_\mathrm{n} \cdot \text{SNR}_\mathrm{min} \cdot F
 \tag{20}\]</span></span></p>
-<p>where <span class="math inline">\(P_\mathrm{n}\)</span> is the noise power at the input, <span class="math inline">\(\text{SNR}_\mathrm{min}\)</span> is the minimum detectable SNR, and <span class="math inline">\(F\)</span> is the noise factor of the receiver. The input noise power can be calculated as</p>
+<p>where <span class="math inline">\(P_\mathrm{n}\)</span> is the noise power at the input, <span class="math inline">\(\text{SNR}_\mathrm{min}\)</span> is the minimum detectable SNR (i.e., the SNR required to demodulate the signal with given accuracy in terms of bit error rate or signal fidelity), and <span class="math inline">\(F\)</span> is the noise factor of the receiver. The input noise power can be calculated as</p>
 <p><span class="math display">\[
 P_\mathrm{n} = k T B
 \]</span></p>
-<p>where <span class="math inline">\(k\)</span> is the Boltzmann constant, <span class="math inline">\(T\)</span> is the temperature in Kelvin, and <span class="math inline">\(B\)</span> is the bandwidth of the receiver. Expressing <a href="#eq-sensitivity" class="quarto-xref">Equation&nbsp;20</a> in dBm we get the following formula:</p>
+<p>where <span class="math inline">\(k\)</span> is Boltzmann’s constant, <span class="math inline">\(T\)</span> is the temperature in Kelvin, and <span class="math inline">\(B\)</span> is the noise bandwidth of the receiver. Expressing <a href="#eq-sensitivity" class="quarto-xref">Equation&nbsp;20</a> in dB/dBm we get the following formula:</p>
 <p><span id="eq-sensitivity-dbm"><span class="math display">\[
 P_\mathrm{in, min}|_\mathrm{dBm} = -174\,\text{dBm/Hz} + \text{NF} + 10 \log_{10}(B/\text{Hz}) + \text{SNR}_\mathrm{min}|_\mathrm{dB}
 \tag{21}\]</span></span></p>
-<p>where -174 dBm/Hz is the thermal noise PSD at room temperature (290 K). We can see that the sensitivity improves with lower noise figure, smaller bandwidth, and lower minimum detectable SNR.</p>
+<p>where -174 dBm/Hz is the thermal noise PSD at room temperature (290 K). We can see that the sensitivity reaches lower dBm values with lower noise figure, smaller bandwidth, and lower minimum detectable SNR.</p>
 <div id="nte-wifi-sensitivity" class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note&nbsp;5: Sensitivity Calculation for WiFi
+Note&nbsp;5: Sensitivity Calculation for Wi-Fi
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Let’s calculate the sensitivity of a WiFi receiver operating at 5 GHz with a bandwidth of <span class="math inline">\(B = 80\,\text{MHz}\)</span>, a noise figure of <span class="math inline">\(NF = 7\,\text{dB}\)</span>, and a minimum detectable SNR of 25 dB. This high SNR means that a high-order modulation scheme (like 64-QAM) is used for high data rates.</p>
+<p>Let’s calculate the sensitivity of a Wi-Fi receiver operating at 5 GHz with a noise bandwidth of <span class="math inline">\(B = 80\,\text{MHz}\)</span>, a noise figure of <span class="math inline">\(\text{NF} = 7\,\text{dB}\)</span>, and a minimum detectable SNR of 25 dB. This high SNR means that a high-order modulation scheme (like 64-QAM) is used for high data rates.</p>
 <p>Using <a href="#eq-sensitivity-dbm" class="quarto-xref">Equation&nbsp;21</a> we get: <span class="math display">\[
 P_\mathrm{in, min} = -174\,\text{dBm/Hz} + 7\,\text{dB} + 10 \log_{10} (80 \times 10^6) + 25\,\text{dB} \approx -63\,\text{dBm}
 \]</span></p>
-<p>This means that the minimum input signal power that can be detected by the WiFi receiver is approximately -63 dBm.</p>
+<p>This means that the minimum input signal power that can be detected by the Wi-Fi receiver is approximately -63 dBm.</p>
 </div>
 </div>
 </section>
 </section>
 <section id="sec-fundamentals-modulation" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="sec-fundamentals-modulation"><span class="header-section-number">2.4</span> Modulation</h2>
-<p>In order to transmit information via an EM wave, we need to modulate the EM wave with the information signal. Looking at a simple sinusoidal carrier wave</p>
+<p>In order to transmit information via an EM wave, we need to modulate the wave with the information signal. Looking at a simple sinusoidal carrier wave</p>
 <p><span class="math display">\[
 s(t) = A \cos(\omega_0 t + \varphi)
 \]</span></p>
@@ -1386,8 +1385,8 @@ s(t) = A \cos(\omega_0 t + \varphi)
 <li>Phase <span class="math inline">\(\varphi(t)\)</span> (phase modulation, PM; the digital form is called phase-shift keying, <strong>PSK</strong>)</li>
 <li>Amplitude <span class="math inline">\(A(t)\)</span> and phase <span class="math inline">\(\varphi(t)\)</span> (quadrature amplitude modulation, <strong>QAM</strong>)</li>
 </ul>
-<p>The modulation formats FM and PM have the advantage that the carrier amplitude is constant, which makes them more robust against nonlinear distortion.</p>
-<p>QAM is widely used in modern communication systems, as it allows transmitting more bits per symbol by combining amplitude and phase modulation. The form with four different symbols is called QPSK. Higher-order modulation like 16-QAM, for example, uses 16 different symbols, which can encode four bits per symbol (as <span class="math inline">\(2^4 = 16\)</span>). Even higher-order QAM formats like 64-QAM (6 bits per symbol), 256-QAM (8 bits per symbol), 1024-QAM (10 bits per symbol), or 4096-QAM (12 bits per symbol) are also used in modern systems like WiFi or LTE.</p>
+<p>The modulation formats FM and PM have the advantage that the carrier amplitude <span class="math inline">\(A\)</span> is constant, which makes them more robust against nonlinear distortion.</p>
+<p>QAM is widely used in modern communication systems, as it allows to transmit more bits per symbol by combining amplitude and phase modulation. The QAM type with four different symbols is called QPSK. Higher-order modulation formats like 16-QAM, for example, use 16 different symbols, which can encode four bits per symbol (as <span class="math inline">\(2^4 = 16\)</span>). Even higher-order QAM formats like 64-QAM (6 bits per symbol), 256-QAM (8 bits per symbol), 1024-QAM (10 bits per symbol), or 4096-QAM (12 bits per symbol) are also used in modern systems like Wi-Fi or LTE/5G NR.</p>
 <div id="cell-fig-16qam-constellation" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div id="fig-16qam-constellation" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1402,13 +1401,13 @@ Figure&nbsp;14: 16-QAM constellation diagram with Gray code labeling of constell
 </div>
 </div>
 </div>
-<p>Shown in <a href="#fig-16qam-constellation" class="quarto-xref">Figure&nbsp;14</a> is the “constellation diagram” of a 16-QAM modulation format. The constellation points are arranged in a square grid, with each point representing a unique combination of amplitude and phase. The distance between the constellation points determines the robustness against noise and interference; larger distances result in better performance, but also require more power. The mapping of bits to constellation points is called “bit mapping” or “symbol mapping”. The example in <a href="#fig-16qam-constellation" class="quarto-xref">Figure&nbsp;14</a> uses a Gray code mapping, which minimizes the number of bit errors in case of a symbol error (assuming that a symbol will be wrongly decoded as one of its neighbors).</p>
-<p>The constellation diagram can be imagined as a complex plane, where the x-axis represents the in-phase component (I) and the y-axis represents the quadrature component (Q) of the modulated signal. During transmission of a specific symbol, the RF carrier is modulated to the corresponding amplitude and phase, resulting in a specific point in the constellation diagram. In <a href="#fig-16qam-constellation" class="quarto-xref">Figure&nbsp;14</a>, the amplitude and phase information for two consecutive symbols, <span class="math inline">\(A_i\)</span>/<span class="math inline">\(\varphi_i\)</span> and <span class="math inline">\(A_{i+1}\)</span>/<span class="math inline">\(\varphi_{i+1}\)</span>, is shown. If we have a bitrate with a bit duration of <span class="math inline">\(T_\mathrm{b}\)</span>, the symbol duration for 16-QAM (4 bits per symbol) is <span class="math inline">\(T_\mathrm{s} = 4 T_\mathrm{b}\)</span>. During the first <span class="math inline">\(T_\mathrm{s}\)</span>, the carrier is modulated to <span class="math inline">\(A_i\)</span>/<span class="math inline">\(\varphi_i\)</span>, and during the next <span class="math inline">\(T_\mathrm{s}\)</span>, it is modulated to <span class="math inline">\(A_{i+1}\)</span>/<span class="math inline">\(\varphi_{i+1}\)</span>.</p>
-<p>The table below shows the <strong>SNR requirements for different modulation formats</strong> to achieve a bit error rate (BER) of <span class="math inline">\(10^{-5}\)</span> in an additive white Gaussian noise (AWGN) channel. As we can see, higher-order modulation formats require higher SNR to achieve the same BER. Note that for the SNR values of this table <strong>no error correction coding</strong> is assumed; with error correction coding the required SNR can be significantly reduced!</p>
+<p>Shown in <a href="#fig-16qam-constellation" class="quarto-xref">Figure&nbsp;14</a> is the <strong>constellation diagram</strong> of a 16-QAM modulation format. The constellation points are arranged in a square grid, with each point representing a unique combination of amplitude and phase. The distance between the constellation points determines the robustness against noise and interference; larger distances result in better performance, but also require more power. The mapping of bits to constellation points is called “bit mapping” or “symbol mapping”. The example in <a href="#fig-16qam-constellation" class="quarto-xref">Figure&nbsp;14</a> uses a <a href="https://en.wikipedia.org/wiki/Gray_code">Gray code</a> mapping, which minimizes the number of bit errors in case of a symbol error (assuming that a symbol will be wrongly decoded as one of its neighbors).</p>
+<p>The constellation diagram can be imagined as a complex plane, where the x-axis represents the in-phase component (I) and the y-axis represents the quadrature component (Q) of the modulated signal. During transmission of a specific symbol, the RF carrier is modulated to the corresponding amplitude <span class="math inline">\(A_i\)</span> and phase <span class="math inline">\(\varphi_i\)</span>, resulting in a specific point in the constellation diagram. In <a href="#fig-16qam-constellation" class="quarto-xref">Figure&nbsp;14</a>, the amplitude and phase information for two consecutive symbols, <span class="math inline">\(A_i\)</span>/<span class="math inline">\(\varphi_i\)</span> and <span class="math inline">\(A_{i+1}\)</span>/<span class="math inline">\(\varphi_{i+1}\)</span>, is shown. If we have a bitrate with a bit duration of <span class="math inline">\(T_\mathrm{b}\)</span>, the symbol duration for 16-QAM (4 bits per symbol) is <span class="math inline">\(T_\mathrm{s} = 4 T_\mathrm{b}\)</span>. During the first <span class="math inline">\(T_\mathrm{s}\)</span>, the carrier is modulated to <span class="math inline">\(A_i\)</span>/<span class="math inline">\(\varphi_i\)</span> (encoding 4 bits), and during the next <span class="math inline">\(T_\mathrm{s}\)</span>, it is modulated to <span class="math inline">\(A_{i+1}\)</span>/<span class="math inline">\(\varphi_{i+1}\)</span> (encoding the next 4 bits).</p>
+<p><a href="#tbl-modulation-snr" class="quarto-xref">Table&nbsp;3</a> shows the <strong>SNR requirements for different modulation formats</strong> to achieve a bit error rate (BER) of <span class="math inline">\(10^{-5}\)</span> in an additive white Gaussian noise (AWGN) channel <span class="citation" data-cites="Sklar_Digital_Communications">(<a href="#ref-Sklar_Digital_Communications" role="doc-biblioref">Sklar and Harris 2020</a>)</span>. As we can see, higher-order modulation formats require higher SNR to achieve the same BER. Note that for the SNR values of this table <strong>no error correction coding</strong> (ECC) is assumed; with error correction coding the required SNR can be significantly reduced!</p>
 <div id="tbl-modulation-snr" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-modulation-snr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3: SNR requirements for different modulation schemes to achieve BER = <span class="math inline">\(10^{-5}\)</span> in AWGN channel
+Table&nbsp;3: Required symbol-energy-to-noise ratio <span class="math inline">\(E_\mathrm{s}/N_0\)</span> for different modulation schemes to achieve BER = <span class="math inline">\(10^{-5}\)</span> in an AWGN channel w/o error correction
 </figcaption>
 <div aria-describedby="tbl-modulation-snr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -1416,7 +1415,7 @@ Table&nbsp;3: SNR requirements for different modulation schemes to achieve BER =
 <tr class="header">
 <th>Modulation</th>
 <th>Bits/Symbol</th>
-<th>Required SNR (dB)</th>
+<th>Required <span class="math inline">\(E_\mathrm{s}/N_0\)</span> (dB)</th>
 </tr>
 </thead>
 <tbody>
@@ -1463,8 +1462,10 @@ Table&nbsp;3: SNR requirements for different modulation schemes to achieve BER =
 </section>
 <section id="sec-fundamentals-pulse-shaping" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="sec-fundamentals-pulse-shaping"><span class="header-section-number">2.5</span> Pulse Shaping and Spectral Efficiency</h2>
-<p>When we modulate symbols onto a carrier, we usually do not transmit the symbols as pure sinusoids, but rather as pulses with a certain shape. The pulse shape determines the bandwidth of the transmitted signal and its spectral efficiency. A common pulse shape is the <strong>rectangular pulse</strong>, which has a sinc-shaped spectrum. However, the sinc function <span class="math inline">\(\sin(\pi x)/(\pi x)\)</span> has side lobes that extend to infinity, which can cause interference with adjacent channels.</p>
-<p>For reference, the two-sided power spectral density <span class="math inline">\(S(f)\)</span> of a random binary sequence with equal probability of -1 and 1, using rectangular pulses with a duration of <span class="math inline">\(T_\mathrm{b}\)</span>, is given by</p>
+<p>When we modulate symbols onto a carrier, the question is how we transition from one symbol <span class="math inline">\(A_i\)</span>/<span class="math inline">\(\varphi_i\)</span> to the next symbol <span class="math inline">\(A_{i+1}\)</span>/<span class="math inline">\(\varphi_{i+1}\)</span>. If we change the amplitude and/or phase of the carrier instantaneously (like with a step function), we will have a very wide spectrum, which is not desirable.</p>
+<p>Therefore, we often apply <strong>pulse shaping</strong> to the symbols, which means that we smooth the transitions between symbols. This is usually done by convolving the symbol sequence with a pulse shaping filter, which has a certain impulse response. The choice of the pulse shaping filter affects the bandwidth of the transmitted signal and its spectral efficiency.</p>
+<p>A simple pulse shape is the <strong>rectangular pulse</strong>, which has a sinc-shaped spectrum. However, the function <span class="math inline">\(\text{sinc}(x) = \sin(\pi x)/(\pi x)\)</span> has side lobes that extend to infinity and roll off only slowly, which can cause interference with adjacent channels.</p>
+<p>For reference, the two-sided power spectral density <span class="math inline">\(S(f)\)</span> of a random binary sequence with equal probability of <span class="math inline">\(-1\)</span> and <span class="math inline">\(1\)</span>, using rectangular pulses with a duration of <span class="math inline">\(T_\mathrm{b}\)</span>, is given by <span class="citation" data-cites="Sklar_Digital_Communications">(<a href="#ref-Sklar_Digital_Communications" role="doc-biblioref">Sklar and Harris 2020</a>)</span></p>
 <p><span id="eq-rect-pulse-spectrum"><span class="math display">\[
 S(f) = T_\mathrm{b} \cdot \text{sinc}^2(fT_\mathrm{b}) = T_\mathrm{b} \cdot \left[ \frac{\sin(\pi f T_\mathrm{b})}{\pi f T_\mathrm{b}} \right]^2
 \tag{22}\]</span></span></p>
@@ -1484,8 +1485,8 @@ Figure&nbsp;15: Power spectral density of a rectangular pulse with duration <spa
 </div>
 </div>
 <p>As can be seen in <a href="#fig-rect-pulse-spectrum" class="quarto-xref">Figure&nbsp;15</a>, the main lobe of the sinc function has a bandwidth of <span class="math inline">\(2/T_\mathrm{b}\)</span>, but the side lobes are quite pronounced with a slow roll-off. This means that a significant amount of power is present outside the main lobe, which can cause interference with adjacent channels.</p>
-<p>To avoid this, we can use pulse shapes that have better spectral properties, such as the raised cosine pulse or the root-raised cosine pulse. The <strong>raised-cosine pulse</strong> has a roll-off factor <span class="math inline">\(\alpha\)</span> that determines the excess bandwidth beyond the Nyquist bandwidth. The root-raised cosine (RRC) pulse is used in practical systems (with half the pulse filter implemented at the TX, and half at the RX), as it can be implemented with a matched filter at the receiver.</p>
-<p>The raised-cosine pulse <span class="math inline">\(p(t)\)</span> (with a spectrum shaped like a raised cosine) is given by:</p>
+<p>To avoid this, we can use pulse shapes that have better spectral properties, such as the raised cosine pulse or the root-raised cosine pulse. The <strong>raised-cosine pulse</strong> (see the <a href="https://en.wikipedia.org/wiki/Raised-cosine_filter">raised-cosine filter</a>, which satisfies the Nyquist ISI criterion) has a roll-off factor <span class="math inline">\(\alpha\)</span> that determines the excess bandwidth beyond the Nyquist bandwidth. The root-raised cosine (RRC) pulse is used in practical systems (with half the pulse filter implemented at the TX, and half at the RX), as it can be implemented with a matched filter at the receiver.</p>
+<p>The raised-cosine pulse <span class="math inline">\(p(t)\)</span> (with a spectrum shaped like a raised cosine) is defined by:</p>
 <p><span class="math display">\[
 p(t) = \frac{\sin(\pi t / T_\mathrm{b})}{\pi t / T_\mathrm{b}} \cdot \frac{\cos(\alpha \pi t / T_\mathrm{b})}{1 - (2 \alpha t / T_\mathrm{b})^2}
 \]</span></p>
@@ -1504,12 +1505,12 @@ Figure&nbsp;16: Raised cosine pulse shaping in time and frequency domain for dif
 </div>
 </div>
 </div>
-<p>Another often-used pulse shape is the <strong>Gaussian pulse</strong>, which is used in Gaussian minimum-shift keying (<strong>GMSK</strong>, used in 2G) modulation, or in Gaussian frequency-shift keying (<strong>GFSK</strong>, used in Bluetooth). The Gaussian pulse has a smooth shape and a narrow spectrum. The Gaussian pulse is given by:</p>
+<p>Another often-used pulse shape is the <strong>Gaussian pulse</strong>, which is used in Gaussian minimum-shift keying (<strong>GMSK</strong>, used in 2G) modulation, or in Gaussian frequency-shift keying (<strong>GFSK</strong>, used in Bluetooth). The Gaussian pulse has a smooth shape and a narrow spectrum. The Gaussian pulse is defined by:</p>
 <p><span class="math display">\[
 p(t) = \frac{\sqrt{\pi}}{\alpha} e^{-(\pi t / \alpha)^2} \quad \text{with} \quad \alpha = \frac{\sqrt{\ln 2}}{\sqrt{2}} \cdot \frac{T_\mathrm{b}}{B T_\mathrm{b}}
 \]</span></p>
 <p>where <span class="math inline">\(B T_\mathrm{b}\)</span> controls the width of the pulse. The spectrum of the Gaussian pulse is also Gaussian-shaped, which helps to minimize inter-symbol interference (ISI).</p>
-<p>The Gaussian pulse for <span class="math inline">\(B T_\mathrm{b} = 0.5\)</span> as used in Bluetooth is shown in <a href="#fig-gaussian-pulse" class="quarto-xref">Figure&nbsp;17</a>.</p>
+<p>The Gaussian pulse for <span class="math inline">\(B T_\mathrm{b} = 0.5\)</span> (as used in Bluetooth) is shown in <a href="#fig-gaussian-pulse" class="quarto-xref">Figure&nbsp;17</a>.</p>
 <div id="cell-fig-gaussian-pulse" class="cell" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div id="fig-gaussian-pulse" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1524,21 +1525,22 @@ Figure&nbsp;17: Gaussian pulse shaping in time and frequency domain for differen
 </div>
 </div>
 </div>
-<p>For both the raised-cosine and Gaussian pulse, the trade-off between time- and frequency-domain containment is clearly visible. This is also captured in “<strong>Küpfmüller’s uncertainty principle</strong>”, which states that the product of the time duration and the bandwidth of a pulse is lower-bounded by a constant. In other words, if we want to have a pulse that is very short in time, it will have a wide bandwidth, and vice versa.</p>
+<p>For all the shown pulse shapes (rectangular, raised-cosine, and Gaussian), the trade-off between time- and frequency-domain containment is clearly visible. This is also captured in “<strong>Küpfmüller’s uncertainty principle</strong>” <span class="citation" data-cites="Kuepfmueller_Systemtheorie">(<a href="#ref-Kuepfmueller_Systemtheorie" role="doc-biblioref">Küpfmüller 1949</a>)</span>, which states that the product of the time duration and the bandwidth of a pulse is lower-bounded by a constant. In other words, if we want to have a pulse that is very short in time, it will have a wide bandwidth, and vice versa.</p>
 </section>
 <section id="sec-fundamentals-ofdm" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="sec-fundamentals-ofdm"><span class="header-section-number">2.6</span> Orthogonal Frequency-Division Multiplexing (OFDM)</h2>
-<p>As we have seen in the previous section, if we make the symbol rate high, we need to use pulses with a wide bandwidth. The problem with a wide bandwidth in wireless communication is <strong>multi-path propagation</strong>, which causes frequency-selective fading. This means that some frequencies are attenuated more than others, which can cause errors in the received signal. Equalizing such a frequency-selective channel can be very complex, especially if the channel changes rapidly (as in mobile communication). We now face a dilemma: How can we achieve high data rates (which require high symbol rates and thus wide bandwidth) while avoiding frequency-selective fading? The key idea, implemented in <strong>OFDM</strong>, is to split the wideband channel into multiple narrowband sub-channels (subcarriers), each with a low symbol rate. This way, each subcarrier experiences flat fading, which is much easier to equalize.</p>
-<p>The key question is now how to implement this idea efficiently, as we now have to apply modulation to hundreds or thousands of individual subcarriers. The solution is to use the <strong>inverse fast Fourier transform (IFFT)</strong> at the transmitter to generate the time-domain OFDM signal from the frequency-domain symbols, and the <strong>fast Fourier transform (FFT)</strong> at the receiver to recover the frequency-domain symbols from the time-domain OFDM signal. This is illustrated in <a href="#fig-ofdm-transceiver" class="quarto-xref">Figure&nbsp;18</a>.</p>
+<p>As we have seen in the previous section, if we make the symbol rate high, we need to use short pulses with a wide bandwidth. The problem with a wide bandwidth in wireless communication is <strong>multi-path propagation</strong> <span class="citation" data-cites="Molisch_Wireless_Communications">(<a href="#ref-Molisch_Wireless_Communications" role="doc-biblioref">Molisch 2022</a>)</span>, which causes frequency-selective fading. This means that some frequency parts of the channel are attenuated more than others, which can cause errors in the received signal. Equalizing such a frequency-selective channel can be very complex, especially if the channel changes rapidly (as in mobile communication).</p>
+<p>We now face a dilemma: How can we achieve high data rates (which require high symbol rates and thus wide bandwidth) while avoiding frequency-selective fading? The key idea, implemented in <strong>orthogonal frequency-division multiplexing (OFDM)</strong> <span class="citation" data-cites="Molisch_Wireless_Communications">(<a href="#ref-Molisch_Wireless_Communications" role="doc-biblioref">Molisch 2022</a>)</span>, is to split the wideband channel into multiple narrow sub-channels (subcarriers), each with a low symbol rate. This way, each subcarrier experiences essentially flat fading, which is much easier to equalize.</p>
+<p>The key question is now how to implement this idea <em>efficiently</em>, as we now have to apply modulation to hundreds or thousands of individual subcarriers. The solution is to use the <strong>inverse fast Fourier transform (IFFT)</strong> at the transmitter to generate the time-domain OFDM signal from the frequency-domain symbols, and the <strong>fast Fourier transform (FFT)</strong> at the receiver to recover the frequency-domain symbols from the time-domain OFDM signal. This process is illustrated in <a href="#fig-ofdm-transceiver" class="quarto-xref">Figure&nbsp;18</a>.</p>
 <div id="cell-fig-ofdm-transceiver" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div id="fig-ofdm-transceiver" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ofdm-transceiver-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="rfic_files/figure-html/fig-ofdm-transceiver-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-18" title="Figure&nbsp;18: OFDM transmission system block diagram showing transmitter and receiver processing chains."><img src="rfic_files/figure-html/fig-ofdm-transceiver-output-1.svg" class="img-fluid figure-img"></a>
+<a href="rfic_files/figure-html/fig-ofdm-transceiver-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-18" title="Figure&nbsp;18: OFDM transmission system block diagram showing transmitter (top) and receiver (bottom) processing chains."><img src="rfic_files/figure-html/fig-ofdm-transceiver-output-1.svg" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ofdm-transceiver-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;18: OFDM transmission system block diagram showing transmitter and receiver processing chains.
+Figure&nbsp;18: OFDM transmission system block diagram showing transmitter (top) and receiver (bottom) processing chains.
 </figcaption>
 </figure>
 </div>
@@ -1546,7 +1548,7 @@ Figure&nbsp;18: OFDM transmission system block diagram showing transmitter and r
 </div>
 <p>The OFDM transmitter takes a block of <span class="math inline">\(N\)</span> symbols (e.g., 64-QAM symbols) and maps them onto <span class="math inline">\(N\)</span> subcarriers, thereby increasing the symbol duration <span class="math inline">\(T_\mathrm{sym}\)</span> for each subcarrier to <span class="math inline">\(N \cdot T_\mathrm{b}\)</span>. The IFFT then generates the time-domain OFDM signal, which is transmitted over the wireless channel. Before transmission, the <strong>cyclic prefix (CP)</strong> is added to each OFDM symbol.</p>
 <p>At the receiver, the CP is first removed, and then the FFT recovers the frequency-domain symbols, which can then be equalized (fairly simply by multiplying each subcarrier with a complex factor to correct amplitude and phase) and demodulated.</p>
-<p>A key property of OFDM is that the subcarriers are <strong>orthogonal</strong> to each other, which means that they do not interfere with each other, even if they overlap in frequency. This is achieved by choosing the subcarrier spacing <span class="math inline">\(\Delta f\)</span> such that it is equal to the symbol rate <span class="math inline">\(1/T_\mathrm{sym}\)</span>, i.e., <span class="math inline">\(\Delta f = 1/T_\mathrm{sym}\)</span>. This way, the integral of the product of two different subcarriers over one symbol period is zero, which means that they are orthogonal.</p>
+<p>A key property of OFDM is that the subcarriers are <strong>orthogonal</strong> to each other, which means that they do not interfere with each other. This is achieved by choosing the subcarrier spacing <span class="math inline">\(\Delta f\)</span> such that it is equal to the symbol rate <span class="math inline">\(1/T_\mathrm{sym}\)</span>, i.e., <span class="math inline">\(\Delta f = 1/T_\mathrm{sym}\)</span>. This way, the integral of the product of two different subcarriers over one symbol period is zero, which means that they are orthogonal.</p>
 <p>To further improve the robustness against multi-path propagation, a CP is added to each OFDM symbol. The CP is a copy of the last part of the OFDM symbol, which is added to the beginning of the symbol. This way, if there are delayed copies of the OFDM symbol due to multi-path propagation, they will still fall within the CP and will not cause inter-symbol interference (ISI). The length of the CP should be longer than the maximum delay spread of the channel.</p>
 <div id="nte-lte-ofdm" class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1566,11 +1568,11 @@ Note&nbsp;6: OFDM in LTE
 <li>Modulation: QPSK, 16-QAM, 64-QAM, 256-QAM</li>
 </ul>
 <p>From the subcarrier spacing we can calculate the symbol duration as <span class="math inline">\(T_\mathrm{sym} = 1 / \Delta f = 1 / 15\,\text{kHz} \approx 66.7\,\mu\text{s}\)</span>.</p>
-<p>We can calculate the raw bitrate for a 20 MHz LTE channel as</p>
+<p>We can calculate the raw bitrate for a 20 MHz LTE channel using 256-QAM modulation as</p>
 <p><span class="math display">\[
-\text{Bitrate} = N_\mathrm{sc} \cdot N_\mathrm{sym} \cdot \frac{1}{T_\mathrm{sym} + T_\mathrm{CP}} = 1200 \cdot 8 \cdot \frac{1}{66.7\,\mu\text{s} + 4.7\,\mu\text{s}} \approx 134\,\text{Mbps}
+\text{Bitrate} = N_\mathrm{sc} \cdot N_\mathrm{bps} \cdot \frac{1}{T_\mathrm{sym} + T_\mathrm{CP}} = 1200 \cdot 8 \cdot \frac{1}{66.7\,\mu\text{s} + 4.7\,\mu\text{s}} \approx 134\,\text{Mbps}
 \]</span></p>
-<p>Without the overhead for control channels and error correction coding a user data rate of approximately 100 Mbps can be achieved in a 20 MHz LTE channel.</p>
+<p>With the overhead for control channels and error correction coding a user data rate of approximately 100 Mbps can be achieved in a 20 MHz LTE channel. This data rate can be scaled up by using multiple 20 MHz channels (MIMO, carrier aggregation).</p>
 </div>
 </div>
 </section>
@@ -1578,36 +1580,36 @@ Note&nbsp;6: OFDM in LTE
 <h2 data-number="2.7" class="anchored" data-anchor-id="sec-fundamentals-multiple-access"><span class="header-section-number">2.7</span> Multiple Access Techniques</h2>
 <p>In wireless communication systems, multiple users need to share the same frequency spectrum. This is achieved by using <strong>multiple access techniques</strong>, which allow multiple users to transmit and receive data simultaneously without interfering with each other. The most common multiple access techniques are:</p>
 <ol type="1">
-<li><p><strong>Time division multiple access (TDMA)</strong>: Users are assigned specific time slots for transmission, allowing multiple users to share the same frequency channel by dividing the time into slots.</p></li>
+<li><p><strong>Time division multiple access (TDMA)</strong>: Users are assigned specific time slots for transmission, allowing multiple users to share the same frequency channel by dividing continuous time into slots.</p></li>
 <li><p><strong>Frequency division multiple access (FDMA)</strong>: Users are assigned specific frequency bands within the overall frequency spectrum, allowing multiple users to transmit simultaneously on different frequencies.</p></li>
-<li><p><strong>Code division multiple access (CDMA)</strong>: Users are assigned unique spreading codes, allowing them to transmit simultaneously over the same frequency band. The receiver uses the code to extract the desired signal. A variant of CDMA is frequency-hopping spread spectrum (FHSS), where the carrier frequency is changed rapidly according to a pseudo-random sequence known to both the transmitter and receiver. This is used in Bluetooth.</p></li>
+<li><p><strong>Code division multiple access (CDMA)</strong>: Users are assigned unique spreading codes, allowing them to transmit simultaneously over the same frequency band. The receiver uses the same code to extract the desired signal. A variant of CDMA is frequency-hopping spread spectrum (FHSS), where the carrier frequency is changed rapidly according to a pseudo-random sequence known to both the transmitter and receiver. This is used in Bluetooth.</p></li>
 <li><p><strong>Orthogonal frequency division multiple access (OFDMA)</strong>: A variant of OFDM, where multiple users are assigned different subcarriers for transmission, allowing for efficient use of the frequency spectrum. This is used in 4G LTE and 5G NR.</p></li>
 <li><p><strong>Spatial division multiple access (SDMA)</strong>: Uses multiple antennas to create spatially separated channels, allowing multiple users to transmit simultaneously in the same frequency band.</p></li>
 </ol>
-<p>In addition, all of these techniques can be combined to create more efficient and flexible communication systems. For example, OFDMA can be used in conjunction with SDMA to allow multiple users to share the same frequency resources while also taking advantage of spatial diversity. Also, TDMA can be combined with FDMA to create a hybrid multiple access scheme (which has been used in 2G GSM).</p>
+<p>All of the above techniques can be combined to create more efficient and flexible communication systems. For example, OFDMA can be used in conjunction with SDMA to allow multiple users to share the same frequency resources while also taking advantage of spatial diversity. Also, TDMA can be combined with FDMA to create a hybrid multiple access scheme (which has been used in 2G).</p>
 </section>
 <section id="sec-fundamentals-mcs" class="level2" data-number="2.8">
 <h2 data-number="2.8" class="anchored" data-anchor-id="sec-fundamentals-mcs"><span class="header-section-number">2.8</span> Modulation and Coding Schemes</h2>
-<p>In modern wireless communication systems several parameters can be adapted to the current channel conditions to optimize the data rate and reliability. These parameters include the modulation format (e.g., QPSK, 16-QAM, 64-QAM, etc.) and the error correction coding scheme (e.g., convolutional codes, turbo codes, LDPC codes, etc.). The combination of modulation format and coding scheme is called the <strong>modulation and coding scheme (MCS)</strong>. The MCS determines the number of bits per symbol and the level of error correction, which in turn affects the data rate and reliability of the communication link.</p>
-<p>Since there are many different MCS options available, and the receiver needs to be informed by the transmitter which MCS is used, a standardized set of MCS options is defined in most wireless communication standards. For example, the MCS options for WiFi can be seen in this <a href="https://mcsindex.net">table</a>, while the MCS calculation for 5G NR can be found <a href="https://www.sqimway.com/nr_pdsch.php">here</a>.</p>
+<p>In modern wireless communication systems several parameters can be adapted on the fly to the current channel conditions to optimize the data rate and reliability. These parameters include the modulation format (e.g., QPSK, 16-QAM, 64-QAM, etc.) and the error correction coding scheme (e.g., convolutional codes, turbo codes, LDPC codes, etc.). The combination of modulation format and coding scheme is called the <strong>modulation and coding scheme (MCS)</strong>. The MCS determines the number of bits per symbol and the level of error correction, which in turn affects the data rate and reliability of the communication link, as well sets the minimum required SNR.</p>
+<p>Since there are many different MCS options available, and the receiver needs to be informed by the transmitter which MCS is used (whenever there is a change of MCS), a standardized set of MCS options is defined in most wireless communication standards. For example, the MCS options for Wi-Fi can be seen in this <a href="https://mcsindex.net">table</a>, while the MCS calculation for 5G NR can be found <a href="https://www.sqimway.com/nr_pdsch.php">here</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Exemplary MCS in WiFi
+<span class="screen-reader-only">Note</span>Exemplary MCS in Wi-Fi
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Some operating systems and drivers show the MCS (and other parameters of the Wi-Fi link) which are currently used. A typical output might be:</p>
+<p>Some operating systems and wireless drivers show the MCS (and other parameters of the Wi-Fi link) during use. A typical output might be:</p>
 <ul>
 <li>MCS: 7</li>
 <li>RSSI: -53 dBm</li>
 <li>Interference: -92 dBm</li>
 <li>Bandwidth: 160 MHz</li>
 </ul>
-<p>Looking up MCS 7 in the WiFi MCS table linked above shows that this corresponds to 64-QAM with a coding rate of 5/6. With a bandwidth of 160 MHz, 2x MIMO and a guard interval (GI) of 0.8 µs, the maximum data rate is a whopping 1441 Mbps.</p>
+<p>Looking up MCS 7 in the Wi-Fi MCS table linked above shows that this corresponds to 64-QAM with a coding rate of 5/6. With a bandwidth of 160 MHz, 2x MIMO and a guard interval (GI) of 0.8 µs, the maximum data rate is a whopping 1441 Mbps.</p>
 </div>
 </div>
 </section>
@@ -4303,6 +4305,9 @@ Kaukovuori, Jouni, Kari Stadius, Jussi Ryynänen, and Kari A. I. Halonen. 2008. 
 <div id="ref-Kral.1998" class="csl-entry" role="listitem">
 Kral, A., F. Behbahani, and A. A. Abidi. 1998. <span>“<span class="nocase">RF-CMOS oscillators with switched tuning</span>.”</span> <em>Proceedings of the IEEE 1998 Custom Integrated Circuits Conference (Cat. No.98CH36143)</em>, January, 555–58. <a href="https://doi.org/10.1109/cicc.1998.695039">https://doi.org/10.1109/cicc.1998.695039</a>.
 </div>
+<div id="ref-Kuepfmueller_Systemtheorie" class="csl-entry" role="listitem">
+Küpfmüller, Karl. 1949. <em>Die Systemtheorie Der Elektrischen Nachrichtenübertragung</em>. S. Hirzel Verlag.
+</div>
 <div id="ref-Lange.1969" class="csl-entry" role="listitem">
 Lange, J. 1969. <span>“Interdigitated Strip-Line Quadrature Hybrid.”</span> <em>1969 g-MTT International Microwave Symposium</em>, 10–13. <a href="https://doi.org/10.1109/GMTT.1969.1122649">https://doi.org/10.1109/GMTT.1969.1122649</a>.
 </div>
@@ -4377,14 +4382,14 @@ Yue, C. P., and S. S. Wong. 1998. <span>“On-Chip Spiral Inductors with Pattern
 </section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div>Apache-2.0 license</div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{pretl2026,
   author = {Pretl, Harald},
   title = {Radio-Frequency {Integrated} {Circuits}},
-  date = {2026-06-26},
+  date = {2026-07-02},
   url = {https://iic-jku.github.io/radio-frequency-integrated-circuits},
   doi = {10.5281/zenodo.17563943},
   langid = {en-US}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-pretl2026" class="csl-entry quarto-appendix-citeas" role="listitem">
 Pretl, Harald. 2026. <span>“Radio-Frequency Integrated Circuits.”</span>
-June 26. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
+July 2. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
