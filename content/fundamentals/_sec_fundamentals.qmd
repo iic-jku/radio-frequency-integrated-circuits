@@ -20,7 +20,7 @@ In this section, we will discuss a few important concepts which will be instrume
 
 ## Channel Capacity {#sec-channel-capacity}
 
-In @sec-intro we have already discussed the fact that we need to pack information into a minimum bandwidth, as the available spectrum is limited. To appreciate the limits of information transfer, we need to understand how much information can be transmitted over a given bandwidth. This limit is given by the **Shannon-Hartley theorem**, which states the maximum data rate $C$ (in bit/s) that can be transmitted over a communication channel with bandwidth $B$ (in Hz) and signal-to-noise ratio $\text{SNR}$ (in linear units):
+In @sec-intro we have already discussed the fact that we need to pack information into a minimum bandwidth, as the available spectrum is limited. To appreciate the limits of information transfer, we need to understand how much information can be transmitted over a given bandwidth. This limit is given by the [**Shannon-Hartley theorem**](https://en.wikipedia.org/wiki/Shannon%E2%80%93Hartley_theorem), which states the maximum data rate $C$ (in bit/s) that can be transmitted over a communication channel with bandwidth $B$ (in Hz) and signal-to-noise ratio $\text{SNR}$ (in linear units):
 
 $$
 C = B \cdot \log_2(1 + \text{SNR})
@@ -42,7 +42,7 @@ $$
 C = B \cdot \log_2(1 + \text{SNR}) = 2\,\text{MHz} \cdot \log_2(1 + 5) = 2\,\text{MHz} \cdot 2.585 \approx 5.2\,\text{Mbps}
 $$
 
-This sounds reasonable, as the user data rate for Bluetooth LE is 1 Mbps for the given SNR, which allows for quite some overhead for coding and protocols. 
+This sounds reasonable, as the user data rate for Bluetooth LE is 1 Mbps for the given SNR, which allows for considerable overhead for coding and protocols.
 :::
 
 ## Linearity {#sec-linearity}
@@ -104,7 +104,7 @@ Looking at @eq-linearity-single and @eq-linearity-single-gain-fundamental, we ca
 
 - Even-order nonlinearities (due to $\alpha_2$ and $\alpha_4$) create low-frequency components; they effectively add frequency components stemming from the envelope $A_0$. If $A_0$ is a constant then this results in a dc term; if $A_0(t)$ is time-variant, it will create a squared and quadrupled version of it at low frequencies.
 - The $\alpha_1$-term is the gain of the circuit block.
-- Odd-order nonlinearities ($\alpha_3$ and $\alpha_5$) can impact the gain of the fundamental term passing through the block. Often $\alpha_3$ and $\alpha_5$ have the same sign, which is opposite to the sign of $\alpha_1$. This implies that the gain stays linear for small input powers. For larger input signal, the terms with $\alpha_3$ and $\alpha_5$ start to dominate, leading to gain compression or saturation effects, until the circuit block reaches a level of maximum output power. In some cases, $\alpha_3$ has the same sign as $\alpha_1$ but $\alpha_5$ has the opposite one, which leads to gain expansion: The gain would first demonstrate an overshoot at some input power level, until the term with $\alpha_5$ becomes dominant and the gain is compressed again.
+- Odd-order nonlinearities ($\alpha_3$ and $\alpha_5$) can impact the gain of the fundamental term passing through the block. Often $\alpha_3$ and $\alpha_5$ have the same sign, which is opposite to the sign of $\alpha_1$. This implies that the gain stays linear for small input powers. For larger input signals, the terms with $\alpha_3$ and $\alpha_5$ start to dominate, leading to gain compression or saturation effects, until the circuit block reaches a level of maximum output power. In some cases, $\alpha_3$ has the same sign as $\alpha_1$ but $\alpha_5$ has the opposite one, which leads to gain expansion: The gain would first demonstrate an overshoot at some input power level, until the term with $\alpha_5$ becomes dominant and the gain is compressed again.
 - Even- and odd-order nonlinearities create additional frequency components, so-called harmonics of the fundamental frequency. These harmonics are often unwanted, as they are far outside the wanted transmission frequency range, and need to be minimized, by either
   1. using a lowpass to filter these harmonics, or
   2. increasing the linearity, i.e., making the $\alpha_2$, $\alpha_3$, etc., small enough.
@@ -122,7 +122,7 @@ How can we quantify the nonlinearity with a one-tone test? We can sweep the inpu
 Note that for compressive behavior, $\alpha_3$ and $\alpha_1$ have different signs, while for expansive behavior, they have the same sign.
 :::
 
-The following plot (@fig-gain-nonlinear-compression-expansion) in addition shows an expansive behavior. In contrast to the truncated Taylor-series model above, a closed-form saturating model is used here so that the output power correctly converges to the saturation power $P_\mathrm{sat}$ for large input levels. The model uses the amplitude characteristic
+The following plot (@fig-gain-nonlinear-compression-expansion) in addition shows an expansive behavior. In contrast to the truncated Taylor-series model above, a closed-form saturating model is used here so that the output power correctly converges to the saturation power $P_\mathrm{sat}$ for large input levels. Such saturating amplitude models are widely used to describe power-amplifier nonlinearity [@Saleh.1981]. The model uses the amplitude characteristic
 
 $$
 A_\mathrm{out} = A_\mathrm{sat} \tanh \left( u + c \cdot u^3 \right)
@@ -188,7 +188,7 @@ $$ {#eq-linearity-double-c}
 
 The tones shown in @eq-linearity-double-c are called "**intermodulation products of third order**" (IM3), and are caused by the odd nonlinearities (like $\alpha_3$). While the IM3 tones located at $2 \omega_1 + \omega_2$ and $\omega_1 + 2 \omega_2$ are similar to the sum IM2 tone and far away from $\omega_1$ and $\omega_2$, the other two tones are concerning.
 
-Expressing $\Delta \omega = \omega_2 - \omega_1$ (and assuming $\omega_1 < \omega_2$), the building law of $2 \omega_1 - \omega_2 = \omega_1 - \Delta \omega$ and $2 \omega_2 - \omega_1 = \omega_2 + \Delta \omega$ results in new tones right beside $\omega_1$ and $\omega_2$, with a frequency separation only defined by $\Delta \omega$. This situation is illustrated in @fig-im3-tones.
+Expressing $\Delta \omega = \omega_2 - \omega_1$ (and assuming $\omega_1 < \omega_2$), the construction rule $2 \omega_1 - \omega_2 = \omega_1 - \Delta \omega$ and $2 \omega_2 - \omega_1 = \omega_2 + \Delta \omega$ results in new tones right beside $\omega_1$ and $\omega_2$, with a frequency separation only defined by $\Delta \omega$. This situation is illustrated in @fig-im3-tones.
 
 {{< include /content/fundamentals/_fig_im3_tones.qmd >}}
 
@@ -206,7 +206,7 @@ $$
 \text{IIP3} = P_\mathrm{in} + \frac{P_\mathrm{in} - P_\mathrm{IM3}}{2}
 $$ {#eq-iip3}
 
-Further, for mildly nonlinear systems (i.e., $\alpha_3$ is dominant), the IIP3 can be approximated from the 1-dB compression point as
+Further, for mildly nonlinear systems (i.e., $\alpha_3$ is dominant), the IIP3 can be approximated from the 1-dB compression point as [@Razavi_RFIC]
 
 $$
 \text{IIP3}|_\mathrm{dBm} \approx P_\mathrm{1dB}|_\mathrm{dBm} + 9.6\,\text{dB}.
@@ -215,7 +215,7 @@ $$ {#eq-iip3-approx}
 If we have multiple blocks which are cascaded, and we know the gain and IIP3 of each block, we can calculate the overall IIP3 of the cascade with the following approximation. An exact calculation is very involved, as the nonlinearities of the first block (and the resulting tones) will be processed by the second block, creating even more tones; this process escalates very quickly. However, for practical purposes, the following approximation is often sufficient:
 
 $$
-\frac{1}{\text{IIP3}_\text{total}} \approx \frac{1}{\text{IIP3}_1} + \frac{G_1}{\text{IIP3}_2} + \frac{G_1 G_2}{\text{IIP3}_3} 
+\frac{1}{\text{IIP3}_\text{total}} \approx \frac{1}{\text{IIP3}_1} + \frac{G_1}{\text{IIP3}_2} + \frac{G_1 G_2}{\text{IIP3}_3}
 $$ {#eq-iip3-cascade}
 
 Here $G_1$ is the linear gain of the first block, and $\text{IIP3}_1$, $\text{IIP3}_2$ are the input-referred IP3 of the first and second block, respectively. Note that all powers have to be in _linear units_ when using @eq-iip3-cascade. An even more simplified version of @eq-iip3-cascade can be used with all quantities given in dBm and dB, respectively:
@@ -255,7 +255,7 @@ The PSD of noise can be flat vs. frequency (which is called "white noise"), or c
 
 ### Types of Noise Generation {#sec-noise-types}
 
-**Resistors** generate thermal noise, which is white noise with a one-sided PSD of $4 k T R$ (in V$^2$/Hz) when looking at the voltage across the resistor, or $4 k T / R$ (in A$^2$/Hz) when looking at the current through the resistor. This noise is generated by the random thermal motion of charge carriers in the resistor.
+**Resistors** generate thermal noise (also called [Johnson-Nyquist noise](https://en.wikipedia.org/wiki/Johnson%E2%80%93Nyquist_noise)), which is white noise with a one-sided PSD of $4 k T R$ (in V$^2$/Hz) when looking at the voltage across the resistor, or $4 k T / R$ (in A$^2$/Hz) when looking at the current through the resistor. This noise is generated by the random thermal motion of charge carriers in the resistor.
 
 ::: {.callout-important}
 ## Thermal Noise
@@ -263,7 +263,7 @@ Note that the simple approximation given above is only valid for reasonably low 
 
 $$
 \text{PSD} = \frac{4 R h f}{e^{{h f}/{k T}} - 1}
-$$ 
+$$
 
 where $h$ is the Planck constant ($h = 6.626 \times 10^{-34}\,\text{J s}$) and $f$ is the frequency. The Rayleigh-Jeans approximation is valid for $f \ll k T / h$, which is approximately 6 THz at room temperature (290 K).
 
@@ -278,7 +278,7 @@ which equates to approximately 13 mVrms noise voltage for a 1 k$\Omega$ resistor
 
 **MOSFETs** generate several types of noise, the most important ones being the thermal noise of the channel and flicker noise.
 
-The thermal noise of the channel can be modeled as a current noise source between the drain and source terminals with a one-sided PSD of $\overline{I_\mathrm{n}^2} = 4 k T \gamma g_{d0}$ (in A$^2$/Hz), where $\gamma$ is a process-dependent parameter (usually between 2/3 and 2). The parameter $g_{d0}$ is the small-signal output conductance of the MOSFET in triode, i.e., $g_{d0} = \gds$, or equal to $g_{d0} = \gm$ when in saturation.
+The thermal noise of the channel can be modeled as a current noise source between the drain and source terminals with a one-sided PSD of $\overline{I_\mathrm{n}^2} = 4 k T \gamma g_{d0}$ (in A$^2$/Hz), where $\gamma$ is a process-dependent parameter (usually between 2/3 and 2). The parameter $g_{d0}$ is the drain-source conductance of the MOSFET at $V_\mathrm{DS} = 0$ (i.e., in deep triode); in saturation it is commonly approximated by $g_{d0} \approx \gm$.
 
 In saturation, it is often useful to express the thermal noise as a voltage noise source at the gate with a PSD of $\overline{V_\mathrm{n}^2} = 4 k T \gamma / \gm$ (in V$^2$/Hz). We can see that we can lower this noise of the MOSFET by increasing the transconductance $\gm$, which can be achieved by increasing the bias current.
 
@@ -298,7 +298,7 @@ Ideal **capacitors** and **inductors** do not generate noise; however, real-worl
 In RF systems, additional noise sources can be present. One noteworthy example is the [**cosmic microwave background**](https://en.wikipedia.org/wiki/Cosmic_microwave_background) radiation, which can be modeled as a noise temperature of approximately 3 K. While this is negligible compared to thermal noise at room temperature (approximately 290 K), it can be significant in very low-noise systems, such as radio telescopes pointing to the sky. Another important noise source in RF systems is the **atmospheric noise**, which is generated by natural phenomena like lightning or in the ionosphere.
 
 ::: {.callout-note}
-##  A Note on Circuit Noise Calculations
+## A Note on Circuit Noise Calculations
 When doing circuit noise calculations, it is instructive to keep the following points in mind:
 
 - For circuit calculations involving noise sources, it is convenient to replace the power spectral
@@ -399,25 +399,25 @@ where $P_\mathrm{n}$ is the noise power at the input, $\text{SNR}_\mathrm{min}$ 
 $$
 P_\mathrm{n} = k T B
 $$
-    
+
 where $k$ is Boltzmann's constant, $T$ is the temperature in Kelvin, and $B$ is the noise bandwidth of the receiver. Expressing @eq-sensitivity in dB/dBm we get the following formula:
 
 $$
-P_\mathrm{in, min}|_\mathrm{dBm} = -174\,\text{dBm/Hz} + \text{NF} + 10 \log_{10}(B/\text{Hz}) + \text{SNR}_\mathrm{min}|_\mathrm{dB} 
+P_\mathrm{in, min}|_\mathrm{dBm} = -174\,\text{dBm/Hz} + \text{NF} + 10 \log_{10}(B/\text{Hz}) + \text{SNR}_\mathrm{min}|_\mathrm{dB}
 $$ {#eq-sensitivity-dbm}
 
 where -174 dBm/Hz is the thermal noise PSD at room temperature (290 K). We can see that the sensitivity reaches lower dBm values with lower noise figure, smaller bandwidth, and lower minimum detectable SNR.
 
 ::: {#nte-wifi-sensitivity .callout-note}
-## Sensitivity Calculation for WiFi
-Let's calculate the sensitivity of a WiFi receiver operating at 5 GHz with a noise bandwidth of $B = 80\,\text{MHz}$, a noise figure of $\text{NF} = 7\,\text{dB}$, and a minimum detectable SNR of 25 dB. This high SNR means that a high-order modulation scheme (like 64-QAM) is used for high data rates.
+## Sensitivity Calculation for Wi-Fi
+Let's calculate the sensitivity of a Wi-Fi receiver operating at 5 GHz with a noise bandwidth of $B = 80\,\text{MHz}$, a noise figure of $\text{NF} = 7\,\text{dB}$, and a minimum detectable SNR of 25 dB. This high SNR means that a high-order modulation scheme (like 64-QAM) is used for high data rates.
 
 Using @eq-sensitivity-dbm we get:
 $$
 P_\mathrm{in, min} = -174\,\text{dBm/Hz} + 7\,\text{dB} + 10 \log_{10} (80 \times 10^6) + 25\,\text{dB} \approx -63\,\text{dBm}
 $$
 
-This means that the minimum input signal power that can be detected by the WiFi receiver is approximately -63 dBm.
+This means that the minimum input signal power that can be detected by the Wi-Fi receiver is approximately -63 dBm.
 :::
 
 ## Modulation {#sec-fundamentals-modulation}
@@ -437,30 +437,30 @@ we see that we can change one or more of the following parameters to encode info
 
 The modulation formats FM and PM have the advantage that the carrier amplitude $A$ is constant, which makes them more robust against nonlinear distortion.
 
-QAM is widely used in modern communication systems, as it allows to transmit more bits per symbol by combining amplitude and phase modulation. The QAM type with four different symbols is called QPSK. Higher-order modulation formats like 16-QAM, for example, use 16 different symbols, which can encode four bits per symbol (as $2^4 = 16$). Even higher-order QAM formats like 64-QAM (6 bits per symbol), 256-QAM (8 bits per symbol), 1024-QAM (10 bits per symbol), or 4096-QAM (12 bits per symbol) are also used in modern systems like WiFi or LTE/5G NR.
+QAM is widely used in modern communication systems, as it allows to transmit more bits per symbol by combining amplitude and phase modulation. The QAM type with four different symbols is called QPSK. Higher-order modulation formats like 16-QAM, for example, use 16 different symbols, which can encode four bits per symbol (as $2^4 = 16$). Even higher-order QAM formats like 64-QAM (6 bits per symbol), 256-QAM (8 bits per symbol), 1024-QAM (10 bits per symbol), or 4096-QAM (12 bits per symbol) are also used in modern systems like Wi-Fi or LTE/5G NR.
 
 {{< include /content/fundamentals/_fig_16qam_constellation.qmd >}}
 
-Shown in @fig-16qam-constellation is the **constellation diagram** of a 16-QAM modulation format. The constellation points are arranged in a square grid, with each point representing a unique combination of amplitude and phase. The distance between the constellation points determines the robustness against noise and interference; larger distances result in better performance, but also require more power. The mapping of bits to constellation points is called "bit mapping" or "symbol mapping". The example in @fig-16qam-constellation uses a Gray code mapping, which minimizes the number of bit errors in case of a symbol error (assuming that a symbol will be wrongly decoded as one of its neighbors).
+Shown in @fig-16qam-constellation is the **constellation diagram** of a 16-QAM modulation format. The constellation points are arranged in a square grid, with each point representing a unique combination of amplitude and phase. The distance between the constellation points determines the robustness against noise and interference; larger distances result in better performance, but also require more power. The mapping of bits to constellation points is called "bit mapping" or "symbol mapping". The example in @fig-16qam-constellation uses a [Gray code](https://en.wikipedia.org/wiki/Gray_code) mapping, which minimizes the number of bit errors in case of a symbol error (assuming that a symbol will be wrongly decoded as one of its neighbors).
 
 The constellation diagram can be imagined as a complex plane, where the x-axis represents the in-phase component (I) and the y-axis represents the quadrature component (Q) of the modulated signal. During transmission of a specific symbol, the RF carrier is modulated to the corresponding amplitude $A_i$ and phase $\varphi_i$, resulting in a specific point in the constellation diagram. In @fig-16qam-constellation, the amplitude and phase information for two consecutive symbols, $A_i$/$\varphi_i$ and $A_{i+1}$/$\varphi_{i+1}$, is shown. If we have a bitrate with a bit duration of $T_\mathrm{b}$, the symbol duration for 16-QAM (4 bits per symbol) is $T_\mathrm{s} = 4 T_\mathrm{b}$. During the first $T_\mathrm{s}$, the carrier is modulated to $A_i$/$\varphi_i$ (encoding 4 bits), and during the next $T_\mathrm{s}$, it is modulated to $A_{i+1}$/$\varphi_{i+1}$ (encoding the next 4 bits).
 
 @tbl-modulation-snr shows the **SNR requirements for different modulation formats** to achieve a bit error rate (BER) of $10^{-5}$ in an additive white Gaussian noise (AWGN) channel [@Sklar_Digital_Communications]. As we can see, higher-order modulation formats require higher SNR to achieve the same BER. Note that for the SNR values of this table **no error correction coding** (ECC) is assumed; with error correction coding the required SNR can be significantly reduced!
 
-| Modulation | Bits/Symbol | Required SNR (dB) |
+| Modulation | Bits/Symbol | Required $E_\mathrm{s}/N_0$ (dB) |
 |------------|--------------|--------------------|
 | BPSK       | 1            | 9.6                |
 | QPSK       | 2            | 12.6               |
 | 16-QAM     | 4            | 18.2               |
-| 64-QAM     | 6            | 24.4               |  
+| 64-QAM     | 6            | 24.4               |
 | 256-QAM    | 8            | 30.6               |
 | 1024-QAM   | 10           | 36.9               |
 | 4096-QAM   | 12           | 43.2               |
-: SNR requirements for different modulation schemes to achieve BER = $10^{-5}$ in AWGN channel w/o error correction {#tbl-modulation-snr}
+: Required symbol-energy-to-noise ratio $E_\mathrm{s}/N_0$ for different modulation schemes to achieve BER = $10^{-5}$ in an AWGN channel w/o error correction {#tbl-modulation-snr}
 
 ## Pulse Shaping and Spectral Efficiency {#sec-fundamentals-pulse-shaping}
 
-When we modulate symbols onto a carrier, the question is how we transition from one symbol $A_i$/$\varphi_i$ to the next symbol $A_{i+1}$/$\varphi_{i+1}$. If we change the amplitude and/or phase of the carrier instantaneously (like with a step function), we will have a very wide spectrum, which is not desirable. 
+When we modulate symbols onto a carrier, the question is how we transition from one symbol $A_i$/$\varphi_i$ to the next symbol $A_{i+1}$/$\varphi_{i+1}$. If we change the amplitude and/or phase of the carrier instantaneously (like with a step function), we will have a very wide spectrum, which is not desirable.
 
 Therefore, we often apply **pulse shaping** to the symbols, which means that we smooth the transitions between symbols. This is usually done by convolving the symbol sequence with a pulse shaping filter, which has a certain impulse response. The choice of the pulse shaping filter affects the bandwidth of the transmitted signal and its spectral efficiency.
 
@@ -478,7 +478,7 @@ and visualized in @fig-rect-pulse-spectrum.
 
 As can be seen in @fig-rect-pulse-spectrum, the main lobe of the sinc function has a bandwidth of $2/T_\mathrm{b}$, but the side lobes are quite pronounced with a slow roll-off. This means that a significant amount of power is present outside the main lobe, which can cause interference with adjacent channels.
 
-To avoid this, we can use pulse shapes that have better spectral properties, such as the raised cosine pulse or the root-raised cosine pulse. The **raised-cosine pulse** has a roll-off factor $\alpha$ that determines the excess bandwidth beyond the Nyquist bandwidth. The root-raised cosine (RRC) pulse is used in practical systems (with half the pulse filter implemented at the TX, and half at the RX), as it can be implemented with a matched filter at the receiver.
+To avoid this, we can use pulse shapes that have better spectral properties, such as the raised cosine pulse or the root-raised cosine pulse. The **raised-cosine pulse** (see the [raised-cosine filter](https://en.wikipedia.org/wiki/Raised-cosine_filter), which satisfies the Nyquist ISI criterion) has a roll-off factor $\alpha$ that determines the excess bandwidth beyond the Nyquist bandwidth. The root-raised cosine (RRC) pulse is used in practical systems (with half the pulse filter implemented at the TX, and half at the RX), as it can be implemented with a matched filter at the receiver.
 
 The raised-cosine pulse $p(t)$ (with a spectrum shaped like a raised cosine) is defined by:
 
@@ -496,7 +496,7 @@ $$
 p(t) = \frac{\sqrt{\pi}}{\alpha} e^{-(\pi t / \alpha)^2} \quad \text{with} \quad \alpha = \frac{\sqrt{\ln 2}}{\sqrt{2}} \cdot \frac{T_\mathrm{b}}{B T_\mathrm{b}}
 $$
 
-where $B T_\mathrm{b}$ controls the width of the pulse. The spectrum of the Gaussian pulse is also Gaussian-shaped, which helps to minimize inter-symbol interference (ISI). 
+where $B T_\mathrm{b}$ controls the width of the pulse. The spectrum of the Gaussian pulse is also Gaussian-shaped, which helps to minimize inter-symbol interference (ISI).
 
 The Gaussian pulse for $B T_\mathrm{b} = 0.5$ (as used in Bluetooth) is shown in @fig-gaussian-pulse.
 
@@ -508,7 +508,7 @@ For all the shown pulse shapes (rectangular, raised-cosine, and Gaussian), the t
 
 As we have seen in the previous section, if we make the symbol rate high, we need to use short pulses with a wide bandwidth. The problem with a wide bandwidth in wireless communication is **multi-path propagation** [@Molisch_Wireless_Communications], which causes frequency-selective fading. This means that some frequency parts of the channel are attenuated more than others, which can cause errors in the received signal. Equalizing such a frequency-selective channel can be very complex, especially if the channel changes rapidly (as in mobile communication).
 
-We now face a dilemma: How can we achieve high data rates (which require high symbol rates and thus wide bandwidth) while avoiding frequency-selective fading? The key idea, implemented in **orthogonal frequency-division multiplexing (OFDM)**, is to split the wideband channel into multiple narrow sub-channels (subcarriers), each with a low symbol rate. This way, each subcarrier experiences essentially flat fading, which is much easier to equalize.
+We now face a dilemma: How can we achieve high data rates (which require high symbol rates and thus wide bandwidth) while avoiding frequency-selective fading? The key idea, implemented in **orthogonal frequency-division multiplexing (OFDM)** [@Molisch_Wireless_Communications], is to split the wideband channel into multiple narrow sub-channels (subcarriers), each with a low symbol rate. This way, each subcarrier experiences essentially flat fading, which is much easier to equalize.
 
 The key question is now how to implement this idea *efficiently*, as we now have to apply modulation to hundreds or thousands of individual subcarriers. The solution is to use the **inverse fast Fourier transform (IFFT)** at the transmitter to generate the time-domain OFDM signal from the frequency-domain symbols, and the **fast Fourier transform (FFT)** at the receiver to recover the frequency-domain symbols from the time-domain OFDM signal. This process is illustrated in @fig-ofdm-transceiver.
 
@@ -536,7 +536,7 @@ From the subcarrier spacing we can calculate the symbol duration as $T_\mathrm{s
 We can calculate the raw bitrate for a 20 MHz LTE channel using 256-QAM modulation as
 
 $$
-\text{Bitrate} = N_\mathrm{sc} \cdot N_\mathrm{sym} \cdot \frac{1}{T_\mathrm{sym} + T_\mathrm{CP}} = 1200 \cdot 8 \cdot \frac{1}{66.7\,\mu\text{s} + 4.7\,\mu\text{s}} \approx 134\,\text{Mbps}
+\text{Bitrate} = N_\mathrm{sc} \cdot N_\mathrm{bps} \cdot \frac{1}{T_\mathrm{sym} + T_\mathrm{CP}} = 1200 \cdot 8 \cdot \frac{1}{66.7\,\mu\text{s} + 4.7\,\mu\text{s}} \approx 134\,\text{Mbps}
 $$
 
 With the overhead for control channels and error correction coding a user data rate of approximately 100 Mbps can be achieved in a 20 MHz LTE channel. This data rate can be scaled up by using multiple 20 MHz channels (MIMO, carrier aggregation).
@@ -562,10 +562,10 @@ All of the above techniques can be combined to create more efficient and flexibl
 
 In modern wireless communication systems several parameters can be adapted on the fly to the current channel conditions to optimize the data rate and reliability. These parameters include the modulation format (e.g., QPSK, 16-QAM, 64-QAM, etc.) and the error correction coding scheme (e.g., convolutional codes, turbo codes, LDPC codes, etc.). The combination of modulation format and coding scheme is called the **modulation and coding scheme (MCS)**. The MCS determines the number of bits per symbol and the level of error correction, which in turn affects the data rate and reliability of the communication link, as well sets the minimum required SNR.
 
-Since there are many different MCS options available, and the receiver needs to be informed by the transmitter which MCS is used (whenever there is a change of MCS), a standardized set of MCS options is defined in most wireless communication standards. For example, the MCS options for WiFi can be seen in this [table](https://mcsindex.net), while the MCS calculation for 5G NR can be found [here](https://www.sqimway.com/nr_pdsch.php).
+Since there are many different MCS options available, and the receiver needs to be informed by the transmitter which MCS is used (whenever there is a change of MCS), a standardized set of MCS options is defined in most wireless communication standards. For example, the MCS options for Wi-Fi can be seen in this [table](https://mcsindex.net), while the MCS calculation for 5G NR can be found [here](https://www.sqimway.com/nr_pdsch.php).
 
 ::: {.callout-note}
-## Exemplary MCS in WiFi
+## Exemplary MCS in Wi-Fi
 
 Some operating systems and wireless drivers show the MCS (and other parameters of the Wi-Fi link) during use. A typical output might be:
 
