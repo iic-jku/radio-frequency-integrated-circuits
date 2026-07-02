@@ -16,7 +16,7 @@ limitations under the License.
 
 # Transceivers {#sec-trx}
 
-Nowadays, the various small-signal RF functions for receive and transmit are integrated into so-called transceivers (TRX). A TRX is a device that can both transmit and receive signals, and is usually called an "RFIC". While high monolithic integration is certainly the norm for radio-frequency devices intended for standards like Bluetooth, WiFi, cellular, etc., it is increasingly used also for mm-wave frequencies for applications like automotive radar and 5G cellular. 
+Nowadays, the various small-signal RF functions for receive and transmit are integrated into so-called transceivers (TRX). A TRX is a device that can both transmit and receive signals, and is usually called an "RFIC". While high monolithic integration is certainly the norm for radio-frequency devices intended for standards like Bluetooth, Wi-Fi, cellular, etc., it is increasingly used also for mm-wave frequencies for applications like automotive radar and 5G cellular.
 
 Typically, TRX include components like amplifiers, mixers, filters, oscillators, and phase-locked loops. When digital interfaces are used for the baseband I/Q data, also functions like analog-to-digital conversion (ADC) and digital-to-analog conversion (DAC) are integrated together with digital signal processing (DSP) blocks and potentially high-speed interfaces (because for wide bandwidths the I/Q sample rate can get quite high).
 
@@ -32,7 +32,7 @@ The following typical functions have to be performed by a TRX:
 - Adapt gain (and linearity) to the signal strength in the RX, and to the output power in the TX.
 - Generate the carrier frequency (local oscillator, LO) with low phase noise.
 
-The dominant architecture for the TRX is the so-called **direct-conversion** or **Zero-IF** architecture, where the up- and downconversion are performed in a single step. This is in contrast to super-heterodyne architectures, where the signal is first converted to an intermediate frequency (IF) before being converted to baseband. The direct-conversion architecture has the advantage of reduced complexity and cost, as it requires fewer components and less filtering. However, it also has some disadvantages, such as increased susceptibility to dc offsets and I/Q imbalance. A typical TRX block diagram is shown in @fig-trx-block.
+The dominant architecture for the TRX is the so-called **direct-conversion** or **zero-IF** architecture, where the up- and downconversion are performed in a single step [@Razavi_RFIC]. This is in contrast to super-heterodyne architectures, where the signal is first converted to an intermediate frequency (IF) before being converted to baseband. The direct-conversion architecture has the advantage of reduced complexity and cost, as it requires fewer components and less filtering. However, it also has some disadvantages, such as increased susceptibility to dc offsets and I/Q imbalance. A typical TRX block diagram is shown in @fig-trx-block.
 
 {{< include /content/trx/_fig_trx_block_diagram.qmd >}}
 
@@ -42,7 +42,7 @@ The [modem](https://en.wikipedia.org/wiki/Modem) (short for modulator-demodulato
 
 ## Modulation and Demodulation {#sec-trx-mod-demod}
 
-Modulation is the process of varying a carrier signal at frequency $f_\mathrm{c}$ in order to transmit information. The complex baseband signal (after converting the real-valued inphase and quadrature signals $s_\mathrm{I}$ and $s_\mathrm{Q}$, respectively, to analog and applying pulse-shaping filtering) is represented as ($\tilde{s}_\mathrm{BB} \in \mathbb{C}$; $s_\mathrm{I}, s_\mathrm{Q} \in \mathbb{R}$) [@Martin.2004]:
+Modulation is the process of varying a carrier signal at frequency $f_\mathrm{c}$ in order to transmit information. The complex baseband signal (after converting the real-valued in-phase and quadrature signals $s_\mathrm{I}$ and $s_\mathrm{Q}$, respectively, to analog and applying pulse-shaping filtering) is represented as ($\tilde{s}_\mathrm{BB} \in \mathbb{C}$; $s_\mathrm{I}, s_\mathrm{Q} \in \mathbb{R}$) [@Martin.2004]:
 
 $$
 \tilde{s}_\mathrm{BB}(t) = s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t).
@@ -62,7 +62,7 @@ $$ {#eq-modulation}
 
 The process formulated in @eq-modulation is done in hardware in the TX modulator, as shown in @fig-tx-modulation.
 
-{{< include /content/trx/_fig_tx_modulation.qmd >}} 
+{{< include /content/trx/_fig_tx_modulation.qmd >}}
 
 The RF signal generation according to @eq-modulation is called **quadrature modulation**. This is the modulation method used most often in modern (broadband) communication systems, as it allows one to transmit two independent signals (I and Q) in the same bandwidth. The I and Q signals are also called quadrature components, as they are 90° out of phase with each other.
 
@@ -78,7 +78,7 @@ $$
 A(t) = \sqrt{s_\mathrm{I}^2(t) + s_\mathrm{Q}^2(t)}, \quad \varphi(t) = \tan^{-1} \left[ \frac{s_\mathrm{Q}(t)}{s_\mathrm{I}(t)} \right].
 $$
 
-As the mathematical operations required for the Cartesian to polar transformation are quite nonlinear, the $A(t)$ and $\varphi(t)$ signals are wideband. While fairly complex to implement, polar modulation can have an efficiency advantage in the TX circuits, as the signal loss associated with quadrature combination can be avoided [TODO Reference polar mod].
+As the mathematical operations required for the Cartesian to polar transformation are quite nonlinear, the $A(t)$ and $\varphi(t)$ signals are wideband. While fairly complex to implement, polar modulation can have an efficiency advantage in the TX circuits, as the signal loss associated with quadrature combination can be avoided [@Fulde.2017].
 
 For narrowband wireless standards the use of polar modulation can be quite efficient, as for example Bluetooth, where basically all transmitters are realized as polar modulators.
 
@@ -96,7 +96,7 @@ $$
 \end{split}
 $$ {#eq-demodulation}
 
-with $s_\mathrm{I}(t) = s_\mathrm{RF}(t) \cdot \cos(\omega_\mathrm{c}t)$ and $s_\mathrm{Q}(t) = -s_\mathrm{RF}(t) \cdot \sin(\omega_\mathrm{c}t)$.
+with $s_\mathrm{I}(t) = s_\mathrm{RF}(t) \cdot \cos(\omega_\mathrm{c}t)$ and $s_\mathrm{Q}(t) = -s_\mathrm{RF}(t) \cdot \sin(\omega_\mathrm{c}t)$. Note that these products also generate components at $2 \omega_\mathrm{c}$, which are removed by the subsequent low-pass filter; the recovered baseband signals additionally carry a factor of one-half that is compensated by the RX gain.
 
 ## Filtering
 
@@ -133,7 +133,7 @@ It is important to note (because this dictates a lot of choices in RF design) th
 
 **Baseband filters (digital)** are implemented as FIR or IIR filters. They can be made programmable and can be easily adapted to different requirements. Digital filters show no variations, so they can be designed to be very high performance. However, a trade-off between power consumption/area (number of bits and operations) and performance exists.
 
-**Surface acoustic wave (SAW)** and **bulk acoustic wave (BAW/FBAR)** filters are spezialized off-chip components that can achieve high $Q$ values of several hundreds. They have a fixed center frequency and bandwidth. Usually 1--2 such filters are required per supported band of interest, which can drive up implementation cost and PCB area for RF front-ends that shall support many different frequency bands.
+**Surface acoustic wave (SAW)** and **bulk acoustic wave (BAW/FBAR)** filters are specialized off-chip components that can achieve high $Q$ values of several hundreds. They have a fixed center frequency and bandwidth. Usually 1--2 such filters are required per supported band of interest, which can drive up implementation cost and PCB area for RF front-ends that shall support many different frequency bands.
 
 **Crystal filters** can achieve very high $Q$ values of several thousands, but are usually bulky and expensive and limited to an operating frequency of tens of MHz.
 
@@ -156,15 +156,15 @@ The transceiver architecture shown in @fig-trx-block is called the direct-conver
 - There are a minimum number of RF blocks, which is good for cost and power consumption.
 - This architecture is very flexible and can be easily adapted to different standards and requirements, and generally shows very good performance if the disadvantages can be overcome by good design.
 - This architecture allows a high integration level, as basically all blocks can be implemented on-chip.
-- Direct conversion is the de facto standard architecture for cellular, WiFi, Bluetooth (with the exception of the TX), and GNSS.
+- Direct conversion is the de facto standard architecture for cellular, Wi-Fi, Bluetooth (with the exception of the TX), and GNSS.
 
 However, the direct-conversion architecture also has some disadvantages:
 
 - LO-RF coupling can cause self-mixing and desensitization of the RX, as well as LO leakage in the TX. This is an issue because the LO frequency is the same as the RF frequency.
-- Even-order distortion products (especially IIP2) cause sensitivity degradation due to strong amplitude-modulated blockers.
+- Even-order distortion (characterized by a low IIP2) causes sensitivity degradation due to strong amplitude-modulated blockers [@Gebhard.2019].
 - LO pulling can occur in the TX (again, LO and RF are at the same frequency).
-- IQ errors (gain and phase mismatch) of the $I$ and $Q$ paths can cause constellation distortion leading to increased error vector magnitude (EVM).
-- DC offsets can occur due to self-mixing of LO leakage and even-order distortion products.
+- I/Q errors (gain and phase mismatch) of the $I$ and $Q$ paths can cause constellation distortion leading to increased error vector magnitude (EVM).
+- dc offsets can occur due to self-mixing of LO leakage and even-order distortion products.
 - Flicker noise (1/f noise) upconversion can cause increased phase noise close to the carrier, as well as increased RX noise figure.
 
 Nowadays there exist good design techniques to mitigate these disadvantages. However, in some cases (for example very high linearity requirements, or very high frequencies) other architectures like low-IF or super-heterodyne may be preferred.
@@ -226,7 +226,7 @@ Below is a summary of important wireless standards and their duplexing method as
 | UMTS (3G)         | FDD              | Traditional cellular standard using paired spectrum |
 | LTE (4G)          | FDD/TDD          | FDD is used mostly <2.7 GHz, TDD is used >2.3 GHz |
 | 5G NR             | FDD/TDD          | FDD is used mostly <2.7 GHz, TDD is used >2.3 GHz |
-| WiFi (802.11)     | TDD              | Unlicensed spectrum operation |
+| Wi-Fi (802.11)     | TDD              | Unlicensed spectrum operation |
 | Bluetooth         | TDD              | Short-range personal area network |
 | Zigbee            | TDD              | Low-power IoT applications |
 
@@ -240,7 +240,7 @@ In some cases, other architectures may be preferred over the direct-conversion a
 
 ### Super-Heterodyne Architecture
 
-The super-heterodyne architecture is a widely used approach in radio. It works by mixing the incoming/outgoing RF signal with an LO to produce an intermediate frequency (IF) signal. This IF signal is then amplified and processed, allowing for better selectivity and sensitivity compared to direct-conversion architectures. Super-heterodyne receivers/transmitters are known for their excellent performance in terms of image rejection and dynamic range, making them suitable for a variety of applications, including traditional analog TV and radio broadcasting. A simplified block diagram of a super-heterodyne transceiver is shown in @fig-trx-superheterodyne.
+The [super-heterodyne architecture](https://en.wikipedia.org/wiki/Superheterodyne_receiver) is a widely used approach in radio. It works by mixing the incoming/outgoing RF signal with an LO to produce an intermediate frequency (IF) signal. This IF signal is then amplified and processed, allowing for better selectivity and sensitivity compared to direct-conversion architectures. Super-heterodyne receivers/transmitters are known for their excellent performance in terms of image rejection and dynamic range, making them suitable for a variety of applications, including traditional analog TV and radio broadcasting. A simplified block diagram of a super-heterodyne transceiver is shown in @fig-trx-superheterodyne.
 
 {{< include /content/trx/_fig_trx_superheterodyne.qmd >}}
 
@@ -250,17 +250,17 @@ One important aspect of super-heterodyne receivers is the choice of the intermed
 
 An important issue in super-heterodyne receivers is the **image frequency**. The image frequency is a spurious frequency that can interfere with the desired signal, and is located at $f_\mathrm{image} = f_\mathrm{RF} \pm 2 f_\mathrm{IF}$ (the sign depends on the choice of high-side or low-side mixing). To suppress the image frequency, an image-reject filter is either placed before (RX) or after (TX) the mixer. The design of this filter is critical, as it must provide sufficient attenuation of the image frequency while maintaining low insertion loss for the desired signal.
 
-An alternative to image filtering is the use of active image rejection techniques, such as the **Hartley** or **Weaver** architectures. These techniques use additional mixers and phase shifters to cancel out the image frequency, allowing for improved performance without the need for a dedicated image-reject filter.
+An alternative to image filtering is the use of active image rejection techniques, such as the **Hartley** or **Weaver** architectures (see [image-reject mixer](https://en.wikipedia.org/wiki/Image_response)) [@Razavi_RFIC]. These techniques use additional mixers and phase shifters to cancel out the image frequency, allowing for improved performance without the need for a dedicated image-reject filter.
 
 ### Low-IF Architecture
 
-To avoid some of the issues of direct-conversion architectures (like dc offsets and flicker noise), a low-IF architecture can be used. In a low-IF architecture, the RX and TX signals are mixed to a low intermediate frequency (typically a few MHz to tens of MHz) instead of directly to baseband. This allows for easier filtering of DC offsets and flicker noise, while still maintaining the benefits of a single LO and reduced complexity compared to super-heterodyne architectures. A low-IF architecture is shown in @fig-trx-lowif.
+To avoid some of the issues of direct-conversion architectures (like dc offsets and flicker noise), a low-IF architecture can be used. In a low-IF architecture, the RX and TX signals are mixed to a low intermediate frequency (typically a few MHz to tens of MHz) instead of directly to baseband. This allows for easier filtering of dc offsets and flicker noise, while still maintaining the benefits of a single LO and reduced complexity compared to super-heterodyne architectures. A low-IF architecture is shown in @fig-trx-lowif.
 
 {{< include /content/trx/_fig_trx_lowif.qmd >}}
 
-The low-IF architecture is the de facto standard for Bluetooth receivers. Its advantage compared to direct-conversion vanishes for larger channel bandwidths, which is why it is not used for cellular or WiFi (GSM receivers might be an exception).
+The low-IF architecture is the de facto standard for Bluetooth receivers. Its advantage compared to direct-conversion vanishes for larger channel bandwidths, which is why it is not used for cellular or Wi-Fi (GSM receivers might be an exception).
 
-One noteworthy disadvantage of low-IF architectures is the required $2\times$ BW compared to direct-conversion. This might cause increased power consumption in the analog baseband filters and ADCs/DACs. Additionally, the low-IF architecture still requires careful design to mitigate issues like IQ imbalance and LO leakage, although these issues are generally less severe than in direct-conversion architectures.
+One noteworthy disadvantage of low-IF architectures is the required $2\times$ BW compared to direct-conversion. This might cause increased power consumption in the analog baseband filters and ADCs/DACs. Additionally, the low-IF architecture still requires careful design to mitigate issues like I/Q imbalance and LO leakage, although these issues are generally less severe than in direct-conversion architectures.
 
 ### Super Simple Architecture
 
@@ -279,7 +279,7 @@ I/Q imbalance can be characterized by two parameters: gain mismatch ($\Delta G$)
 There are two ways to quantify I/Q imbalance:
 
 - **Image rejection ratio (IRR)**: The IRR is a measure of how well the receiver can reject the image frequency caused by I/Q imbalance. It is defined as the ratio of the power of the desired signal to the power of the image (unwanted) signal, typically expressed in dB. A higher IRR indicates better performance, with values above 30 dB to 40 dB generally considered acceptable for most applications.
-- **Error vector magnitude (EVM)**: The EVM is a measure of the difference between the ideal transmitted signal and the received signal, expressed as a percentage of the signal's magnitude. It quantifies the overall distortion in the received signal, including the effects of I/Q imbalance. Lower EVM values indicate better performance, with typical requirements ranging from 1% to 10% depending on the modulation scheme and application.
+- **[Error vector magnitude (EVM)](https://en.wikipedia.org/wiki/Error_vector_magnitude)**: The EVM is a measure of the difference between the ideal transmitted signal and the received signal, expressed as a percentage of the signal's magnitude. It quantifies the overall distortion in the received signal, including the effects of I/Q imbalance. Lower EVM values indicate better performance, with typical requirements ranging from 1% to 10% depending on the modulation scheme and application.
 
 The EVM (in rms) is defined as
 
