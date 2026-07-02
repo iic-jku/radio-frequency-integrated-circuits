@@ -18,37 +18,37 @@ limitations under the License.
 
 Nowadays, the various small-signal RF functions for receive and transmit are integrated into so-called transceivers (TRX). A TRX is a device that can both transmit and receive signals, and is usually called an "RFIC". While high monolithic integration is certainly the norm for radio-frequency devices intended for standards like Bluetooth, WiFi, cellular, etc., it is increasingly used also for mm-wave frequencies for applications like automotive radar and 5G cellular. 
 
-Typically TRX include components like amplifiers, mixers, filters, oscillators, and phase-locked loops. When digital interfaces are used for the baseband data transport, also functions like analog-to-digital conversion (ADC) and digital-to-analog conversion (DAC) are integrated together with digital signal processing (DSP) blocks and potentially high-speed interfaces.
+Typically, TRX include components like amplifiers, mixers, filters, oscillators, and phase-locked loops. When digital interfaces are used for the baseband I/Q data, also functions like analog-to-digital conversion (ADC) and digital-to-analog conversion (DAC) are integrated together with digital signal processing (DSP) blocks and potentially high-speed interfaces (because for wide bandwidths the I/Q sample rate can get quite high).
 
-In this lecture we will focus on the RF part of a TRX, which is responsible for the upconversion of baseband or intermediate frequency (IF) signals to the desired transmit frequency during transmission, and the downconversion of received signals from the carrier frequency to baseband or IF during reception. For filters, low-frequency amplifiers, ADCs, DACs, and DSP blocks we refer to related courses and literature, for example [our analog circuit design course](https://iic-jku.github.io/analog-circuit-design/aicd.html).
+In these notes we will focus on the RF part of the TRX, which is responsible for the upconversion of baseband or intermediate frequency (IF) signals to the desired transmit frequency during transmission, and the downconversion of received signals from the carrier frequency to baseband or IF during reception. For filters, low-frequency amplifiers, ADCs, DACs, and DSP blocks we refer to related courses and literature, for example [our analog circuit design course](https://iic-jku.github.io/analog-circuit-design/aicd.html).
 
 ## Direct-Conversion Transceiver {#sec-trx-direct-conversion}
 
 The following typical functions have to be performed by a TRX:
 
-- Pulse-shaping filtering of the baseband signal (can be implemented in analog or, in most cases, digital form).
+- Pulse-shaping filtering of the baseband signal (which can be implemented in analog or, in most cases, digital form).
 - Modulating the baseband signal onto a carrier frequency (upconversion) in the TX or downconversion in the RX.
-- Contain the RF signal in a small bandwidth (TX), or single out the wanted signal in the RX.
+- Contain the RF signal in a small bandwidth (TX), or single out the wanted signal in the RX with adequate signal to noise ratio (SNR).
 - Adapt gain (and linearity) to the signal strength in the RX, and to the output power in the TX.
 - Generate the carrier frequency (local oscillator, LO) with low phase noise.
 
-The dominant architecture for the TRX is the so-called direct-conversion (or Zero-IF) architecture, where the upconversion and downconversion are performed in a single step. This is in contrast to super-heterodyne architectures, where the signal is first converted to an intermediate frequency (IF) before being converted to baseband. The direct-conversion architecture has the advantage of reduced complexity and cost, as it requires fewer components and less filtering. However, it also has some disadvantages, such as increased susceptibility to DC offsets and I/Q imbalance. A typical TRX block diagram is shown in @fig-trx-block.
+The dominant architecture for the TRX is the so-called **direct-conversion** or **Zero-IF** architecture, where the up- and downconversion are performed in a single step. This is in contrast to super-heterodyne architectures, where the signal is first converted to an intermediate frequency (IF) before being converted to baseband. The direct-conversion architecture has the advantage of reduced complexity and cost, as it requires fewer components and less filtering. However, it also has some disadvantages, such as increased susceptibility to dc offsets and I/Q imbalance. A typical TRX block diagram is shown in @fig-trx-block.
 
 {{< include /content/trx/_fig_trx_block_diagram.qmd >}}
 
-As can be seen in @fig-trx-block, this generic example can be adapted in various ways. Generally, the amplifier gains are adjustable to adapt to different signal levels. If various channel bandwidths are to be supported, the corner frequencies of the low-pass filters (LPF) can be adjusted, as well as (optionally) the sampling rate of the ADCs and DACs. The local oscillator (LO) frequency is generated by a phase-locked loop (PLL) synthesizer, which can be tuned to the desired carrier frequency. In case of frequency-division duplex (FDD) operation, two PLLs are used to generate the TX and RX LO frequencies, which are separated by the duplex distance. In time-division duplex (TDD) operation, a single PLL is sufficient, supplying the LO signal to both RX and TX.
+As can be seen in @fig-trx-block, this generic architecture can be adapted in various ways. Generally, the amplifier gains are adjustable to adapt to different signal levels. If adaptive channel bandwidths are to be supported, the corner frequencies of the low-pass filters (LPF) can be adjusted, as well as (optionally) the sampling rate of the ADCs and DACs. The local oscillator (LO) frequency is generated by a phase-locked loop (PLL) synthesizer, which can be tuned to the desired carrier frequency. In case of frequency-division duplex (FDD) operation, two PLLs are used to generate the TX and RX LO frequencies, which are separated by the duplex distance $f_\mathrm{dpx}$. In time-division duplex (TDD) operation, a single PLL is sufficient, supplying the LO signal to both RX and TX.
 
-The [modem](https://en.wikipedia.org/wiki/Modem) (short for modulator-demodulator) that is shown in @fig-trx-block is responsible for the digital baseband processing, including functions like channel coding/decoding, modulation/demodulation, equalization, and error correction. The modem is usually implemented as a digital System-on-Chip (SoC) consisting of (multiple) CPUs, DSPs, and fixed-function blocks for time-critical processing. For an in-depth discussion we recommend [@Sklar_Digital_Communications] or [@Molisch_Wireless_Communications].
+The [modem](https://en.wikipedia.org/wiki/Modem) (short for modulator-demodulator) that is shown in @fig-trx-block is responsible for the digital baseband processing, including functions like channel coding/decoding, modulation/demodulation, equalization, error correction, encryption/decryption, and framing/timing. The modem is usually implemented as a digital System-on-Chip (SoC) consisting of (multiple) CPUs, DSPs, and fixed-function blocks for time-critical processing. For an in-depth discussion we recommend [@Sklar_Digital_Communications] or [@Molisch_Wireless_Communications].
 
 ## Modulation and Demodulation {#sec-trx-mod-demod}
 
-Modulation is the process of varying a carrier signal at frequency $f_\mathrm{c}$ in order to transmit information. The complex baseband signal (after converting the real-valued digital inphase $s_\mathrm{I}$ and quadrature $s_\mathrm{Q}$ signals to analog and pulse-shaping filtering) is represented as ($\tilde{s}_\mathrm{BB} \in \mathbb{C}$; $s_\mathrm{I}, s_\mathrm{Q} \in \mathbb{R}$) [@Martin.2004]:
+Modulation is the process of varying a carrier signal at frequency $f_\mathrm{c}$ in order to transmit information. The complex baseband signal (after converting the real-valued inphase and quadrature signals $s_\mathrm{I}$ and $s_\mathrm{Q}$, respectively, to analog and applying pulse-shaping filtering) is represented as ($\tilde{s}_\mathrm{BB} \in \mathbb{C}$; $s_\mathrm{I}, s_\mathrm{Q} \in \mathbb{R}$) [@Martin.2004]:
 
 $$
 \tilde{s}_\mathrm{BB}(t) = s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t).
 $$
 
-We want to shift this signal to the carrier frequency $f_\mathrm{c}$, which can be done by multiplying with a complex exponential ($e^{j \omega_\mathrm{c} t}$, with $\omega_\mathrm{c} = 2 \pi f_\mathrm{c}$):
+We want to shift this signal to the carrier frequency $f_\mathrm{c}$ to create the modulated RF signal $\tilde{s}_\mathrm{RF} \in \mathbb{C}$, which can be done by multiplying with a complex exponential ($e^{j \omega_\mathrm{c} t}$, with $\omega_\mathrm{c} = 2 \pi f_\mathrm{c}$):
 
 $$
 \tilde{s}_\mathrm{RF}(t) = \tilde{s}_\mathrm{BB}(t) \cdot e^{j \omega_\mathrm{c} t} = [s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t)] \cdot [\cos(\omega_\mathrm{c} t) + j \cdot \sin(\omega_\mathrm{c} t)].
@@ -60,13 +60,13 @@ $$
 s_\mathrm{RF}(t) = \frac{1}{2} \left[ \tilde{s}_\mathrm{RF}(t) + \tilde{s}_\mathrm{RF}^*(t) \right] = s_\mathrm{I}(t) \cos(\omega_\mathrm{c} t) - s_\mathrm{Q}(t) \sin(\omega_\mathrm{c} t).
 $$ {#eq-modulation}
 
-The process formulated in @eq-modulation is done in the TX, as shown in @fig-tx-modulation.
+The process formulated in @eq-modulation is done in hardware in the TX modulator, as shown in @fig-tx-modulation.
 
 {{< include /content/trx/_fig_tx_modulation.qmd >}} 
 
-The RF signal generation according to @eq-modulation is called quadrature modulation. This is the modulation used most often in modern communication systems, as it allows one to transmit two independent signals (I and Q) in the same bandwidth. The I and Q signals are also called quadrature components, as they are 90° out of phase with each other.
+The RF signal generation according to @eq-modulation is called **quadrature modulation**. This is the modulation method used most often in modern (broadband) communication systems, as it allows one to transmit two independent signals (I and Q) in the same bandwidth. The I and Q signals are also called quadrature components, as they are 90° out of phase with each other.
 
-Alternatively, a modulation type called **polar modulation** can be used, where the amplitude and phase of the carrier are varied according to (again using the complex-conjugate symmetry to obtain a real-valued signal):
+Alternatively, a modulation method called **polar modulation** can be used, where the amplitude and phase of the carrier are varied according to (again using the complex-conjugate symmetry to obtain a real-valued signal):
 
 $$
 s_\mathrm{RF}(t) = \frac{1}{2} \left[ A(t) \cdot e^{j \omega_\mathrm{c} t + j \varphi(t)} + A(t) \cdot e^{-j \omega_\mathrm{c} t -j \varphi(t)} \right] = A(t) \cdot \cos[ \omega_\mathrm{c} t + \varphi(t) ]
@@ -78,63 +78,79 @@ $$
 A(t) = \sqrt{s_\mathrm{I}^2(t) + s_\mathrm{Q}^2(t)}, \quad \varphi(t) = \tan^{-1} \left[ \frac{s_\mathrm{Q}(t)}{s_\mathrm{I}(t)} \right].
 $$
 
-As the mathematical operations required for the Cartesian to polar transformation are quite nonlinear, the $A(t)$ and $\varphi(t)$ signals are wideband. Some wireless standards allow efficient use of polar modulation, for example Bluetooth, where basically all TX are realized as polar modulators.
+As the mathematical operations required for the Cartesian to polar transformation are quite nonlinear, the $A(t)$ and $\varphi(t)$ signals are wideband. While fairly complex to implement, polar modulation can have an efficiency advantage in the TX circuits, as the signal loss associated with quadrature combination can be avoided [TODO Reference polar mod].
 
-In the RX, the received RF signal is downconverted to baseband by a similar process, as shown in @fig-rx-demodulation.
+For narrowband wireless standards the use of polar modulation can be quite efficient, as for example Bluetooth, where basically all transmitters are realized as polar modulators.
+
+In the RX, the received RF signal is downconverted to baseband by the inverse process of @fig-tx-modulation, shown in @fig-rx-demodulation.
 
 {{< include /content/trx/_fig_rx_demodulation.qmd >}}
 
-For demodulation we have to shift the RF signal down to baseband, which mathematically is done by multiplying with the negative complex carrier frequency $e^{-j \omega_\mathrm{c} t}$:
+For demodulation we have to shift the RF signal down to baseband, which mathematically is done by multiplying with the negative complex carrier frequency $e^{-j \omega_\mathrm{c} t}$
 
 $$
-\tilde{s}_\mathrm{BB}(t) = s_\mathrm{RF}(t) \cdot e^{-j \omega_\mathrm{c} t} = s_\mathrm{RF}(t) \cdot [\cos(\omega_\mathrm{c} t) - j \cdot \sin(\omega_\mathrm{c} t)]
+\begin{split}
+\tilde{s}_\mathrm{BB}(t) &= s_\mathrm{RF}(t) \cdot e^{-j \omega_\mathrm{c} t}\\
+&= s_\mathrm{RF}(t) \cdot [\cos(\omega_\mathrm{c} t) - j \cdot \sin(\omega_\mathrm{c} t)]\\
+&= s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t)
+\end{split}
 $$ {#eq-demodulation}
+
+with $s_\mathrm{I}(t) = s_\mathrm{RF}(t) \cdot \cos(\omega_\mathrm{c}t)$ and $s_\mathrm{Q}(t) = -s_\mathrm{RF}(t) \cdot \sin(\omega_\mathrm{c}t)$.
 
 ## Filtering
 
-Filtering is an essential function in both TX and RX. In the TX, filtering is used to limit the bandwidth of the transmitted signal to the allocated channel bandwidth, and to suppress out-of-band emissions. In the RX, filtering is used to select the wanted signal from a crowded spectrum, and to suppress unwanted signals (blockers) that can cause interference or desensitization of the RX. A typical example of filtering in the RX is shown in @fig-filtering-rx, where a bandpass filter is used to attenuate strong unwanted blockers while only slightly attenuating the wanted signal.
+Filtering is an essential function in both TX and RX. In the TX, filtering is used to limit the bandwidth of the transmitted signal to the allocated channel bandwidth, and to suppress out-of-band emissions. In the RX, filtering is used to select the wanted signal from a crowded spectrum, and to suppress unwanted signals (blockers) that can cause interference or desensitization of the RX.
+
+A typical example of filtering in the RX is shown in @fig-filtering-rx, where a bandpass filter is used to attenuate strong unwanted blockers while only slightly attenuating the wanted signal.
 
 {{< include /content/trx/_fig_filtering_rx.qmd >}}
 
-In any filter there exists a fundamental trade-off between selectivity (steepness of the filter skirts), bandwidth, and insertion loss. A very selective filter with steep skirts and large BW will have a high insertion loss. Conversely, a filter with low insertion loss will have a gentle roll-off and may not sufficiently suppress unwanted signals. A useful metric to quantify the performance of a filter is the quality factor $Q$, defined as
+In any filter there exists a fundamental trade-off between selectivity (steepness of the filter skirts), bandwidth, and insertion loss. A very selective filter with steep skirts and large passband BW will have a high insertion loss. Conversely, a filter with low insertion loss will have a gentle roll-off and may not sufficiently suppress unwanted signals.
+
+A useful metric to quantify the performance of a filter is the quality factor $Q$, defined as
 
 $$
 Q = \frac{f_\mathrm{c}}{\Delta f}
 $$
 
-where $f_\mathrm{c}$ is the center frequency and $\Delta f$ is the $-3$ dB bandwidth of the filter. A higher $Q$ indicates a more selective filter.
+where $f_\mathrm{c}$ is the center frequency and $\Delta f$ is the $-3$ dB bandwidth of the filter. A high $Q$ indicates a narrow-band filter.
 
-The achievable $Q$ depends on the filter technology used. For example, on-chip LC filters can achieve $Q$ values of around 10-20, while off-chip SAW or BAW/FBAR filters can achieve $Q$ values of several hundreds, and a crystal filter can achieve $Q$ values of several thousands. The choice of filter technology depends on the application requirements, such as frequency range, bandwidth, insertion loss, and cost. Generally speaking, the required filtering to single out the wanted signal in the RX spectrum and decrease the power of strong blockers to a tolerable level is one of the most critical design choices, and is usually distributed at different locations in the RX chain:
+The achievable $Q$ depends on the used filter technology. For example, on-chip $LC$ filters can achieve $Q$ values of around 10--20, while off-chip SAW or BAW/FBAR filters can achieve $Q$ values of several hundreds, and a crystal filter can achieve $Q$ values of several thousands.
+
+The choice of filter technology depends on the application requirements, such as frequency range, bandwidth, insertion loss, cost, and power handling. Generally speaking, the required filtering to single out the wanted signal in the RX spectrum and decrease the power of strong blockers to a tolerable level is one of the most critical design choices, and is usually distributed at different locations in the RX chain:
 
 - **RF filters** (between antenna and LNA) provide a first level of filtering, and are usually implemented as off-chip SAW or BAW/FBAR filters. They provide high $Q$ and good selectivity, but have a fixed center frequency and bandwidth. They are used to pass the wanted band of interest, and to attenuate strong out-of-band blockers.
 - **IF filters** (in case of a super-heterodyne receiver) provide additional filtering, and can be implemented as on-chip LC filters or off-chip SAW/BAW filters. They provide moderate $Q$ and selectivity, and can be tuned to some extent.
-- **BB filters** (after downconversion) provide the final level of filtering before entering the ADCs, and are usually implemented as on-chip active RC filters. They provide channel selection, and can be easily adjusted to different bandwidths.
+- **BB filters** (after downconversion) provide the final level of filtering before entering the ADCs, and are usually implemented as on-chip active $RC$ filters. They provide channel selection, and can be easily adjusted to different bandwidths.
 - **Digital filters** (in the DSP block) provide the final level of filtering and signal processing, and can be implemented as FIR or IIR filters. They provide high flexibility and can be easily adapted to different standards and requirements. Digital filters show no variations, so they can be designed to be very selective.
 
 It is important to note (because this dictates a lot of choices in RF design) that high-$Q$ filters are usually fixed-frequency and fixed-bandwidth. Only baseband and digital filters can be easily adjusted to different bandwidths!
 
-::: {.callout-important}
-## Filter Technologies
-**Baseband filters (analog)** are usually implemented as active $RC$ filters on-chip. They are very flexible and can have adjustable bandwidth by either changing $R$ and/or $C$. For medium frequencies $\gm-C$ filters can be used, which are also tunable by changing the transconductance $\gm$ and/or $C$. For even higher bandwidths, on-chip LC filters can be used, which have a limited $Q$ of around 10-20.
+::: {.callout-note}
+## Filter Technologies Primer
+**Baseband filters (analog)** are usually implemented as active $RC$ filters on-chip. They are very flexible and can have adjustable bandwidth by changing $R$ and/or $C$. For medium/high frequencies $\gm C$ filters can be used, which are also tunable by changing the transconductance $\gm$ and/or $C$. For even higher bandwidths, on-chip LC filters can be used, which have a limited $Q$ of around 10--20.
 
-**Baseband filters (digital)** are implemented as FIR or IIR filters in the DSP block. They are very flexible and can be easily adapted to different standards and requirements. Digital filters show no variations, so they can be designed to be very selective.
+**Baseband filters (digital)** are implemented as FIR or IIR filters. They can be made programmable and can be easily adapted to different requirements. Digital filters show no variations, so they can be designed to be very high performance. However, a trade-off between power consumption/area (number of bits and operations) and performance exists.
 
-**Surface acoustic wave (SAW)** and **bulk acoustic wave (BAW/FBAR)** filters are off-chip components that can achieve high $Q$ values of several hundreds. They have a fixed center frequency and bandwidth. Usually 1-2 such filters are required per supported band of interest.
+**Surface acoustic wave (SAW)** and **bulk acoustic wave (BAW/FBAR)** filters are spezialized off-chip components that can achieve high $Q$ values of several hundreds. They have a fixed center frequency and bandwidth. Usually 1--2 such filters are required per supported band of interest, which can drive up implementation cost and PCB area for RF front-ends that shall support many different frequency bands.
 
-**Crystal filters** can achieve very high $Q$ values of several thousands, but are usually bulky and expensive.
+**Crystal filters** can achieve very high $Q$ values of several thousands, but are usually bulky and expensive and limited to an operating frequency of tens of MHz.
 
-**LC filters** can be either implemented off-chip (using discrete components) or on-chip. Off-chip LC filters can achieve higher $Q$ values than on-chip LC filters, but are usually larger and more expensive. On-chip LC filters are limited in $Q$ (around 10-20), but are very compact and can be integrated into the RFIC. Off-chip LC filters can achieve $Q$ values of around 50-100, depending on the frequency and component quality.
+**LC filters** can be either implemented off-chip (using discrete components) or on-chip. Off-chip $LC$ filters can achieve higher $Q$ values than on-chip $LC$ filters, but are usually larger and more expensive. On-chip $LC$ filters are limited in $Q$ (around 10--20), but are very compact and can be integrated into the RFIC. Off-chip $LC$ filters can achieve $Q$ values of around 50--100, depending on the frequency and component quality. $LC$ filters can be made tunable by changing $L$ (difficult) and/or $C$ (easy).
 
 **Ceramic filters** are another off-chip filter technology that can achieve moderate to high $Q$ values (up to several hundreds). They are usually smaller and less expensive than SAW or BAW/FBAR filters, but also have lower performance.
 
 **Waveguide filters** are used at very high frequencies (above 10 GHz) and can achieve very high $Q$ values (up to several thousands). They are usually bulky and expensive, and are not commonly used in mobile applications, but rather in fixed installations like base stations or satellite communication.
+
+**Optical filters** can have extremely high $Q$ values but are difficult to apply in electronic RF systems due to the need for optical components and the challenge of integrating them with electronic circuits, as well as the required electrical-optical signal conversion.
 :::
 
-Fundamentally, the choice of filter technology is a trade-off between performance, size, cost, and flexibility. In most cases, a combination of different filter technologies is used to achieve the desired performance.
+Fundamentally, the choice of filter technology is a trade-off between performance, size, cost, power handling, and flexibility. In most cases, a combination of different filter technologies is used to achieve the desired performance.
 
 ## Direct-Conversion Architecture
 
-The transceiver architecture shown in @fig-trx-block is called direct-conversion or zero-IF architecture, as the downconversion in the RX and upconversion in the TX are done in a single step. This architecture has several advantages:
+The transceiver architecture shown in @fig-trx-block is called the direct-conversion or zero-IF architecture, as the downconversion in the RX and upconversion in the TX are done in a single step. This architecture has several advantages:
 
 - Per RX and TX a single LO is required (which can even be shared between RX and TX in TDD operation).
 - There are a minimum number of RF blocks, which is good for cost and power consumption.
