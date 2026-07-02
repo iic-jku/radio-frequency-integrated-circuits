@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-harmonics
 #| echo: false 
-#| fig-cap: "Single-tone test showing created harmonics at 2ω and 3ω."
+#| fig-cap: "Single-tone test showing created harmonics at $2\\omega_0$ and $3\\omega_0$."
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -34,7 +34,7 @@ f_harmonic_3 = 3*f1
 
 # Frequency domain spectrum
 frequencies = [f1, f_harmonic_2, f_harmonic_3]
-freq_labels = ['ω', '2ω', '3ω']
+freq_labels = [r'$\omega_0$', r'$2\omega_0$', r'$3\omega_0$']
 colors = ['blue', 'red', 'red']
 amplitudes = [1.0, 0.3, 0.1]  # Relative amplitudes
 line_styles = ['-', '--', '--']
