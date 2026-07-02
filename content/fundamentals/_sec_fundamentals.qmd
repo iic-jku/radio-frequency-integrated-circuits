@@ -422,7 +422,7 @@ This means that the minimum input signal power that can be detected by the WiFi 
 
 ## Modulation {#sec-fundamentals-modulation}
 
-In order to transmit information via an EM wave, we need to modulate the EM wave with the information signal. Looking at a simple sinusoidal carrier wave
+In order to transmit information via an EM wave, we need to modulate the wave with the information signal. Looking at a simple sinusoidal carrier wave
 
 $$
 s(t) = A \cos(\omega_0 t + \varphi)
@@ -435,17 +435,17 @@ we see that we can change one or more of the following parameters to encode info
 - Phase $\varphi(t)$ (phase modulation, PM; the digital form is called phase-shift keying, **PSK**)
 - Amplitude $A(t)$ and phase $\varphi(t)$ (quadrature amplitude modulation, **QAM**)
 
-The modulation formats FM and PM have the advantage that the carrier amplitude is constant, which makes them more robust against nonlinear distortion.
+The modulation formats FM and PM have the advantage that the carrier amplitude $A$ is constant, which makes them more robust against nonlinear distortion.
 
-QAM is widely used in modern communication systems, as it allows transmitting more bits per symbol by combining amplitude and phase modulation. The form with four different symbols is called QPSK. Higher-order modulation like 16-QAM, for example, uses 16 different symbols, which can encode four bits per symbol (as $2^4 = 16$). Even higher-order QAM formats like 64-QAM (6 bits per symbol), 256-QAM (8 bits per symbol), 1024-QAM (10 bits per symbol), or 4096-QAM (12 bits per symbol) are also used in modern systems like WiFi or LTE.
+QAM is widely used in modern communication systems, as it allows to transmit more bits per symbol by combining amplitude and phase modulation. The QAM type with four different symbols is called QPSK. Higher-order modulation formats like 16-QAM, for example, use 16 different symbols, which can encode four bits per symbol (as $2^4 = 16$). Even higher-order QAM formats like 64-QAM (6 bits per symbol), 256-QAM (8 bits per symbol), 1024-QAM (10 bits per symbol), or 4096-QAM (12 bits per symbol) are also used in modern systems like WiFi or LTE/5G NR.
 
 {{< include /content/fundamentals/_fig_16qam_constellation.qmd >}}
 
-Shown in @fig-16qam-constellation is the "constellation diagram" of a 16-QAM modulation format. The constellation points are arranged in a square grid, with each point representing a unique combination of amplitude and phase. The distance between the constellation points determines the robustness against noise and interference; larger distances result in better performance, but also require more power. The mapping of bits to constellation points is called "bit mapping" or "symbol mapping". The example in @fig-16qam-constellation uses a Gray code mapping, which minimizes the number of bit errors in case of a symbol error (assuming that a symbol will be wrongly decoded as one of its neighbors).
+Shown in @fig-16qam-constellation is the **constellation diagram** of a 16-QAM modulation format. The constellation points are arranged in a square grid, with each point representing a unique combination of amplitude and phase. The distance between the constellation points determines the robustness against noise and interference; larger distances result in better performance, but also require more power. The mapping of bits to constellation points is called "bit mapping" or "symbol mapping". The example in @fig-16qam-constellation uses a Gray code mapping, which minimizes the number of bit errors in case of a symbol error (assuming that a symbol will be wrongly decoded as one of its neighbors).
 
-The constellation diagram can be imagined as a complex plane, where the x-axis represents the in-phase component (I) and the y-axis represents the quadrature component (Q) of the modulated signal. During transmission of a specific symbol, the RF carrier is modulated to the corresponding amplitude and phase, resulting in a specific point in the constellation diagram. In @fig-16qam-constellation, the amplitude and phase information for two consecutive symbols, $A_i$/$\varphi_i$ and $A_{i+1}$/$\varphi_{i+1}$, is shown. If we have a bitrate with a bit duration of $T_\mathrm{b}$, the symbol duration for 16-QAM (4 bits per symbol) is $T_\mathrm{s} = 4 T_\mathrm{b}$. During the first $T_\mathrm{s}$, the carrier is modulated to $A_i$/$\varphi_i$, and during the next $T_\mathrm{s}$, it is modulated to $A_{i+1}$/$\varphi_{i+1}$.
+The constellation diagram can be imagined as a complex plane, where the x-axis represents the in-phase component (I) and the y-axis represents the quadrature component (Q) of the modulated signal. During transmission of a specific symbol, the RF carrier is modulated to the corresponding amplitude $A_i$ and phase $\varphi_i$, resulting in a specific point in the constellation diagram. In @fig-16qam-constellation, the amplitude and phase information for two consecutive symbols, $A_i$/$\varphi_i$ and $A_{i+1}$/$\varphi_{i+1}$, is shown. If we have a bitrate with a bit duration of $T_\mathrm{b}$, the symbol duration for 16-QAM (4 bits per symbol) is $T_\mathrm{s} = 4 T_\mathrm{b}$. During the first $T_\mathrm{s}$, the carrier is modulated to $A_i$/$\varphi_i$ (encoding 4 bits), and during the next $T_\mathrm{s}$, it is modulated to $A_{i+1}$/$\varphi_{i+1}$ (encoding the next 4 bits).
 
-The table below shows the **SNR requirements for different modulation formats** to achieve a bit error rate (BER) of $10^{-5}$ in an additive white Gaussian noise (AWGN) channel. As we can see, higher-order modulation formats require higher SNR to achieve the same BER. Note that for the SNR values of this table **no error correction coding** is assumed; with error correction coding the required SNR can be significantly reduced!
+@tbl-modulation-snr shows the **SNR requirements for different modulation formats** to achieve a bit error rate (BER) of $10^{-5}$ in an additive white Gaussian noise (AWGN) channel [@Sklar_Digital_Communications]. As we can see, higher-order modulation formats require higher SNR to achieve the same BER. Note that for the SNR values of this table **no error correction coding** (ECC) is assumed; with error correction coding the required SNR can be significantly reduced!
 
 | Modulation | Bits/Symbol | Required SNR (dB) |
 |------------|--------------|--------------------|
@@ -456,13 +456,17 @@ The table below shows the **SNR requirements for different modulation formats** 
 | 256-QAM    | 8            | 30.6               |
 | 1024-QAM   | 10           | 36.9               |
 | 4096-QAM   | 12           | 43.2               |
-: SNR requirements for different modulation schemes to achieve BER = $10^{-5}$ in AWGN channel {#tbl-modulation-snr}
+: SNR requirements for different modulation schemes to achieve BER = $10^{-5}$ in AWGN channel w/o error correction {#tbl-modulation-snr}
 
 ## Pulse Shaping and Spectral Efficiency {#sec-fundamentals-pulse-shaping}
 
-When we modulate symbols onto a carrier, we usually do not transmit the symbols as pure sinusoids, but rather as pulses with a certain shape. The pulse shape determines the bandwidth of the transmitted signal and its spectral efficiency. A common pulse shape is the **rectangular pulse**, which has a sinc-shaped spectrum. However, the sinc function $\sin(\pi x)/(\pi x)$ has side lobes that extend to infinity, which can cause interference with adjacent channels.
+When we modulate symbols onto a carrier, the question is how we transition from one symbol $A_i$/$\varphi_i$ to the next symbol $A_{i+1}$/$\varphi_{i+1}$. If we change the amplitude and/or phase of the carrier instantaneously (like with a step function), we will have a very wide spectrum, which is not desirable. 
 
-For reference, the two-sided power spectral density $S(f)$ of a random binary sequence with equal probability of -1 and 1, using rectangular pulses with a duration of $T_\mathrm{b}$, is given by
+Therefore, we often apply **pulse shaping** to the symbols, which means that we smooth the transitions between symbols. This is usually done by convolving the symbol sequence with a pulse shaping filter, which has a certain impulse response. The choice of the pulse shaping filter affects the bandwidth of the transmitted signal and its spectral efficiency.
+
+A simple pulse shape is the **rectangular pulse**, which has a sinc-shaped spectrum. However, the function $\text{sinc}(x) = \sin(\pi x)/(\pi x)$ has side lobes that extend to infinity and roll off only slowly, which can cause interference with adjacent channels.
+
+For reference, the two-sided power spectral density $S(f)$ of a random binary sequence with equal probability of $-1$ and $1$, using rectangular pulses with a duration of $T_\mathrm{b}$, is given by [@Sklar_Digital_Communications]
 
 $$
 S(f) = T_\mathrm{b} \cdot \text{sinc}^2(fT_\mathrm{b}) = T_\mathrm{b} \cdot \left[ \frac{\sin(\pi f T_\mathrm{b})}{\pi f T_\mathrm{b}} \right]^2
@@ -476,7 +480,7 @@ As can be seen in @fig-rect-pulse-spectrum, the main lobe of the sinc function h
 
 To avoid this, we can use pulse shapes that have better spectral properties, such as the raised cosine pulse or the root-raised cosine pulse. The **raised-cosine pulse** has a roll-off factor $\alpha$ that determines the excess bandwidth beyond the Nyquist bandwidth. The root-raised cosine (RRC) pulse is used in practical systems (with half the pulse filter implemented at the TX, and half at the RX), as it can be implemented with a matched filter at the receiver.
 
-The raised-cosine pulse $p(t)$ (with a spectrum shaped like a raised cosine) is given by:
+The raised-cosine pulse $p(t)$ (with a spectrum shaped like a raised cosine) is defined by:
 
 $$
 p(t) = \frac{\sin(\pi t / T_\mathrm{b})}{\pi t / T_\mathrm{b}} \cdot \frac{\cos(\alpha \pi t / T_\mathrm{b})}{1 - (2 \alpha t / T_\mathrm{b})^2}
@@ -486,7 +490,7 @@ Setting $\alpha = 0$ results in a sinc pulse in the time domain (with a perfect 
 
 {{< include /content/fundamentals/_fig_raised_cosine_pulse.qmd >}}
 
-Another often-used pulse shape is the **Gaussian pulse**, which is used in Gaussian minimum-shift keying (**GMSK**, used in 2G) modulation, or in Gaussian frequency-shift keying (**GFSK**, used in Bluetooth). The Gaussian pulse has a smooth shape and a narrow spectrum. The Gaussian pulse is given by:
+Another often-used pulse shape is the **Gaussian pulse**, which is used in Gaussian minimum-shift keying (**GMSK**, used in 2G) modulation, or in Gaussian frequency-shift keying (**GFSK**, used in Bluetooth). The Gaussian pulse has a smooth shape and a narrow spectrum. The Gaussian pulse is defined by:
 
 $$
 p(t) = \frac{\sqrt{\pi}}{\alpha} e^{-(\pi t / \alpha)^2} \quad \text{with} \quad \alpha = \frac{\sqrt{\ln 2}}{\sqrt{2}} \cdot \frac{T_\mathrm{b}}{B T_\mathrm{b}}
@@ -494,17 +498,19 @@ $$
 
 where $B T_\mathrm{b}$ controls the width of the pulse. The spectrum of the Gaussian pulse is also Gaussian-shaped, which helps to minimize inter-symbol interference (ISI). 
 
-The Gaussian pulse for $B T_\mathrm{b} = 0.5$ as used in Bluetooth is shown in @fig-gaussian-pulse.
+The Gaussian pulse for $B T_\mathrm{b} = 0.5$ (as used in Bluetooth) is shown in @fig-gaussian-pulse.
 
 {{< include /content/fundamentals/_fig_gaussian_pulse.qmd >}}
 
-For both the raised-cosine and Gaussian pulse, the trade-off between time- and frequency-domain containment is clearly visible. This is also captured in "**Küpfmüller's uncertainty principle**", which states that the product of the time duration and the bandwidth of a pulse is lower-bounded by a constant. In other words, if we want to have a pulse that is very short in time, it will have a wide bandwidth, and vice versa.
+For all the shown pulse shapes (rectangular, raised-cosine, and Gaussian), the trade-off between time- and frequency-domain containment is clearly visible. This is also captured in "**Küpfmüller's uncertainty principle**" [@Kuepfmueller_Systemtheorie], which states that the product of the time duration and the bandwidth of a pulse is lower-bounded by a constant. In other words, if we want to have a pulse that is very short in time, it will have a wide bandwidth, and vice versa.
 
 ## Orthogonal Frequency-Division Multiplexing (OFDM) {#sec-fundamentals-ofdm}
 
-As we have seen in the previous section, if we make the symbol rate high, we need to use pulses with a wide bandwidth. The problem with a wide bandwidth in wireless communication is **multi-path propagation**, which causes frequency-selective fading. This means that some frequencies are attenuated more than others, which can cause errors in the received signal. Equalizing such a frequency-selective channel can be very complex, especially if the channel changes rapidly (as in mobile communication). We now face a dilemma: How can we achieve high data rates (which require high symbol rates and thus wide bandwidth) while avoiding frequency-selective fading? The key idea, implemented in **OFDM**, is to split the wideband channel into multiple narrowband sub-channels (subcarriers), each with a low symbol rate. This way, each subcarrier experiences flat fading, which is much easier to equalize.
+As we have seen in the previous section, if we make the symbol rate high, we need to use short pulses with a wide bandwidth. The problem with a wide bandwidth in wireless communication is **multi-path propagation** [@Molisch_Wireless_Communications], which causes frequency-selective fading. This means that some frequency parts of the channel are attenuated more than others, which can cause errors in the received signal. Equalizing such a frequency-selective channel can be very complex, especially if the channel changes rapidly (as in mobile communication).
 
-The key question is now how to implement this idea efficiently, as we now have to apply modulation to hundreds or thousands of individual subcarriers. The solution is to use the **inverse fast Fourier transform (IFFT)** at the transmitter to generate the time-domain OFDM signal from the frequency-domain symbols, and the **fast Fourier transform (FFT)** at the receiver to recover the frequency-domain symbols from the time-domain OFDM signal. This is illustrated in @fig-ofdm-transceiver.
+We now face a dilemma: How can we achieve high data rates (which require high symbol rates and thus wide bandwidth) while avoiding frequency-selective fading? The key idea, implemented in **orthogonal frequency-division multiplexing (OFDM)**, is to split the wideband channel into multiple narrow sub-channels (subcarriers), each with a low symbol rate. This way, each subcarrier experiences essentially flat fading, which is much easier to equalize.
+
+The key question is now how to implement this idea *efficiently*, as we now have to apply modulation to hundreds or thousands of individual subcarriers. The solution is to use the **inverse fast Fourier transform (IFFT)** at the transmitter to generate the time-domain OFDM signal from the frequency-domain symbols, and the **fast Fourier transform (FFT)** at the receiver to recover the frequency-domain symbols from the time-domain OFDM signal. This process is illustrated in @fig-ofdm-transceiver.
 
 {{< include /content/fundamentals/_fig_ofdm_transceiver.qmd >}}
 
@@ -512,7 +518,7 @@ The OFDM transmitter takes a block of $N$ symbols (e.g., 64-QAM symbols) and map
 
 At the receiver, the CP is first removed, and then the FFT recovers the frequency-domain symbols, which can then be equalized (fairly simply by multiplying each subcarrier with a complex factor to correct amplitude and phase) and demodulated.
 
-A key property of OFDM is that the subcarriers are **orthogonal** to each other, which means that they do not interfere with each other, even if they overlap in frequency. This is achieved by choosing the subcarrier spacing $\Delta f$ such that it is equal to the symbol rate $1/T_\mathrm{sym}$, i.e., $\Delta f = 1/T_\mathrm{sym}$. This way, the integral of the product of two different subcarriers over one symbol period is zero, which means that they are orthogonal.
+A key property of OFDM is that the subcarriers are **orthogonal** to each other, which means that they do not interfere with each other. This is achieved by choosing the subcarrier spacing $\Delta f$ such that it is equal to the symbol rate $1/T_\mathrm{sym}$, i.e., $\Delta f = 1/T_\mathrm{sym}$. This way, the integral of the product of two different subcarriers over one symbol period is zero, which means that they are orthogonal.
 
 To further improve the robustness against multi-path propagation, a CP is added to each OFDM symbol. The CP is a copy of the last part of the OFDM symbol, which is added to the beginning of the symbol. This way, if there are delayed copies of the OFDM symbol due to multi-path propagation, they will still fall within the CP and will not cause inter-symbol interference (ISI). The length of the CP should be longer than the maximum delay spread of the channel.
 
@@ -527,46 +533,46 @@ In LTE OFDM is used for the downlink (base station to user equipment) with the f
 
 From the subcarrier spacing we can calculate the symbol duration as $T_\mathrm{sym} = 1 / \Delta f = 1 / 15\,\text{kHz} \approx 66.7\,\mu\text{s}$.
 
-We can calculate the raw bitrate for a 20 MHz LTE channel as
+We can calculate the raw bitrate for a 20 MHz LTE channel using 256-QAM modulation as
 
 $$
 \text{Bitrate} = N_\mathrm{sc} \cdot N_\mathrm{sym} \cdot \frac{1}{T_\mathrm{sym} + T_\mathrm{CP}} = 1200 \cdot 8 \cdot \frac{1}{66.7\,\mu\text{s} + 4.7\,\mu\text{s}} \approx 134\,\text{Mbps}
 $$
 
-Without the overhead for control channels and error correction coding a user data rate of approximately 100 Mbps can be achieved in a 20 MHz LTE channel.
+With the overhead for control channels and error correction coding a user data rate of approximately 100 Mbps can be achieved in a 20 MHz LTE channel. This data rate can be scaled up by using multiple 20 MHz channels (MIMO, carrier aggregation).
 :::
 
 ## Multiple Access Techniques {#sec-fundamentals-multiple-access}
 
 In wireless communication systems, multiple users need to share the same frequency spectrum. This is achieved by using **multiple access techniques**, which allow multiple users to transmit and receive data simultaneously without interfering with each other. The most common multiple access techniques are:
 
-1. **Time division multiple access (TDMA)**: Users are assigned specific time slots for transmission, allowing multiple users to share the same frequency channel by dividing the time into slots.
+1. **Time division multiple access (TDMA)**: Users are assigned specific time slots for transmission, allowing multiple users to share the same frequency channel by dividing continuous time into slots.
 
 2. **Frequency division multiple access (FDMA)**: Users are assigned specific frequency bands within the overall frequency spectrum, allowing multiple users to transmit simultaneously on different frequencies.
 
-3. **Code division multiple access (CDMA)**: Users are assigned unique spreading codes, allowing them to transmit simultaneously over the same frequency band. The receiver uses the code to extract the desired signal. A variant of CDMA is frequency-hopping spread spectrum (FHSS), where the carrier frequency is changed rapidly according to a pseudo-random sequence known to both the transmitter and receiver. This is used in Bluetooth.
+3. **Code division multiple access (CDMA)**: Users are assigned unique spreading codes, allowing them to transmit simultaneously over the same frequency band. The receiver uses the same code to extract the desired signal. A variant of CDMA is frequency-hopping spread spectrum (FHSS), where the carrier frequency is changed rapidly according to a pseudo-random sequence known to both the transmitter and receiver. This is used in Bluetooth.
 
 4. **Orthogonal frequency division multiple access (OFDMA)**: A variant of OFDM, where multiple users are assigned different subcarriers for transmission, allowing for efficient use of the frequency spectrum. This is used in 4G LTE and 5G NR.
 
 5. **Spatial division multiple access (SDMA)**: Uses multiple antennas to create spatially separated channels, allowing multiple users to transmit simultaneously in the same frequency band.
 
-In addition, all of these techniques can be combined to create more efficient and flexible communication systems. For example, OFDMA can be used in conjunction with SDMA to allow multiple users to share the same frequency resources while also taking advantage of spatial diversity. Also, TDMA can be combined with FDMA to create a hybrid multiple access scheme (which has been used in 2G GSM).
+All of the above techniques can be combined to create more efficient and flexible communication systems. For example, OFDMA can be used in conjunction with SDMA to allow multiple users to share the same frequency resources while also taking advantage of spatial diversity. Also, TDMA can be combined with FDMA to create a hybrid multiple access scheme (which has been used in 2G).
 
 ## Modulation and Coding Schemes {#sec-fundamentals-mcs}
 
-In modern wireless communication systems several parameters can be adapted to the current channel conditions to optimize the data rate and reliability. These parameters include the modulation format (e.g., QPSK, 16-QAM, 64-QAM, etc.) and the error correction coding scheme (e.g., convolutional codes, turbo codes, LDPC codes, etc.). The combination of modulation format and coding scheme is called the **modulation and coding scheme (MCS)**. The MCS determines the number of bits per symbol and the level of error correction, which in turn affects the data rate and reliability of the communication link.
+In modern wireless communication systems several parameters can be adapted on the fly to the current channel conditions to optimize the data rate and reliability. These parameters include the modulation format (e.g., QPSK, 16-QAM, 64-QAM, etc.) and the error correction coding scheme (e.g., convolutional codes, turbo codes, LDPC codes, etc.). The combination of modulation format and coding scheme is called the **modulation and coding scheme (MCS)**. The MCS determines the number of bits per symbol and the level of error correction, which in turn affects the data rate and reliability of the communication link, as well sets the minimum required SNR.
 
-Since there are many different MCS options available, and the receiver needs to be informed by the transmitter which MCS is used, a standardized set of MCS options is defined in most wireless communication standards. For example, the MCS options for WiFi can be seen in this [table](https://mcsindex.net), while the MCS calculation for 5G NR can be found [here](https://www.sqimway.com/nr_pdsch.php).
+Since there are many different MCS options available, and the receiver needs to be informed by the transmitter which MCS is used (whenever there is a change of MCS), a standardized set of MCS options is defined in most wireless communication standards. For example, the MCS options for WiFi can be seen in this [table](https://mcsindex.net), while the MCS calculation for 5G NR can be found [here](https://www.sqimway.com/nr_pdsch.php).
 
 ::: {.callout-note}
 ## Exemplary MCS in WiFi
 
-Some operating systems and drivers show the MCS (and other parameters of the Wi-Fi link) which are currently used. A typical output might be:
+Some operating systems and wireless drivers show the MCS (and other parameters of the Wi-Fi link) during use. A typical output might be:
 
 - MCS: 7
 - RSSI: -53 dBm
 - Interference: -92 dBm
 - Bandwidth: 160 MHz
 
-Looking up MCS 7 in the WiFi MCS table linked above shows that this corresponds to 64-QAM with a coding rate of 5/6. With a bandwidth of 160 MHz, 2x MIMO and a guard interval (GI) of 0.8 µs, the maximum data rate is a whopping 1441 Mbps.
+Looking up MCS 7 in the Wi-Fi MCS table linked above shows that this corresponds to 64-QAM with a coding rate of 5/6. With a bandwidth of 160 MHz, 2x MIMO and a guard interval (GI) of 0.8 µs, the maximum data rate is a whopping 1441 Mbps.
 :::

@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-ofdm-transceiver
 #| echo: false
-#| fig-cap: "OFDM transmission system block diagram showing transmitter and receiver processing chains."
+#| fig-cap: "OFDM transmission system block diagram showing transmitter (top) and receiver (bottom) processing chains."
 
 import schemdraw as sd
 import schemdraw.elements as elm
