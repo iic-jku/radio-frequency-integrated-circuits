@@ -69,7 +69,10 @@ The RF signal generation according to @eq-modulation is called **quadrature modu
 Alternatively, a modulation method called **polar modulation** can be used, where the amplitude and phase of the carrier are varied according to (again using the complex-conjugate symmetry to obtain a real-valued signal):
 
 $$
-s_\mathrm{RF}(t) = \frac{1}{2} \left[ A(t) \cdot e^{j \omega_\mathrm{c} t + j \varphi(t)} + A(t) \cdot e^{-j \omega_\mathrm{c} t -j \varphi(t)} \right] = A(t) \cdot \cos[ \omega_\mathrm{c} t + \varphi(t) ]
+\begin{split}
+s_\mathrm{RF}(t) &= \frac{1}{2} \left[ A(t) \cdot e^{j \omega_\mathrm{c} t + j \varphi(t)} + A(t) \cdot e^{-j \omega_\mathrm{c} t -j \varphi(t)} \right]\\
+&= A(t) \cdot \cos[ \omega_\mathrm{c} t + \varphi(t) ]
+\end{split}
 $$
 
 This is done by converting the baseband I and Q signals ($s_\mathrm{I}$ and $s_\mathrm{Q}$) to polar coordinates with
@@ -255,35 +258,35 @@ In some cases, other architectures may be preferred over the direct-conversion a
 
 ### Super-Heterodyne Architecture
 
-The [super-heterodyne architecture](https://en.wikipedia.org/wiki/Superheterodyne_receiver) is a widely used approach in radio. It works by mixing the incoming/outgoing RF signal with an LO to produce an intermediate frequency (IF) signal. This IF signal is then amplified and processed, allowing for better selectivity and sensitivity compared to direct-conversion architectures. Super-heterodyne receivers/transmitters are known for their excellent performance in terms of image rejection and dynamic range, making them suitable for a variety of applications, including traditional analog TV and radio broadcasting. A simplified block diagram of a super-heterodyne transceiver is shown in @fig-trx-superheterodyne.
+The [super-heterodyne architecture](https://en.wikipedia.org/wiki/Superheterodyne_receiver) is a widely used approach in radio. It works by mixing the incoming/outgoing RF signal with an LO to produce an intermediate frequency (IF) signal. This IF signal is then amplified and processed, allowing for better selectivity and sensitivity compared to direct-conversion architectures. Super-heterodyne receivers and transmitters are known for their excellent performance in terms of image rejection and dynamic range, making them suitable for a variety of applications, including traditional analog TV and radio broadcasting. A simplified block diagram of a super-heterodyne transceiver is shown in @fig-trx-superheterodyne.
 
 {{< include /content/trx/_fig_trx_superheterodyne.qmd >}}
 
-When you compare @fig-trx-block with @fig-trx-superheterodyne, you can immediately appreciate the increased complexity of the super-heterodyne architecture. It requires two PLLs to generate the RX and TX LO frequencies, as well as additional mixers and filters for the IF stage. This increases cost, power consumption, and size. However, the super-heterodyne architecture can provide better performance in terms of selectivity and sensitivity, especially in challenging RF environments with strong blockers, as it allows filtering at RF, IF, and baseband frequencies.
+When you compare @fig-trx-block with @fig-trx-superheterodyne, you can immediately appreciate the increased complexity of the super-heterodyne architecture. It requires two PLLs to generate the RX and TX LO frequencies, as well as additional mixers, amplifiers, and filters for the IF stage. This increases cost, power consumption, and size. However, the super-heterodyne architecture can provide better performance in terms of selectivity and sensitivity, especially in challenging RF environments with strong blockers, as it allows distributed filtering at RF, IF, and baseband frequencies.
 
-One important aspect of super-heterodyne receivers is the choice of the intermediate frequency (IF). The IF should be high enough to allow for effective filtering and **image rejection**, but low enough to avoid excessive complexity and power consumption. Common IF frequencies range from a few MHz to several hundred MHz, depending on the application and frequency band.
+One important aspect of super-heterodyne receivers is the choice of the intermediate frequency (IF). The IF should be high enough to allow for effective filtering and high **image frequency** rejection, but low enough to avoid excessive complexity and power consumption. Common IF frequencies range from a few MHz to several hundred MHz, depending on the application and frequency band.
 
-An important issue in super-heterodyne receivers is the **image frequency**. The image frequency is a spurious frequency that can interfere with the desired signal, and is located at $f_\mathrm{image} = f_\mathrm{RF} \pm 2 f_\mathrm{IF}$ (the sign depends on the choice of high-side or low-side mixing). To suppress the image frequency, an image-reject filter is either placed before (RX) or after (TX) the mixer. The design of this filter is critical, as it must provide sufficient attenuation of the image frequency while maintaining low insertion loss for the desired signal.
+The image frequency is a spurious frequency that can interfere with the desired signal, and is located at $f_\mathrm{image} = f_\mathrm{RF} \pm 2 f_\mathrm{IF}$ (the sign depends on the selection of high-side or low-side mixing, which is an important design choice in superhets). To suppress the image frequency, an image-reject filter is either placed before (RX) or after (TX) the mixer. The design of this filter is critical, as it must provide sufficient attenuation of the image frequency while maintaining low insertion loss for the desired signal.
 
 An alternative to image filtering is the use of active image rejection techniques, such as the **Hartley** or **Weaver** architectures (see [image-reject mixer](https://en.wikipedia.org/wiki/Image_response)) [@Razavi_RFIC]. These techniques use additional mixers and phase shifters to cancel out the image frequency, allowing for improved performance without the need for a dedicated image-reject filter.
 
 ### Low-IF Architecture
 
-To avoid some of the issues of direct-conversion architectures (like dc offsets and flicker noise), a low-IF architecture can be used. In a low-IF architecture, the RX and TX signals are mixed to a low intermediate frequency (typically a few MHz to tens of MHz) instead of directly to baseband. This allows for easier filtering of dc offsets and flicker noise, while still maintaining the benefits of a single LO and reduced complexity compared to super-heterodyne architectures. A low-IF architecture is shown in @fig-trx-lowif.
+To avoid some of the issues of direct-conversion architectures (like dc offsets and flicker noise), a low-IF architecture can be used. In a low-IF architecture (which is a kind of a super-heterodyne architecture), the RX and TX signals are mixed to a low intermediate frequency (typically a few MHz to tens of MHz) in the analog domain instead of directly to baseband (the final mixing to baseband is done digitally). This allows for easier filtering of dc offsets and flicker noise, while still maintaining the benefits of a single LO and reduced complexity compared to super-heterodyne architectures. A low-IF architecture is shown in @fig-trx-lowif.
 
 {{< include /content/trx/_fig_trx_lowif.qmd >}}
 
 The low-IF architecture is the de facto standard for Bluetooth receivers. Its advantage compared to direct-conversion vanishes for larger channel bandwidths, which is why it is not used for cellular or Wi-Fi (GSM receivers might be an exception).
 
-One noteworthy disadvantage of low-IF architectures is the required $2\times$ BW compared to direct-conversion. This might cause increased power consumption in the analog baseband filters and ADCs/DACs. Additionally, the low-IF architecture still requires careful design to mitigate issues like I/Q imbalance and LO leakage, although these issues are generally less severe than in direct-conversion architectures.
+One noteworthy disadvantage of low-IF architectures is the required $\ge 2\times$ BW of the analog baseband filters and the ADCs/DACs compared to direct-conversion. This might cause increased power consumption in these blocks. Additionally, the low-IF architecture still requires careful design to mitigate issues like I/Q imbalance and LO leakage, although these issues are generally less severe than in direct-conversion architectures.
 
-### Super Simple Architecture
+### Direct-Modulated Oscillator and Direct-Detection Receiver (aka "Super Simple" Architecture)
 
-For some applications with very low cost and low performance requirements, a super simple architecture can be used (think garage door opener). In this architecture, the RX and TX paths are stripped down to the bare minimum. A super simple receiver just uses a bandpass filter and an envelope detector, while a super simple transmitter uses an oscillator and power amplifier. These simplified architectures are shown in @fig-trx-supersimple.
+For some applications with very low cost and low performance requirements, a super simple architecture can be used (for applications like a garage door opener). In this architecture, the RX and TX paths are stripped down to the bare minimum. A simple direct-detection receiver just uses an (optional) bandpass filter and a power detector, while a simple direct-modulated oscillator transmitter uses an oscillator and (optional) power amplifier. These simplified architectures are shown in @fig-trx-supersimple.
 
 {{< include /content/trx/_fig_trx_supersimple.qmd >}}
 
-Despite the simple architecture, digital amplitude-shift-keying (ASK) or on-off-keying (OOK) can be used. If the receiver is able to discriminate between frequencies (e.g., by using two RF filters with an envelope detector each), also frequency-shift-keying (FSK) can be used.
+Despite the reduced architecture, digital amplitude-shift-keying (ASK) or on-off-keying (OOK) can be used. If the receiver is able to discriminate between frequencies (e.g., by using two RF filters with a power detector each), also frequency-shift-keying (FSK) can be used.
 
 ## I/Q Imbalance
 
