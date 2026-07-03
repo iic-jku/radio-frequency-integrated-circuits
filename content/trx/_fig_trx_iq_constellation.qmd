@@ -1,0 +1,84 @@
+::: {.content-hidden}
+Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-trx-iq-constellation
+#| echo: false
+#| fig-cap: "QPSK constellation illustrating the two error contributions. Applied to all four symbols, an amplitude error $\\Delta A$ (radial displacement, orange crosses) and a phase error $\\Delta \\varphi$ (rotation on the circle, green crosses) are shown separately relative to the ideal symbols (blue circles)."
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Error magnitudes (exaggerated for illustration)
+dA = 0.25              # amplitude error (fractional radial displacement)
+dphi = np.deg2rad(20)  # phase error (rotation)
+
+# Ideal QPSK symbols (on the unit circle)
+I_ideal = np.array([1, -1, -1, 1]) / np.sqrt(2)
+Q_ideal = np.array([1, 1, -1, -1]) / np.sqrt(2)
+
+fig, ax = plt.subplots(1, 1, figsize=(5, 5))
+
+# Unit circle for reference
+theta = np.linspace(0, 2 * np.pi, 200)
+ax.plot(np.cos(theta), np.sin(theta), color='gray', linestyle=':', linewidth=1, alpha=0.5)
+
+# Axes through origin
+ax.axhline(0, color='gray', linewidth=0.8)
+ax.axvline(0, color='gray', linewidth=0.8)
+
+# Ideal constellation points
+ax.plot(I_ideal, Q_ideal, 'o', color='tab:blue', markersize=10, label='Ideal symbols')
+
+# Apply both errors to all four symbols
+angle = np.arctan2(Q_ideal, I_ideal)
+
+# Amplitude error: radial displacement (radius grown by dA, angle unchanged)
+Ia = (1 + dA) * np.cos(angle)
+Qa = (1 + dA) * np.sin(angle)
+
+# Phase error: rotation on the unit circle (radius unchanged, angle rotated by dphi)
+Ip = np.cos(angle + dphi)
+Qp = np.sin(angle + dphi)
+
+for k in range(4):
+    # Radial amplitude-error arrow
+    ax.annotate('', xy=(Ia[k], Qa[k]), xytext=(I_ideal[k], Q_ideal[k]),
+                arrowprops=dict(arrowstyle='->', color='tab:orange', linewidth=1.5))
+    # Tangential (arc) phase-error arrow
+    arc_theta = np.linspace(angle[k], angle[k] + dphi, 50)
+    ax.plot(np.cos(arc_theta), np.sin(arc_theta), color='tab:green', linewidth=1.5)
+    ax.annotate('', xy=(Ip[k], Qp[k]),
+                xytext=(np.cos(arc_theta[-2]), np.sin(arc_theta[-2])),
+                arrowprops=dict(arrowstyle='->', color='tab:green', linewidth=1.5))
+
+# Impaired symbols (colored to match the error type / legend)
+ax.plot(Ia, Qa, 'x', color='tab:orange', markersize=10, markeredgewidth=2,
+        label=r'Amplitude error $\Delta A$')
+ax.plot(Ip, Qp, 'x', color='tab:green', markersize=10, markeredgewidth=2,
+        label=r'Phase error $\Delta \varphi$')
+
+ax.set_xlabel('I')
+ax.set_ylabel('Q')
+ax.set_xlim(-1.5, 1.5)
+ax.set_ylim(-1.5, 1.5)
+ax.set_aspect('equal')
+ax.grid(True, alpha=0.3)
+ax.legend(loc='lower right', fontsize=9)
+
+plt.tight_layout()
+plt.show()
+```

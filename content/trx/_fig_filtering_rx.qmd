@@ -9,7 +9,7 @@ You may obtain a copy of the License at
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
-negative WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 :::
@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-filtering-rx
 #| echo: false 
-#| fig-cap: "Filtering of wanted channel amid strong unwanted blockers. An example is shown in an RX scenario around 900 MHz. The strong blockers (top figure) are attenuated by an RF bandpass filter (bottom figure) with a bandwidth of 20 MHz, achieving more than 40 dB rejection of the blockers while only slightly attenuating the wanted signal."
+#| fig-cap: "Filtering of wanted channel amid strong unwanted blockers. An exemplary RX scenario around 900 MHz is shown: The strong blockers (top figure) are attenuated by an RF bandpass filter (bottom figure) with a bandwidth of 20 MHz, achieving more than 40 dB rejection of the blockers while only slightly attenuating the wanted signal."
 
 import numpy as np
 import matplotlib.pyplot as plt

@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-trx-supersimple
 #| echo: false
-#| fig-cap: "Block diagram of a super-simple TX and RX." 
+#| fig-cap: "Block diagram of a direct-modulated oscillator and direct-detection receiver (aka 'Super Simple') TX and RX with optional components." 
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -27,17 +27,19 @@ sd.svgconfig.svg2 = False
 with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=14, margin=0.5)
 
+    elm.Arrow().right(d.unit/2).label('data', loc='top')
     dsp.Oscillator()
     dsp.Arrow().right(d.unit/2)
-    dsp.Amp()
+    dsp.Amp().linestyle('dashed')
     dsp.Line().right(d.unit/2)
     elm.Antenna()
 
-    d.move(dx=d.unit*2, dy=0)
+    d.move(dx=d.unit*1.5, dy=0)
 
     elm.Antenna()
     dsp.Arrow().right(d.unit/2)
-    dsp.Filter(response='bp')
+    dsp.Filter(response='bp').linestyle('dashed')
     dsp.Arrow().right(d.unit/2)
     dsp.Demod()
+    dsp.Arrow().right(d.unit/2).label('data', loc='top')
 ```
