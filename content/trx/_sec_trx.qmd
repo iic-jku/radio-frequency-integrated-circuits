@@ -152,52 +152,55 @@ Fundamentally, the choice of filter technology is a trade-off between performanc
 
 The transceiver architecture shown in @fig-trx-block is called the direct-conversion or zero-IF architecture, as the downconversion in the RX and upconversion in the TX are done in a single step. This architecture has several advantages:
 
-- Per RX and TX a single LO is required (which can even be shared between RX and TX in TDD operation).
+- Per RX- and TX-chain a single LO is required (which can even be shared between RX and TX in TDD operation).
 - There are a minimum number of RF blocks, which is good for cost and power consumption.
-- This architecture is very flexible and can be easily adapted to different standards and requirements, and generally shows very good performance if the disadvantages can be overcome by good design.
+- This architecture is very flexible and can be easily adapted to different standards and requirements, even for wideband operation. It generally shows very good performance if the disadvantages can be overcome by good design.
 - This architecture allows a high integration level, as basically all blocks can be implemented on-chip.
 - Direct conversion is the de facto standard architecture for cellular, Wi-Fi, Bluetooth (with the exception of the TX), and GNSS.
 
-However, the direct-conversion architecture also has some disadvantages:
+However, the direct-conversion architecture also has some serious disadvantages:
 
-- LO-RF coupling can cause self-mixing and desensitization of the RX, as well as LO leakage in the TX. This is an issue because the LO frequency is the same as the RF frequency.
+- LO-RF coupling can cause self-mixing and desensitization of the RX, as well as LO leakage in the TX. This is an issue because the LO frequency is the same as the RF carrier frequency.
 - Even-order distortion (characterized by a low IIP2) causes sensitivity degradation due to strong amplitude-modulated blockers [@Gebhard.2019].
-- LO pulling can occur in the TX (again, LO and RF are at the same frequency).
+- LO pulling can occur in the TX (as, again, LO and RF are at the same frequency).
 - I/Q errors (gain and phase mismatch) of the $I$ and $Q$ paths can cause constellation distortion leading to increased error vector magnitude (EVM).
-- dc offsets can occur due to self-mixing of LO leakage and even-order distortion products.
-- Flicker noise (1/f noise) upconversion can cause increased phase noise close to the carrier, as well as increased RX noise figure.
+- Significant dc offsets can occur due to self-mixing of LO leakage or the even-order distortion products (IM2).
+- Flicker noise (1/f noise) upconversion can cause increased TX noise close to the carrier, as well as increased RX noise figure.
 
-Nowadays there exist good design techniques to mitigate these disadvantages. However, in some cases (for example very high linearity requirements, or very high frequencies) other architectures like low-IF or super-heterodyne may be preferred.
+Nowadays there exist good design techniques to mitigate these disadvantages. However, in some cases (for example very high linearity requirements, or very high frequencies) other architectures like low-IF or super-heterodyne may be preferable.
 
 ## Duplexing {#sec-trx-duplexing}
 
-In the block diagram of @fig-trx-block, we have not yet considered how to share the antenna between RX and TX. Essentially, there are two main methods to achieve this: **frequency-division duplex (FDD)** and **time-division duplex (TDD)**.
+In the block diagram of @fig-trx-block, we have not yet considered how to share a single antenna between RX and TX. Essentially, there are two main methods to achieve this: **frequency-division duplex (FDD)** and **time-division duplex (TDD)**.
+
+A special case beyond FDD and TDD is **full-duplex (FD)**, where RX and TX operate *simultaneously* in the *same frequency band*. Full-duplex is technically challenging, as it requires very high isolation between RX and TX, which is difficult to achieve in practice. For some special applications, like radar, full-duplex operation is possible, but for most communication systems FDD or TDD is used.
 
 ### Frequency-Division Duplex (FDD)
 
-In FDD, the RX and TX operate at different frequencies, separated by a duplex distance. This allows simultaneous transmission and reception, which is beneficial for applications like voice communication where low latency is required. However, FDD requires two separate frequency bands, which can be a limitation in terms of spectrum availability. Additionally, FDD requires two PLLs to generate the RX and TX LO frequencies, which increases complexity and power consumption.
+In FDD, the RX and TX operate at different frequencies, separated by a duplex distance $f_\mathrm{dpx} = | f_\mathrm{RX} - f_\mathrm{TX} |$. This allows simultaneous transmission and reception, which is beneficial for applications like voice communication where low latency is required. However, FDD requires two separate frequency bands, which can be a limitation in terms of spectrum availability. Additionally, FDD requires two PLLs to generate the RX and TX LO frequencies, which increases complexity and power consumption.
 
-The RF RX and TX paths are connected to the antenna via a duplexer, which is a three-port device that allows signals to pass between the antenna and the RX or TX path, while isolating the RX and TX paths from each other. A typical FDD TRX block diagram is shown in @fig-trx-fdd.
+The RF RX and TX paths are connected to the antenna via a duplexer filter, which is a three-port device that allows signals to pass between the antenna and the RX or TX path, while isolating the RX and TX paths from each other. A typical FDD TRX block diagram is shown in @fig-trx-fdd.
 
 {{< include /content/trx/_fig_trx_fdd.qmd >}}
 
 Advantages of FDD:
 
 - RX and TX can operate simultaneously, which is beneficial for low-latency applications.
-- There is no need for fast switching between RX and TX, which simplifies the design.
-- Relaxed synchronization requirements between RX and TX and different users.
+- There is no need for fast switching between RX and TX, which simplifies the timing control.
+- FDD allows relaxed synchronization requirements between RX and TX and different users.
 
 Disadvantages of FDD:
 
-- Duplexers are costly components with significant insertion loss depending on filtering requirements.
-- Requires two separate frequency bands, which can be a limitation in terms of spectrum availability, and MIMO channel estimation.
-- The strong TX causes severe desensitization of the RX, which requires high linearity and good filtering (50 dB to 60 dB).
+- Duplexer filters are costly components with significant insertion loss depending on filtering requirements.
+- It requires two separate frequency bands, which can be a limitation in terms of spectrum availability and MIMO channel estimation.
+- The strong TX leakage via the duplexer filter into the RX path causes severe desensitization of the RX, which requires high linearity and good filtering (50 dB to 60 dB).
+- The RX and TX chains (including their PLLs) are operating simultaneously, which increases power consumption and can cause interference between the RX and TX paths (e.g., LO pulling).
 
 ### Time-Division Duplex (TDD)
 
-In TDD, the RX and TX share the same frequency band but operate at different times. This allows for more efficient use of the available spectrum, as the same frequency can be used for both transmission and reception. TDD is particularly well-suited for applications with asymmetric traffic patterns, where the data rate in one direction is significantly higher than in the other. However, TDD requires precise timing control to avoid interference between RX and TX periods, which can increase complexity.
+In TDD, the RX and TX share the same frequency band but operate at different times. This allows for more efficient use of the available spectrum, as the same channel frequency can be used for both transmission and reception. TDD is particularly well-suited for applications with asymmetric traffic patterns, where the data rate in one direction is significantly higher than in the other. However, TDD requires precise timing control to avoid interference between RX and TX periods, which can increase complexity.
 
-In TDD, a single PLL can be used to generate the LO frequency for both RX and TX, which reduces complexity and power consumption. The RF RX and TX paths are connected to the antenna via a switch, which alternates between connecting the antenna to the RX path and the TX path. A typical TDD TRX block diagram is shown in @fig-trx-tdd.
+In TDD, a single PLL can be used to generate the LO frequency for both RX and TX, which reduces complexity and power consumption. The RX and TX RF paths are connected to the antenna via a switch, which alternates between connecting the antenna to the RX path and the TX path. A typical TDD TRX block diagram is shown in @fig-trx-tdd.
 
 {{< include /content/trx/_fig_trx_tdd.qmd >}}
 
@@ -207,18 +210,18 @@ Advantages of TDD:
 - A single PLL can be used for both RX and TX, which reduces complexity and power consumption.
 - No duplexer is required (just a single band filter), which reduces cost and insertion loss.
 - No RX blocking by own TX, which relaxes linearity and filtering requirements.
-- Easier to implement MIMO, as all antennas can operate in the same frequency band.
+- MIMO is easier to implement, as all antennas can operate in the same frequency band.
 
 Disadvantages of TDD:
 
 - RX and TX cannot operate simultaneously, which can be a limitation for low-latency applications.
-- Requires precise timing control to avoid interference between RX and TX periods, which can increase complexity.
+- TDD requires precise timing control to avoid interference between RX and TX periods, which can increase complexity.
 - Synchronization between RX and TX and different users is required, which can be challenging in some scenarios.
 
 
 ### Comparison of FDD and TDD
 
-Below is a summary of important wireless standards and their duplexing method as shown in @tbl-duplexing-standards:
+Below is a summary of important wireless standards and their duplexing method as shown in @tbl-duplexing-standards.
 
 | Wireless Standard | Duplexing Method | Comments                                 |
 |:------------------|:-----------------|:-----------------------------------------|
