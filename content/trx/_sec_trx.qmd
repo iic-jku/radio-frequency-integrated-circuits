@@ -289,26 +289,54 @@ Despite the simple architecture, digital amplitude-shift-keying (ASK) or on-off-
 
 In direct-conversion and low-IF architectures, the I and Q paths are used to process the in-phase and quadrature components of the signal. Ideally, these paths should have identical gain and a 90° phase difference. However, in practice, there are always some mismatches between the I and Q paths, leading to **I/Q imbalance**. This imbalance can cause constellation distortion, leading to increased error vector magnitude (EVM) and degraded system performance.
 
-I/Q imbalance can be characterized by two parameters: gain mismatch ($\Delta G$) and phase mismatch ($\Delta \varphi$). Gain mismatch refers to the difference in gain between the I and Q paths, while phase mismatch refers to the deviation from the ideal 90° phase difference. The impact of I/Q imbalance on system performance depends on the modulation scheme used, with higher-order modulations being more sensitive to these impairments.
+{{< include /content/trx/_fig_trx_iq_constellation.qmd >}}
+
+I/Q imbalance can be characterized by two parameters: amplitude mismatch ($\Delta A$) and phase mismatch ($\Delta \varphi$). Amplitude mismatch originates from the difference in gain between the I and Q paths, while phase mismatch refers to the deviation from the ideal 90° phase difference. The impact of I/Q imbalance on system performance depends on the modulation scheme used, with higher-order modulations being more sensitive to these impairments. @fig-trx-iq-constellation illustrates the effect of gain and phase mismatch on a QPSK constellation, where each ideal symbol is displaced to a measured position, with the resulting error vector giving rise to the EVM.
 
 There are two ways to quantify I/Q imbalance:
 
 - **Image rejection ratio (IRR)**: The IRR is a measure of how well the receiver can reject the image frequency caused by I/Q imbalance. It is defined as the ratio of the power of the desired signal to the power of the image (unwanted) signal, typically expressed in dB. A higher IRR indicates better performance, with values above 30 dB to 40 dB generally considered acceptable for most applications.
-- **[Error vector magnitude (EVM)](https://en.wikipedia.org/wiki/Error_vector_magnitude)**: The EVM is a measure of the difference between the ideal transmitted signal and the received signal, expressed as a percentage of the signal's magnitude. It quantifies the overall distortion in the received signal, including the effects of I/Q imbalance. Lower EVM values indicate better performance, with typical requirements ranging from 1% to 10% depending on the modulation scheme and application.
+
+The IRR can be calculated from the relative amplitude mismatch $\epsilon = \Delta A/A$ and the phase mismatch $\Delta \varphi$ (in radians) as [@Razavi_RFIC]
+
+$$
+\begin{split}
+\text{IRR} &= \frac{1 + (1 + \epsilon)^2 + 2 (1 + \epsilon) \cos(\Delta \varphi)}{1 + (1 + \epsilon)^2 - 2 (1 + \epsilon) \cos(\Delta \varphi)}\\
+&\approx \frac{4}{\epsilon^2 + (\Delta \varphi)^2},
+\end{split}
+$$ {#eq-irr-definition}
+
+where the approximation on the right holds for small amplitude and phase errors. The IRR in dB is given by
+
+$$
+\text{IRR}|_\mathrm{dB} = 10 \cdot \log_{10}(\text{IRR}).
+$$
+
+For example, an amplitude mismatch of 1% ($\epsilon = 0.01$) together with a phase mismatch of 1° ($\Delta \varphi \approx 0.0175$) yields an IRR of about 40 dB.
+
+- **Error vector magnitude (EVM)**: The [EVM](https://en.wikipedia.org/wiki/Error_vector_magnitude) is a measure of the difference between the ideal transmitted signal and the received signal, expressed as a percentage of the signal's magnitude. It quantifies the overall distortion in the received signal, including the effects of I/Q imbalance. Lower EVM values indicate better performance, with typical requirements ranging from 1% to 10% depending on the modulation scheme and application.
 
 The EVM (in rms) is defined as
 
 $$
-\text{EVM} = \frac{\sqrt{\frac{1}{N} \sum_{i=1}^{N} |s_\mathrm{ideal}(i) - s_\mathrm{meas}(i)|^2}}{\sqrt{\frac{1}{N} \sum_{i=1}^{N} |s_\mathrm{ideal}(i)|^2}}
+\text{EVM} = \frac{\sqrt{\frac{1}{N} \sum_{i=1}^{N} |s_{\mathrm{ideal},i} - s_{\mathrm{meas},i}|^2}}{\sqrt{\frac{1}{N} \sum_{i=1}^{N} |s_{\mathrm{ideal},i}|^2}}
 $$ {#eq-evm-definition}
 
-where $s_\mathrm{ideal}(i)$ is the ideal transmitted symbol, $s_\mathrm{meas}(i)$ is the measured received symbol, and $N$ is the number of symbols. EVM is expressed either in percent or in dB using
+where $s_{\mathrm{ideal},i}$ are the ideal transmitted symbols, $s_{\mathrm{meas},i}$ are the measured received symbols, and $N$ is the number of symbols. EVM is expressed either in percent or in dB using
 
 $$
 \text{EVM}|_\mathrm{dB} = 20 \cdot \log_{10}(\text{EVM}).
+$$
+
+Note that the EVM (in dB) is always a negative number, with lower values indicating better performance. For example, an EVM of 1% (a very good number) corresponds to --40 dB, while an EVM of 10% corresponds to --20 dB. The SNR of the RF signal can be related to the EVM as
+
+$$
+\text{SNR}|_\mathrm{dB} \approx -20 \cdot \log_{10}(\text{EVM}) = -\text{EVM}|_\mathrm{dB}.
 $$
 
 In order to make the I/Q mismatch sufficiently small, the following techniques can be used:
 
 - Careful layout and matching of the components in the I and Q paths to minimize gain and phase mismatches. This usually involves good layout techniques. Further, the LO I/Q generation should be done with high accuracy.
 - Calibration techniques can be used to measure and compensate for I/Q imbalance. This can be done either in the analog domain (e.g., using variable gain amplifiers and phase shifters) or in the digital domain (e.g., using digital signal processing algorithms). Digital compensation is usually preferred, as it is more flexible and can adapt to changing conditions. A [CORDIC](https://en.wikipedia.org/wiki/CORDIC) can be readily used for this purpose.
+
+A final note on EVM: EVM is not only affected by I/Q imbalance, but also by other impairments like phase noise, nonlinearities, and noise in general. Therefore, EVM is a more comprehensive measure of the overall performance of a communication system, and often used to quantify the overall system performance in terms of SNR.
