@@ -237,6 +237,18 @@ Below is a summary of important wireless standards and their duplexing method as
 
 As you can see in @tbl-duplexing-standards, there is a tendency to use FDD for lower frequencies and long communication distances, while TDD is preferred for higher frequencies and shorter distances.
 
+### Full Duplex (FD)
+
+In case of FD, neither a duplexer nor a switch can be used in the RF front-end. One popular method (which also helps to increase the RX-TX isolation) is to use two antennas, as shown in @fig-trx-fd-dualantenna. The TX antenna is used to transmit the signal, while the RX antenna is used to receive the signal. The two antennas are placed in such a way that they are isolated from each other, which helps to reduce the interference between the RX and TX paths. Also polarization diversity can be used to further increase the isolation.
+
+{{< include /content/trx/_fig_trx_fd_dualantenna.qmd >}}
+
+Another method to achieve FD operation is to use a circulator, which is a three-port device that allows signals to flow in one direction while isolating the other two ports. The circulator can be used to connect the RX and TX paths to the same antenna, while providing isolation between them. A typical FD TRX block diagram using a circulator is shown in @fig-trx-fd-circulator.
+
+{{< include /content/trx/_fig_trx_fd_circulator.qmd >}}
+
+Regardless of whether two antennas or a circulator are used, the isolation between the TX and RX paths is always finite (typically only in the range of 15 dB to 20 dB for a circulator). As a consequence, a large fraction of the own (and strong) TX signal leaks directly into the sensitive RX port. Practical FD systems therefore require additional **self-interference cancellation** (also called leakage cancellation), performed in the RF/analog and/or digital domain, to suppress this residual TX leakage below the RX noise floor [@Sadjina.2020].
+
 ## Specialty Architectures
 
 In some cases, other architectures may be preferred over the direct-conversion architecture. During the evolution of wireless communication, many different architectures have been proposed and used. However, only a few of them are still relevant today. Some examples are shown next.
