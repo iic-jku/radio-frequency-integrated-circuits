@@ -251,7 +251,7 @@ Regardless of whether two antennas or a circulator are used, the isolation betwe
 
 ## Specialty Architectures
 
-In some cases, other architectures may be preferred over the direct-conversion architecture. During the evolution of wireless communication, many different architectures have been proposed and used. However, only a few of them are still relevant today. Some examples are shown next.
+In some cases, other architectures may be preferred over the direct-conversion architecture. During the evolution of wireless communication, many different architectures have been proposed and used. However, only a few of them are still relevant today. A few examples are shown next.
 
 ### Super-Heterodyne Architecture
 
