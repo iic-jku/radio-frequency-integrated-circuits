@@ -166,7 +166,7 @@ However, the direct-conversion architecture also has some serious disadvantages:
 - LO-RF coupling can cause self-mixing and desensitization of the RX, as well as LO leakage in the TX. This is an issue because the LO frequency is the same as the RF carrier frequency.
 - Even-order distortion (characterized by a low IIP2) causes sensitivity degradation due to strong amplitude-modulated blockers [@Gebhard.2019].
 - LO pulling can occur in the TX (as, again, LO and RF are at the same frequency).
-- I/Q errors (gain and phase mismatch) of the $I$ and $Q$ paths can cause constellation distortion leading to increased error vector magnitude (EVM).
+- I/Q errors (amplitude and phase mismatch) of the $I$ and $Q$ paths can cause constellation distortion leading to increased error vector magnitude (EVM).
 - Significant dc offsets can occur due to self-mixing of LO leakage or the even-order distortion products (IM2).
 - Flicker noise (1/f noise) upconversion can cause increased TX noise close to the carrier, as well as increased RX noise figure.
 
@@ -294,7 +294,7 @@ In direct-conversion and low-IF architectures, the I and Q paths are used to pro
 
 {{< include /content/trx/_fig_trx_iq_constellation.qmd >}}
 
-I/Q imbalance can be characterized by two parameters: amplitude mismatch ($\Delta A$) and phase mismatch ($\Delta \varphi$). Amplitude mismatch originates from the difference in gain between the I and Q paths, while phase mismatch refers to the deviation from the ideal 90° phase difference. The impact of I/Q imbalance on system performance depends on the modulation scheme used, with higher-order modulations being more sensitive to these impairments. @fig-trx-iq-constellation illustrates the effect of gain and phase mismatch on a QPSK constellation, where each ideal symbol is displaced to a measured position, with the resulting error vector giving rise to the EVM.
+I/Q imbalance can be characterized by two parameters: amplitude mismatch ($\Delta A$) and phase mismatch ($\Delta \varphi$). Amplitude mismatch originates from the difference in gain between the I and Q paths, while phase mismatch refers to the deviation from the ideal 90° phase difference. The impact of I/Q imbalance on system performance depends on the modulation scheme used, with higher-order modulations being more sensitive to these impairments. @fig-trx-iq-constellation illustrates both effects on a QPSK constellation: an amplitude mismatch displaces each symbol radially, while a phase mismatch rotates each symbol along the constellation circle.
 
 There are two ways to quantify I/Q imbalance:
 
