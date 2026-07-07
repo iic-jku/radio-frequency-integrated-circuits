@@ -17,15 +17,31 @@ limitations under the License.
 ```{python}
 #| label: fig-smith-chart
 #| echo: false
-#| fig-cap: "Smith chart showing constant resistance and reactance circles for impedance matching in RF circuits."
+#| fig-cap: "Smith chart showing constant resistance and reactance circles for impedance matching in RF circuits. The blue dot indicates perfect matching at 50 Ω, the green dot shows an open, and the red dot shows a short. The red dashed circle indicates a mismatch with RL = 10 dB."
 
+import numpy as np
 import matplotlib.pyplot as plt
-import pysmithchart
+from pysmithchart import R_DOMAIN
 
 # Create a subplot that will use the Smith projection and include the minor grid
 plt.figure(figsize=(5, 5))
 plt.subplot(1, 1, 1, projection="smith", Z0=50)
 
-plt.plot([50 + 0j], markersize=10)
+# Blue dot: perfect match at 50 Ω
+plt.plot([0 + 0j], domain=R_DOMAIN, marker='o', color='b', markersize=10)
+
+# Green dot: open circuit (Γ = +1, right edge of Smith chart)
+plt.plot([1 + 0j], domain=R_DOMAIN, marker='o', color='g', markersize=10)
+
+# Red dot: short circuit (Γ = -1, left edge of Smith chart)
+plt.plot([-1 + 0j], domain=R_DOMAIN, marker='o', color='r', markersize=10)
+
+# Red dashed circle: constant |Γ| corresponding to RL = 10 dB
+rho = 10 ** (-10 / 20)          # |Γ| = 10^(-RL_dB/20) ≈ 0.316
+theta = np.linspace(0, 2 * np.pi, 360)
+gamma = rho * np.exp(1j * theta)
+Z_rl10 = 50 * (1 + gamma) / (1 - gamma)
+plt.plot(Z_rl10, 'r--', linewidth=1.5, label=r'$RL = 10\,\mathrm{dB}$')
+
 plt.show()
 ```

@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-lna-naive-noise
 #| echo: false
-#| fig-cap: "Equivalent circuit of resistively matched common-source LNA."
+#| fig-cap: "Equivalent circuit of resistively matched common-source LNA (noise sources shown in blue)."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -28,7 +28,7 @@ with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=14, margin=0.5)
 
     elm.Ground()
-    src1 = elm.SourceSin().up().label(r'$4 k T (R_\mathrm{s} \parallel R_\mathrm{p})$').color('blue')
+    src1 = elm.SourceSin().up().flip().label(r'$4 k T (R_\mathrm{s} \parallel R_\mathrm{p})$').color('blue')
     elm.Line().right().length(d.unit/2)
     elm.Resistor().right().label(r'$R_\mathrm{s} \parallel R_\mathrm{p}$')
     elm.Line().right().length(d.unit/2)

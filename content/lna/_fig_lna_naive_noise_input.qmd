@@ -28,7 +28,7 @@ with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=14, margin=0.5)
 
     elm.Ground()
-    elm.SourceSin().up().label(r'$4 k T R_\mathrm{s}$').color('blue')
+    elm.SourceSin().up().flip().label(r'$4 k T R_\mathrm{s}$').color('blue')
     elm.Resistor().right().label(r'$R_\mathrm{s}$')
     elm.Line().right().length(d.unit/4).dot(open=True)
     elm.Line().right().length(d.unit/2).dot()
