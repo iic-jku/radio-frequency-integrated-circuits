@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-lna-cg
 #| echo: false
-#| fig-cap: "Circuit diagram of a common-gate LNA." 
+#| fig-cap: "Circuit diagram of a common-gate LNA (biasing details are omitted)."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -28,7 +28,7 @@ with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=14, margin=0.5)
 
     elm.Ground()
-    elm.SourceSin().up().label(r'$v_\mathrm{in}$')
+    elm.SourceSin().up().flip().label(r'$v_\mathrm{in}$')
     elm.Resistor().right().label(r'$R_\mathrm{s}=50\,\Omega$')
     elm.Line().right().length(d.unit/4).dot(open=True)
     elm.Line().right().length(d.unit*1.5).dot()
@@ -46,10 +46,10 @@ with sd.Drawing(canvas='svg') as d:
     elm.Resistor().up().label(r'$R_\mathrm{D}$')
     d.pop()
     d.push()
-    elm.Line().left().length(d.unit/2)
+    elm.Line().left().length(d.unit*3/4)
     L1 = elm.Inductor2(loops=2).up().label(r'$L$')
     d.pop()
-    elm.Line().right().length(d.unit/2).dot()
+    elm.Line().right().length(d.unit*3/4).dot()
     d.push()
     elm.Line().right().length(d.unit/2).label(r'$v_\mathrm{out}$', loc='right').dot(open=True)
     d.pop()
