@@ -17,83 +17,71 @@ limitations under the License.
 ```{python}
 #| label: fig-tank-bandpass
 #| echo: false
-#| fig-cap: "First-order bandpass behavior and impedance of an N-path filter."
+#| fig-cap: "Input impedance of an N-path filter, obtained by frequency-translating the first-order baseband $RC$ impedance to $\\pm f_\\mathrm{LO}$ and adding the series switch resistance. Doubling the path capacitance halves the bandwidth, while the peak impedance stays at $R_\\mathrm{sw} + R_\\mathrm{BB}$."
 
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Define frequency range around resonant frequency
-f0 = 1.0  # Normalized resonant frequency
-f = np.linspace(0.1, 2.0, 1000)
-omega = 2 * np.pi * f
+# ---------- model ----------
+# A passive mixer is "transparent": the impedance connected at baseband appears
+# at the RF port, shifted up to +/- f_LO. With a first-order baseband load
+#   Z_BB(df) = R_BB / (1 + j*2*pi*df*R_BB*C)
+# the RF-port impedance around the LO becomes
+#   Z_in(f_LO + df) = R_sw + Z_BB(df)
+# i.e. a *first-order* bandpass centred exactly at f_LO.
+#
+# Everything is normalised to R_sw = 1 and f_LO = 1.
+R_sw = 1.0     # on-resistance of one switch
+R_BB = 20.0    # effective shunt resistance at baseband (sets the peak impedance)
+f_LO = 1.0
 
-# Tank circuit parameters (normalized)
-omega0 = 2 * np.pi * f0
-Q = 10  # Quality factor for demonstration
-Rsw = 1.0  # Switch resistance (normalized)
+# Baseband pole placed at 1 % of f_LO for the reference capacitance C0
+f_pole_C0 = 0.01 * f_LO           # = 1 / (2*pi*R_BB*C0)
 
-# First-order bandpass impedance (magnitude)
-# |Z| = Rsw * Q / sqrt(1 + Q^2 * (omega/omega0 - omega0/omega)^2)
-# At resonance, |Z| = Q * Rsw
-frequency_ratio = omega / omega0
-delta_f = frequency_ratio - 1/frequency_ratio
-Z_magnitude = (Q * Rsw) / np.sqrt(1 + (Q * delta_f)**2)
+f = np.linspace(0.90, 1.10, 4000)
 
-# Peak impedance value (5.3 * Rsw)
-Z_peak = 5.3 * Rsw
-Q_actual = Z_peak / Rsw  # This gives us Q = 5.3
+def Z_in(f, f_pole):
+    """Magnitude of the N-path input impedance, normalised to R_sw."""
+    df = f - f_LO
+    Z_bb = R_BB / (1.0 + 1j * df / f_pole)
+    return np.abs(R_sw + Z_bb) / R_sw
 
-# Recalculate with actual Q
-Z_magnitude = (Q_actual * Rsw) / np.sqrt(1 + (Q_actual * delta_f)**2)
+Z_C0 = Z_in(f, f_pole_C0)          # capacitance C0
+Z_2C0 = Z_in(f, f_pole_C0 / 2.0)   # capacitance 2*C0 -> pole at half the frequency
 
-# Find 3dB bandwidth points
-Z_3dB = Z_peak / np.sqrt(2)
-idx_3dB_lower = np.argmin(np.abs(Z_magnitude[f < f0] - Z_3dB))
-idx_3dB_upper = np.argmin(np.abs(Z_magnitude[f > f0] - Z_3dB)) + len(f[f < f0])
-f_3dB_lower = f[idx_3dB_lower]
-f_3dB_upper = f[idx_3dB_upper]
-bandwidth = f_3dB_upper - f_3dB_lower
+Z_peak = (R_sw + R_BB) / R_sw      # peak impedance, normalised to R_sw
+Z_3dB = Z_peak / np.sqrt(2.0)
 
-# Create the plot
+# ---------- plot ----------
 fig, ax = plt.subplots(1, 1, figsize=(6, 4))
 
-# Plot impedance magnitude
-ax.plot(f, Z_magnitude, 'b-', linewidth=2.5, label='|Z(ω)|')
+ax.plot(f, Z_C0, 'b-', linewidth=2.5, label=r'$C$')
+ax.plot(f, Z_2C0, 'g-', linewidth=2.0, alpha=0.8, label=r'$2C$ (half the bandwidth)')
 
-# Mark peak impedance
-ax.plot(f0, Z_peak, 'ro', markersize=8, markerfacecolor='red', 
-        markeredgewidth=2, markeredgecolor='darkred')
-ax.annotate(f'5.3×Rsw', xy=(f0, Z_peak), xytext=(f0 + 0.2, Z_peak + 0.3),
-            color='red',
-            arrowprops=dict(arrowstyle='->', color='red', lw=1.5))
+ax.axhline(Z_3dB, color='gray', linestyle='--', alpha=0.6, linewidth=1)
+ax.text(0.905, Z_3dB + 0.5, '-3 dB', color='gray')
+ax.axvline(f_LO, color='gray', linestyle=':', alpha=0.6, linewidth=1)
 
-# Mark 3dB bandwidth points
-ax.plot([f_3dB_lower, f_3dB_upper], [Z_3dB, Z_3dB], 'go', markersize=6, 
-        markerfacecolor='green', markeredgewidth=1.5, markeredgecolor='darkgreen')
+ax.plot(f_LO, Z_peak, 'ro', markersize=7)
+ax.annotate(r'peak $= (R_\mathrm{sw} + R_\mathrm{BB}) / R_\mathrm{sw}$',
+            xy=(f_LO, Z_peak), xytext=(0.905, Z_peak - 1.2),
+            color='red', ha='left', va='center',
+            arrowprops=dict(arrowstyle='->', color='red', lw=1.2))
 
-# Draw bandwidth arrow and label
-ax.annotate('', xy=(f_3dB_upper, Z_3dB - 1.2), xytext=(f_3dB_lower, Z_3dB - 1.2),
-            arrowprops=dict(arrowstyle='<->', color='green', lw=2))
-ax.text((f_3dB_lower + f_3dB_upper)/2, Z_3dB - 1.5, 
-        f'BW ∝ 1/C', 
-        ha='center', va='top', color='green',
-        bbox=dict(boxstyle='round,pad=0.3', facecolor='lightgreen', alpha=0.7))
+# Mark the -3 dB bandwidth of the C curve
+half_bw = f_pole_C0
+ax.annotate('', xy=(f_LO + half_bw, Z_3dB), xytext=(f_LO - half_bw, Z_3dB),
+            arrowprops=dict(arrowstyle='<->', color='blue', lw=1.8))
+ax.text(f_LO, Z_3dB - 2.0, r'BW $= 1/(\pi R_\mathrm{BB} C) \propto 1/C$',
+        ha='center', va='top', color='blue',
+        bbox=dict(boxstyle='round,pad=0.3', facecolor='lightblue', alpha=0.7))
 
-# Add horizontal dashed line for 3dB level
-ax.axhline(y=Z_3dB, color='gray', linestyle='--', alpha=0.6, linewidth=1)
-ax.text(0.15, Z_3dB + 0.1, '-3dB', color='gray')
-
-# Add vertical line at resonance
-ax.axvline(x=f0, color='gray', linestyle=':', alpha=0.6, linewidth=1)
-
-# Formatting
-ax.set_xlabel('Frequency (normalized to f₀)')
-ax.set_ylabel('Impedance Magnitude |Zin(ω) / Rsw|')
+ax.set_xlabel(r'Frequency (normalized to $f_\mathrm{LO}$)')
+ax.set_ylabel(r'$| Z_\mathrm{in} | / R_\mathrm{sw}$')
 ax.grid(True, alpha=0.3)
-
-# Set axis limits for better visualization
-ax.set_xlim(0.1, 2.0)
-ax.set_ylim(0, 6)
+ax.legend(loc='upper right')
+ax.set_xlim(0.90, 1.10)
+ax.set_ylim(0, Z_peak * 1.15)
 
 plt.tight_layout()
 plt.show()
