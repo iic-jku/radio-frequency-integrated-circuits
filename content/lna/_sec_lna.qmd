@@ -38,7 +38,7 @@ $$
 \Gamma = \frac{Z_{\mathrm{in}} - Z_0}{Z_{\mathrm{in}} + Z_0}
 $$ {#eq-reflection-coefficient}
 
-where $Z_0$ is the characteristic impedance of the system (usually 50 Ω) and $Z_{\mathrm{in}}$ is the input impedance of the LNA. The reflection coefficient $\Gamma$ is a complex number with a magnitude between 0 and 1 (as can be readily shown from @eq-reflection-coefficient), where $|\Gamma| = 0$ indicates a perfect match and $|\Gamma| = 1$ indicates a complete mismatch. This reflection coefficient can be represented on the Smith chart shown in @fig-smith-chart. A useful interactive tool to draft a matching network and visualize it on a Smith chart is this [website](https://onlinesmithchart.com).
+where $Z_0$ is the characteristic impedance of the system (usually 50 Ω) and $Z_{\mathrm{in}}$ is the input impedance of the LNA. For a *passive* input impedance, i.e., $\Re \{ Z_\mathrm{in} \} \geq 0$, the reflection coefficient $\Gamma$ is a complex number with a magnitude between 0 and 1 (as can be readily shown from @eq-reflection-coefficient), where $|\Gamma| = 0$ indicates a perfect match and $|\Gamma| = 1$ indicates a complete mismatch. If the input presents a *negative* real part, then $|\Gamma| > 1$, i.e., the port reflects more power than is incident on it. This is exactly the condition we must avoid at all costs, and which we investigate in @sec-amp-stability. This reflection coefficient can be represented on the Smith chart shown in @fig-smith-chart. A useful interactive tool to draft a matching network and visualize it on a Smith chart is this [website](https://onlinesmithchart.com).
 
 {{< include /content/lna/_fig_smith_chart.qmd >}}
 
