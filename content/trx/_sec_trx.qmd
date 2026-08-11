@@ -54,7 +54,7 @@ $$
 \tilde{s}_\mathrm{RF}(t) = \tilde{s}_\mathrm{BB}(t) \cdot e^{j \omega_\mathrm{c} t} = [s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t)] \cdot [\cos(\omega_\mathrm{c} t) + j \cdot \sin(\omega_\mathrm{c} t)].
 $$
 
-The real-valued RF signal $s_\mathrm{RF} \in \mathbb{R}$ is obtained from $\tilde{s}_\mathrm{RF}$ by complex-conjugate symmetry:
+The real-valued RF signal $s_\mathrm{RF} \in \mathbb{R}$ is obtained from $\tilde{s}_\mathrm{RF}$ by complex-conjugate symmetry
 
 $$
 s_\mathrm{RF}(t) = \frac{1}{2} \left[ \tilde{s}_\mathrm{RF}(t) + \tilde{s}_\mathrm{RF}^*(t) \right] = s_\mathrm{I}(t) \cos(\omega_\mathrm{c} t) - s_\mathrm{Q}(t) \sin(\omega_\mathrm{c} t).
@@ -95,11 +95,11 @@ $$
 \begin{split}
 \tilde{s}_\mathrm{BB}(t) &= s_\mathrm{RF}(t) \cdot e^{-j \omega_\mathrm{c} t}\\
 &= s_\mathrm{RF}(t) \cdot [\cos(\omega_\mathrm{c} t) - j \cdot \sin(\omega_\mathrm{c} t)]\\
-&= s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t)
+&\overset{\text{LPF}}{=} \frac{1}{2} \left[ s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t) \right].
 \end{split}
 $$ {#eq-demodulation}
 
-with $s_\mathrm{I}(t) = s_\mathrm{RF}(t) \cdot \cos(\omega_\mathrm{c}t)$ and $s_\mathrm{Q}(t) = -s_\mathrm{RF}(t) \cdot \sin(\omega_\mathrm{c}t)$. Note that these products also generate components at $2 \omega_\mathrm{c}$, which are removed by the subsequent low-pass filter; the recovered baseband signals additionally carry a factor of one-half that is compensated by the RX gain.
+In hardware this is realized with two mixers, producing $s_\mathrm{RF}(t) \cdot \cos(\omega_\mathrm{c}t)$ in the I path and $-s_\mathrm{RF}(t) \cdot \sin(\omega_\mathrm{c}t)$ in the Q path. Each of these products contains, besides the wanted baseband term, a component at $2 \omega_\mathrm{c}$, which is why @eq-demodulation only holds after the subsequent low-pass filter (indicated by the "LPF" above the equal sign). The factor of one-half that the recovered baseband signals carry is of no consequence, as it is simply absorbed by the RX gain.
 
 ## Filtering
 
@@ -119,7 +119,7 @@ $$
 
 where $f_\mathrm{c}$ is the center frequency and $\Delta f$ is the $-3$ dB bandwidth of the filter. A high $Q$ indicates a narrow-band filter.
 
-The achievable $Q$ depends on the used filter technology. For example, on-chip $LC$ filters can achieve $Q$ values of around 10--20, while off-chip SAW or BAW/FBAR filters can achieve $Q$ values of several hundreds, and a crystal filter can achieve $Q$ values of several thousands.
+The achievable $Q$ depends on the used filter technology. For example, on-chip $LC$ filters can achieve $Q$ values of around 10--20, while off-chip SAW or BAW/FBAR filters reach $Q$ values into the thousands, and a crystal filter can achieve $Q$ values of several tens of thousands.
 
 The choice of filter technology depends on the application requirements, such as frequency range, bandwidth, insertion loss, cost, and power handling. Generally speaking, the required filtering to single out the wanted signal in the RX spectrum and decrease the power of strong blockers to a tolerable level is one of the most critical design choices, and is usually distributed at different locations in the RX chain:
 
