@@ -232,19 +232,29 @@ $$
 Z_\mathrm{in}(s) = -\frac{\gm}{\omega^2 C_1 C_2} + \frac{C_1 + C_2}{s C_1 C_2} = -R_\mathrm{amp} + \frac{1}{s C_\mathrm{amp}}
 $$
 
-which consists of the series combination of a negative resistance $-R_\mathrm{amp}$ and a capacitance $C_\mathrm{amp}$. Note that the circuit in @fig-neg-r-single-ended does not show a ground symbol. In fact, any of the three nodes marked with blue numbers can be used as a reference node (ground), and this results in the following well-known oscillator topologies:
+which consists of the series combination of a negative resistance $-R_\mathrm{amp}$ and a capacitance $C_\mathrm{amp}$. Note that the circuit in @fig-neg-r-single-ended does not show a ground symbol. In fact, any of the three nodes marked with blue numbers can be used as a reference node (ground), and this results in the following well-known oscillator topologies, summarized in @tbl-three-point-oscillators.
 
-| Reference Node | Oscillator Topology                                                      |
-|----------------|--------------------------------------------------------------------------|
-| Node 1 (Gate)  | [Colpitts oscillator](https://en.wikipedia.org/wiki/Colpitts_oscillator) |
-| Node 2 (Source)| [Pierce oscillator](https://en.wikipedia.org/wiki/Pierce_oscillator)     |
-| Node 3 (Drain) | [Clapp oscillator](https://en.wikipedia.org/wiki/Clapp_oscillator)       |
+| Reference Node | Amplifier Configuration | Common Name |
+|:---------------|:------------------------|:---------------------------------------------------------------------------|
+| Node 1 (Gate)  | common-gate             | grounded-gate (also called common-base [Colpitts](https://en.wikipedia.org/wiki/Colpitts_oscillator)) |
+| Node 2 (Source)| common-source           | [Pierce oscillator](https://en.wikipedia.org/wiki/Pierce_oscillator)        |
+| Node 3 (Drain) | common-drain            | [Colpitts oscillator](https://en.wikipedia.org/wiki/Colpitts_oscillator)    |
+: The three "three-point" oscillator topologies obtained by grounding one node of @fig-neg-r-single-ended {#tbl-three-point-oscillators}
+
+The important insight is that the negative resistance $-R_\mathrm{amp}$ is *identical* in all three cases: choosing a different reference node does not change the oscillation mechanism at all. What it does change is which node serves as the output, how the transistor is biased, and how supply and substrate noise couple into the resonator — which in practice is what decides the choice.
+
+::: {.callout-note}
+## A Note on Oscillator Naming
+The naming in @tbl-three-point-oscillators is not used consistently across the literature. The grounded-source case is universally called the Pierce oscillator, but *both* the grounded-gate and the grounded-drain variants are referred to as "Colpitts" by different authors (they differ only in which of the two capacitors provides the feedback), and some crystal-oscillator literature treats the grounded-drain circuit as just another implementation of the Pierce oscillator [@Vittoz_Crystal_Oscillators].
+
+What is *not* a grounding variant is the **Clapp oscillator**: it is a Colpitts with an additional capacitor placed **in series with the inductor**, introduced to keep the transistor's parasitic capacitances from pulling the frequency [@Clapp.1948]. Interestingly, a quartz crystal oscillator gets this for free: as we will see in @fig-crystal-equivalent-circuit, the motional branch of a crystal is $L_\mathrm{m}$ in series with a very small $C_\mathrm{m}$, so $C_\mathrm{m}$ plays exactly the role of Clapp's series capacitor. This is the very reason why the crystal can be pulled only by a few ppm (see @eq-crystal-pulling), and thus why quartz oscillators are so stable.
+:::
 
 When we investigate the equivalent electrical circuit of a quartz crystal, we find that it has inductive behavior between its series resonance frequency and its parallel resonance frequency, which are very close together. The quartz crystal equivalent circuit is shown in @fig-crystal-equivalent-circuit.
 
 {{< include /content/oscillator/_fig_crystal_equivalent_circuit.qmd >}}
 
-This means we can operate the quartz crystal as a high-Q inductor in an oscillator circuit, which results in the single-ended quartz crystal oscillator shown in @fig-crystal-oscillator, which is a very popular choice for high-performance crystal oscillators. Note that in a simple implementation the current-bias MOSFET can be replaced by an inverter stage biased in the linear region.
+This means we can operate the quartz crystal as a high-Q inductor in an oscillator circuit, which results in the single-ended quartz crystal oscillator shown in @fig-crystal-oscillator, which is a very popular choice for high-performance crystal oscillators. For an in-depth treatment of this circuit, including its start-up behavior and amplitude regulation, we recommend [@Vittoz_Crystal_Oscillators]. Note that in a simple implementation the current-bias MOSFET can be replaced by an inverter stage biased in the linear region.
 
 {{< include /content/oscillator/_fig_crystal_oscillator.qmd >}}
 
