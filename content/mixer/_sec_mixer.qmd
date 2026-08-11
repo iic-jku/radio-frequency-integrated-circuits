@@ -175,7 +175,7 @@ The most widely used approach to generate quadrature LO signals is to use digita
 
 {{< include /content/mixer/_fig_iqgen_phase_diagram.qmd >}}
 
-It is important to note that the circuit shown in @fig-iq-divider has to be implemented in a way so that there is no phase ambiguity, i.e., the I-phase is lagging the Q-phase by exactly 90°. This can be achieved by using a reset signal to set the flip-flops to a known state at startup, or by implementing flip-flops using a differential clock input.
+It is important to note that the circuit shown in @fig-iq-divider has to be implemented in a way so that there is no phase ambiguity, i.e., the Q-phase is lagging the I-phase by exactly 90° (as drawn in @fig-ff-phase-diagram). This can be achieved by using a reset signal to set the flip-flops to a known state at startup, or by implementing flip-flops using a differential clock input.
 
 If the input clock is not 2x the target frequency but higher (e.g., 4x), then we can use a frequency divider approach to generate more than four phases. This could be useful in an N-path filter, where we could need more than four phases (see @sec-mixer-npath).
 
