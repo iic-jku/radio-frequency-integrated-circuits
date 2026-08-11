@@ -23,7 +23,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Define frequency offset range (Hz)
-f_offset = np.logspace(3, 8, 1000)  # 10 Hz to 100 MHz
 f_offset = np.logspace(3, 8, 1000)  # 1 kHz to 100 MHz
 
 # PLL parameters
