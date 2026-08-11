@@ -24,14 +24,17 @@ import matplotlib.pyplot as plt
 
 # Define frequency offset range (Hz)
 f_offset = np.logspace(3, 8, 1000)  # 10 Hz to 100 MHz
+f_offset = np.logspace(3, 8, 1000)  # 1 kHz to 100 MHz
 
 # PLL parameters
 f_loop = 1e5  # Loop bandwidth = 100 kHz
 N = 100  # Division ratio
 
-# Reference phase noise - unfiltered (free-running reference oscillator)
-L_ref_1MHz = -140  # Reference phase noise at 1 MHz in dBc/Hz
-L_ref_unfiltered = L_ref_1MHz + 20*np.log10(N)  # Scaled by N² (20*log10(N))
+# Reference phase noise - unfiltered (free-running reference oscillator).
+# For simplicity the reference is modelled as a flat -140 dBc/Hz floor over the
+# whole plotted offset range; a real crystal would show 1/f^3 and 1/f^2 regions too.
+L_ref_flat = -140  # Reference phase noise in dBc/Hz
+L_ref_unfiltered = L_ref_flat + 20*np.log10(N)  # Scaled by N² (20*log10(N))
 
 # Reference phase noise - filtered through PLL (low-pass shaped)
 # Use higher order filter for steeper rolloff (3rd order)
