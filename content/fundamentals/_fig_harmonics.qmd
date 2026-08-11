@@ -40,15 +40,10 @@ amplitudes = [1.0, 0.3, 0.1]  # Relative amplitudes
 line_styles = ['-', '--', '--']
 
 # Plot spectral lines
-for i, (freq, amp, color, style, label) in enumerate(zip(frequencies, amplitudes, colors, line_styles, freq_labels)):
+for freq, amp, color, style, label in zip(frequencies, amplitudes, colors, line_styles, freq_labels):
     ax.vlines(freq, 0, amp, colors=color, linestyles=style, linewidth=3, alpha=0.8)
     ax.plot(freq, amp, 'o', color=color, markersize=8, markerfacecolor=color, alpha=0.8)
-    
-    # Add frequency labels
-    if 'harmonic' not in label:  # Fundamental tones
-        ax.text(freq, amp + 0.1, label, ha='center', va='bottom', color=color)
-    else:  # Harmonics
-        ax.text(freq, amp + 0.1, f'{label}\n(IM3)', ha='center', va='bottom', color=color)
+    ax.text(freq, amp + 0.1, label, ha='center', va='bottom', color=color)
 
 # Frequency domain formatting
 ax.set_xlabel('Frequency (GHz)')
