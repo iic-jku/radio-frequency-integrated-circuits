@@ -113,7 +113,7 @@ The created harmonics are illustrated in @fig-harmonics. Note that measuring har
 
 {{< include /content/fundamentals/_fig_harmonics.qmd >}}
 
-How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal $x(t)$ in amplitude, and observe the output $y(t)$. If the observed gain drops by 1 dB from the small-signal value, we note the input power and call this point the **1 dB compression point** ($P_\mathrm{1dB}$). We should always add whether this 1-dB compression point is input- or output-referred to avoid ambiguity. The diagram in @fig-1db-compression-point shows this test, evaluated directly from @eq-linearity-single-gain-fundamental with the *voltage* gain $\alpha_1 = 10$ (i.e., a small-signal power gain of 20 dB) and $\alpha_3 = -145\,\mathrm{V^{-2}}$, referred to a 50 Ω system.
+How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal $x(t)$ in amplitude, and observe the output $y(t)$. If the observed gain drops by 1 dB from the small-signal value, we note the input power and call this point the **1 dB compression point** ($P_\mathrm{1dB}$). We should always add whether this 1-dB compression point is input- or output-referred to avoid ambiguity. The diagram in @fig-1db-compression-point shows this test, evaluated directly from @eq-linearity-single-gain-fundamental with the *voltage* gain $\alpha_1 = 10$ (i.e., a small-signal power gain of 20 dB) and $\alpha_3 = -145\,\mathrm{V^{-2}}$, referred to a 50 Ω system.
 
 Setting the compressed gain of @eq-linearity-single-gain-fundamental to $10^{-1/20}$ of its small-signal value $\alpha_1$ gives the input amplitude at the 1-dB compression point,
 

@@ -50,7 +50,7 @@ This chapter contains a collection of potential questions covering the topics di
 
 13. What are the main types of noise relevant for electronic circuits? Describe thermal noise, shot noise, and flicker noise with their governing equations.
 
-14. What is the thermal noise voltage of a resistor with value $R$? Calculate the noise voltage spectral density of a 1 kΩ resistor at room temperature.
+14. What is the thermal noise voltage of a resistor with value $R$? Calculate the noise voltage spectral density of a 1 kΩ resistor at room temperature.
 
 15. What is the maximum noise power that can be extracted from a resistor? Derive the result using the maximum power transfer theorem and explain why it equals $kT$ per Hz.
 
@@ -162,7 +162,7 @@ This chapter contains a collection of potential questions covering the topics di
 
 ## Power Amplifiers {#sec-exam-poweramp}
 
-63. Draw a simple single-ended power amplifier. What is the trade-off between supply voltage, load impedance, and output power? Calculate the maximum output power for $V_\mathrm{DD}$ = 3 V and $R_\mathrm{L}$ = 50 Ω.
+63. Draw a simple single-ended power amplifier. What is the trade-off between supply voltage, load impedance, and output power? Calculate the maximum output power for $V_\mathrm{DD}$ = 3 V and $R_\mathrm{L}$ = 50 Ω.
 
 64. What is the definition of drain efficiency and power-added efficiency (PAE) of a PA?
 
@@ -194,7 +194,7 @@ This chapter contains a collection of potential questions covering the topics di
 
 77. **Reciprocal Mixing**: A receiver has a desired sensitivity of --90 dBm with an adjacent channel blocker at --30 dBm located 3 MHz from the carrier. The channel bandwidth is 100 kHz, and the demodulator requires an SNR of 10 dB. What is the maximum allowable LO phase noise at 3 MHz offset, assuming the reciprocal mixing noise may consume the entire noise budget?
 
-78. **Phase Noise**: An oscillator operates at 2.4 GHz with a tank $Q$ of 15, tank resistance $R_p$ = 500 Ω, oscillation amplitude of 0.8 V peak, and noise factor $F$ = 2. Calculate the phase noise at 1 MHz offset using Leeson's equation.
+78. **Phase Noise**: An oscillator operates at 2.4 GHz with a tank $Q$ of 15, tank resistance $R_p$ = 500 Ω, oscillation amplitude of 0.8 V peak, and noise factor $F$ = 2. Calculate the phase noise at 1 MHz offset using Leeson's equation.
 
 79. **PLL Loop Parameters**: A charge-pump PLL has $I_\mathrm{CP}$ = 100 µA, $K_\mathrm{VCO}$ = 100 MHz/V, $C_\mathrm{int}$ = 10 nF, and $N$ = 100. Calculate the natural frequency $\omega_n$ and the required $R_\mathrm{int}$ for a damping factor $\zeta$ = 0.707. Watch the units of $K_\mathrm{VCO}$!
 

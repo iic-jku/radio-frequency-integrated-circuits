@@ -27,7 +27,7 @@ from pysmithchart import R_DOMAIN
 plt.figure(figsize=(5, 5))
 plt.subplot(1, 1, 1, projection="smith", Z0=50)
 
-# Blue dot: perfect match at 50 Ω
+# Blue dot: perfect match at 50 Ω
 plt.plot([0 + 0j], domain=R_DOMAIN, marker='o', color='b', markersize=10)
 
 # Green dot: open circuit (Γ = +1, right edge of Smith chart)
