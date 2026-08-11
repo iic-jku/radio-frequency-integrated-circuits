@@ -1447,58 +1447,77 @@ Figure&nbsp;14: 16-QAM constellation diagram with Gray code labeling of constell
 <div id="tbl-modulation-snr" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-modulation-snr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3: Required symbol-energy-to-noise ratio <span class="math inline">\(E_\mathrm{s}/N_0\)</span> for different modulation schemes to achieve BER = <span class="math inline">\(10^{-5}\)</span> in an AWGN channel w/o error correction
+Table&nbsp;3: Required symbol-energy-to-noise ratio <span class="math inline">\(E_\mathrm{s}/N_0\)</span> and bit-energy-to-noise ratio <span class="math inline">\(E_\mathrm{b}/N_0\)</span> for Gray-coded modulation schemes to achieve BER = <span class="math inline">\(10^{-5}\)</span> in an AWGN channel w/o error correction
 </figcaption>
 <div aria-describedby="tbl-modulation-snr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 17%">
+<col style="width: 35%">
+<col style="width: 35%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Modulation</th>
-<th>Bits/Symbol</th>
-<th>Required <span class="math inline">\(E_\mathrm{s}/N_0\)</span> (dB)</th>
+<th style="text-align: left;">Modulation</th>
+<th style="text-align: center;">Bits/Symbol <span class="math inline">\(k\)</span></th>
+<th style="text-align: center;">Required <span class="math inline">\(E_\mathrm{s}/N_0\)</span> (dB)</th>
+<th style="text-align: center;">Required <span class="math inline">\(E_\mathrm{b}/N_0\)</span> (dB)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>BPSK</td>
-<td>1</td>
-<td>9.6</td>
+<td style="text-align: left;">BPSK</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">9.6</td>
+<td style="text-align: center;">9.6</td>
 </tr>
 <tr class="even">
-<td>QPSK</td>
-<td>2</td>
-<td>12.6</td>
+<td style="text-align: left;">QPSK</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">12.6</td>
+<td style="text-align: center;">9.6</td>
 </tr>
 <tr class="odd">
-<td>16-QAM</td>
-<td>4</td>
-<td>18.2</td>
+<td style="text-align: left;">16-QAM</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">19.5</td>
+<td style="text-align: center;">13.4</td>
 </tr>
 <tr class="even">
-<td>64-QAM</td>
-<td>6</td>
-<td>24.4</td>
+<td style="text-align: left;">64-QAM</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">25.6</td>
+<td style="text-align: center;">17.8</td>
 </tr>
 <tr class="odd">
-<td>256-QAM</td>
-<td>8</td>
-<td>30.6</td>
+<td style="text-align: left;">256-QAM</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">31.5</td>
+<td style="text-align: center;">22.5</td>
 </tr>
 <tr class="even">
-<td>1024-QAM</td>
-<td>10</td>
-<td>36.9</td>
+<td style="text-align: left;">1024-QAM</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">37.5</td>
+<td style="text-align: center;">27.5</td>
 </tr>
 <tr class="odd">
-<td>4096-QAM</td>
-<td>12</td>
-<td>43.2</td>
+<td style="text-align: left;">4096-QAM</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">43.4</td>
+<td style="text-align: center;">32.6</td>
 </tr>
 </tbody>
 </table>
 </div>
 </figure>
 </div>
+<p>The two columns of <a href="#tbl-modulation-snr" class="quarto-xref">Table&nbsp;3</a> are related by the number of bits per symbol,</p>
+<p><span id="eq-esn0-ebn0"><span class="math display">\[
+\frac{E_\mathrm{s}}{N_0} \bigg|_\mathrm{dB} = \frac{E_\mathrm{b}}{N_0} \bigg|_\mathrm{dB} + 10 \log_{10}(k),
+\tag{25}\]</span></span></p>
+<p>and it is worth being careful about which of the two a given data sheet or standard quotes — they differ by more than 10 dB for the high-order formats. Note also that BPSK and QPSK require the <em>same</em> <span class="math inline">\(E_\mathrm{b}/N_0\)</span>: QPSK transmits two bits per symbol on two orthogonal carriers, so it doubles the spectral efficiency of BPSK entirely for free in terms of energy per bit. From 16-QAM upwards, each step to the next-higher square QAM order costs roughly 6 dB in <span class="math inline">\(E_\mathrm{s}/N_0\)</span>, because the number of constellation points quadruples while the constellation is squeezed into the same average power.</p>
 </section>
 <section id="sec-fundamentals-pulse-shaping" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="sec-fundamentals-pulse-shaping"><span class="header-section-number">2.5</span> Pulse Shaping and Spectral Efficiency</h2>
@@ -1508,7 +1527,7 @@ Table&nbsp;3: Required symbol-energy-to-noise ratio <span class="math inline">\(
 <p>For reference, the two-sided power spectral density <span class="math inline">\(S(f)\)</span> of a random binary sequence with equal probability of <span class="math inline">\(-1\)</span> and <span class="math inline">\(1\)</span>, using rectangular pulses with a duration of <span class="math inline">\(T_\mathrm{b}\)</span>, is given by <span class="citation" data-cites="Sklar_Digital_Communications">(<a href="#ref-Sklar_Digital_Communications" role="doc-biblioref">Sklar and Harris 2020</a>)</span></p>
 <p><span id="eq-rect-pulse-spectrum"><span class="math display">\[
 S(f) = T_\mathrm{b} \cdot \text{sinc}^2(fT_\mathrm{b}) = T_\mathrm{b} \cdot \left[ \frac{\sin(\pi f T_\mathrm{b})}{\pi f T_\mathrm{b}} \right]^2
-\tag{25}\]</span></span></p>
+\tag{26}\]</span></span></p>
 <p>and visualized in <a href="#fig-rect-pulse-spectrum" class="quarto-xref">Figure&nbsp;15</a>.</p>
 <div id="cell-fig-rect-pulse-spectrum" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
@@ -1700,8 +1719,8 @@ Figure&nbsp;19: Block diagram of a typical transceiver (TRX) showing the main fu
 <p>The real-valued RF signal <span class="math inline">\(s_\mathrm{RF} \in \mathbb{R}\)</span> is obtained from <span class="math inline">\(\tilde{s}_\mathrm{RF}\)</span> by complex-conjugate symmetry</p>
 <p><span id="eq-modulation"><span class="math display">\[
 s_\mathrm{RF}(t) = \frac{1}{2} \left[ \tilde{s}_\mathrm{RF}(t) + \tilde{s}_\mathrm{RF}^*(t) \right] = s_\mathrm{I}(t) \cos(\omega_\mathrm{c} t) - s_\mathrm{Q}(t) \sin(\omega_\mathrm{c} t).
-\tag{26}\]</span></span></p>
-<p>The process formulated in <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;26</a> is done in hardware in the TX modulator, as shown in <a href="#fig-tx-modulation" class="quarto-xref">Figure&nbsp;20</a>.</p>
+\tag{27}\]</span></span></p>
+<p>The process formulated in <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;27</a> is done in hardware in the TX modulator, as shown in <a href="#fig-tx-modulation" class="quarto-xref">Figure&nbsp;20</a>.</p>
 <div id="cell-fig-tx-modulation" class="cell" data-execution_count="20">
 <div class="cell-output cell-output-display">
 <div id="fig-tx-modulation" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1716,7 +1735,7 @@ Figure&nbsp;20: TX modulator.
 </div>
 </div>
 </div>
-<p>The RF signal generation according to <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;26</a> is called <strong>quadrature modulation</strong>. This is the modulation method used most often in modern (broadband) communication systems, as it allows one to transmit two independent signals (I and Q) in the same bandwidth. The I and Q signals are also called quadrature components, as they are 90° out of phase with each other.</p>
+<p>The RF signal generation according to <a href="#eq-modulation" class="quarto-xref">Equation&nbsp;27</a> is called <strong>quadrature modulation</strong>. This is the modulation method used most often in modern (broadband) communication systems, as it allows one to transmit two independent signals (I and Q) in the same bandwidth. The I and Q signals are also called quadrature components, as they are 90° out of phase with each other.</p>
 <p>Alternatively, a modulation method called <strong>polar modulation</strong> can be used, where the amplitude and phase of the carrier are varied according to (again using the complex-conjugate symmetry to obtain a real-valued signal):</p>
 <p><span class="math display">\[
 \begin{split}
@@ -1752,8 +1771,8 @@ Figure&nbsp;21: RX demodulator.
 &amp;= s_\mathrm{RF}(t) \cdot [\cos(\omega_\mathrm{c} t) - j \cdot \sin(\omega_\mathrm{c} t)]\\
 &amp;\overset{\text{LPF}}{=} \frac{1}{2} \left[ s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t) \right].
 \end{split}
-\tag{27}\]</span></span></p>
-<p>In hardware this is realized with two mixers, producing <span class="math inline">\(s_\mathrm{RF}(t) \cdot \cos(\omega_\mathrm{c}t)\)</span> in the I path and <span class="math inline">\(-s_\mathrm{RF}(t) \cdot \sin(\omega_\mathrm{c}t)\)</span> in the Q path. Each of these products contains, besides the wanted baseband term, a component at <span class="math inline">\(2 \omega_\mathrm{c}\)</span>, which is why <a href="#eq-demodulation" class="quarto-xref">Equation&nbsp;27</a> only holds after the subsequent low-pass filter (indicated by the “LPF” above the equal sign). The factor of one-half that the recovered baseband signals carry is of no consequence, as it is simply absorbed by the RX gain.</p>
+\tag{28}\]</span></span></p>
+<p>In hardware this is realized with two mixers, producing <span class="math inline">\(s_\mathrm{RF}(t) \cdot \cos(\omega_\mathrm{c}t)\)</span> in the I path and <span class="math inline">\(-s_\mathrm{RF}(t) \cdot \sin(\omega_\mathrm{c}t)\)</span> in the Q path. Each of these products contains, besides the wanted baseband term, a component at <span class="math inline">\(2 \omega_\mathrm{c}\)</span>, which is why <a href="#eq-demodulation" class="quarto-xref">Equation&nbsp;28</a> only holds after the subsequent low-pass filter (indicated by the “LPF” above the equal sign). The factor of one-half that the recovered baseband signals carry is of no consequence, as it is simply absorbed by the RX gain.</p>
 </section>
 <section id="filtering" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="filtering"><span class="header-section-number">3.3</span> Filtering</h2>
@@ -2093,7 +2112,7 @@ Figure&nbsp;30: QPSK constellation illustrating the two error contributions. App
 \text{IRR} &amp;= \frac{1 + (1 + \epsilon)^2 + 2 (1 + \epsilon) \cos(\Delta \varphi)}{1 + (1 + \epsilon)^2 - 2 (1 + \epsilon) \cos(\Delta \varphi)}\\
 &amp;\approx \frac{4}{\epsilon^2 + (\Delta \varphi)^2},
 \end{split}
-\tag{28}\]</span></span></p>
+\tag{29}\]</span></span></p>
 <p>where the approximation on the right holds for small amplitude and phase errors. The IRR in dB is given by</p>
 <p><span class="math display">\[
 \text{IRR}|_\mathrm{dB} = 10 \cdot \log_{10}(\text{IRR}).
@@ -2105,7 +2124,7 @@ Figure&nbsp;30: QPSK constellation illustrating the two error contributions. App
 <p>The EVM (in rms) is defined as</p>
 <p><span id="eq-evm-definition"><span class="math display">\[
 \text{EVM} = \frac{\sqrt{\frac{1}{N} \sum_{i=1}^{N} |s_{\mathrm{ideal},i} - s_{\mathrm{meas},i}|^2}}{\sqrt{\frac{1}{N} \sum_{i=1}^{N} |s_{\mathrm{ideal},i}|^2}}
-\tag{29}\]</span></span></p>
+\tag{30}\]</span></span></p>
 <p>where <span class="math inline">\(s_{\mathrm{ideal},i}\)</span> are the ideal transmitted symbols, <span class="math inline">\(s_{\mathrm{meas},i}\)</span> are the measured received symbols, and <span class="math inline">\(N\)</span> is the number of symbols. EVM is expressed either in percent or in dB using</p>
 <p><span class="math display">\[
 \text{EVM}|_\mathrm{dB} = 20 \cdot \log_{10}(\text{EVM}).
@@ -2152,8 +2171,8 @@ Figure&nbsp;31: Block diagram of an LNA. Typically, the LNA input is impedance m
 <p>To quantify the “quality” of an impedance match, the <strong>reflection coefficient</strong> <span class="math inline">\(\Gamma\)</span> is often used, which is defined as <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span>:</p>
 <p><span id="eq-reflection-coefficient"><span class="math display">\[
 \Gamma = \frac{Z_{\mathrm{in}} - Z_0}{Z_{\mathrm{in}} + Z_0}
-\tag{30}\]</span></span></p>
-<p>where <span class="math inline">\(Z_0\)</span> is the characteristic impedance of the system (usually 50 Ω) and <span class="math inline">\(Z_{\mathrm{in}}\)</span> is the input impedance of the LNA. For a <em>passive</em> input impedance, i.e., <span class="math inline">\(\Re \{ Z_\mathrm{in} \} \geq 0\)</span>, the reflection coefficient <span class="math inline">\(\Gamma\)</span> is a complex number with a magnitude between 0 and 1 (as can be readily shown from <a href="#eq-reflection-coefficient" class="quarto-xref">Equation&nbsp;30</a>), where <span class="math inline">\(|\Gamma| = 0\)</span> indicates a perfect match and <span class="math inline">\(|\Gamma| = 1\)</span> indicates a complete mismatch. If the input presents a <em>negative</em> real part, then <span class="math inline">\(|\Gamma| &gt; 1\)</span>, i.e., the port reflects more power than is incident on it. This is exactly the condition we must avoid at all costs, and which we investigate in <a href="#sec-amp-stability" class="quarto-xref">Section&nbsp;4.2</a>. This reflection coefficient can be represented on the Smith chart shown in <a href="#fig-smith-chart" class="quarto-xref">Figure&nbsp;32</a>. A useful interactive tool to draft a matching network and visualize it on a Smith chart is this <a href="https://onlinesmithchart.com">website</a>.</p>
+\tag{31}\]</span></span></p>
+<p>where <span class="math inline">\(Z_0\)</span> is the characteristic impedance of the system (usually 50 Ω) and <span class="math inline">\(Z_{\mathrm{in}}\)</span> is the input impedance of the LNA. For a <em>passive</em> input impedance, i.e., <span class="math inline">\(\Re \{ Z_\mathrm{in} \} \geq 0\)</span>, the reflection coefficient <span class="math inline">\(\Gamma\)</span> is a complex number with a magnitude between 0 and 1 (as can be readily shown from <a href="#eq-reflection-coefficient" class="quarto-xref">Equation&nbsp;31</a>), where <span class="math inline">\(|\Gamma| = 0\)</span> indicates a perfect match and <span class="math inline">\(|\Gamma| = 1\)</span> indicates a complete mismatch. If the input presents a <em>negative</em> real part, then <span class="math inline">\(|\Gamma| &gt; 1\)</span>, i.e., the port reflects more power than is incident on it. This is exactly the condition we must avoid at all costs, and which we investigate in <a href="#sec-amp-stability" class="quarto-xref">Section&nbsp;4.2</a>. This reflection coefficient can be represented on the Smith chart shown in <a href="#fig-smith-chart" class="quarto-xref">Figure&nbsp;32</a>. A useful interactive tool to draft a matching network and visualize it on a Smith chart is this <a href="https://onlinesmithchart.com">website</a>.</p>
 <div id="cell-fig-smith-chart" class="cell" data-execution_count="32">
 <div class="cell-output cell-output-display">
 <div id="fig-smith-chart" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2171,7 +2190,7 @@ Figure&nbsp;32: Smith chart showing constant resistance and reactance circles fo
 <p>However, in practice, the more commonly used metric for impedance matching is the return loss (RL), which is defined as <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span>:</p>
 <p><span id="eq-return-loss"><span class="math display">\[
 \text{RL} = -20 \log_{10} |\Gamma| = 20 \log_{10} \left| \frac{Z_\mathrm{in} + Z_0}{Z_\mathrm{in} - Z_0} \right|
-\tag{31}\]</span></span></p>
+\tag{32}\]</span></span></p>
 <p>A higher return loss indicates a better impedance match. A return loss of 10 dB (see <a href="#fig-smith-chart" class="quarto-xref">Figure&nbsp;32</a>) indicates that 10% of the signal power is reflected back, while a return loss of 20 dB indicates that only 1% of the signal power is reflected back. In practice, a return loss of at least 10 dB is desired, with higher (positive) values being better <span class="citation" data-cites="Bird.2009">(<a href="#ref-Bird.2009" role="doc-biblioref">Bird 2009</a>)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -2186,7 +2205,7 @@ Figure&nbsp;32: Smith chart showing constant resistance and reactance circles fo
 <p>The Bode-Fano criterion states that for a given load impedance and a given bandwidth, there is a fundamental limit to how well an impedance can be matched over that bandwidth; this criterion is important in the design of LNAs! The Bode-Fano criterion can be expressed mathematically as <span class="citation" data-cites="Fano.1950 Pozar_RF">(<a href="#ref-Fano.1950" role="doc-biblioref">Fano 1950</a>; <a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>, ch.&nbsp;5.9)</span></p>
 <p><span id="eq-bode-fano-criterion"><span class="math display">\[
 \int_{0}^{\infty} \ln \left( \frac{1}{|\Gamma(\omega)|} \right) d\omega \leq \frac{\pi}{R C}
-\tag{32}\]</span></span></p>
+\tag{33}\]</span></span></p>
 <p>where <span class="math inline">\(\Gamma(\omega)\)</span> is the frequency-dependent reflection coefficient, <span class="math inline">\(R\)</span> is the load resistance, and <span class="math inline">\(C\)</span> is the load capacitance (for an <span class="math inline">\(R \parallel C\)</span> load). This criterion implies that achieving a very good impedance match (i.e., a low reflection coefficient) over a wide bandwidth is fundamentally limited by the properties of the load. In practice, this means that there is a trade-off between the bandwidth of the match and the achievable return loss in an LNA design.</p>
 <p>If we assume that we strive for match with <span class="math inline">\(|\Gamma_\mathrm{m}|\)</span> over a fractional bandwidth <span class="math inline">\(\Delta \omega / \omega_0\)</span>, we can derive from the Bode-Fano criterion (and using that <span class="math inline">\(Q = \omega_0 R C\)</span> for a parallel <span class="math inline">\(RC\)</span> circuit) that</p>
 <p><span class="math display">\[
@@ -2203,11 +2222,11 @@ Figure&nbsp;32: Smith chart showing constant resistance and reactance circles fo
 <p>One test for unconditional stability is the Rollet stability factor <span class="math inline">\(K\)</span>, which is defined as <span class="citation" data-cites="Pozar_RF">(<a href="#ref-Pozar_RF" role="doc-biblioref">Pozar 2011</a>)</span></p>
 <p><span id="eq-rollet-stability-factor"><span class="math display">\[
 K = \frac{1 - |S_{11}|^2 - |S_{22}|^2 + |\Delta|^2}{2 |S_{12} S_{21}|}
-\tag{33}\]</span></span></p>
+\tag{34}\]</span></span></p>
 <p>with</p>
 <p><span id="eq-rollet-stability-factor-delta"><span class="math display">\[
 \Delta = S_{11} S_{22} - S_{12} S_{21}.
-\tag{34}\]</span></span></p>
+\tag{35}\]</span></span></p>
 <p>For unconditional stability, the following conditions must be met:</p>
 <p><span class="math display">\[
 K &gt; 1 \quad \text{and} \quad |\Delta| &lt; 1.
@@ -2216,13 +2235,13 @@ K &gt; 1 \quad \text{and} \quad |\Delta| &lt; 1.
 <p>Unfortunately, the <span class="math inline">\(K\)</span>-factor test only provides a binary answer (stable/unstable) and does not provide any information about how close the amplifier is to instability. For this purpose, the so-called <span class="math inline">\(\mu\)</span> stability factor is used, which is defined as <span class="citation" data-cites="Edwards.1992">(<a href="#ref-Edwards.1992" role="doc-biblioref">Edwards and Sinsky 1992</a>)</span></p>
 <p><span id="eq-mu-stability-factor"><span class="math display">\[
 \mu = \frac{1 - |S_{11}|^2}{|S_{22} - S_{11}^* \Delta| + |S_{12} S_{21}|}.
-\tag{35}\]</span></span></p>
+\tag{36}\]</span></span></p>
 <p>For unconditional stability, the following condition must be met:</p>
 <p><span class="math display">\[
 \mu &gt; 1
 \]</span></p>
 <p>The <span class="math inline">\(\mu\)</span>-factor provides a measure of how close the amplifier is to instability; the larger the <span class="math inline">\(\mu\)</span>-factor, the more stable the amplifier is. A <span class="math inline">\(\mu\)</span>-factor of 1.5 or higher is usually considered sufficient for practical applications.</p>
-<p>What we can learn from <a href="#eq-rollet-stability-factor" class="quarto-xref">Equation&nbsp;33</a>, <a href="#eq-rollet-stability-factor-delta" class="quarto-xref">Equation&nbsp;34</a>, and <a href="#eq-mu-stability-factor" class="quarto-xref">Equation&nbsp;35</a> is that to achieve a <em>stable</em> amplifier, we need to <em>minimize</em> the reverse gain <span class="math inline">\(S_{12}\)</span> (also called isolation) and the input and output reflection coefficients <span class="math inline">\(S_{11}\)</span> and <span class="math inline">\(S_{22}\)</span>. In practice, this means that we need to design the amplifier with good reverse isolation and good input and output matching. Cascode stages are often used in RF amplifiers to achieve high gain and good isolation.</p>
+<p>What we can learn from <a href="#eq-rollet-stability-factor" class="quarto-xref">Equation&nbsp;34</a>, <a href="#eq-rollet-stability-factor-delta" class="quarto-xref">Equation&nbsp;35</a>, and <a href="#eq-mu-stability-factor" class="quarto-xref">Equation&nbsp;36</a> is that to achieve a <em>stable</em> amplifier, we need to <em>minimize</em> the reverse gain <span class="math inline">\(S_{12}\)</span> (also called isolation) and the input and output reflection coefficients <span class="math inline">\(S_{11}\)</span> and <span class="math inline">\(S_{22}\)</span>. In practice, this means that we need to design the amplifier with good reverse isolation and good input and output matching. Cascode stages are often used in RF amplifiers to achieve high gain and good isolation.</p>
 </section>
 <section id="sec-lna-resistive-matching" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="sec-lna-resistive-matching"><span class="header-section-number">4.3</span> Resistively Matched Common-Source LNA</h2>
@@ -2245,7 +2264,7 @@ Figure&nbsp;33: A simple LNA with resistive input matching and a parallel <span 
 <p>How can we calculate the noise figure of this simple LNA? We formulate</p>
 <p><span id="eq-lna-noise-factor"><span class="math display">\[
 F = \frac{\text{total noise at output}}{\text{noise at output due to source only}}.
-\tag{36}\]</span></span></p>
+\tag{37}\]</span></span></p>
 <p>We derive a small-signal equivalent circuit of <a href="#fig-lna-naive" class="quarto-xref">Figure&nbsp;33</a>, which is shown in <a href="#fig-lna-naive-noise" class="quarto-xref">Figure&nbsp;34</a>, to calculate the total noise at the output of the LNA.</p>
 <div id="cell-fig-lna-naive-noise" class="cell" data-execution_count="34">
 <div class="cell-output cell-output-display">
@@ -2277,7 +2296,7 @@ Figure&nbsp;34: Equivalent circuit of resistively matched common-source LNA (noi
 \overline{V_\mathrm{n,out}^2} &amp;= \overline{V_\mathrm{n,out,1}^2} + \overline{V_\mathrm{n,out,2}^2}\\
 &amp;= 4 k T \left[ (g_\mathrm{m}R_\mathrm{D})^2 (R_\mathrm{s} \parallel R_\mathrm{p}) + \gamma g_\mathrm{m}R_\mathrm{D}^2 + R_\mathrm{D} \right].
 \end{split}
-\tag{37}\]</span></span></p>
+\tag{38}\]</span></span></p>
 <p>We now need to find the output noise coming from the source only. For this we can use the equivalent circuit in <a href="#fig-lna-naive-noise-input" class="quarto-xref">Figure&nbsp;35</a>, to formulate the output noise due to the source only.</p>
 <div id="cell-fig-lna-naive-noise-input" class="cell" data-execution_count="35">
 <div class="cell-output cell-output-display">
@@ -2296,11 +2315,11 @@ Figure&nbsp;35: Equivalent circuit to calculate the output noise from the input.
 <p>We find that</p>
 <p><span id="eq-lna-naive-noise-input"><span class="math display">\[
 \overline{V_\mathrm{n,out,s}^2} = A_\mathrm{v}^2 \cdot 4 k T R_\mathrm{s} \cdot \left(\frac{R_\mathrm{p}}{R_\mathrm{s} + R_\mathrm{p}} \right)^2.
-\tag{38}\]</span></span></p>
-<p>Finally, we can use <a href="#eq-lna-naive-noise-total" class="quarto-xref">Equation&nbsp;37</a> and <a href="#eq-lna-naive-noise-input" class="quarto-xref">Equation&nbsp;38</a> with <a href="#eq-lna-noise-factor" class="quarto-xref">Equation&nbsp;36</a> to calculate the noise figure of the simple resistively matched common-source LNA as</p>
+\tag{39}\]</span></span></p>
+<p>Finally, we can use <a href="#eq-lna-naive-noise-total" class="quarto-xref">Equation&nbsp;38</a> and <a href="#eq-lna-naive-noise-input" class="quarto-xref">Equation&nbsp;39</a> with <a href="#eq-lna-noise-factor" class="quarto-xref">Equation&nbsp;37</a> to calculate the noise figure of the simple resistively matched common-source LNA as</p>
 <p><span id="eq-lna-naive-noise-factor"><span class="math display">\[
 F = \frac{\overline{V_\mathrm{n,out}^2}}{\overline{V_\mathrm{n,out,s}^2}} = 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} + \frac{\gamma R_\mathrm{s}}{g_\mathrm{m}(R_\mathrm{s} \parallel R_\mathrm{p})^2} + \frac{R_\mathrm{s}}{g_\mathrm{m}^2 (R_\mathrm{s} \parallel R_\mathrm{p})^2 R_\mathrm{D}}.
-\tag{39}\]</span></span></p>
+\tag{40}\]</span></span></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2311,10 +2330,10 @@ F = \frac{\overline{V_\mathrm{n,out}^2}}{\overline{V_\mathrm{n,out,s}^2}} = 1 + 
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>As an exercise to calculate noise behavior of circuits, derive and thus re-confirm the result of <a href="#eq-lna-naive-noise-factor" class="quarto-xref">Equation&nbsp;39</a> by yourself.</p>
+<p>As an exercise to calculate noise behavior of circuits, derive and thus re-confirm the result of <a href="#eq-lna-naive-noise-factor" class="quarto-xref">Equation&nbsp;40</a> by yourself.</p>
 </div>
 </div>
-<p>How can we interpret <a href="#eq-lna-naive-noise-factor" class="quarto-xref">Equation&nbsp;39</a>? We see that we can minimize the noise factor by maximizing <span class="math inline">\(g_\mathrm{m}\)</span>. We then have a noise factor of</p>
+<p>How can we interpret <a href="#eq-lna-naive-noise-factor" class="quarto-xref">Equation&nbsp;40</a>? We see that we can minimize the noise factor by maximizing <span class="math inline">\(g_\mathrm{m}\)</span>. We then have a noise factor of</p>
 <p><span class="math display">\[
 F \overset{g_\mathrm{m}\gg}{=} 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} = 2
 \]</span></p>
@@ -2344,15 +2363,15 @@ Figure&nbsp;36: Circuit diagram of a common-gate LNA (biasing details are omitte
 \overline{V_\mathrm{n,out}^2} &amp;= k T \left[ (g_\mathrm{m}R_\mathrm{D})^2 R_\mathrm{s} + \gamma g_\mathrm{m}R_\mathrm{D}^2 + 4 R_\mathrm{D} \right]\\
 &amp;= k T \left( \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + \gamma \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + 4 R_\mathrm{D} \right).
 \end{split}
-\tag{40}\]</span></span></p>
+\tag{41}\]</span></span></p>
 <p>The output noise due to the source only is given by</p>
 <p><span id="eq-lna-cg-noise-source"><span class="math display">\[
 \overline{V_\mathrm{n,out,s}^2} = k T \frac{R_\mathrm{D}^2}{R_\mathrm{s}}.
-\tag{41}\]</span></span></p>
-<p>Finally, we can use <a href="#eq-lna-cg-noise-total" class="quarto-xref">Equation&nbsp;40</a> and <a href="#eq-lna-cg-noise-source" class="quarto-xref">Equation&nbsp;41</a> with <a href="#eq-lna-noise-factor" class="quarto-xref">Equation&nbsp;36</a> to calculate the noise figure of the common-gate LNA as</p>
+\tag{42}\]</span></span></p>
+<p>Finally, we can use <a href="#eq-lna-cg-noise-total" class="quarto-xref">Equation&nbsp;41</a> and <a href="#eq-lna-cg-noise-source" class="quarto-xref">Equation&nbsp;42</a> with <a href="#eq-lna-noise-factor" class="quarto-xref">Equation&nbsp;37</a> to calculate the noise figure of the common-gate LNA as</p>
 <p><span id="eq-lna-cg-noise-factor"><span class="math display">\[
 F = 1 + \gamma + \frac{4 R_\mathrm{s}}{R_\mathrm{D}} \approx 1 + \gamma \quad \text{for} \quad R_\mathrm{D} \gg R_\mathrm{s}.
-\tag{42}\]</span></span></p>
+\tag{43}\]</span></span></p>
 <p>With a classical long-channel <span class="math inline">\(\gamma = 2/3\)</span>, we can achieve a minimum noise figure of 2.2 dB, which is already better than the resistively matched common-source LNA in <a href="#sec-lna-resistive-matching" class="quarto-xref">Section&nbsp;4.3</a>. However, using short-channel MOSFETs, <span class="math inline">\(\gamma\)</span> is often larger than 1, so that the minimum noise figure of the common-gate LNA is often larger than 3 dB <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span>.</p>
 </section>
 <section id="sec-lna-inductive-degeneration" class="level2" data-number="4.5">
@@ -2394,15 +2413,15 @@ V_\mathrm{x} = V_\mathrm{gs}+ Z_\mathrm{deg} (I_\mathrm{x} + g_\mathrm{m}V_\math
 <p>with <span class="math inline">\(V_\mathrm{gs}= I_\mathrm{x} / s C_\mathrm{gs}\)</span>, so that we can write the input impedance as</p>
 <p><span id="eq-lna-inductive-degeneration-zin"><span class="math display">\[
 Z_\mathrm{in} = \frac{V_\mathrm{x}}{I_\mathrm{x}} = \frac{1}{s C_\mathrm{gs}} + Z_\mathrm{deg} + \frac{g_\mathrm{m}Z_\mathrm{deg}}{s C_\mathrm{gs}}.
-\tag{43}\]</span></span></p>
-<p>The final term in <a href="#eq-lna-inductive-degeneration-zin" class="quarto-xref">Equation&nbsp;43</a> is the interesting one: By choosing <span class="math inline">\(Z_\mathrm{deg}\)</span> to be inductive (which we can do by using either an on-chip or an off-chip inductor), we can <em>realize a real part</em> of the input impedance. Choosing <span class="math inline">\(Z_\mathrm{deg} = s L\)</span>, we find that</p>
+\tag{44}\]</span></span></p>
+<p>The final term in <a href="#eq-lna-inductive-degeneration-zin" class="quarto-xref">Equation&nbsp;44</a> is the interesting one: By choosing <span class="math inline">\(Z_\mathrm{deg}\)</span> to be inductive (which we can do by using either an on-chip or an off-chip inductor), we can <em>realize a real part</em> of the input impedance. Choosing <span class="math inline">\(Z_\mathrm{deg} = s L\)</span>, we find that</p>
 <p><span class="math display">\[
 Z_\mathrm{in} = \frac{1}{s C_\mathrm{gs}} + s L + \frac{g_\mathrm{m}L}{C_\mathrm{gs}}.
 \]</span></p>
 <p>By proper choice of <span class="math inline">\(L\)</span> and <span class="math inline">\(C_\mathrm{gs}\)</span>, we can achieve input matching to 50 Ω at the desired frequency <span class="math inline">\(\omega_0\)</span>. We find that the real part of the input impedance is given by</p>
 <p><span id="eq-lna-inductive-degeneration-zin-real"><span class="math display">\[
 \Re \{ Z_\mathrm{in} \} = \frac{g_\mathrm{m}L}{C_\mathrm{gs}}.
-\tag{44}\]</span></span></p>
+\tag{45}\]</span></span></p>
 <p>Without proof (refer to <span class="citation" data-cites="Razavi_RFIC Darabi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>; <a href="#ref-Darabi_RFIC" role="doc-biblioref">Darabi 2020</a>)</span> for a derivation), we state the noise factor of this input stage (with some simplification) as (<span class="math inline">\(\omega_\mathrm{T} \approx g_\mathrm{m}/ C_\mathrm{gs}\)</span> is the transition frequency of the MOSFET)</p>
 <p><span id="eq-lna-inductive-degeneration-noise-factor"><span class="math display">\[
 \begin{split}
@@ -2410,9 +2429,9 @@ F &amp;= 1 + \frac{\gamma R_\mathrm{s} \omega_0^2 C_\mathrm{gs}^2}{g_\mathrm{m}}
 &amp;\approx 1 + \gamma R_\mathrm{s} g_\mathrm{m}\left( \frac{\omega_0}{\omega_\mathrm{T}} \right)^2\\
 &amp;\approx 1 + \gamma \omega_0^2 C_\mathrm{gs} L.
 \end{split}
-\tag{45}\]</span></span></p>
+\tag{46}\]</span></span></p>
 <p>Finally, we have an LNA input stage configuration that allows us to achieve a noise figure below 3 dB, even with <span class="math inline">\(\gamma &gt; 1\)</span>, by proper choice of a fast transistor with <span class="math inline">\(\omega_\mathrm{T} \gg \omega_0\)</span> (and thus small <span class="math inline">\(C_\mathrm{gs}\)</span>). The inductively-degenerated common-source LNA is a widely used LNA input stage configuration in modern RFICs.</p>
-<p>Note that the noise performance of <a href="#eq-lna-inductive-degeneration-noise-factor" class="quarto-xref">Equation&nbsp;45</a> cannot be lowered towards <span class="math inline">\(F=1\)</span> because <span class="math inline">\(g_\mathrm{m}\)</span>, <span class="math inline">\(L\)</span>, and <span class="math inline">\(C_\mathrm{gs}\)</span> are tied together by the input matching condition <a href="#eq-lna-inductive-degeneration-zin-real" class="quarto-xref">Equation&nbsp;44</a>, and we have neglected the induced gate noise of the MOSFET and other effects <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span>.</p>
+<p>Note that the noise performance of <a href="#eq-lna-inductive-degeneration-noise-factor" class="quarto-xref">Equation&nbsp;46</a> cannot be lowered towards <span class="math inline">\(F=1\)</span> because <span class="math inline">\(g_\mathrm{m}\)</span>, <span class="math inline">\(L\)</span>, and <span class="math inline">\(C_\mathrm{gs}\)</span> are tied together by the input matching condition <a href="#eq-lna-inductive-degeneration-zin-real" class="quarto-xref">Equation&nbsp;45</a>, and we have neglected the induced gate noise of the MOSFET and other effects <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span>.</p>
 <p>A bit more detailed schematic is shown in <a href="#fig-lna-inductive-degeneration-detailed" class="quarto-xref">Figure&nbsp;39</a>. The inductor <span class="math inline">\(L_\mathrm{match}\)</span> is used to match the input impedance to 50 Ω at the desired frequency, <span class="math inline">\(L_\mathrm{deg}\)</span> is used to realize the real part of the input impedance, <span class="math inline">\(R_\mathrm{bias}\)</span> is used to bias the gate of <span class="math inline">\(M_1\)</span>, <span class="math inline">\(M_2\)</span> is a cascode transistor which increases the output impedance and thus the gain of the stage (plus it improves the reverse isolation), and <span class="math inline">\(R_\mathrm{D}\)</span>, <span class="math inline">\(L_\mathrm{D}\)</span>, and <span class="math inline">\(C_\mathrm{D}\)</span> form a load tank which provides high gain at the desired frequency. A dc block is used at the input so that the bias point of <span class="math inline">\(M_1\)</span> is not corrupted by the input signal source. The bias voltage <span class="math inline">\(V_\mathrm{bias2}\)</span> sets the operating point of the cascode transistor <span class="math inline">\(M_2\)</span>.</p>
 <div id="cell-fig-lna-inductive-degeneration-detailed" class="cell" data-execution_count="39">
 <div class="cell-output cell-output-display">
@@ -2451,7 +2470,7 @@ Figure&nbsp;40: A shunt-feedback LNA.
 <p>The input impedance of the shunt feedback LNA is given by</p>
 <p><span id="eq-lna-shunt-fb-zin"><span class="math display">\[
 Z_\mathrm{in} = \frac{Z_\mathrm{F} + Z_\mathrm{L}}{1 + g_\mathrm{m}Z_\mathrm{L}}.
-\tag{46}\]</span></span></p>
+\tag{47}\]</span></span></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2478,15 +2497,15 @@ I_x &amp;= \frac{V_x - V_d}{Z_\mathrm{F}}\\
 &amp;= \frac{V_x\,(1 + g_\mathrm{m}Z_\mathrm{L})}{Z_\mathrm{F} + Z_\mathrm{L}},
 \end{split}
 \]</span></p>
-<p>which gives <a href="#eq-lna-shunt-fb-zin" class="quarto-xref">Equation&nbsp;46</a> directly.</p>
+<p>which gives <a href="#eq-lna-shunt-fb-zin" class="quarto-xref">Equation&nbsp;47</a> directly.</p>
 </div>
 </div>
 <p>The noise factor of the shunt feedback LNA is given by</p>
 <p><span id="eq-lna-shunt-fb-noise-factor"><span class="math display">\[
 F = 1 + \left| \frac{Z_\mathrm{F} + R_\mathrm{s}}{g_\mathrm{m}Z_\mathrm{F} + 1} \right|^2 \cdot \frac{\gamma g_\mathrm{m}+ \Re \{ Y_\mathrm{L} \} }{\Re \{ Z_\mathrm{in} \}},
-\tag{47}\]</span></span></p>
+\tag{48}\]</span></span></p>
 <p>which holds exactly for reactive (noiseless) <span class="math inline">\(Z_\mathrm{F}\)</span> and <span class="math inline">\(Z_\mathrm{L}\)</span> (where <span class="math inline">\(\Re\{Y_F\}=0\)</span>), and for a matched input (<span class="math inline">\(R_\mathrm{s} = \Re\{Z_\mathrm{in}\}\)</span>) <span class="citation" data-cites="Darabi_RFIC">(<a href="#ref-Darabi_RFIC" role="doc-biblioref">Darabi 2020</a>)</span>.</p>
-<p>As you can see from <a href="#eq-lna-shunt-fb-noise-factor" class="quarto-xref">Equation&nbsp;47</a>, by making <span class="math inline">\(g_\mathrm{m}\)</span> large (and spending enough bias current), the noise figure can be made arbitrarily small! Depending on the choice of <span class="math inline">\(Z_\mathrm{F}\)</span> and <span class="math inline">\(Z_\mathrm{L}\)</span>, the input impedance of this LNA can be changed in interesting ways.</p>
+<p>As you can see from <a href="#eq-lna-shunt-fb-noise-factor" class="quarto-xref">Equation&nbsp;48</a>, by making <span class="math inline">\(g_\mathrm{m}\)</span> large (and spending enough bias current), the noise figure can be made arbitrarily small! Depending on the choice of <span class="math inline">\(Z_\mathrm{F}\)</span> and <span class="math inline">\(Z_\mathrm{L}\)</span>, the input impedance of this LNA can be changed in interesting ways.</p>
 <p>By setting <span class="math inline">\(Z_\mathrm{L} \rightarrow \infty\)</span> (e.g., by biasing with a current source and high-impedance loading), we find that</p>
 <p><span class="math display">\[
 Z_\mathrm{in} = \frac{1}{g_\mathrm{m}}
@@ -2500,8 +2519,8 @@ Z_\mathrm{in} = \frac{Z_\mathrm{L}}{1 + A_0}
 <p>A very interesting case can be achieved by choosing <span class="math inline">\(Z_\mathrm{L} = (s C_\mathrm{L})^{-1}\)</span> and <span class="math inline">\(Z_\mathrm{F} = (s C_\mathrm{F})^{-1}\)</span>, which results in</p>
 <p><span id="eq-lna-shunt-fb-yin"><span class="math display">\[
 Y_\mathrm{in} = \frac{1}{Z_\mathrm{in}} = \frac{g_\mathrm{m}C_\mathrm{F}}{C_\mathrm{L} + C_\mathrm{F}} + s \frac{C_\mathrm{L} C_\mathrm{F}}{C_\mathrm{L} + C_\mathrm{F}}
-\tag{48}\]</span></span></p>
-<p>Looking at <a href="#eq-lna-shunt-fb-yin" class="quarto-xref">Equation&nbsp;48</a>, we see that the input admittance has a <strong>real part</strong>! By proper choice of components, we can achieve an input impedance matched to 50 Ω at the desired frequency. The noise factor can again be made small by making <span class="math inline">\(g_\mathrm{m}\)</span> large.</p>
+\tag{49}\]</span></span></p>
+<p>Looking at <a href="#eq-lna-shunt-fb-yin" class="quarto-xref">Equation&nbsp;49</a>, we see that the input admittance has a <strong>real part</strong>! By proper choice of components, we can achieve an input impedance matched to 50 Ω at the desired frequency. The noise factor can again be made small by making <span class="math inline">\(g_\mathrm{m}\)</span> large.</p>
 <p>There is also an option, by proper choice of <span class="math inline">\(Z_\mathrm{F}\)</span> and <span class="math inline">\(Z_\mathrm{L}\)</span>, to achieve an inductive input impedance component, which can be used to resonate out parts of the input capacitance of the LNA, similar to the inductively-degenerated common-source LNA. However, in contrast to the inductively-degenerated common-source LNA, no inductor is required in this case. This configuration is called a reactance-canceling LNA <span class="citation" data-cites="Razavi_RFIC">(<a href="#ref-Razavi_RFIC" role="doc-biblioref">Razavi 2011</a>)</span>.</p>
 </section>
 </section>
@@ -2556,7 +2575,7 @@ Figure&nbsp;42: A squarer as a nonlinear mixer.
 s_\mathrm{out}(t) = [ s_\mathrm{in}(t) + s_\mathrm{LO}(t) ]^2 &amp;= \cos(\omega_\mathrm{in} t + \omega_\mathrm{LO} t) + \cos(\omega_\mathrm{in} t - \omega_\mathrm{LO} t) \\
 &amp;+ 1 + \frac{1}{2} \cos(2 \omega_\mathrm{in} t) + \frac{1}{2} \cos(2 \omega_\mathrm{LO} t).
 \end{split}
-\tag{49}\]</span></span></p>
+\tag{50}\]</span></span></p>
 <p>We see that the output signal contains the desired frequency components at <span class="math inline">\(\omega_\mathrm{in} \pm \omega_\mathrm{LO}\)</span>, but also additional components at dc (0 Hz), <span class="math inline">\(2 \omega_\mathrm{in}\)</span>, and <span class="math inline">\(2 \omega_\mathrm{LO}\)</span>. These additional components are usually unwanted and have to be filtered out in a subsequent filtering stage. As a side-note, in some circuits a <strong>frequency doubler</strong> is desired, which can be implemented by simply filtering out the other frequency components. In a doubler no LO signal is required, as the input signal is simply squared.</p>
 <p>A simple example circuit is a diode, which has a non-linear current-voltage characteristic. The block diagram of a simple diode mixer is shown in <a href="#fig-diode-mixer" class="quarto-xref">Figure&nbsp;43</a>.</p>
 <div id="cell-fig-diode-mixer" class="cell" data-execution_count="43">
@@ -2602,7 +2621,7 @@ s_\mathrm{out}(t) &amp;= s_\mathrm{in}(t) \cdot \underbrace{\frac{1}{2} \left\{ 
 <p>where <span class="math inline">\(\mathrm{sgn}(\cdot)\)</span> is the signum function. The term in curly brackets is a square wave that switches between 0 and 1 at the LO frequency. This square wave can be expressed as a Fourier series, which contains the fundamental frequency at <span class="math inline">\(\omega_\mathrm{LO}\)</span> and all odd harmonics <span class="math inline">\(3 \omega_\mathrm{LO}\)</span>, <span class="math inline">\(5 \omega_\mathrm{LO}\)</span>, and so on. In conclusion, if the input signal is expressed as <span class="math inline">\(\cos(\omega_\mathrm{in} t)\)</span>, we get the output signal</p>
 <p><span id="eq-mixer-single-output"><span class="math display">\[
 s_\mathrm{out}(t) = \frac{1}{\pi} \cos(\omega_\mathrm{in} t \pm \omega_\mathrm{LO} t) + \ldots
-\tag{50}\]</span></span></p>
+\tag{51}\]</span></span></p>
 <p>Again, we see that the output signal contains the desired frequency components at <span class="math inline">\(\omega_\mathrm{in} \pm \omega_\mathrm{LO}\)</span>, but also additional components at <span class="math inline">\(3 \omega_\mathrm{LO}\)</span>, <span class="math inline">\(5 \omega_\mathrm{LO}\)</span>, and so on. These additional components are usually unwanted and have to be filtered out in a subsequent filtering stage. The advantage of a time-variant mixer is that it can be implemented readily in CMOS, as shown in <a href="#fig-cmos-single-mixer" class="quarto-xref">Figure&nbsp;45</a>.</p>
 <div id="cell-fig-cmos-single-mixer" class="cell" data-execution_count="45">
 <div class="cell-output cell-output-display">
@@ -2634,10 +2653,10 @@ Figure&nbsp;46: A fully-differential double-balanced MOSFET mixer.
 </div>
 </div>
 </div>
-<p>The balanced structure changes the switching function from one toggling between 0 and 1 into one toggling between <span class="math inline">\(-1\)</span> and <span class="math inline">\(+1\)</span>. The Fourier series of the latter has twice the fundamental amplitude, so the conversion gain doubles from <span class="math inline">\(1/\pi\)</span> to <span class="math inline">\(2/\pi\)</span>, i.e., we gain 6 dB compared to the unbalanced mixer of <a href="#eq-mixer-single-output" class="quarto-xref">Equation&nbsp;50</a>:</p>
+<p>The balanced structure changes the switching function from one toggling between 0 and 1 into one toggling between <span class="math inline">\(-1\)</span> and <span class="math inline">\(+1\)</span>. The Fourier series of the latter has twice the fundamental amplitude, so the conversion gain doubles from <span class="math inline">\(1/\pi\)</span> to <span class="math inline">\(2/\pi\)</span>, i.e., we gain 6 dB compared to the unbalanced mixer of <a href="#eq-mixer-single-output" class="quarto-xref">Equation&nbsp;51</a>:</p>
 <p><span id="eq-mixer-double-output"><span class="math display">\[
 s_\mathrm{out}(t) = \frac{2}{\pi} \cos(\omega_\mathrm{in} t \pm \omega_\mathrm{LO} t) + \ldots
-\tag{51}\]</span></span></p>
+\tag{52}\]</span></span></p>
 <p>The factor <span class="math inline">\(2/\pi\)</span> corresponds to a conversion loss of 3.9 dB, which is the best an ideal balanced passive mixer can do.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -2711,8 +2730,8 @@ Figure&nbsp;49: A 4-phase N-path filter.
 <p>The reason this works is the <strong>transparency</strong> of the passive mixer: the impedance connected to the baseband side of the switches appears at the RF port, frequency-shifted to <span class="math inline">\(\pm \omega_\mathrm{LO}\)</span>. If the baseband load is a first-order <span class="math inline">\(RC\)</span> section with impedance <span class="math inline">\(Z_\mathrm{BB}(\Delta \omega)\)</span>, then the RF-port impedance around the LO is simply</p>
 <p><span id="eq-npath-impedance"><span class="math display">\[
 Z_\mathrm{in}(\omega_\mathrm{LO} + \Delta \omega) \approx R_\mathrm{sw} + Z_\mathrm{BB}(\Delta \omega),
-\tag{52}\]</span></span></p>
-<p>i.e., a <em>first-order</em> bandpass centered exactly at <span class="math inline">\(\omega_\mathrm{LO}\)</span>, sitting on top of the series switch resistance <span class="math inline">\(R_\mathrm{sw}\)</span>. This is shown in <a href="#fig-tank-bandpass" class="quarto-xref">Figure&nbsp;50</a>. Two properties follow directly from <a href="#eq-npath-impedance" class="quarto-xref">Equation&nbsp;52</a> and make the N-path filter so attractive:</p>
+\tag{53}\]</span></span></p>
+<p>i.e., a <em>first-order</em> bandpass centered exactly at <span class="math inline">\(\omega_\mathrm{LO}\)</span>, sitting on top of the series switch resistance <span class="math inline">\(R_\mathrm{sw}\)</span>. This is shown in <a href="#fig-tank-bandpass" class="quarto-xref">Figure&nbsp;50</a>. Two properties follow directly from <a href="#eq-npath-impedance" class="quarto-xref">Equation&nbsp;53</a> and make the N-path filter so attractive:</p>
 <ul>
 <li>The <strong>peak impedance</strong> is <span class="math inline">\(R_\mathrm{sw} + R_\mathrm{BB}\)</span>, where <span class="math inline">\(R_\mathrm{BB}\)</span> is the effective shunt resistance at baseband. The switch resistance therefore sets the floor of what is achievable — low-<span class="math inline">\(R_\mathrm{sw}\)</span> switches are essential.</li>
 <li>The <strong>bandwidth is inversely proportional to the capacitance</strong>, <span class="math inline">\(\mathrm{BW} \propto 1/C\)</span>, while the center frequency is set solely by <span class="math inline">\(\omega_\mathrm{LO}\)</span>. This gives us a filter whose center frequency and bandwidth are independently and precisely programmable — something no passive <span class="math inline">\(LC\)</span> filter can offer. The resulting effective <span class="math inline">\(Q = \omega_\mathrm{LO}/\mathrm{BW}\)</span> can easily reach several hundreds.</li>
@@ -2753,7 +2772,7 @@ Figure&nbsp;51: An RC/CR IQ generation network.
 </div>
 </div>
 </div>
-<p>The advantage of this network is its simplicity, as it only requires a few passive components, and it can generate I and Q phases from an incoming signal at the target frequency. The disadvantage is that both the phase shift <em>and</em> the amplitude are frequency-dependent: exactly at <span class="math inline">\(\omega_0 = 1/RC\)</span> the two outputs are perfectly in quadrature <em>and</em> have equal magnitude (<span class="math inline">\(1/\sqrt{2}\)</span> each), but as soon as we move away from <span class="math inline">\(\omega_0\)</span> the lowpass output rolls off while the highpass output rises, so we accumulate both a phase error and an amplitude imbalance. Since the resulting I/Q mismatch directly limits the image rejection (see <a href="#eq-irr-definition" class="quarto-xref">Equation&nbsp;28</a>), this network is only usable over a narrow frequency range, and typically requires additional amplitude-limiting or gain stages. Additionally, this passive network has a 3 dB loss at <span class="math inline">\(\omega_0\)</span>, which also has to be made up by subsequent gain stages.</p>
+<p>The advantage of this network is its simplicity, as it only requires a few passive components, and it can generate I and Q phases from an incoming signal at the target frequency. The disadvantage is that both the phase shift <em>and</em> the amplitude are frequency-dependent: exactly at <span class="math inline">\(\omega_0 = 1/RC\)</span> the two outputs are perfectly in quadrature <em>and</em> have equal magnitude (<span class="math inline">\(1/\sqrt{2}\)</span> each), but as soon as we move away from <span class="math inline">\(\omega_0\)</span> the lowpass output rolls off while the highpass output rises, so we accumulate both a phase error and an amplitude imbalance. Since the resulting I/Q mismatch directly limits the image rejection (see <a href="#eq-irr-definition" class="quarto-xref">Equation&nbsp;29</a>), this network is only usable over a narrow frequency range, and typically requires additional amplitude-limiting or gain stages. Additionally, this passive network has a 3 dB loss at <span class="math inline">\(\omega_0\)</span>, which also has to be made up by subsequent gain stages.</p>
 </section>
 <section id="sec-lo-polyphase" class="level3" data-number="5.5.2">
 <h3 data-number="5.5.2" class="anchored" data-anchor-id="sec-lo-polyphase"><span class="header-section-number">5.5.2</span> Polyphase Filter</h3>
@@ -2863,7 +2882,7 @@ S = \frac{1}{\sqrt{2}} \begin{bmatrix}
 -j &amp; 0 &amp; 0 \\
 -1 &amp; 0 &amp; 0
 \end{bmatrix}.
-\tag{53}\]</span></span></p>
+\tag{54}\]</span></span></p>
 <p>A feature of the coupler in <a href="#fig-branch-line-coupler" class="quarto-xref">Figure&nbsp;57</a> is that it is single-ended; a differential implementation needs either two couplers or a coupler with subsequent baluns. An alternative implementation of a 90° hybrid coupler is the Lange coupler, which uses interdigitated fingers to achieve the required coupling. The Lange coupler can be implemented in a single-ended or differential way, and it can achieve very good performance over a wide frequency range. The disadvantage is that it requires a large number of fingers, which can take up a lot of area on-chip <span class="citation" data-cites="Lange.1969">(<a href="#ref-Lange.1969" role="doc-biblioref">Lange 1969</a>)</span>.</p>
 <p>Another approach, which is similar to the flip-flop based approach, is to use a delay line to generate the required phase shifts. This can be done with a single delay line and multiple taps, or with multiple delay lines. The idea is that we delay the input clock signal by a certain amount of time, which corresponds to a 90° phase shift at the target frequency. This approach is shown in <a href="#fig-logen-dll" class="quarto-xref">Figure&nbsp;58</a>. Since the delay of a delay line is frequency dependent, and the delay will change with process, voltage, and temperature (PVT) variations, we have to implement a tuning mechanism to adjust the delay. This implementation is called a delay-locked loop (DLL), which is similar to a phase-locked loop (PLL, see <a href="#sec-pll" class="quarto-xref">Section&nbsp;7</a>).</p>
 <div id="cell-fig-logen-dll" class="cell" data-execution_count="58">
@@ -2919,9 +2938,9 @@ Figure&nbsp;60: Three-stage single-ended ring oscillator.
 <p>Note that the output frequency of the ring oscillator shown above is ill-controlled, as it only depends on the delay (i.e., phase shift) of the inverters, which are usually dependent on process, voltage, and temperature (PVT) variations. Also, the inherent quality factor of such an oscillator is low, as exemplified by the definition of the quality factor <span class="math inline">\(Q\)</span> as <span class="citation" data-cites="Razavi.1996">(<a href="#ref-Razavi.1996" role="doc-biblioref">Razavi 1996</a>)</span></p>
 <p><span id="eq-definition-q"><span class="math display">\[
 Q = 2 \pi \frac{\text{Average energy stored}}{\text{Energy loss per cycle}} = \frac{\omega_0}{\Delta \omega} = \frac{\omega_0}{2} \sqrt{ \left( \frac{d A}{d \omega} \right)^2 + \left( \frac{d \varphi}{d \omega} \right)^2 }
-\tag{54}\]</span></span></p>
+\tag{55}\]</span></span></p>
 <p>with a ring oscillator having very low <span class="math inline">\(dA / d \omega\)</span> and <span class="math inline">\(d \varphi / d \omega\)</span> slopes (<span class="math inline">\(A(\omega)\)</span> and <span class="math inline">\(\varphi(\omega)\)</span> are the open loop gain and phase shift, respectively). It can be shown that <span class="math inline">\(Q \approx 1.3\)</span> for a 3-stage ring oscillator <span class="citation" data-cites="Razavi.1996">(<a href="#ref-Razavi.1996" role="doc-biblioref">Razavi 1996</a>)</span>. For some applications, this might be sufficient, but in many cases, a higher <span class="math inline">\(Q\)</span> is desired to reduce phase noise and improve frequency stability (as we will see later in this chapter).</p>
-<p>According to <a href="#eq-definition-q" class="quarto-xref">Equation&nbsp;54</a>, a high <span class="math inline">\(Q\)</span> can be achieved by using a resonator with high energy storage capability and low energy loss per cycle. We then add an amplifier in a feedback loop to compensate for the losses of the resonator. This principle is shown in <a href="#fig-lc-oscillator" class="quarto-xref">Figure&nbsp;61</a> for a parallel LC tank circuit as the resonator. Sometimes the action of the feedback loop around the amplifier is modelled as a negative resistance <span class="math inline">\(-R_\mathrm{amp}\)</span> that compensates for the losses of the tank circuit represented by the resistor <span class="math inline">\(R_\mathrm{p}\)</span>. The single parallel resistor <span class="math inline">\(R_\mathrm{p}\)</span> models the losses of the inductor <span class="math inline">\(L\)</span> and the capacitor <span class="math inline">\(C\)</span>.</p>
+<p>According to <a href="#eq-definition-q" class="quarto-xref">Equation&nbsp;55</a>, a high <span class="math inline">\(Q\)</span> can be achieved by using a resonator with high energy storage capability and low energy loss per cycle. We then add an amplifier in a feedback loop to compensate for the losses of the resonator. This principle is shown in <a href="#fig-lc-oscillator" class="quarto-xref">Figure&nbsp;61</a> for a parallel LC tank circuit as the resonator. Sometimes the action of the feedback loop around the amplifier is modelled as a negative resistance <span class="math inline">\(-R_\mathrm{amp}\)</span> that compensates for the losses of the tank circuit represented by the resistor <span class="math inline">\(R_\mathrm{p}\)</span>. The single parallel resistor <span class="math inline">\(R_\mathrm{p}\)</span> models the losses of the inductor <span class="math inline">\(L\)</span> and the capacitor <span class="math inline">\(C\)</span>.</p>
 <div id="cell-fig-lc-oscillator" class="cell" data-execution_count="61">
 <div class="cell-output cell-output-display">
 <div id="fig-lc-oscillator" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2941,7 +2960,7 @@ Figure&nbsp;61: LC parallel tank with connected negative resistance forming an L
 <li><p>An alternative implementation of setting the oscillation amplitude is to use an <em>automatic level control</em> (ALC) loop, which measures the oscillation amplitude and adjusts the amplifier gain accordingly to maintain a constant output amplitude. This approach can improve the stability of the oscillation amplitude over process, voltage, and temperature variations.</p></li>
 <li><p>An alternative to starting the oscillation from thermal noise (which can take considerable time depending on the <span class="math inline">\(Q\)</span> of the resonator) is to provide a known initial condition to the resonator, e.g., by pre-charging the capacitor <span class="math inline">\(C\)</span> to a certain voltage before enabling the amplifier. This way, the oscillation can start immediately from this initial energy stored in the resonator.</p></li>
 </ul>
-<p>As a first hint on how to optimize an LC oscillator for low phase noise, we can try to maximize <span class="math inline">\(Q\)</span> according to <a href="#eq-definition-q" class="quarto-xref">Equation&nbsp;54</a>. The energy stored in the capacitor at peak voltage is</p>
+<p>As a first hint on how to optimize an LC oscillator for low phase noise, we can try to maximize <span class="math inline">\(Q\)</span> according to <a href="#eq-definition-q" class="quarto-xref">Equation&nbsp;55</a>. The energy stored in the capacitor at peak voltage is</p>
 <p><span class="math display">\[
 E_\mathrm{stored} = \frac{C V_\mathrm{osc,p}^2}{2}
 \]</span></p>
@@ -2959,7 +2978,7 @@ Q = 2 \pi \frac{E_\mathrm{stored}}{E_\mathrm{loss}} = \omega_0 C R_\mathrm{p}
 v_\mathrm{osc}(t) = V_\mathrm{osc,p}(t) \cdot \cos[ \omega_0(t) t + \varphi(t) ]
 \]</span></p>
 <p>we want to keep the amplitude variations small, i.e., <span class="math inline">\(V_\mathrm{osc,p}(t) = V_\mathrm{osc,p}\)</span>, and also the frequency variations small, i.e., <span class="math inline">\(\omega_0(t) = \omega_0\)</span>. We further want to minimize any phase fluctuations, i.e., <span class="math inline">\(\varphi(t) = \varphi_0\)</span>.</p>
-<p>As a side note, the definition of <span class="math inline">\(Q\)</span> in <a href="#eq-definition-q" class="quarto-xref">Equation&nbsp;54</a> can also be understood as describing how many oscillation cycles it takes until the energy stored in the resonator is dissipated. For example, if <span class="math inline">\(Q = 1000\)</span> at <span class="math inline">\(f_0 = 1\,\text{GHz}\)</span>, the energy stored in the resonator will last for approximately 1000 cycles, which is 1 µs. This time duration is sometimes called the “ring-down time” of the resonator.</p>
+<p>As a side note, the definition of <span class="math inline">\(Q\)</span> in <a href="#eq-definition-q" class="quarto-xref">Equation&nbsp;55</a> can also be understood as describing how many oscillation cycles it takes until the energy stored in the resonator is dissipated. For example, if <span class="math inline">\(Q = 1000\)</span> at <span class="math inline">\(f_0 = 1\,\text{GHz}\)</span>, the energy stored in the resonator will last for approximately 1000 cycles, which is 1 µs. This time duration is sometimes called the “ring-down time” of the resonator.</p>
 <section id="sec-oscillator-noise" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="sec-oscillator-noise"><span class="header-section-number">6.1</span> Oscillator Noise</h2>
 <p>For calculating the noise of an oscillator, we assume that an LC-based oscillator as shown in <a href="#fig-lc-oscillator" class="quarto-xref">Figure&nbsp;61</a> is used. We assume that the oscillator is in steady-state operation, i.e., <span class="math inline">\(-R_\mathrm{amp} = R_\mathrm{p}\)</span>. We can then simplify the circuit to the one shown in <a href="#fig-lc-oscillator-noise-model" class="quarto-xref">Figure&nbsp;62</a>.</p>
@@ -3004,12 +3023,12 @@ Z_\mathrm{tank}(j \omega_0 + j \Delta \omega) = -\frac{j}{2 \Delta \omega C}.
 <p>This absolute noise voltage is not of much interest per se. We normalize it to the oscillation amplitude <span class="math inline">\(V_\mathrm{p}\)</span>, and only account for 1/2 of the noise, as the total noise power is split equally into amplitude noise and phase noise <span class="citation" data-cites="Razavi.1996">(<a href="#ref-Razavi.1996" role="doc-biblioref">Razavi 1996</a>)</span>, and we are only interested in the <strong>phase noise</strong>. This is because we assume the amplitude noise is removed by amplitude clipping in the LO chain routing the oscillator signal to the mixer. This is often a valid assumption. We introduce the symbol <span class="math inline">\(\mathcal{L}\left\{\cdot\right\}\)</span> to denote this normalized phase noise of the oscillator:</p>
 <p><span id="eq-leeson-equation"><span class="math display">\[
 \mathcal{L}\left\{\Delta \omega\right\} = \frac{\frac{1}{2} \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2}{\left( \frac{V_\mathrm{p}}{\sqrt{2}} \right)^2} = \frac{k T F R_\mathrm{p}}{V_\mathrm{p}^2} \cdot \frac{1}{Q^2} \cdot \left( \frac{\omega_0}{\Delta \omega} \right)^2
-\tag{55}\]</span></span></p>
+\tag{56}\]</span></span></p>
 <p>This equation is known as “<strong>Leeson’s equation</strong>” <span class="citation" data-cites="Leeson.1966">(<a href="#ref-Leeson.1966" role="doc-biblioref">Leeson 1966</a>)</span>, and it provides us with important insights on how to design low phase noise oscillators.</p>
-<p>At first glance <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;55</a> seems to say that a <em>large</em> tank resistance <span class="math inline">\(R_\mathrm{p}\)</span> is bad, since it sits in the numerator. This is misleading, because <span class="math inline">\(Q\)</span> in the denominator itself depends on <span class="math inline">\(R_\mathrm{p}\)</span>. Substituting <span class="math inline">\(Q = \omega_0 C R_\mathrm{p}\)</span> makes the true dependence explicit:</p>
+<p>At first glance <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;56</a> seems to say that a <em>large</em> tank resistance <span class="math inline">\(R_\mathrm{p}\)</span> is bad, since it sits in the numerator. This is misleading, because <span class="math inline">\(Q\)</span> in the denominator itself depends on <span class="math inline">\(R_\mathrm{p}\)</span>. Substituting <span class="math inline">\(Q = \omega_0 C R_\mathrm{p}\)</span> makes the true dependence explicit:</p>
 <p><span id="eq-leeson-equation-rp"><span class="math display">\[
 \mathcal{L}\left\{\Delta \omega\right\} = \frac{k T F}{V_\mathrm{p}^2 \, \omega_0^2 C^2 R_\mathrm{p}} \cdot \left( \frac{\omega_0}{\Delta \omega} \right)^2
-\tag{56}\]</span></span></p>
+\tag{57}\]</span></span></p>
 <p>so for a given tank capacitance <span class="math inline">\(C\)</span> the phase noise indeed <em>falls</em> with increasing <span class="math inline">\(R_\mathrm{p}\)</span>, i.e., with a lower-loss tank. With this in mind, the design guidelines are:</p>
 <ol type="1">
 <li>Use a resonator with high quality factor <span class="math inline">\(Q\)</span> to reduce phase noise. On-chip LC tanks usually provide moderate <span class="math inline">\(Q\)</span> values (e.g., 10 to 30), while off-chip crystals can provide very high <span class="math inline">\(Q\)</span> values (e.g., 10,000 to 100,000).</li>
@@ -3018,7 +3037,7 @@ Z_\mathrm{tank}(j \omega_0 + j \Delta \omega) = -\frac{j}{2 \Delta \omega C}.
 <li>Maximize the tank resistance <span class="math inline">\(R_\mathrm{p}\)</span> to minimize the thermal noise contribution. This can be achieved by using high-Q inductors and low-loss capacitors.</li>
 </ol>
 <p>The phase noise <span class="math inline">\(\mathcal{L}\left\{\Delta \omega\right\}\)</span> is expressed in the unit of dBc/Hz, i.e., in decibels of phase noise relative to the carrier power per 1 Hz of bandwidth. When expressing the phase noise of an oscillator in dBc/Hz it is important to state both the oscillation frequency <span class="math inline">\(\omega_0\)</span> and the offset frequency <span class="math inline">\(\Delta \omega\)</span> at which the phase noise is evaluated. For example, we could say that an oscillator has a phase noise of -137 dBc/Hz at 3 MHz offset from a carrier frequency of 2 GHz.</p>
-<p>The phase noise expressed with <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;55</a> describes an important region of the total oscillator phase noise where the phase noise decreases with <span class="math inline">\(1 / (\Delta \omega)^2\)</span>, i.e., with 20 dB per decade. This region is often called the “thermal noise region” as it is dominated by thermal noise from the tank resistor and the active circuit. However, at lower offset frequencies, other noise mechanisms (like flicker noise) can dominate, leading to different slopes of the phase noise vs.&nbsp;offset frequency curve. At larger offset frequencies, the phase noise can flatten out due to thermal noise floor limitation of buffer amplifiers following the oscillator. A typical phase noise plot of an LC oscillator is shown in <a href="#fig-phase-noise-spectrum" class="quarto-xref">Figure&nbsp;63</a>.</p>
+<p>The phase noise expressed with <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;56</a> describes an important region of the total oscillator phase noise where the phase noise decreases with <span class="math inline">\(1 / (\Delta \omega)^2\)</span>, i.e., with 20 dB per decade. This region is often called the “thermal noise region” as it is dominated by thermal noise from the tank resistor and the active circuit. However, at lower offset frequencies, other noise mechanisms (like flicker noise) can dominate, leading to different slopes of the phase noise vs.&nbsp;offset frequency curve. At larger offset frequencies, the phase noise can flatten out due to thermal noise floor limitation of buffer amplifiers following the oscillator. A typical phase noise plot of an LC oscillator is shown in <a href="#fig-phase-noise-spectrum" class="quarto-xref">Figure&nbsp;63</a>.</p>
 <div id="cell-fig-phase-noise-spectrum" class="cell" data-execution_count="63">
 <div class="cell-output cell-output-display">
 <div id="fig-phase-noise-spectrum" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -3033,7 +3052,7 @@ Figure&nbsp;63: Phase noise spectrum of a typical LC oscillator showing characte
 </div>
 </div>
 </div>
-<p>It is important to note that the phase noise does not go to infinity as <span class="math inline">\(\Delta \omega\)</span> approaches zero, as <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;55</a> might suggest. This is an artifact of the simplified model used to derive Leeson’s equation. In reality, the phase noise has the form of a Lorentzian spectrum around the carrier frequency, which means that it flattens out at very low offset frequencies with a trend described by</p>
+<p>It is important to note that the phase noise does not go to infinity as <span class="math inline">\(\Delta \omega\)</span> approaches zero, as <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;56</a> might suggest. This is an artifact of the simplified model used to derive Leeson’s equation. In reality, the phase noise has the form of a Lorentzian spectrum around the carrier frequency, which means that it flattens out at very low offset frequencies with a trend described by</p>
 <p><span class="math display">\[
 \mathcal{L}\left\{\Delta \omega \ll\right\} \propto \frac{1}{\omega_\mathrm{B}^2 + \Delta \omega^2}
 \]</span></p>
@@ -3064,8 +3083,8 @@ Note&nbsp;7: Phase Noise and Frequency Division
 <h2 data-number="6.2" class="anchored" data-anchor-id="sec-oscillator-jitter"><span class="header-section-number">6.2</span> Jitter</h2>
 <p>Jitter is a time-domain representation of phase noise. It quantifies the timing variations of a periodic signal, such as the zero-crossings or rising edges of a clock signal. Jitter is typically measured in seconds (or fractions thereof) and can be expressed as root mean square (RMS) jitter or peak-to-peak jitter. The relationship between phase noise and RMS jitter can be approximated by the following equation <span class="citation" data-cites="DaDalt_PHN">(<a href="#ref-DaDalt_PHN" role="doc-biblioref">Da Dalt and Sheikholeslami 2018</a>)</span>: <span id="eq-jitter-phase-noise"><span class="math display">\[
 \sigma_\mathrm{a} = \frac{1}{2 \pi f_0} \sqrt{2 \int_{f_1}^{f_2} \mathcal{L}\left\{f\right\} df}
-\tag{57}\]</span></span></p>
-<p>where <span class="math inline">\(\sigma_\mathrm{a}\)</span> is the absolute RMS jitter, <span class="math inline">\(f_0\)</span> is the carrier frequency, and the integral is taken over the frequency offset range from <span class="math inline">\(f_1\)</span> to <span class="math inline">\(f_2\)</span>. This equation shows that higher phase noise levels lead to increased jitter, which can adversely affect the performance of digital communication systems by causing timing errors and signal integrity issues. Note that the phase noise <span class="math inline">\(\mathcal{L}\left\{f\right\}\)</span> in <a href="#eq-jitter-phase-noise" class="quarto-xref">Equation&nbsp;57</a> must be expressed in linear scale (not dBc/Hz) when using this equation.</p>
+\tag{58}\]</span></span></p>
+<p>where <span class="math inline">\(\sigma_\mathrm{a}\)</span> is the absolute RMS jitter, <span class="math inline">\(f_0\)</span> is the carrier frequency, and the integral is taken over the frequency offset range from <span class="math inline">\(f_1\)</span> to <span class="math inline">\(f_2\)</span>. This equation shows that higher phase noise levels lead to increased jitter, which can adversely affect the performance of digital communication systems by causing timing errors and signal integrity issues. Note that the phase noise <span class="math inline">\(\mathcal{L}\left\{f\right\}\)</span> in <a href="#eq-jitter-phase-noise" class="quarto-xref">Equation&nbsp;58</a> must be expressed in linear scale (not dBc/Hz) when using this equation.</p>
 </section>
 <section id="sec-oscillator-reciprocal-mixing" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="sec-oscillator-reciprocal-mixing"><span class="header-section-number">6.3</span> Reciprocal Mixing</h2>
@@ -3073,7 +3092,7 @@ Note&nbsp;7: Phase Noise and Frequency Division
 <p>To analyze reciprocal mixing, we consider a scenario where a strong interferer is present at a frequency offset <span class="math inline">\(\Delta f\)</span> from the desired signal. The phase noise of the local oscillator at this offset frequency can be characterized by its power spectral density <span class="math inline">\(\mathcal{L}\left\{\Delta f\right\}\)</span>. When the local oscillator mixes with the interferer, the phase noise sidebands effectively “fold” into the desired signal band, creating additional noise. This noise level can be estimated by multiplying the power of the interferer by the phase noise level at the offset frequency and considering the channel bandwidth <span class="math inline">\(B\)</span> of the RX</p>
 <p><span id="eq-reciprocal-mixing-noise"><span class="math display">\[
 P_\mathrm{RM} = P_\mathrm{interferer} + \mathcal{L}\left\{\Delta f\right\} + 10 \log_{10}(B)
-\tag{58}\]</span></span></p>
+\tag{59}\]</span></span></p>
 <p>where <span class="math inline">\(P_\mathrm{RM}\)</span> is the power of the reciprocal mixing noise introduced into the desired signal band.</p>
 <div id="nte-reciprocal-mixing" class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -3100,7 +3119,7 @@ P_\mathrm{interferer} &amp;= P_\mathrm{sens} - \text{C/I} \\
 &amp;= -70\,\text{dBm} + 27\,\text{dB} = -43\,\text{dBm}
 \end{split}
 \]</span></p>
-<p>Using <a href="#eq-reciprocal-mixing-noise" class="quarto-xref">Equation&nbsp;58</a>, we can express the maximum allowable phase noise at 3 MHz offset at 2.4 GHz as:</p>
+<p>Using <a href="#eq-reciprocal-mixing-noise" class="quarto-xref">Equation&nbsp;59</a>, we can express the maximum allowable phase noise at 3 MHz offset at 2.4 GHz as:</p>
 <p><span class="math display">\[
 \begin{split}
 \mathcal{L}\left\{3\,\text{MHz}\right\} &amp;= P_\mathrm{noise,max} - P_\mathrm{interferer} - 10 \log_{10}(B/\text{Hz}) \\
@@ -3202,11 +3221,11 @@ Figure&nbsp;67: Circuit diagram of a single-ended Pierce crystal oscillator oper
 <p>The series combination of <span class="math inline">\(C_1\)</span> and <span class="math inline">\(C_2\)</span> provides the load capacitance required by the crystal to oscillate at its specified frequency. Note that the oscillation frequency is <em>not</em> set by <span class="math inline">\(C_\mathrm{load}\)</span> resonating with the motional inductance <span class="math inline">\(L_\mathrm{m}\)</span>: since the motional capacitance is tiny (<span class="math inline">\(C_\mathrm{m}\)</span> is in the femtofarad range, while <span class="math inline">\(C_\mathrm{load}\)</span> is in the picofarad range), the frequency is set almost entirely by the crystal itself. The oscillator runs slightly <em>above</em> the series resonance frequency</p>
 <p><span id="eq-crystal-series-resonance"><span class="math display">\[
 f_\mathrm{s} = \frac{1}{2 \pi \sqrt{L_\mathrm{m} C_\mathrm{m}}},
-\tag{59}\]</span></span></p>
+\tag{60}\]</span></span></p>
 <p>pulled up by the load capacitance according to (<span class="math inline">\(C_\mathrm{load}^{-1} = 1/C_1 + 1/C_2\)</span>, and <span class="math inline">\(C_0\)</span> being the parallel plate capacitance of the crystal)</p>
 <p><span id="eq-crystal-pulling"><span class="math display">\[
 f_0 \approx f_\mathrm{s} \left[ 1 + \frac{C_\mathrm{m}}{2 (C_0 + C_\mathrm{load})} \right].
-\tag{60}\]</span></span></p>
+\tag{61}\]</span></span></p>
 <p>The resulting <em>pulling</em> is only in the range of some tens to hundreds of ppm, which is exactly why crystal data sheets specify a nominal load capacitance: the designer trims <span class="math inline">\(C_1\)</span> and <span class="math inline">\(C_2\)</span> (often with an on-chip switched capacitor bank) to hit the specified frequency, and can use the same knob to compensate for aging and temperature drift.</p>
 </section>
 <section id="sec-differential-oscillators" class="level2" data-number="6.5">
@@ -3279,7 +3298,7 @@ Figure&nbsp;71: An LC differential oscillator using a PMOS and an NMOS cross-cou
 </div>
 </div>
 </div>
-<p>Note that no bias current sources are shown in <a href="#fig-oscillator-lc-cmos" class="quarto-xref">Figure&nbsp;71</a>, but can be added in practice. However, they require some voltage headroom, which lowers the maximum voltage swing across the tank, which is negative for phase noise performance according to Leeson’s equation in <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;55</a>.</p>
+<p>Note that no bias current sources are shown in <a href="#fig-oscillator-lc-cmos" class="quarto-xref">Figure&nbsp;71</a>, but can be added in practice. However, they require some voltage headroom, which lowers the maximum voltage swing across the tank, which is negative for phase noise performance according to Leeson’s equation in <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;56</a>.</p>
 <p>The inductor <span class="math inline">\(L\)</span> used in LC tanks is often implemented as a differential spiral inductor, which can be realized on-chip using the top metal layers of the CMOS process. If higher <span class="math inline">\(Q\)</span> is sought, then off-chip inductors must be used, which is more expensive and uses package pins to connect the inductor. Alternatively, bondwire inductors can be used, which utilize the bondwires connecting the die to the package leads as inductors. Bondwire inductors can provide high <span class="math inline">\(Q\)</span> values and are a cost-effective solution for improving oscillator performance without requiring off-chip components. For mm-wave frequencies, transmission line stubs can be used as inductors, which can be implemented on-chip using coplanar waveguide (CPW) or microstrip structures.</p>
 </section>
 <section id="sec-frequency-tuning-of-oscillators" class="level2" data-number="6.6">
@@ -3337,7 +3356,7 @@ Figure&nbsp;72: A switched capacitor for use in an oscillator’s switched-capac
 </div>
 </div>
 <p>Here, when the control signal <span class="math inline">\(S\)</span> is high, the effective capacitance is <span class="math inline">\(C/2\)</span>, with a parasitic series resistance <span class="math inline">\(R_\mathrm{on}\)</span> due to the switch. When <span class="math inline">\(S\)</span> is low, the effective capacitance is <span class="math inline">\(C_\mathrm{off}\)</span>, which is the parasitic drain-source capacitance of the MOSFET switch.</p>
-<p>Note that there exists a trade-off when designing the switched capacitor: A larger switch (with increased <span class="math inline">\(W\)</span>) reduces <span class="math inline">\(R_\mathrm{on}\)</span>, but increases <span class="math inline">\(C_\mathrm{off}\)</span>. A large <span class="math inline">\(R_\mathrm{on}\)</span> leads to increased losses in the tank circuit, which degrades the quality factor <span class="math inline">\(Q\)</span> and increases phase noise according to <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;55</a>. On the other hand, a large <span class="math inline">\(C_\mathrm{off}\)</span> reduces the effective tuning range of the switched capacitor, which can be detrimental if a wide tuning range is required.</p>
+<p>Note that there exists a trade-off when designing the switched capacitor: A larger switch (with increased <span class="math inline">\(W\)</span>) reduces <span class="math inline">\(R_\mathrm{on}\)</span>, but increases <span class="math inline">\(C_\mathrm{off}\)</span>. A large <span class="math inline">\(R_\mathrm{on}\)</span> leads to increased losses in the tank circuit, which degrades the quality factor <span class="math inline">\(Q\)</span> and increases phase noise according to <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;56</a>. On the other hand, a large <span class="math inline">\(C_\mathrm{off}\)</span> reduces the effective tuning range of the switched capacitor, which can be detrimental if a wide tuning range is required.</p>
 <p>In <strong>digitally-controlled oscillators (DCOs)</strong>, the tuning voltage <span class="math inline">\(V_\mathrm{tune}\)</span> is replaced by a digital control word that selects different capacitance values from a capacitor bank. This approach allows for precise and repeatable frequency tuning, which is beneficial in applications requiring frequency synthesis or channel selection. These fine tuning steps can also be implemented according to <a href="#fig-switched-capacitor" class="quarto-xref">Figure&nbsp;72</a>; however, the value of <span class="math inline">\(C\)</span> must be sufficiently small.</p>
 </section>
 <section id="sec-oscillator-modeling" class="level2" data-number="6.7">
@@ -3372,7 +3391,7 @@ Figure&nbsp;73: A model of a VCO as a perfect integrator for the excess phase in
 <h1 data-number="7"><span class="header-section-number">7</span> Phase-Locked Loops</h1>
 <p>Thinking about oscillators, we face a dilemma:</p>
 <ul>
-<li>Good phase noise performance is reached with high to very high <span class="math inline">\(Q\)</span> in the resonator (see <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;55</a>).</li>
+<li>Good phase noise performance is reached with high to very high <span class="math inline">\(Q\)</span> in the resonator (see <a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;56</a>).</li>
 <li>Oscillator tunability requires a tunable resonator, which usually results in a low-to-moderate <span class="math inline">\(Q\)</span>, unfortunately.</li>
 <li>Oscillators have inherent frequency stability issues due to temperature variations, device aging, and supply voltage fluctuations. However, for wireless communication systems, precise frequency control and a very stable LO (down to a few ppm of accuracy) are required.</li>
 </ul>
@@ -3481,8 +3500,8 @@ V_\mathrm{PD}(s) = K_\mathrm{PD} \left[ \varphi_\mathrm{ref}(s) - \frac{\varphi_
 <p>Note that this equation has one integrator <span class="math inline">\(1/s\)</span> (which we can also see in <a href="#fig-pll-block-diagram-s-domain" class="quarto-xref">Figure&nbsp;76</a>). We call PLLs with one integrator in the loop a <strong>Type-I PLL</strong>. We can now rearrange to find the closed-loop transfer function <span class="math inline">\(H(s)\)</span> as</p>
 <p><span id="eq-pll-transfer-function"><span class="math display">\[
 H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{K_\mathrm{VCO} \cdot K_\mathrm{PD} \cdot \omega_\mathrm{LP} / N}{s^2 + s \cdot \omega_\mathrm{LP} + K_\mathrm{VCO} \cdot K_\mathrm{PD} \cdot \omega_\mathrm{LP} / N}.
-\tag{61}\]</span></span></p>
-<p>We can use all techniques known from control theory to analyze the stability and dynamic response of the PLL based on <a href="#eq-pll-transfer-function" class="quarto-xref">Equation&nbsp;61</a>, however, we have to keep the following in mind:</p>
+\tag{62}\]</span></span></p>
+<p>We can use all techniques known from control theory to analyze the stability and dynamic response of the PLL based on <a href="#eq-pll-transfer-function" class="quarto-xref">Equation&nbsp;62</a>, however, we have to keep the following in mind:</p>
 <ul>
 <li><span class="math inline">\(H(s)\)</span> is a small-signal model of the PLL around its locked operating point, only valid for small perturbations. Large-signal behavior, such as acquisition and lock range, is not captured by this model.</li>
 <li>A PLL is a sampled system, working at instants of <span class="math inline">\(T_\mathrm{ref}\)</span>. <span class="math inline">\(H(s)\)</span> is a continuous-time approximation, which is valid only if the loop bandwidth is much smaller (typically <span class="math inline">\(1/10\)</span>) than the reference frequency <span class="math inline">\(f_\mathrm{ref}\)</span>. If this approximation is not valid, a discrete-time model of the PLL must be used, deriving the <span class="math inline">\(z\)</span>-domain transfer function <span class="math inline">\(H(z)\)</span>.</li>
@@ -3491,14 +3510,14 @@ H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{K
 <p><span class="math display">\[
 H(s) = N \cdot \frac{\omega_\mathrm{n}^2}{s^2 + s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2},
 \]</span></p>
-<p>with <a href="#eq-pll-transfer-function" class="quarto-xref">Equation&nbsp;61</a>, we can identify the natural frequency <span class="math inline">\(\omega_n\)</span> and the damping factor <span class="math inline">\(\zeta\)</span> of the PLL as</p>
+<p>with <a href="#eq-pll-transfer-function" class="quarto-xref">Equation&nbsp;62</a>, we can identify the natural frequency <span class="math inline">\(\omega_n\)</span> and the damping factor <span class="math inline">\(\zeta\)</span> of the PLL as</p>
 <p><span id="eq-pd-pll-natural-frequency"><span class="math display">\[
 \omega_\mathrm{n} = \sqrt{\frac{K_\mathrm{VCO} \cdot K_\mathrm{PD} \cdot \omega_\mathrm{LP}}{N}}
-\tag{62}\]</span></span></p>
+\tag{63}\]</span></span></p>
 <p>and</p>
 <p><span id="eq-pd-pll-damping-factor"><span class="math display">\[
 \zeta = \frac{1}{2} \sqrt{\frac{\omega_\mathrm{LP} \cdot N}{K_\mathrm{VCO} \cdot K_\mathrm{PD}}}.
-\tag{63}\]</span></span></p>
+\tag{64}\]</span></span></p>
 <p>This allows us to use standard control theory results to design the PLL parameters <span class="math inline">\(K_\mathrm{PD}\)</span>, <span class="math inline">\(K_\mathrm{VCO}\)</span>, <span class="math inline">\(\omega_\mathrm{LP}\)</span>, and <span class="math inline">\(N\)</span> to achieve the desired dynamic response and stability margins. Remember that <span class="math inline">\(K_\mathrm{PD}\)</span> has to be inserted in V/rad and <span class="math inline">\(K_\mathrm{VCO}\)</span> in rad/(s<span class="math inline">\(\cdot\)</span>V), i.e., <span class="math inline">\(2 \pi\)</span> times the value quoted in Hz/V (see the callout in <a href="#sec-frequency-tuning-of-oscillators" class="quarto-xref">Section&nbsp;6.6</a>). Note that <span class="math inline">\(\omega_\mathrm{n}\)</span> and <span class="math inline">\(\zeta\)</span> are not independent, as they both depend on the same set of PLL parameters! This seriously limits the design of the loop dynamics and means that we need a more complex loop filter <span class="math inline">\(H_\mathrm{LP}(s)\)</span> to achieve more freedom in selecting <span class="math inline">\(\omega_\mathrm{n}\)</span> and <span class="math inline">\(\zeta\)</span> independently. Often, we want to choose <span class="math inline">\(\zeta = 1/\sqrt{2} \approx 0.707\)</span> to achieve a maximally-flat Butterworth response with minimal overshoot.</p>
 <p>The poles of a second-order system are given by</p>
 <p><span class="math display">\[
@@ -3625,12 +3644,12 @@ Figure&nbsp;82: Charge pump consisting of two matched current sources and switch
 <p>The voltage change on the capacitor can be expressed as</p>
 <p><span id="eq-cp-voltage-change"><span class="math display">\[
 \Delta V_\mathrm{LF} = \frac{1}{C_\mathrm{int}} \int_0^{t_\mathrm{on}} I_\mathrm{CP} \cdot dt
-\tag{64}\]</span></span></p>
+\tag{65}\]</span></span></p>
 <p>where <span class="math inline">\(t_\mathrm{on}\)</span> is the duration for which the UP or DOWN signal is active, proportional to the phase difference between the reference and feedback signals.</p>
-<p>Taking the Laplace transform of <a href="#eq-cp-voltage-change" class="quarto-xref">Equation&nbsp;64</a>, we find the transfer function of the CP from the UP/DOWN control signals to the loop filter voltage as</p>
+<p>Taking the Laplace transform of <a href="#eq-cp-voltage-change" class="quarto-xref">Equation&nbsp;65</a>, we find the transfer function of the CP from the UP/DOWN control signals to the loop filter voltage as</p>
 <p><span id="eq-cp-transfer-function"><span class="math display">\[
 H_\mathrm{CP}(s) = \frac{I_\mathrm{CP}}{2 \pi} \left( \frac{1}{s C_\mathrm{int}} + R_\mathrm{int} \right)
-\tag{65}\]</span></span></p>
+\tag{66}\]</span></span></p>
 <p>where we have added a resistor <span class="math inline">\(R_\mathrm{int}\)</span> in series with the capacitor <span class="math inline">\(C_\mathrm{int}\)</span> to introduce a zero in the loop filter transfer function. The need for this zero will become apparent when we analyze the PLL loop dynamics next.</p>
 <p>The resulting PLL using a PFD-CP combination is shown in <a href="#fig-pll-pfd-cp" class="quarto-xref">Figure&nbsp;83</a>.</p>
 <div id="cell-fig-pll-pfd-cp" class="cell" data-execution_count="83">
@@ -3650,18 +3669,18 @@ Figure&nbsp;83: Diagram of a PFD-CP PLL. Note that the capacitor <span class="ma
 <p>Neglecting <span class="math inline">\(C_3\)</span> for now, we can derive the closed-loop transfer function of the PLL from reference phase <span class="math inline">\(\varphi_\mathrm{ref}(s)\)</span> to output phase <span class="math inline">\(\varphi_\mathrm{out}(s)\)</span> as</p>
 <p><span id="eq-cp-pll-transfer-function"><span class="math display">\[
 H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{\frac{I_\mathrm{CP} K_\mathrm{VCO}}{2 \pi C_\mathrm{int} N} (1 + s C_\mathrm{int} R_\mathrm{int})}{s^2 + s \frac{I_\mathrm{CP} K_\mathrm{VCO} R_\mathrm{int}}{2 \pi N} + \frac{I_\mathrm{CP} K_\mathrm{VCO}}{2 \pi C_\mathrm{int} N}} = N \cdot \frac{s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2}{s^2 + s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2}
-\tag{66}\]</span></span></p>
+\tag{67}\]</span></span></p>
 <p>with</p>
 <p><span id="eq-cp-pll-natural-frequency"><span class="math display">\[
 \omega_\mathrm{n} = \sqrt{\frac{I_\mathrm{CP} K_\mathrm{VCO}}{2 \pi C_\mathrm{int} N}}
-\tag{67}\]</span></span></p>
+\tag{68}\]</span></span></p>
 <p>and</p>
 <p><span id="eq-cp-pll-damping-factor"><span class="math display">\[
 \zeta = \frac{R_\mathrm{int}}{2} \sqrt{\frac{I_\mathrm{CP} K_\mathrm{VCO} C_\mathrm{int}}{2 \pi N}}.
-\tag{68}\]</span></span></p>
-<p>Looking at <a href="#eq-cp-pll-natural-frequency" class="quarto-xref">Equation&nbsp;67</a> and <a href="#eq-cp-pll-damping-factor" class="quarto-xref">Equation&nbsp;68</a>, we can see that we now have one additional <em>independent</em> parameter (<span class="math inline">\(R_\mathrm{int}\)</span>) to set the natural frequency <span class="math inline">\(\omega_\mathrm{n}\)</span> and the damping factor <span class="math inline">\(\zeta\)</span> of the PLL independently (compare this to <a href="#eq-pd-pll-natural-frequency" class="quarto-xref">Equation&nbsp;62</a> and <a href="#eq-pd-pll-damping-factor" class="quarto-xref">Equation&nbsp;63</a>). This allows us to design the loop dynamics more flexibly to achieve the desired performance.</p>
-<p>With <a href="#eq-cp-pll-damping-factor" class="quarto-xref">Equation&nbsp;68</a>, we can now appreciate the need for the resistor <span class="math inline">\(R_\mathrm{int}\)</span> in series with the capacitor <span class="math inline">\(C_\mathrm{int}\)</span> in the loop filter. Without this resistor, the damping factor <span class="math inline">\(\zeta\)</span> would be zero, leading to an undamped system with oscillatory behavior and poor transient response. The resistor introduces a zero in the loop filter transfer function, providing the necessary damping to stabilize the PLL and improve its dynamic response.</p>
-<p>Looking at <a href="#fig-pll-pfd-cp" class="quarto-xref">Figure&nbsp;83</a> and <a href="#eq-cp-transfer-function" class="quarto-xref">Equation&nbsp;65</a>, we can also see that the PFD-CP introduces another integrator in the loop. This integrator, together with the integrator from the VCO, makes the PLL a <strong>Type-II PLL</strong>. A Type-II PLL achieves zero steady-state phase error not only for a step in the reference phase (which a Type-I PLL manages as well), but also for a <em>step in the reference frequency</em>, i.e., a ramp in the reference phase. This is the practically important case, as it means the loop settles to exactly <span class="math inline">\(\Delta \varphi = 0\)</span> after a channel change, without the static phase offset that a Type-I PLL would exhibit. Only for a frequency <em>ramp</em> (a parabolic phase input) does a Type-II PLL retain a finite static phase error.</p>
+\tag{69}\]</span></span></p>
+<p>Looking at <a href="#eq-cp-pll-natural-frequency" class="quarto-xref">Equation&nbsp;68</a> and <a href="#eq-cp-pll-damping-factor" class="quarto-xref">Equation&nbsp;69</a>, we can see that we now have one additional <em>independent</em> parameter (<span class="math inline">\(R_\mathrm{int}\)</span>) to set the natural frequency <span class="math inline">\(\omega_\mathrm{n}\)</span> and the damping factor <span class="math inline">\(\zeta\)</span> of the PLL independently (compare this to <a href="#eq-pd-pll-natural-frequency" class="quarto-xref">Equation&nbsp;63</a> and <a href="#eq-pd-pll-damping-factor" class="quarto-xref">Equation&nbsp;64</a>). This allows us to design the loop dynamics more flexibly to achieve the desired performance.</p>
+<p>With <a href="#eq-cp-pll-damping-factor" class="quarto-xref">Equation&nbsp;69</a>, we can now appreciate the need for the resistor <span class="math inline">\(R_\mathrm{int}\)</span> in series with the capacitor <span class="math inline">\(C_\mathrm{int}\)</span> in the loop filter. Without this resistor, the damping factor <span class="math inline">\(\zeta\)</span> would be zero, leading to an undamped system with oscillatory behavior and poor transient response. The resistor introduces a zero in the loop filter transfer function, providing the necessary damping to stabilize the PLL and improve its dynamic response.</p>
+<p>Looking at <a href="#fig-pll-pfd-cp" class="quarto-xref">Figure&nbsp;83</a> and <a href="#eq-cp-transfer-function" class="quarto-xref">Equation&nbsp;66</a>, we can also see that the PFD-CP introduces another integrator in the loop. This integrator, together with the integrator from the VCO, makes the PLL a <strong>Type-II PLL</strong>. A Type-II PLL achieves zero steady-state phase error not only for a step in the reference phase (which a Type-I PLL manages as well), but also for a <em>step in the reference frequency</em>, i.e., a ramp in the reference phase. This is the practically important case, as it means the loop settles to exactly <span class="math inline">\(\Delta \varphi = 0\)</span> after a channel change, without the static phase offset that a Type-I PLL would exhibit. Only for a frequency <em>ramp</em> (a parabolic phase input) does a Type-II PLL retain a finite static phase error.</p>
 <p>In conclusion:</p>
 <ul>
 <li>The PLL regulates the phase of a VCO to match the phase of a reference signal, using feedback control. Even with a steady-state phase error, the frequency error is zero (Type-I PLL). In a Type-II PLL, both phase and frequency errors are zero in steady state.</li>
@@ -4396,7 +4415,7 @@ Figure&nbsp;105: Block diagram of a typical transceiver (TRX) showing the main c
 <li><p>What is amplifier stability? Explain the <span class="math inline">\(\mu\)</span> stability factor. What conditions must be satisfied for unconditional stability?</p></li>
 <li><p>Draw the schematic of a resistively matched common-source LNA. Derive its noise figure and explain why this topology is limited to a minimum NF of 3 dB.</p></li>
 <li><p>Draw the schematic of a common-gate LNA. What is its input impedance? Explain why the noise factor is limited by <span class="math inline">\(F = 1 + \gamma\)</span>.</p></li>
-<li><p>Draw the schematic of an inductively-degenerated common-source LNA. Derive the input impedance (<a href="#eq-lna-inductive-degeneration-zin" class="quarto-xref">Equation&nbsp;43</a>). How can a purely resistive input impedance be achieved?</p></li>
+<li><p>Draw the schematic of an inductively-degenerated common-source LNA. Derive the input impedance (<a href="#eq-lna-inductive-degeneration-zin" class="quarto-xref">Equation&nbsp;44</a>). How can a purely resistive input impedance be achieved?</p></li>
 <li><p>What is the advantage of the inductively-degenerated LNA over the common-gate LNA in terms of noise figure? How can the noise figure be minimized?</p></li>
 <li><p>Describe the shunt-feedback LNA topology. What are its advantages, and how does the input impedance depend on the feedback and load impedances?</p></li>
 </ol>
@@ -4419,7 +4438,7 @@ Figure&nbsp;105: Block diagram of a typical transceiver (TRX) showing the main c
 <li><p>What is the Barkhausen criterion for oscillation? Describe the conditions for sustained oscillation in a feedback system.</p></li>
 <li><p>Draw an LC tank circuit with loss. What is the resonance frequency? How is the quality factor <span class="math inline">\(Q\)</span> defined? What is the relationship between <span class="math inline">\(Q\)</span> and the energy stored vs.&nbsp;energy dissipated per cycle?</p></li>
 <li><p>Describe the concept of phase noise. What is its physical meaning? In what unit is it typically specified? Calculate the phase noise for an oscillator with 10 dBm output power and –80 dBm noise at 1 MHz offset measured with 1 kHz bandwidth.</p></li>
-<li><p>What is Leeson’s equation (<a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;55</a>)? Which factors influence the phase noise of an oscillator? How can phase noise be minimized?</p></li>
+<li><p>What is Leeson’s equation (<a href="#eq-leeson-equation" class="quarto-xref">Equation&nbsp;56</a>)? Which factors influence the phase noise of an oscillator? How can phase noise be minimized?</p></li>
 <li><p>What is reciprocal mixing? Why is it problematic in wireless receivers? Derive the maximum allowable phase noise given a blocker power and sensitivity requirement.</p></li>
 <li><p>Draw a cross-coupled LC oscillator (NMOS, PMOS, or CMOS topology). What is the negative resistance provided by the cross-coupled pair? How does oscillation start and stabilize?</p></li>
 <li><p>How can frequency tuning of an LC oscillator be achieved? Describe different varactor implementations (MOS varactor, switched capacitor, PN junction).</p></li>
