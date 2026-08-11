@@ -3165,29 +3165,57 @@ Figure&nbsp;65: Circuit diagram of a single-ended negative resistance implementa
 <p><span class="math display">\[
 Z_\mathrm{in}(s) = -\frac{g_\mathrm{m}}{\omega^2 C_1 C_2} + \frac{C_1 + C_2}{s C_1 C_2} = -R_\mathrm{amp} + \frac{1}{s C_\mathrm{amp}}
 \]</span></p>
-<p>which consists of the series combination of a negative resistance <span class="math inline">\(-R_\mathrm{amp}\)</span> and a capacitance <span class="math inline">\(C_\mathrm{amp}\)</span>. Note that the circuit in <a href="#fig-neg-r-single-ended" class="quarto-xref">Figure&nbsp;65</a> does not show a ground symbol. In fact, any of the three nodes marked with blue numbers can be used as a reference node (ground), and this results in the following well-known oscillator topologies:</p>
+<p>which consists of the series combination of a negative resistance <span class="math inline">\(-R_\mathrm{amp}\)</span> and a capacitance <span class="math inline">\(C_\mathrm{amp}\)</span>. Note that the circuit in <a href="#fig-neg-r-single-ended" class="quarto-xref">Figure&nbsp;65</a> does not show a ground symbol. In fact, any of the three nodes marked with blue numbers can be used as a reference node (ground), and this results in the following well-known oscillator topologies, summarized in <a href="#tbl-three-point-oscillators" class="quarto-xref">Table&nbsp;5</a>.</p>
+<div id="tbl-three-point-oscillators" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-three-point-oscillators-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: The three “three-point” oscillator topologies obtained by grounding one node of <a href="#fig-neg-r-single-ended" class="quarto-xref">Figure&nbsp;65</a>
+</figcaption>
+<div aria-describedby="tbl-three-point-oscillators-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Reference Node</th>
-<th>Oscillator Topology</th>
+<th style="text-align: left;">Reference Node</th>
+<th style="text-align: left;">Amplifier Configuration</th>
+<th style="text-align: left;">Common Name</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Node 1 (Gate)</td>
-<td><a href="https://en.wikipedia.org/wiki/Colpitts_oscillator">Colpitts oscillator</a></td>
+<td style="text-align: left;">Node 1 (Gate)</td>
+<td style="text-align: left;">common-gate</td>
+<td style="text-align: left;">grounded-gate (also called common-base <a href="https://en.wikipedia.org/wiki/Colpitts_oscillator">Colpitts</a>)</td>
 </tr>
 <tr class="even">
-<td>Node 2 (Source)</td>
-<td><a href="https://en.wikipedia.org/wiki/Pierce_oscillator">Pierce oscillator</a></td>
+<td style="text-align: left;">Node 2 (Source)</td>
+<td style="text-align: left;">common-source</td>
+<td style="text-align: left;"><a href="https://en.wikipedia.org/wiki/Pierce_oscillator">Pierce oscillator</a></td>
 </tr>
 <tr class="odd">
-<td>Node 3 (Drain)</td>
-<td><a href="https://en.wikipedia.org/wiki/Clapp_oscillator">Clapp oscillator</a></td>
+<td style="text-align: left;">Node 3 (Drain)</td>
+<td style="text-align: left;">common-drain</td>
+<td style="text-align: left;"><a href="https://en.wikipedia.org/wiki/Colpitts_oscillator">Colpitts oscillator</a></td>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
+<p>The important insight is that the negative resistance <span class="math inline">\(-R_\mathrm{amp}\)</span> is <em>identical</em> in all three cases: choosing a different reference node does not change the oscillation mechanism at all. What it does change is which node serves as the output, how the transistor is biased, and how supply and substrate noise couple into the resonator — which in practice is what decides the choice.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A Note on Oscillator Naming
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The naming in <a href="#tbl-three-point-oscillators" class="quarto-xref">Table&nbsp;5</a> is not used consistently across the literature. The grounded-source case is universally called the Pierce oscillator, but <em>both</em> the grounded-gate and the grounded-drain variants are referred to as “Colpitts” by different authors (they differ only in which of the two capacitors provides the feedback), and some crystal-oscillator literature treats the grounded-drain circuit as just another implementation of the Pierce oscillator <span class="citation" data-cites="Vittoz_Crystal_Oscillators">(<a href="#ref-Vittoz_Crystal_Oscillators" role="doc-biblioref">Vittoz 2010</a>)</span>.</p>
+<p>What is <em>not</em> a grounding variant is the <strong>Clapp oscillator</strong>: it is a Colpitts with an additional capacitor placed <strong>in series with the inductor</strong>, introduced to keep the transistor’s parasitic capacitances from pulling the frequency <span class="citation" data-cites="Clapp.1948">(<a href="#ref-Clapp.1948" role="doc-biblioref">Clapp 1948</a>)</span>. Interestingly, a quartz crystal oscillator gets this for free: as we will see in <a href="#fig-crystal-equivalent-circuit" class="quarto-xref">Figure&nbsp;66</a>, the motional branch of a crystal is <span class="math inline">\(L_\mathrm{m}\)</span> in series with a very small <span class="math inline">\(C_\mathrm{m}\)</span>, so <span class="math inline">\(C_\mathrm{m}\)</span> plays exactly the role of Clapp’s series capacitor. This is the very reason why the crystal can be pulled only by a few ppm (see <a href="#eq-crystal-pulling" class="quarto-xref">Equation&nbsp;61</a>), and thus why quartz oscillators are so stable.</p>
+</div>
+</div>
 <p>When we investigate the equivalent electrical circuit of a quartz crystal, we find that it has inductive behavior between its series resonance frequency and its parallel resonance frequency, which are very close together. The quartz crystal equivalent circuit is shown in <a href="#fig-crystal-equivalent-circuit" class="quarto-xref">Figure&nbsp;66</a>.</p>
 <div id="cell-fig-crystal-equivalent-circuit" class="cell" data-execution_count="66">
 <div class="cell-output cell-output-display">
@@ -3203,7 +3231,7 @@ Figure&nbsp;66: Quartz crystal equivalent circuit.
 </div>
 </div>
 </div>
-<p>This means we can operate the quartz crystal as a high-Q inductor in an oscillator circuit, which results in the single-ended quartz crystal oscillator shown in <a href="#fig-crystal-oscillator" class="quarto-xref">Figure&nbsp;67</a>, which is a very popular choice for high-performance crystal oscillators. Note that in a simple implementation the current-bias MOSFET can be replaced by an inverter stage biased in the linear region.</p>
+<p>This means we can operate the quartz crystal as a high-Q inductor in an oscillator circuit, which results in the single-ended quartz crystal oscillator shown in <a href="#fig-crystal-oscillator" class="quarto-xref">Figure&nbsp;67</a>, which is a very popular choice for high-performance crystal oscillators. For an in-depth treatment of this circuit, including its start-up behavior and amplitude regulation, we recommend <span class="citation" data-cites="Vittoz_Crystal_Oscillators">(<a href="#ref-Vittoz_Crystal_Oscillators" role="doc-biblioref">Vittoz 2010</a>)</span>. Note that in a simple implementation the current-bias MOSFET can be replaced by an inverter stage biased in the linear region.</p>
 <div id="cell-fig-crystal-oscillator" class="cell" data-execution_count="67">
 <div class="cell-output cell-output-display">
 <div id="fig-crystal-oscillator" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -3887,11 +3915,11 @@ Figure&nbsp;91: NTF H(f) of a first-order delta-sigma modulator showing the high
 </div>
 </div>
 </div>
-<p>If we analyze the signal properties of the number sequence generated by the first-order DSM in <a href="#fig-pll-dsm-digital-first-order" class="quarto-xref">Figure&nbsp;90</a>, we find that its randomization properties are not ideal, leading to spurs in the PLL output spectrum. To improve the randomization properties, higher-order DSMs are used in fractional-N PLLs, especially 2nd or 3rd order. A consequence of a higher-order DSM is that the produced sequence can take more values than just <span class="math inline">\(N\)</span> and <span class="math inline">\(N+1\)</span>. The range of produced values is shown in <a href="#tbl-pll-dsm-orders" class="quarto-xref">Table&nbsp;5</a>.</p>
+<p>If we analyze the signal properties of the number sequence generated by the first-order DSM in <a href="#fig-pll-dsm-digital-first-order" class="quarto-xref">Figure&nbsp;90</a>, we find that its randomization properties are not ideal, leading to spurs in the PLL output spectrum. To improve the randomization properties, higher-order DSMs are used in fractional-N PLLs, especially 2nd or 3rd order. A consequence of a higher-order DSM is that the produced sequence can take more values than just <span class="math inline">\(N\)</span> and <span class="math inline">\(N+1\)</span>. The range of produced values is shown in <a href="#tbl-pll-dsm-orders" class="quarto-xref">Table&nbsp;6</a>.</p>
 <div id="tbl-pll-dsm-orders" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-pll-dsm-orders-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;5: DSM output ranges and characteristics for different orders
+Table&nbsp;6: DSM output ranges and characteristics for different orders
 </figcaption>
 <div aria-describedby="tbl-pll-dsm-orders-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -4132,7 +4160,7 @@ Figure&nbsp;101: A generic differential power amplifier with cascode stages for 
 <div id="tbl-poweramp-classes" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-poweramp-classes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;6: Amplifier Classes
+Table&nbsp;7: Amplifier Classes
 </figcaption>
 <div aria-describedby="tbl-poweramp-classes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -4512,6 +4540,9 @@ Bird, Trevor S. 2009. <span>“<span class="nocase">Definition and Misuse of Ret
 <div id="ref-Brown.1971" class="csl-entry" role="listitem">
 Brown, J. I. 1971. <span>“<span class="nocase">A digital phase and frequency-sensitive detector</span>.”</span> <em>Proceedings of the IEEE</em> 59 (4): 717–18. <a href="https://doi.org/10.1109/proc.1971.8246">https://doi.org/10.1109/proc.1971.8246</a>.
 </div>
+<div id="ref-Clapp.1948" class="csl-entry" role="listitem">
+Clapp, J. K. 1948. <span>“An Inductance-Capacitance Oscillator of Unusual Frequency Stability.”</span> <em>Proceedings of the <span>IRE</span></em> 36 (3): 356–58. <a href="https://doi.org/10.1109/jrproc.1948.233920">https://doi.org/10.1109/jrproc.1948.233920</a>.
+</div>
 <div id="ref-DaDalt_PHN" class="csl-entry" role="listitem">
 Da Dalt, Luca, and Ali Sheikholeslami. 2018. <em>Understanding Jitter and Phase Noise</em>. Cambridge University Press.
 </div>
@@ -4622,6 +4653,9 @@ Vazny, Rastislav, Werner Schelmbauer, Harald Pretl, Stefan Herzinger, and Robert
 </div>
 <div id="ref-Verghese.1995" class="csl-entry" role="listitem">
 Verghese, Nishath K., Timothy J. Schmerbeck, and David J. Allstot. 1995. <em>Simulation Techniques and Solutions for Mixed-Signal Coupling in Integrated Circuits</em>. Kluwer Academic Publishers.
+</div>
+<div id="ref-Vittoz_Crystal_Oscillators" class="csl-entry" role="listitem">
+Vittoz, Eric. 2010. <em>Low-Power Crystal and <span>MEMS</span> Oscillators: The Experience of Watch Developments</em>. Springer Netherlands. <a href="https://doi.org/10.1007/978-90-481-9395-0">https://doi.org/10.1007/978-90-481-9395-0</a>.
 </div>
 <div id="ref-Yue.1998" class="csl-entry" role="listitem">
 Yue, C. P., and S. S. Wong. 1998. <span>“On-Chip Spiral Inductors with Patterned Ground Shields for <span>Si</span>-Based <span>RF</span> <span>ICs</span>.”</span> <em><span>IEEE</span> Journal of Solid-State Circuits</em> 33 (5): 743–52. <a href="https://doi.org/10.1109/4.668989">https://doi.org/10.1109/4.668989</a>.
