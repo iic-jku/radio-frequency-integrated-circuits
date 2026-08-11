@@ -110,9 +110,9 @@ This chapter contains a collection of potential questions covering the topics di
 
 39. What are the two fundamental approaches to implementing frequency conversion in a mixer? Explain the difference between nonlinear and time-variant mixers.
 
-40. Draw the block diagram of a single-balanced passive mixer using a MOSFET switch. Derive the output signal expression and identify the conversion loss.
+40. Draw the block diagram of an unbalanced passive mixer using a single MOSFET switch. Derive the output signal expression and identify the conversion loss.
 
-41. What is a double-balanced mixer? Draw its circuit diagram. What are the advantages over a single-balanced mixer? What is the conversion gain/loss of an ideal double-balanced mixer?
+41. What is a double-balanced mixer? Draw its circuit diagram. What are the advantages over an unbalanced and over a single-balanced mixer, respectively? What is the conversion gain/loss of an ideal double-balanced mixer, and where do the 6 dB compared to the unbalanced mixer come from?
 
 42. Draw and explain the Gilbert cell mixer. How does it work? What is the advantage of using a bipolar or CMOS Gilbert cell?
 

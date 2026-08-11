@@ -87,17 +87,26 @@ Again, we see that the output signal contains the desired frequency components a
 The implementation in @fig-cmos-single-mixer uses a single NMOS transistor as a switch. The LO signal is ac-coupled to the gate of the transistor, so that the dc operating point is set by the bias voltage $V_\mathrm{bias}$. When the LO signal is high enough, the transistor is switched on and the input signal $v_\mathrm{in}(t)$ is passed to the output; when the LO signal is low, the transistor is switched off and no signal is passed. Note that with the MOSFET we can switch voltages as well as currents, so the mixer can work in both modes, voltage mode or current mode.
 
 
-A big disadvantage of this simple implementation is that the input signal is "lost" for half of the cycle when the MOSFET switch is open. A fully differential implementation (having differential ports at input, output and LO input) can alleviate this problem, as the input signal is always connected to one of the two output ports. This configuration is called a "**double-balanced mixer**" and is widely used in practice. It is shown in @fig-cmos-double-mixer.
+A big disadvantage of this simple, **unbalanced** implementation is that the input signal is "lost" for half of the cycle when the MOSFET switch is open. A fully differential implementation (having differential ports at input, output and LO input) can alleviate this problem, as the input signal is always connected to one of the two output ports. This configuration is called a "**double-balanced mixer**" and is widely used in practice. It is shown in @fig-cmos-double-mixer.
 
 {{< include /content/mixer/_fig_cmos_mixer_double.qmd >}}
 
-Note that with a double-balanced mixer, we have 6 dB more conversion gain compared to the single-balanced mixer (refer to @eq-mixer-single-output), as can be seen in @eq-mixer-double-output. Note that the factor of $2/\pi$ represents the conversion loss of an ideal double-balanced mixer of 3.9 dB.
+The balanced structure changes the switching function from one toggling between 0 and 1 into one toggling between $-1$ and $+1$. The Fourier series of the latter has twice the fundamental amplitude, so the conversion gain doubles from $1/\pi$ to $2/\pi$, i.e., we gain 6 dB compared to the unbalanced mixer of @eq-mixer-single-output:
 
 $$
 s_\mathrm{out}(t) = \frac{2}{\pi} \cos(\omega_\mathrm{in} t \pm \omega_\mathrm{LO} t) + \ldots
 $$ {#eq-mixer-double-output}
 
-Note that no dc current needs to flow through the mixer structures shown in @fig-cmos-single-mixer and @fig-cmos-double-mixer, which is a huge advantage when thinking of flicker noise. Flicker noise in a MOSFET is proportional to the dc current flowing through the device, so if no dc current flows, no flicker noise is generated!
+The factor $2/\pi$ corresponds to a conversion loss of 3.9 dB, which is the best an ideal balanced passive mixer can do.
+
+::: {.callout-important}
+## Single-Balanced vs. Double-Balanced
+Take care not to attribute these 6 dB to the *double*-balancing itself. A **single-balanced** mixer (a single-ended input driving a differential pair of switches with a differential output) already realizes the $\pm 1$ switching function, and therefore already achieves the $2/\pi$ conversion gain. What the second level of balancing buys is *port-to-port isolation*: in the double-balanced mixer of @fig-cmos-double-mixer both the LO feedthrough and the RF feedthrough appear as common-mode signals at the differential output and are thus suppressed. This is why the double-balanced structure is the workhorse in practice, not because of any additional conversion gain.
+:::
+
+Note that no dc current needs to flow through the mixer structures shown in @fig-cmos-single-mixer and @fig-cmos-double-mixer, which is a huge advantage when thinking of flicker noise. Careful, though: this is *not* because the flicker noise of a MOSFET disappears without dc current. The gate-referred flicker noise $K_f / (\Cox W L f)$ of @sec-noise-types is independent of the bias current. What matters is that this gate-referred voltage noise is converted into a *drain current* noise, $\overline{I_\mathrm{n,1/f}^2} = \gm^2 K_f / (\Cox W L f)$, and it is this current that is translated to the mixer output. In a passive mixer the switches are driven hard on and off, and with (ideally) zero dc current through them there is no bias current for the flicker noise to modulate, so the contribution at the output is drastically reduced [@RedmanWhite.2001]. This is in stark contrast to an active (Gilbert-type) mixer, where the switching pair carries the transconductor's bias current at all times.
+
+Passive mixers are therefore the architecture of choice for zero-IF receivers, where the downconverted signal sits right at dc and is thus maximally exposed to 1/f noise.
 
 In order to look at the full picture, we embed the mixer of @fig-cmos-double-mixer in a complete RX front-end, as shown in @fig-rx-mixer-simplified. An LNA (essentially a $\gm$ cell) creates a current signal from the received voltage signal at the antenna. This current signal is then fed to the mixer in the current domain, and further sunk into a transimpedance amplifier (TIA), which also implements a lowpass pole. The simplified circuit is shown in @fig-rx-mixer-simplified [@RedmanWhite.2001].
 
@@ -121,7 +130,18 @@ Without much deliberation or diving into the background, it has to be stated tha
 
 The key observation to make is that a switch that is opened and closed at a certain frequency (the LO frequency) can be seen as a time-variant resistor. This time-variant resistor converts impedance seen at one end to the other end, and also changes the frequency of this apparent impedance. In other words, if we connect grounded capacitors at one end of the mixer switches and look into the other end, we see a **bandpass filter centered at the LO** frequency! In this way we can build bandpass filters (and also bandstop filters [@Vazny.2010]) at very high frequencies which are precisely centered (without component variations) around $\omega_\mathrm{LO}$.
 
-The impedance characteristics of such a tank circuit exhibit first-order bandpass behavior, as shown in @fig-tank-bandpass. The peak impedance reaches 5.3 times the switch resistance ($R_\mathrm{sw}$), and importantly, the bandwidth is inversely proportional to the capacitance value, i.e., $\mathrm{BW} \propto 1/C$. This relationship allows for precise control of the filter bandwidth by adjusting the capacitor values.
+The reason this works is the **transparency** of the passive mixer: the impedance connected to the baseband side of the switches appears at the RF port, frequency-shifted to $\pm \omega_\mathrm{LO}$. If the baseband load is a first-order $RC$ section with impedance $Z_\mathrm{BB}(\Delta \omega)$, then the RF-port impedance around the LO is simply
+
+$$
+Z_\mathrm{in}(\omega_\mathrm{LO} + \Delta \omega) \approx R_\mathrm{sw} + Z_\mathrm{BB}(\Delta \omega),
+$$ {#eq-npath-impedance}
+
+i.e., a *first-order* bandpass centered exactly at $\omega_\mathrm{LO}$, sitting on top of the series switch resistance $R_\mathrm{sw}$. This is shown in @fig-tank-bandpass. Two properties follow directly from @eq-npath-impedance and make the N-path filter so attractive:
+
+- The **peak impedance** is $R_\mathrm{sw} + R_\mathrm{BB}$, where $R_\mathrm{BB}$ is the effective shunt resistance at baseband. The switch resistance therefore sets the floor of what is achievable — low-$R_\mathrm{sw}$ switches are essential.
+- The **bandwidth is inversely proportional to the capacitance**, $\mathrm{BW} \propto 1/C$, while the center frequency is set solely by $\omega_\mathrm{LO}$. This gives us a filter whose center frequency and bandwidth are independently and precisely programmable — something no passive $LC$ filter can offer. The resulting effective $Q = \omega_\mathrm{LO}/\mathrm{BW}$ can easily reach several hundreds.
+
+A detailed treatment, including the dependence on $N$ and the duty cycle as well as the folding of the higher harmonics, can be found in [@Ghaffari.2011].
 
 {{< include /content/mixer/_fig_tank_bandpass.qmd >}}
 
@@ -135,7 +155,7 @@ Probably the simplest way to generate quadrature LO signals is to use a simple R
 
 {{< include /content/mixer/_fig_rc_cr_phase_shift.qmd >}}
 
-The advantage of this network is its simplicity, as it only requires a few passive components, and it can generate I and Q phases from an incoming signal at the target frequency. The disadvantage is that the phase shift is frequency-dependent, so the quadrature signals are only perfectly in quadrature at one frequency. Furthermore, the amplitude of the two outputs is not equal, which might require additional gain stages to equalize the amplitudes. Additionally, this passive network has a 3 dB loss, so we need additional gain stages to compensate for this loss.
+The advantage of this network is its simplicity, as it only requires a few passive components, and it can generate I and Q phases from an incoming signal at the target frequency. The disadvantage is that both the phase shift *and* the amplitude are frequency-dependent: exactly at $\omega_0 = 1/RC$ the two outputs are perfectly in quadrature *and* have equal magnitude ($1/\sqrt{2}$ each), but as soon as we move away from $\omega_0$ the lowpass output rolls off while the highpass output rises, so we accumulate both a phase error and an amplitude imbalance. Since the resulting I/Q mismatch directly limits the image rejection (see @eq-irr-definition), this network is only usable over a narrow frequency range, and typically requires additional amplitude-limiting or gain stages. Additionally, this passive network has a 3 dB loss at $\omega_0$, which also has to be made up by subsequent gain stages.
 
 ### Polyphase Filter {#sec-lo-polyphase}
 

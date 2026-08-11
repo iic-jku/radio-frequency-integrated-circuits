@@ -79,7 +79,7 @@ ax.text(f_LO, Z_3dB - 2.0, r'BW $= 1/(\pi R_\mathrm{BB} C) \propto 1/C$',
 ax.set_xlabel(r'Frequency (normalized to $f_\mathrm{LO}$)')
 ax.set_ylabel(r'$| Z_\mathrm{in} | / R_\mathrm{sw}$')
 ax.grid(True, alpha=0.3)
-ax.legend(loc='upper right')
+ax.legend(loc='lower right')
 ax.set_xlim(0.90, 1.10)
 ax.set_ylim(0, Z_peak * 1.15)
 
