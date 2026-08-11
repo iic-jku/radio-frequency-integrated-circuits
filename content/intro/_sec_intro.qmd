@@ -156,7 +156,7 @@ In order to allow communication between different devices, different operators, 
 | **Transmission/ multiple access** | TDMA, FDMA | DS-CDMA | OFDMA (DL**+UL**), SC-FDMA/**DFT-s-OFDM (UL)** | OFDM, CSMA/CA | FHSS | CDMA |
 | **Duplex** | FDD | FDD | FDD, TDD | TDD | TDD | n/a |
 | **Channel bandwidth** | 200 kHz | 5 MHz | 1.4, 3, 5, 10, 15, 20, ..., **100 MHz (FR1), 400 MHz (FR2)** | 10, 20, 40, 80, 160, 320 MHz | 1 MHz | 16...24 MHz |
-| **Symbol rate**[^sym-rate] | 270.833 ksym/s | 3.84 Msym/s | 15/**30/60** ksym/s | 312.5 ksym/s | 1 Msym/s | 50 sym/s |
+| **Symbol rate**[^sym-rate] | 270.833 ksym/s | 3.84 Msym/s | 15/**30/60** ksym/s | 312.5 ksym/s (11a/g/n/ac), 78.125 ksym/s (11ax/be) | 1 Msym/s | 50 sym/s |
 | **Pulse shaping** | Gaussian (BT=0.3) | Root Raised Cosine ($\alpha$=0.22) | Rectangular | Rectangular | Gaussian (BT=0.5) | Rectangular |
 | **Transmit power** | 1...2 W | 250 mW | 200 mW (FDD), 400 mW (TDD) | 100 mW | 1...100 mW | n/a |
 | **PAR (UL)** | 0 dB (GMSK), 3 dB (8PSK) | 3...8 dB | 6...8 dB | Up to 12 dB | 0 dB (GFSK), 3 dB (8DPSK) | n/a |
