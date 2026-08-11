@@ -478,16 +478,24 @@ The constellation diagram can be imagined as a complex plane, where the x-axis r
 
 @tbl-modulation-snr shows the **SNR requirements for different modulation formats** to achieve a bit error rate (BER) of $10^{-5}$ in an additive white Gaussian noise (AWGN) channel [@Sklar_Digital_Communications]. As we can see, higher-order modulation formats require higher SNR to achieve the same BER. Note that for the SNR values of this table **no error correction coding** (ECC) is assumed; with error correction coding the required SNR can be significantly reduced!
 
-| Modulation | Bits/Symbol | Required $E_\mathrm{s}/N_0$ (dB) |
-|------------|--------------|--------------------|
-| BPSK       | 1            | 9.6                |
-| QPSK       | 2            | 12.6               |
-| 16-QAM     | 4            | 18.2               |
-| 64-QAM     | 6            | 24.4               |
-| 256-QAM    | 8            | 30.6               |
-| 1024-QAM   | 10           | 36.9               |
-| 4096-QAM   | 12           | 43.2               |
-: Required symbol-energy-to-noise ratio $E_\mathrm{s}/N_0$ for different modulation schemes to achieve BER = $10^{-5}$ in an AWGN channel w/o error correction {#tbl-modulation-snr}
+| Modulation | Bits/Symbol $k$ | Required $E_\mathrm{s}/N_0$ (dB) | Required $E_\mathrm{b}/N_0$ (dB) |
+|:-----------|:---------------:|:--------------------------------:|:--------------------------------:|
+| BPSK       | 1               | 9.6                              | 9.6                              |
+| QPSK       | 2               | 12.6                             | 9.6                              |
+| 16-QAM     | 4               | 19.5                             | 13.4                             |
+| 64-QAM     | 6               | 25.6                             | 17.8                             |
+| 256-QAM    | 8               | 31.5                             | 22.5                             |
+| 1024-QAM   | 10              | 37.5                             | 27.5                             |
+| 4096-QAM   | 12              | 43.4                             | 32.6                             |
+: Required symbol-energy-to-noise ratio $E_\mathrm{s}/N_0$ and bit-energy-to-noise ratio $E_\mathrm{b}/N_0$ for Gray-coded modulation schemes to achieve BER = $10^{-5}$ in an AWGN channel w/o error correction {#tbl-modulation-snr}
+
+The two columns of @tbl-modulation-snr are related by the number of bits per symbol,
+
+$$
+\frac{E_\mathrm{s}}{N_0} \bigg|_\mathrm{dB} = \frac{E_\mathrm{b}}{N_0} \bigg|_\mathrm{dB} + 10 \log_{10}(k),
+$$ {#eq-esn0-ebn0}
+
+and it is worth being careful about which of the two a given data sheet or standard quotes — they differ by more than 10 dB for the high-order formats. Note also that BPSK and QPSK require the *same* $E_\mathrm{b}/N_0$: QPSK transmits two bits per symbol on two orthogonal carriers, so it doubles the spectral efficiency of BPSK entirely for free in terms of energy per bit. From 16-QAM upwards, each step to the next-higher square QAM order costs roughly 6 dB in $E_\mathrm{s}/N_0$, because the number of constellation points quadruples while the constellation is squeezed into the same average power.
 
 ## Pulse Shaping and Spectral Efficiency {#sec-fundamentals-pulse-shaping}
 
