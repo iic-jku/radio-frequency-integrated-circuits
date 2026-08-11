@@ -15,9 +15,9 @@ limitations under the License.
 :::
 
 ```{python}
-#| label: fig-mixer-block
+#| label: fig-mixer-square
 #| echo: false
-#| fig-cap: "Mixer block diagram."
+#| fig-cap: "A squarer as a nonlinear mixer."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -28,7 +28,7 @@ with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=14, margin=0.5)
 
     dsp.Arrow().right(d.unit/2).label(r'$s_\mathrm{in}(t)$', 'left')
-    mix1 = dsp.Mixer()
+    mix1 = dsp.Square().label(r'$(\cdot)^2$', loc='center')
     dsp.Arrow().length(d.unit/2).label(r'$s_\mathrm{out}(t)$', 'right')
     dsp.Arrow().at(mix1.S).down(d.unit/2).label(r'$s_\mathrm{LO}(t)$', 'left').reverse()
 ```
