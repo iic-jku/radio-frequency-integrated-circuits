@@ -44,10 +44,16 @@ Unfortunately, wireless transmission is hard. The wireless channel, i.e., the us
 In order to estimate the received power $P_\mathrm{R}$ from a wireless transmission, we can use **Friis' transmission formula** [@Pozar_RF]:
 
 $$
-P_\mathrm{R} = \frac{P_\mathrm{T}}{4 \pi d^2} \cdot A_\mathrm{R} = P_\mathrm{T} \cdot \frac{A_\mathrm{R} \cdot A_\mathrm{T}}{d^2 \lambda^2}
+P_\mathrm{R} = \frac{P_\mathrm{T} \cdot G_\mathrm{T}}{4 \pi d^2} \cdot A_\mathrm{R} = P_\mathrm{T} \cdot \frac{A_\mathrm{R} \cdot A_\mathrm{T}}{d^2 \lambda^2}
 $$ {#eq-friis-transmission}
 
-Here, $A_\mathrm{R}$/$A_\mathrm{T}$ is the effective area of the receive/transmit antenna, while $d$ is the distance (line of sight) between the two antennas, and $\lambda$ is the wavelength of the EM wave. The effective area of an antenna depends on the type and construction, but generally we can say that
+Here, $A_\mathrm{R}$/$A_\mathrm{T}$ is the effective area of the receive/transmit antenna, while $d$ is the distance (line of sight) between the two antennas, and $\lambda$ is the wavelength of the EM wave. The first form of @eq-friis-transmission is simply the power density at distance $d$ (the transmit power spread over a sphere, boosted by the transmit antenna gain $G_\mathrm{T}$) multiplied by the effective area of the receive antenna. The second form follows by substituting the general relation between antenna gain and effective area,
+
+$$
+G = \frac{4 \pi A}{\lambda^2},
+$$ {#eq-antenna-gain-area}
+
+for the transmit antenna. The effective area of an antenna depends on the type and construction, but generally we can say that
 
 $$
 A \propto \lambda^2
