@@ -801,7 +801,7 @@ Table&nbsp;2: Comparison of wireless communication standards
 <td>270.833 ksym/s</td>
 <td>3.84 Msym/s</td>
 <td>15/<strong>30/60</strong> ksym/s</td>
-<td>312.5 ksym/s</td>
+<td>312.5 ksym/s (11a/g/n/ac), 78.125 ksym/s (11ax/be)</td>
 <td>1 Msym/s</td>
 <td>50 sym/s</td>
 </tr>
@@ -997,7 +997,7 @@ Figure&nbsp;5: Single-tone test showing created harmonics at <span class="math i
 </div>
 </div>
 </div>
-<p>How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal <span class="math inline">\(x(t)\)</span> in amplitude, and observe the output <span class="math inline">\(y(t)\)</span>. If the observed gain drops by 1 dB from the small-signal value, we note the input power and call this point the <strong>1 dB compression point</strong> (<span class="math inline">\(P_\mathrm{1dB}\)</span>). We should always add whether this 1-dB compression point is input- or output-referred to avoid ambiguity. The diagram in <a href="#fig-1db-compression-point" class="quarto-xref">Figure&nbsp;6</a> shows this test, evaluated directly from <a href="#eq-linearity-single-gain-fundamental" class="quarto-xref">Equation&nbsp;8</a> with the <em>voltage</em> gain <span class="math inline">\(\alpha_1 = 10\)</span> (i.e., a small-signal power gain of 20 dB) and <span class="math inline">\(\alpha_3 = -145\,\mathrm{V^{-2}}\)</span>, referred to a 50 Ω system.</p>
+<p>How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal <span class="math inline">\(x(t)\)</span> in amplitude, and observe the output <span class="math inline">\(y(t)\)</span>. If the observed gain drops by 1 dB from the small-signal value, we note the input power and call this point the <strong>1 dB compression point</strong> (<span class="math inline">\(P_\mathrm{1dB}\)</span>). We should always add whether this 1-dB compression point is input- or output-referred to avoid ambiguity. The diagram in <a href="#fig-1db-compression-point" class="quarto-xref">Figure&nbsp;6</a> shows this test, evaluated directly from <a href="#eq-linearity-single-gain-fundamental" class="quarto-xref">Equation&nbsp;8</a> with the <em>voltage</em> gain <span class="math inline">\(\alpha_1 = 10\)</span> (i.e., a small-signal power gain of 20 dB) and <span class="math inline">\(\alpha_3 = -145\,\mathrm{V^{-2}}\)</span>, referred to a 50 Ω system.</p>
 <p>Setting the compressed gain of <a href="#eq-linearity-single-gain-fundamental" class="quarto-xref">Equation&nbsp;8</a> to <span class="math inline">\(10^{-1/20}\)</span> of its small-signal value <span class="math inline">\(\alpha_1\)</span> gives the input amplitude at the 1-dB compression point,</p>
 <p><span id="eq-p1db-amplitude"><span class="math display">\[
 A_\mathrm{1dB}^2 = \frac{1 - 10^{-1/20}}{\frac{3}{4} \left| \alpha_3 / \alpha_1 \right|} \approx 0.145 \cdot \left| \frac{\alpha_1}{\alpha_3} \right|,
@@ -2159,7 +2159,7 @@ Figure&nbsp;31: Block diagram of an LNA. Typically, the LNA input is impedance m
 </div>
 </div>
 </div>
-<p>The LNA as a building block is shown in <a href="#fig-lna-block" class="quarto-xref">Figure&nbsp;31</a>. It is usually designed for a specific frequency band, e.g., the 2.4 GHz ISM band or the 5 GHz WLAN band, and is typically designed for a specific impedance, e.g., 50 Ω, which is the standard impedance for RF systems. Impedance matching is usually mandated at the input; the output impedance matching is only required if the output of the LNA goes off-chip; if it is kept on-chip, impedance matching is often not needed. The LNA is also designed to be sufficiently linear, i.e., to not introduce significant distortion to the amplified signal; however, compared to the noise requirements, linearity is often less critical.</p>
+<p>The LNA as a building block is shown in <a href="#fig-lna-block" class="quarto-xref">Figure&nbsp;31</a>. It is usually designed for a specific frequency band, e.g., the 2.4 GHz ISM band or the 5 GHz WLAN band, and is typically designed for a specific impedance, e.g., 50 Ω, which is the standard impedance for RF systems. Impedance matching is usually mandated at the input; the output impedance matching is only required if the output of the LNA goes off-chip; if it is kept on-chip, impedance matching is often not needed. The LNA is also designed to be sufficiently linear, i.e., to not introduce significant distortion to the amplified signal; however, compared to the noise requirements, linearity is often less critical.</p>
 <section id="sec-impedance-matching" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="sec-impedance-matching"><span class="header-section-number">4.1</span> Impedance Matching</h2>
 <p>Why is impedance matching at the input of the LNA so important?</p>
@@ -2825,7 +2825,7 @@ Figure&nbsp;54: Input and output waveforms of I/Q generation with a divide-by-2.
 </div>
 </div>
 </div>
-<p>It is important to note that the circuit shown in <a href="#fig-iq-divider" class="quarto-xref">Figure&nbsp;53</a> has to be implemented in a way so that there is no phase ambiguity, i.e., the I-phase is lagging the Q-phase by exactly 90°. This can be achieved by using a reset signal to set the flip-flops to a known state at startup, or by implementing flip-flops using a differential clock input.</p>
+<p>It is important to note that the circuit shown in <a href="#fig-iq-divider" class="quarto-xref">Figure&nbsp;53</a> has to be implemented in a way so that there is no phase ambiguity, i.e., the Q-phase is lagging the I-phase by exactly 90° (as drawn in <a href="#fig-ff-phase-diagram" class="quarto-xref">Figure&nbsp;54</a>). This can be achieved by using a reset signal to set the flip-flops to a known state at startup, or by implementing flip-flops using a differential clock input.</p>
 <p>If the input clock is not 2x the target frequency but higher (e.g., 4x), then we can use a frequency divider approach to generate more than four phases. This could be useful in an N-path filter, where we could need more than four phases (see <a href="#sec-mixer-npath" class="quarto-xref">Section&nbsp;5.4</a>).</p>
 <p>Often, we need four-phase LO signals with 25% duty cycle (instead of the 50% duty cycle shown in <a href="#fig-ff-phase-diagram" class="quarto-xref">Figure&nbsp;54</a>). This can be achieved by using additional logic gates to combine the outputs of the flip-flops, as shown in <a href="#fig-logen-25" class="quarto-xref">Figure&nbsp;55</a>. The resulting LO waveforms are shown in <a href="#fig-logen-25-waveforms" class="quarto-xref">Figure&nbsp;56</a>.</p>
 <div id="cell-fig-logen-25" class="cell" data-execution_count="55">
@@ -4406,7 +4406,7 @@ Figure&nbsp;105: Block diagram of a typical transceiver (TRX) showing the main c
 <h2 data-number="10.3" class="anchored" data-anchor-id="sec-exam-noise"><span class="header-section-number">10.3</span> Noise</h2>
 <ol start="13" type="1">
 <li><p>What are the main types of noise relevant for electronic circuits? Describe thermal noise, shot noise, and flicker noise with their governing equations.</p></li>
-<li><p>What is the thermal noise voltage of a resistor with value <span class="math inline">\(R\)</span>? Calculate the noise voltage spectral density of a 1 kΩ resistor at room temperature.</p></li>
+<li><p>What is the thermal noise voltage of a resistor with value <span class="math inline">\(R\)</span>? Calculate the noise voltage spectral density of a 1 kΩ resistor at room temperature.</p></li>
 <li><p>What is the maximum noise power that can be extracted from a resistor? Derive the result using the maximum power transfer theorem and explain why it equals <span class="math inline">\(kT\)</span> per Hz.</p></li>
 <li><p>What are the main noise sources in a MOSFET? How can the input-referred noise voltage be minimized? How does flicker noise depend on transistor dimensions?</p></li>
 <li><p>What is the noise figure (NF)? State the definition using SNR at input and output (<a href="#eq-noise-figure" class="quarto-xref">Equation&nbsp;21</a>). What is the noise figure of an ideal noiseless amplifier? What is the noise figure of a passive lossy element with loss <span class="math inline">\(L\)</span>?</p></li>
@@ -4490,7 +4490,7 @@ Figure&nbsp;105: Block diagram of a typical transceiver (TRX) showing the main c
 <section id="sec-exam-poweramp" class="level2" data-number="10.10">
 <h2 data-number="10.10" class="anchored" data-anchor-id="sec-exam-poweramp"><span class="header-section-number">10.10</span> Power Amplifiers</h2>
 <ol start="63" type="1">
-<li><p>Draw a simple single-ended power amplifier. What is the trade-off between supply voltage, load impedance, and output power? Calculate the maximum output power for <span class="math inline">\(V_\mathrm{DD}\)</span> = 3 V and <span class="math inline">\(R_\mathrm{L}\)</span> = 50 Ω.</p></li>
+<li><p>Draw a simple single-ended power amplifier. What is the trade-off between supply voltage, load impedance, and output power? Calculate the maximum output power for <span class="math inline">\(V_\mathrm{DD}\)</span> = 3 V and <span class="math inline">\(R_\mathrm{L}\)</span> = 50 Ω.</p></li>
 <li><p>What is the definition of drain efficiency and power-added efficiency (PAE) of a PA?</p></li>
 <li><p>What is the AM/AM and AM/PM distortion in a power amplifier? How can the Saleh model be used to characterize PA nonlinearity?</p></li>
 <li><p>Describe load-pull measurements. Why are they important for PA design?</p></li>
@@ -4510,7 +4510,7 @@ Figure&nbsp;105: Block diagram of a typical transceiver (TRX) showing the main c
 <li><p><strong>Sensitivity Calculation</strong>: A Bluetooth LE receiver has a noise figure of 8 dB, channel bandwidth of 2 MHz, and requires an SNR of 15 dB. Calculate the receiver sensitivity.</p></li>
 <li><p><strong>LNA Input Impedance</strong>: An inductively-degenerated common-source LNA has <span class="math inline">\(C_\mathrm{gs}\)</span> = 200 fF, <span class="math inline">\(g_m\)</span> = 40 mS, and <span class="math inline">\(L_\mathrm{deg}\)</span> = 1 nH. Calculate the real part of the input impedance. What additional inductance is needed to resonate with <span class="math inline">\(C_\mathrm{gs}\)</span> at 2.4 GHz?</p></li>
 <li><p><strong>Reciprocal Mixing</strong>: A receiver has a desired sensitivity of –90 dBm with an adjacent channel blocker at –30 dBm located 3 MHz from the carrier. The channel bandwidth is 100 kHz, and the demodulator requires an SNR of 10 dB. What is the maximum allowable LO phase noise at 3 MHz offset, assuming the reciprocal mixing noise may consume the entire noise budget?</p></li>
-<li><p><strong>Phase Noise</strong>: An oscillator operates at 2.4 GHz with a tank <span class="math inline">\(Q\)</span> of 15, tank resistance <span class="math inline">\(R_p\)</span> = 500 Ω, oscillation amplitude of 0.8 V peak, and noise factor <span class="math inline">\(F\)</span> = 2. Calculate the phase noise at 1 MHz offset using Leeson’s equation.</p></li>
+<li><p><strong>Phase Noise</strong>: An oscillator operates at 2.4 GHz with a tank <span class="math inline">\(Q\)</span> of 15, tank resistance <span class="math inline">\(R_p\)</span> = 500 Ω, oscillation amplitude of 0.8 V peak, and noise factor <span class="math inline">\(F\)</span> = 2. Calculate the phase noise at 1 MHz offset using Leeson’s equation.</p></li>
 <li><p><strong>PLL Loop Parameters</strong>: A charge-pump PLL has <span class="math inline">\(I_\mathrm{CP}\)</span> = 100 µA, <span class="math inline">\(K_\mathrm{VCO}\)</span> = 100 MHz/V, <span class="math inline">\(C_\mathrm{int}\)</span> = 10 nF, and <span class="math inline">\(N\)</span> = 100. Calculate the natural frequency <span class="math inline">\(\omega_n\)</span> and the required <span class="math inline">\(R_\mathrm{int}\)</span> for a damping factor <span class="math inline">\(\zeta\)</span> = 0.707. Watch the units of <span class="math inline">\(K_\mathrm{VCO}\)</span>!</p></li>
 <li><p><strong>PA Efficiency</strong>: A power amplifier delivers 27 dBm output power and draws 400 mA from a 3.3 V supply. Calculate the drain efficiency and the PAE if the input power is 0 dBm.</p></li>
 </ol>
