@@ -113,7 +113,15 @@ The created harmonics are illustrated in @fig-harmonics. Note that measuring har
 
 {{< include /content/fundamentals/_fig_harmonics.qmd >}}
 
-How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal $x(t)$ in amplitude, and observe the output $y(t)$. If the observed gain drops by 1 dB from the small-signal value, we note the input power and call this point the **1 dB compression point** ($P_\mathrm{1dB}$). We should always add whether this 1-dB compression point is input- or output-referred to avoid ambiguity. The diagram in @fig-1db-compression-point shows this test ($\alpha_1 = 100$, $\alpha_3 = -0.2$).
+How can we quantify the nonlinearity with a one-tone test? We can sweep the input signal $x(t)$ in amplitude, and observe the output $y(t)$. If the observed gain drops by 1 dB from the small-signal value, we note the input power and call this point the **1 dB compression point** ($P_\mathrm{1dB}$). We should always add whether this 1-dB compression point is input- or output-referred to avoid ambiguity. The diagram in @fig-1db-compression-point shows this test, evaluated directly from @eq-linearity-single-gain-fundamental with the *voltage* gain $\alpha_1 = 10$ (i.e., a small-signal power gain of 20 dB) and $\alpha_3 = -145\,\mathrm{V^{-2}}$, referred to a 50 Ω system.
+
+Setting the compressed gain of @eq-linearity-single-gain-fundamental to $10^{-1/20}$ of its small-signal value $\alpha_1$ gives the input amplitude at the 1-dB compression point,
+
+$$
+A_\mathrm{1dB}^2 = \frac{1 - 10^{-1/20}}{\frac{3}{4} \left| \alpha_3 / \alpha_1 \right|} \approx 0.145 \cdot \left| \frac{\alpha_1}{\alpha_3} \right|,
+$$ {#eq-p1db-amplitude}
+
+which for the values above lands at $P_\mathrm{1dB} = -10\,\text{dBm}$ (input-referred). Note that the truncated third-order model is only meaningful up to its turnover point at $A^2 = \alpha_1 / (2.25 |\alpha_3|)$, which is a mere 4.9 dB above $P_\mathrm{1dB}$; beyond that, the higher-order terms of @eq-nonlinear-model (or a saturating model, see below) are required.
 
 {{< include /content/fundamentals/_fig_1db_compression.qmd >}}
 
@@ -147,6 +155,11 @@ y(t) = y'(t) + y''(t) + y'''(t)
 $$ {#eq-linearity-double}
 
 As many different frequency components are created by this simple two-tone test (and nonlinearity only up to 3rd order), we split the result into different equations and look at the result separately.
+
+::: {.callout-note}
+## What We Leave Out
+To keep the following equations readable, we list only the components that are *new* compared to the single-tone case. The two-tone stimulus of course also produces the plain harmonics of each tone individually (at $2 \omega_1$, $2 \omega_2$, $3 \omega_1$, $3 \omega_2$), with exactly the coefficients we already derived in @eq-linearity-single. They are omitted below, not missing.
+:::
 
 First, we start with the fundamental tones:
 
@@ -198,7 +211,13 @@ The resulting test is called a two-tone test yielding the third-order intercept 
 
 {{< include /content/fundamentals/_fig_im3_power_sweep.qmd >}}
 
-Note that, as shown in @fig-im3-power-sweep, the IM3 products rise with a slope of 3 dB/dB, i.e., if the input power is increased by 1 dB, the IM3 products increase by 3 dB. The fundamental tones rise with a slope of 1 dB/dB (as long as we are in the linear region). The IP3 point is defined as the intersection of the **extrapolated** linear lines of fundamental and IM3 products. As both lines have different slopes, this intersection point is usually far outside the actual operating range of the circuit block under test!
+Note that, as shown in @fig-im3-power-sweep, the IM3 products rise with a slope of 3 dB/dB, i.e., if the input power is increased by 1 dB, the IM3 products increase by 3 dB. The fundamental tones rise with a slope of 1 dB/dB (as long as we are in the linear region). The IP3 point is defined as the intersection of the **extrapolated** linear lines of fundamental and IM3 products. Equating the extrapolated fundamental $\alpha_1 A$ with the extrapolated IM3 amplitude $\frac{3}{4} |\alpha_3| A^3$ from @eq-linearity-double-c gives
+
+$$
+A_\mathrm{IIP3}^2 = \frac{4}{3} \left| \frac{\alpha_1}{\alpha_3} \right|.
+$$ {#eq-iip3-amplitude}
+
+As both lines have different slopes, this intersection point is usually far outside the actual operating range of the circuit block under test! @fig-im3-power-sweep uses the same $\alpha_1$ and $\alpha_3$ as @fig-1db-compression-point, so both figures describe the *same* device: the resulting IIP3 of $-0.4$ dBm indeed sits 9.6 dB above the $P_\mathrm{1dB}$ of $-10$ dBm, which is precisely the rule of thumb stated in @eq-iip3-approx below.
 
 When calculating the IIP3 (input-referred IP3), we can use the following formula, assuming equal input power per tone. It is important to always check the slope of the IM3 products to ensure that we are indeed in the third-order region! If the input power per tone is $P_\mathrm{in}$ (in dBm) and the input-referred power of one IM3 tone is $P_\mathrm{IM3}$ (in dBm), then the input-referred IP3 is given by
 
@@ -245,10 +264,22 @@ We see that the overall IIP3 is limited by the linearity of the second block, as
 
 Just as nonlinearity is a limiting factor for large signals, noise is the limiting factor for small signals. Noise is present in all electronic circuits and systems, and it is impossible to avoid it. However, we can try to minimize its impact on system performance.
 
-Noise is usually characterized by its power spectral density (PSD) in units of Watts per Hertz (W/Hz). For example, thermal noise at room temperature has a one-sided PSD of approximately $k T = 4 \times 10^{-21}\,\text{W/Hz}$, or $-174\,\text{dBm/Hz}$ (using Boltzmann's constant $k = 1.38 \times 10^{-23}\,\text{J/K}$). This means that if we have a bandwidth of 1 MHz, the total thermal noise power would be:
+Noise is usually characterized by its power spectral density (PSD) in units of Watts per Hertz (W/Hz). For example, thermal noise at room temperature has a one-sided PSD of approximately $k T = 4 \times 10^{-21}\,\text{W/Hz}$, or $-174\,\text{dBm/Hz}$ (using Boltzmann's constant $k = 1.38 \times 10^{-23}\,\text{J/K}$). This means that if we have a bandwidth of 1 MHz, the total thermal noise power would be
 
 $$
-P_\mathrm{thermal} = \text{PSD} \cdot B = -174\,\text{dBm/Hz} + 10 \log_{10} \left( \frac{1\,\text{MHz}}{1\,\text{Hz}} \right) = -114\,\text{dBm}
+\begin{split}
+P_\mathrm{thermal} \big|_\mathrm{W} &= \text{PSD} \big|_\mathrm{W/Hz} \cdot B\\
+&= 4 \times 10^{-21}\,\text{W/Hz} \cdot 1\,\text{MHz} = 4 \times 10^{-15}\,\text{W}
+\end{split}
+$$
+
+or
+
+$$
+\begin{split}
+P_\mathrm{thermal} \big|_\mathrm{dBm} &= \text{PSD} \big|_\mathrm{dBm/Hz} + 10 \log_{10} \left( \frac{B}{1\,\text{Hz}} \right)\\
+&= -174\,\text{dBm/Hz} + 10 \log_{10} \left( \frac{1\,\text{MHz}}{1\,\text{Hz}} \right) = -114\,\text{dBm}.
+\end{split}
 $$
 
 The PSD of noise can be flat vs. frequency (which is called "white noise"), or can decrease with frequency (e.g., "flicker noise" or "1/f noise"). Further, noise can be generated by resistors (thermal noise), semiconductors (shot noise, generation-recombination noise), etc. A detailed discussion of noise sources can be found in [@Gray_Meyer_5th_ed; @Razavi_Analog_CMOS].
@@ -480,10 +511,10 @@ As can be seen in @fig-rect-pulse-spectrum, the main lobe of the sinc function h
 
 To avoid this, we can use pulse shapes that have better spectral properties, such as the raised cosine pulse or the root-raised cosine pulse. The **raised-cosine pulse** (see the [raised-cosine filter](https://en.wikipedia.org/wiki/Raised-cosine_filter), which satisfies the Nyquist ISI criterion) has a roll-off factor $\alpha$ that determines the excess bandwidth beyond the Nyquist bandwidth. The root-raised cosine (RRC) pulse is used in practical systems (with half the pulse filter implemented at the TX, and half at the RX), as it can be implemented with a matched filter at the receiver.
 
-The raised-cosine pulse $p(t)$ (with a spectrum shaped like a raised cosine) is defined by:
+The raised-cosine pulse $p(t)$ (with a spectrum shaped like a raised cosine) is defined by ($T_\mathrm{s}$ being the *symbol* duration, which for an $n$-bit-per-symbol modulation is $T_\mathrm{s} = n \, T_\mathrm{b}$):
 
 $$
-p(t) = \frac{\sin(\pi t / T_\mathrm{b})}{\pi t / T_\mathrm{b}} \cdot \frac{\cos(\alpha \pi t / T_\mathrm{b})}{1 - (2 \alpha t / T_\mathrm{b})^2}
+p(t) = \frac{\sin(\pi t / T_\mathrm{s})}{\pi t / T_\mathrm{s}} \cdot \frac{\cos(\alpha \pi t / T_\mathrm{s})}{1 - (2 \alpha t / T_\mathrm{s})^2}
 $$
 
 Setting $\alpha = 0$ results in a sinc pulse in the time domain (with a perfect bandwidth containment in the frequency domain), while $\alpha = 1$ results in a pulse with double the Nyquist bandwidth. The pulse shape for $\alpha = 0$ and $\alpha = 0.22$ (used in 3G) is shown in @fig-raised-cosine-pulse.
@@ -514,7 +545,7 @@ The key question is now how to implement this idea *efficiently*, as we now have
 
 {{< include /content/fundamentals/_fig_ofdm_transceiver.qmd >}}
 
-The OFDM transmitter takes a block of $N$ symbols (e.g., 64-QAM symbols) and maps them onto $N$ subcarriers, thereby increasing the symbol duration $T_\mathrm{sym}$ for each subcarrier to $N \cdot T_\mathrm{b}$. The IFFT then generates the time-domain OFDM signal, which is transmitted over the wireless channel. Before transmission, the **cyclic prefix (CP)** is added to each OFDM symbol.
+The OFDM transmitter takes a block of $N$ symbols (e.g., 64-QAM symbols) and maps them onto $N$ subcarriers. If the serial symbol stream has a symbol duration of $T_\mathrm{s}$, then distributing $N$ of these symbols over $N$ parallel subcarriers stretches the duration seen by each individual subcarrier to $T_\mathrm{sym} = N \cdot T_\mathrm{s}$. This is precisely the point of OFDM: the per-subcarrier symbol becomes long compared to the delay spread of the channel, so each subcarrier sees essentially flat fading. The IFFT then generates the time-domain OFDM signal, which is transmitted over the wireless channel. Before transmission, the **cyclic prefix (CP)** is added to each OFDM symbol.
 
 At the receiver, the CP is first removed, and then the FFT recovers the frequency-domain symbols, which can then be equalized (fairly simply by multiplying each subcarrier with a complex factor to correct amplitude and phase) and demodulated.
 
@@ -539,7 +570,7 @@ $$
 \text{Bitrate} = N_\mathrm{sc} \cdot N_\mathrm{bps} \cdot \frac{1}{T_\mathrm{sym} + T_\mathrm{CP}} = 1200 \cdot 8 \cdot \frac{1}{66.7\,\mu\text{s} + 4.7\,\mu\text{s}} \approx 134\,\text{Mbps}
 $$
 
-With the overhead for control channels and error correction coding a user data rate of approximately 100 Mbps can be achieved in a 20 MHz LTE channel. This data rate can be scaled up by using multiple 20 MHz channels (MIMO, carrier aggregation).
+With the overhead for control channels and error correction coding a user data rate of approximately 100 Mbps can be achieved in a 20 MHz LTE channel. This data rate can be scaled up in two independent ways: **carrier aggregation** combines several such 20 MHz channels into one logical link, while **MIMO** transmits multiple spatial layers within the *same* 20 MHz channel using several antennas. The two multiply, which is how modern devices reach gigabit rates.
 :::
 
 ## Multiple Access Techniques {#sec-fundamentals-multiple-access}
@@ -550,7 +581,7 @@ In wireless communication systems, multiple users need to share the same frequen
 
 2. **Frequency division multiple access (FDMA)**: Users are assigned specific frequency bands within the overall frequency spectrum, allowing multiple users to transmit simultaneously on different frequencies.
 
-3. **Code division multiple access (CDMA)**: Users are assigned unique spreading codes, allowing them to transmit simultaneously over the same frequency band. The receiver uses the same code to extract the desired signal. A variant of CDMA is frequency-hopping spread spectrum (FHSS), where the carrier frequency is changed rapidly according to a pseudo-random sequence known to both the transmitter and receiver. This is used in Bluetooth.
+3. **Code division multiple access (CDMA)**: Users are assigned unique spreading codes, allowing them to transmit simultaneously over the same frequency band. The receiver uses the same code to extract the desired signal. This scheme is more precisely called direct-sequence CDMA (DS-CDMA). A sibling technique from the same spread-spectrum family (not a variant of DS-CDMA) is frequency-hopping spread spectrum (FHSS), where the carrier frequency is changed rapidly according to a pseudo-random sequence known to both the transmitter and receiver; users are separated by their hopping patterns rather than by a spreading code. This is used in Bluetooth, and has originally been co-invented by the Austrian actress [Hedy Lamarr](https://en.wikipedia.org/wiki/Hedy_Lamarr).
 
 4. **Orthogonal frequency division multiple access (OFDMA)**: A variant of OFDM, where multiple users are assigned different subcarriers for transmission, allowing for efficient use of the frequency spectrum. This is used in 4G LTE and 5G NR.
 
