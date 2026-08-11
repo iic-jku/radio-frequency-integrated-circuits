@@ -43,7 +43,7 @@ L_1f3_linear = 10**(L_1f3 / 10)  # Convert dBc/Hz to linear
 L_1f2_linear = 10**(L_1f2 / 10)  # Convert dBc/Hz to linear  
 L_floor_linear = 10**(L_floor / 10)  # Convert dBc/Hz to linear
 
-# Add all noise sources in linear domain (RSS - Root Sum Square)
+# Add all noise sources as powers in the linear domain (uncorrelated noise sources)
 L_total_linear = L_1f3_linear + L_1f2_linear + L_floor_linear
 
 # Convert back to logarithmic scale (dBc/Hz)
@@ -60,9 +60,11 @@ ax.semilogx(f_offset, L_1f3, 'r--', linewidth=2, alpha=0.7, label='1/f³ region 
 ax.semilogx(f_offset, L_1f2, 'g--', linewidth=2, alpha=0.7, label='1/f² region (thermal)')
 ax.semilogx(f_offset, L_floor, 'm--', linewidth=2, alpha=0.7, label='Noise floor')
 
-# Mark characteristic frequencies
+# Mark characteristic frequencies:
+#   1e4  = flicker corner, where the -30 dB/dec and -20 dB/dec asymptotes cross
+#   1e7  = noise-floor onset, where the -20 dB/dec asymptote hits the -160 dBc/Hz floor
 ax.axvline(1e4, color='gray', linestyle=':', alpha=0.7, linewidth=1)
-ax.axvline(1e6, color='gray', linestyle=':', alpha=0.7, linewidth=1)
+ax.axvline(1e7, color='gray', linestyle=':', alpha=0.7, linewidth=1)
 
 # Formatting
 ax.set_xlabel('Frequency Offset from Carrier (Hz)')
