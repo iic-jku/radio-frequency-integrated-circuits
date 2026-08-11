@@ -196,6 +196,6 @@ This chapter contains a collection of potential questions covering the topics di
 
 78. **Phase Noise**: An oscillator operates at 2.4 GHz with a tank $Q$ of 15, tank resistance $R_p$ = 500 Ω, oscillation amplitude of 0.8 V peak, and noise factor $F$ = 2. Calculate the phase noise at 1 MHz offset using Leeson's equation.
 
-79. **PLL Loop Parameters**: A charge-pump PLL has $I_\mathrm{CP}$ = 100 µA, $K_\mathrm{VCO}$ = 100 MHz/V, $C_\mathrm{int}$ = 10 nF, and $N$ = 100. Calculate the natural frequency $\omega_n$ and the required $R_\mathrm{int}$ for a damping factor $\zeta$ = 0.707.
+79. **PLL Loop Parameters**: A charge-pump PLL has $I_\mathrm{CP}$ = 100 µA, $K_\mathrm{VCO}$ = 100 MHz/V, $C_\mathrm{int}$ = 10 nF, and $N$ = 100. Calculate the natural frequency $\omega_n$ and the required $R_\mathrm{int}$ for a damping factor $\zeta$ = 0.707. Watch the units of $K_\mathrm{VCO}$!
 
 80. **PA Efficiency**: A power amplifier delivers 27 dBm output power and draws 400 mA from a 3.3 V supply. Calculate the drain efficiency and the PAE if the input power is 0 dBm.
