@@ -192,7 +192,7 @@ This chapter contains a collection of potential questions covering the topics di
 
 76. **LNA Input Impedance**: An inductively-degenerated common-source LNA has $C_\mathrm{gs}$ = 200 fF, $g_m$ = 40 mS, and $L_\mathrm{deg}$ = 1 nH. Calculate the real part of the input impedance. What additional inductance is needed to resonate with $C_\mathrm{gs}$ at 2.4 GHz?
 
-77. **Reciprocal Mixing**: A receiver has a desired sensitivity of --90 dBm with an adjacent channel blocker at --30 dBm located 3 MHz from the carrier. The channel bandwidth is 100 kHz. What is the maximum allowable LO phase noise at 3 MHz offset?
+77. **Reciprocal Mixing**: A receiver has a desired sensitivity of --90 dBm with an adjacent channel blocker at --30 dBm located 3 MHz from the carrier. The channel bandwidth is 100 kHz, and the demodulator requires an SNR of 10 dB. What is the maximum allowable LO phase noise at 3 MHz offset, assuming the reciprocal mixing noise may consume the entire noise budget?
 
 78. **Phase Noise**: An oscillator operates at 2.4 GHz with a tank $Q$ of 15, tank resistance $R_p$ = 500 Ω, oscillation amplitude of 0.8 V peak, and noise factor $F$ = 2. Calculate the phase noise at 1 MHz offset using Leeson's equation.
 

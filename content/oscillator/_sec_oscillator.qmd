@@ -20,7 +20,7 @@ For the generation of the LO frequency to be used in a mixer for frequency conve
 
 {{< include /content/oscillator/_fig_oscillator_block.qmd >}}
 
-The question is how to construct an oscillator. In summary, we need to build something that oscillates, i.e., produces a sustained periodic signal with frequency $\omega_0$. One way to achieve this is to construct a feedback loop where $|H(s = j \omega_0)| = 1$ and $\angle H(s = j \omega_0) = n \cdot 2 \pi$; these conditions are called the "[Barkhausen criterion](https://en.wikipedia.org/wiki/Barkhausen_criterion)" (here, $H(s)$ is the loop gain around the feedback loop). A ring oscillator is one example of such a feedback oscillator. For the 3-stage single-ended *ring oscillator* shown in @fig-ring-oscillator, each inverter provides a phase shift of $2 \pi / 3$ at the oscillation frequency $\omega_0$, resulting in a total phase shift of $2 \pi$ for the three inverters. The gain condition is fulfilled by the gain of the inverters, which must be larger than unity to compensate for losses in the loop. By using an odd number of inverters, a stable locking point at dc is avoided.
+The question is how to construct an oscillator. In summary, we need to build something that oscillates, i.e., produces a sustained periodic signal with frequency $\omega_0$. One way to achieve this is to construct a feedback loop where $|H(s = j \omega_0)| = 1$ and $\angle H(s = j \omega_0) = n \cdot 2 \pi$; these conditions are called the "[Barkhausen criterion](https://en.wikipedia.org/wiki/Barkhausen_criterion)" (here, $H(s)$ is the loop gain around the feedback loop). A *ring oscillator* is one example of such a feedback oscillator. For the 3-stage single-ended ring oscillator shown in @fig-ring-oscillator, each inverter contributes $\pi$ (180°) of dc inversion plus a frequency-dependent lag caused by its output pole. At the oscillation frequency $\omega_0$ this extra lag must be $\pi / 3$ (60°) per stage, so that each inverter contributes $4 \pi / 3$ (240°) in total and the three inverters together provide $4 \pi$, i.e., $n \cdot 2 \pi$ with $n = 2$. With a single-pole model per stage this happens at $\omega_0 = \sqrt{3}\, \omega_\mathrm{p}$, where $\omega_\mathrm{p}$ is the pole frequency of one inverter stage. The gain condition is fulfilled by the gain of the inverters, which must be larger than unity to compensate for losses in the loop. By using an odd number of inverters, a stable locking point at dc is avoided.
 
 {{< include /content/oscillator/_fig_ring_oscillator.qmd >}}
 
@@ -120,11 +120,19 @@ $$
 \phn[\Delta \omega] = \frac{\frac{1}{2} \frac{k T F R_\mathrm{p}}{Q^2} \left( \frac{\omega_0}{\Delta \omega} \right)^2}{\left( \frac{V_\mathrm{p}}{\sqrt{2}} \right)^2} = \frac{k T F R_\mathrm{p}}{V_\mathrm{p}^2} \cdot \frac{1}{Q^2} \cdot \left( \frac{\omega_0}{\Delta \omega} \right)^2
 $$ {#eq-leeson-equation}
 
-This equation is known as "**Leeson's equation**" [@Leeson.1966], and it provides us with important insights on how to design low phase noise oscillators:
+This equation is known as "**Leeson's equation**" [@Leeson.1966], and it provides us with important insights on how to design low phase noise oscillators.
+
+At first glance @eq-leeson-equation seems to say that a *large* tank resistance $R_\mathrm{p}$ is bad, since it sits in the numerator. This is misleading, because $Q$ in the denominator itself depends on $R_\mathrm{p}$. Substituting $Q = \omega_0 C R_\mathrm{p}$ makes the true dependence explicit:
+
+$$
+\phn[\Delta \omega] = \frac{k T F}{V_\mathrm{p}^2 \, \omega_0^2 C^2 R_\mathrm{p}} \cdot \left( \frac{\omega_0}{\Delta \omega} \right)^2
+$$ {#eq-leeson-equation-rp}
+
+so for a given tank capacitance $C$ the phase noise indeed *falls* with increasing $R_\mathrm{p}$, i.e., with a lower-loss tank. With this in mind, the design guidelines are:
 
 1. Use a resonator with high quality factor $Q$ to reduce phase noise. On-chip LC tanks usually provide moderate $Q$ values (e.g., 10 to 30), while off-chip crystals can provide very high $Q$ values (e.g., 10,000 to 100,000).
 2. Maximize the oscillation amplitude $V_\mathrm{p}$ to increase the stored energy in the resonator. In CMOS implementations, this is often limited by the supply voltage and/or device breakdown voltages.
-3. Use an active circuit with low noise factor $F$ to minimize the noise contribution of the negative resistance $-R_\mathrm{amp}$. A good value to aim for is $F \approx 2$ or lower.
+3. Use an active circuit with low noise factor $F$ to minimize the noise contribution of the negative resistance $-R_\mathrm{amp}$. A good value to aim for is $F \approx 2$.
 4. Maximize the tank resistance $R_\mathrm{p}$ to minimize the thermal noise contribution. This can be achieved by using high-Q inductors and low-loss capacitors.
 
 The phase noise $\phn[\Delta \omega]$ is expressed in the unit of dBc/Hz, i.e., in decibels of phase noise relative to the carrier power per 1 Hz of bandwidth. When expressing the phase noise of an oscillator in dBc/Hz it is important to state both the oscillation frequency $\omega_0$ and the offset frequency $\Delta \omega$ at which the phase noise is evaluated. For example, we could say that an oscillator has a phase noise of -137 dBc/Hz at 3 MHz offset from a carrier frequency of 2 GHz.
@@ -202,8 +210,8 @@ Using @eq-reciprocal-mixing-noise, we can express the maximum allowable phase no
 
 $$
 \begin{split}
-\phn[3\,\text{MHz}] &= P_\mathrm{noise,max} - P_\mathrm{interferer} - 10 \log_{10}(B) \\
-&= -83\,\text{dBm} + 43\,\text{dBm} - 60\,\text{dB} = -100\,\text{dBc/Hz}
+\phn[3\,\text{MHz}] &= P_\mathrm{noise,max} - P_\mathrm{interferer} - 10 \log_{10}(B/\text{Hz}) \\
+&= -83\,\text{dBm} - (-43\,\text{dBm}) - 60\,\text{dB} = -100\,\text{dBc/Hz}
 \end{split}
 $$
 :::
@@ -240,11 +248,19 @@ This means we can operate the quartz crystal as a high-Q inductor in an oscillat
 
 {{< include /content/oscillator/_fig_crystal_oscillator.qmd >}}
 
-The series combination of $C_1$ and $C_2$ provides the load capacitance required by the crystal to oscillate at its specified frequency. The oscillation frequency can be approximated by ($C_\mathrm{load}^{-1} = 1/C_1 + 1/C_2$):
+The series combination of $C_1$ and $C_2$ provides the load capacitance required by the crystal to oscillate at its specified frequency. Note that the oscillation frequency is *not* set by $C_\mathrm{load}$ resonating with the motional inductance $L_\mathrm{m}$: since the motional capacitance is tiny ($C_\mathrm{m}$ is in the femtofarad range, while $C_\mathrm{load}$ is in the picofarad range), the frequency is set almost entirely by the crystal itself. The oscillator runs slightly *above* the series resonance frequency
 
 $$
-f_0 \approx \frac{1}{2 \pi \sqrt{L_\mathrm{m} C_\mathrm{load}}}
+f_\mathrm{s} = \frac{1}{2 \pi \sqrt{L_\mathrm{m} C_\mathrm{m}}},
+$$ {#eq-crystal-series-resonance}
+
+pulled up by the load capacitance according to ($C_\mathrm{load}^{-1} = 1/C_1 + 1/C_2$, and $C_0$ being the parallel plate capacitance of the crystal)
+
 $$
+f_0 \approx f_\mathrm{s} \left[ 1 + \frac{C_\mathrm{m}}{2 (C_0 + C_\mathrm{load})} \right].
+$$ {#eq-crystal-pulling}
+
+The resulting *pulling* is only in the range of some tens to hundreds of ppm, which is exactly why crystal data sheets specify a nominal load capacitance: the designer trims $C_1$ and $C_2$ (often with an on-chip switched capacitor bank) to hit the specified frequency, and can use the same knob to compensate for aging and temperature drift.
 
 ## Differential Oscillators {#sec-differential-oscillators}
 
@@ -303,6 +319,17 @@ K_\mathrm{VCO} = \frac{d f_0}{d V_\mathrm{tune}}
 $$
 
 with $V_\mathrm{tune}$ being the control voltage applied to the varactor. The unit of $K_\mathrm{VCO}$ is usually expressed in MHz/V or GHz/V. A high $K_\mathrm{VCO}$ means that a small change in tuning voltage results in a large change in oscillation frequency, which can be beneficial for wide tuning ranges but can also make the oscillator more sensitive to noise on the tuning voltage line.
+
+::: {.callout-important}
+## Watch the Units of $K_\mathrm{VCO}$!
+Data sheets and measurements state $K_\mathrm{VCO}$ as a *frequency* sensitivity in MHz/V or GHz/V, as defined above. All loop equations that follow (in @sec-oscillator-modeling and throughout @sec-pll) instead need the *angular* frequency sensitivity in rad/(s$\cdot$V), which is larger by a factor of $2 \pi$:
+
+$$
+K_\mathrm{VCO} \big|_\mathrm{rad/(s \cdot V)} = 2 \pi \cdot K_\mathrm{VCO} \big|_\mathrm{Hz/V}
+$$
+
+Forgetting this factor is one of the most common sources of error in PLL loop design: since the natural frequency scales as $\omega_\mathrm{n} \propto \sqrt{K_\mathrm{VCO}}$, a missing $2 \pi$ moves the loop bandwidth by a factor of $\sqrt{2 \pi} \approx 2.5$, and it moves the damping factor by the same amount (in one direction or the other, depending on the loop filter used). In the remainder of these notes, $K_\mathrm{VCO}$ inside loop equations is always understood to be in rad/(s$\cdot$V).
+:::
 
 Note that the tuning sensitivity $K_\mathrm{VCO}$ is usually quite nonlinear over the tuning range, so it is common to specify $K_\mathrm{VCO}$ at a certain operating point or as an average value over the tuning range.
 
