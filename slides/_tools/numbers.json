@@ -1,5 +1,5 @@
 {
- "book": "rfic.html",
+ "book": "../rfic.html",
  "labels": {
   "eq-antenna-gain-area": {
    "chapter": 1,

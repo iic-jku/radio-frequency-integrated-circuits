@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -------------------------------------------------
-# Unit tests for _slides/gen_decks.py
+# Unit tests for slides/_tools/gen_decks.py
 # -------------------------------------------------
 # SPDX-FileCopyrightText: 2026 Harald Pretl
 # Johannes Kepler University, Institute for Integrated Circuits
 # SPDX-License-Identifier: Apache-2.0
 #
-# Run: python -m unittest _slides/test_gen_decks.py
+# Run: python3 -m unittest slides/_tools/test_gen_decks.py
 
 import sys
 import tempfile
@@ -168,30 +168,39 @@ class RenderFilesTest(unittest.TestCase):
         self.tmp.cleanup()
 
     def test_one_deck_per_chapter_without_exam(self):
-        decks = sorted(f for f in self.files if f.startswith("slides_"))
-        self.assertEqual(decks, ["slides_intro.qmd", "slides_lna.qmd"])
+        decks = sorted(f for f in self.files
+                       if f.startswith("slides/") and f.count("/") == 1
+                       and f != "slides/index.qmd")
+        self.assertEqual(decks, ["slides/intro.qmd", "slides/lna.qmd"])
 
     def test_deck_front_matter(self):
-        deck = self.files["slides_lna.qmd"]
+        deck = self.files["slides/lna.qmd"]
         self.assertIn('title: "Low Noise Amplifiers"', deck)
         self.assertIn("rfic-chapter: 2", deck)
         self.assertIn("number-offset: [1]", deck)
         self.assertIn("{{< include /content/lna/_sec_lna.qmd >}}", deck)
-        self.assertIn("rfic.html#sec-lna", deck)
+        self.assertIn("(../rfic.html#sec-lna)", deck)
+        self.assertIn("path: _tools/structure.lua", deck)
+        self.assertIn("bibliography: ../references.bib", deck)
 
     def test_overview_lists_decks(self):
-        self.assertIn("2. [Low Noise Amplifiers](slides_lna.html)",
-                      self.files["slides.qmd"])
+        index = self.files["slides/index.qmd"]
+        self.assertIn("2. [Low Noise Amplifiers](lna.html)", index)
+        self.assertIn("(../rfic.html)", index)
+
+    def test_numbers_map_links_from_slides_dir(self):
+        self.assertIn('"book": "../rfic.html"',
+                      self.files["slides/_tools/numbers.json"])
 
     def test_check_mode_detects_stale_files(self):
         gen_decks.ROOT = self.root
         try:
             self.assertEqual(gen_decks.main([]), 0)
             self.assertEqual(gen_decks.main(["--check"]), 0)
-            (self.root / "slides_lna.qmd").write_text("edited")
+            (self.root / "slides" / "lna.qmd").write_text("edited")
             self.assertEqual(gen_decks.main(["--check"]), 1)
         finally:
-            gen_decks.ROOT = Path(gen_decks.__file__).resolve().parent.parent
+            gen_decks.ROOT = Path(gen_decks.__file__).resolve().parents[2]
 
 
 if __name__ == "__main__":

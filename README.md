@@ -14,13 +14,13 @@ All course material is made publicly available and shared under the Apache-2.0 l
 
 ## Lecture Slides
 
-One reveal.js deck per chapter is generated from the lecture notes (`slides_<topic>.qmd`, listed on `slides.qmd`). Figures, display equations, callouts, lists and tables go on slides; prose becomes speaker notes (press `S`). Figure, equation, table and section numbers match the notes.
+One reveal.js deck per chapter is generated from the lecture notes (`slides/<topic>.qmd`, listed on `slides/index.qmd`; tooling in `slides/_tools/`). Figures, display equations, callouts, lists and tables go on slides; prose becomes speaker notes (press `S`). Figure, equation, table and section numbers match the notes.
 
 After adding, removing or renaming a chapter, or adding/removing labels (`#fig-`, `#eq-`, `#tbl-`, `#nte-`, `#sec-`), regenerate and check:
 
 ```bash
-python3 _slides/gen_decks.py
-python3 -m unittest _slides/test_gen_decks.py
+python3 slides/_tools/gen_decks.py
+python3 -m unittest slides/_tools/test_gen_decks.py
 ```
 
 Optional markup in the chapter files to improve slides (ignored by the HTML and PDF notes):

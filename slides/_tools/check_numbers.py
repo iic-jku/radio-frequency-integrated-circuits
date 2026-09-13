@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -------------------------------------------------
-# Verify rendered numbering against _slides/numbers.json
+# Verify rendered numbering against slides/_tools/numbers.json
 # -------------------------------------------------
 # SPDX-FileCopyrightText: 2026 Harald Pretl
 # Johannes Kepler University, Institute for Integrated Circuits
 # SPDX-License-Identifier: Apache-2.0
 #
 # Usage:
-#   python _slides/check_numbers.py _site/rfic.html          # the book
-#   python _slides/check_numbers.py _site/slides_*.html      # the decks
+#   python3 slides/_tools/check_numbers.py _site/rfic.html           # the book
+#   python3 slides/_tools/check_numbers.py _site/slides/*.html       # the decks
 #
 # For every label found in an HTML file, the number Quarto printed must equal
 # the book number in numbers.json. Decks additionally must not contain
@@ -19,7 +19,6 @@ import re
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
 WINDOW = 3000  # characters after id="label" to search for the number
 
 
@@ -49,7 +48,7 @@ def check_file(path, labels, prefix):
         found += 1
         if got != info["number"]:
             errors.append(f"{label}: rendered {got}, book {info['number']}")
-    if "slides_" in Path(path).name:
+    if Path(path).parent.name == "slides" and Path(path).name != "index.html":
         if "?@" in html:
             errors.append("unresolved reference (?@) present")
         empty = re.findall(r'<section class="slide level3[^"]*">\s*</section>', html)
@@ -59,7 +58,7 @@ def check_file(path, labels, prefix):
 
 
 def main(argv):
-    data = json.loads((ROOT / "_slides" / "numbers.json").read_text())
+    data = json.loads((Path(__file__).resolve().parent / "numbers.json").read_text())
     failed = False
     for path in argv:
         found, errors = check_file(path, data["labels"], data["prefix"])
