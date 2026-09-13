@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <title>Radio-Frequency Integrated Circuits – Phase-Locked Loops</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-a975c94262742d03914c7a56aca0ba09.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Phase-Locked Loops</h1>
+  <p class="subtitle">Radio-Frequency Integrated Circuits</p>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section>
+<section id="sec-pll" class="title-slide slide level1 center" data-number="7">
+<h1><span class="header-section-number">7</span> Phase-Locked Loops</h1>
+<div class="hidden">
+
+</div>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Phase-Locked Loops</h3>
+<ul>
+<li>Good phase noise performance is reached with high to very high <span class="math inline">\(Q\)</span> in the resonator (see <a href="../rfic.html#eq-leeson-equation">Equation&nbsp;56</a>).</li>
+<li>Oscillator tunability requires a tunable resonator, which usually results in a low-to-moderate <span class="math inline">\(Q\)</span>, unfortunately.</li>
+<li>Oscillators have inherent frequency stability issues due to temperature variations, device aging, and supply voltage fluctuations. However, for wireless communication systems, precise frequency control and a very stable LO (down to a few ppm of accuracy) are required.</li>
+</ul>
+<aside class="notes">
+<p>Thinking about oscillators, we face a dilemma:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="sec-pll-basic-architecture" class="title-slide slide level2 center" data-number="7.1">
+<h2><span class="header-section-number">7.1</span> Basic PLL Architecture</h2>
+
+</section>
+<section class="slide level3 unnumbered">
+<h3>Basic PLL Architecture</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-pll-block-diagram-output-1.svg" class="r-stretch quarto-figure-center" id="fig-pll-block-diagram"><p class="caption">
+Figure&nbsp;74: Block diagram of a PLL.
+</p><aside class="notes">
+<p>We solve the issues above by using a <strong>phase-locked loop (PLL)</strong> to stabilize and control the frequency of a tunable oscillator, mostly in the form of a VCO. A PLL is a feedback control system that locks the phase of the VCO output to the phase of a reference signal, typically generated by a crystal oscillator with excellent frequency stability. The block diagram of a basic PLL is shown in <a href="#/fig-pll-block-diagram" class="quarto-xref">Figure&nbsp;74</a>.</p>
+Block diagram of a PLL. A reference phase signal is compared to the phase of a VCO output signal in a phase detector. The phase error is low-pass filtered and used to tune the VCO frequency.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Basic PLL Architecture</h3>
+<p><span class="math display">\[
+\Delta \varphi = 2 \pi \frac{\Delta t}{T_\mathrm{ref}}
+\]</span></p>
+<p><span class="math display">\[
+V_\mathrm{error} = K_\mathrm{PD} \cdot \Delta \varphi
+\]</span></p>
+<aside class="notes">
+<p>The phase of a reference signal (often coming from a high-<span class="math inline">\(Q\)</span> crystal oscillator) is compared to the phase of a VCO output signal in a phase detector (PD). The phase error is low-pass filtered and used to tune the VCO frequency. By continuously adjusting the VCO based on the phase difference, the PLL ensures that the VCO output remains synchronized with the reference signal, effectively combining the stability of the reference with the tunability of the VCO. When the output signal of the VCO is fed back to the phase detector through a frequency divider (with division ratio <span class="math inline">\(N\)</span>), the PLL can generate output frequencies that are integer multiples of the reference frequency, given by <span class="math inline">\(f_\mathrm{out} = N \cdot f_\mathrm{ref}\)</span>.</p>
+<p>The PD compares the phase of the reference signal with the phase of the VCO output signal. It works in the time domain and produces an output voltage proportional to the arrival time difference (phase difference) between the two input signals. This output voltage, known as the phase error signal, indicates whether the VCO is leading or lagging the reference signal in phase, expressed as</p>
+<p>and</p>
+<p>where <span class="math inline">\(\Delta \varphi\)</span> is the phase difference (caused by the arrival time difference) in rad, <span class="math inline">\(K_\mathrm{PD}\)</span> is the phase detector gain in V/rad, <span class="math inline">\(\Delta t\)</span> is the time difference between the two signals, and <span class="math inline">\(T_\mathrm{ref}\)</span> is the period of the reference signal.</p>
+<p>An important consideration of the PD is its linear operating range. The PD can only provide a linear output voltage over a limited window of phase differences. For an XOR gate (or a multiplier used as a PD) this window is <span class="math inline">\(\pi\)</span> wide: the characteristic rises linearly from <span class="math inline">\(\Delta \varphi = 0\)</span> to <span class="math inline">\(\Delta \varphi = \pi\)</span> and then folds back, so the loop operates around a quiescent point of <span class="math inline">\(\Delta \varphi = \pi/2\)</span> (quadrature) with a usable range of only ±90° around it. If the phase difference exceeds this range, the PD characteristic “wraps around,” leading to ambiguity in the phase error signal. This can cause the PLL to lose lock or behave unpredictably. Therefore, the PLL design must ensure that the phase difference remains within the linear range of the PD during normal operation, which is especially troublesome if the output frequency <span class="math inline">\(f_\mathrm{out}\)</span> is not yet close enough to its final steady-state value. Note that a simple PD can be implemented by using an XOR gate for digital signals or a mixer for analog signals.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Basic PLL Architecture</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-pd-xor-diagram-output-1.svg" class="r-stretch quarto-figure-center" id="fig-pd-xor-diagram"><p class="caption">
+Figure&nbsp;75: Input and output waveforms of an XOR-based phase detector.
+</p></section>
+<section class="slide level3 unnumbered">
+<h3>Basic PLL Architecture</h3>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>JK Flip-Flop Phase Detector</strong></p>
+</div>
+<div class="callout-content">
+<p>Instead of an XOR gate, which requires 50% duty cycle input signals, an edge-triggered JK flip-flop can be used. While the overall behavior is similar, the JK flip-flop-based PD is insensitive to duty cycle variations of the input signals, as it only evaluates the rising edges of the reference and feedback signals <span class="citation" data-cites="Best_PLL">(<a href="#/references" role="doc-biblioref" onclick="">Best 1999</a>)</span>.</p>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>We can see in <a href="#/fig-pd-xor-diagram" class="quarto-xref">Figure&nbsp;75</a> that the output of the XOR PD is high when the two input signals differ and low when they are the same. The output duty cycle is proportional to the phase difference between the two input signals. Note that this PD has no notion of frequency, only phase! Still, it can be used to lock the frequency of the VCO to the reference frequency, as a constant phase difference implies equal frequencies; however, this works only if the initial frequency difference is small enough. Also, this XOR-based PD does not evaluate the edges of the input signals, only their logic states. Therefore, it is crucial that both input signals are square waves with a 50% duty cycle to ensure proper operation of the PD.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Basic PLL Architecture</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-pll-block-diagram-s-domain-output-1.svg" class="r-stretch quarto-figure-center" id="fig-pll-block-diagram-s-domain"><p class="caption">
+Figure&nbsp;76: Laplace domain model of a PLL.
+</p><aside class="notes">
+<p>As the output signal of the PD contains high-frequency components (at least at twice the reference frequency), a low-pass filter (LPF) is used to smooth the phase error signal before it is applied to the VCO tuning input. The LPF also determines the dynamic response of the PLL, affecting its stability and transient behavior. A well-designed LPF ensures that the PLL can quickly respond to changes in the reference signal or disturbances while maintaining stability and minimizing overshoot or oscillations in the output frequency. Often, the LPF has voltage-mode inputs and outputs to connect to the PD and VCO, respectively.</p>
+<p>Using a digital divider in the feedback path to only pass every <span class="math inline">\(N\)</span>-th cycle of the VCO output to the PD allows the PLL to generate output frequencies that are integer multiples of the reference frequency. This is particularly useful in applications such as frequency synthesis, where a wide range of frequencies is required from a single stable reference source. By adjusting the division ratio <span class="math inline">\(N \in \mathbb{N}\)</span>, the PLL can produce various output frequencies while maintaining phase lock with the reference signal. However, note that the frequency resolution of the output frequencies <span class="math inline">\(\Delta f_\mathrm{out}\)</span> is limited to integer multiples of the reference frequency!</p>
+<p>Putting everything together into an <span class="math inline">\(s\)</span>-domain block diagram, the PLL can be modeled as shown in <a href="#/fig-pll-block-diagram-s-domain" class="quarto-xref">Figure&nbsp;76</a>.</p>
+Laplace domain model of a PLL. Note that input and output signals are (excess) phase in rad.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Basic PLL Architecture</h3>
+<p><span class="math display">\[
+H_\mathrm{LP}(s) = \frac{1}{1 + s T_\mathrm{LP}}.
+\]</span></p>
+<aside class="notes">
+<p>For the loop filter transfer function <span class="math inline">\(H(s)\)</span>, we assume a simple first-order low-pass filter with a cutoff frequency of <span class="math inline">\(\omega_\mathrm{LP} = 1 / T_\mathrm{LP}\)</span> given by</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Basic PLL Architecture</h3>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Why Regulate Phase Instead of Frequency (PLL vs.&nbsp;FLL)?</strong></p>
+</div>
+<div class="callout-content">
+<p>Before we proceed, it is worth discussing why PLLs regulate the phase of the VCO output rather than its frequency directly. The reason lies in the relationship between phase and frequency: Frequency is the time derivative of phase. By controlling the phase, the PLL inherently controls the frequency as well. Additionally, even if the phase regulation has a steady-state phase error <span class="math inline">\(\varphi_\mathrm{err}\)</span>, the frequency error in steady state is <strong>zero</strong>, as can be appreciated when inspecting</p>
+<p><span class="math display">\[
+\omega_\mathrm{out}(t) = \frac{d \varphi_\mathrm{out}(t)}{dt}  = \frac{d}{dt} \left[ N \cdot \varphi_\mathrm{ref}(t) + \varphi_\mathrm{err} \right] = N \cdot \frac{d \varphi_\mathrm{ref}(t)}{dt} = N \cdot \omega_\mathrm{ref}(t).
+\]</span></p>
+<p>In principle, one could also design a frequency-locked loop (FLL) that compares the frequencies of the reference and VCO output signals directly (by, e.g., using counters); however, this usually results in non-zero frequency error in steady state. Nevertheless, FLLs are often used in combination with PLLs to improve acquisition time and robustness, especially in scenarios with large initial frequency offsets.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Basic PLL Architecture</h3>
+<p><span class="math display">\[
+V_\mathrm{PD}(s) = K_\mathrm{PD} \left[ \varphi_\mathrm{ref}(s) - \frac{\varphi_\mathrm{out}(s)}{N} \right]
+\]</span></p>
+<p><span class="math display">\[
+\varphi_\mathrm{out}(s) = \frac{K_\mathrm{VCO}}{s} \cdot H_\mathrm{LP}(s) \cdot V_\mathrm{PD}(s) = \frac{K_\mathrm{VCO}}{s} \cdot \frac{1}{1 + s T_\mathrm{LP}} \cdot K_\mathrm{PD} \left[ \varphi_\mathrm{ref}(s) - \frac{\varphi_\mathrm{out}(s)}{N} \right].
+\]</span></p>
+<aside class="notes">
+<p>We now derive the closed-loop transfer function of the PLL from reference phase <span class="math inline">\(\varphi_\mathrm{ref}(s)\)</span> to output phase <span class="math inline">\(\varphi_\mathrm{out}(s)\)</span>. First, we note that</p>
+<p>and</p>
+<p>Note that this equation has one integrator <span class="math inline">\(1/s\)</span> (which we can also see in <a href="#/fig-pll-block-diagram-s-domain" class="quarto-xref">Figure&nbsp;76</a>). We call PLLs with one integrator in the loop a <strong>Type-I PLL</strong>. We can now rearrange to find the closed-loop transfer function <span class="math inline">\(H(s)\)</span> as</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Basic PLL Architecture</h3>
+<p><span id="eq-pll-transfer-function"><span class="math display">\[
+H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{K_\mathrm{VCO} \cdot K_\mathrm{PD} \cdot \omega_\mathrm{LP} / N}{s^2 + s \cdot \omega_\mathrm{LP} + K_\mathrm{VCO} \cdot K_\mathrm{PD} \cdot \omega_\mathrm{LP} / N}.
+\tag{62}\]</span></span></p>
+<aside class="notes">
+<p>We can use all techniques known from control theory to analyze the stability and dynamic response of the PLL based on <a href="#/eq-pll-transfer-function" class="quarto-xref">Equation&nbsp;62</a>, however, we have to keep the following in mind:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Basic PLL Architecture</h3>
+<ul>
+<li><span class="math inline">\(H(s)\)</span> is a small-signal model of the PLL around its locked operating point, only valid for small perturbations. Large-signal behavior, such as acquisition and lock range, is not captured by this model.</li>
+<li>A PLL is a sampled system, working at instants of <span class="math inline">\(T_\mathrm{ref}\)</span>. <span class="math inline">\(H(s)\)</span> is a continuous-time approximation, which is valid only if the loop bandwidth is much smaller (typically <span class="math inline">\(1/10\)</span>) than the reference frequency <span class="math inline">\(f_\mathrm{ref}\)</span>. If this approximation is not valid, a discrete-time model of the PLL must be used, deriving the <span class="math inline">\(z\)</span>-domain transfer function <span class="math inline">\(H(z)\)</span>.</li>
+</ul>
+<aside class="notes">
+<p>If we compare the canonical form of a second-order system given by</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Basic PLL Architecture</h3>
+<p><span class="math display">\[
+H(s) = N \cdot \frac{\omega_\mathrm{n}^2}{s^2 + s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2},
+\]</span></p>
+<p><span id="eq-pd-pll-natural-frequency"><span class="math display">\[
+\omega_\mathrm{n} = \sqrt{\frac{K_\mathrm{VCO} \cdot K_\mathrm{PD} \cdot \omega_\mathrm{LP}}{N}}
+\tag{63}\]</span></span></p>
+<aside class="notes">
+<p>with <a href="#/eq-pll-transfer-function" class="quarto-xref">Equation&nbsp;62</a>, we can identify the natural frequency <span class="math inline">\(\omega_n\)</span> and the damping factor <span class="math inline">\(\zeta\)</span> of the PLL as</p>
+<p>and</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Basic PLL Architecture</h3>
+<p><span id="eq-pd-pll-damping-factor"><span class="math display">\[
+\zeta = \frac{1}{2} \sqrt{\frac{\omega_\mathrm{LP} \cdot N}{K_\mathrm{VCO} \cdot K_\mathrm{PD}}}.
+\tag{64}\]</span></span></p>
+<p><span class="math display">\[
+p_{1,2} = -\omega_\mathrm{n} \left( \zeta \pm \sqrt{\zeta^2 - 1} \right)
+\]</span></p>
+<aside class="notes">
+<p>This allows us to use standard control theory results to design the PLL parameters <span class="math inline">\(K_\mathrm{PD}\)</span>, <span class="math inline">\(K_\mathrm{VCO}\)</span>, <span class="math inline">\(\omega_\mathrm{LP}\)</span>, and <span class="math inline">\(N\)</span> to achieve the desired dynamic response and stability margins. Remember that <span class="math inline">\(K_\mathrm{PD}\)</span> has to be inserted in V/rad and <span class="math inline">\(K_\mathrm{VCO}\)</span> in rad/(s<span class="math inline">\(\cdot\)</span>V), i.e., <span class="math inline">\(2 \pi\)</span> times the value quoted in Hz/V (see the callout in <a href="../rfic.html#sec-frequency-tuning-of-oscillators">Section&nbsp;6.6</a>). Note that <span class="math inline">\(\omega_\mathrm{n}\)</span> and <span class="math inline">\(\zeta\)</span> are not independent, as they both depend on the same set of PLL parameters! This seriously limits the design of the loop dynamics and means that we need a more complex loop filter <span class="math inline">\(H_\mathrm{LP}(s)\)</span> to achieve more freedom in selecting <span class="math inline">\(\omega_\mathrm{n}\)</span> and <span class="math inline">\(\zeta\)</span> independently. Often, we want to choose <span class="math inline">\(\zeta = 1/\sqrt{2} \approx 0.707\)</span> to achieve a maximally-flat Butterworth response with minimal overshoot.</p>
+<p>The poles of a second-order system are given by</p>
+<p>with <span class="math inline">\(\zeta = 1/\sqrt{2}\)</span> resulting in complex conjugate poles at</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Basic PLL Architecture</h3>
+<p><span class="math display">\[
+p_{1,2} = -\frac{\omega_\mathrm{n}}{\sqrt{2}} \pm j \frac{\omega_\mathrm{n}}{\sqrt{2}}.
+\]</span></p>
+<aside class="notes">
+<p>To summarize: We can make a simple PLL using an XOR for a PD, use a first-order LPF, plus a feedback divider to get frequency multiplication of <span class="math inline">\(f_\mathrm{out} = N \cdot f_\mathrm{ref}\)</span>. However, the control over the loop dynamics is very limited, and the locking procedure of the PLL is tricky, as the PD has a limited linear range of ±180°, requiring that the VCO frequency at the start of the locking procedure is already close enough to the desired output frequency. In addition, <span class="math inline">\(N\)</span> is an integer, limiting the frequency resolution of the output frequencies to integer multiples of the reference frequency.</p>
+<p>The question is how to improve the PLL design to overcome these limitations. We will explore advanced PLL architectures and techniques in the following section.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="sec-pll-charge-pump" class="title-slide slide level2 center" data-number="7.2">
+<h2><span class="header-section-number">7.2</span> Charge-Pump PLL</h2>
+
+</section>
+<section class="slide level3 unnumbered">
+<h3>Charge-Pump PLL</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-pfd-implementation-output-1.svg" class="r-stretch quarto-figure-center" id="fig-pfd-implementation"><p class="caption">
+Figure&nbsp;77: Implementation of a phase-frequency detector.
+</p><aside class="notes">
+<p>The fundamental limitations of the simple PLL architecture presented in <a href="#/sec-pll-basic-architecture" class="quarto-xref">Section&nbsp;7.1</a> can be addressed by using a more sophisticated phase detector known as a <strong>phase-frequency detector (PFD)</strong> in combination with a <strong>charge pump (CP)</strong> <span class="citation" data-cites="Gardner.1980">(<a href="#/references" role="doc-biblioref" onclick="">Gardner 1980</a>)</span>. This combination allows for better control over the loop dynamics and improved locking behavior.</p>
+<p>In order to drive the CP, we envision a PFD with two digital outputs: an “up” signal that indicates when the VCO phase lags behind the reference phase, and a “down” signal that indicates when the VCO phase leads the reference phase <span class="citation" data-cites="Brown.1971">(<a href="#/references" role="doc-biblioref" onclick="">Brown 1971</a>)</span>. The PFD compares both the phase and frequency of the reference and feedback signals, providing a more robust locking mechanism. The typical implementation of a PFD is shown in <a href="#/fig-pfd-implementation" class="quarto-xref">Figure&nbsp;77</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Charge-Pump PLL</h3>
+<ul>
+<li>If the reference signal leads the feedback signal (its rising edge arrives first), the “UP” output is activated, causing the CP to source current into the integration capacitor, <em>increasing</em> the VCO tuning voltage and thus the VCO frequency.</li>
+<li>If the feedback signal leads the reference signal (its rising edge arrives first), the “DOWN” output is activated, causing the CP to sink current from the integration capacitor, <em>decreasing</em> the VCO tuning voltage and thus the VCO frequency.</li>
+<li>If both signals are aligned in phase and frequency, both outputs are only activated for a short time (the gate delays of the DFF and the AND), and the CP does not source or sink current; the integration capacitor in the loop filter holds its voltage, maintaining the VCO frequency.</li>
+<li>The rising edge that arrives last resets both outputs, ensuring that the CP only sources or sinks current for a duration proportional to the phase difference between the two signals.</li>
+</ul>
+<aside class="notes">
+<p>The PFD operates as follows:</p>
+<p>In the following, we will look at four different cases of PFD operation to illustrate its behavior.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered scrollable">
+<h3>Charge-Pump PLL</h3>
+<ol type="1">
+<li><em>Reference leads feedback</em>: The “UP” output is activated, and the CP sources current to the loop filter, increasing the VCO frequency.</li>
+</ol>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Charge-Pump PLL</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-pfd-diagram1-output-1.svg" class="r-stretch quarto-figure-center" id="fig-pfd-diagram1"><p class="caption">
+Figure&nbsp;78: Reference leading the VCO feedback signal, frequencies are already aligned.
+</p></section>
+<section class="slide level3 unnumbered scrollable">
+<h3>Charge-Pump PLL</h3>
+<ol start="2" type="1">
+<li><em>Feedback leads reference</em>: The “DOWN” output is activated, and the CP sinks current from the loop filter, decreasing the VCO frequency.</li>
+</ol>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Charge-Pump PLL</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-pfd-diagram2-output-1.svg" class="r-stretch quarto-figure-center" id="fig-pfd-diagram2"><p class="caption">
+Figure&nbsp;79: VCO feedback signal leading the reference, frequencies are already aligned.
+</p></section>
+<section class="slide level3 unnumbered scrollable">
+<h3>Charge-Pump PLL</h3>
+<ol start="3" type="1">
+<li><em>Both signals aligned</em>: Both outputs are briefly activated, but the CP does not source or sink current, maintaining the VCO frequency.</li>
+</ol>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Charge-Pump PLL</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-pfd-diagram3-output-1.svg" class="r-stretch quarto-figure-center" id="fig-pfd-diagram3"><p class="caption">
+Figure&nbsp;80: VCO feedback and reference signal are aligned in phase and frequency.
+</p></section>
+<section class="slide level3 unnumbered scrollable">
+<h3>Charge-Pump PLL</h3>
+<ol start="4" type="1">
+<li><em>Large frequency difference</em>: The PFD continues to source or sink current until the phases align, allowing the PLL to acquire lock even with large initial frequency offsets.</li>
+</ol>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Charge-Pump PLL</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-pfd-diagram4-output-1.svg" class="r-stretch quarto-figure-center" id="fig-pfd-diagram4"><p class="caption">
+Figure&nbsp;81: VCO feedback and reference signal have different frequencies (the VCO frequency is too high).
+</p><aside class="notes">
+VCO feedback and reference signal have different frequencies (the VCO frequency is too high). There will be some periods with a wrong output (as shown here in the first cycle), but on average the phase-frequency detector output will indicate that the VCO frequency must be decreased.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Charge-Pump PLL</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-cp-implementation-output-1.svg" class="r-stretch quarto-figure-center" id="fig-cp-implementation"><p class="caption">
+Figure&nbsp;82: Charge pump consisting of two matched current sources and switches.
+</p><aside class="notes">
+<p>Let us now investigate the circuit of the CP. The UP and DOWN signals from the PFD control two current sources/sinks connected to the loop filter capacitor, as shown in <a href="#/fig-cp-implementation" class="quarto-xref">Figure&nbsp;82</a>.</p>
+Charge pump consisting of two matched current sources and switches. The resistor in series with the capacitor introduces a zero.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Charge-Pump PLL</h3>
+<p><span id="eq-cp-voltage-change"><span class="math display">\[
+\Delta V_\mathrm{LF} = \frac{1}{C_\mathrm{int}} \int_0^{t_\mathrm{on}} I_\mathrm{CP} \cdot dt
+\tag{65}\]</span></span></p>
+<p><span id="eq-cp-transfer-function"><span class="math display">\[
+H_\mathrm{CP}(s) = \frac{I_\mathrm{CP}}{2 \pi} \left( \frac{1}{s C_\mathrm{int}} + R_\mathrm{int} \right)
+\tag{66}\]</span></span></p>
+<aside class="notes">
+<p>When the UP signal is high, the CP <em>sources</em> a constant current <span class="math inline">\(I_\mathrm{CP}\)</span> into the loop filter capacitor <span class="math inline">\(C_\mathrm{int}\)</span>, increasing its voltage linearly over time according to the phase error. Conversely, when the DOWN signal is high, the CP <em>sinks</em> a constant current <span class="math inline">\(I_\mathrm{CP}\)</span> from the capacitor, decreasing its voltage linearly.</p>
+<p>Note that the top and bottom current sources must be well matched to ensure symmetric operation of the CP and should have a wide operating range. The output impedance of the CP is ideally very high so that the charge pump current does not depend on the voltage across the loop filter capacitor. Further, the switches introduce charge injection and clock feedthrough, which can cause unwanted ripples on the loop filter voltage, leading to spurious signals in the PLL output. Careful design of the switches and careful layout techniques are necessary to minimize these effects.</p>
+<p>The voltage change on the capacitor can be expressed as</p>
+<p>where <span class="math inline">\(t_\mathrm{on}\)</span> is the duration for which the UP or DOWN signal is active, proportional to the phase difference between the reference and feedback signals.</p>
+<p>Taking the Laplace transform of <a href="#/eq-cp-voltage-change" class="quarto-xref">Equation&nbsp;65</a>, we find the transfer function of the CP from the UP/DOWN control signals to the loop filter voltage as</p>
+<p>where we have added a resistor <span class="math inline">\(R_\mathrm{int}\)</span> in series with the capacitor <span class="math inline">\(C_\mathrm{int}\)</span> to introduce a zero in the loop filter transfer function. The need for this zero will become apparent when we analyze the PLL loop dynamics next.</p>
+<p>The resulting PLL using a PFD-CP combination is shown in <a href="#/fig-pll-pfd-cp" class="quarto-xref">Figure&nbsp;83</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Charge-Pump PLL</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-pll-pfd-cp-output-1.svg" class="r-stretch quarto-figure-center" id="fig-pll-pfd-cp"><p class="caption">
+Figure&nbsp;83: Diagram of a PFD-CP PLL.
+</p><aside class="notes">
+Diagram of a PFD-CP PLL. Note that the capacitor <span class="math inline">\(C_3\)</span> has been added to reduce the CP switching ripple, and its presence makes the loop filter 3rd order.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Charge-Pump PLL</h3>
+<p><span id="eq-cp-pll-transfer-function"><span class="math display">\[
+H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{\frac{I_\mathrm{CP} K_\mathrm{VCO}}{2 \pi C_\mathrm{int} N} (1 + s C_\mathrm{int} R_\mathrm{int})}{s^2 + s \frac{I_\mathrm{CP} K_\mathrm{VCO} R_\mathrm{int}}{2 \pi N} + \frac{I_\mathrm{CP} K_\mathrm{VCO}}{2 \pi C_\mathrm{int} N}} = N \cdot \frac{s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2}{s^2 + s \cdot 2 \zeta \omega_\mathrm{n} + \omega_\mathrm{n}^2}
+\tag{67}\]</span></span></p>
+<p><span id="eq-cp-pll-natural-frequency"><span class="math display">\[
+\omega_\mathrm{n} = \sqrt{\frac{I_\mathrm{CP} K_\mathrm{VCO}}{2 \pi C_\mathrm{int} N}}
+\tag{68}\]</span></span></p>
+<aside class="notes">
+<p>Neglecting <span class="math inline">\(C_3\)</span> for now, we can derive the closed-loop transfer function of the PLL from reference phase <span class="math inline">\(\varphi_\mathrm{ref}(s)\)</span> to output phase <span class="math inline">\(\varphi_\mathrm{out}(s)\)</span> as</p>
+<p>with</p>
+<p>and</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Charge-Pump PLL</h3>
+<p><span id="eq-cp-pll-damping-factor"><span class="math display">\[
+\zeta = \frac{R_\mathrm{int}}{2} \sqrt{\frac{I_\mathrm{CP} K_\mathrm{VCO} C_\mathrm{int}}{2 \pi N}}.
+\tag{69}\]</span></span></p>
+<aside class="notes">
+<p>Looking at <a href="#/eq-cp-pll-natural-frequency" class="quarto-xref">Equation&nbsp;68</a> and <a href="#/eq-cp-pll-damping-factor" class="quarto-xref">Equation&nbsp;69</a>, we can see that we now have one additional <em>independent</em> parameter (<span class="math inline">\(R_\mathrm{int}\)</span>) to set the natural frequency <span class="math inline">\(\omega_\mathrm{n}\)</span> and the damping factor <span class="math inline">\(\zeta\)</span> of the PLL independently (compare this to <a href="#/eq-pd-pll-natural-frequency" class="quarto-xref">Equation&nbsp;63</a> and <a href="#/eq-pd-pll-damping-factor" class="quarto-xref">Equation&nbsp;64</a>). This allows us to design the loop dynamics more flexibly to achieve the desired performance.</p>
+<p>With <a href="#/eq-cp-pll-damping-factor" class="quarto-xref">Equation&nbsp;69</a>, we can now appreciate the need for the resistor <span class="math inline">\(R_\mathrm{int}\)</span> in series with the capacitor <span class="math inline">\(C_\mathrm{int}\)</span> in the loop filter. Without this resistor, the damping factor <span class="math inline">\(\zeta\)</span> would be zero, leading to an undamped system with oscillatory behavior and poor transient response. The resistor introduces a zero in the loop filter transfer function, providing the necessary damping to stabilize the PLL and improve its dynamic response.</p>
+<p>Looking at <a href="#/fig-pll-pfd-cp" class="quarto-xref">Figure&nbsp;83</a> and <a href="#/eq-cp-transfer-function" class="quarto-xref">Equation&nbsp;66</a>, we can also see that the PFD-CP introduces another integrator in the loop. This integrator, together with the integrator from the VCO, makes the PLL a <strong>Type-II PLL</strong>. A Type-II PLL achieves zero steady-state phase error not only for a step in the reference phase (which a Type-I PLL manages as well), but also for a <em>step in the reference frequency</em>, i.e., a ramp in the reference phase. This is the practically important case, as it means the loop settles to exactly <span class="math inline">\(\Delta \varphi = 0\)</span> after a channel change, without the static phase offset that a Type-I PLL would exhibit. Only for a frequency <em>ramp</em> (a parabolic phase input) does a Type-II PLL retain a finite static phase error.</p>
+<p>In conclusion:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Charge-Pump PLL</h3>
+<ul>
+<li>The PLL regulates the phase of a VCO to match the phase of a reference signal, using feedback control. Even with a steady-state phase error, the frequency error is zero (Type-I PLL). In a Type-II PLL, both phase and frequency errors are zero in steady state.</li>
+<li>The lowpass behavior of the loop filter determines the dynamic response and stability of the PLL.</li>
+<li>Further, the PLL transfer function from reference phase to output phase has the form of a lowpass, which passes the reference oscillator phase noise to the output inside the passband. The phase noise of the VCO is suppressed inside the loop bandwidth, as the PLL corrects for phase deviations.</li>
+<li>Outside the PLL loop bandwidth, the VCO phase noise dominates, as the PLL cannot correct for phase deviations fast enough.</li>
+</ul>
+<aside class="notes">
+<p>This phase noise shaping behavior is illustrated in <a href="#/fig-pll-phase-noise" class="quarto-xref">Figure&nbsp;84</a>, which shows how the reference and VCO phase noise contributions combine to form the total PLL output phase noise.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Charge-Pump PLL</h3>
+<div id="cell-fig-pll-phase-noise" class="cell" data-execution_count="11">
+<div class="cell-output cell-output-display">
+<div id="fig-pll-phase-noise" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-pll-phase-noise-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="pll_files/figure-revealjs/fig-pll-phase-noise-output-1.png" width="568" height="373">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-phase-noise-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;84: PLL phase noise contributions at the PLL output showing reference phase noise (increased by 20*log(N) and low-pass shaped), VCO phase noise (high-pass shaped), and total phase noise.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+PLL phase noise contributions at the PLL output showing reference phase noise (increased by 20*log(N) and low-pass shaped), VCO phase noise (high-pass shaped), and total phase noise. The loop bandwidth determines the crossover frequency between reference and VCO phase noise contributions. For effective rejection of the 1/f³ VCO phase noise, a higher-order loop filter (shown is 3rd order) is beneficial.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="sec-pll-all-digital" class="title-slide slide level2 center" data-number="7.3">
+<h2><span class="header-section-number">7.3</span> All-Digital PLL</h2>
+<aside class="notes">
+<p>Note that inside the PLL loop bandwidth the reference phase noise is multiplied by <span class="math inline">\(N^2\)</span> in power, i.e., <span class="math inline">\(20 \log_{10}(N)\)</span> in dB, as the PLL output frequency is <span class="math inline">\(N\)</span> times the reference frequency. In <a href="#/fig-pll-phase-noise" class="quarto-xref">Figure&nbsp;84</a>, <span class="math inline">\(N = 100\)</span> and a reference phase noise of -140 dBc/Hz is used. Large values of <span class="math inline">\(N\)</span> can significantly increase the reference phase noise contribution at the PLL output, which is why low phase noise references are essential for high-performance PLLs.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>All-Digital PLL</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-adpll-block-diagram-output-1.svg" class="r-stretch quarto-figure-center" id="fig-adpll-block-diagram"><p class="caption">
+Figure&nbsp;85: Block diagram of an all-digital PLL.
+</p><aside class="notes">
+<p>In the PLL implementations discussed so far, we have used analog components such as the VCO, loop filter, and charge pump. While these analog PLLs can achieve excellent performance, they also come with challenges such as component variability, temperature sensitivity, and integration complexity in modern digital processes. The question arises: Can we implement a PLL using only digital components to overcome these challenges? The answer is yes, leading to the concept of the <strong>all-digital phase-locked loop (ADPLL)</strong> <span class="citation" data-cites="Staszewski.2003">(<a href="#/references" role="doc-biblioref" onclick="">Staszewski et al. 2003</a>)</span>, whose block diagram is shown in <a href="#/fig-adpll-block-diagram" class="quarto-xref">Figure&nbsp;85</a>.</p>
+Block diagram of an all-digital PLL. A reference phase signal is compared to the phase of a digitally-controlled oscillator (DCO) output signal in a time-to-digital converter (TDC). The phase error word is digitally low-pass filtered and used to tune the DCO frequency via a frequency control word.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="sec-pll-tdc" class="slide level3" data-number="7.3.1">
+<h3><span class="header-section-number">7.3.1</span> Time-to-Digital Converter</h3>
+<aside class="notes">
+<p>Conceptually, the ADPLL in <a href="#/fig-adpll-block-diagram" class="quarto-xref">Figure&nbsp;85</a> is similar to the analog PLL in <a href="#/fig-pll-block-diagram" class="quarto-xref">Figure&nbsp;74</a>, with the key difference being that all components are implemented digitally. The phase detector is replaced by a time-to-digital converter (TDC), which measures the time difference between the reference and feedback signal edges and converts it into a digital phase error word. The loop filter is implemented as a digital filter (FIR, IIR, or similar), processing the phase error word to generate a tuning word for the digitally controlled oscillator (DCO). The DCO generates the output frequency based on the tuning word, completing the feedback loop.</p>
+<p>The advantages of the ADPLL are that it can be fully integrated in a digital nm CMOS process, benefiting from scalability, low power consumption, small chip area, and immunity to analog component variations. Additionally, the digital nature of the ADPLL allows for easy programmability and adaptability to different applications. However, the ADPLL also faces challenges such as quantization noise from the TDC and DCO, nonlinearity (DNL and INL) of TDC and DCO, as well as coupling of digital switching noise into the oscillator output signal.</p>
+<p>The TDC is a crucial component of the ADPLL, responsible for measuring the time difference between the reference and feedback signal edges and converting it into a digital phase error word. The TDC operates by sampling the time interval between two events (the rising edges of the reference and feedback signals) and quantizing this interval into discrete levels. TDCs can be implemented using various techniques. One popular method is using a digital delay line. An exemplary implementation is shown in <a href="#/fig-pll-tdc" class="quarto-xref">Figure&nbsp;86</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Time-to-Digital Converter</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-pll-tdc-output-1.svg" class="r-stretch quarto-figure-center" id="fig-pll-tdc"><p class="caption">
+Figure&nbsp;86: Basic TDC implementation as a delay line with parallel capture flip-flops.
+</p><aside class="notes">
+Basic TDC implementation as a delay line with parallel capture flip-flops. The TDC delay resolution is limited to two inverter delays.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Time-to-Digital Converter</h3>
+<p><span class="math display">\[
+\mathcal{L}\left\{f\right\} = 10 \cdot \log \left[ \frac{(2 \pi)^2}{12 f_\mathrm{ref}} \cdot \left(  \frac{\Delta T_\mathrm{TDC}}{T_\mathrm{DCO}} \right)^2 \right]
+\]</span></p>
+<aside class="notes">
+<p>In <a href="#/fig-pll-tdc" class="quarto-xref">Figure&nbsp;86</a>, the reference signal edge runs through a series of buffers (delay elements) connected in a delay line configuration. The feedback signal edge is used to sample the state of the delay line at the moment it arrives. The outputs of the DFFs represent the time difference between the reference and feedback signals, which can be encoded into a digital phase error word. The resolution of the TDC is determined by the delay between each stage in the delay line, with finer delays providing higher resolution. However, increasing the resolution also increases the complexity and power consumption of the TDC.</p>
+<p>The phase noise of the TDC (at the output of the ADPLL) arising from this time measurement quantization can be modeled as</p>
+<p>where <span class="math inline">\(\Delta T_\mathrm{TDC}\)</span> is the time resolution of the TDC, <span class="math inline">\(T_\mathrm{DCO}\)</span> is the period of the DCO output frequency, and <span class="math inline">\(f_\mathrm{ref}\)</span> is the reference frequency. This equation shows that improving the TDC resolution (reducing <span class="math inline">\(\Delta T_\mathrm{TDC}\)</span>) and increasing the reference frequency can help reduce the phase noise contribution from the TDC.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Time-to-Digital Converter</h3>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>TDC Resolution Example</strong></p>
+</div>
+<div class="callout-content">
+<p>To get an idea of the performance requirements for the TDC, we assume a DCO output frequency of 2.4 GHz (e.g., for a Bluetooth application) and a reference frequency of 40 MHz. If we aim for a TDC phase noise contribution of -100 dBc/Hz at the DCO output, we can rearrange the above equation to find the required TDC time resolution:</p>
+<p><span class="math display">\[
+\Delta T_\mathrm{TDC} = T_\mathrm{DCO} \cdot \sqrt{\frac{12 f_\mathrm{ref} \cdot 10^{\mathcal{L}\left\{f\right\}/10}}{(2 \pi)^2}} = \frac{1}{2.4 \times 10^9} \cdot \sqrt{\frac{12 \cdot 40 \times 10^6 \cdot 10^{-10}}{(2 \pi)^2}} \approx 15\,\text{ps}
+\]</span></p>
+<div class="fragment">
+<p>This number is challenging but achievable with modern TDC designs in nm CMOS.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-pll-dco" class="slide level3 scrollable" data-number="7.3.2">
+<h3><span class="header-section-number">7.3.2</span> Digitally Controlled Oscillator</h3>
+<ol type="1">
+<li>An analog-controlled oscillator (e.g., a VCO) is combined with a digital-to-analog converter (DAC) to convert the digital tuning word into an analog control voltage. This approach is shown in <a href="#/fig-pll-dco-dac" class="quarto-xref">Figure&nbsp;87</a>.</li>
+</ol>
+<aside class="notes">
+<p>With the implementation of the TDC clarified in <a href="#/sec-pll-tdc" class="quarto-xref">Section&nbsp;7.3.1</a>, we now turn our attention to the digitally controlled oscillator (DCO), which generates the output frequency of the ADPLL based on a digital tuning word. The DCO is a digital equivalent of the VCO used in analog PLLs, and its frequency is adjusted by changing the digital input value. Fundamentally, two possible implementations exist:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Digitally Controlled Oscillator</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-pll-dco-dac-output-1.svg" class="r-stretch quarto-figure-center" id="fig-pll-dco-dac"><p class="caption">
+Figure&nbsp;87: Digitally controlled oscillator using a DAC.
+</p></section>
+<section class="slide level3 unnumbered scrollable">
+<h3>Digitally Controlled Oscillator</h3>
+<ol start="2" type="1">
+<li>A digitally-controlled oscillator uses a large number of small varactors or switched capacitor banks to adjust the oscillation frequency directly based on the digital tuning word. An example implementation of a switched varactor is shown in <a href="#/fig-dco-switched-varactor" class="quarto-xref">Figure&nbsp;88</a>, or a switched capacitor like shown in <a href="../rfic.html#fig-switched-capacitor">Figure&nbsp;72</a> is used.</li>
+</ol>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Digitally Controlled Oscillator</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-dco-switched-varactor-output-1.svg" class="r-stretch quarto-figure-center" id="fig-dco-switched-varactor"><p class="caption">
+Figure&nbsp;88: A switched differential varactor used for fine frequency control in a DCO.
+</p></section>
+
+<section id="sec-pll-frac-n" class="title-slide slide level2 center" data-number="7.4">
+<h2><span class="header-section-number">7.4</span> Fractional-N PLL</h2>
+<aside class="notes">
+<p>It has to be noted that while an ADPLL seems conceptually simpler than an analog PLL, the design of high-performance TDCs and DCOs can be quite complex and requires careful consideration of quantization noise, linearity, and power consumption. Coupling effects between different circuit blocks can also introduce unwanted spurs and phase noise folding in the ADPLL output. Therefore, while ADPLLs offer many advantages, they also present unique design challenges that must be addressed to achieve adequate performance.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Fractional-N PLL</h3>
+<p><span class="math display">\[
+N = N_1, N_1, N_1, N_2 \implies \text{Average } N = \frac{61 + 61 + 61 + 62}{4} = 61.25
+\]</span></p>
+<p><span class="math display">\[
+N = \frac{99 \cdot 61 + 1 \cdot 62}{100} = 61.01
+\]</span></p>
+<aside class="notes">
+<p>With the PLL architectures discussed so far, the output frequency resolution is limited to integer multiples of the reference frequency, i.e., <span class="math inline">\(f_\mathrm{out} = N \cdot f_\mathrm{ref}\)</span> with <span class="math inline">\(N \in \mathbb{N}\)</span>. For a fine output frequency resolution, this requires a very low reference frequency. With the rule of thumb that the PLL loop bandwidth should be less than <span class="math inline">\(f_\mathrm{ref}/10\)</span> to ensure stable operation, a low reference frequency also limits the achievable loop bandwidth, which is detrimental to phase noise performance and settling time. Further, we have learned in <a href="#/sec-pll-charge-pump" class="quarto-xref">Section&nbsp;7.2</a> that large values of <span class="math inline">\(N\)</span> increase the reference phase noise contribution at the PLL output by <span class="math inline">\(20 \log_{10}(N)\)</span> dB, making it challenging to achieve low phase noise performance with high frequency resolution.</p>
+<p>How to break these fundamental limitations? The answer lies in the concept of the <strong>fractional-N PLL</strong>, which allows for non-integer frequency multiplication.</p>
+<p>Assume we want to generate an output frequency of <span class="math inline">\(f_\mathrm{out} = 2.45\,\text{GHz}\)</span> from a reference frequency of <span class="math inline">\(f_\mathrm{ref} = 40\,\text{MHz}\)</span>. This requires a frequency multiplication factor of <span class="math inline">\(N = 61.25\)</span>, which is not an integer. To achieve this, the fractional-N PLL employs a feedback divider that can switch between two integer division ratios, <span class="math inline">\(N_1\)</span> and <span class="math inline">\(N_2\)</span>, such that the average division ratio over time equals the desired fractional value (the averaging is performed by the low-pass loop filter, providing the averaged tuning voltage to the VCO / the tuning word to the DCO). In this case, we can choose <span class="math inline">\(N_1 = 61\)</span> and <span class="math inline">\(N_2 = 62\)</span>. By alternating between these two division ratios in a controlled manner, the PLL can effectively achieve an average division ratio of 61.25, allowing it to generate the desired output frequency of 2.45 GHz. The following sequence illustrates this concept over four reference cycles:</p>
+<p>A simple sequence like the one above works, but would lead to significant spurs in the PLL output spectrum due to the periodic nature of the division ratio switching, especially when the fractionality is close to an integer, and thus the sequence is long. Consider the case of <span class="math inline">\(N = 61.01\)</span>, where we would need to switch to <span class="math inline">\(N_2 = 62\)</span> only once every 100 cycles of <span class="math inline">\(N_1 = 61\)</span>:</p>
+<p>This periodic switching introduces spurious tones in the PLL output spectrum at multiples of <span class="math inline">\(f_\mathrm{ref}/100\)</span>, which can potentially pass through the loop filter and appear in the output spectrum, degrading the signal quality.</p>
+<p>To minimize these spurs, more sophisticated techniques such as <em>delta-sigma modulation</em> are employed to <em>randomize</em> the switching sequence, spreading the quantization noise over a wider frequency range and reducing its impact on the PLL output. Additionally, the quantization noise introduced by the fractional division is <em>pushed to higher frequencies</em> where it can be more easily filtered out by the loop filter.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="sec-pll-delta-sigma" class="slide level3" data-number="7.4.1">
+<h3><span class="header-section-number">7.4.1</span> Delta-Sigma Modulator</h3>
+<aside class="notes">
+<p>For an in-depth understanding of delta-sigma modulation, we refer to <span class="citation" data-cites="Schreier_DSM">(<a href="#/references" role="doc-biblioref" onclick="">Schreier et al. 2017</a>)</span>. Here, we briefly summarize the key concepts relevant to fractional-N PLLs. In a nutshell, a delta-sigma modulator (DSM) is a feedback system that shapes quantization noise to higher frequencies, allowing for high-resolution digital-to-analog conversion or frequency synthesis. The basic structure of a first-order DSM is shown in <a href="#/fig-pll-dsm-first-order" class="quarto-xref">Figure&nbsp;89</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Delta-Sigma Modulator</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-pll-dsm-first-order-output-1.svg" class="r-stretch quarto-figure-center" id="fig-pll-dsm-first-order"><p class="caption">
+Figure&nbsp;89: A first-order continuous-time delta-sigma modulator.
+</p></section>
+<section class="slide level3 unnumbered">
+<h3>Delta-Sigma Modulator</h3>
+<p><span class="math display">\[
+Y(s) = X(s) \cdot \frac{1}{1 + s T} = X(s) \cdot H_\mathrm{LP}(s)
+\]</span></p>
+<p><span class="math display">\[
+Y(s) = Q(s) \cdot \frac{s T}{1 + s T} = Q(s) \cdot H_\mathrm{HP}(s)
+\]</span></p>
+<aside class="notes">
+<p>In <a href="#/fig-pll-dsm-first-order" class="quarto-xref">Figure&nbsp;89</a>, the input signal <span class="math inline">\(X(s)\)</span> is transferred to the output <span class="math inline">\(Y(s)\)</span> with the following transfer function (we set <span class="math inline">\(Q = 0\)</span>):</p>
+<p>The quantization noise <span class="math inline">\(Q(s)\)</span> introduced by the quantizer is shaped by the feedback loop, resulting in the following output contribution:</p>
+<p>We can see that the quantization noise is highpass filtered, pushing it to higher frequencies, where it can be more easily filtered out by a subsequent lowpass filter.</p>
+<p>The digital implementation of a first-order DSM is straightforward and one possible form is shown in <a href="#/fig-pll-dsm-digital-first-order" class="quarto-xref">Figure&nbsp;90</a>. At the point of truncation from <span class="math inline">\(N+2\)</span> bits to 1 bit (the MSB) we imagine quantization noise <span class="math inline">\(q[n]\)</span> being added to the signal.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Delta-Sigma Modulator</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-pll-dsm-digital-first-order-output-1.svg" class="r-stretch quarto-figure-center" id="fig-pll-dsm-digital-first-order"><p class="caption">
+Figure&nbsp;90: A first-order digital delta-sigma modulator.
+</p></section>
+<section class="slide level3 unnumbered">
+<h3>Delta-Sigma Modulator</h3>
+<p><span class="math display">\[
+\frac{Y(z)}{X(z)} = \text{STF}(z) = z^{-1}
+\]</span></p>
+<p><span class="math display">\[
+\frac{Y(z)}{Q(z)} = \text{NTF}(z) = (1 - z^{-1}) \implies \text{NTF} = 1 - z^{-1}.
+\]</span></p>
+<aside class="notes">
+<p>Calculating the <span class="math inline">\(z\)</span>-domain transfer functions from input <span class="math inline">\(X(z)\)</span> to the output <span class="math inline">\(Y(z)\)</span> (the signal transfer function, STF) and quantization noise <span class="math inline">\(Q(z)\)</span> to <span class="math inline">\(Y(z)\)</span> (the noise transfer function, NTF), we find</p>
+<p>and</p>
+<p>We see that the STF is a simple delay, while the NTF has a zero at DC, pushing the quantization noise to higher frequencies. Evaluating the frequency response of the NTF to find the frequency-shaped PSD of the quantization noise, we find</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Delta-Sigma Modulator</h3>
+<p><span class="math display">\[
+S_\mathrm{y}(f) = S_\mathrm{q}(f) |H(f)|^2 = S_\mathrm{q}(f) \cdot 2 \left| 1 - \cos(2 \pi f T_\mathrm{s}) \right| \implies H(f) = \sqrt{ 2 \left| 1 - \cos(2 \pi f T_\mathrm{s}) \right| }.
+\]</span></p>
+<aside class="notes">
+<p>with <span class="math inline">\(T_\mathrm{s}\)</span> being the sampling period of the DSM. The resulting <span class="math inline">\(H(f)\)</span> is shown in <a href="#/fig-pll-dsm-ntf-plot" class="quarto-xref">Figure&nbsp;91</a>. With the assumed PLL loop bandwidth of 100 kHz and a reference frequency of 40 MHz, we can see that the quantization noise is significantly attenuated inside the PLL loop bandwidth, minimizing its impact on the PLL output phase noise. The general trend is that higher-order DSMs and faster sampling frequencies lead to better noise shaping and lower in-band quantization noise.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Delta-Sigma Modulator</h3>
+<div id="cell-fig-pll-dsm-ntf-plot" class="cell" data-execution_count="18">
+<div class="cell-output cell-output-display">
+<div id="fig-pll-dsm-ntf-plot" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-pll-dsm-ntf-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="pll_files/figure-revealjs/fig-pll-dsm-ntf-plot-output-1.png" width="569" height="374">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pll-dsm-ntf-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;91: NTF H(f) of a first-order delta-sigma modulator showing the high-pass noise shaping characteristic.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+NTF H(f) of a first-order delta-sigma modulator showing the high-pass noise shaping characteristic. The quantization noise is suppressed at low frequencies and increases towards the Nyquist frequency. An exemplary loop filter bandwidth of 300 kHz for a 40 MHz reference frequency is indicated.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Delta-Sigma Modulator</h3>
+<div id="tbl-pll-dsm-orders" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-tbl">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-pll-dsm-orders-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6: DSM output ranges and characteristics for different orders
+</figcaption>
+<div aria-describedby="tbl-pll-dsm-orders-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>DSM Order</th>
+<th>Output Range</th>
+<th>Noise Shaping</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><span class="math inline">\(N, N+1\)</span></td>
+<td>20 dB/decade</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><span class="math inline">\(N-1 \ldots N+2\)</span></td>
+<td>40 dB/decade</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><span class="math inline">\(N-3 \ldots N+4\)</span></td>
+<td>60 dB/decade</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<aside class="notes">
+<p>If we analyze the signal properties of the number sequence generated by the first-order DSM in <a href="#/fig-pll-dsm-digital-first-order" class="quarto-xref">Figure&nbsp;90</a>, we find that its randomization properties are not ideal, leading to spurs in the PLL output spectrum. To improve the randomization properties, higher-order DSMs are used in fractional-N PLLs, especially 2nd or 3rd order. A consequence of a higher-order DSM is that the produced sequence can take more values than just <span class="math inline">\(N\)</span> and <span class="math inline">\(N+1\)</span>. The range of produced values is shown in <a href="#/tbl-pll-dsm-orders" class="quarto-xref">Table&nbsp;6</a>.</p>
+<p>A standard 3rd-order DSM implementation has issues with stability due to the phase shift of three integrators in the feedback loop. To mitigate this, a well-known architecture called the <strong>MASH (multi-stage noise shaping) DSM</strong> is often used <span class="citation" data-cites="Matsuya.1989">(<a href="#/references" role="doc-biblioref" onclick="">Matsuya et al. 1989</a>)</span>, which consists of multiple first-order DSM stages cascaded together. An example Python implementation of a 3rd-order MASH DSM is shown in <a href="#/fig-mash-nodither" class="quarto-xref">Figure&nbsp;92</a>, showing a snippet of the time-domain output and the resulting frequency spectrum, showing the noise shaping. As can be clearly seen, even using a 3rd-order MASH, there are strong spurious signals showing up in the spectrum. The time series shows that for some static input values (like here 0.125) patterns with a short period can exist.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Delta-Sigma Modulator</h3>
+<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/radio-frequency-integrated-circuits/radio-frequency-integrated-circuits/content/pll/delta_sigma_modulator.ipynb" data-notebook-title="MASH Modulator (3rd Order)" data-notebook-cellid="cell-fig-mash-nodither">
+<div id="cell-fig-mash-nodither" class="cell" data-tags="[&quot;fig-mash-nodither&quot;]" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<div id="fig-mash-nodither" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-mash-nodither-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="pll_files/figure-revealjs/-content-pll-delta_sigma_modulator-fig-mash-nodither-output-1.png">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mash-nodither-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;92: Time series and the spectrum of a MASH 3rd-order modulator.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Delta-Sigma Modulator</h3>
+<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/radio-frequency-integrated-circuits/radio-frequency-integrated-circuits/content/pll/delta_sigma_modulator.ipynb" data-notebook-title="MASH Modulator (3rd Order)" data-notebook-cellid="cell-fig-mash-dither">
+<div id="cell-fig-mash-dither" class="cell" data-tags="[&quot;fig-mash-dither&quot;]" data-execution_count="7">
+<div class="cell-output cell-output-display">
+<div id="fig-mash-dither" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-mash-dither-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="pll_files/figure-revealjs/-content-pll-delta_sigma_modulator-fig-mash-dither-output-1.png">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mash-dither-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;93: Time series and the spectrum of a MASH 3rd-order modulator with added dither.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>As a potential solution, we can add a very small dithering signal (i.e., adding a random signal to the input), which breaks these patterns. As shown in <a href="#/fig-mash-dither" class="quarto-xref">Figure&nbsp;93</a>, dithering indeed causes enough randomization so that the noise shaping can be clearly seen without noticeable spurs (this is evident when comparing the time series of <a href="#/fig-mash-nodither" class="quarto-xref">Figure&nbsp;92</a> and <a href="#/fig-mash-dither" class="quarto-xref">Figure&nbsp;93</a>). Care has to be taken that the added random noise is small enough to not cause issues with in-band noise.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Delta-Sigma Modulator</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-mash-third-order-output-1.svg" class="r-stretch quarto-figure-center" id="fig-mash-third-order"><p class="caption">
+Figure&nbsp;94: Block diagram of a 3rd-order MASH 1-1-1 delta-sigma modulator with three cascaded first-order stages and digital noise cancellation logic including dither injection.
+</p><aside class="notes">
+<p>A block diagram of a 3rd-order <a href="http://www.aholme.co.uk/Frac2/Mash.htm">MASH 1-1-1</a> implementation including dither injection (shown in blue) is depicted in <a href="#/fig-mash-third-order" class="quarto-xref">Figure&nbsp;94</a>. The dither is typically implemented digitally as a pseudo-random bit sequence (PRBS) generator, often in the form of a <a href="https://en.wikipedia.org/wiki/Linear-feedback_shift_register">linear-feedback shift register</a> (LFSR).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="sec-pll-frac-n-implementation" class="slide level3" data-number="7.4.2">
+<h3><span class="header-section-number">7.4.2</span> Fractional-N PLL Implementation</h3>
+<aside class="notes">
+<p>A block diagram of a fractional-N PLL using a DSM and a multi-modulus divider (MMD) is shown in <a href="#/fig-pll-frac-n-block" class="quarto-xref">Figure&nbsp;95</a>. In order to ease the timing loop of the jittered clock coming from the MMD, the DSM is typically clocked by the MMD’s output.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Fractional-N PLL Implementation</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-pll-frac-n-block-output-1.svg" class="r-stretch quarto-figure-center" id="fig-pll-frac-n-block"><p class="caption">
+Figure&nbsp;95: Block diagram of a fractional-N PLL.
+</p><aside class="notes">
+Block diagram of a fractional-N PLL. The VCO signal is divided by a sequence of integer divider values div[k] whose average value is given by <span class="math inline">\(N.f\)</span>, where <span class="math inline">\(N\)</span> is the integer part of the divider value and <span class="math inline">\(f\)</span> is the fractional part of the divider.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered scrollable">
+<h3>Fractional-N PLL Implementation</h3>
+<ol type="1">
+<li>Use a Type-I PLL architecture with <span class="math inline">\(\Delta \varphi \neq 0\)</span>.</li>
+<li>Introduce a phase offset in a Type-II PLL to operate away from <span class="math inline">\(\Delta \varphi = 0\)</span>.</li>
+</ol>
+<aside class="notes">
+<p>For a practical implementation of a fractional-N PLL, it is of utmost importance that the path from the MMD output to the loop filter output is linear, as only the averaging/lowpass filtering of the noise-shaped quantization noise reduces the noise. Any <em>nonlinearity</em> in this path will lead to distortion of the quantization noise, causing quantization noise to fold back into the PLL loop bandwidth, degrading the PLL output phase noise!</p>
+<p>One prominent source of nonlinearity is the difference between the source and sink currents of the charge pump, as well as any nonlinearity present in the PFD/CP operating point of <span class="math inline">\(\Delta \varphi \approx 0\)</span> (like a deadzone). Since a Type-II PLL ideally operates at exactly this point, with random excursions around it due to the DSM-induced jitter, any nonlinearity here will seriously degrade the PLL performance. There are predominantly two options to mitigate this issue:</p>
+<p>A simple way to introduce a phase offset is to add a fixed current source/sink to the charge pump, as shown in <a href="#/fig-pll-cp-offset" class="quarto-xref">Figure&nbsp;96</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Fractional-N PLL Implementation</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-pll-cp-offset-output-1.svg" class="r-stretch quarto-figure-center" id="fig-pll-cp-offset"><p class="caption">
+Figure&nbsp;96: Charge pump with offset current for use in a fractional-N Type-II PLL.
+</p></section>
+<section class="slide level3 unnumbered">
+<h3>Fractional-N PLL Implementation</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-ref-doubler-output-1.svg" class="r-stretch quarto-figure-center" id="fig-ref-doubler"><p class="caption">
+Figure&nbsp;97: Implementation of reference frequency doubler.
+</p><aside class="notes">
+<p>As we have seen multiple times in the PLL discussion, using a higher <span class="math inline">\(f_\mathrm{ref}\)</span> is beneficial for phase noise performance, loop bandwidth, and TDC resolution (in an ADPLL). However, in many applications the choice of reference frequency is constrained by other factors. One way to achieve a higher reference frequency is by using a <strong>frequency doubler</strong>. As shown in <a href="#/fig-ref-doubler" class="quarto-xref">Figure&nbsp;97</a>, a frequency doubler can be implemented using an XOR gate and a delay line. The delay line is set to a quarter of the period of the reference frequency, i.e., <span class="math inline">\(T_\mathrm{d} = T_\mathrm{ref} / 4\)</span>. The XOR gate then produces an output frequency of <span class="math inline">\(f_\mathrm{double} = 2 \cdot f_\mathrm{ref}\)</span>. For stable operation, this delay line must be designed to be relatively insensitive to process, voltage, and temperature (PVT) variations, or must be adjusted with a control loop.</p>
+Implementation of reference frequency doubler. Ideally, <span class="math inline">\(T_\mathrm{d}\)</span> should be set to <span class="math inline">\(T_\mathrm{ref} / 4\)</span>.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Fractional-N PLL Implementation</h3>
+
+<img data-src="pll_files/figure-revealjs/fig-pll-frac-n-block-retiming-output-1.svg" class="r-stretch quarto-figure-center" id="fig-pll-frac-n-block-retiming"><p class="caption">
+Figure&nbsp;98: Block diagram of a fractional-N PLL including a retiming flip-flop to reduce the MMD-related jitter.
+</p><aside class="notes">
+<p>As a final remark, we note that the output of the MMD in <a href="#/fig-pll-frac-n-block" class="quarto-xref">Figure&nbsp;95</a> is a jittered clock due to the changing division ratio and the multiple gates and flip-flops that make up the MMD. This jitter degrades the PLL phase noise performance. Fortunately, there is an easy fix for this issue by using a retiming flip-flop after the MMD, clocked by the oscillator output, as shown in <a href="#/fig-pll-frac-n-block-retiming" class="quarto-xref">Figure&nbsp;98</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="references" class="slide level3 unnumbered smaller scrollable">
+<h3>References</h3>
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Best_PLL" class="csl-entry" role="listitem">
+Best, Roland E. 1999. <em>Phase-Locked Loops: Design, Simulation, and Applications</em>. McGraw-Hill Education.
+</div>
+<div id="ref-Brown.1971" class="csl-entry" role="listitem">
+Brown, J. I. 1971. <span>“<span class="nocase">A digital phase and frequency-sensitive detector</span>.”</span> <em>Proceedings of the IEEE</em> 59 (4): 717–18. <a href="https://doi.org/10.1109/proc.1971.8246">https://doi.org/10.1109/proc.1971.8246</a>.
+</div>
+<div id="ref-Gardner.1980" class="csl-entry" role="listitem">
+Gardner, F. 1980. <span>“<span>Charge-Pump Phase-Lock Loops</span>.”</span> <em>IEEE Transactions on Communications</em> 28 (11): 1849–58. <a href="https://doi.org/10.1109/TCOM.1980.1094619">https://doi.org/10.1109/TCOM.1980.1094619</a>.
+</div>
+<div id="ref-Matsuya.1989" class="csl-entry" role="listitem">
+Matsuya, Y., K. Uchimura, A. Iwata, and T. Kaneko. 1989. <span>“<span class="nocase">A 17 bit oversampling D-A conversion technology using multistage noise shaping</span>.”</span> <em>IEEE Journal of Solid-State Circuits</em> 24 (4): 969–75. <a href="https://doi.org/10.1109/4.34079">https://doi.org/10.1109/4.34079</a>.
+</div>
+<div id="ref-Schreier_DSM" class="csl-entry" role="listitem">
+Schreier, Richard, Shanthi Pavan, and Gabor C. Temes. 2017. <em>Understanding Delta-Sigma Data Converters</em>. John Wiley &amp; Sons, Ltd.
+</div>
+<div id="ref-Staszewski.2003" class="csl-entry" role="listitem">
+Staszewski, R. B., D. Leipold, K. Muhammad, and P. T. Balsara. 2003. <span>“<span class="nocase">Digitally controlled oscillator (DCO)-based architecture for RF frequency synthesis in a deep-submicrometer CMOS Process</span>.”</span> <em>IEEE Transactions on Circuits and Systems II: Analog and Digital Signal Processing</em> 50 (11): 815–28. <a href="https://doi.org/10.1109/tcsii.2003.819128">https://doi.org/10.1109/tcsii.2003.819128</a>.
+</div>
+</div>
+<aside class="notes">
+<p>This retiming flip-flop effectively synchronizes the MMD output to the oscillator clock domain, significantly reducing the jitter seen by the loop filter and improving the overall phase noise performance of the fractional-N PLL.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>References</h3>
+
+</section>
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p><a href="../rfic.html#sec-pll">RFIC lecture notes</a></p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"numbers":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/iic-jku\.github\.io\/radio-frequency-integrated-circuits\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

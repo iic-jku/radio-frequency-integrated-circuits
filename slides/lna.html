@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <title>Radio-Frequency Integrated Circuits – Low Noise Amplifiers</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-a975c94262742d03914c7a56aca0ba09.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Low Noise Amplifiers</h1>
+  <p class="subtitle">Radio-Frequency Integrated Circuits</p>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section>
+<section id="sec-lna" class="title-slide slide level1 center" data-number="4">
+<h1><span class="header-section-number">4</span> Low Noise Amplifiers</h1>
+<div class="hidden">
+
+</div>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Low Noise Amplifiers</h3>
+
+<img data-src="lna_files/figure-revealjs/fig-lna-block-output-1.svg" class="r-stretch quarto-figure-center" id="fig-lna-block"><p class="caption">
+Figure&nbsp;31: Block diagram of an LNA.
+</p><aside class="notes">
+<p>As shown in <a href="../rfic.html#sec-sensitivity">Section&nbsp;2.3.4</a>, the sensitivity of a receiver is determined (besides the channel bandwidth and the SNR requirement of the demodulator) mainly by the noise figure of the receiver. The noise figure is in turn determined by the noise figure of the first few components in the receive chain, as exemplified in <a href="../rfic.html#eq-friis">Equation&nbsp;22</a>. Hence, as shown in <a href="../rfic.html#fig-trx-fdd">Figure&nbsp;23</a> and <a href="../rfic.html#fig-trx-tdd">Figure&nbsp;24</a>, <strong>low noise amplifiers (LNAs)</strong> are usually the first active building block in a receiver after the antenna, switches, and initial RF filtering.</p>
+<p>The main purpose of the LNA is to amplify the received signal with as little additional noise as possible, so that the subsequent stages in the receive chain can operate with a better signal-to-noise ratio (SNR) and do not increase the receiver NF substantially. The LNA is a critical component in the receiver design, and its performance has a significant impact on the overall sensitivity of the receiver.</p>
+Block diagram of an LNA. Typically, the LNA input is impedance matched to 50 Ω, while the output is often not matched if the LNA is integrated on-chip. Often, the LNA gain is adjustable (shown with the arrow) to allow for gain control in the receiver depending on the signal conditions. The LNA also might have a low-power bypass mode to reduce the power consumption of the LNA for sufficiently strong signals.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="sec-impedance-matching" class="title-slide slide level2 center" data-number="4.1">
+<h2><span class="header-section-number">4.1</span> Impedance Matching</h2>
+<aside class="notes">
+<p>The LNA as a building block is shown in <a href="#/fig-lna-block" class="quarto-xref">Figure&nbsp;31</a>. It is usually designed for a specific frequency band, e.g., the 2.4 GHz ISM band or the 5 GHz WLAN band, and is typically designed for a specific impedance, e.g., 50 Ω, which is the standard impedance for RF systems. Impedance matching is usually mandated at the input; the output impedance matching is only required if the output of the LNA goes off-chip; if it is kept on-chip, impedance matching is often not needed. The LNA is also designed to be sufficiently linear, i.e., to not introduce significant distortion to the amplified signal; however, compared to the noise requirements, linearity is often less critical.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Impedance Matching</h3>
+<ul>
+<li>The antenna is usually designed for a specific impedance, e.g., 50 Ω, and if the LNA input is not matched to this impedance, a significant portion of the received signal will be reflected back to the antenna, resulting in a loss of signal power.</li>
+<li>RF filters at the input of the LNA need to be terminated with the correct impedance to achieve the desired filter characteristics.</li>
+<li>Any transmission line in front of the LNA needs to be matched to avoid reflections and standing waves.</li>
+</ul>
+<aside class="notes">
+<p>Why is impedance matching at the input of the LNA so important?</p>
+<p>To quantify the “quality” of an impedance match, the <strong>reflection coefficient</strong> <span class="math inline">\(\Gamma\)</span> is often used, which is defined as <span class="citation" data-cites="Pozar_RF">(<a href="#/references" role="doc-biblioref" onclick="">Pozar 2011</a>)</span>:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Impedance Matching</h3>
+<p><span id="eq-reflection-coefficient"><span class="math display">\[
+\Gamma = \frac{Z_{\mathrm{in}} - Z_0}{Z_{\mathrm{in}} + Z_0}
+\tag{31}\]</span></span></p>
+<aside class="notes">
+<p>where <span class="math inline">\(Z_0\)</span> is the characteristic impedance of the system (usually 50 Ω) and <span class="math inline">\(Z_{\mathrm{in}}\)</span> is the input impedance of the LNA. For a <em>passive</em> input impedance, i.e., <span class="math inline">\(\Re \{ Z_\mathrm{in} \} \geq 0\)</span>, the reflection coefficient <span class="math inline">\(\Gamma\)</span> is a complex number with a magnitude between 0 and 1 (as can be readily shown from <a href="#/eq-reflection-coefficient" class="quarto-xref">Equation&nbsp;31</a>), where <span class="math inline">\(|\Gamma| = 0\)</span> indicates a perfect match and <span class="math inline">\(|\Gamma| = 1\)</span> indicates a complete mismatch. If the input presents a <em>negative</em> real part, then <span class="math inline">\(|\Gamma| &gt; 1\)</span>, i.e., the port reflects more power than is incident on it. This is exactly the condition we must avoid at all costs, and which we investigate in <a href="#/sec-amp-stability" class="quarto-xref">Section&nbsp;4.2</a>. This reflection coefficient can be represented on the Smith chart shown in <a href="#/fig-smith-chart" class="quarto-xref">Figure&nbsp;32</a>. A useful interactive tool to draft a matching network and visualize it on a Smith chart is this <a href="https://onlinesmithchart.com">website</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Impedance Matching</h3>
+<div id="cell-fig-smith-chart" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div id="fig-smith-chart" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-smith-chart-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="lna_files/figure-revealjs/fig-smith-chart-output-1.png" width="389" height="389">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-smith-chart-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;32: Smith chart showing constant resistance and reactance circles for impedance matching in RF circuits.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+Smith chart showing constant resistance and reactance circles for impedance matching in RF circuits. The blue dot indicates perfect matching at 50 Ω, the green dot shows an open, and the red dot shows a short. The red dashed circle indicates a mismatch with RL = 10 dB.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Impedance Matching</h3>
+<p><span id="eq-return-loss"><span class="math display">\[
+\text{RL} = -20 \log_{10} |\Gamma| = 20 \log_{10} \left| \frac{Z_\mathrm{in} + Z_0}{Z_\mathrm{in} - Z_0} \right|
+\tag{32}\]</span></span></p>
+<aside class="notes">
+<p>However, in practice, the more commonly used metric for impedance matching is the return loss (RL), which is defined as <span class="citation" data-cites="Pozar_RF">(<a href="#/references" role="doc-biblioref" onclick="">Pozar 2011</a>)</span>:</p>
+<p>A higher return loss indicates a better impedance match. A return loss of 10 dB (see <a href="#/fig-smith-chart" class="quarto-xref">Figure&nbsp;32</a>) indicates that 10% of the signal power is reflected back, while a return loss of 20 dB indicates that only 1% of the signal power is reflected back. In practice, a return loss of at least 10 dB is desired, with higher (positive) values being better <span class="citation" data-cites="Bird.2009">(<a href="#/references" role="doc-biblioref" onclick="">Bird 2009</a>)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Impedance Matching</h3>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Bode-Fano Criterion</strong></p>
+</div>
+<div class="callout-content">
+<p>The Bode-Fano criterion states that for a given load impedance and a given bandwidth, there is a fundamental limit to how well an impedance can be matched over that bandwidth; this criterion is important in the design of LNAs! The Bode-Fano criterion can be expressed mathematically as <span class="citation" data-cites="Fano.1950 Pozar_RF">(<a href="#/references" role="doc-biblioref" onclick="">Fano 1950</a>; <a href="#/references" role="doc-biblioref" onclick="">Pozar 2011</a>, ch.&nbsp;5.9)</span></p>
+<p><span id="eq-bode-fano-criterion"><span class="math display">\[
+\int_{0}^{\infty} \ln \left( \frac{1}{|\Gamma(\omega)|} \right) d\omega \leq \frac{\pi}{R C}
+\tag{33}\]</span></span></p>
+<div class="fragment">
+<p>where <span class="math inline">\(\Gamma(\omega)\)</span> is the frequency-dependent reflection coefficient, <span class="math inline">\(R\)</span> is the load resistance, and <span class="math inline">\(C\)</span> is the load capacitance (for an <span class="math inline">\(R \parallel C\)</span> load). This criterion implies that achieving a very good impedance match (i.e., a low reflection coefficient) over a wide bandwidth is fundamentally limited by the properties of the load. In practice, this means that there is a trade-off between the bandwidth of the match and the achievable return loss in an LNA design.</p>
+</div>
+<div class="fragment">
+<p>If we assume that we strive for match with <span class="math inline">\(|\Gamma_\mathrm{m}|\)</span> over a fractional bandwidth <span class="math inline">\(\Delta \omega / \omega_0\)</span>, we can derive from the Bode-Fano criterion (and using that <span class="math inline">\(Q = \omega_0 R C\)</span> for a parallel <span class="math inline">\(RC\)</span> circuit) that</p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[
+\frac{\Delta \omega}{\omega_0} \leq \frac{\pi}{Q} \cdot \frac{1}{\ln(1/|\Gamma_\mathrm{m}|)}
+\]</span></p>
+</div>
+<div class="fragment">
+<p>For example, if we want to achieve a return loss of 20 dB (i.e., <span class="math inline">\(|\Gamma_\mathrm{m}| = 0.1\)</span>) over a fractional bandwidth of 30%, we find that the quality factor of the load (i.e., the input stage of the LNA) needs to be <span class="math inline">\(Q \leq 4.5\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="sec-amp-stability" class="title-slide slide level2 center" data-number="4.2">
+<h2><span class="header-section-number">4.2</span> Amplifier Stability</h2>
+
+</section>
+<section class="slide level3 unnumbered">
+<h3>Amplifier Stability</h3>
+<p><span id="eq-rollet-stability-factor"><span class="math display">\[
+K = \frac{1 - |S_{11}|^2 - |S_{22}|^2 + |\Delta|^2}{2 |S_{12} S_{21}|}
+\tag{34}\]</span></span></p>
+<p><span id="eq-rollet-stability-factor-delta"><span class="math display">\[
+\Delta = S_{11} S_{22} - S_{12} S_{21}.
+\tag{35}\]</span></span></p>
+<aside class="notes">
+<p>When designing amplifiers, it is generally important to ensure that the amplifier is stable, i.e., that it does not oscillate! Under well-defined conditions, this is already complicated enough, but in RF design, the situation is even more complex, as the stability is usually a function of source and load impedances, which, especially when going off-chip, are often not well defined.</p>
+<p>Hence, we have a two-port network, where we need to ensure that the amplifier is stable for all possible source and load impedances, which represent a large number of potential simulation cases. Luckily, there are well-defined criteria to check the stability of a two-port network.</p>
+<p>One test for unconditional stability is the Rollet stability factor <span class="math inline">\(K\)</span>, which is defined as <span class="citation" data-cites="Pozar_RF">(<a href="#/references" role="doc-biblioref" onclick="">Pozar 2011</a>)</span></p>
+<p>with</p>
+<p>For unconditional stability, the following conditions must be met:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Amplifier Stability</h3>
+<p><span class="math display">\[
+K &gt; 1 \quad \text{and} \quad |\Delta| &lt; 1.
+\]</span></p>
+<p><span id="eq-mu-stability-factor"><span class="math display">\[
+\mu = \frac{1 - |S_{11}|^2}{|S_{22} - S_{11}^* \Delta| + |S_{12} S_{21}|}.
+\tag{36}\]</span></span></p>
+<aside class="notes">
+<p>If these conditions are not met, the amplifier is potentially unstable, i.e., it might oscillate for some source and load impedances. In this case, further analysis is required to determine the stability of the amplifier.</p>
+<p>Unfortunately, the <span class="math inline">\(K\)</span>-factor test only provides a binary answer (stable/unstable) and does not provide any information about how close the amplifier is to instability. For this purpose, the so-called <span class="math inline">\(\mu\)</span> stability factor is used, which is defined as <span class="citation" data-cites="Edwards.1992">(<a href="#/references" role="doc-biblioref" onclick="">Edwards and Sinsky 1992</a>)</span></p>
+<p>For unconditional stability, the following condition must be met:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Amplifier Stability</h3>
+<p><span class="math display">\[
+\mu &gt; 1
+\]</span></p>
+<aside class="notes">
+<p>The <span class="math inline">\(\mu\)</span>-factor provides a measure of how close the amplifier is to instability; the larger the <span class="math inline">\(\mu\)</span>-factor, the more stable the amplifier is. A <span class="math inline">\(\mu\)</span>-factor of 1.5 or higher is usually considered sufficient for practical applications.</p>
+<p>What we can learn from <a href="#/eq-rollet-stability-factor" class="quarto-xref">Equation&nbsp;34</a>, <a href="#/eq-rollet-stability-factor-delta" class="quarto-xref">Equation&nbsp;35</a>, and <a href="#/eq-mu-stability-factor" class="quarto-xref">Equation&nbsp;36</a> is that to achieve a <em>stable</em> amplifier, we need to <em>minimize</em> the reverse gain <span class="math inline">\(S_{12}\)</span> (also called isolation) and the input and output reflection coefficients <span class="math inline">\(S_{11}\)</span> and <span class="math inline">\(S_{22}\)</span>. In practice, this means that we need to design the amplifier with good reverse isolation and good input and output matching. Cascode stages are often used in RF amplifiers to achieve high gain and good isolation.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="sec-lna-resistive-matching" class="title-slide slide level2 center" data-number="4.3">
+<h2><span class="header-section-number">4.3</span> Resistively Matched Common-Source LNA</h2>
+
+</section>
+<section class="slide level3 unnumbered">
+<h3>Resistively Matched Common-Source LNA</h3>
+
+<img data-src="lna_files/figure-revealjs/fig-lna-naive-output-1.svg" class="r-stretch quarto-figure-center" id="fig-lna-naive"><p class="caption">
+Figure&nbsp;33: A simple LNA with resistive input matching and a parallel <span class="math inline">\(RLC\)</span> tank circuit as a load (biasing details are omitted).
+</p><aside class="notes">
+<p>The key question is now how to design an LNA with low noise figure and an input impedance matched to 50 Ω? In order to appreciate this design challenge, we will first try a naive approach, using a common-source amplifier with resistive termination, as shown in <a href="#/fig-lna-naive" class="quarto-xref">Figure&nbsp;33</a>.</p>
+A simple LNA with resistive input matching and a parallel <span class="math inline">\(RLC\)</span> tank circuit as a load (biasing details are omitted). The LNA is driven by a 50 Ω source.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Resistively Matched Common-Source LNA</h3>
+<p><span id="eq-lna-noise-factor"><span class="math display">\[
+F = \frac{\text{total noise at output}}{\text{noise at output due to source only}}.
+\tag{37}\]</span></span></p>
+<aside class="notes">
+<p>If we assume the gate capacitance of <span class="math inline">\(M_1\)</span> is negligible, we can achieve good input impedance matching by choosing <span class="math inline">\(R_\mathrm{p} = R_\mathrm{s} = 50\,\Omega\)</span>. The voltage gain of this simple common-source LNA is given by <span class="math inline">\(A_\mathrm{v} = -g_\mathrm{m}R_\mathrm{D}\)</span>, neglecting capacitances and <span class="math inline">\(g_\mathrm{ds}\)</span> of <span class="math inline">\(M_1\)</span> (we assume that the load tank is tuned to the desired frequency with <span class="math inline">\(\omega_0 = 1 / \sqrt{L C}\)</span>).</p>
+<p>How can we calculate the noise figure of this simple LNA? We formulate</p>
+<p>We derive a small-signal equivalent circuit of <a href="#/fig-lna-naive" class="quarto-xref">Figure&nbsp;33</a>, which is shown in <a href="#/fig-lna-naive-noise" class="quarto-xref">Figure&nbsp;34</a>, to calculate the total noise at the output of the LNA.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Resistively Matched Common-Source LNA</h3>
+
+<img data-src="lna_files/figure-revealjs/fig-lna-naive-noise-output-1.svg" class="r-stretch quarto-figure-center" id="fig-lna-naive-noise"><p class="caption">
+Figure&nbsp;34: Equivalent circuit of resistively matched common-source LNA (noise sources shown in blue).
+</p></section>
+<section class="slide level3 unnumbered">
+<h3>Resistively Matched Common-Source LNA</h3>
+<p><span class="math display">\[
+\overline{V_\mathrm{n,out,1}^2} = A_\mathrm{v}^2 \cdot 4 k T (R_\mathrm{s} \parallel R_\mathrm{p}) = (g_\mathrm{m}R_\mathrm{D})^2 \cdot 4 k T (R_\mathrm{s} \parallel R_\mathrm{p})
+\]</span></p>
+<p><span class="math display">\[
+\overline{I_\mathrm{n,out}^2} = 4 k T \gamma g_\mathrm{m}+ \frac{4 k T}{R_\mathrm{D}}
+\]</span> <span class="math display">\[
+\overline{V_\mathrm{n,out,2}^2} = R_\mathrm{D}^2 \cdot \overline{I_\mathrm{n,out}^2} = 4 k T \gamma g_\mathrm{m}R_\mathrm{D}^2 + 4 k T R_\mathrm{D}
+\]</span></p>
+<aside class="notes">
+<p>With the help of <a href="#/fig-lna-naive-noise" class="quarto-xref">Figure&nbsp;34</a>, we can calculate the total output noise power spectral density as</p>
+<p>and</p>
+<p>so that in total</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Resistively Matched Common-Source LNA</h3>
+<p><span id="eq-lna-naive-noise-total"><span class="math display">\[
+\begin{split}
+\overline{V_\mathrm{n,out}^2} &amp;= \overline{V_\mathrm{n,out,1}^2} + \overline{V_\mathrm{n,out,2}^2}\\
+&amp;= 4 k T \left[ (g_\mathrm{m}R_\mathrm{D})^2 (R_\mathrm{s} \parallel R_\mathrm{p}) + \gamma g_\mathrm{m}R_\mathrm{D}^2 + R_\mathrm{D} \right].
+\end{split}
+\tag{38}\]</span></span></p>
+<aside class="notes">
+<p>We now need to find the output noise coming from the source only. For this we can use the equivalent circuit in <a href="#/fig-lna-naive-noise-input" class="quarto-xref">Figure&nbsp;35</a>, to formulate the output noise due to the source only.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Resistively Matched Common-Source LNA</h3>
+
+<img data-src="lna_files/figure-revealjs/fig-lna-naive-noise-input-output-1.svg" class="r-stretch quarto-figure-center" id="fig-lna-naive-noise-input"><p class="caption">
+Figure&nbsp;35: Equivalent circuit to calculate the output noise from the input.
+</p></section>
+<section class="slide level3 unnumbered">
+<h3>Resistively Matched Common-Source LNA</h3>
+<p><span id="eq-lna-naive-noise-input"><span class="math display">\[
+\overline{V_\mathrm{n,out,s}^2} = A_\mathrm{v}^2 \cdot 4 k T R_\mathrm{s} \cdot \left(\frac{R_\mathrm{p}}{R_\mathrm{s} + R_\mathrm{p}} \right)^2.
+\tag{39}\]</span></span></p>
+<p><span id="eq-lna-naive-noise-factor"><span class="math display">\[
+F = \frac{\overline{V_\mathrm{n,out}^2}}{\overline{V_\mathrm{n,out,s}^2}} = 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} + \frac{\gamma R_\mathrm{s}}{g_\mathrm{m}(R_\mathrm{s} \parallel R_\mathrm{p})^2} + \frac{R_\mathrm{s}}{g_\mathrm{m}^2 (R_\mathrm{s} \parallel R_\mathrm{p})^2 R_\mathrm{D}}.
+\tag{40}\]</span></span></p>
+<aside class="notes">
+<p>We find that</p>
+<p>Finally, we can use <a href="#/eq-lna-naive-noise-total" class="quarto-xref">Equation&nbsp;38</a> and <a href="#/eq-lna-naive-noise-input" class="quarto-xref">Equation&nbsp;39</a> with <a href="#/eq-lna-noise-factor" class="quarto-xref">Equation&nbsp;37</a> to calculate the noise figure of the simple resistively matched common-source LNA as</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Resistively Matched Common-Source LNA</h3>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Common-source LNA with Resistive Matching</strong></p>
+</div>
+<div class="callout-content">
+<p>As an exercise to calculate noise behavior of circuits, derive and thus re-confirm the result of <a href="#/eq-lna-naive-noise-factor" class="quarto-xref">Equation&nbsp;40</a> by yourself.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Resistively Matched Common-Source LNA</h3>
+<p><span class="math display">\[
+F \overset{g_\mathrm{m}\gg}{=} 1 + \frac{R_\mathrm{s}}{R_\mathrm{p}} = 2
+\]</span></p>
+<aside class="notes">
+<p>How can we interpret <a href="#/eq-lna-naive-noise-factor" class="quarto-xref">Equation&nbsp;40</a>? We see that we can minimize the noise factor by maximizing <span class="math inline">\(g_\mathrm{m}\)</span>. We then have a noise factor of</p>
+<p>so we see that we are limited to a minimum noise figure of 3 dB, even if we spend the bias current to make <span class="math inline">\(g_\mathrm{m}\)</span> very large. We can go below a noise figure of 3 dB only if we give up on return loss and choose <span class="math inline">\(R_\mathrm{p} &gt; R_\mathrm{s}\)</span>, however, this means that the input is no longer matched to 50 Ω, so there are bounds on how far we can go. Hence, this simple resistively matched common-source LNA is not a good choice for a low-noise amplifier, with one exception: For very wideband amplifiers, where an NF larger than 3 dB is acceptable, this configuration might be a good choice (often the solution shown in <a href="#/sec-lna-common-gate" class="quarto-xref">Section&nbsp;4.4</a> is still better).</p>
+<p>We see that we are stuck at high noise figures if we realize the real part of the input impedance with a resistor. This leaves us with the question of how to realize the real part of the input impedance otherwise. We will answer this question in the next sections (spoiler: feedback)!</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="sec-lna-common-gate" class="title-slide slide level2 center" data-number="4.4">
+<h2><span class="header-section-number">4.4</span> Common-Gate LNA</h2>
+
+</section>
+<section class="slide level3 unnumbered">
+<h3>Common-Gate LNA</h3>
+
+<img data-src="lna_files/figure-revealjs/fig-lna-cg-output-1.svg" class="r-stretch quarto-figure-center" id="fig-lna-cg"><p class="caption">
+Figure&nbsp;36: Circuit diagram of a common-gate LNA (biasing details are omitted).
+</p><aside class="notes">
+<p>We remember from our <a href="https://iic-jku.github.io/analog-circuit-design/aicd.html">analog circuit design lecture</a> that the common-gate configuration has an input impedance of <span class="math inline">\(1/g_\mathrm{m}\)</span> (conveniently neglecting parasitic capacitances). Hence, if we choose <span class="math inline">\(g_\mathrm{m}= 1/50\,\Omega = 20\,\text{mS}\)</span>, we can achieve input matching to 50 Ω without using a resistor at the input. This is the key idea of the common-gate LNA, which is shown in <a href="#/fig-lna-cg" class="quarto-xref">Figure&nbsp;36</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Common-Gate LNA</h3>
+<p><span id="eq-lna-cg-noise-total"><span class="math display">\[
+\begin{split}
+\overline{V_\mathrm{n,out}^2} &amp;= k T \left[ (g_\mathrm{m}R_\mathrm{D})^2 R_\mathrm{s} + \gamma g_\mathrm{m}R_\mathrm{D}^2 + 4 R_\mathrm{D} \right]\\
+&amp;= k T \left( \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + \gamma \frac{R_\mathrm{D}^2}{R_\mathrm{s}} + 4 R_\mathrm{D} \right).
+\end{split}
+\tag{41}\]</span></span></p>
+<aside class="notes">
+<p>By inspecting <a href="#/fig-lna-cg" class="quarto-xref">Figure&nbsp;36</a> and following the practice from <a href="#/sec-lna-resistive-matching" class="quarto-xref">Section&nbsp;4.3</a>, we can directly write down the output noise voltage as (setting <span class="math inline">\(g_\mathrm{m}^{-1} = R_\mathrm{s}\)</span>)</p>
+<p>The output noise due to the source only is given by</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Common-Gate LNA</h3>
+<p><span id="eq-lna-cg-noise-source"><span class="math display">\[
+\overline{V_\mathrm{n,out,s}^2} = k T \frac{R_\mathrm{D}^2}{R_\mathrm{s}}.
+\tag{42}\]</span></span></p>
+<p><span id="eq-lna-cg-noise-factor"><span class="math display">\[
+F = 1 + \gamma + \frac{4 R_\mathrm{s}}{R_\mathrm{D}} \approx 1 + \gamma \quad \text{for} \quad R_\mathrm{D} \gg R_\mathrm{s}.
+\tag{43}\]</span></span></p>
+<aside class="notes">
+<p>Finally, we can use <a href="#/eq-lna-cg-noise-total" class="quarto-xref">Equation&nbsp;41</a> and <a href="#/eq-lna-cg-noise-source" class="quarto-xref">Equation&nbsp;42</a> with <a href="#/eq-lna-noise-factor" class="quarto-xref">Equation&nbsp;37</a> to calculate the noise figure of the common-gate LNA as</p>
+<p>With a classical long-channel <span class="math inline">\(\gamma = 2/3\)</span>, we can achieve a minimum noise figure of 2.2 dB, which is already better than the resistively matched common-source LNA in <a href="#/sec-lna-resistive-matching" class="quarto-xref">Section&nbsp;4.3</a>. However, using short-channel MOSFETs, <span class="math inline">\(\gamma\)</span> is often larger than 1, so that the minimum noise figure of the common-gate LNA is often larger than 3 dB <span class="citation" data-cites="Razavi_RFIC">(<a href="#/references" role="doc-biblioref" onclick="">Razavi 2011</a>)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="sec-lna-inductive-degeneration" class="title-slide slide level2 center" data-number="4.5">
+<h2><span class="header-section-number">4.5</span> Inductively-Degenerated Common-Source LNA</h2>
+
+</section>
+<section class="slide level3 unnumbered">
+<h3>Inductively-Degenerated Common-Source LNA</h3>
+
+<img data-src="lna_files/figure-revealjs/fig-lna-inductive-degeneration-output-1.svg" class="r-stretch quarto-figure-center" id="fig-lna-inductive-degeneration"><p class="caption">
+Figure&nbsp;37: A common-source MOSFET stage with degeneration impedance (biasing details are omitted).
+</p><aside class="notes">
+<p>As we have seen in <a href="#/sec-lna-common-gate" class="quarto-xref">Section&nbsp;4.4</a>, circuit techniques (feedback) can be used to realize the real part of an input impedance without the associated thermal noise of a resistor. We now try something different, in the hope that it will result in an even lower noise figure. We construct an LNA based on a common-source MOSFET amplifier, but we add an impedance <span class="math inline">\(Z_\mathrm{deg}\)</span> into the source line for series-series feedback <span class="citation" data-cites="Gray_Meyer_5th_ed">(<a href="#/references" role="doc-biblioref" onclick="">Gray et al. 2009</a>)</span>. This arrangement is shown in <a href="#/fig-lna-inductive-degeneration" class="quarto-xref">Figure&nbsp;37</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Inductively-Degenerated Common-Source LNA</h3>
+
+<img data-src="lna_files/figure-revealjs/fig-lna-inductive-degeneration-zin-output-1.svg" class="r-stretch quarto-figure-center" id="fig-lna-inductive-degeneration-zin"><p class="caption">
+Figure&nbsp;38: Equivalent small-signal circuit of the input stage around <span class="math inline">\(M_1\)</span>.
+</p><aside class="notes">
+<p>We now extract the small-signal equivalent circuit of the input stage of <a href="#/fig-lna-inductive-degeneration" class="quarto-xref">Figure&nbsp;37</a>, which is shown in <a href="#/fig-lna-inductive-degeneration-zin" class="quarto-xref">Figure&nbsp;38</a>, to calculate the input impedance (we ignore <span class="math inline">\(g_\mathrm{ds}\)</span> for this analysis to simplify the derivation).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Inductively-Degenerated Common-Source LNA</h3>
+<p><span class="math display">\[
+V_\mathrm{x} = V_\mathrm{gs}+ Z_\mathrm{deg} (I_\mathrm{x} + g_\mathrm{m}V_\mathrm{gs})
+\]</span></p>
+<p><span id="eq-lna-inductive-degeneration-zin"><span class="math display">\[
+Z_\mathrm{in} = \frac{V_\mathrm{x}}{I_\mathrm{x}} = \frac{1}{s C_\mathrm{gs}} + Z_\mathrm{deg} + \frac{g_\mathrm{m}Z_\mathrm{deg}}{s C_\mathrm{gs}}.
+\tag{44}\]</span></span></p>
+<aside class="notes">
+<p>We find that</p>
+<p>with <span class="math inline">\(V_\mathrm{gs}= I_\mathrm{x} / s C_\mathrm{gs}\)</span>, so that we can write the input impedance as</p>
+<p>The final term in <a href="#/eq-lna-inductive-degeneration-zin" class="quarto-xref">Equation&nbsp;44</a> is the interesting one: By choosing <span class="math inline">\(Z_\mathrm{deg}\)</span> to be inductive (which we can do by using either an on-chip or an off-chip inductor), we can <em>realize a real part</em> of the input impedance. Choosing <span class="math inline">\(Z_\mathrm{deg} = s L\)</span>, we find that</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Inductively-Degenerated Common-Source LNA</h3>
+<p><span class="math display">\[
+Z_\mathrm{in} = \frac{1}{s C_\mathrm{gs}} + s L + \frac{g_\mathrm{m}L}{C_\mathrm{gs}}.
+\]</span></p>
+<p><span id="eq-lna-inductive-degeneration-zin-real"><span class="math display">\[
+\Re \{ Z_\mathrm{in} \} = \frac{g_\mathrm{m}L}{C_\mathrm{gs}}.
+\tag{45}\]</span></span></p>
+<aside class="notes">
+<p>By proper choice of <span class="math inline">\(L\)</span> and <span class="math inline">\(C_\mathrm{gs}\)</span>, we can achieve input matching to 50 Ω at the desired frequency <span class="math inline">\(\omega_0\)</span>. We find that the real part of the input impedance is given by</p>
+<p>Without proof (refer to <span class="citation" data-cites="Razavi_RFIC Darabi_RFIC">(<a href="#/references" role="doc-biblioref" onclick="">Razavi 2011</a>; <a href="#/references" role="doc-biblioref" onclick="">Darabi 2020</a>)</span> for a derivation), we state the noise factor of this input stage (with some simplification) as (<span class="math inline">\(\omega_\mathrm{T} \approx g_\mathrm{m}/ C_\mathrm{gs}\)</span> is the transition frequency of the MOSFET)</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Inductively-Degenerated Common-Source LNA</h3>
+<p><span id="eq-lna-inductive-degeneration-noise-factor"><span class="math display">\[
+\begin{split}
+F &amp;= 1 + \frac{\gamma R_\mathrm{s} \omega_0^2 C_\mathrm{gs}^2}{g_\mathrm{m}}\\
+&amp;\approx 1 + \gamma R_\mathrm{s} g_\mathrm{m}\left( \frac{\omega_0}{\omega_\mathrm{T}} \right)^2\\
+&amp;\approx 1 + \gamma \omega_0^2 C_\mathrm{gs} L.
+\end{split}
+\tag{46}\]</span></span></p>
+<aside class="notes">
+<p>Finally, we have an LNA input stage configuration that allows us to achieve a noise figure below 3 dB, even with <span class="math inline">\(\gamma &gt; 1\)</span>, by proper choice of a fast transistor with <span class="math inline">\(\omega_\mathrm{T} \gg \omega_0\)</span> (and thus small <span class="math inline">\(C_\mathrm{gs}\)</span>). The inductively-degenerated common-source LNA is a widely used LNA input stage configuration in modern RFICs.</p>
+<p>Note that the noise performance of <a href="#/eq-lna-inductive-degeneration-noise-factor" class="quarto-xref">Equation&nbsp;46</a> cannot be lowered towards <span class="math inline">\(F=1\)</span> because <span class="math inline">\(g_\mathrm{m}\)</span>, <span class="math inline">\(L\)</span>, and <span class="math inline">\(C_\mathrm{gs}\)</span> are tied together by the input matching condition <a href="#/eq-lna-inductive-degeneration-zin-real" class="quarto-xref">Equation&nbsp;45</a>, and we have neglected the induced gate noise of the MOSFET and other effects <span class="citation" data-cites="Razavi_RFIC">(<a href="#/references" role="doc-biblioref" onclick="">Razavi 2011</a>)</span>.</p>
+<p>A bit more detailed schematic is shown in <a href="#/fig-lna-inductive-degeneration-detailed" class="quarto-xref">Figure&nbsp;39</a>. The inductor <span class="math inline">\(L_\mathrm{match}\)</span> is used to match the input impedance to 50 Ω at the desired frequency, <span class="math inline">\(L_\mathrm{deg}\)</span> is used to realize the real part of the input impedance, <span class="math inline">\(R_\mathrm{bias}\)</span> is used to bias the gate of <span class="math inline">\(M_1\)</span>, <span class="math inline">\(M_2\)</span> is a cascode transistor which increases the output impedance and thus the gain of the stage (plus it improves the reverse isolation), and <span class="math inline">\(R_\mathrm{D}\)</span>, <span class="math inline">\(L_\mathrm{D}\)</span>, and <span class="math inline">\(C_\mathrm{D}\)</span> form a load tank which provides high gain at the desired frequency. A dc block is used at the input so that the bias point of <span class="math inline">\(M_1\)</span> is not corrupted by the input signal source. The bias voltage <span class="math inline">\(V_\mathrm{bias2}\)</span> sets the operating point of the cascode transistor <span class="math inline">\(M_2\)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Inductively-Degenerated Common-Source LNA</h3>
+
+<img data-src="lna_files/figure-revealjs/fig-lna-inductive-degeneration-detailed-output-1.svg" class="r-stretch quarto-figure-center" id="fig-lna-inductive-degeneration-detailed"><p class="caption">
+Figure&nbsp;39: An (almost complete) common-source MOSFET stage with degeneration impedance and cascode.
+</p></section>
+
+<section id="sec-lna-feedback" class="title-slide slide level2 center" data-number="4.6">
+<h2><span class="header-section-number">4.6</span> Feedback LNA</h2>
+<aside class="notes">
+<p>What is missing in <a href="#/fig-lna-inductive-degeneration-detailed" class="quarto-xref">Figure&nbsp;39</a> is a form of frequency tuning of the load tank to the frequency of interest, and support for different gain modes. Apart from these details, this LNA circuit is a good starting point for a practical LNA design.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Feedback LNA</h3>
+
+<img data-src="lna_files/figure-revealjs/fig-lna-shunt-fb-output-1.svg" class="r-stretch quarto-figure-center" id="fig-lna-shunt-fb"><p class="caption">
+Figure&nbsp;40: A shunt-feedback LNA.
+</p><aside class="notes">
+<p>One drawback of the inductively-degenerated common-source LNA (besides its limited bandwidth) is the use of at least one inductor. If the inductor is placed on-chip, it has a comparatively large size, and if it is implemented in the package (via a bondwire) or on the PCB it adds complexity or cost to the bill-of-materials (BOM).</p>
+<p>As an alternative, if the CMOS technology is sufficiently fast, a shunt feedback amplifier, as shown in <a href="#/fig-lna-shunt-fb" class="quarto-xref">Figure&nbsp;40</a>, might be a good choice <span class="citation" data-cites="Gray_Meyer_5th_ed">(<a href="#/references" role="doc-biblioref" onclick="">Gray et al. 2009</a>)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Feedback LNA</h3>
+<p><span id="eq-lna-shunt-fb-zin"><span class="math display">\[
+Z_\mathrm{in} = \frac{Z_\mathrm{F} + Z_\mathrm{L}}{1 + g_\mathrm{m}Z_\mathrm{L}}.
+\tag{47}\]</span></span></p>
+<aside class="notes">
+<p>The input impedance of the shunt feedback LNA is given by</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Feedback LNA</h3>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Derivation of the Shunt-Feedback Input Impedance</strong></p>
+</div>
+<div class="callout-content">
+<p>We apply a test voltage <span class="math inline">\(V_x\)</span> at the gate and find the resulting current <span class="math inline">\(I_x\)</span> (ignoring <span class="math inline">\(g_\mathrm{ds}\)</span> and the gate capacitance for simplicity). Because the only path into the gate is through <span class="math inline">\(Z_\mathrm{F}\)</span>, we have</p>
+<p><span class="math display">\[
+I_x = \frac{V_x - V_d}{Z_\mathrm{F}}.
+\]</span></p>
+<div class="fragment">
+<p>Applying KCL at the drain node, where currents leave through <span class="math inline">\(Z_\mathrm{F}\)</span>, through <span class="math inline">\(Z_\mathrm{L}\)</span> to <span class="math inline">\(V_\mathrm{DD}\)</span> (ac ground), and via the transistor current source <span class="math inline">\(g_\mathrm{m}V_x\)</span>:</p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[
+\frac{V_d - V_x}{Z_\mathrm{F}} + \frac{V_d}{Z_\mathrm{L}} + g_\mathrm{m}V_x = 0
+\]</span></p>
+</div>
+<div class="fragment">
+<p>Rearranging for <span class="math inline">\(V_d\)</span> and substituting back</p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[
+\begin{split}
+I_x &amp;= \frac{V_x - V_d}{Z_\mathrm{F}}\\
+&amp;= \frac{V_x}{Z_\mathrm{F}} \cdot \frac{Z_\mathrm{F} + Z_\mathrm{L} - Z_\mathrm{L}(1 - g_\mathrm{m}Z_\mathrm{F})}{Z_\mathrm{F} + Z_\mathrm{L}}\\
+&amp;= \frac{V_x\,(1 + g_\mathrm{m}Z_\mathrm{L})}{Z_\mathrm{F} + Z_\mathrm{L}},
+\end{split}
+\]</span></p>
+</div>
+<div class="fragment">
+<p>which gives <a href="#/eq-lna-shunt-fb-zin" class="quarto-xref">Equation&nbsp;47</a> directly.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Feedback LNA</h3>
+<p><span id="eq-lna-shunt-fb-noise-factor"><span class="math display">\[
+F = 1 + \left| \frac{Z_\mathrm{F} + R_\mathrm{s}}{g_\mathrm{m}Z_\mathrm{F} + 1} \right|^2 \cdot \frac{\gamma g_\mathrm{m}+ \Re \{ Y_\mathrm{L} \} }{\Re \{ Z_\mathrm{in} \}},
+\tag{48}\]</span></span></p>
+<p><span class="math display">\[
+Z_\mathrm{in} = \frac{1}{g_\mathrm{m}}
+\]</span></p>
+<aside class="notes">
+<p>The noise factor of the shunt feedback LNA is given by</p>
+<p>which holds exactly for reactive (noiseless) <span class="math inline">\(Z_\mathrm{F}\)</span> and <span class="math inline">\(Z_\mathrm{L}\)</span> (where <span class="math inline">\(\Re\{Y_F\}=0\)</span>), and for a matched input (<span class="math inline">\(R_\mathrm{s} = \Re\{Z_\mathrm{in}\}\)</span>) <span class="citation" data-cites="Darabi_RFIC">(<a href="#/references" role="doc-biblioref" onclick="">Darabi 2020</a>)</span>.</p>
+<p>As you can see from <a href="#/eq-lna-shunt-fb-noise-factor" class="quarto-xref">Equation&nbsp;48</a>, by making <span class="math inline">\(g_\mathrm{m}\)</span> large (and spending enough bias current), the noise figure can be made arbitrarily small! Depending on the choice of <span class="math inline">\(Z_\mathrm{F}\)</span> and <span class="math inline">\(Z_\mathrm{L}\)</span>, the input impedance of this LNA can be changed in interesting ways.</p>
+<p>By setting <span class="math inline">\(Z_\mathrm{L} \rightarrow \infty\)</span> (e.g., by biasing with a current source and high-impedance loading), we find that</p>
+<p>which is <em>independent</em> of <span class="math inline">\(Z_\mathrm{F}\)</span> and is a well-known result for a common-source stage. The disadvantage of this configuration is the noise factor, which (given that <span class="math inline">\(Z_\mathrm{F}\)</span> is sufficiently large) tends towards <span class="math inline">\(F = 1 + \gamma\)</span>, which is the same as for the common-gate LNA.</p>
+<p>A bit more interesting is the case when <span class="math inline">\(g_\mathrm{m}Z_\mathrm{L} = A_0\)</span> and <span class="math inline">\(Z_\mathrm{L} \gg Z_\mathrm{F}\)</span>, which results in</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Feedback LNA</h3>
+<p><span class="math display">\[
+Z_\mathrm{in} = \frac{Z_\mathrm{L}}{1 + A_0}
+\]</span></p>
+<p><span id="eq-lna-shunt-fb-yin"><span class="math display">\[
+Y_\mathrm{in} = \frac{1}{Z_\mathrm{in}} = \frac{g_\mathrm{m}C_\mathrm{F}}{C_\mathrm{L} + C_\mathrm{F}} + s \frac{C_\mathrm{L} C_\mathrm{F}}{C_\mathrm{L} + C_\mathrm{F}}
+\tag{49}\]</span></span></p>
+<aside class="notes">
+<p>which is the well-known result that the input impedance of an amplifier with feedback is reduced by the factor <span class="math inline">\(1 + A_0\)</span>, where <span class="math inline">\(A_0\)</span> is the open-loop gain of the amplifier. The noise factor can be made small by making <span class="math inline">\(g_\mathrm{m}\)</span> large, as we have already noted above.</p>
+<p>A very interesting case can be achieved by choosing <span class="math inline">\(Z_\mathrm{L} = (s C_\mathrm{L})^{-1}\)</span> and <span class="math inline">\(Z_\mathrm{F} = (s C_\mathrm{F})^{-1}\)</span>, which results in</p>
+<p>Looking at <a href="#/eq-lna-shunt-fb-yin" class="quarto-xref">Equation&nbsp;49</a>, we see that the input admittance has a <strong>real part</strong>! By proper choice of components, we can achieve an input impedance matched to 50 Ω at the desired frequency. The noise factor can again be made small by making <span class="math inline">\(g_\mathrm{m}\)</span> large.</p>
+<p>There is also an option, by proper choice of <span class="math inline">\(Z_\mathrm{F}\)</span> and <span class="math inline">\(Z_\mathrm{L}\)</span>, to achieve an inductive input impedance component, which can be used to resonate out parts of the input capacitance of the LNA, similar to the inductively-degenerated common-source LNA. However, in contrast to the inductively-degenerated common-source LNA, no inductor is required in this case. This configuration is called a reactance-canceling LNA <span class="citation" data-cites="Razavi_RFIC">(<a href="#/references" role="doc-biblioref" onclick="">Razavi 2011</a>)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="references" class="slide level3 unnumbered smaller scrollable">
+<h3>References</h3>
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Bird.2009" class="csl-entry" role="listitem">
+Bird, Trevor S. 2009. <span>“<span class="nocase">Definition and Misuse of Return Loss [Report of the Transactions Editor-in-Chief]</span>.”</span> <em>IEEE Antennas and Propagation Magazine</em> 51 (2): 166–67. <a href="https://doi.org/10.1109/map.2009.5162049">https://doi.org/10.1109/map.2009.5162049</a>.
+</div>
+<div id="ref-Darabi_RFIC" class="csl-entry" role="listitem">
+Darabi, Hooman. 2020. <em>Radio Frequency Integrated Circuits and Systems</em>. 2nd edition. Cambridge University Press.
+</div>
+<div id="ref-Edwards.1992" class="csl-entry" role="listitem">
+Edwards, M. L., and J. H. Sinsky. 1992. <span>“<span class="nocase">A new criterion for linear 2-port stability using a single geometrically derived parameter</span>.”</span> <em>IEEE Transactions on Microwave Theory and Techniques</em> 40 (12): 2303–11. <a href="https://doi.org/10.1109/22.179894">https://doi.org/10.1109/22.179894</a>.
+</div>
+<div id="ref-Fano.1950" class="csl-entry" role="listitem">
+Fano, R. M. 1950. <span>“Theoretical Limitations on the Broadband Matching of Arbitrary Impedances.”</span> <em>Journal of the Franklin Institute</em> 249 (1): 57–83. <a href="https://doi.org/10.1016/0016-0032(50)90006-8">https://doi.org/10.1016/0016-0032(50)90006-8</a>.
+</div>
+<div id="ref-Gray_Meyer_5th_ed" class="csl-entry" role="listitem">
+Gray, Paul R., Paul J. Hurst, Stephen H. Lewis, and Robert G. Meyer. 2009. <em><span class="nocase">Analysis and Design of Analog Integrated Circuits</span></em>. Fifth. Wiley.
+</div>
+<div id="ref-Pozar_RF" class="csl-entry" role="listitem">
+Pozar, David M. 2011. <em>Microwave Engineering</em>. 4th edition. Wiley.
+</div>
+<div id="ref-Razavi_RFIC" class="csl-entry" role="listitem">
+Razavi, Behzad. 2011. <em>RF Microelectronics</em>. 2nd edition. Pearson.
+</div>
+</div>
+</section>
+<section class="slide level3 unnumbered">
+<h3>References</h3>
+
+</section>
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p><a href="../rfic.html#sec-lna">RFIC lecture notes</a></p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"numbers":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/iic-jku\.github\.io\/radio-frequency-integrated-circuits\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

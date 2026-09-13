@@ -1,54 +1,5 @@
 [
   {
-    "objectID": "content/pll/delta_sigma_modulator.html",
-    "href": "content/pll/delta_sigma_modulator.html",
-    "title": "MASH Modulator (3rd Order)",
-    "section": "",
-    "text": "Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)\nLicensed under the Apache License, Version 2.0\nThis notebook implements a 3rd order MASH (1-1-1) modulator that converts a constant input value (0-1) into a multi-bit sequence. The output shows the time-domain sequence, individual stage outputs, and its spectrum via FFT."
-  },
-  {
-    "objectID": "content/pll/delta_sigma_modulator.html#import-libraries",
-    "href": "content/pll/delta_sigma_modulator.html#import-libraries",
-    "title": "MASH Modulator (3rd Order)",
-    "section": "Import Libraries",
-    "text": "Import Libraries\n\nimport numpy as np\nimport matplotlib.pyplot as plt"
-  },
-  {
-    "objectID": "content/pll/delta_sigma_modulator.html#mash-modulator-class",
-    "href": "content/pll/delta_sigma_modulator.html#mash-modulator-class",
-    "title": "MASH Modulator (3rd Order)",
-    "section": "MASH Modulator Class",
-    "text": "MASH Modulator Class\nThe MASH (Multi-stAge noise SHaping) modulator consists of three cascaded 1st-order stages with digital noise cancellation logic.\n\nclass MASHModulator:\n    \"\"\"3rd order MASH (Multi-stAge noise SHaping) modulator\"\"\"\n    \n    def __init__(self):\n        \"\"\"Initialize the 3-stage MASH modulator.\"\"\"\n        # Three 1st order stages\n        self.integrator1 = 0.0\n        self.integrator2 = 0.0\n        self.integrator3 = 0.0\n        \n        # Storage for digital cancellation logic (need 2 delays)\n        self.y1_prev = 0\n        self.y1_prev2 = 0\n        self.y2_prev = 0\n        self.y2_prev2 = 0\n        self.y3_prev = 0\n        self.y3_prev2 = 0\n    \n    def reset(self):\n        \"\"\"Reset all states to zero\"\"\"\n        self.integrator1 = 0.0\n        self.integrator2 = 0.0\n        self.integrator3 = 0.0\n        self.y1_prev = 0\n        self.y1_prev2 = 0\n        self.y2_prev = 0\n        self.y2_prev2 = 0\n        self.y3_prev = 0\n        self.y3_prev2 = 0\n    \n    def step(self, input_value):\n        \"\"\"\n        Perform one step of MASH modulation.\n        \n        Parameters:\n        -----------\n        input_value : float\n            Input signal value (0-1)\n        \n        Returns:\n        --------\n        tuple\n            (combined_output, y1, y2, y3) - combined output and individual stage outputs\n        \"\"\"\n        # Stage 1: 1st order modulator with input signal\n        self.integrator1 += input_value\n        y1 = 1 if self.integrator1 &gt;= 1.0 else 0\n        e1 = self.integrator1 - y1  # Quantization error\n        self.integrator1 = e1  # Store error for next iteration\n        \n        # Stage 2: 1st order modulator fed with quantization error from stage 1\n        self.integrator2 += e1\n        y2 = 1 if self.integrator2 &gt;= 1.0 else 0\n        e2 = self.integrator2 - y2\n        self.integrator2 = e2\n        \n        # Stage 3: 1st order modulator fed with quantization error from stage 2\n        self.integrator3 += e2\n        y3 = 1 if self.integrator3 &gt;= 1.0 else 0\n        e3 = self.integrator3 - y3\n        self.integrator3 = e3\n        \n        # Digital noise cancellation logic for MASH 1-1-1\n        # Output = Y1 + (1-z^-1)*Y2 + (1-z^-1)^2*Y3\n        # Expanding (1-z^-1)^2 = 1 - 2*z^-1 + z^-2:\n        # Output = Y1 + Y2 - Y2[z^-1] + Y3 - 2*Y3[z^-1] + Y3[z^-2]\n        \n        combined = y1 + (y2 - self.y2_prev) + (y3 - 2*self.y3_prev + self.y3_prev2)\n        \n        # Update delay elements\n        self.y1_prev2 = self.y1_prev\n        self.y1_prev = y1\n        \n        self.y2_prev2 = self.y2_prev\n        self.y2_prev = y2\n        \n        self.y3_prev2 = self.y3_prev\n        self.y3_prev = y3\n        \n        return combined, y1, y2, y3\n    \n    def modulate(self, input_value, length, dither_amplitude=0.0, seed=None):\n        \"\"\"\n        Generate MASH modulated sequence.\n        \n        Parameters:\n        -----------\n        input_value : float\n            Constant input value (0-1)\n        length : int\n            Length of output sequence\n        dither_amplitude : float\n            Peak dither amplitude added to input (uniform in [-A, +A])\n        seed : int or None\n            RNG seed for reproducible dithering\n        \n        Returns:\n        --------\n        tuple\n            (combined_output, y1, y2, y3) - arrays of combined and individual outputs\n            Combined output range: -3 to +4 (multi-bit output)\n        \"\"\"\n        self.reset()\n        rng = np.random.default_rng(seed)\n        combined_output = np.zeros(length)\n        y1_output = np.zeros(length)\n        y2_output = np.zeros(length)\n        y3_output = np.zeros(length)\n        \n        for i in range(length):\n            dither = rng.uniform(-dither_amplitude, dither_amplitude) if dither_amplitude &gt; 0 else 0.0\n            combined, y1, y2, y3 = self.step(input_value + dither)\n            combined_output[i] = combined\n            y1_output[i] = y1\n            y2_output[i] = y2\n            y3_output[i] = y3\n        \n        return combined_output, y1_output, y2_output, y3_output"
-  },
-  {
-    "objectID": "content/pll/delta_sigma_modulator.html#configuration-parameters",
-    "href": "content/pll/delta_sigma_modulator.html#configuration-parameters",
-    "title": "MASH Modulator (3rd Order)",
-    "section": "Configuration Parameters",
-    "text": "Configuration Parameters\nSet the input parameters for the MASH modulator simulation.\n\n# Parameters\ninput_value = 0.125  # Constant input (0-1)\nsequence_length = 2**15  # Length of sequence\ndisplay_samples = 100  # Number of samples to display in time plot\ndither_seed = 0  # RNG seed for reproducible dithering (None for random)\n\n# Dithering configurations to compare\ndither_amplitude_no_dither = 0.0  # No dithering\ndither_amplitude_with_dither = 0.000001  # With dithering\n\nprint(\"=\" * 60)\nprint(\"MASH 3rd Order Modulator - Dithering Comparison\")\nprint(\"=\" * 60)\nprint(f\"Input Value:           {input_value}\")\nprint(f\"Sequence Length:       {sequence_length}\")\nprint(f\"Dither (no):           {dither_amplitude_no_dither}\")\nprint(f\"Dither (with):         {dither_amplitude_with_dither}\")\nprint(\"=\" * 60)\n\n============================================================\nMASH 3rd Order Modulator - Dithering Comparison\n============================================================\nInput Value:           0.125\nSequence Length:       32768\nDither (no):           0.0\nDither (with):         1e-06\n============================================================"
-  },
-  {
-    "objectID": "content/pll/delta_sigma_modulator.html#generate-mash-sequence",
-    "href": "content/pll/delta_sigma_modulator.html#generate-mash-sequence",
-    "title": "MASH Modulator (3rd Order)",
-    "section": "Generate MASH Sequence",
-    "text": "Generate MASH Sequence\nCreate the modulator instance and generate the output sequence.\n\n# Create modulator\nmash = MASHModulator()\n\n# Generate sequence WITHOUT dithering\nprint(\"\\nGenerating MASH sequence WITHOUT dithering...\")\nmash_combined_no_dither, mash_y1_no_dither, mash_y2_no_dither, mash_y3_no_dither = mash.modulate(\n    input_value,\n    sequence_length,\n    dither_amplitude=dither_amplitude_no_dither,\n    seed=dither_seed,\n)\n\n# Generate sequence WITH dithering\nprint(\"Generating MASH sequence WITH dithering...\")\nmash_combined_with_dither, mash_y1_with_dither, mash_y2_with_dither, mash_y3_with_dither = mash.modulate(\n    input_value,\n    sequence_length,\n    dither_amplitude=dither_amplitude_with_dither,\n    seed=dither_seed,\n)\n\n\nGenerating MASH sequence WITHOUT dithering...\nGenerating MASH sequence WITH dithering..."
-  },
-  {
-    "objectID": "content/pll/delta_sigma_modulator.html#statistics",
-    "href": "content/pll/delta_sigma_modulator.html#statistics",
-    "title": "MASH Modulator (3rd Order)",
-    "section": "Statistics",
-    "text": "Statistics\nAnalyze the output statistics of the MASH modulator.\n\nprint(\"\\nMASH Modulator Statistics:\")\nprint(\"\\n--- WITHOUT Dithering ---\")\nmash_mean_no = np.mean(mash_combined_no_dither)\nmash_min_no = np.min(mash_combined_no_dither)\nmash_max_no = np.max(mash_combined_no_dither)\nmash_unique_no = np.unique(mash_combined_no_dither)\nprint(f\"  Mean output:       {mash_mean_no:.6f}\")\nprint(f\"  Deviation:         {abs(mash_mean_no - input_value):.6f}\")\nprint(f\"  Output range:      {mash_min_no:.0f} to {mash_max_no:.0f}\")\nprint(f\"  Unique values:     {len(mash_unique_no)}\")\n\nprint(\"\\n--- WITH Dithering ---\")\nmash_mean_with = np.mean(mash_combined_with_dither)\nmash_min_with = np.min(mash_combined_with_dither)\nmash_max_with = np.max(mash_combined_with_dither)\nmash_unique_with = np.unique(mash_combined_with_dither)\nprint(f\"  Mean output:       {mash_mean_with:.6f}\")\nprint(f\"  Deviation:         {abs(mash_mean_with - input_value):.6f}\")\nprint(f\"  Output range:      {mash_min_with:.0f} to {mash_max_with:.0f}\")\nprint(f\"  Unique values:     {len(mash_unique_with)}\")\n\n\nMASH Modulator Statistics:\n\n--- WITHOUT Dithering ---\n  Mean output:       0.125000\n  Deviation:         0.000000\n  Output range:      -2 to 2\n  Unique values:     5\n\n--- WITH Dithering ---\n  Mean output:       0.125000\n  Deviation:         0.000000\n  Output range:      -3 to 3\n  Unique values:     7"
-  },
-  {
-    "objectID": "content/pll/delta_sigma_modulator.html#visualization---comparison",
-    "href": "content/pll/delta_sigma_modulator.html#visualization---comparison",
-    "title": "MASH Modulator (3rd Order)",
-    "section": "Visualization - Comparison",
-    "text": "Visualization - Comparison\nCompare MASH modulator outputs with and without dithering.\n\nfig = plt.figure()\n\ntime = np.arange(min(display_samples, len(mash_combined_no_dither)))\n\n# Plot 1: Time domain (no dither)\nax1 = plt.subplot(1, 2, 1)\nax1.step(time, mash_combined_no_dither[:display_samples], where='post', linewidth=1.5, color='C0')\nax1.axhline(y=input_value, color='r', linestyle='--', linewidth=2, \n            label=f'Expected = {input_value:.4f}')\nax1.set_xlabel('Sample Number')\nax1.set_ylabel('Output (multi-bit)')\nax1.grid(True, alpha=0.3)\nax1.legend()\nax1.set_ylim(-3.5, 4.5)\n\n# Plot 2: Frequency spectrum (no dither)\nax2 = plt.subplot(1, 2, 2)\nN = len(mash_combined_no_dither)\nfft_freq = np.fft.fftfreq(N)\npos_freq = fft_freq &gt;= 0\nfft_no = np.fft.fft(mash_combined_no_dither)\npsd_no = 20 * np.log10(np.abs(fft_no) / N + 1e-12)\nax2.plot(fft_freq[pos_freq], psd_no[pos_freq], linewidth=0.5, color='C0')\nax2.set_xlabel('Normalized Frequency (f/fs)')\nax2.set_ylabel('PSD (dB)')\nax2.grid(True, alpha=0.3)\nax2.set_xlim(0, 0.5)\nax2.set_ylim(-120, 0)\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\nFigure 1: Time series and the spectrum of a MASH 3rd-order modulator.\n\n\n\n\n\n\nfig = plt.figure()\n\ntime = np.arange(min(display_samples, len(mash_combined_with_dither)))\n\n# Plot 1: Time domain (with dither)\nax1 = plt.subplot(1, 2, 1)\nax1.step(time, mash_combined_with_dither[:display_samples], where='post', linewidth=1.5, color='C0')\nax1.axhline(y=input_value, color='r', linestyle='--', linewidth=2, \n            label=f'Expected = {input_value:.4f}')\nax1.set_xlabel('Sample Number')\nax1.set_ylabel('Output (multi-bit)')\nax1.grid(True, alpha=0.3)\nax1.legend()\nax1.set_ylim(-3.5, 4.5)\n\n# Plot 2: Frequency spectrum (with dither)\nax2 = plt.subplot(1, 2, 2)\nN = len(mash_combined_with_dither)\nfft_freq = np.fft.fftfreq(N)\npos_freq = fft_freq &gt;= 0\nfft_no = np.fft.fft(mash_combined_with_dither)\npsd_no = 20 * np.log10(np.abs(fft_no) / N + 1e-12)\nax2.plot(fft_freq[pos_freq], psd_no[pos_freq], linewidth=0.5, color='C0')\nax2.set_xlabel('Normalized Frequency (f/fs)')\nax2.set_ylabel('PSD (dB)')\nax2.grid(True, alpha=0.3)\nax2.set_xlim(0, 0.5)\nax2.set_ylim(-120, 0)\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\nFigure 2: Time series and the spectrum of a MASH 3rd-order modulator with added dither."
-  },
-  {
     "objectID": "rfic.html#sec-intro-wireless",
     "href": "rfic.html#sec-intro-wireless",
     "title": "Radio-Frequency Integrated Circuits",
@@ -462,10 +413,395 @@
     "text": "Footnotes\n\n\nFor the OFDM-based standards (LTE/5G NR, WiFi), the listed values correspond to the subcarrier spacing (numerology \\(\\Delta f\\)), which equals the per-subcarrier symbol rate; they are not the aggregate symbol rate of the full signal.↩︎"
   },
   {
+    "objectID": "slides/trx.html#sec-trx-direct-conversion",
+    "href": "slides/trx.html#sec-trx-direct-conversion",
+    "title": "Transceivers",
+    "section": "3.1 Direct-Conversion Transceiver",
+    "text": "3.1 Direct-Conversion Transceiver\n\nNowadays, the various small-signal RF functions for receive and transmit are integrated into so-called transceivers (TRX). A TRX is a device that can both transmit and receive signals, and is usually called an “RFIC”. While high monolithic integration is certainly the norm for radio-frequency devices intended for standards like Bluetooth, Wi-Fi, cellular, etc., it is increasingly used also for mm-wave frequencies for applications like automotive radar and 5G cellular.\nTypically, TRX include components like amplifiers, mixers, filters, oscillators, and phase-locked loops. When digital interfaces are used for the baseband I/Q data, also functions like analog-to-digital conversion (ADC) and digital-to-analog conversion (DAC) are integrated together with digital signal processing (DSP) blocks and potentially high-speed interfaces (because for wide bandwidths the I/Q sample rate can get quite high).\nIn these notes we will focus on the RF part of the TRX, which is responsible for the upconversion of baseband or intermediate frequency (IF) signals to the desired transmit frequency during transmission, and the downconversion of received signals from the carrier frequency to baseband or IF during reception. For filters, low-frequency amplifiers, ADCs, DACs, and DSP blocks we refer to related courses and literature, for example our analog circuit design course."
+  },
+  {
+    "objectID": "slides/trx.html#sec-trx-mod-demod",
+    "href": "slides/trx.html#sec-trx-mod-demod",
+    "title": "Transceivers",
+    "section": "3.2 Modulation and Demodulation",
+    "text": "3.2 Modulation and Demodulation\n\nAs can be seen in Figure 19, this generic architecture can be adapted in various ways. Generally, the amplifier gains are adjustable to adapt to different signal levels. If adaptive channel bandwidths are to be supported, the corner frequencies of the low-pass filters (LPF) can be adjusted, as well as (optionally) the sampling rate of the ADCs and DACs. The local oscillator (LO) frequency is generated by a phase-locked loop (PLL) synthesizer, which can be tuned to the desired carrier frequency. In case of frequency-division duplex (FDD) operation, two PLLs are used to generate the TX and RX LO frequencies, which are separated by the duplex distance \\(f_\\mathrm{dpx}\\). In time-division duplex (TDD) operation, a single PLL is sufficient, supplying the LO signal to both RX and TX.\nThe modem (short for modulator-demodulator) that is shown in Figure 19 is responsible for the digital baseband processing, including functions like channel coding/decoding, modulation/demodulation, equalization, error correction, encryption/decryption, and framing/timing. The modem is usually implemented as a digital System-on-Chip (SoC) consisting of (multiple) CPUs, DSPs, and fixed-function blocks for time-critical processing. For an in-depth discussion we recommend (Sklar and Harris 2020) or (Molisch 2022)."
+  },
+  {
+    "objectID": "slides/trx.html#filtering",
+    "href": "slides/trx.html#filtering",
+    "title": "Transceivers",
+    "section": "3.3 Filtering",
+    "text": "3.3 Filtering"
+  },
+  {
+    "objectID": "slides/trx.html#direct-conversion-architecture",
+    "href": "slides/trx.html#direct-conversion-architecture",
+    "title": "Transceivers",
+    "section": "3.4 Direct-Conversion Architecture",
+    "text": "3.4 Direct-Conversion Architecture\n\nFundamentally, the choice of filter technology is a trade-off between performance, size, cost, power handling, and flexibility. In most cases, a combination of different filter technologies is used to achieve the desired performance."
+  },
+  {
+    "objectID": "slides/trx.html#sec-trx-duplexing",
+    "href": "slides/trx.html#sec-trx-duplexing",
+    "title": "Transceivers",
+    "section": "3.5 Duplexing",
+    "text": "3.5 Duplexing"
+  },
+  {
+    "objectID": "slides/trx.html#specialty-architectures",
+    "href": "slides/trx.html#specialty-architectures",
+    "title": "Transceivers",
+    "section": "3.6 Specialty Architectures",
+    "text": "3.6 Specialty Architectures\n\nRegardless of whether two antennas or a circulator are used, the isolation between the TX and RX paths is always finite (typically only in the range of 15 dB to 20 dB for a circulator). As a consequence, a large fraction of the own (and strong) TX signal leaks directly into the sensitive RX port. Practical FD systems therefore require additional self-interference cancellation (also called leakage cancellation), performed in the RF/analog and/or digital domain, to suppress this residual TX leakage below the RX noise floor (Sadjina et al. 2020)."
+  },
+  {
+    "objectID": "slides/trx.html#iq-imbalance",
+    "href": "slides/trx.html#iq-imbalance",
+    "title": "Transceivers",
+    "section": "3.7 I/Q Imbalance",
+    "text": "3.7 I/Q Imbalance\n\nDespite the reduced architecture, digital amplitude-shift-keying (ASK) or on-off-keying (OOK) can be used. If the receiver is able to discriminate between frequencies (e.g., by using two RF filters with a power detector each), also frequency-shift-keying (FSK) can be used."
+  },
+  {
+    "objectID": "slides/lna.html#sec-impedance-matching",
+    "href": "slides/lna.html#sec-impedance-matching",
+    "title": "Low Noise Amplifiers",
+    "section": "4.1 Impedance Matching",
+    "text": "4.1 Impedance Matching\n\nThe LNA as a building block is shown in Figure 31. It is usually designed for a specific frequency band, e.g., the 2.4 GHz ISM band or the 5 GHz WLAN band, and is typically designed for a specific impedance, e.g., 50 Ω, which is the standard impedance for RF systems. Impedance matching is usually mandated at the input; the output impedance matching is only required if the output of the LNA goes off-chip; if it is kept on-chip, impedance matching is often not needed. The LNA is also designed to be sufficiently linear, i.e., to not introduce significant distortion to the amplified signal; however, compared to the noise requirements, linearity is often less critical."
+  },
+  {
+    "objectID": "slides/lna.html#sec-amp-stability",
+    "href": "slides/lna.html#sec-amp-stability",
+    "title": "Low Noise Amplifiers",
+    "section": "4.2 Amplifier Stability",
+    "text": "4.2 Amplifier Stability"
+  },
+  {
+    "objectID": "slides/lna.html#sec-lna-resistive-matching",
+    "href": "slides/lna.html#sec-lna-resistive-matching",
+    "title": "Low Noise Amplifiers",
+    "section": "4.3 Resistively Matched Common-Source LNA",
+    "text": "4.3 Resistively Matched Common-Source LNA"
+  },
+  {
+    "objectID": "slides/lna.html#sec-lna-common-gate",
+    "href": "slides/lna.html#sec-lna-common-gate",
+    "title": "Low Noise Amplifiers",
+    "section": "4.4 Common-Gate LNA",
+    "text": "4.4 Common-Gate LNA"
+  },
+  {
+    "objectID": "slides/lna.html#sec-lna-inductive-degeneration",
+    "href": "slides/lna.html#sec-lna-inductive-degeneration",
+    "title": "Low Noise Amplifiers",
+    "section": "4.5 Inductively-Degenerated Common-Source LNA",
+    "text": "4.5 Inductively-Degenerated Common-Source LNA"
+  },
+  {
+    "objectID": "slides/lna.html#sec-lna-feedback",
+    "href": "slides/lna.html#sec-lna-feedback",
+    "title": "Low Noise Amplifiers",
+    "section": "4.6 Feedback LNA",
+    "text": "4.6 Feedback LNA\n\nWhat is missing in Figure 39 is a form of frequency tuning of the load tank to the frequency of interest, and support for different gain modes. Apart from these details, this LNA circuit is a good starting point for a practical LNA design."
+  },
+  {
+    "objectID": "slides/pll.html#sec-pll-basic-architecture",
+    "href": "slides/pll.html#sec-pll-basic-architecture",
+    "title": "Phase-Locked Loops",
+    "section": "7.1 Basic PLL Architecture",
+    "text": "7.1 Basic PLL Architecture"
+  },
+  {
+    "objectID": "slides/pll.html#sec-pll-charge-pump",
+    "href": "slides/pll.html#sec-pll-charge-pump",
+    "title": "Phase-Locked Loops",
+    "section": "7.2 Charge-Pump PLL",
+    "text": "7.2 Charge-Pump PLL"
+  },
+  {
+    "objectID": "slides/pll.html#sec-pll-all-digital",
+    "href": "slides/pll.html#sec-pll-all-digital",
+    "title": "Phase-Locked Loops",
+    "section": "7.3 All-Digital PLL",
+    "text": "7.3 All-Digital PLL\n\nNote that inside the PLL loop bandwidth the reference phase noise is multiplied by \\(N^2\\) in power, i.e., \\(20 \\log_{10}(N)\\) in dB, as the PLL output frequency is \\(N\\) times the reference frequency. In Figure 84, \\(N = 100\\) and a reference phase noise of -140 dBc/Hz is used. Large values of \\(N\\) can significantly increase the reference phase noise contribution at the PLL output, which is why low phase noise references are essential for high-performance PLLs."
+  },
+  {
+    "objectID": "slides/pll.html#sec-pll-frac-n",
+    "href": "slides/pll.html#sec-pll-frac-n",
+    "title": "Phase-Locked Loops",
+    "section": "7.4 Fractional-N PLL",
+    "text": "7.4 Fractional-N PLL\n\nIt has to be noted that while an ADPLL seems conceptually simpler than an analog PLL, the design of high-performance TDCs and DCOs can be quite complex and requires careful consideration of quantization noise, linearity, and power consumption. Coupling effects between different circuit blocks can also introduce unwanted spurs and phase noise folding in the ADPLL output. Therefore, while ADPLLs offer many advantages, they also present unique design challenges that must be addressed to achieve adequate performance."
+  },
+  {
+    "objectID": "slides/intro.html#sec-intro-wireless",
+    "href": "slides/intro.html#sec-intro-wireless",
+    "title": "Introduction",
+    "section": "1.1 Wireless Transmission",
+    "text": "1.1 Wireless Transmission"
+  },
+  {
+    "objectID": "slides/intro.html#sec-intro-standards",
+    "href": "slides/intro.html#sec-intro-standards",
+    "title": "Introduction",
+    "section": "1.2 Wireless Standards",
+    "text": "1.2 Wireless Standards"
+  },
+  {
+    "objectID": "slides/index.html",
+    "href": "slides/index.html",
+    "title": "Lecture Slides",
+    "section": "",
+    "text": "Slide decks generated from the lecture notes, one per chapter. Press S for speaker notes, C for the chalkboard, and ? for all shortcuts.\n\nIntroduction\nFundamentals\nTransceivers\nLow Noise Amplifiers\nMixers\nOscillators\nPhase-Locked Loops\nPower Amplifiers\nSpurs, Crosstalk and Self-Interference"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Radio-Frequency Integrated Circuits",
     "section": "",
     "text": "Radio-Frequency Integrated Circuits\n\n\n\nQuarto Publish\n\n\n(c) 2025-2026 Harald Pretl and co-authors, Department for Integrated Circuits (ICD), Johannes Kepler University, Linz (JKU)\nThis is the material for a graduate-level radio-frequency integrated circuit course, held at JKU under course number 336.023 (“VO Integrierte Hochfrequenz-Schaltungstechnik”). Follow this link to access the material.\nAll course material is made publicly available and shared under the Apache-2.0 license.\nWe happily accept pull requests to fix typos or add content! If you want to discuss something that is not clear, please open an issue!"
+  },
+  {
+    "objectID": "content/pll/delta_sigma_modulator.html",
+    "href": "content/pll/delta_sigma_modulator.html",
+    "title": "MASH Modulator (3rd Order)",
+    "section": "",
+    "text": "Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)\nLicensed under the Apache License, Version 2.0\nThis notebook implements a 3rd order MASH (1-1-1) modulator that converts a constant input value (0-1) into a multi-bit sequence. The output shows the time-domain sequence, individual stage outputs, and its spectrum via FFT."
+  },
+  {
+    "objectID": "content/pll/delta_sigma_modulator.html#import-libraries",
+    "href": "content/pll/delta_sigma_modulator.html#import-libraries",
+    "title": "MASH Modulator (3rd Order)",
+    "section": "Import Libraries",
+    "text": "Import Libraries\n\nimport numpy as np\nimport matplotlib.pyplot as plt"
+  },
+  {
+    "objectID": "content/pll/delta_sigma_modulator.html#mash-modulator-class",
+    "href": "content/pll/delta_sigma_modulator.html#mash-modulator-class",
+    "title": "MASH Modulator (3rd Order)",
+    "section": "MASH Modulator Class",
+    "text": "MASH Modulator Class\nThe MASH (Multi-stAge noise SHaping) modulator consists of three cascaded 1st-order stages with digital noise cancellation logic.\n\nclass MASHModulator:\n    \"\"\"3rd order MASH (Multi-stAge noise SHaping) modulator\"\"\"\n    \n    def __init__(self):\n        \"\"\"Initialize the 3-stage MASH modulator.\"\"\"\n        # Three 1st order stages\n        self.integrator1 = 0.0\n        self.integrator2 = 0.0\n        self.integrator3 = 0.0\n        \n        # Storage for digital cancellation logic (need 2 delays)\n        self.y1_prev = 0\n        self.y1_prev2 = 0\n        self.y2_prev = 0\n        self.y2_prev2 = 0\n        self.y3_prev = 0\n        self.y3_prev2 = 0\n    \n    def reset(self):\n        \"\"\"Reset all states to zero\"\"\"\n        self.integrator1 = 0.0\n        self.integrator2 = 0.0\n        self.integrator3 = 0.0\n        self.y1_prev = 0\n        self.y1_prev2 = 0\n        self.y2_prev = 0\n        self.y2_prev2 = 0\n        self.y3_prev = 0\n        self.y3_prev2 = 0\n    \n    def step(self, input_value):\n        \"\"\"\n        Perform one step of MASH modulation.\n        \n        Parameters:\n        -----------\n        input_value : float\n            Input signal value (0-1)\n        \n        Returns:\n        --------\n        tuple\n            (combined_output, y1, y2, y3) - combined output and individual stage outputs\n        \"\"\"\n        # Stage 1: 1st order modulator with input signal\n        self.integrator1 += input_value\n        y1 = 1 if self.integrator1 &gt;= 1.0 else 0\n        e1 = self.integrator1 - y1  # Quantization error\n        self.integrator1 = e1  # Store error for next iteration\n        \n        # Stage 2: 1st order modulator fed with quantization error from stage 1\n        self.integrator2 += e1\n        y2 = 1 if self.integrator2 &gt;= 1.0 else 0\n        e2 = self.integrator2 - y2\n        self.integrator2 = e2\n        \n        # Stage 3: 1st order modulator fed with quantization error from stage 2\n        self.integrator3 += e2\n        y3 = 1 if self.integrator3 &gt;= 1.0 else 0\n        e3 = self.integrator3 - y3\n        self.integrator3 = e3\n        \n        # Digital noise cancellation logic for MASH 1-1-1\n        # Output = Y1 + (1-z^-1)*Y2 + (1-z^-1)^2*Y3\n        # Expanding (1-z^-1)^2 = 1 - 2*z^-1 + z^-2:\n        # Output = Y1 + Y2 - Y2[z^-1] + Y3 - 2*Y3[z^-1] + Y3[z^-2]\n        \n        combined = y1 + (y2 - self.y2_prev) + (y3 - 2*self.y3_prev + self.y3_prev2)\n        \n        # Update delay elements\n        self.y1_prev2 = self.y1_prev\n        self.y1_prev = y1\n        \n        self.y2_prev2 = self.y2_prev\n        self.y2_prev = y2\n        \n        self.y3_prev2 = self.y3_prev\n        self.y3_prev = y3\n        \n        return combined, y1, y2, y3\n    \n    def modulate(self, input_value, length, dither_amplitude=0.0, seed=None):\n        \"\"\"\n        Generate MASH modulated sequence.\n        \n        Parameters:\n        -----------\n        input_value : float\n            Constant input value (0-1)\n        length : int\n            Length of output sequence\n        dither_amplitude : float\n            Peak dither amplitude added to input (uniform in [-A, +A])\n        seed : int or None\n            RNG seed for reproducible dithering\n        \n        Returns:\n        --------\n        tuple\n            (combined_output, y1, y2, y3) - arrays of combined and individual outputs\n            Combined output range: -3 to +4 (multi-bit output)\n        \"\"\"\n        self.reset()\n        rng = np.random.default_rng(seed)\n        combined_output = np.zeros(length)\n        y1_output = np.zeros(length)\n        y2_output = np.zeros(length)\n        y3_output = np.zeros(length)\n        \n        for i in range(length):\n            dither = rng.uniform(-dither_amplitude, dither_amplitude) if dither_amplitude &gt; 0 else 0.0\n            combined, y1, y2, y3 = self.step(input_value + dither)\n            combined_output[i] = combined\n            y1_output[i] = y1\n            y2_output[i] = y2\n            y3_output[i] = y3\n        \n        return combined_output, y1_output, y2_output, y3_output"
+  },
+  {
+    "objectID": "content/pll/delta_sigma_modulator.html#configuration-parameters",
+    "href": "content/pll/delta_sigma_modulator.html#configuration-parameters",
+    "title": "MASH Modulator (3rd Order)",
+    "section": "Configuration Parameters",
+    "text": "Configuration Parameters\nSet the input parameters for the MASH modulator simulation.\n\n# Parameters\ninput_value = 0.125  # Constant input (0-1)\nsequence_length = 2**15  # Length of sequence\ndisplay_samples = 100  # Number of samples to display in time plot\ndither_seed = 0  # RNG seed for reproducible dithering (None for random)\n\n# Dithering configurations to compare\ndither_amplitude_no_dither = 0.0  # No dithering\ndither_amplitude_with_dither = 0.000001  # With dithering\n\nprint(\"=\" * 60)\nprint(\"MASH 3rd Order Modulator - Dithering Comparison\")\nprint(\"=\" * 60)\nprint(f\"Input Value:           {input_value}\")\nprint(f\"Sequence Length:       {sequence_length}\")\nprint(f\"Dither (no):           {dither_amplitude_no_dither}\")\nprint(f\"Dither (with):         {dither_amplitude_with_dither}\")\nprint(\"=\" * 60)\n\n============================================================\nMASH 3rd Order Modulator - Dithering Comparison\n============================================================\nInput Value:           0.125\nSequence Length:       32768\nDither (no):           0.0\nDither (with):         1e-06\n============================================================"
+  },
+  {
+    "objectID": "content/pll/delta_sigma_modulator.html#generate-mash-sequence",
+    "href": "content/pll/delta_sigma_modulator.html#generate-mash-sequence",
+    "title": "MASH Modulator (3rd Order)",
+    "section": "Generate MASH Sequence",
+    "text": "Generate MASH Sequence\nCreate the modulator instance and generate the output sequence.\n\n# Create modulator\nmash = MASHModulator()\n\n# Generate sequence WITHOUT dithering\nprint(\"\\nGenerating MASH sequence WITHOUT dithering...\")\nmash_combined_no_dither, mash_y1_no_dither, mash_y2_no_dither, mash_y3_no_dither = mash.modulate(\n    input_value,\n    sequence_length,\n    dither_amplitude=dither_amplitude_no_dither,\n    seed=dither_seed,\n)\n\n# Generate sequence WITH dithering\nprint(\"Generating MASH sequence WITH dithering...\")\nmash_combined_with_dither, mash_y1_with_dither, mash_y2_with_dither, mash_y3_with_dither = mash.modulate(\n    input_value,\n    sequence_length,\n    dither_amplitude=dither_amplitude_with_dither,\n    seed=dither_seed,\n)\n\n\nGenerating MASH sequence WITHOUT dithering...\nGenerating MASH sequence WITH dithering..."
+  },
+  {
+    "objectID": "content/pll/delta_sigma_modulator.html#statistics",
+    "href": "content/pll/delta_sigma_modulator.html#statistics",
+    "title": "MASH Modulator (3rd Order)",
+    "section": "Statistics",
+    "text": "Statistics\nAnalyze the output statistics of the MASH modulator.\n\nprint(\"\\nMASH Modulator Statistics:\")\nprint(\"\\n--- WITHOUT Dithering ---\")\nmash_mean_no = np.mean(mash_combined_no_dither)\nmash_min_no = np.min(mash_combined_no_dither)\nmash_max_no = np.max(mash_combined_no_dither)\nmash_unique_no = np.unique(mash_combined_no_dither)\nprint(f\"  Mean output:       {mash_mean_no:.6f}\")\nprint(f\"  Deviation:         {abs(mash_mean_no - input_value):.6f}\")\nprint(f\"  Output range:      {mash_min_no:.0f} to {mash_max_no:.0f}\")\nprint(f\"  Unique values:     {len(mash_unique_no)}\")\n\nprint(\"\\n--- WITH Dithering ---\")\nmash_mean_with = np.mean(mash_combined_with_dither)\nmash_min_with = np.min(mash_combined_with_dither)\nmash_max_with = np.max(mash_combined_with_dither)\nmash_unique_with = np.unique(mash_combined_with_dither)\nprint(f\"  Mean output:       {mash_mean_with:.6f}\")\nprint(f\"  Deviation:         {abs(mash_mean_with - input_value):.6f}\")\nprint(f\"  Output range:      {mash_min_with:.0f} to {mash_max_with:.0f}\")\nprint(f\"  Unique values:     {len(mash_unique_with)}\")\n\n\nMASH Modulator Statistics:\n\n--- WITHOUT Dithering ---\n  Mean output:       0.125000\n  Deviation:         0.000000\n  Output range:      -2 to 2\n  Unique values:     5\n\n--- WITH Dithering ---\n  Mean output:       0.125000\n  Deviation:         0.000000\n  Output range:      -3 to 3\n  Unique values:     7"
+  },
+  {
+    "objectID": "content/pll/delta_sigma_modulator.html#visualization---comparison",
+    "href": "content/pll/delta_sigma_modulator.html#visualization---comparison",
+    "title": "MASH Modulator (3rd Order)",
+    "section": "Visualization - Comparison",
+    "text": "Visualization - Comparison\nCompare MASH modulator outputs with and without dithering.\n\nfig = plt.figure()\n\ntime = np.arange(min(display_samples, len(mash_combined_no_dither)))\n\n# Plot 1: Time domain (no dither)\nax1 = plt.subplot(1, 2, 1)\nax1.step(time, mash_combined_no_dither[:display_samples], where='post', linewidth=1.5, color='C0')\nax1.axhline(y=input_value, color='r', linestyle='--', linewidth=2, \n            label=f'Expected = {input_value:.4f}')\nax1.set_xlabel('Sample Number')\nax1.set_ylabel('Output (multi-bit)')\nax1.grid(True, alpha=0.3)\nax1.legend()\nax1.set_ylim(-3.5, 4.5)\n\n# Plot 2: Frequency spectrum (no dither)\nax2 = plt.subplot(1, 2, 2)\nN = len(mash_combined_no_dither)\nfft_freq = np.fft.fftfreq(N)\npos_freq = fft_freq &gt;= 0\nfft_no = np.fft.fft(mash_combined_no_dither)\npsd_no = 20 * np.log10(np.abs(fft_no) / N + 1e-12)\nax2.plot(fft_freq[pos_freq], psd_no[pos_freq], linewidth=0.5, color='C0')\nax2.set_xlabel('Normalized Frequency (f/fs)')\nax2.set_ylabel('PSD (dB)')\nax2.grid(True, alpha=0.3)\nax2.set_xlim(0, 0.5)\nax2.set_ylim(-120, 0)\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\nFigure 1: Time series and the spectrum of a MASH 3rd-order modulator.\n\n\n\n\n\n\nfig = plt.figure()\n\ntime = np.arange(min(display_samples, len(mash_combined_with_dither)))\n\n# Plot 1: Time domain (with dither)\nax1 = plt.subplot(1, 2, 1)\nax1.step(time, mash_combined_with_dither[:display_samples], where='post', linewidth=1.5, color='C0')\nax1.axhline(y=input_value, color='r', linestyle='--', linewidth=2, \n            label=f'Expected = {input_value:.4f}')\nax1.set_xlabel('Sample Number')\nax1.set_ylabel('Output (multi-bit)')\nax1.grid(True, alpha=0.3)\nax1.legend()\nax1.set_ylim(-3.5, 4.5)\n\n# Plot 2: Frequency spectrum (with dither)\nax2 = plt.subplot(1, 2, 2)\nN = len(mash_combined_with_dither)\nfft_freq = np.fft.fftfreq(N)\npos_freq = fft_freq &gt;= 0\nfft_no = np.fft.fft(mash_combined_with_dither)\npsd_no = 20 * np.log10(np.abs(fft_no) / N + 1e-12)\nax2.plot(fft_freq[pos_freq], psd_no[pos_freq], linewidth=0.5, color='C0')\nax2.set_xlabel('Normalized Frequency (f/fs)')\nax2.set_ylabel('PSD (dB)')\nax2.grid(True, alpha=0.3)\nax2.set_xlim(0, 0.5)\nax2.set_ylim(-120, 0)\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\nFigure 2: Time series and the spectrum of a MASH 3rd-order modulator with added dither."
+  },
+  {
+    "objectID": "slides/oscillator.html#sec-oscillator-noise",
+    "href": "slides/oscillator.html#sec-oscillator-noise",
+    "title": "Oscillators",
+    "section": "6.1 Oscillator Noise",
+    "text": "6.1 Oscillator Noise"
+  },
+  {
+    "objectID": "slides/oscillator.html#sec-oscillator-jitter",
+    "href": "slides/oscillator.html#sec-oscillator-jitter",
+    "title": "Oscillators",
+    "section": "6.2 Jitter",
+    "text": "6.2 Jitter"
+  },
+  {
+    "objectID": "slides/oscillator.html#sec-oscillator-reciprocal-mixing",
+    "href": "slides/oscillator.html#sec-oscillator-reciprocal-mixing",
+    "title": "Oscillators",
+    "section": "6.3 Reciprocal Mixing",
+    "text": "6.3 Reciprocal Mixing"
+  },
+  {
+    "objectID": "slides/oscillator.html#sec-single-ended-oscillators",
+    "href": "slides/oscillator.html#sec-single-ended-oscillators",
+    "title": "Oscillators",
+    "section": "6.4 Single-Ended Oscillators",
+    "text": "6.4 Single-Ended Oscillators"
+  },
+  {
+    "objectID": "slides/oscillator.html#sec-differential-oscillators",
+    "href": "slides/oscillator.html#sec-differential-oscillators",
+    "title": "Oscillators",
+    "section": "6.5 Differential Oscillators",
+    "text": "6.5 Differential Oscillators"
+  },
+  {
+    "objectID": "slides/oscillator.html#sec-frequency-tuning-of-oscillators",
+    "href": "slides/oscillator.html#sec-frequency-tuning-of-oscillators",
+    "title": "Oscillators",
+    "section": "6.6 Frequency Tuning of Oscillators",
+    "text": "6.6 Frequency Tuning of Oscillators\n\nNote that no bias current sources are shown in Figure 71, but can be added in practice. However, they require some voltage headroom, which lowers the maximum voltage swing across the tank, which is negative for phase noise performance according to Leeson’s equation in Equation 56.\nThe inductor \\(L\\) used in LC tanks is often implemented as a differential spiral inductor, which can be realized on-chip using the top metal layers of the CMOS process. If higher \\(Q\\) is sought, then off-chip inductors must be used, which is more expensive and uses package pins to connect the inductor. Alternatively, bondwire inductors can be used, which utilize the bondwires connecting the die to the package leads as inductors. Bondwire inductors can provide high \\(Q\\) values and are a cost-effective solution for improving oscillator performance without requiring off-chip components. For mm-wave frequencies, transmission line stubs can be used as inductors, which can be implemented on-chip using coplanar waveguide (CPW) or microstrip structures."
+  },
+  {
+    "objectID": "slides/oscillator.html#sec-oscillator-modeling",
+    "href": "slides/oscillator.html#sec-oscillator-modeling",
+    "title": "Oscillators",
+    "section": "6.7 Oscillator Modelling",
+    "text": "6.7 Oscillator Modelling\n\nHere, when the control signal \\(S\\) is high, the effective capacitance is \\(C/2\\), with a parasitic series resistance \\(R_\\mathrm{on}\\) due to the switch. When \\(S\\) is low, the effective capacitance is \\(C_\\mathrm{off}\\), which is the parasitic drain-source capacitance of the MOSFET switch.\nNote that there exists a trade-off when designing the switched capacitor: A larger switch (with increased \\(W\\)) reduces \\(R_\\mathrm{on}\\), but increases \\(C_\\mathrm{off}\\). A large \\(R_\\mathrm{on}\\) leads to increased losses in the tank circuit, which degrades the quality factor \\(Q\\) and increases phase noise according to Equation 56. On the other hand, a large \\(C_\\mathrm{off}\\) reduces the effective tuning range of the switched capacitor, which can be detrimental if a wide tuning range is required.\nIn digitally-controlled oscillators (DCOs), the tuning voltage \\(V_\\mathrm{tune}\\) is replaced by a digital control word that selects different capacitance values from a capacitor bank. This approach allows for precise and repeatable frequency tuning, which is beneficial in applications requiring frequency synthesis or channel selection. These fine tuning steps can also be implemented according to Figure 72; however, the value of \\(C\\) must be sufficiently small."
+  },
+  {
+    "objectID": "slides/fundamentals.html#sec-channel-capacity",
+    "href": "slides/fundamentals.html#sec-channel-capacity",
+    "title": "Fundamentals",
+    "section": "2.1 Channel Capacity",
+    "text": "2.1 Channel Capacity\n\nIn this section, we will discuss a few important concepts which will be instrumental in the further study of RF circuits and systems. As the dynamic range of signals in RF circuits and systems is often limited on the top end by linearity, and on the bottom end by noise, we will discuss these two topics in some detail."
+  },
+  {
+    "objectID": "slides/fundamentals.html#sec-linearity",
+    "href": "slides/fundamentals.html#sec-linearity",
+    "title": "Fundamentals",
+    "section": "2.2 Linearity",
+    "text": "2.2 Linearity"
+  },
+  {
+    "objectID": "slides/fundamentals.html#sec-noise",
+    "href": "slides/fundamentals.html#sec-noise",
+    "title": "Fundamentals",
+    "section": "2.3 Noise",
+    "text": "2.3 Noise"
+  },
+  {
+    "objectID": "slides/fundamentals.html#sec-fundamentals-modulation",
+    "href": "slides/fundamentals.html#sec-fundamentals-modulation",
+    "title": "Fundamentals",
+    "section": "2.4 Modulation",
+    "text": "2.4 Modulation"
+  },
+  {
+    "objectID": "slides/fundamentals.html#sec-fundamentals-pulse-shaping",
+    "href": "slides/fundamentals.html#sec-fundamentals-pulse-shaping",
+    "title": "Fundamentals",
+    "section": "2.5 Pulse Shaping and Spectral Efficiency",
+    "text": "2.5 Pulse Shaping and Spectral Efficiency"
+  },
+  {
+    "objectID": "slides/fundamentals.html#sec-fundamentals-ofdm",
+    "href": "slides/fundamentals.html#sec-fundamentals-ofdm",
+    "title": "Fundamentals",
+    "section": "2.6 Orthogonal Frequency-Division Multiplexing (OFDM)",
+    "text": "2.6 Orthogonal Frequency-Division Multiplexing (OFDM)\n\nFor all the shown pulse shapes (rectangular, raised-cosine, and Gaussian), the trade-off between time- and frequency-domain containment is clearly visible. This is also captured in “Küpfmüller’s uncertainty principle” (Küpfmüller 1949), which states that the product of the time duration and the bandwidth of a pulse is lower-bounded by a constant. In other words, if we want to have a pulse that is very short in time, it will have a wide bandwidth, and vice versa."
+  },
+  {
+    "objectID": "slides/fundamentals.html#sec-fundamentals-multiple-access",
+    "href": "slides/fundamentals.html#sec-fundamentals-multiple-access",
+    "title": "Fundamentals",
+    "section": "2.7 Multiple Access Techniques",
+    "text": "2.7 Multiple Access Techniques"
+  },
+  {
+    "objectID": "slides/fundamentals.html#sec-fundamentals-mcs",
+    "href": "slides/fundamentals.html#sec-fundamentals-mcs",
+    "title": "Fundamentals",
+    "section": "2.8 Modulation and Coding Schemes",
+    "text": "2.8 Modulation and Coding Schemes"
+  },
+  {
+    "objectID": "slides/poweramp.html#sec-poweramp-efficiency",
+    "href": "slides/poweramp.html#sec-poweramp-efficiency",
+    "title": "Power Amplifiers",
+    "section": "8.1 PA Efficiency",
+    "text": "8.1 PA Efficiency"
+  },
+  {
+    "objectID": "slides/poweramp.html#sec-poweramp-nonlinearity",
+    "href": "slides/poweramp.html#sec-poweramp-nonlinearity",
+    "title": "Power Amplifiers",
+    "section": "8.2 PA Nonlinearity",
+    "text": "8.2 PA Nonlinearity"
+  },
+  {
+    "objectID": "slides/poweramp.html#sec-poweramp-classes",
+    "href": "slides/poweramp.html#sec-poweramp-classes",
+    "title": "Power Amplifiers",
+    "section": "8.3 Amplifier Classes",
+    "text": "8.3 Amplifier Classes\n\nThe cascode transistors \\(M_2\\) and \\(M_4\\) allow higher output voltage swings by stacking the transistors, thus reducing the voltage stress on each individual transistor. They can be implemented as thick-oxide transistors to further increase the breakdown voltage.\nWhile the power amplifier circuits look simple in principle, their design and optimization require large-signal models and extensive electromagnetic (EM) simulations to accurately capture the behavior of the matching networks and parasitic effects. Additionally, thermal management is crucial in PA design, as high power dissipation can lead to device degradation and failure.\nIn order to accurately capture and model large-signal effects, load-pull measurements are often performed during PA design. In a load-pull measurement setup, the PA is driven with a known input signal while the output load impedance is varied systematically using impedance tuners. By measuring the output power, efficiency, and linearity metrics at different load impedances, the optimal load conditions for the PA can be determined. This information is then used to design the output matching network to achieve the desired performance."
+  },
+  {
+    "objectID": "slides/poweramp.html#sec-poweramp-stability",
+    "href": "slides/poweramp.html#sec-poweramp-stability",
+    "title": "Power Amplifiers",
+    "section": "8.4 PA Stability and Neutralization",
+    "text": "8.4 PA Stability and Neutralization"
+  },
+  {
+    "objectID": "slides/poweramp.html#sec-poweramp-advanced",
+    "href": "slides/poweramp.html#sec-poweramp-advanced",
+    "title": "Power Amplifiers",
+    "section": "8.5 PA Advanced Techniques",
+    "text": "8.5 PA Advanced Techniques"
+  },
+  {
+    "objectID": "slides/mixer.html#sec-mixer-nonlinear",
+    "href": "slides/mixer.html#sec-mixer-nonlinear",
+    "title": "Mixers",
+    "section": "5.1 Non-Linear Mixer",
+    "text": "5.1 Non-Linear Mixer"
+  },
+  {
+    "objectID": "slides/mixer.html#sec-mixer-time-variant",
+    "href": "slides/mixer.html#sec-mixer-time-variant",
+    "title": "Mixers",
+    "section": "5.2 Time-Variant Mixer",
+    "text": "5.2 Time-Variant Mixer\n\nThis structure is conceptually simple; it just requires a (fast) diode, filters to couple the desired frequency components in and out, and an RF choke to provide a dc bias voltage for the diode. However, the performance of such a simple mixer is usually not very good, as the diode is a highly non-linear device, which generates many spurious frequency components. More advanced mixer circuits use more complex non-linear devices (for example, a ring of diodes) to improve the performance. The advantage of these mixers is that they can operate up to very high frequencies (in the mm-wave range and beyond). If you can make a nonlinear device, you can make a mixer (think also of nonlinear optics, for example)."
+  },
+  {
+    "objectID": "slides/mixer.html#sec-mixer-gilbert",
+    "href": "slides/mixer.html#sec-mixer-gilbert",
+    "title": "Mixers",
+    "section": "5.3 Gilbert Cell Mixer",
+    "text": "5.3 Gilbert Cell Mixer\n\nThe capacitors connected directly to ground at the mixer outputs are good practice, as they shunt high-frequency switching noise to ground, and in this way help the performance of the TIA, which otherwise would have to sink these currents. Note that all blocker currents originating at the LNA output and passing through the mixer are shunted by the feedback capacitors to the output of the TIA, and need to be actively driven by the TIA’s output stage!"
+  },
+  {
+    "objectID": "slides/mixer.html#sec-mixer-npath",
+    "href": "slides/mixer.html#sec-mixer-npath",
+    "title": "Mixers",
+    "section": "5.4 N-Path Filter",
+    "text": "5.4 N-Path Filter\n\nThe idea is that an input transconductor creates currents, which are switched in the double differential pair and converted back to voltage in the load impedances. There are many known variations of this circuit, like skipping the current source at the bottom to increase linearity and headroom, or swapping the input transconductor for another structure. It might also be useful to “bleed” some bias current from the LO switching stage to improve the noise performance."
+  },
+  {
+    "objectID": "slides/mixer.html#sec-mixer-lo",
+    "href": "slides/mixer.html#sec-mixer-lo",
+    "title": "Mixers",
+    "section": "5.5 LO Generation",
+    "text": "5.5 LO Generation"
+  },
+  {
+    "objectID": "slides/spurs.html#sec-spurs-mechanisms",
+    "href": "slides/spurs.html#sec-spurs-mechanisms",
+    "title": "Spurs, Crosstalk and Self-Interference",
+    "section": "9.1 Coupling Paths",
+    "text": "9.1 Coupling Paths"
+  },
+  {
+    "objectID": "slides/spurs.html#sec-spurs-pll",
+    "href": "slides/spurs.html#sec-spurs-pll",
+    "title": "Spurs, Crosstalk and Self-Interference",
+    "section": "9.2 Synthesizer Spurs",
+    "text": "9.2 Synthesizer Spurs"
+  },
+  {
+    "objectID": "slides/spurs.html#sec-spurs-mitigation",
+    "href": "slides/spurs.html#sec-spurs-mitigation",
+    "title": "Spurs, Crosstalk and Self-Interference",
+    "section": "9.3 Spur and Crosstalk Mitigation",
+    "text": "9.3 Spur and Crosstalk Mitigation"
   }
 ]

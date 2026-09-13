@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <title>Radio-Frequency Integrated Circuits – Transceivers</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-a975c94262742d03914c7a56aca0ba09.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Transceivers</h1>
+  <p class="subtitle">Radio-Frequency Integrated Circuits</p>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section>
+<section id="sec-trx" class="title-slide slide level1 center" data-number="3">
+<h1><span class="header-section-number">3</span> Transceivers</h1>
+<div class="hidden">
+
+</div>
+</section>
+<section id="sec-trx-direct-conversion" class="title-slide slide level2 center" data-number="3.1">
+<h2><span class="header-section-number">3.1</span> Direct-Conversion Transceiver</h2>
+<aside class="notes">
+<p>Nowadays, the various small-signal RF functions for receive and transmit are integrated into so-called transceivers (TRX). A TRX is a device that can both transmit and receive signals, and is usually called an “RFIC”. While high monolithic integration is certainly the norm for radio-frequency devices intended for standards like Bluetooth, Wi-Fi, cellular, etc., it is increasingly used also for mm-wave frequencies for applications like automotive radar and 5G cellular.</p>
+<p>Typically, TRX include components like amplifiers, mixers, filters, oscillators, and phase-locked loops. When digital interfaces are used for the baseband I/Q data, also functions like analog-to-digital conversion (ADC) and digital-to-analog conversion (DAC) are integrated together with digital signal processing (DSP) blocks and potentially high-speed interfaces (because for wide bandwidths the I/Q sample rate can get quite high).</p>
+<p>In these notes we will focus on the RF part of the TRX, which is responsible for the upconversion of baseband or intermediate frequency (IF) signals to the desired transmit frequency during transmission, and the downconversion of received signals from the carrier frequency to baseband or IF during reception. For filters, low-frequency amplifiers, ADCs, DACs, and DSP blocks we refer to related courses and literature, for example <a href="https://iic-jku.github.io/analog-circuit-design/aicd.html">our analog circuit design course</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Direct-Conversion Transceiver</h3>
+<ul>
+<li>Pulse-shaping filtering of the baseband signal (which can be implemented in analog or, in most cases, digital form).</li>
+<li>Modulating the baseband signal onto a carrier frequency (upconversion) in the TX or downconversion in the RX.</li>
+<li>Contain the RF signal in a small bandwidth (TX), or single out the wanted signal in the RX with adequate signal to noise ratio (SNR).</li>
+<li>Adapt gain (and linearity) to the signal strength in the RX, and to the output power in the TX.</li>
+<li>Generate the carrier frequency (local oscillator, LO) with low phase noise.</li>
+</ul>
+<aside class="notes">
+<p>The following typical functions have to be performed by a TRX:</p>
+<p>The dominant architecture for the TRX is the so-called <strong>direct-conversion</strong> or <strong>zero-IF</strong> architecture, where the up- and downconversion are performed in a single step <span class="citation" data-cites="Razavi_RFIC">(<a href="#/references" role="doc-biblioref" onclick="">Razavi 2011</a>)</span>. This is in contrast to super-heterodyne architectures, where the signal is first converted to an intermediate frequency (IF) before being converted to baseband. The direct-conversion architecture has the advantage of reduced complexity and cost, as it requires fewer components and less filtering. However, it also has some disadvantages, such as increased susceptibility to dc offsets and I/Q imbalance. A typical TRX block diagram is shown in <a href="#/fig-trx-block" class="quarto-xref">Figure&nbsp;19</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Direct-Conversion Transceiver</h3>
+
+<img data-src="trx_files/figure-revealjs/fig-trx-block-output-1.svg" class="r-stretch quarto-figure-center" id="fig-trx-block"><p class="caption">
+Figure&nbsp;19: Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX.
+</p><aside class="notes">
+Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system. For implementation options of the RF front-end, see <a href="#/sec-trx-duplexing" class="quarto-xref">Section&nbsp;3.5</a>.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="sec-trx-mod-demod" class="title-slide slide level2 center" data-number="3.2">
+<h2><span class="header-section-number">3.2</span> Modulation and Demodulation</h2>
+<aside class="notes">
+<p>As can be seen in <a href="#/fig-trx-block" class="quarto-xref">Figure&nbsp;19</a>, this generic architecture can be adapted in various ways. Generally, the amplifier gains are adjustable to adapt to different signal levels. If adaptive channel bandwidths are to be supported, the corner frequencies of the low-pass filters (LPF) can be adjusted, as well as (optionally) the sampling rate of the ADCs and DACs. The local oscillator (LO) frequency is generated by a phase-locked loop (PLL) synthesizer, which can be tuned to the desired carrier frequency. In case of frequency-division duplex (FDD) operation, two PLLs are used to generate the TX and RX LO frequencies, which are separated by the duplex distance <span class="math inline">\(f_\mathrm{dpx}\)</span>. In time-division duplex (TDD) operation, a single PLL is sufficient, supplying the LO signal to both RX and TX.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Modem">modem</a> (short for modulator-demodulator) that is shown in <a href="#/fig-trx-block" class="quarto-xref">Figure&nbsp;19</a> is responsible for the digital baseband processing, including functions like channel coding/decoding, modulation/demodulation, equalization, error correction, encryption/decryption, and framing/timing. The modem is usually implemented as a digital System-on-Chip (SoC) consisting of (multiple) CPUs, DSPs, and fixed-function blocks for time-critical processing. For an in-depth discussion we recommend <span class="citation" data-cites="Sklar_Digital_Communications">(<a href="#/references" role="doc-biblioref" onclick="">Sklar and Harris 2020</a>)</span> or <span class="citation" data-cites="Molisch_Wireless_Communications">(<a href="#/references" role="doc-biblioref" onclick="">Molisch 2022</a>)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Modulation and Demodulation</h3>
+<p><span class="math display">\[
+\tilde{s}_\mathrm{BB}(t) = s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t).
+\]</span></p>
+<p><span class="math display">\[
+\tilde{s}_\mathrm{RF}(t) = \tilde{s}_\mathrm{BB}(t) \cdot e^{j \omega_\mathrm{c} t} = [s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t)] \cdot [\cos(\omega_\mathrm{c} t) + j \cdot \sin(\omega_\mathrm{c} t)].
+\]</span></p>
+<aside class="notes">
+<p>Modulation is the process of varying a carrier signal at frequency <span class="math inline">\(f_\mathrm{c}\)</span> in order to transmit information. The complex baseband signal (after converting the real-valued in-phase and quadrature signals <span class="math inline">\(s_\mathrm{I}\)</span> and <span class="math inline">\(s_\mathrm{Q}\)</span>, respectively, to analog and applying pulse-shaping filtering) is represented as (<span class="math inline">\(\tilde{s}_\mathrm{BB} \in \mathbb{C}\)</span>; <span class="math inline">\(s_\mathrm{I}, s_\mathrm{Q} \in \mathbb{R}\)</span>) <span class="citation" data-cites="Martin.2004">(<a href="#/references" role="doc-biblioref" onclick="">Martin 2004</a>)</span>:</p>
+<p>We want to shift this signal to the carrier frequency <span class="math inline">\(f_\mathrm{c}\)</span> to create the modulated RF signal <span class="math inline">\(\tilde{s}_\mathrm{RF} \in \mathbb{C}\)</span>, which can be done by multiplying with a complex exponential (<span class="math inline">\(e^{j \omega_\mathrm{c} t}\)</span>, with <span class="math inline">\(\omega_\mathrm{c} = 2 \pi f_\mathrm{c}\)</span>):</p>
+<p>The real-valued RF signal <span class="math inline">\(s_\mathrm{RF} \in \mathbb{R}\)</span> is obtained from <span class="math inline">\(\tilde{s}_\mathrm{RF}\)</span> by complex-conjugate symmetry</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Modulation and Demodulation</h3>
+<p><span id="eq-modulation"><span class="math display">\[
+s_\mathrm{RF}(t) = \frac{1}{2} \left[ \tilde{s}_\mathrm{RF}(t) + \tilde{s}_\mathrm{RF}^*(t) \right] = s_\mathrm{I}(t) \cos(\omega_\mathrm{c} t) - s_\mathrm{Q}(t) \sin(\omega_\mathrm{c} t).
+\tag{27}\]</span></span></p>
+<aside class="notes">
+<p>The process formulated in <a href="#/eq-modulation" class="quarto-xref">Equation&nbsp;27</a> is done in hardware in the TX modulator, as shown in <a href="#/fig-tx-modulation" class="quarto-xref">Figure&nbsp;20</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Modulation and Demodulation</h3>
+
+<img data-src="trx_files/figure-revealjs/fig-tx-modulation-output-1.svg" class="r-stretch quarto-figure-center" id="fig-tx-modulation"><p class="caption">
+Figure&nbsp;20: TX modulator.
+</p></section>
+<section class="slide level3 unnumbered">
+<h3>Modulation and Demodulation</h3>
+<p><span class="math display">\[
+\begin{split}
+s_\mathrm{RF}(t) &amp;= \frac{1}{2} \left[ A(t) \cdot e^{j \omega_\mathrm{c} t + j \varphi(t)} + A(t) \cdot e^{-j \omega_\mathrm{c} t -j \varphi(t)} \right]\\
+&amp;= A(t) \cdot \cos[ \omega_\mathrm{c} t + \varphi(t) ]
+\end{split}
+\]</span></p>
+<aside class="notes">
+<p>The RF signal generation according to <a href="#/eq-modulation" class="quarto-xref">Equation&nbsp;27</a> is called <strong>quadrature modulation</strong>. This is the modulation method used most often in modern (broadband) communication systems, as it allows one to transmit two independent signals (I and Q) in the same bandwidth. The I and Q signals are also called quadrature components, as they are 90° out of phase with each other.</p>
+<p>Alternatively, a modulation method called <strong>polar modulation</strong> can be used, where the amplitude and phase of the carrier are varied according to (again using the complex-conjugate symmetry to obtain a real-valued signal):</p>
+<p>This is done by converting the baseband I and Q signals (<span class="math inline">\(s_\mathrm{I}\)</span> and <span class="math inline">\(s_\mathrm{Q}\)</span>) to polar coordinates with</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Modulation and Demodulation</h3>
+<p><span class="math display">\[
+A(t) = \sqrt{s_\mathrm{I}^2(t) + s_\mathrm{Q}^2(t)}, \quad \varphi(t) = \tan^{-1} \left[ \frac{s_\mathrm{Q}(t)}{s_\mathrm{I}(t)} \right].
+\]</span></p>
+<aside class="notes">
+<p>As the mathematical operations required for the Cartesian to polar transformation are quite nonlinear, the <span class="math inline">\(A(t)\)</span> and <span class="math inline">\(\varphi(t)\)</span> signals are wideband. While fairly complex to implement, polar modulation can have an efficiency advantage in the TX circuits, as the signal loss associated with quadrature combination can be avoided <span class="citation" data-cites="Fulde.2017">(<a href="#/references" role="doc-biblioref" onclick="">Fulde et al. 2017</a>)</span>.</p>
+<p>For narrowband wireless standards the use of polar modulation can be quite efficient, as for example Bluetooth, where basically all transmitters are realized as polar modulators.</p>
+<p>In the RX, the received RF signal is downconverted to baseband by the inverse process of <a href="#/fig-tx-modulation" class="quarto-xref">Figure&nbsp;20</a>, shown in <a href="#/fig-rx-demodulation" class="quarto-xref">Figure&nbsp;21</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Modulation and Demodulation</h3>
+
+<img data-src="trx_files/figure-revealjs/fig-rx-demodulation-output-1.svg" class="r-stretch quarto-figure-center" id="fig-rx-demodulation"><p class="caption">
+Figure&nbsp;21: RX demodulator.
+</p></section>
+<section class="slide level3 unnumbered">
+<h3>Modulation and Demodulation</h3>
+<p><span id="eq-demodulation"><span class="math display">\[
+\begin{split}
+\tilde{s}_\mathrm{BB}(t) &amp;= s_\mathrm{RF}(t) \cdot e^{-j \omega_\mathrm{c} t}\\
+&amp;= s_\mathrm{RF}(t) \cdot [\cos(\omega_\mathrm{c} t) - j \cdot \sin(\omega_\mathrm{c} t)]\\
+&amp;\overset{\text{LPF}}{=} \frac{1}{2} \left[ s_\mathrm{I}(t) + j \cdot s_\mathrm{Q}(t) \right].
+\end{split}
+\tag{28}\]</span></span></p>
+<aside class="notes">
+<p>For demodulation we have to shift the RF signal down to baseband, which mathematically is done by multiplying with the negative complex carrier frequency <span class="math inline">\(e^{-j \omega_\mathrm{c} t}\)</span></p>
+<p>In hardware this is realized with two mixers, producing <span class="math inline">\(s_\mathrm{RF}(t) \cdot \cos(\omega_\mathrm{c}t)\)</span> in the I path and <span class="math inline">\(-s_\mathrm{RF}(t) \cdot \sin(\omega_\mathrm{c}t)\)</span> in the Q path. Each of these products contains, besides the wanted baseband term, a component at <span class="math inline">\(2 \omega_\mathrm{c}\)</span>, which is why <a href="#/eq-demodulation" class="quarto-xref">Equation&nbsp;28</a> only holds after the subsequent low-pass filter (indicated by the “LPF” above the equal sign). The factor of one-half that the recovered baseband signals carry is of no consequence, as it is simply absorbed by the RX gain.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="filtering" class="title-slide slide level2 center" data-number="3.3">
+<h2><span class="header-section-number">3.3</span> Filtering</h2>
+
+</section>
+<section class="slide level3 unnumbered">
+<h3>Filtering</h3>
+<div id="cell-fig-filtering-rx" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div id="fig-filtering-rx" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-filtering-rx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="trx_files/figure-revealjs/fig-filtering-rx-output-1.png" width="569" height="566">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-filtering-rx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;22: Filtering of wanted channel amid strong unwanted blockers.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Filtering is an essential function in both TX and RX. In the TX, filtering is used to limit the bandwidth of the transmitted signal to the allocated channel bandwidth, and to suppress out-of-band emissions. In the RX, filtering is used to select the wanted signal from a crowded spectrum, and to suppress unwanted signals (blockers) that can cause interference or desensitization of the RX.</p>
+<p>A typical example of filtering in the RX is shown in <a href="#/fig-filtering-rx" class="quarto-xref">Figure&nbsp;22</a>, where a bandpass filter is used to attenuate strong unwanted blockers while only slightly attenuating the wanted signal.</p>
+Filtering of wanted channel amid strong unwanted blockers. An exemplary RX scenario around 900 MHz is shown: The strong blockers (top figure) are attenuated by an RF bandpass filter (bottom figure) with a bandwidth of 20 MHz, achieving more than 40 dB rejection of the blockers while only slightly attenuating the wanted signal.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Filtering</h3>
+<p><span class="math display">\[
+Q = \frac{f_\mathrm{c}}{\Delta f}
+\]</span></p>
+<aside class="notes">
+<p>In any filter there exists a fundamental trade-off between selectivity (steepness of the filter skirts), bandwidth, and insertion loss. A very selective filter with steep skirts and large passband BW will have a high insertion loss. Conversely, a filter with low insertion loss will have a gentle roll-off and may not sufficiently suppress unwanted signals.</p>
+<p>A useful metric to quantify the performance of a filter is the quality factor <span class="math inline">\(Q\)</span>, defined as</p>
+<p>where <span class="math inline">\(f_\mathrm{c}\)</span> is the center frequency and <span class="math inline">\(\Delta f\)</span> is the <span class="math inline">\(-3\)</span> dB bandwidth of the filter. A high <span class="math inline">\(Q\)</span> indicates a narrow-band filter.</p>
+<p>The achievable <span class="math inline">\(Q\)</span> depends on the used filter technology. For example, on-chip <span class="math inline">\(LC\)</span> filters can achieve <span class="math inline">\(Q\)</span> values of around 10–20, while off-chip SAW or BAW/FBAR filters reach <span class="math inline">\(Q\)</span> values into the thousands, and a crystal filter can achieve <span class="math inline">\(Q\)</span> values of several tens of thousands.</p>
+<p>The choice of filter technology depends on the application requirements, such as frequency range, bandwidth, insertion loss, cost, and power handling. Generally speaking, the required filtering to single out the wanted signal in the RX spectrum and decrease the power of strong blockers to a tolerable level is one of the most critical design choices, and is usually distributed at different locations in the RX chain:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Filtering</h3>
+<ul>
+<li><strong>RF filters</strong> (between antenna and LNA) provide a first level of filtering, and are usually implemented as off-chip SAW or BAW/FBAR filters. They provide high <span class="math inline">\(Q\)</span> and good selectivity, but have a fixed center frequency and bandwidth. They are used to pass the wanted band of interest, and to attenuate strong out-of-band blockers.</li>
+<li><strong>IF filters</strong> (in case of a super-heterodyne receiver) provide additional filtering, and can be implemented as on-chip LC filters or off-chip SAW/BAW filters. They provide moderate <span class="math inline">\(Q\)</span> and selectivity, and can be tuned to some extent.</li>
+<li><strong>BB filters</strong> (after downconversion) provide the final level of filtering before entering the ADCs, and are usually implemented as on-chip active <span class="math inline">\(RC\)</span> filters. They provide channel selection, and can be easily adjusted to different bandwidths.</li>
+<li><strong>Digital filters</strong> (in the DSP block) provide the final level of filtering and signal processing, and can be implemented as FIR or IIR filters. They provide high flexibility and can be easily adapted to different standards and requirements. Digital filters show no variations, so they can be designed to be very selective.</li>
+</ul>
+<aside class="notes">
+<p>It is important to note (because this dictates a lot of choices in RF design) that high-<span class="math inline">\(Q\)</span> filters are usually fixed-frequency and fixed-bandwidth. Only baseband and digital filters can be easily adjusted to different bandwidths!</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Filtering</h3>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Filter Technologies Primer</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Baseband filters (analog)</strong> are usually implemented as active <span class="math inline">\(RC\)</span> filters on-chip <span class="citation" data-cites="Schaumann_Analog_Filters Zverev_Filter_Synthesis">(<a href="#/references" role="doc-biblioref" onclick="">Schaumann et al. 2009</a>; <a href="#/references" role="doc-biblioref" onclick="">Zverev 1967</a>)</span>. They are very flexible and can have adjustable bandwidth by changing <span class="math inline">\(R\)</span> and/or <span class="math inline">\(C\)</span>. For medium/high frequencies <span class="math inline">\(g_\mathrm{m}C\)</span> filters can be used, which are also tunable by changing the transconductance <span class="math inline">\(g_\mathrm{m}\)</span> and/or <span class="math inline">\(C\)</span>. For even higher bandwidths, on-chip LC filters can be used, which have a limited <span class="math inline">\(Q\)</span> of around 10–20.</p>
+<p><strong>Baseband filters (digital)</strong> are implemented as <a href="https://en.wikipedia.org/wiki/Finite_impulse_response">FIR</a> or <a href="https://en.wikipedia.org/wiki/Infinite_impulse_response">IIR</a> filters. They can be made programmable and can be easily adapted to different requirements. Digital filters show no variations, so they can be designed to be very high performance. However, a trade-off between power consumption/area (number of bits and operations) and performance exists.</p>
+<p><strong><a href="https://en.wikipedia.org/wiki/Surface_acoustic_wave">Surface acoustic wave (SAW)</a></strong> and <strong><a href="https://en.wikipedia.org/wiki/Thin-film_bulk_acoustic_resonator">bulk acoustic wave (BAW/FBAR)</a></strong> filters are specialized off-chip components that can achieve high <span class="math inline">\(Q\)</span> into the thousands. They have a fixed center frequency and bandwidth. Usually 1–2 such filters are required per supported band of interest, which can drive up implementation cost and PCB area for RF front-ends that shall support many different frequency bands.</p>
+<p><strong><a href="https://en.wikipedia.org/wiki/Crystal_filter">Crystal filters</a></strong> can achieve very high <span class="math inline">\(Q\)</span> values of several tens of thousands, but are usually bulky and expensive and limited to an operating frequency of tens of MHz.</p>
+<p><strong><a href="https://en.wikipedia.org/wiki/LC_circuit">LC filters</a></strong> can be either implemented off-chip (using discrete components) or on-chip. Off-chip <span class="math inline">\(LC\)</span> filters can achieve higher <span class="math inline">\(Q\)</span> values than on-chip <span class="math inline">\(LC\)</span> filters, but are usually larger and more expensive. On-chip <span class="math inline">\(LC\)</span> filters are limited in <span class="math inline">\(Q\)</span> (around 10–20), but are very compact and can be integrated into the RFIC. Off-chip <span class="math inline">\(LC\)</span> filters can achieve <span class="math inline">\(Q\)</span> values of around 50–100, depending on the frequency and component quality. <span class="math inline">\(LC\)</span> filters can be made tunable by changing <span class="math inline">\(L\)</span> (difficult) and/or <span class="math inline">\(C\)</span> (easy).</p>
+<p><strong><a href="https://en.wikipedia.org/wiki/Ceramic_resonator">Ceramic filters</a></strong> are another off-chip filter technology that can achieve moderate to high <span class="math inline">\(Q\)</span> values (up to several hundreds). They are usually smaller and less expensive than SAW or BAW/FBAR filters, but also have lower performance.</p>
+<p><strong><a href="https://en.wikipedia.org/wiki/Waveguide_filter">Waveguide filters</a></strong> are used at very high frequencies (above 10 GHz) and can achieve very high <span class="math inline">\(Q\)</span> values (up to several thousands). They are usually bulky and expensive, and are not commonly used in mobile applications, but rather in fixed installations like base stations or satellite communication.</p>
+<p><strong><a href="https://en.wikipedia.org/wiki/Optical_filter">Optical filters</a></strong> can have extremely high <span class="math inline">\(Q\)</span> values but are difficult to apply in electronic RF systems due to the need for optical components and the challenge of integrating them with electronic circuits, as well as the required electrical-optical signal conversion.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="direct-conversion-architecture" class="title-slide slide level2 center" data-number="3.4">
+<h2><span class="header-section-number">3.4</span> Direct-Conversion Architecture</h2>
+<aside class="notes">
+<p>Fundamentally, the choice of filter technology is a trade-off between performance, size, cost, power handling, and flexibility. In most cases, a combination of different filter technologies is used to achieve the desired performance.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Direct-Conversion Architecture</h3>
+<ul>
+<li>Per RX- and TX-chain a single LO is required (which can even be shared between RX and TX in TDD operation).</li>
+<li>There are a minimum number of RF blocks, which is good for cost and power consumption.</li>
+<li>This architecture is very flexible and can be easily adapted to different standards and requirements, even for wideband operation. It generally shows very good performance if the disadvantages can be overcome by good design.</li>
+<li>This architecture allows a high integration level, as basically all blocks can be implemented on-chip.</li>
+<li>Direct conversion is the de facto standard architecture for cellular, Wi-Fi, Bluetooth (with the exception of the TX), and GNSS.</li>
+</ul>
+<aside class="notes">
+<p>The transceiver architecture shown in <a href="#/fig-trx-block" class="quarto-xref">Figure&nbsp;19</a> is called the direct-conversion or zero-IF architecture, as the downconversion in the RX and upconversion in the TX are done in a single step. This architecture has several advantages:</p>
+<p>However, the direct-conversion architecture also has some serious disadvantages:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Direct-Conversion Architecture</h3>
+<ul>
+<li>LO-RF coupling can cause self-mixing and desensitization of the RX, as well as LO leakage in the TX. This is an issue because the LO frequency is the same as the RF carrier frequency.</li>
+<li>Even-order distortion (characterized by a low IIP2) causes sensitivity degradation due to strong amplitude-modulated blockers <span class="citation" data-cites="Gebhard.2019">(<a href="#/references" role="doc-biblioref" onclick="">Gebhard et al. 2019</a>)</span>.</li>
+<li>LO pulling can occur in the TX (as, again, LO and RF are at the same frequency).</li>
+<li>I/Q errors (amplitude and phase mismatch) of the <span class="math inline">\(I\)</span> and <span class="math inline">\(Q\)</span> paths can cause constellation distortion leading to increased error vector magnitude (EVM).</li>
+<li>Significant dc offsets can occur due to self-mixing of LO leakage or the even-order distortion products (IM2).</li>
+<li>Flicker noise (1/f noise) upconversion can cause increased TX noise close to the carrier, as well as increased RX noise figure.</li>
+</ul>
+<aside class="notes">
+<p>Nowadays there exist good design techniques to mitigate these disadvantages. However, in some cases (for example very high linearity requirements, or very high frequencies) other architectures like low-IF or super-heterodyne may be preferable.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="sec-trx-duplexing" class="title-slide slide level2 center" data-number="3.5">
+<h2><span class="header-section-number">3.5</span> Duplexing</h2>
+
+</section>
+<section id="frequency-division-duplex-fdd" class="slide level3" data-number="3.5.1">
+<h3><span class="header-section-number">3.5.1</span> Frequency-Division Duplex (FDD)</h3>
+<aside class="notes">
+<p>In the block diagram of <a href="#/fig-trx-block" class="quarto-xref">Figure&nbsp;19</a>, we have not yet considered how to share a single antenna between RX and TX. Essentially, there are two main methods to achieve this: <strong>frequency-division duplex (FDD)</strong> and <strong>time-division duplex (TDD)</strong>.</p>
+<p>A special case beyond FDD and TDD is <strong>full-duplex (FD)</strong>, where RX and TX operate <em>simultaneously</em> in the <em>same frequency band</em>. Full-duplex is technically challenging, as it requires very high isolation between RX and TX, which is difficult to achieve in practice. For some special applications, like radar, full-duplex operation is possible, but for most communication systems FDD or TDD is used.</p>
+<p>In FDD, the RX and TX operate at different frequencies, separated by a duplex distance <span class="math inline">\(f_\mathrm{dpx} = | f_\mathrm{RX} - f_\mathrm{TX} |\)</span>. This allows simultaneous transmission and reception, which is beneficial for applications like voice communication where low latency is required. However, FDD requires two separate frequency bands, which can be a limitation in terms of spectrum availability. Additionally, FDD requires two PLLs to generate the RX and TX LO frequencies, which increases complexity and power consumption.</p>
+<p>The RF RX and TX paths are connected to the antenna via a duplexer filter, which is a three-port device that allows signals to pass between the antenna and the RX or TX path, while isolating the RX and TX paths from each other. A typical FDD TRX block diagram is shown in <a href="#/fig-trx-fdd" class="quarto-xref">Figure&nbsp;23</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Frequency-Division Duplex (FDD)</h3>
+
+<img data-src="trx_files/figure-revealjs/fig-trx-fdd-output-1.svg" class="r-stretch quarto-figure-center" id="fig-trx-fdd"><p class="caption">
+Figure&nbsp;23: Block diagram of an FDD RF front-end.
+</p></section>
+<section class="slide level3 unnumbered">
+<h3>Frequency-Division Duplex (FDD)</h3>
+<ul>
+<li>RX and TX can operate simultaneously, which is beneficial for low-latency applications.</li>
+<li>There is no need for fast switching between RX and TX, which simplifies the timing control.</li>
+<li>FDD allows relaxed synchronization requirements between RX and TX and different users.</li>
+</ul>
+<aside class="notes">
+<p>Advantages of FDD:</p>
+<p>Disadvantages of FDD:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Frequency-Division Duplex (FDD)</h3>
+<ul>
+<li>Duplexer filters are costly components with significant insertion loss depending on filtering requirements.</li>
+<li>It requires two separate frequency bands, which can be a limitation in terms of spectrum availability and MIMO channel estimation.</li>
+<li>The strong TX leakage via the duplexer filter into the RX path causes severe desensitization of the RX, which requires high linearity and good filtering (50 dB to 60 dB).</li>
+<li>The RX and TX chains (including their PLLs) are operating simultaneously, which increases power consumption and can cause interference between the RX and TX paths (e.g., LO pulling).</li>
+</ul>
+</section>
+<section id="time-division-duplex-tdd" class="slide level3" data-number="3.5.2">
+<h3><span class="header-section-number">3.5.2</span> Time-Division Duplex (TDD)</h3>
+<aside class="notes">
+<p>In TDD, the RX and TX share the same frequency band but operate at different times. This allows for more efficient use of the available spectrum, as the same channel frequency can be used for both transmission and reception. TDD is particularly well-suited for applications with asymmetric traffic patterns, where the data rate in one direction is significantly higher than in the other. However, TDD requires precise timing control to avoid interference between RX and TX periods, which can increase complexity.</p>
+<p>In TDD, a single PLL can be used to generate the LO frequency for both RX and TX, which reduces complexity and power consumption. The RX and TX RF paths are connected to the antenna via a switch, which alternates between connecting the antenna to the RX path and the TX path. A typical TDD TRX block diagram is shown in <a href="#/fig-trx-tdd" class="quarto-xref">Figure&nbsp;24</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Time-Division Duplex (TDD)</h3>
+
+<img data-src="trx_files/figure-revealjs/fig-trx-tdd-output-1.svg" class="r-stretch quarto-figure-center" id="fig-trx-tdd"><p class="caption">
+Figure&nbsp;24: Block diagram of a TDD RF front-end.
+</p></section>
+<section class="slide level3 unnumbered">
+<h3>Time-Division Duplex (TDD)</h3>
+<ul>
+<li>More efficient use of the available spectrum, as the same frequency can be used for both RX and TX.</li>
+<li>A single PLL can be used for both RX and TX, which reduces complexity and power consumption.</li>
+<li>No duplexer is required (just a single band filter), which reduces cost and insertion loss.</li>
+<li>No RX blocking by own TX, which relaxes linearity and filtering requirements.</li>
+<li>MIMO is easier to implement, as all antennas can operate in the same frequency band.</li>
+</ul>
+<aside class="notes">
+<p>Advantages of TDD:</p>
+<p>Disadvantages of TDD:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Time-Division Duplex (TDD)</h3>
+<ul>
+<li>RX and TX cannot operate simultaneously, which can be a limitation for low-latency applications.</li>
+<li>TDD requires precise timing control to avoid interference between RX and TX periods, which can increase complexity.</li>
+<li>Synchronization between RX and TX and different users is required, which can be challenging in some scenarios.</li>
+</ul>
+</section>
+<section id="comparison-of-fdd-and-tdd" class="slide level3" data-number="3.5.3">
+<h3><span class="header-section-number">3.5.3</span> Comparison of FDD and TDD</h3>
+<div id="tbl-duplexing-standards" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-tbl">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-duplexing-standards-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: Comparison of duplexing methods used by major wireless standards
+</figcaption>
+<div aria-describedby="tbl-duplexing-standards-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 22%">
+<col style="width: 53%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Wireless Standard</th>
+<th style="text-align: left;">Duplexing Method</th>
+<th style="text-align: left;">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">GSM (2G)</td>
+<td style="text-align: left;">FDD &amp; TDMA</td>
+<td style="text-align: left;">TX and RX operate at different frequencies (FDD) and different times (TDMA)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UMTS (3G)</td>
+<td style="text-align: left;">FDD</td>
+<td style="text-align: left;">Traditional cellular standard using paired spectrum</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LTE (4G)</td>
+<td style="text-align: left;">FDD/TDD</td>
+<td style="text-align: left;">FDD is used mostly &lt;2.7 GHz, TDD is used &gt;2.3 GHz</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5G NR</td>
+<td style="text-align: left;">FDD/TDD</td>
+<td style="text-align: left;">FDD is used mostly &lt;2.7 GHz, TDD is used &gt;2.3 GHz</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Wi-Fi (802.11)</td>
+<td style="text-align: left;">TDD</td>
+<td style="text-align: left;">Unlicensed spectrum operation</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bluetooth</td>
+<td style="text-align: left;">TDD</td>
+<td style="text-align: left;">Short-range personal area network</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Zigbee</td>
+<td style="text-align: left;">TDD</td>
+<td style="text-align: left;">Low-power IoT applications</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<aside class="notes">
+<p>Below is a summary of important wireless standards and their duplexing method as shown in <a href="#/tbl-duplexing-standards" class="quarto-xref">Table&nbsp;4</a>.</p>
+<p>As you can see in <a href="#/tbl-duplexing-standards" class="quarto-xref">Table&nbsp;4</a>, there is a tendency to use FDD for lower frequencies and long communication distances, while TDD is preferred for higher frequencies and shorter distances.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="full-duplex-fd" class="slide level3" data-number="3.5.4">
+<h3><span class="header-section-number">3.5.4</span> Full Duplex (FD)</h3>
+<aside class="notes">
+<p>In case of FD, neither a duplexer nor a switch can be used in the RF front-end. One popular method (which also helps to increase the RX-TX isolation) is to use two antennas, as shown in <a href="#/fig-trx-fd-dualantenna" class="quarto-xref">Figure&nbsp;25</a>. The TX antenna is used to transmit the signal, while the RX antenna is used to receive the signal. The two antennas are placed in such a way that they are isolated from each other, which helps to reduce the interference between the RX and TX paths. Also polarization diversity can be used to further increase the isolation.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Full Duplex (FD)</h3>
+
+<img data-src="trx_files/figure-revealjs/fig-trx-fd-dualantenna-output-1.svg" class="r-stretch quarto-figure-center" id="fig-trx-fd-dualantenna"><p class="caption">
+Figure&nbsp;25: Block diagram of an in-band full-duplex (FD) RF front-end using two separate antennas for RX and TX, which operate simultaneously at the same frequency.
+</p></section>
+<section class="slide level3 unnumbered">
+<h3>Full Duplex (FD)</h3>
+
+<img data-src="trx_files/figure-revealjs/fig-trx-fd-circulator-output-1.svg" class="r-stretch quarto-figure-center" id="fig-trx-fd-circulator"><p class="caption">
+Figure&nbsp;26: Block diagram of an in-band full-duplex (FD) RF front-end using a single antenna and a circulator.
+</p><aside class="notes">
+<p>Another method to achieve FD operation is to use a circulator, which is a three-port device that allows signals to flow in one direction while isolating the other two ports. The circulator can be used to connect the RX and TX paths to the same antenna, while providing isolation between them. A typical FD TRX block diagram using a circulator is shown in <a href="#/fig-trx-fd-circulator" class="quarto-xref">Figure&nbsp;26</a>.</p>
+Block diagram of an in-band full-duplex (FD) RF front-end using a single antenna and a circulator. The circulator routes TX to the antenna and the antenna to RX, while isolating the TX from the RX port.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="specialty-architectures" class="title-slide slide level2 center" data-number="3.6">
+<h2><span class="header-section-number">3.6</span> Specialty Architectures</h2>
+<aside class="notes">
+<p>Regardless of whether two antennas or a circulator are used, the isolation between the TX and RX paths is always finite (typically only in the range of 15 dB to 20 dB for a circulator). As a consequence, a large fraction of the own (and strong) TX signal leaks directly into the sensitive RX port. Practical FD systems therefore require additional <strong>self-interference cancellation</strong> (also called leakage cancellation), performed in the RF/analog and/or digital domain, to suppress this residual TX leakage below the RX noise floor <span class="citation" data-cites="Sadjina.2020">(<a href="#/references" role="doc-biblioref" onclick="">Sadjina et al. 2020</a>)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="super-heterodyne-architecture" class="slide level3" data-number="3.6.1">
+<h3><span class="header-section-number">3.6.1</span> Super-Heterodyne Architecture</h3>
+<aside class="notes">
+<p>In some cases, other architectures may be preferred over the direct-conversion architecture. During the evolution of wireless communication, many different architectures have been proposed and used. However, only a few of them are still relevant today. A few examples are shown next.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Superheterodyne_receiver">super-heterodyne architecture</a> is a widely used approach in radio. It works by mixing the incoming/outgoing RF signal with an LO to produce an intermediate frequency (IF) signal. This IF signal is then amplified and processed, allowing for better selectivity and sensitivity compared to direct-conversion architectures. Super-heterodyne receivers and transmitters are known for their excellent performance in terms of image rejection and dynamic range, making them suitable for a variety of applications, including traditional analog TV and radio broadcasting. A simplified block diagram of a super-heterodyne transceiver is shown in <a href="#/fig-trx-superheterodyne" class="quarto-xref">Figure&nbsp;27</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Super-Heterodyne Architecture</h3>
+
+<img data-src="trx_files/figure-revealjs/fig-trx-superheterodyne-output-1.svg" class="r-stretch quarto-figure-center" id="fig-trx-superheterodyne"><p class="caption">
+Figure&nbsp;27: Block diagram of a super-heterodyne transceiver (TRX) showing the main functional blocks of RX and TX.
+</p></section>
+<section id="low-if-architecture" class="slide level3" data-number="3.6.2">
+<h3><span class="header-section-number">3.6.2</span> Low-IF Architecture</h3>
+<aside class="notes">
+<p>When you compare <a href="#/fig-trx-block" class="quarto-xref">Figure&nbsp;19</a> with <a href="#/fig-trx-superheterodyne" class="quarto-xref">Figure&nbsp;27</a>, you can immediately appreciate the increased complexity of the super-heterodyne architecture. It requires two PLLs to generate the RX and TX LO frequencies, as well as additional mixers, amplifiers, and filters for the IF stage. This increases cost, power consumption, and size. However, the super-heterodyne architecture can provide better performance in terms of selectivity and sensitivity, especially in challenging RF environments with strong blockers, as it allows distributed filtering at RF, IF, and baseband frequencies.</p>
+<p>One important aspect of super-heterodyne receivers is the choice of the intermediate frequency (IF). The IF should be high enough to allow for effective filtering and high <strong>image frequency</strong> rejection, but low enough to avoid excessive complexity and power consumption. Common IF frequencies range from a few MHz to several hundred MHz, depending on the application and frequency band.</p>
+<p>The image frequency is a spurious frequency that can interfere with the desired signal, and is located at <span class="math inline">\(f_\mathrm{image} = f_\mathrm{RF} \pm 2 f_\mathrm{IF}\)</span> (the sign depends on the selection of high-side or low-side mixing, which is an important design choice in superhets). To suppress the image frequency, an image-reject filter is either placed before (RX) or after (TX) the mixer. The design of this filter is critical, as it must provide sufficient attenuation of the image frequency while maintaining low insertion loss for the desired signal.</p>
+<p>An alternative to image filtering is the use of active image rejection techniques, such as the <strong>Hartley</strong> or <strong>Weaver</strong> architectures (see <a href="https://en.wikipedia.org/wiki/Image_response">image-reject mixer</a>) <span class="citation" data-cites="Razavi_RFIC">(<a href="#/references" role="doc-biblioref" onclick="">Razavi 2011</a>)</span>. These techniques use additional mixers and phase shifters to cancel out the image frequency, allowing for improved performance without the need for a dedicated image-reject filter.</p>
+<p>To avoid some of the issues of direct-conversion architectures (like dc offsets and flicker noise), a low-IF architecture can be used. In a low-IF architecture (which is a kind of a super-heterodyne architecture), the RX and TX signals are mixed to a low intermediate frequency (typically a few MHz to tens of MHz) in the analog domain instead of directly to baseband (the final mixing to baseband is done digitally). This allows for easier filtering of dc offsets and flicker noise, while still maintaining the benefits of a single LO and reduced complexity compared to super-heterodyne architectures. A low-IF architecture is shown in <a href="#/fig-trx-lowif" class="quarto-xref">Figure&nbsp;28</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Low-IF Architecture</h3>
+
+<img data-src="trx_files/figure-revealjs/fig-trx-lowif-output-1.svg" class="r-stretch quarto-figure-center" id="fig-trx-lowif"><p class="caption">
+Figure&nbsp;28: Block diagram of a low-IF transceiver (TRX) showing the main functional blocks of RX and TX.
+</p><aside class="notes">
+Block diagram of a low-IF transceiver (TRX) showing the main functional blocks of RX and TX. Note the usage of complex analog and digital baseband filters. Otherwise, the structure is similar to a zero-IF TRX as shown in <a href="#/fig-trx-block" class="quarto-xref">Figure&nbsp;19</a>.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="direct-modulated-oscillator-and-direct-detection-receiver-aka-super-simple-architecture" class="slide level3" data-number="3.6.3">
+<h3><span class="header-section-number">3.6.3</span> Direct-Modulated Oscillator and Direct-Detection Receiver (aka “Super Simple” Architecture)</h3>
+<aside class="notes">
+<p>The low-IF architecture is the de facto standard for Bluetooth receivers. Its advantage compared to direct-conversion vanishes for larger channel bandwidths, which is why it is not used for cellular or Wi-Fi (GSM receivers might be an exception).</p>
+<p>One noteworthy disadvantage of low-IF architectures is the required <span class="math inline">\(\ge 2\times\)</span> BW of the analog baseband filters and the ADCs/DACs compared to direct-conversion. This might cause increased power consumption in these blocks. Additionally, the low-IF architecture still requires careful design to mitigate issues like I/Q imbalance and LO leakage, although these issues are generally less severe than in direct-conversion architectures.</p>
+<p>For some applications with very low cost and low performance requirements, a super simple architecture can be used (for applications like a garage door opener). In this architecture, the RX and TX paths are stripped down to the bare minimum. A simple direct-detection receiver just uses an (optional) bandpass filter and a power detector, while a simple direct-modulated oscillator transmitter uses an oscillator and (optional) power amplifier. These simplified architectures are shown in <a href="#/fig-trx-supersimple" class="quarto-xref">Figure&nbsp;29</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Direct-Modulated Oscillator and Direct-Detection Receiver (aka “Super Simple” Architecture)</h3>
+
+<img data-src="trx_files/figure-revealjs/fig-trx-supersimple-output-1.svg" class="r-stretch quarto-figure-center" id="fig-trx-supersimple"><p class="caption">
+Figure&nbsp;29: Block diagram of a direct-modulated oscillator and direct-detection receiver (aka ‘Super Simple’) TX and RX with optional components.
+</p></section>
+
+<section id="iq-imbalance" class="title-slide slide level2 center" data-number="3.7">
+<h2><span class="header-section-number">3.7</span> I/Q Imbalance</h2>
+<aside class="notes">
+<p>Despite the reduced architecture, digital amplitude-shift-keying (ASK) or on-off-keying (OOK) can be used. If the receiver is able to discriminate between frequencies (e.g., by using two RF filters with a power detector each), also frequency-shift-keying (FSK) can be used.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>I/Q Imbalance</h3>
+<div id="cell-fig-trx-iq-constellation" class="cell" data-execution_count="12">
+<div class="cell-output cell-output-display">
+<div id="fig-trx-iq-constellation" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-trx-iq-constellation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="trx_files/figure-revealjs/fig-trx-iq-constellation-output-1.png" width="476" height="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trx-iq-constellation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;30: QPSK constellation illustrating the two error contributions.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>In direct-conversion and low-IF architectures, the I and Q paths are used to process the in-phase and quadrature components of the signal. Ideally, these paths should have identical gain and a 90° phase difference. However, in practice, there are always some mismatches between the I and Q paths, leading to <strong>I/Q imbalance</strong>. This imbalance can cause constellation distortion, leading to increased error vector magnitude (EVM) and degraded system performance.</p>
+QPSK constellation illustrating the two error contributions. Applied to all four symbols, an amplitude error <span class="math inline">\(\Delta A\)</span> (radial displacement, orange crosses) and a phase error <span class="math inline">\(\Delta \varphi\)</span> (rotation on the circle, green crosses) are shown separately relative to the ideal symbols (blue circles).
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>I/Q Imbalance</h3>
+<ul>
+<li><strong>Image rejection ratio (IRR)</strong>: The IRR is a measure of how well the receiver can reject the image frequency caused by I/Q imbalance. It is defined as the ratio of the power of the desired signal to the power of the image (unwanted) signal, typically expressed in dB. A higher IRR indicates better performance, with values above 30 dB to 40 dB generally considered acceptable for most applications.</li>
+</ul>
+<aside class="notes">
+<p>I/Q imbalance can be characterized by two parameters: amplitude mismatch (<span class="math inline">\(\Delta A\)</span>) and phase mismatch (<span class="math inline">\(\Delta \varphi\)</span>). Amplitude mismatch originates from the difference in gain between the I and Q paths, while phase mismatch refers to the deviation from the ideal 90° phase difference. The impact of I/Q imbalance on system performance depends on the modulation scheme used, with higher-order modulations being more sensitive to these impairments. <a href="#/fig-trx-iq-constellation" class="quarto-xref">Figure&nbsp;30</a> illustrates both effects on a QPSK constellation: an amplitude mismatch displaces each symbol radially, while a phase mismatch rotates each symbol along the constellation circle.</p>
+<p>There are two ways to quantify I/Q imbalance:</p>
+<p>The IRR can be calculated from the relative amplitude mismatch <span class="math inline">\(\epsilon = \Delta A/A\)</span> and the phase mismatch <span class="math inline">\(\Delta \varphi\)</span> (in radians) as <span class="citation" data-cites="Razavi_RFIC">(<a href="#/references" role="doc-biblioref" onclick="">Razavi 2011</a>)</span></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>I/Q Imbalance</h3>
+<p><span id="eq-irr-definition"><span class="math display">\[
+\begin{split}
+\text{IRR} &amp;= \frac{1 + (1 + \epsilon)^2 + 2 (1 + \epsilon) \cos(\Delta \varphi)}{1 + (1 + \epsilon)^2 - 2 (1 + \epsilon) \cos(\Delta \varphi)}\\
+&amp;\approx \frac{4}{\epsilon^2 + (\Delta \varphi)^2},
+\end{split}
+\tag{29}\]</span></span></p>
+<aside class="notes">
+<p>where the approximation on the right holds for small amplitude and phase errors. The IRR in dB is given by</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>I/Q Imbalance</h3>
+<p><span class="math display">\[
+\text{IRR}|_\mathrm{dB} = 10 \cdot \log_{10}(\text{IRR}).
+\]</span></p>
+<aside class="notes">
+<p>For example, an amplitude mismatch of 1% (<span class="math inline">\(\epsilon = 0.01\)</span>) together with a phase mismatch of 1° (<span class="math inline">\(\Delta \varphi \approx 0.0175\)</span>) yields an IRR of about 40 dB.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>I/Q Imbalance</h3>
+<ul>
+<li><strong>Error vector magnitude (EVM)</strong>: The <a href="https://en.wikipedia.org/wiki/Error_vector_magnitude">EVM</a> is a measure of the difference between the ideal transmitted signal and the received signal, expressed as a percentage of the signal’s magnitude. It quantifies the overall distortion in the received signal, including the effects of I/Q imbalance. Lower EVM values indicate better performance, with typical requirements ranging from 1% to 10% depending on the modulation scheme and application.</li>
+</ul>
+<aside class="notes">
+<p>The EVM (in rms) is defined as</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>I/Q Imbalance</h3>
+<p><span id="eq-evm-definition"><span class="math display">\[
+\text{EVM} = \frac{\sqrt{\frac{1}{N} \sum_{i=1}^{N} |s_{\mathrm{ideal},i} - s_{\mathrm{meas},i}|^2}}{\sqrt{\frac{1}{N} \sum_{i=1}^{N} |s_{\mathrm{ideal},i}|^2}}
+\tag{30}\]</span></span></p>
+<p><span class="math display">\[
+\text{EVM}|_\mathrm{dB} = 20 \cdot \log_{10}(\text{EVM}).
+\]</span></p>
+<aside class="notes">
+<p>where <span class="math inline">\(s_{\mathrm{ideal},i}\)</span> are the ideal transmitted symbols, <span class="math inline">\(s_{\mathrm{meas},i}\)</span> are the measured received symbols, and <span class="math inline">\(N\)</span> is the number of symbols. EVM is expressed either in percent or in dB using</p>
+<p>Note that the EVM (in dB) is always a negative number, with lower values indicating better performance. For example, an EVM of 1% (a very good number) corresponds to –40 dB, while an EVM of 10% corresponds to –20 dB. The SNR of the RF signal can be related to the EVM as</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>I/Q Imbalance</h3>
+<p><span class="math display">\[
+\text{SNR}|_\mathrm{dB} \approx -20 \cdot \log_{10}(\text{EVM}) = -\text{EVM}|_\mathrm{dB}.
+\]</span></p>
+<aside class="notes">
+<p>In order to make the I/Q mismatch sufficiently small, the following techniques can be used:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered">
+<h3>I/Q Imbalance</h3>
+<ul>
+<li>Careful layout and matching of the components in the I and Q paths to minimize gain and phase mismatches. This usually involves good layout techniques. Further, the LO I/Q generation should be done with high accuracy.</li>
+<li>Calibration techniques can be used to measure and compensate for I/Q imbalance. This can be done either in the analog domain (e.g., using variable gain amplifiers and phase shifters) or in the digital domain (e.g., using digital signal processing algorithms). Digital compensation is usually preferred, as it is more flexible and can adapt to changing conditions. A <a href="https://en.wikipedia.org/wiki/CORDIC">CORDIC</a> can be readily used for this purpose.</li>
+</ul>
+<aside class="notes">
+<p>A final note on EVM: EVM is not only affected by I/Q imbalance, but also by other impairments like phase noise, nonlinearities, and noise in general. Therefore, EVM is a more comprehensive measure of the overall performance of a communication system, and often used to quantify the overall system performance in terms of SNR.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="references" class="slide level3 unnumbered smaller scrollable">
+<h3>References</h3>
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Fulde.2017" class="csl-entry" role="listitem">
+Fulde, Michael, Alexander Belitzer, Zdravko Boos, et al. 2017. <span>“13.2 a Digital Multimode Polar Transmitter Supporting 40MHz <span>LTE</span> Carrier Aggregation in 28nm <span>CMOS</span>.”</span> <em>2017 <span>IEEE</span> International Solid-State Circuits Conference (<span>ISSCC</span>)</em>, February, 218–19. <a href="https://doi.org/10.1109/isscc.2017.7870339">https://doi.org/10.1109/isscc.2017.7870339</a>.
+</div>
+<div id="ref-Gebhard.2019" class="csl-entry" role="listitem">
+Gebhard, Andreas, Oliver Lang, Michael Lunglmayr, et al. 2019. <span>“A Robust Nonlinear <span>RLS</span> Type Adaptive Filter for Second-Order-Intermodulation Distortion Cancellation in <span>FDD</span> <span>LTE</span> and <span>5G</span> Direct Conversion Transceivers.”</span> <em><span>IEEE</span> Transactions on Microwave Theory and Techniques</em> 67 (5): 1946–61. <a href="https://doi.org/10.1109/tmtt.2019.2896513">https://doi.org/10.1109/tmtt.2019.2896513</a>.
+</div>
+<div id="ref-Martin.2004" class="csl-entry" role="listitem">
+Martin, Kenneth W. 2004. <span>“Complex Signal Processing Is Not Complex.”</span> <em><span>IEEE</span> Transactions on Circuits and Systems—I: Regular Papers</em> 51 (9): 1823–36. <a href="https://doi.org/10.1109/tcsi.2004.834522">https://doi.org/10.1109/tcsi.2004.834522</a>.
+</div>
+<div id="ref-Molisch_Wireless_Communications" class="csl-entry" role="listitem">
+Molisch, Andreas F. 2022. <em>Wireless Communications: From Fundamentals to Beyond 5G</em>. 3rd edition. Wiley-IEEE Press.
+</div>
+<div id="ref-Razavi_RFIC" class="csl-entry" role="listitem">
+Razavi, Behzad. 2011. <em>RF Microelectronics</em>. 2nd edition. Pearson.
+</div>
+<div id="ref-Sadjina.2020" class="csl-entry" role="listitem">
+Sadjina, Silvester, Christian Motz, Thomas Paireder, Mario Huemer, and Harald Pretl. 2020. <span>“<span class="nocase">A Survey of Self-Interference in LTE-Advanced and 5G New Radio Wireless Transceivers</span>.”</span> <em>IEEE Transactions on Microwave Theory and Techniques</em> 68 (3): 1118–31. <a href="https://doi.org/10.1109/TMTT.2019.2951166">https://doi.org/10.1109/TMTT.2019.2951166</a>.
+</div>
+<div id="ref-Schaumann_Analog_Filters" class="csl-entry" role="listitem">
+Schaumann, Rolf, Haiqiao Xiao, and Mac E. Van Valkenburg. 2009. <em><span class="nocase">Design of Analog Filters</span></em>. Third. Oxford University Press.
+</div>
+<div id="ref-Sklar_Digital_Communications" class="csl-entry" role="listitem">
+Sklar, Bernard, and Fredric J. Harris. 2020. <em>Digital Communications: Fundamentals and Applications</em>. 3rd edition. Pearson.
+</div>
+<div id="ref-Zverev_Filter_Synthesis" class="csl-entry" role="listitem">
+Zverev, Anatol I. 1967. <em><span class="nocase">Handbook of Filter Synthesis</span></em>. John Wiley &amp; Sons.
+</div>
+</div>
+</section>
+<section class="slide level3 unnumbered">
+<h3>References</h3>
+
+</section>
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p><a href="../rfic.html#sec-trx">RFIC lecture notes</a></p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"numbers":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/iic-jku\.github\.io\/radio-frequency-integrated-circuits\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
