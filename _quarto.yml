@@ -16,6 +16,9 @@ website:
         text: "About"
       - href: rfic.qmd
         text: "Course Material"
+      - icon: easel
+        href: slides.qmd
+        text: "Slides"
       - icon: bi-filetype-pdf
         text: PDF
         href: rfic.pdf
