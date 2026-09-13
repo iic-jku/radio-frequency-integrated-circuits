@@ -177,6 +177,8 @@ execute:
 format:
   revealjs:
     slide-level: 3
+    width: 1280
+    height: 720
     number-sections: true
     slide-number: c/t
     scrollable: true

@@ -182,6 +182,8 @@ class RenderFilesTest(unittest.TestCase):
         self.assertIn("(../rfic.html#sec-lna)", deck)
         self.assertIn("path: _tools/structure.lua", deck)
         self.assertIn("bibliography: ../references.bib", deck)
+        # 16:9 slides for widescreen projectors
+        self.assertIn("    width: 1280\n    height: 720\n", deck)
 
     def test_overview_lists_decks(self):
         index = self.files["slides/index.qmd"]
