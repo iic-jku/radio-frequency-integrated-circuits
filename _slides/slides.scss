@@ -1,0 +1,22 @@
+/*-- scss:defaults --*/
+// SPDX-FileCopyrightText: 2026 Harald Pretl
+// SPDX-License-Identifier: Apache-2.0
+
+$link-color: #447099;
+$presentation-heading-color: #447099;
+$presentation-font-size-root: 36px;
+
+/*-- scss:rules --*/
+
+.reveal .slides section .quarto-figure img {
+  max-height: 440px;
+  object-fit: contain;
+}
+
+.reveal .callout {
+  font-size: 0.8em;
+}
+
+.reveal .footer a {
+  color: #447099;
+}
