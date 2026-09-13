@@ -1,0 +1,1337 @@
+{
+ "book": "../rfic.html",
+ "labels": {
+  "eq-antenna-gain-area": {
+   "chapter": 1,
+   "number": "2",
+   "type": "eq"
+  },
+  "eq-bode-fano-criterion": {
+   "chapter": 4,
+   "number": "33",
+   "type": "eq"
+  },
+  "eq-branch-line-coupler-sparams": {
+   "chapter": 5,
+   "number": "54",
+   "type": "eq"
+  },
+  "eq-cp-pll-damping-factor": {
+   "chapter": 7,
+   "number": "69",
+   "type": "eq"
+  },
+  "eq-cp-pll-natural-frequency": {
+   "chapter": 7,
+   "number": "68",
+   "type": "eq"
+  },
+  "eq-cp-pll-transfer-function": {
+   "chapter": 7,
+   "number": "67",
+   "type": "eq"
+  },
+  "eq-cp-transfer-function": {
+   "chapter": 7,
+   "number": "66",
+   "type": "eq"
+  },
+  "eq-cp-voltage-change": {
+   "chapter": 7,
+   "number": "65",
+   "type": "eq"
+  },
+  "eq-crystal-pulling": {
+   "chapter": 6,
+   "number": "61",
+   "type": "eq"
+  },
+  "eq-crystal-series-resonance": {
+   "chapter": 6,
+   "number": "60",
+   "type": "eq"
+  },
+  "eq-dbm": {
+   "chapter": 1,
+   "number": "3",
+   "type": "eq"
+  },
+  "eq-definition-q": {
+   "chapter": 6,
+   "number": "55",
+   "type": "eq"
+  },
+  "eq-demodulation": {
+   "chapter": 3,
+   "number": "28",
+   "type": "eq"
+  },
+  "eq-esn0-ebn0": {
+   "chapter": 2,
+   "number": "25",
+   "type": "eq"
+  },
+  "eq-evm-definition": {
+   "chapter": 3,
+   "number": "30",
+   "type": "eq"
+  },
+  "eq-friis": {
+   "chapter": 2,
+   "number": "22",
+   "type": "eq"
+  },
+  "eq-friis-transmission": {
+   "chapter": 1,
+   "number": "1",
+   "type": "eq"
+  },
+  "eq-fspl": {
+   "chapter": 1,
+   "number": "4",
+   "type": "eq"
+  },
+  "eq-iip3": {
+   "chapter": 2,
+   "number": "15",
+   "type": "eq"
+  },
+  "eq-iip3-amplitude": {
+   "chapter": 2,
+   "number": "14",
+   "type": "eq"
+  },
+  "eq-iip3-approx": {
+   "chapter": 2,
+   "number": "16",
+   "type": "eq"
+  },
+  "eq-iip3-cascade": {
+   "chapter": 2,
+   "number": "17",
+   "type": "eq"
+  },
+  "eq-iip3-cascade-simple": {
+   "chapter": 2,
+   "number": "18",
+   "type": "eq"
+  },
+  "eq-irr-definition": {
+   "chapter": 3,
+   "number": "29",
+   "type": "eq"
+  },
+  "eq-jitter-phase-noise": {
+   "chapter": 6,
+   "number": "58",
+   "type": "eq"
+  },
+  "eq-leeson-equation": {
+   "chapter": 6,
+   "number": "56",
+   "type": "eq"
+  },
+  "eq-leeson-equation-rp": {
+   "chapter": 6,
+   "number": "57",
+   "type": "eq"
+  },
+  "eq-linearity-double": {
+   "chapter": 2,
+   "number": "10",
+   "type": "eq"
+  },
+  "eq-linearity-double-a": {
+   "chapter": 2,
+   "number": "11",
+   "type": "eq"
+  },
+  "eq-linearity-double-b": {
+   "chapter": 2,
+   "number": "12",
+   "type": "eq"
+  },
+  "eq-linearity-double-c": {
+   "chapter": 2,
+   "number": "13",
+   "type": "eq"
+  },
+  "eq-linearity-single": {
+   "chapter": 2,
+   "number": "7",
+   "type": "eq"
+  },
+  "eq-linearity-single-gain-fundamental": {
+   "chapter": 2,
+   "number": "8",
+   "type": "eq"
+  },
+  "eq-lna-cg-noise-factor": {
+   "chapter": 4,
+   "number": "43",
+   "type": "eq"
+  },
+  "eq-lna-cg-noise-source": {
+   "chapter": 4,
+   "number": "42",
+   "type": "eq"
+  },
+  "eq-lna-cg-noise-total": {
+   "chapter": 4,
+   "number": "41",
+   "type": "eq"
+  },
+  "eq-lna-inductive-degeneration-noise-factor": {
+   "chapter": 4,
+   "number": "46",
+   "type": "eq"
+  },
+  "eq-lna-inductive-degeneration-zin": {
+   "chapter": 4,
+   "number": "44",
+   "type": "eq"
+  },
+  "eq-lna-inductive-degeneration-zin-real": {
+   "chapter": 4,
+   "number": "45",
+   "type": "eq"
+  },
+  "eq-lna-naive-noise-factor": {
+   "chapter": 4,
+   "number": "40",
+   "type": "eq"
+  },
+  "eq-lna-naive-noise-input": {
+   "chapter": 4,
+   "number": "39",
+   "type": "eq"
+  },
+  "eq-lna-naive-noise-total": {
+   "chapter": 4,
+   "number": "38",
+   "type": "eq"
+  },
+  "eq-lna-noise-factor": {
+   "chapter": 4,
+   "number": "37",
+   "type": "eq"
+  },
+  "eq-lna-shunt-fb-noise-factor": {
+   "chapter": 4,
+   "number": "48",
+   "type": "eq"
+  },
+  "eq-lna-shunt-fb-yin": {
+   "chapter": 4,
+   "number": "49",
+   "type": "eq"
+  },
+  "eq-lna-shunt-fb-zin": {
+   "chapter": 4,
+   "number": "47",
+   "type": "eq"
+  },
+  "eq-mixer-double-output": {
+   "chapter": 5,
+   "number": "52",
+   "type": "eq"
+  },
+  "eq-mixer-single-output": {
+   "chapter": 5,
+   "number": "51",
+   "type": "eq"
+  },
+  "eq-mixer-square-output": {
+   "chapter": 5,
+   "number": "50",
+   "type": "eq"
+  },
+  "eq-modulation": {
+   "chapter": 3,
+   "number": "27",
+   "type": "eq"
+  },
+  "eq-mu-stability-factor": {
+   "chapter": 4,
+   "number": "36",
+   "type": "eq"
+  },
+  "eq-noise-figure": {
+   "chapter": 2,
+   "number": "21",
+   "type": "eq"
+  },
+  "eq-noise-power-matched": {
+   "chapter": 2,
+   "number": "19",
+   "type": "eq"
+  },
+  "eq-nonlinear-model": {
+   "chapter": 2,
+   "number": "6",
+   "type": "eq"
+  },
+  "eq-npath-impedance": {
+   "chapter": 5,
+   "number": "53",
+   "type": "eq"
+  },
+  "eq-p1db-amplitude": {
+   "chapter": 2,
+   "number": "9",
+   "type": "eq"
+  },
+  "eq-pd-pll-damping-factor": {
+   "chapter": 7,
+   "number": "64",
+   "type": "eq"
+  },
+  "eq-pd-pll-natural-frequency": {
+   "chapter": 7,
+   "number": "63",
+   "type": "eq"
+  },
+  "eq-pll-transfer-function": {
+   "chapter": 7,
+   "number": "62",
+   "type": "eq"
+  },
+  "eq-reciprocal-mixing-noise": {
+   "chapter": 6,
+   "number": "59",
+   "type": "eq"
+  },
+  "eq-rect-pulse-spectrum": {
+   "chapter": 2,
+   "number": "26",
+   "type": "eq"
+  },
+  "eq-reflection-coefficient": {
+   "chapter": 4,
+   "number": "31",
+   "type": "eq"
+  },
+  "eq-return-loss": {
+   "chapter": 4,
+   "number": "32",
+   "type": "eq"
+  },
+  "eq-rollet-stability-factor": {
+   "chapter": 4,
+   "number": "34",
+   "type": "eq"
+  },
+  "eq-rollet-stability-factor-delta": {
+   "chapter": 4,
+   "number": "35",
+   "type": "eq"
+  },
+  "eq-sensitivity": {
+   "chapter": 2,
+   "number": "23",
+   "type": "eq"
+  },
+  "eq-sensitivity-dbm": {
+   "chapter": 2,
+   "number": "24",
+   "type": "eq"
+  },
+  "eq-shannon-hartley": {
+   "chapter": 2,
+   "number": "5",
+   "type": "eq"
+  },
+  "eq-thermal-noise-impedance": {
+   "chapter": 2,
+   "number": "20",
+   "type": "eq"
+  },
+  "fig-16qam-constellation": {
+   "chapter": 2,
+   "number": "14",
+   "type": "fig"
+  },
+  "fig-1db-compression-point": {
+   "chapter": 2,
+   "number": "6",
+   "type": "fig"
+  },
+  "fig-adpll-block-diagram": {
+   "chapter": 7,
+   "number": "85",
+   "type": "fig"
+  },
+  "fig-branch-line-coupler": {
+   "chapter": 5,
+   "number": "57",
+   "type": "fig"
+  },
+  "fig-cmos-double-mixer": {
+   "chapter": 5,
+   "number": "46",
+   "type": "fig"
+  },
+  "fig-cmos-single-mixer": {
+   "chapter": 5,
+   "number": "45",
+   "type": "fig"
+  },
+  "fig-cp-implementation": {
+   "chapter": 7,
+   "number": "82",
+   "type": "fig"
+  },
+  "fig-cross-coupled-pair": {
+   "chapter": 6,
+   "number": "68",
+   "type": "fig"
+  },
+  "fig-crystal-equivalent-circuit": {
+   "chapter": 6,
+   "number": "66",
+   "type": "fig"
+  },
+  "fig-crystal-oscillator": {
+   "chapter": 6,
+   "number": "67",
+   "type": "fig"
+  },
+  "fig-dco-switched-varactor": {
+   "chapter": 7,
+   "number": "88",
+   "type": "fig"
+  },
+  "fig-diode-mixer": {
+   "chapter": 5,
+   "number": "43",
+   "type": "fig"
+  },
+  "fig-ff-phase-diagram": {
+   "chapter": 5,
+   "number": "54",
+   "type": "fig"
+  },
+  "fig-filtering-rx": {
+   "chapter": 3,
+   "number": "22",
+   "type": "fig"
+  },
+  "fig-free-space-path-loss": {
+   "chapter": 1,
+   "number": "2",
+   "type": "fig"
+  },
+  "fig-gain-nonlinear-compression-expansion": {
+   "chapter": 2,
+   "number": "7",
+   "type": "fig"
+  },
+  "fig-gaussian-pulse": {
+   "chapter": 2,
+   "number": "17",
+   "type": "fig"
+  },
+  "fig-gilbert-mixer": {
+   "chapter": 5,
+   "number": "48",
+   "type": "fig"
+  },
+  "fig-harmonics": {
+   "chapter": 2,
+   "number": "5",
+   "type": "fig"
+  },
+  "fig-iip3-cascade": {
+   "chapter": 2,
+   "number": "10",
+   "type": "fig"
+  },
+  "fig-im3-power-sweep": {
+   "chapter": 2,
+   "number": "9",
+   "type": "fig"
+  },
+  "fig-im3-tones": {
+   "chapter": 2,
+   "number": "8",
+   "type": "fig"
+  },
+  "fig-iq-divider": {
+   "chapter": 5,
+   "number": "53",
+   "type": "fig"
+  },
+  "fig-lc-oscillator": {
+   "chapter": 6,
+   "number": "61",
+   "type": "fig"
+  },
+  "fig-lc-oscillator-noise-model": {
+   "chapter": 6,
+   "number": "62",
+   "type": "fig"
+  },
+  "fig-lna-block": {
+   "chapter": 4,
+   "number": "31",
+   "type": "fig"
+  },
+  "fig-lna-cg": {
+   "chapter": 4,
+   "number": "36",
+   "type": "fig"
+  },
+  "fig-lna-inductive-degeneration": {
+   "chapter": 4,
+   "number": "37",
+   "type": "fig"
+  },
+  "fig-lna-inductive-degeneration-detailed": {
+   "chapter": 4,
+   "number": "39",
+   "type": "fig"
+  },
+  "fig-lna-inductive-degeneration-zin": {
+   "chapter": 4,
+   "number": "38",
+   "type": "fig"
+  },
+  "fig-lna-naive": {
+   "chapter": 4,
+   "number": "33",
+   "type": "fig"
+  },
+  "fig-lna-naive-noise": {
+   "chapter": 4,
+   "number": "34",
+   "type": "fig"
+  },
+  "fig-lna-naive-noise-input": {
+   "chapter": 4,
+   "number": "35",
+   "type": "fig"
+  },
+  "fig-lna-shunt-fb": {
+   "chapter": 4,
+   "number": "40",
+   "type": "fig"
+  },
+  "fig-logen-25": {
+   "chapter": 5,
+   "number": "55",
+   "type": "fig"
+  },
+  "fig-logen-25-waveforms": {
+   "chapter": 5,
+   "number": "56",
+   "type": "fig"
+  },
+  "fig-logen-dll": {
+   "chapter": 5,
+   "number": "58",
+   "type": "fig"
+  },
+  "fig-mash-dither": {
+   "chapter": 7,
+   "number": "93",
+   "type": "fig"
+  },
+  "fig-mash-nodither": {
+   "chapter": 7,
+   "number": "92",
+   "type": "fig"
+  },
+  "fig-mash-third-order": {
+   "chapter": 7,
+   "number": "94",
+   "type": "fig"
+  },
+  "fig-mixer-block": {
+   "chapter": 5,
+   "number": "41",
+   "type": "fig"
+  },
+  "fig-mixer-square": {
+   "chapter": 5,
+   "number": "42",
+   "type": "fig"
+  },
+  "fig-neg-r-single-ended": {
+   "chapter": 6,
+   "number": "65",
+   "type": "fig"
+  },
+  "fig-noise-block": {
+   "chapter": 2,
+   "number": "12",
+   "type": "fig"
+  },
+  "fig-noise-cascade": {
+   "chapter": 2,
+   "number": "13",
+   "type": "fig"
+  },
+  "fig-noise-matched-system": {
+   "chapter": 2,
+   "number": "11",
+   "type": "fig"
+  },
+  "fig-npath-filter": {
+   "chapter": 5,
+   "number": "49",
+   "type": "fig"
+  },
+  "fig-ofdm-transceiver": {
+   "chapter": 2,
+   "number": "18",
+   "type": "fig"
+  },
+  "fig-oscillator-lc-cmos": {
+   "chapter": 6,
+   "number": "71",
+   "type": "fig"
+  },
+  "fig-oscillator-lc-nmos": {
+   "chapter": 6,
+   "number": "69",
+   "type": "fig"
+  },
+  "fig-oscillator-lc-pmos": {
+   "chapter": 6,
+   "number": "70",
+   "type": "fig"
+  },
+  "fig-oscillator-model": {
+   "chapter": 6,
+   "number": "73",
+   "type": "fig"
+  },
+  "fig-oscillator-symbol": {
+   "chapter": 6,
+   "number": "59",
+   "type": "fig"
+  },
+  "fig-pd-xor-diagram": {
+   "chapter": 7,
+   "number": "75",
+   "type": "fig"
+  },
+  "fig-pfd-diagram1": {
+   "chapter": 7,
+   "number": "78",
+   "type": "fig"
+  },
+  "fig-pfd-diagram2": {
+   "chapter": 7,
+   "number": "79",
+   "type": "fig"
+  },
+  "fig-pfd-diagram3": {
+   "chapter": 7,
+   "number": "80",
+   "type": "fig"
+  },
+  "fig-pfd-diagram4": {
+   "chapter": 7,
+   "number": "81",
+   "type": "fig"
+  },
+  "fig-pfd-implementation": {
+   "chapter": 7,
+   "number": "77",
+   "type": "fig"
+  },
+  "fig-phase-noise-spectrum": {
+   "chapter": 6,
+   "number": "63",
+   "type": "fig"
+  },
+  "fig-pll-block-diagram": {
+   "chapter": 7,
+   "number": "74",
+   "type": "fig"
+  },
+  "fig-pll-block-diagram-s-domain": {
+   "chapter": 7,
+   "number": "76",
+   "type": "fig"
+  },
+  "fig-pll-cp-offset": {
+   "chapter": 7,
+   "number": "96",
+   "type": "fig"
+  },
+  "fig-pll-dco-dac": {
+   "chapter": 7,
+   "number": "87",
+   "type": "fig"
+  },
+  "fig-pll-dsm-digital-first-order": {
+   "chapter": 7,
+   "number": "90",
+   "type": "fig"
+  },
+  "fig-pll-dsm-first-order": {
+   "chapter": 7,
+   "number": "89",
+   "type": "fig"
+  },
+  "fig-pll-dsm-ntf-plot": {
+   "chapter": 7,
+   "number": "91",
+   "type": "fig"
+  },
+  "fig-pll-frac-n-block": {
+   "chapter": 7,
+   "number": "95",
+   "type": "fig"
+  },
+  "fig-pll-frac-n-block-retiming": {
+   "chapter": 7,
+   "number": "98",
+   "type": "fig"
+  },
+  "fig-pll-pfd-cp": {
+   "chapter": 7,
+   "number": "83",
+   "type": "fig"
+  },
+  "fig-pll-phase-noise": {
+   "chapter": 7,
+   "number": "84",
+   "type": "fig"
+  },
+  "fig-pll-tdc": {
+   "chapter": 7,
+   "number": "86",
+   "type": "fig"
+  },
+  "fig-polyphase-filter": {
+   "chapter": 5,
+   "number": "52",
+   "type": "fig"
+  },
+  "fig-poweramp-basic": {
+   "chapter": 8,
+   "number": "99",
+   "type": "fig"
+  },
+  "fig-poweramp-differential": {
+   "chapter": 8,
+   "number": "101",
+   "type": "fig"
+  },
+  "fig-poweramp-differential-neutralization": {
+   "chapter": 8,
+   "number": "104",
+   "type": "fig"
+  },
+  "fig-poweramp-miller": {
+   "chapter": 8,
+   "number": "102",
+   "type": "fig"
+  },
+  "fig-poweramp-neutralization": {
+   "chapter": 8,
+   "number": "103",
+   "type": "fig"
+  },
+  "fig-poweramp-twostage": {
+   "chapter": 8,
+   "number": "100",
+   "type": "fig"
+  },
+  "fig-raised-cosine-pulse": {
+   "chapter": 2,
+   "number": "16",
+   "type": "fig"
+  },
+  "fig-rc-cr-phase-shift": {
+   "chapter": 5,
+   "number": "51",
+   "type": "fig"
+  },
+  "fig-reciprocal-mixing": {
+   "chapter": 6,
+   "number": "64",
+   "type": "fig"
+  },
+  "fig-rect-pulse-spectrum": {
+   "chapter": 2,
+   "number": "15",
+   "type": "fig"
+  },
+  "fig-ref-doubler": {
+   "chapter": 7,
+   "number": "97",
+   "type": "fig"
+  },
+  "fig-rf-design-considerations": {
+   "chapter": 1,
+   "number": "4",
+   "type": "fig"
+  },
+  "fig-rf-design-multidisciplinary": {
+   "chapter": 1,
+   "number": "3",
+   "type": "fig"
+  },
+  "fig-ring-oscillator": {
+   "chapter": 6,
+   "number": "60",
+   "type": "fig"
+  },
+  "fig-rx-demodulation": {
+   "chapter": 3,
+   "number": "21",
+   "type": "fig"
+  },
+  "fig-rx-mixer-simplified": {
+   "chapter": 5,
+   "number": "47",
+   "type": "fig"
+  },
+  "fig-simple-wireless-system": {
+   "chapter": 1,
+   "number": "1",
+   "type": "fig"
+  },
+  "fig-smith-chart": {
+   "chapter": 4,
+   "number": "32",
+   "type": "fig"
+  },
+  "fig-switch-mixer": {
+   "chapter": 5,
+   "number": "44",
+   "type": "fig"
+  },
+  "fig-switched-capacitor": {
+   "chapter": 6,
+   "number": "72",
+   "type": "fig"
+  },
+  "fig-tank-bandpass": {
+   "chapter": 5,
+   "number": "50",
+   "type": "fig"
+  },
+  "fig-trx-block": {
+   "chapter": 3,
+   "number": "19",
+   "type": "fig"
+  },
+  "fig-trx-coupling": {
+   "chapter": 9,
+   "number": "105",
+   "type": "fig"
+  },
+  "fig-trx-fd-circulator": {
+   "chapter": 3,
+   "number": "26",
+   "type": "fig"
+  },
+  "fig-trx-fd-dualantenna": {
+   "chapter": 3,
+   "number": "25",
+   "type": "fig"
+  },
+  "fig-trx-fdd": {
+   "chapter": 3,
+   "number": "23",
+   "type": "fig"
+  },
+  "fig-trx-iq-constellation": {
+   "chapter": 3,
+   "number": "30",
+   "type": "fig"
+  },
+  "fig-trx-lowif": {
+   "chapter": 3,
+   "number": "28",
+   "type": "fig"
+  },
+  "fig-trx-superheterodyne": {
+   "chapter": 3,
+   "number": "27",
+   "type": "fig"
+  },
+  "fig-trx-supersimple": {
+   "chapter": 3,
+   "number": "29",
+   "type": "fig"
+  },
+  "fig-trx-tdd": {
+   "chapter": 3,
+   "number": "24",
+   "type": "fig"
+  },
+  "fig-tx-modulation": {
+   "chapter": 3,
+   "number": "20",
+   "type": "fig"
+  },
+  "nte-channel-limit": {
+   "chapter": 2,
+   "number": "3",
+   "type": "nte"
+  },
+  "nte-iip3-cascade": {
+   "chapter": 2,
+   "number": "4",
+   "type": "nte"
+  },
+  "nte-lte-ofdm": {
+   "chapter": 2,
+   "number": "6",
+   "type": "nte"
+  },
+  "nte-phnoise_division": {
+   "chapter": 6,
+   "number": "7",
+   "type": "nte"
+  },
+  "nte-reciprocal-mixing": {
+   "chapter": 6,
+   "number": "8",
+   "type": "nte"
+  },
+  "nte-wavelength-calculation": {
+   "chapter": 1,
+   "number": "1",
+   "type": "nte"
+  },
+  "nte-wifi-sensitivity": {
+   "chapter": 2,
+   "number": "5",
+   "type": "nte"
+  },
+  "nte-wireless-attenuation": {
+   "chapter": 1,
+   "number": "2",
+   "type": "nte"
+  },
+  "sec-amp-stability": {
+   "chapter": 4,
+   "number": "4.2",
+   "type": "sec"
+  },
+  "sec-channel-capacity": {
+   "chapter": 2,
+   "number": "2.1",
+   "type": "sec"
+  },
+  "sec-differential-oscillators": {
+   "chapter": 6,
+   "number": "6.5",
+   "type": "sec"
+  },
+  "sec-exam-calculations": {
+   "chapter": 10,
+   "number": "10.11",
+   "type": "sec"
+  },
+  "sec-exam-intro": {
+   "chapter": 10,
+   "number": "10.1",
+   "type": "sec"
+  },
+  "sec-exam-linearity": {
+   "chapter": 10,
+   "number": "10.2",
+   "type": "sec"
+  },
+  "sec-exam-lna": {
+   "chapter": 10,
+   "number": "10.6",
+   "type": "sec"
+  },
+  "sec-exam-mixer": {
+   "chapter": 10,
+   "number": "10.7",
+   "type": "sec"
+  },
+  "sec-exam-modulation": {
+   "chapter": 10,
+   "number": "10.4",
+   "type": "sec"
+  },
+  "sec-exam-noise": {
+   "chapter": 10,
+   "number": "10.3",
+   "type": "sec"
+  },
+  "sec-exam-oscillator": {
+   "chapter": 10,
+   "number": "10.8",
+   "type": "sec"
+  },
+  "sec-exam-pll": {
+   "chapter": 10,
+   "number": "10.9",
+   "type": "sec"
+  },
+  "sec-exam-poweramp": {
+   "chapter": 10,
+   "number": "10.10",
+   "type": "sec"
+  },
+  "sec-exam-questions": {
+   "chapter": 10,
+   "number": "10",
+   "type": "sec"
+  },
+  "sec-exam-trx": {
+   "chapter": 10,
+   "number": "10.5",
+   "type": "sec"
+  },
+  "sec-frequency-tuning-of-oscillators": {
+   "chapter": 6,
+   "number": "6.6",
+   "type": "sec"
+  },
+  "sec-fundamentals": {
+   "chapter": 2,
+   "number": "2",
+   "type": "sec"
+  },
+  "sec-fundamentals-mcs": {
+   "chapter": 2,
+   "number": "2.8",
+   "type": "sec"
+  },
+  "sec-fundamentals-modulation": {
+   "chapter": 2,
+   "number": "2.4",
+   "type": "sec"
+  },
+  "sec-fundamentals-multiple-access": {
+   "chapter": 2,
+   "number": "2.7",
+   "type": "sec"
+  },
+  "sec-fundamentals-ofdm": {
+   "chapter": 2,
+   "number": "2.6",
+   "type": "sec"
+  },
+  "sec-fundamentals-pulse-shaping": {
+   "chapter": 2,
+   "number": "2.5",
+   "type": "sec"
+  },
+  "sec-impedance-matching": {
+   "chapter": 4,
+   "number": "4.1",
+   "type": "sec"
+  },
+  "sec-intro": {
+   "chapter": 1,
+   "number": "1",
+   "type": "sec"
+  },
+  "sec-intro-standards": {
+   "chapter": 1,
+   "number": "1.2",
+   "type": "sec"
+  },
+  "sec-intro-wireless": {
+   "chapter": 1,
+   "number": "1.1",
+   "type": "sec"
+  },
+  "sec-linearity": {
+   "chapter": 2,
+   "number": "2.2",
+   "type": "sec"
+  },
+  "sec-linearity-single": {
+   "chapter": 2,
+   "number": "2.2.1",
+   "type": "sec"
+  },
+  "sec-lna": {
+   "chapter": 4,
+   "number": "4",
+   "type": "sec"
+  },
+  "sec-lna-common-gate": {
+   "chapter": 4,
+   "number": "4.4",
+   "type": "sec"
+  },
+  "sec-lna-feedback": {
+   "chapter": 4,
+   "number": "4.6",
+   "type": "sec"
+  },
+  "sec-lna-inductive-degeneration": {
+   "chapter": 4,
+   "number": "4.5",
+   "type": "sec"
+  },
+  "sec-lna-resistive-matching": {
+   "chapter": 4,
+   "number": "4.3",
+   "type": "sec"
+  },
+  "sec-lo-delay": {
+   "chapter": 5,
+   "number": "5.5.4",
+   "type": "sec"
+  },
+  "sec-lo-ff": {
+   "chapter": 5,
+   "number": "5.5.3",
+   "type": "sec"
+  },
+  "sec-lo-polyphase": {
+   "chapter": 5,
+   "number": "5.5.2",
+   "type": "sec"
+  },
+  "sec-lo-rc": {
+   "chapter": 5,
+   "number": "5.5.1",
+   "type": "sec"
+  },
+  "sec-mixer": {
+   "chapter": 5,
+   "number": "5",
+   "type": "sec"
+  },
+  "sec-mixer-gilbert": {
+   "chapter": 5,
+   "number": "5.3",
+   "type": "sec"
+  },
+  "sec-mixer-lo": {
+   "chapter": 5,
+   "number": "5.5",
+   "type": "sec"
+  },
+  "sec-mixer-nonlinear": {
+   "chapter": 5,
+   "number": "5.1",
+   "type": "sec"
+  },
+  "sec-mixer-npath": {
+   "chapter": 5,
+   "number": "5.4",
+   "type": "sec"
+  },
+  "sec-mixer-time-variant": {
+   "chapter": 5,
+   "number": "5.2",
+   "type": "sec"
+  },
+  "sec-noise": {
+   "chapter": 2,
+   "number": "2.3",
+   "type": "sec"
+  },
+  "sec-noise-figure": {
+   "chapter": 2,
+   "number": "2.3.3",
+   "type": "sec"
+  },
+  "sec-noise-types": {
+   "chapter": 2,
+   "number": "2.3.1",
+   "type": "sec"
+  },
+  "sec-oscillator": {
+   "chapter": 6,
+   "number": "6",
+   "type": "sec"
+  },
+  "sec-oscillator-jitter": {
+   "chapter": 6,
+   "number": "6.2",
+   "type": "sec"
+  },
+  "sec-oscillator-modeling": {
+   "chapter": 6,
+   "number": "6.7",
+   "type": "sec"
+  },
+  "sec-oscillator-noise": {
+   "chapter": 6,
+   "number": "6.1",
+   "type": "sec"
+  },
+  "sec-oscillator-reciprocal-mixing": {
+   "chapter": 6,
+   "number": "6.3",
+   "type": "sec"
+  },
+  "sec-pll": {
+   "chapter": 7,
+   "number": "7",
+   "type": "sec"
+  },
+  "sec-pll-all-digital": {
+   "chapter": 7,
+   "number": "7.3",
+   "type": "sec"
+  },
+  "sec-pll-basic-architecture": {
+   "chapter": 7,
+   "number": "7.1",
+   "type": "sec"
+  },
+  "sec-pll-charge-pump": {
+   "chapter": 7,
+   "number": "7.2",
+   "type": "sec"
+  },
+  "sec-pll-dco": {
+   "chapter": 7,
+   "number": "7.3.2",
+   "type": "sec"
+  },
+  "sec-pll-delta-sigma": {
+   "chapter": 7,
+   "number": "7.4.1",
+   "type": "sec"
+  },
+  "sec-pll-frac-n": {
+   "chapter": 7,
+   "number": "7.4",
+   "type": "sec"
+  },
+  "sec-pll-frac-n-implementation": {
+   "chapter": 7,
+   "number": "7.4.2",
+   "type": "sec"
+  },
+  "sec-pll-tdc": {
+   "chapter": 7,
+   "number": "7.3.1",
+   "type": "sec"
+  },
+  "sec-poweramp": {
+   "chapter": 8,
+   "number": "8",
+   "type": "sec"
+  },
+  "sec-poweramp-advanced": {
+   "chapter": 8,
+   "number": "8.5",
+   "type": "sec"
+  },
+  "sec-poweramp-classes": {
+   "chapter": 8,
+   "number": "8.3",
+   "type": "sec"
+  },
+  "sec-poweramp-efficiency": {
+   "chapter": 8,
+   "number": "8.1",
+   "type": "sec"
+  },
+  "sec-poweramp-nonlinearity": {
+   "chapter": 8,
+   "number": "8.2",
+   "type": "sec"
+  },
+  "sec-poweramp-stability": {
+   "chapter": 8,
+   "number": "8.4",
+   "type": "sec"
+  },
+  "sec-sensitivity": {
+   "chapter": 2,
+   "number": "2.3.4",
+   "type": "sec"
+  },
+  "sec-single-ended-oscillators": {
+   "chapter": 6,
+   "number": "6.4",
+   "type": "sec"
+  },
+  "sec-spurs": {
+   "chapter": 9,
+   "number": "9",
+   "type": "sec"
+  },
+  "sec-spurs-mechanisms": {
+   "chapter": 9,
+   "number": "9.1",
+   "type": "sec"
+  },
+  "sec-spurs-mitigation": {
+   "chapter": 9,
+   "number": "9.3",
+   "type": "sec"
+  },
+  "sec-spurs-pll": {
+   "chapter": 9,
+   "number": "9.2",
+   "type": "sec"
+  },
+  "sec-trx": {
+   "chapter": 3,
+   "number": "3",
+   "type": "sec"
+  },
+  "sec-trx-direct-conversion": {
+   "chapter": 3,
+   "number": "3.1",
+   "type": "sec"
+  },
+  "sec-trx-duplexing": {
+   "chapter": 3,
+   "number": "3.5",
+   "type": "sec"
+  },
+  "sec-trx-mod-demod": {
+   "chapter": 3,
+   "number": "3.2",
+   "type": "sec"
+  },
+  "tbl-duplexing-standards": {
+   "chapter": 3,
+   "number": "4",
+   "type": "tbl"
+  },
+  "tbl-modulation-snr": {
+   "chapter": 2,
+   "number": "3",
+   "type": "tbl"
+  },
+  "tbl-pll-dsm-orders": {
+   "chapter": 7,
+   "number": "6",
+   "type": "tbl"
+  },
+  "tbl-poweramp-classes": {
+   "chapter": 8,
+   "number": "7",
+   "type": "tbl"
+  },
+  "tbl-rf-applications": {
+   "chapter": 1,
+   "number": "1",
+   "type": "tbl"
+  },
+  "tbl-three-point-oscillators": {
+   "chapter": 6,
+   "number": "5",
+   "type": "tbl"
+  },
+  "tbl-wireless-standards": {
+   "chapter": 1,
+   "number": "2",
+   "type": "tbl"
+  }
+ },
+ "prefix": {
+  "eq": "Equation",
+  "fig": "Figure",
+  "nte": "Note",
+  "sec": "Section",
+  "tbl": "Table"
+ }
+}
