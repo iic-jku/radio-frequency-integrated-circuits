@@ -54,7 +54,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-a975c94262742d03914c7a56aca0ba09.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-03e017e5ca202a610282a31b74f9273c.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -230,12 +230,25 @@ C = B \cdot \log_2(1 + \text{SNR}) = 2\,\text{MHz} \cdot \log_2(1 + 5) = 2\,\tex
 \]</span></p>
 </div>
 <div class="fragment">
+<p>Reasonable: the Bluetooth LE user data rate of 1 Mbps leaves room for coding and protocol overhead.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside class="notes">
 <p>This sounds reasonable, as the user data rate for Bluetooth LE is 1 Mbps for the given SNR, which allows for considerable overhead for coding and protocols.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
 <section id="sec-linearity" class="title-slide slide level2 center" data-number="2.2">
@@ -254,13 +267,14 @@ C = B \cdot \log_2(1 + \text{SNR}) = 2\,\text{MHz} \cdot \log_2(1 + 5) = 2\,\tex
 </div>
 <div class="callout-content">
 <p>We use a <strong>memoryless</strong> (also called “instantaneous”) nonlinear model to simplify the mathematics. A memoryless nonlinear system has the property that the output at time <span class="math inline">\(t\)</span> only depends on the input at time <span class="math inline">\(t\)</span>.</p>
-<p>In contrast, a system <strong>with memory</strong> will have an output at time <span class="math inline">\(t\)</span> which depends on the input at time <span class="math inline">\(t\)</span> and also on past inputs (e.g., at times <span class="math inline">\(t - \Delta T, t - 2 \Delta T, \ldots, t - N \Delta T\)</span>). Such a system can additionally be <strong>time-variant</strong>, which means its behavior changes over time, which leads to quite a few very interesting and important phenomena! Examples of systems with memory are filters, which have a frequency-dependent response, or power amplifiers with thermal memory effects.</p>
+<p>A system <strong>with memory</strong> also depends on past inputs (e.g., filters, PAs with thermal memory), and can additionally be <strong>time-variant</strong>.</p>
 </div>
 </div>
 </div>
 <aside class="notes">
 <p>As we have already seen in <a href="../rfic.html#sec-intro-wireless">Section&nbsp;1.1</a>, the transmitter has to process large signals without distorting them, while the receiver has to process small signals in the presence of large signals. Both situations mean we need metrics and models to quantify and discuss linearity properties.</p>
 <p>We are going to use a very simple, time-invariant model to study linearity, based on a Taylor polynomial.</p>
+<p>In contrast, a system <strong>with memory</strong> will have an output at time <span class="math inline">\(t\)</span> which depends on the input at time <span class="math inline">\(t\)</span> and also on past inputs (e.g., at times <span class="math inline">\(t - \Delta T, t - 2 \Delta T, \ldots, t - N \Delta T\)</span>). Such a system can additionally be <strong>time-variant</strong>, which means its behavior changes over time, which leads to quite a few very interesting and important phenomena! Examples of systems with memory are filters, which have a frequency-dependent response, or power amplifiers with thermal memory effects.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -343,7 +357,7 @@ x(t) = A_0 \cos(\omega_0 t)
           display:block!important;
       }</style></aside>
 </section>
-<section class="slide level3 unnumbered">
+<section class="slide level3 unnumbered scrollable">
 <h3>Single-Tone Linearity</h3>
 <p><span id="eq-linearity-single-gain-fundamental"><span class="math display">\[
 \begin{equation}
@@ -352,6 +366,16 @@ x(t) = A_0 \cos(\omega_0 t)
 \tag{8}\]</span></span></p>
 <aside class="notes">
 <p>Looking at <a href="#/eq-linearity-single" class="quarto-xref">Equation&nbsp;7</a> and <a href="#/eq-linearity-single-gain-fundamental" class="quarto-xref">Equation&nbsp;8</a>, we can make a few interesting observations:</p>
+<ul>
+<li>Even-order nonlinearities (due to <span class="math inline">\(\alpha_2\)</span> and <span class="math inline">\(\alpha_4\)</span>) create low-frequency components; they effectively add frequency components stemming from the envelope <span class="math inline">\(A_0\)</span>. If <span class="math inline">\(A_0\)</span> is a constant then this results in a dc term; if <span class="math inline">\(A_0(t)\)</span> is time-variant, it will create a squared and quadrupled version of it at low frequencies.</li>
+<li>The <span class="math inline">\(\alpha_1\)</span>-term is the gain of the circuit block.</li>
+<li>Odd-order nonlinearities (<span class="math inline">\(\alpha_3\)</span> and <span class="math inline">\(\alpha_5\)</span>) can impact the gain of the fundamental term passing through the block. Often <span class="math inline">\(\alpha_3\)</span> and <span class="math inline">\(\alpha_5\)</span> have the same sign, which is opposite to the sign of <span class="math inline">\(\alpha_1\)</span>. This implies that the gain stays linear for small input powers. For larger input signals, the terms with <span class="math inline">\(\alpha_3\)</span> and <span class="math inline">\(\alpha_5\)</span> start to dominate, leading to gain compression or saturation effects, until the circuit block reaches a level of maximum output power. In some cases, <span class="math inline">\(\alpha_3\)</span> has the same sign as <span class="math inline">\(\alpha_1\)</span> but <span class="math inline">\(\alpha_5\)</span> has the opposite one, which leads to gain expansion: The gain would first demonstrate an overshoot at some input power level, until the term with <span class="math inline">\(\alpha_5\)</span> becomes dominant and the gain is compressed again.</li>
+<li>Even- and odd-order nonlinearities create additional frequency components, so-called harmonics of the fundamental frequency. These harmonics are often unwanted, as they are far outside the wanted transmission frequency range, and need to be minimized, by either
+<ol type="1">
+<li>using a lowpass to filter these harmonics, or</li>
+<li>increasing the linearity, i.e., making the <span class="math inline">\(\alpha_2\)</span>, <span class="math inline">\(\alpha_3\)</span>, etc., small enough.</li>
+</ol></li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -364,31 +388,14 @@ x(t) = A_0 \cos(\omega_0 t)
           display:block!important;
       }</style></aside>
 </section>
-<section class="slide level3 unnumbered scrollable">
+<section class="slide level3 unnumbered">
 <h3>Single-Tone Linearity</h3>
 <ul>
-<li>Even-order nonlinearities (due to <span class="math inline">\(\alpha_2\)</span> and <span class="math inline">\(\alpha_4\)</span>) create low-frequency components; they effectively add frequency components stemming from the envelope <span class="math inline">\(A_0\)</span>. If <span class="math inline">\(A_0\)</span> is a constant then this results in a dc term; if <span class="math inline">\(A_0(t)\)</span> is time-variant, it will create a squared and quadrupled version of it at low frequencies.</li>
-<li>The <span class="math inline">\(\alpha_1\)</span>-term is the gain of the circuit block.</li>
-<li>Odd-order nonlinearities (<span class="math inline">\(\alpha_3\)</span> and <span class="math inline">\(\alpha_5\)</span>) can impact the gain of the fundamental term passing through the block. Often <span class="math inline">\(\alpha_3\)</span> and <span class="math inline">\(\alpha_5\)</span> have the same sign, which is opposite to the sign of <span class="math inline">\(\alpha_1\)</span>. This implies that the gain stays linear for small input powers. For larger input signals, the terms with <span class="math inline">\(\alpha_3\)</span> and <span class="math inline">\(\alpha_5\)</span> start to dominate, leading to gain compression or saturation effects, until the circuit block reaches a level of maximum output power. In some cases, <span class="math inline">\(\alpha_3\)</span> has the same sign as <span class="math inline">\(\alpha_1\)</span> but <span class="math inline">\(\alpha_5\)</span> has the opposite one, which leads to gain expansion: The gain would first demonstrate an overshoot at some input power level, until the term with <span class="math inline">\(\alpha_5\)</span> becomes dominant and the gain is compressed again.</li>
-<li>Even- and odd-order nonlinearities create additional frequency components, so-called harmonics of the fundamental frequency. These harmonics are often unwanted, as they are far outside the wanted transmission frequency range, and need to be minimized, by either
-<ol type="1">
-<li>using a lowpass to filter these harmonics, or</li>
-<li>increasing the linearity, i.e., making the <span class="math inline">\(\alpha_2\)</span>, <span class="math inline">\(\alpha_3\)</span>, etc., small enough.</li>
-</ol></li>
+<li>Even order (<span class="math inline">\(\alpha_2\)</span>, <span class="math inline">\(\alpha_4\)</span>): dc and low-frequency terms from the envelope <span class="math inline">\(A_0\)</span></li>
+<li><span class="math inline">\(\alpha_1\)</span>: gain of the block</li>
+<li>Odd order (<span class="math inline">\(\alpha_3\)</span>, <span class="math inline">\(\alpha_5\)</span>): change the gain of the fundamental, leading to <strong>compression</strong> (or <strong>expansion</strong>)</li>
+<li>Both create <strong>harmonics</strong>: filter them (lowpass) or increase linearity</li>
 </ul>
-<aside class="notes">
-<p>The created harmonics are illustrated in <a href="#/fig-harmonics" class="quarto-xref">Figure&nbsp;5</a>. Note that measuring harmonics to quantify the nonlinearity metrics like <span class="math inline">\(\alpha_2\)</span> and <span class="math inline">\(\alpha_3\)</span> is often not very accurate, as these harmonics are often filtered in bandwidth-limited systems.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section class="slide level3 unnumbered">
 <h3>Single-Tone Linearity</h3>
@@ -406,6 +413,19 @@ Figure&nbsp;5: Single-tone test showing created harmonics at <span class="math i
 </div>
 </div>
 </div>
+<aside class="notes">
+<p>The created harmonics are illustrated in <a href="#/fig-harmonics" class="quarto-xref">Figure&nbsp;5</a>. Note that measuring harmonics to quantify the nonlinearity metrics like <span class="math inline">\(\alpha_2\)</span> and <span class="math inline">\(\alpha_3\)</span> is often not very accurate, as these harmonics are often filtered in bandwidth-limited systems.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level3 unnumbered">
 <h3>Single-Tone Linearity</h3>
@@ -575,6 +595,11 @@ y(t) = y'(t) + y''(t) + y'''(t)
 <aside class="notes">
 <p>First, we start with the fundamental tones:</p>
 <p>As shown in <a href="#/eq-linearity-double-a" class="quarto-xref">Equation&nbsp;11</a>, interesting things happen:</p>
+<ul>
+<li>We (again) have the gain compression/expansion effect as already discussed in <a href="#/sec-linearity-single" class="quarto-xref">Section&nbsp;2.2.1</a>.</li>
+<li>In addition, we have <strong>cross-modulation</strong>, i.e., the squared envelope of one tone (e.g., <span class="math inline">\(A_2(t)\)</span> of the tone at <span class="math inline">\(\omega_2\)</span>) impacts the envelope of the other tone at <span class="math inline">\(\omega_1\)</span>. This can lead to unwanted signal distortion, even if there is a large frequency separation between <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>!</li>
+<li>Further, since the sign of <span class="math inline">\(\alpha_3\)</span> is usually opposite to <span class="math inline">\(\alpha_1\)</span>, this can also lead to <strong>desensitization</strong> (“desens”). If, for example, <span class="math inline">\(A_2 \gg A_1\)</span>, then there would be no compression due to the tone <span class="math inline">\(\omega_1\)</span> itself, however, the large tone at <span class="math inline">\(\omega_2\)</span> will lead to gain compression of the tone at <span class="math inline">\(\omega_1\)</span>; this effect is called desens.</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -590,23 +615,10 @@ y(t) = y'(t) + y''(t) + y'''(t)
 <section class="slide level3 unnumbered">
 <h3>Multi-Tone Linearity</h3>
 <ul>
-<li>We (again) have the gain compression/expansion effect as already discussed in <a href="#/sec-linearity-single" class="quarto-xref">Section&nbsp;2.2.1</a>.</li>
-<li>In addition, we have <strong>cross-modulation</strong>, i.e., the squared envelope of one tone (e.g., <span class="math inline">\(A_2(t)\)</span> of the tone at <span class="math inline">\(\omega_2\)</span>) impacts the envelope of the other tone at <span class="math inline">\(\omega_1\)</span>. This can lead to unwanted signal distortion, even if there is a large frequency separation between <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>!</li>
-<li>Further, since the sign of <span class="math inline">\(\alpha_3\)</span> is usually opposite to <span class="math inline">\(\alpha_1\)</span>, this can also lead to <strong>desensitization</strong> (“desens”). If, for example, <span class="math inline">\(A_2 \gg A_1\)</span>, then there would be no compression due to the tone <span class="math inline">\(\omega_1\)</span> itself, however, the large tone at <span class="math inline">\(\omega_2\)</span> will lead to gain compression of the tone at <span class="math inline">\(\omega_1\)</span>; this effect is called desens.</li>
+<li>Gain compression/expansion (as in <a href="#/sec-linearity-single" class="quarto-xref">Section&nbsp;2.2.1</a>)</li>
+<li><strong>Cross-modulation</strong>: the envelope of one tone modulates the other, even for a large frequency separation</li>
+<li><strong>Desensitization</strong> (“desens”): a large tone at <span class="math inline">\(\omega_2\)</span> compresses a weak tone at <span class="math inline">\(\omega_1\)</span></li>
 </ul>
-<aside class="notes">
-<p>We now look at the next class of generated tones:</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section class="slide level3 unnumbered">
 <h3>Multi-Tone Linearity</h3>
@@ -618,6 +630,7 @@ y(t) = y'(t) + y''(t) + y'''(t)
 \end{split}
 \tag{12}\]</span></span></p>
 <aside class="notes">
+<p>We now look at the next class of generated tones:</p>
 <p>As we can see in <a href="#/eq-linearity-double-b" class="quarto-xref">Equation&nbsp;12</a>, new tones are created (besides the low frequency components we already know from the single-tone test) at the sum and difference of <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span>. These new frequency components are called “<strong>intermodulation products of second order</strong>” (IM2). These tones are created by the even-order nonlinearity (<span class="math inline">\(\alpha_2\)</span>). These IM2 products are far away from the wanted tones, so they are often not very problematic in amplifiers (but there can be exceptions!). However, they can be very problematic in frequency conversion blocks like mixers. We will come back to this point when discussing zero-IF receivers.</p>
 <p>We now investigate the next couple of tones:</p>
 <style type="text/css">
@@ -791,18 +804,32 @@ Figure&nbsp;10: Block cascade for IIP3 calculation showing multiple stages with 
 <p><strong>Note&nbsp;4: Simple IIP3 Cascade Calculation</strong></p>
 </div>
 <div class="callout-content">
-<p>Let’s calculate the overall IIP3 of two cascaded blocks. The first block is a low-noise amplifier with an IIP3 of -10 dBm and a gain of 20 dB. The second block is a mixer that has a gain of 10 dB and an IIP3 of 5 dBm. What is the value of the overall IIP3?</p>
+<p>LNA (IIP3 = -10 dBm, gain 20 dB) followed by a mixer (IIP3 = 5 dBm, gain 10 dB). What is the overall IIP3?</p>
 <p>Using <a href="#/eq-iip3-cascade-simple" class="quarto-xref">Equation&nbsp;18</a> we can quickly estimate:</p>
 <p><span class="math display">\[
 \text{IIP3}_\text{total} \approx \min \{ -10\,\text{dBm}, 5\,\text{dBm} - 20\,\text{dB} = -15\,\text{dBm} \} = -15\,\text{dBm}
 \]</span></p>
 <div class="fragment">
+<p>The second block limits the IIP3, as the LNA amplifies blockers by 20 dB before they reach the mixer.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Let’s calculate the overall IIP3 of two cascaded blocks. The first block is a low-noise amplifier with an IIP3 of -10 dBm and a gain of 20 dB. The second block is a mixer that has a gain of 10 dB and an IIP3 of 5 dBm. What is the value of the overall IIP3?</p>
 <p>We see that the overall IIP3 is limited by the linearity of the second block, as the first block amplifies all signals (including blockers) by 20 dB before they reach the second block.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
 <section id="sec-noise" class="title-slide slide level2 center" data-number="2.3">
@@ -882,19 +909,34 @@ P_\mathrm{thermal} \big|_\mathrm{dBm} &amp;= \text{PSD} \big|_\mathrm{dBm/Hz} + 
 <p><strong>Thermal Noise</strong></p>
 </div>
 <div class="callout-content">
-<p>Note that the simple approximation given above is only valid for reasonably low frequencies and typical temperatures, and is known as the Rayleigh-Jeans approximation. The full expression of Planck’s blackbody radiation, accounting for quantum effects, is given by <span class="citation" data-cites="Pozar_RF">(<a href="#/references" role="doc-biblioref" onclick="">Pozar 2011</a>)</span></p>
+<p><span class="math inline">\(4 k T R\)</span> is the Rayleigh-Jeans approximation; including quantum effects (Planck) gives <span class="citation" data-cites="Pozar_RF">(<a href="#/references" role="doc-biblioref" onclick="">Pozar 2011</a>)</span></p>
 <p><span class="math display">\[
 \text{PSD} = \frac{4 R h f}{e^{{h f}/{k T}} - 1}
 \]</span></p>
-<p>where <span class="math inline">\(h\)</span> is the Planck constant (<span class="math inline">\(h = 6.626 \times 10^{-34}\,\text{J s}\)</span>) and <span class="math inline">\(f\)</span> is the frequency. The Rayleigh-Jeans approximation is valid for <span class="math inline">\(f \ll k T / h\)</span>, which is approximately 6 THz at room temperature (290 K).</p>
-<p>We can integrate the above single-sided PSD over the full frequency range and show that the rms noise voltage of a resistor <span class="math inline">\(R\)</span> is bounded to</p>
+<p>Rayleigh-Jeans holds for <span class="math inline">\(f \ll k T / h \approx 6\,\text{THz}\)</span> at 290 K. Integrating over all frequencies bounds the noise:</p>
 <p><span class="math display">\[
 \overline{v_\mathrm{n}^2} = \int_0^\infty \frac{4 R h f}{e^{{h f}/{k T}} - 1} df = \frac{2 (\pi k T)^2}{3 h} \cdot R
 \]</span></p>
+<p>That is approx. 13 mVrms for 1 k<span class="math inline">\(\Omega\)</span> at room temperature (not measurable in any bandwidth-limited setup).</p>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Note that the simple approximation given above is only valid for reasonably low frequencies and typical temperatures, and is known as the Rayleigh-Jeans approximation. The full expression of Planck’s blackbody radiation, accounting for quantum effects, is given by <span class="citation" data-cites="Pozar_RF">(<a href="#/references" role="doc-biblioref" onclick="">Pozar 2011</a>)</span></p>
+<p>where <span class="math inline">\(h\)</span> is the Planck constant (<span class="math inline">\(h = 6.626 \times 10^{-34}\,\text{J s}\)</span>) and <span class="math inline">\(f\)</span> is the frequency. The Rayleigh-Jeans approximation is valid for <span class="math inline">\(f \ll k T / h\)</span>, which is approximately 6 THz at room temperature (290 K).</p>
+<p>We can integrate the above single-sided PSD over the full frequency range and show that the rms noise voltage of a resistor <span class="math inline">\(R\)</span> is bounded to</p>
 <p>which equates to approximately 13 mVrms noise voltage for a 1 k<span class="math inline">\(\Omega\)</span> resistor at room temperature (which is impossible to measure in practice, as there will be some form of bandwidth limitation in any real measurement setup).</p>
-</div>
-</div>
-</div>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level3 unnumbered">
 <h3>Types of Noise Generation</h3>
@@ -941,12 +983,10 @@ P_\mathrm{thermal} \big|_\mathrm{dBm} &amp;= \text{PSD} \big|_\mathrm{dBm/Hz} + 
 <p><strong>A Note on Circuit Noise Calculations</strong></p>
 </div>
 <div class="callout-content">
-<p>When doing circuit noise calculations, it is instructive to keep the following points in mind:</p>
 <ul>
-<li>For circuit calculations involving noise sources, it is convenient to replace the power spectral density by equivalent sinusoidal generators in small bandwidths (typically 1 Hz).</li>
-<li>The noise power spectral density in a small bandwidth <span class="math inline">\(\Delta f\)</span> is given by <span class="math inline">\(\overline{V_\mathrm{n}^2} = \overline{v_\mathrm{n}^2} / \Delta f\)</span> and <span class="math inline">\(\overline{I_\mathrm{n}^2} = \overline{i_\mathrm{n}^2} / \Delta f\)</span>.</li>
-<li>The quantities <span class="math inline">\(\overline{V_\mathrm{n}^2}\)</span> and <span class="math inline">\(\overline{I_\mathrm{n}^2}\)</span> can be considered the mean-square value of sinusoidal generators. Using these values, network noise calculations reduce to familiar sinusoidal circuit-analysis calculations using <span class="math inline">\(V_\mathrm{n}\)</span> and <span class="math inline">\(I_\mathrm{n}\)</span>.</li>
-<li>Multiple <em>independent</em> noise sources can be calculated individually at the output, and the total noise in bandwidth <span class="math inline">\(\Delta f\)</span> is calculated as a mean-square value by adding the individual mean-square contributions from each sinusoid.</li>
+<li>Replace noise PSDs by equivalent sinusoidal generators in a small bandwidth (typically 1 Hz)</li>
+<li><span class="math inline">\(\overline{V_\mathrm{n}^2} = \overline{v_\mathrm{n}^2} / \Delta f\)</span> and <span class="math inline">\(\overline{I_\mathrm{n}^2} = \overline{i_\mathrm{n}^2} / \Delta f\)</span> are their mean-square values, so ordinary sinusoidal circuit analysis applies</li>
+<li><em>Independent</em> sources: add the mean-square contributions at the output</li>
 </ul>
 </div>
 </div>
@@ -954,6 +994,13 @@ P_\mathrm{thermal} \big|_\mathrm{dBm} &amp;= \text{PSD} \big|_\mathrm{dBm/Hz} + 
 <aside class="notes">
 <p>Ideal <strong>capacitors</strong> and <strong>inductors</strong> do not generate noise; however, real-world capacitors and inductors have parasitic resistances which generate thermal noise.</p>
 <p>In RF systems, additional noise sources can be present. One noteworthy example is the <a href="https://en.wikipedia.org/wiki/Cosmic_microwave_background"><strong>cosmic microwave background</strong></a> radiation, which can be modeled as a noise temperature of approximately 3 K. While this is negligible compared to thermal noise at room temperature (approximately 290 K), it can be significant in very low-noise systems, such as radio telescopes pointing to the sky. Another important noise source in RF systems is the <strong>atmospheric noise</strong>, which is generated by natural phenomena like lightning or in the ionosphere.</p>
+<p>When doing circuit noise calculations, it is instructive to keep the following points in mind:</p>
+<ul>
+<li>For circuit calculations involving noise sources, it is convenient to replace the power spectral density by equivalent sinusoidal generators in small bandwidths (typically 1 Hz).</li>
+<li>The noise power spectral density in a small bandwidth <span class="math inline">\(\Delta f\)</span> is given by <span class="math inline">\(\overline{V_\mathrm{n}^2} = \overline{v_\mathrm{n}^2} / \Delta f\)</span> and <span class="math inline">\(\overline{I_\mathrm{n}^2} = \overline{i_\mathrm{n}^2} / \Delta f\)</span>.</li>
+<li>The quantities <span class="math inline">\(\overline{V_\mathrm{n}^2}\)</span> and <span class="math inline">\(\overline{I_\mathrm{n}^2}\)</span> can be considered the mean-square value of sinusoidal generators. Using these values, network noise calculations reduce to familiar sinusoidal circuit-analysis calculations using <span class="math inline">\(V_\mathrm{n}\)</span> and <span class="math inline">\(I_\mathrm{n}\)</span>.</li>
+<li>Multiple <em>independent</em> noise sources can be calculated individually at the output, and the total noise in bandwidth <span class="math inline">\(\Delta f\)</span> is calculated as a mean-square value by adding the individual mean-square contributions from each sinusoid.</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1075,9 +1122,10 @@ S_\mathrm{out} = G S_\mathrm{in}
 \]</span></p>
 <p><span class="math display">\[
 N_\mathrm{out} = G N_\mathrm{in} + N_\mathrm{dut}
-\]</span> The resulting noise factor can then be calculated as</p>
+\]</span></p>
 <aside class="notes">
 <p>The output signal and noise powers are then given by</p>
+<p>The resulting noise factor can then be calculated as</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1124,6 +1172,11 @@ F_\mathrm{total} = 1 + (F_1 - 1) + \frac{F_2 - 1}{G_1} + \frac{F_3 - 1}{G_1 G_2}
 <aside class="notes">
 <p>If we have a cascade of multiple blocks, as shown in <a href="#/fig-noise-cascade" class="quarto-xref">Figure&nbsp;13</a>, we can calculate the overall noise factor with the <strong>Friis formula</strong> <span class="citation" data-cites="Pozar_RF">(<a href="#/references" role="doc-biblioref" onclick="">Pozar 2011</a>)</span></p>
 <p>where <span class="math inline">\(F_i\)</span> and <span class="math inline">\(G_i\)</span> are the noise factor and power gain of the <span class="math inline">\(i\)</span>-th block, respectively. Note that all gains have to be in linear units (not dB) when using <a href="#/eq-friis" class="quarto-xref">Equation&nbsp;22</a>. We can interpret <a href="#/eq-friis" class="quarto-xref">Equation&nbsp;22</a> as follows:</p>
+<ul>
+<li>The overall noise factor <span class="math inline">\(F_\mathrm{total}\)</span> is always larger than or equal to the noise factor of the first block (<span class="math inline">\(F_1\)</span>).</li>
+<li>The noise factor of the first block is the most important one, as the noise factors of the following blocks are reduced by the gain of all preceding blocks. This is especially important in RF receivers, where the first block is usually a low-noise amplifier (LNA) with a very low noise figure (e.g., 1 dB or less) and a high gain (e.g., 10 dB or more). This ensures that the noise of the following blocks is negligible.</li>
+<li>The noise factor of the last block is reduced by the gain of all preceding blocks, so it is usually not very important.</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1139,23 +1192,10 @@ F_\mathrm{total} = 1 + (F_1 - 1) + \frac{F_2 - 1}{G_1} + \frac{F_3 - 1}{G_1 G_2}
 <section class="slide level3 unnumbered">
 <h3>Noise Figure</h3>
 <ul>
-<li>The overall noise factor <span class="math inline">\(F_\mathrm{total}\)</span> is always larger than or equal to the noise factor of the first block (<span class="math inline">\(F_1\)</span>).</li>
-<li>The noise factor of the first block is the most important one, as the noise factors of the following blocks are reduced by the gain of all preceding blocks. This is especially important in RF receivers, where the first block is usually a low-noise amplifier (LNA) with a very low noise figure (e.g., 1 dB or less) and a high gain (e.g., 10 dB or more). This ensures that the noise of the following blocks is negligible.</li>
-<li>The noise factor of the last block is reduced by the gain of all preceding blocks, so it is usually not very important.</li>
+<li><span class="math inline">\(F_\mathrm{total} \geq F_1\)</span></li>
+<li>The first block matters most: later noise factors are divided by the preceding gain, hence an LNA with low NF and high gain</li>
+<li>The last block is usually negligible</li>
 </ul>
-<aside class="notes">
-<p>Here we also see a trade-off between noise and linearity, as shown by <a href="#/eq-iip3-cascade" class="quarto-xref">Equation&nbsp;17</a> and <a href="#/eq-friis" class="quarto-xref">Equation&nbsp;22</a>. For low noise, we should try to maximize <span class="math inline">\(G_1\)</span>, however, this will affect linearity (IIP3) in a negative way. As in many other situations in RF design, we have to find a good compromise between conflicting requirements.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section id="sec-sensitivity" class="slide level3" data-number="2.3.4">
 <h3><span class="header-section-number">2.3.4</span> Sensitivity</h3>
@@ -1166,6 +1206,7 @@ P_\mathrm{in, min} = P_\mathrm{n} \cdot \text{SNR}_\mathrm{min} \cdot F
 P_\mathrm{n} = k T B
 \]</span></p>
 <aside class="notes">
+<p>Here we also see a trade-off between noise and linearity, as shown by <a href="#/eq-iip3-cascade" class="quarto-xref">Equation&nbsp;17</a> and <a href="#/eq-friis" class="quarto-xref">Equation&nbsp;22</a>. For low noise, we should try to maximize <span class="math inline">\(G_1\)</span>, however, this will affect linearity (IIP3) in a negative way. As in many other situations in RF design, we have to find a good compromise between conflicting requirements.</p>
 <p>In RF receivers, we often want to know the minimum input signal power that can be detected with a certain SNR. This minimum input signal power is called the <strong>sensitivity</strong> of the receiver. The sensitivity can be calculated as</p>
 <p>where <span class="math inline">\(P_\mathrm{n}\)</span> is the noise power at the input, <span class="math inline">\(\text{SNR}_\mathrm{min}\)</span> is the minimum detectable SNR (i.e., the SNR required to demodulate the signal with given accuracy in terms of bit error rate or signal fidelity), and <span class="math inline">\(F\)</span> is the noise factor of the receiver. The input noise power can be calculated as</p>
 <p>where <span class="math inline">\(k\)</span> is Boltzmann’s constant, <span class="math inline">\(T\)</span> is the temperature in Kelvin, and <span class="math inline">\(B\)</span> is the noise bandwidth of the receiver. Expressing <a href="#/eq-sensitivity" class="quarto-xref">Equation&nbsp;23</a> in dB/dBm we get the following formula:</p>
@@ -1581,12 +1622,10 @@ Figure&nbsp;18: OFDM transmission system block diagram showing transmitter (top)
 <p><strong>Note&nbsp;6: OFDM in LTE</strong></p>
 </div>
 <div class="callout-content">
-<p>In LTE OFDM is used for the downlink (base station to user equipment) with the following parameters:</p>
+<p>LTE downlink parameters:</p>
 <ul>
-<li>Subcarrier spacing: 15 kHz</li>
-<li>CP length: 5.2 µs (first symbol) resp. 4.7 µs (following symbols), and 16.67 µs as extended CP for scenarios with large delay spreads</li>
-<li>Number of subcarriers: 1200 (for 20 MHz bandwidth)</li>
-<li>Modulation: QPSK, 16-QAM, 64-QAM, 256-QAM</li>
+<li>Subcarrier spacing 15 kHz, CP 4.7 µs (5.2 µs for the first symbol)</li>
+<li>1200 subcarriers (20 MHz), QPSK to 256-QAM</li>
 </ul>
 <p>From the subcarrier spacing we can calculate the symbol duration as <span class="math inline">\(T_\mathrm{sym} = 1 / \Delta f = 1 / 15\,\text{kHz} \approx 66.7\,\mu\text{s}\)</span>.</p>
 <p>We can calculate the raw bitrate for a 20 MHz LTE channel using 256-QAM modulation as</p>
@@ -1594,7 +1633,7 @@ Figure&nbsp;18: OFDM transmission system block diagram showing transmitter (top)
 \text{Bitrate} = N_\mathrm{sc} \cdot N_\mathrm{bps} \cdot \frac{1}{T_\mathrm{sym} + T_\mathrm{CP}} = 1200 \cdot 8 \cdot \frac{1}{66.7\,\mu\text{s} + 4.7\,\mu\text{s}} \approx 134\,\text{Mbps}
 \]</span></p>
 <div class="fragment">
-<p>With the overhead for control channels and error correction coding a user data rate of approximately 100 Mbps can be achieved in a 20 MHz LTE channel. This data rate can be scaled up in two independent ways: <strong>carrier aggregation</strong> combines several such 20 MHz channels into one logical link, while <strong>MIMO</strong> transmits multiple spatial layers within the <em>same</em> 20 MHz channel using several antennas. The two multiply, which is how modern devices reach gigabit rates.</p>
+<p>After overhead approx. 100 Mbps; <strong>carrier aggregation</strong> and <strong>MIMO</strong> multiply this to gigabit rates.</p>
 </div>
 </div>
 </div>
@@ -1605,6 +1644,14 @@ Figure&nbsp;18: OFDM transmission system block diagram showing transmitter (top)
 <p>At the receiver, the CP is first removed, and then the FFT recovers the frequency-domain symbols, which can then be equalized (fairly simply by multiplying each subcarrier with a complex factor to correct amplitude and phase) and demodulated.</p>
 <p>A key property of OFDM is that the subcarriers are <strong>orthogonal</strong> to each other, which means that they do not interfere with each other. This is achieved by choosing the subcarrier spacing <span class="math inline">\(\Delta f\)</span> such that it is equal to the symbol rate <span class="math inline">\(1/T_\mathrm{sym}\)</span>, i.e., <span class="math inline">\(\Delta f = 1/T_\mathrm{sym}\)</span>. This way, the integral of the product of two different subcarriers over one symbol period is zero, which means that they are orthogonal.</p>
 <p>To further improve the robustness against multi-path propagation, a CP is added to each OFDM symbol. The CP is a copy of the last part of the OFDM symbol, which is added to the beginning of the symbol. This way, if there are delayed copies of the OFDM symbol due to multi-path propagation, they will still fall within the CP and will not cause inter-symbol interference (ISI). The length of the CP should be longer than the maximum delay spread of the channel.</p>
+<p>In LTE OFDM is used for the downlink (base station to user equipment) with the following parameters:</p>
+<ul>
+<li>Subcarrier spacing: 15 kHz</li>
+<li>CP length: 5.2 µs (first symbol) resp. 4.7 µs (following symbols), and 16.67 µs as extended CP for scenarios with large delay spreads</li>
+<li>Number of subcarriers: 1200 (for 20 MHz bandwidth)</li>
+<li>Modulation: QPSK, 16-QAM, 64-QAM, 256-QAM</li>
+</ul>
+<p>With the overhead for control channels and error correction coding a user data rate of approximately 100 Mbps can be achieved in a 20 MHz LTE channel. This data rate can be scaled up in two independent ways: <strong>carrier aggregation</strong> combines several such 20 MHz channels into one logical link, while <strong>MIMO</strong> transmits multiple spatial layers within the <em>same</em> 20 MHz channel using several antennas. The two multiply, which is how modern devices reach gigabit rates.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1625,15 +1672,21 @@ Figure&nbsp;18: OFDM transmission system block diagram showing transmitter (top)
 <section class="slide level3 unnumbered scrollable">
 <h3>Multiple Access Techniques</h3>
 <ol type="1">
+<li><strong>TDMA</strong>: users get time slots</li>
+<li><strong>FDMA</strong>: users get frequency bands</li>
+<li><strong>CDMA</strong>: users get spreading codes (DS-CDMA); the sibling <strong>FHSS</strong> separates users by hopping patterns (Bluetooth)</li>
+<li><strong>OFDMA</strong>: users get OFDM subcarriers (LTE, 5G NR)</li>
+<li><strong>SDMA</strong>: users are separated spatially by multiple antennas</li>
+</ol>
+<aside class="notes">
+<p>In wireless communication systems, multiple users need to share the same frequency spectrum. This is achieved by using <strong>multiple access techniques</strong>, which allow multiple users to transmit and receive data simultaneously without interfering with each other. The most common multiple access techniques are:</p>
+<ol type="1">
 <li><p><strong>Time division multiple access (TDMA)</strong>: Users are assigned specific time slots for transmission, allowing multiple users to share the same frequency channel by dividing continuous time into slots.</p></li>
 <li><p><strong>Frequency division multiple access (FDMA)</strong>: Users are assigned specific frequency bands within the overall frequency spectrum, allowing multiple users to transmit simultaneously on different frequencies.</p></li>
 <li><p><strong>Code division multiple access (CDMA)</strong>: Users are assigned unique spreading codes, allowing them to transmit simultaneously over the same frequency band. The receiver uses the same code to extract the desired signal. This scheme is more precisely called direct-sequence CDMA (DS-CDMA). A sibling technique from the same spread-spectrum family (not a variant of DS-CDMA) is frequency-hopping spread spectrum (FHSS), where the carrier frequency is changed rapidly according to a pseudo-random sequence known to both the transmitter and receiver; users are separated by their hopping patterns rather than by a spreading code. This is used in Bluetooth, and has originally been co-invented by the Austrian actress <a href="https://en.wikipedia.org/wiki/Hedy_Lamarr">Hedy Lamarr</a>.</p></li>
 <li><p><strong>Orthogonal frequency division multiple access (OFDMA)</strong>: A variant of OFDM, where multiple users are assigned different subcarriers for transmission, allowing for efficient use of the frequency spectrum. This is used in 4G LTE and 5G NR.</p></li>
 <li><p><strong>Spatial division multiple access (SDMA)</strong>: Uses multiple antennas to create spatially separated channels, allowing multiple users to transmit simultaneously in the same frequency band.</p></li>
 </ol>
-<aside class="notes">
-<p>In wireless communication systems, multiple users need to share the same frequency spectrum. This is achieved by using <strong>multiple access techniques</strong>, which allow multiple users to transmit and receive data simultaneously without interfering with each other. The most common multiple access techniques are:</p>
-<p>All of the above techniques can be combined to create more efficient and flexible communication systems. For example, OFDMA can be used in conjunction with SDMA to allow multiple users to share the same frequency resources while also taking advantage of spatial diversity. Also, TDMA can be combined with FDMA to create a hybrid multiple access scheme (which has been used in 2G).</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1649,7 +1702,19 @@ Figure&nbsp;18: OFDM transmission system block diagram showing transmitter (top)
 
 <section id="sec-fundamentals-mcs" class="title-slide slide level2 center" data-number="2.8">
 <h2><span class="header-section-number">2.8</span> Modulation and Coding Schemes</h2>
-
+<aside class="notes">
+<p>All of the above techniques can be combined to create more efficient and flexible communication systems. For example, OFDMA can be used in conjunction with SDMA to allow multiple users to share the same frequency resources while also taking advantage of spatial diversity. Also, TDMA can be combined with FDMA to create a hybrid multiple access scheme (which has been used in 2G).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level3 unnumbered">
 <h3>Modulation and Coding Schemes</h3>
@@ -1669,13 +1734,14 @@ Figure&nbsp;18: OFDM transmission system block diagram showing transmitter (top)
 <li>Interference: -92 dBm</li>
 <li>Bandwidth: 160 MHz</li>
 </ul>
-<p>Looking up MCS 7 in the Wi-Fi MCS table linked above shows that this corresponds to 64-QAM with a coding rate of 5/6. With a bandwidth of 160 MHz, 2x MIMO and a guard interval (GI) of 0.8 µs, the maximum data rate is a whopping 1441 Mbps.</p>
+<p>MCS 7 is 64-QAM with coding rate 5/6; with 160 MHz, 2x MIMO and 0.8 µs GI up to 1441 Mbps.</p>
 </div>
 </div>
 </div>
 <aside class="notes">
 <p>In modern wireless communication systems several parameters can be adapted on the fly to the current channel conditions to optimize the data rate and reliability. These parameters include the modulation format (e.g., QPSK, 16-QAM, 64-QAM, etc.) and the error correction coding scheme (e.g., convolutional codes, turbo codes, LDPC codes, etc.). The combination of modulation format and coding scheme is called the <strong>modulation and coding scheme (MCS)</strong>. The MCS determines the number of bits per symbol and the level of error correction, which in turn affects the data rate and reliability of the communication link, as well sets the minimum required SNR.</p>
 <p>Since there are many different MCS options available, and the receiver needs to be informed by the transmitter which MCS is used (whenever there is a change of MCS), a standardized set of MCS options is defined in most wireless communication standards. For example, the MCS options for Wi-Fi can be seen in this <a href="https://mcsindex.net">table</a>, while the MCS calculation for 5G NR can be found <a href="https://www.sqimway.com/nr_pdsch.php">here</a>.</p>
+<p>Looking up MCS 7 in the Wi-Fi MCS table linked above shows that this corresponds to 64-QAM with a coding rate of 5/6. With a bandwidth of 160 MHz, 2x MIMO and a guard interval (GI) of 0.8 µs, the maximum data rate is a whopping 1441 Mbps.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

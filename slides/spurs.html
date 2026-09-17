@@ -54,7 +54,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-a975c94262742d03914c7a56aca0ba09.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-03e017e5ca202a610282a31b74f9273c.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -221,11 +221,29 @@ Figure&nbsp;105: Block diagram of a typical transceiver (TRX) showing the main c
 <section class="slide level3 unnumbered">
 <h3>Coupling Paths</h3>
 <ul>
-<li>TX-to-RX coupling through the RFIC, duplexer and shared front-end elements (“TX leakage”) can cause issues such as gain desensitization, reciprocal mixing, receive-band noise from the TX, and IM2/IM3 distortion in the RX <span class="citation" data-cites="Aparin.2006">(<a href="#/references" role="doc-biblioref" onclick="">Aparin and Larson 2006</a>)</span>.</li>
+<li><strong>TX to RX</strong> (“TX leakage”): desensitization, reciprocal mixing, RX-band noise, IM2/IM3 <span class="citation" data-cites="Aparin.2006">(<a href="#/references" role="doc-biblioref" onclick="">Aparin et al. 2006</a>)</span></li>
+<li><strong>RX VCO</strong> to LNA/mixer (“RX LO leakage”): IM2 products, LO radiation</li>
+<li><strong>LO to LO</strong>: reciprocal mixing (RX), OOB emissions (TX), injection pulling <span class="citation" data-cites="Razavi.2004">(<a href="#/references" role="doc-biblioref" onclick="">Razavi 2004</a>)</span></li>
+<li><strong>TX VCO</strong> to PA (“TX LO leakage”): LO leakage, EVM degradation</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>TX-to-RX coupling through the RFIC, duplexer and shared front-end elements (“TX leakage”) can cause issues such as gain desensitization, reciprocal mixing, receive-band noise from the TX, and IM2/IM3 distortion in the RX <span class="citation" data-cites="Aparin.2006">(<a href="#/references" role="doc-biblioref" onclick="">Aparin et al. 2006</a>)</span>.</li>
 <li>RX VCO coupling (“RX LO leakage”) from the RX VCO/PLL into the LNA/mixer can cause increased IM2 products and LO radiation.</li>
 <li>LO-to-LO coupling through the LO distribution network can cause reciprocal mixing due to LO spurs in RX, or OOB emissions on TX. When the two oscillators run at nearby frequencies, injection pulling between the VCOs can also degrade the spectral purity of both LOs <span class="citation" data-cites="Razavi.2004">(<a href="#/references" role="doc-biblioref" onclick="">Razavi 2004</a>)</span>.</li>
 <li>TX VCO coupling (“TX LO leakage”) from the TX VCO/PLL into the PA can cause increased LO leakage and EVM degradation.</li>
 </ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
 <section id="sec-spurs-pll" class="title-slide slide level2 center" data-number="9.2">
@@ -235,14 +253,19 @@ Figure&nbsp;105: Block diagram of a typical transceiver (TRX) showing the main c
 <section class="slide level3 unnumbered">
 <h3>Synthesizer Spurs</h3>
 <ul>
+<li><strong>Reference spurs</strong> at <span class="math inline">\(f_\mathrm{LO} \pm k\, f_\mathrm{ref}\)</span>: CP mismatch and leakage, coupling; set by loop-filter rejection</li>
+<li><strong>Fractional-<span class="math inline">\(N\)</span> spurs</strong> from the <span class="math inline">\(\Delta\Sigma\)</span> modulator (<a href="../rfic.html#sec-pll-delta-sigma">Section&nbsp;7.4.1</a>); reduced by higher order and dithering</li>
+<li><strong>Divider and digital-switching spurs</strong> coupling via supply and substrate</li>
+<li><strong>Digital spurs</strong> from TDC/DCO nonlinearities in ADPLLs</li>
+</ul>
+<aside class="notes">
+<p>In addition to the inter-block coupling discussed above, the frequency synthesizer itself is a notorious source of <em>intra-PLL</em> spurs (see also <a href="../rfic.html#sec-pll">Section&nbsp;7</a>). The most relevant mechanisms are:</p>
+<ul>
 <li><strong>Reference spurs</strong> at integer multiples of the reference frequency, <span class="math inline">\(f_\mathrm{spur} = f_\mathrm{LO} \pm k\, f_\mathrm{ref}\)</span>, <span class="math inline">\(k \in \mathbb{N}^+\)</span>. They are caused by charge-pump mismatch and leakage, finite isolation of the loop-filter node, and supply or substrate coupling at <span class="math inline">\(f_\mathrm{ref}\)</span>. Their amplitude is set by how strongly the loop filter rejects components at <span class="math inline">\(f_\mathrm{ref}\)</span> relative to the loop bandwidth.</li>
 <li><strong>Fractional-<span class="math inline">\(N\)</span> spurs</strong> generated by the periodicity and quantization noise of the <span class="math inline">\(\Delta\Sigma\)</span> modulator that controls the divider (see <a href="../rfic.html#sec-pll-delta-sigma">Section&nbsp;7.4.1</a>). They typically appear as families of tones around <span class="math inline">\(f_\mathrm{LO}\)</span> at offsets related to the fractional ratio. Higher-order modulators and dithering reduce their level at the cost of increased close-in noise.</li>
 <li><strong>Divider and digital-switching spurs</strong> at sub-harmonics of <span class="math inline">\(f_\mathrm{LO}\)</span> and at digital clock frequencies, coupling into the VCO through the supply and substrate.</li>
 <li><strong>Digital spurs</strong> originating from TDC or DCO nonlinearities in all-digital PLLs, or from digital blocks in the vicinity of the VCO.</li>
 </ul>
-<aside class="notes">
-<p>In addition to the inter-block coupling discussed above, the frequency synthesizer itself is a notorious source of <em>intra-PLL</em> spurs (see also <a href="../rfic.html#sec-pll">Section&nbsp;7</a>). The most relevant mechanisms are:</p>
-<p>Once these spurs appear on the LO, they translate directly into the receive band through reciprocal mixing of a strong blocker, or into the transmit spectrum through the upconversion mixer. If these spurs are inside the channel bandwidth, they cause EVM degradation and may violate spectral mask requirements.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -258,14 +281,26 @@ Figure&nbsp;105: Block diagram of a typical transceiver (TRX) showing the main c
 
 <section id="sec-spurs-mitigation" class="title-slide slide level2 center" data-number="9.3">
 <h2><span class="header-section-number">9.3</span> Spur and Crosstalk Mitigation</h2>
-
+<aside class="notes">
+<p>Once these spurs appear on the LO, they translate directly into the receive band through reciprocal mixing of a strong blocker, or into the transmit spectrum through the upconversion mixer. If these spurs are inside the channel bandwidth, they cause EVM degradation and may violate spectral mask requirements.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="references" class="slide level3 unnumbered smaller scrollable">
 <h3>References</h3>
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-Aparin.2006" class="csl-entry" role="listitem">
-Aparin, Vladimir, and Lawrence E. Larson. 2006. <span>“Linearization of <span>CDMA</span> Receiver Front-Ends by Means of Derivative Superposition.”</span> <em><span>IEEE</span> Transactions on Microwave Theory and Techniques</em> 53 (2): 571–81. <a href="https://doi.org/10.1109/TMTT.2005.860500">https://doi.org/10.1109/TMTT.2005.860500</a>.
+Aparin, Vladimir, Gary J. Ballantyne, Charles J. Persico, and Alberto Cicalini. 2006. <span>“An Integrated <span>LMS</span> Adaptive Filter of <span>TX</span> Leakage for <span>CDMA</span> Receiver Front Ends.”</span> <em><span>IEEE</span> Journal of Solid-State Circuits</em> 41 (5): 1171–82. <a href="https://doi.org/10.1109/JSSC.2006.872738">https://doi.org/10.1109/JSSC.2006.872738</a>.
 </div>
 <div id="ref-ElNozahi.2010" class="csl-entry" role="listitem">
 El-Nozahi, Mohamed, Ahmed Amer, Joselyn Torres, Kamran Entesari, and Edgar Sanchez-Sinencio. 2010. <span>“High <span>PSR</span> Low Drop-Out Regulator with Feed-Forward Ripple Cancellation Technique.”</span> <em><span>IEEE</span> Journal of Solid-State Circuits</em> 45 (3): 565–77. <a href="https://doi.org/10.1109/JSSC.2009.2039685">https://doi.org/10.1109/JSSC.2009.2039685</a>.

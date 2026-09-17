@@ -54,7 +54,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-a975c94262742d03914c7a56aca0ba09.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-03e017e5ca202a610282a31b74f9273c.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -182,13 +182,13 @@
 <div class="callout-content">
 <p>All course material (source code of this document, Jupyter notebooks for calculations, Xschem circuits, etc.) is made publicly available on GitHub (<a href="https://github.com/iic-jku/radio-frequency-integrated-circuits">follow this link</a>) and shared under the Apache-2.0 license.</p>
 <p>Please feel free to submit <a href="https://github.com/iic-jku/radio-frequency-integrated-circuits/pulls">pull requests</a> to fix typos or add content! If you want to discuss something that is not clear, please <a href="https://github.com/iic-jku/radio-frequency-integrated-circuits/issues/new">open an issue</a>.</p>
-<p>The production of this document would be impossible without these (and many more) great open-source software products: <code>VS Code</code>, <code>Quarto</code>, <code>Pandoc</code>, <code>LaTeX</code>, <code>Typst</code>, <code>Jupyter Notebook</code>, <code>Python</code>, <code>Xschem</code>, <code>ngspice</code>, <code>CACE</code>, <code>pygmid</code>, <code>schemdraw</code>, <code>Numpy</code>, <code>Scipy</code>, <code>Matplotlib</code>, <code>Pandas</code>, <code>Git</code>, <code>Docker</code>, <code>Ubuntu</code>, <code>GNU/Linux</code>, …</p>
 </div>
 </div>
 </div>
 <aside class="notes">
 <p>This is the material for an introductory radio-frequency integrated circuits course. The contents are largely based on <span class="citation" data-cites="Razavi_RFIC Darabi_RFIC">(<a href="#/references" role="doc-biblioref" onclick="">Razavi 2011</a>; <a href="#/references" role="doc-biblioref" onclick="">Darabi 2020</a>)</span>; these two books are an excellent introduction to this topic and are highly recommended! For a general introduction to RF and microwave, <span class="citation" data-cites="Pozar_RF">(<a href="#/references" role="doc-biblioref" onclick="">Pozar 2011</a>)</span> is a great read!</p>
 <p>It is assumed that readers are familiar with the contents of this <a href="https://iic-jku.github.io/analog-circuit-design/aicd.html">Analog Circuit Design</a> course.</p>
+<p>The production of this document would be impossible without these (and many more) great open-source software products: <code>VS Code</code>, <code>Quarto</code>, <code>Pandoc</code>, <code>LaTeX</code>, <code>Typst</code>, <code>Jupyter Notebook</code>, <code>Python</code>, <code>Xschem</code>, <code>ngspice</code>, <code>CACE</code>, <code>pygmid</code>, <code>schemdraw</code>, <code>Numpy</code>, <code>Scipy</code>, <code>Matplotlib</code>, <code>Pandas</code>, <code>Git</code>, <code>Docker</code>, <code>Ubuntu</code>, <code>GNU/Linux</code>, …</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -484,6 +484,13 @@ Figure&nbsp;2: Free space path loss vs.&nbsp;distance for different frequencies 
 <aside class="notes">
 <p>As dire as the situation of <a href="#/fig-free-space-path-loss" class="quarto-xref">Figure&nbsp;2</a> already looks, these are not even all the factors to consider:</p>
 <p>The consequences of this are (among others):</p>
+<ul>
+<li>The transmitter needs to generate enough <strong>transmit power</strong> to overcome the transmission loss; this has to be done with high <strong>efficiency</strong>, as the transmit device is battery operated or limited by cooling.</li>
+<li>The receiver has to be able to process <strong>weak signals</strong>, i.e., the <strong>noise</strong> level of the signal processing has to be very low.</li>
+<li>Often, the receive signal is very weak, while there are strong signals at other frequencies (i.e., other wireless transmitters are located close to the receiver). This means the receiver has to be able to process a weak signal while simultaneously tolerating <strong>large interfering signals</strong> (called <strong>blockers</strong>).</li>
+<li>Since the frequency spectrum is shared among many users and wireless applications, the transmit information has to be packed efficiently into a <strong>small bandwidth</strong>.</li>
+<li>Very often, wireless devices are battery-operated. This means transmit and receive functions have to be implemented using <strong>minimum power consumption</strong>.</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -499,12 +506,16 @@ Figure&nbsp;2: Free space path loss vs.&nbsp;distance for different frequencies 
 <section class="slide level3 unnumbered">
 <h3>Wireless Transmission</h3>
 <ul>
-<li>The transmitter needs to generate enough <strong>transmit power</strong> to overcome the transmission loss; this has to be done with high <strong>efficiency</strong>, as the transmit device is battery operated or limited by cooling.</li>
-<li>The receiver has to be able to process <strong>weak signals</strong>, i.e., the <strong>noise</strong> level of the signal processing has to be very low.</li>
-<li>Often, the receive signal is very weak, while there are strong signals at other frequencies (i.e., other wireless transmitters are located close to the receiver). This means the receiver has to be able to process a weak signal while simultaneously tolerating <strong>large interfering signals</strong> (called <strong>blockers</strong>).</li>
-<li>Since the frequency spectrum is shared among many users and wireless applications, the transmit information has to be packed efficiently into a <strong>small bandwidth</strong>.</li>
-<li>Very often, wireless devices are battery-operated. This means transmit and receive functions have to be implemented using <strong>minimum power consumption</strong>.</li>
+<li>TX: enough <strong>transmit power</strong> at high <strong>efficiency</strong></li>
+<li>RX: process <strong>weak signals</strong> with low <strong>noise</strong></li>
+<li>RX: tolerate <strong>large interfering signals</strong> (<strong>blockers</strong>)</li>
+<li>Pack information into a <strong>small bandwidth</strong></li>
+<li>Battery operation: <strong>minimum power consumption</strong></li>
 </ul>
+</section>
+
+<section id="sec-intro-standards" class="title-slide slide level2 center" data-number="1.2">
+<h2><span class="header-section-number">1.2</span> Wireless Standards</h2>
 <aside class="notes">
 <p>As stated in the beginning, designing wireless systems is hard.</p>
 <style type="text/css">
@@ -519,12 +530,7 @@ Figure&nbsp;2: Free space path loss vs.&nbsp;distance for different frequencies 
           display:block!important;
       }</style></aside>
 </section>
-
-<section id="sec-intro-standards" class="title-slide slide level2 center" data-number="1.2">
-<h2><span class="header-section-number">1.2</span> Wireless Standards</h2>
-
-</section>
-<section class="slide level3 unnumbered scrollable">
+<section class="slide level3 unnumbered">
 <h3>Wireless Standards</h3>
 <div id="tbl-wireless-standards" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-tbl">
@@ -590,6 +596,49 @@ Table&nbsp;2: Comparison of wireless communication standards
 <td>TDD</td>
 <td>n/a</td>
 </tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<aside class="notes">
+<p>In order to allow communication between different devices, different operators, and different manufacturers, wireless communication is usually standardized. There are many different standards, each with its own characteristics. Wireless standards define every aspect of wireless communication, and can be documents of hundreds or thousands of pages. Here, we mainly focus on the radio-frequency and analog aspects of wireless standards. Summarized in <a href="#/tbl-wireless-standards" class="quarto-xref">Table&nbsp;2</a> are a few popular wireless standards with their main characteristics.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level3 unnumbered scrollable">
+<h3>Wireless Standards</h3>
+<table class="caption-top">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 8%">
+<col style="width: 13%">
+<col style="width: 18%">
+<col style="width: 11%">
+<col style="width: 18%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Standard</th>
+<th>GSM (2G)</th>
+<th>WCDMA (3G)</th>
+<th>LTE (4G)<br><strong>5G NR</strong></th>
+<th>WiFi</th>
+<th>Bluetooth</th>
+<th>GNSS</th>
+</tr>
+</thead>
+<tbody>
 <tr class="odd">
 <td style="text-align: left;"><strong>Channel bandwidth</strong></td>
 <td>200 kHz</td>
@@ -617,7 +666,34 @@ Table&nbsp;2: Comparison of wireless communication standards
 <td>Gaussian (BT=0.5)</td>
 <td>Rectangular</td>
 </tr>
-<tr class="even">
+</tbody>
+</table>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>For the OFDM-based standards (LTE/5G NR, WiFi), the listed values correspond to the subcarrier spacing (numerology <span class="math inline">\(\Delta f\)</span>), which equals the per-subcarrier symbol rate; they are not the aggregate symbol rate of the full signal.</p></li></ol></aside></section>
+<section class="slide level3 unnumbered">
+<h3>Wireless Standards</h3>
+<table class="caption-top">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 8%">
+<col style="width: 13%">
+<col style="width: 18%">
+<col style="width: 11%">
+<col style="width: 18%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Standard</th>
+<th>GSM (2G)</th>
+<th>WCDMA (3G)</th>
+<th>LTE (4G)<br><strong>5G NR</strong></th>
+<th>WiFi</th>
+<th>Bluetooth</th>
+<th>GNSS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td style="text-align: left;"><strong>Transmit power</strong></td>
 <td>1…2 W</td>
 <td>250 mW</td>
@@ -626,7 +702,7 @@ Table&nbsp;2: Comparison of wireless communication standards
 <td>1…100 mW</td>
 <td>n/a</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"><strong>PAR (UL)</strong></td>
 <td>0 dB (GMSK), 3 dB (8PSK)</td>
 <td>3…8 dB</td>
@@ -635,7 +711,7 @@ Table&nbsp;2: Comparison of wireless communication standards
 <td>0 dB (GFSK), 3 dB (8DPSK)</td>
 <td>n/a</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"><strong>MIMO</strong></td>
 <td>no</td>
 <td>Not realized (DL 2x2)</td>
@@ -644,7 +720,7 @@ Table&nbsp;2: Comparison of wireless communication standards
 <td>no</td>
 <td>no</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"><strong>Channel bond</strong></td>
 <td>no</td>
 <td>Up to 4x5 MHz</td>
@@ -655,11 +731,7 @@ Table&nbsp;2: Comparison of wireless communication standards
 </tr>
 </tbody>
 </table>
-</div>
-</figure>
-</div>
 <aside class="notes">
-<p>In order to allow communication between different devices, different operators, and different manufacturers, wireless communication is usually standardized. There are many different standards, each with its own characteristics. Wireless standards define every aspect of wireless communication, and can be documents of hundreds or thousands of pages. Here, we mainly focus on the radio-frequency and analog aspects of wireless standards. Summarized in <a href="#/tbl-wireless-standards" class="quarto-xref">Table&nbsp;2</a> are a few popular wireless standards with their main characteristics.</p>
 <p>During this course, we will learn what these terms mean and how they impact the design of RF integrated circuits.</p>
 <p>As you can see in <a href="#/tbl-wireless-standards" class="quarto-xref">Table&nbsp;2</a>, since LTE (4G) and 5G NR, many additional bands have been defined in the sub-6 GHz range (FR1) and also in the mm-wave range (FR2, 24.25 to 52.6 GHz). This means that modern wireless devices have to support many different frequency bands, which makes the design of RF front ends even more challenging. A good overview of the different frequency bands is given here for <a href="https://www.sqimway.com/lte_band.php">LTE</a> and <a href="https://www.sqimway.com/nr_band.php">5G NR</a>.</p>
 <p>RFIC design is a multidisciplinary field, requiring knowledge from various engineering domains, as shown in <a href="#/fig-rf-design-multidisciplinary" class="quarto-xref">Figure&nbsp;3</a>. This makes RFIC design challenging, but also very interesting!</p>
@@ -674,7 +746,7 @@ Table&nbsp;2: Comparison of wireless communication standards
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>For the OFDM-based standards (LTE/5G NR, WiFi), the listed values correspond to the subcarrier spacing (numerology <span class="math inline">\(\Delta f\)</span>), which equals the per-subcarrier symbol rate; they are not the aggregate symbol rate of the full signal.</p></li></ol></aside></section>
+</section>
 <section class="slide level3 unnumbered">
 <h3>Wireless Standards</h3>
 <div id="cell-fig-rf-design-multidisciplinary" class="cell" data-execution_count="3">

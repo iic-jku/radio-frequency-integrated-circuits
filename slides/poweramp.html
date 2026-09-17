@@ -54,7 +54,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-a975c94262742d03914c7a56aca0ba09.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-03e017e5ca202a610282a31b74f9273c.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -409,6 +409,14 @@ Table&nbsp;7: Amplifier Classes
 </div>
 <aside class="notes">
 <p>Power amplifiers can be classified into different <a href="https://en.wikipedia.org/wiki/Power_amplifier_classes">classes</a> based on their conduction angle, which is the portion of the input signal cycle during which the transistor conducts current. The most common classes are Class A, Class B, Class AB, Class C, Class D, Class E, and Class F. Each class has its own trade-offs between efficiency, linearity, and complexity. The following table summarizes the main characteristics of each amplifier class:</p>
+<ul>
+<li><strong>Class A</strong> amplifiers are the most linear but also the least efficient, as they conduct current throughout the entire input signal cycle. They are typically used in applications where linearity is critical, such as low power analog signal processing. Drain efficiency is limited to <span class="math inline">\(\eta \leq 50\%\)</span>.</li>
+<li><strong>Class B</strong> amplifiers are more efficient than Class A, as they conduct current only during half of the input signal cycle. However, they suffer from crossover distortion at the zero-crossing point of the input signal. The upper limit for drain efficiency is <span class="math inline">\(\eta \leq 78.5\%\)</span>.</li>
+<li><strong>Class AB</strong> amplifiers are a compromise between Class A and Class B, providing better linearity than Class B while still being more efficient than Class A. They are widely used in small-signal applications and linear RF power amplifiers, where better efficiency than Class A is desired.</li>
+<li><strong>Class C</strong> amplifiers are highly efficient but exhibit significant distortion, as they conduct current for only a part of the input signal cycle. They are typically used in applications where efficiency is more important than linearity, such as RF transmitters for constant-envelope modulation schemes (e.g., FM, FSK). Drain efficiency can theoretically approach <span class="math inline">\(\eta = 100\%\)</span>, but only as the output power falls to zero.</li>
+<li><strong>Class D, E, and F</strong> amplifiers are switching amplifiers that achieve very high efficiencies by operating the transistor as a switch, either fully on or fully off. They use various techniques such as pulse-width modulation (PWM), tuned loads, and harmonic tuning to optimize efficiency. These classes are commonly used in high-power applications, such as audio amplifiers and RF transmitters.</li>
+<li><strong>Class G and H</strong> amplifiers use multiple supply voltages or adaptive supply voltages to improve efficiency, and can be combined with the other classes. They are often used in applications where power consumption is a concern, such as battery-powered devices. Class AB combined with Class G or H techniques is state-of-the-art in mobile device PAs. Class G and H are sometimes also referred to as “<strong>envelope tracking</strong>” techniques.</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -424,12 +432,12 @@ Table&nbsp;7: Amplifier Classes
 <section class="slide level3 unnumbered">
 <h3>Amplifier Classes</h3>
 <ul>
-<li><strong>Class A</strong> amplifiers are the most linear but also the least efficient, as they conduct current throughout the entire input signal cycle. They are typically used in applications where linearity is critical, such as low power analog signal processing. Drain efficiency is limited to <span class="math inline">\(\eta \leq 50\%\)</span>.</li>
-<li><strong>Class B</strong> amplifiers are more efficient than Class A, as they conduct current only during half of the input signal cycle. However, they suffer from crossover distortion at the zero-crossing point of the input signal. The upper limit for drain efficiency is <span class="math inline">\(\eta \leq 78.5\%\)</span>.</li>
-<li><strong>Class AB</strong> amplifiers are a compromise between Class A and Class B, providing better linearity than Class B while still being more efficient than Class A. They are widely used in small-signal applications and linear RF power amplifiers, where better efficiency than Class A is desired.</li>
-<li><strong>Class C</strong> amplifiers are highly efficient but exhibit significant distortion, as they conduct current for only a part of the input signal cycle. They are typically used in applications where efficiency is more important than linearity, such as RF transmitters for constant-envelope modulation schemes (e.g., FM, FSK). Drain efficiency can theoretically approach <span class="math inline">\(\eta = 100\%\)</span>, but only as the output power falls to zero.</li>
-<li><strong>Class D, E, and F</strong> amplifiers are switching amplifiers that achieve very high efficiencies by operating the transistor as a switch, either fully on or fully off. They use various techniques such as pulse-width modulation (PWM), tuned loads, and harmonic tuning to optimize efficiency. These classes are commonly used in high-power applications, such as audio amplifiers and RF transmitters.</li>
-<li><strong>Class G and H</strong> amplifiers use multiple supply voltages or adaptive supply voltages to improve efficiency, and can be combined with the other classes. They are often used in applications where power consumption is a concern, such as battery-powered devices. Class AB combined with Class G or H techniques is state-of-the-art in mobile device PAs. Class G and H are sometimes also referred to as “<strong>envelope tracking</strong>” techniques.</li>
+<li><strong>Class A</strong>: most linear, least efficient, <span class="math inline">\(\eta \leq 50\%\)</span></li>
+<li><strong>Class B</strong>: half-cycle conduction, crossover distortion, <span class="math inline">\(\eta \leq 78.5\%\)</span></li>
+<li><strong>Class AB</strong>: compromise; linear RF PAs</li>
+<li><strong>Class C</strong>: efficient but distorting; constant-envelope modulation, <span class="math inline">\(\eta \to 100\%\)</span> only as output power <span class="math inline">\(\to 0\)</span></li>
+<li><strong>Class D, E, F</strong>: switching amplifiers, very high efficiency</li>
+<li><strong>Class G, H</strong>: multiple or adaptive supply (“<strong>envelope tracking</strong>”); AB + G/H is state of the art in mobile PAs</li>
 </ul>
 </section>
 
@@ -510,12 +518,17 @@ Figure&nbsp;104: A generic differential power amplifier with neutralization for 
 <section class="slide level3 unnumbered">
 <h3>PA Advanced Techniques</h3>
 <ul>
+<li><strong>Predistortion</strong> (DPD): inverse distortion of the input cancels PA nonlinearity</li>
+<li><strong>Envelope tracking</strong>: supply follows the signal envelope (cf.&nbsp;Class G/H)</li>
+<li><strong>Load modulation</strong>: tunable or switched load; actively in the <strong>Doherty amplifier</strong> (main and peaking amplifier) for efficiency at back-off</li>
+</ul>
+<aside class="notes">
+<p>To further improve the performance of power amplifiers (but outside the scope of these lecture notes), several advanced techniques can be employed:</p>
+<ul>
 <li><strong>Predistortion</strong>: This technique involves applying an inverse distortion to the input signal before it enters the PA, effectively canceling out the nonlinearity of the PA. Digital predistortion (DPD) is commonly used in modern communication systems to improve linearity and reduce spectral regrowth.</li>
 <li><strong>Envelope Tracking</strong>: This technique dynamically adjusts the supply voltage of the PA based on the envelope of the input signal, improving efficiency by reducing power consumption during low signal levels (see Class G and Class H).</li>
 <li><strong>Load Modulation</strong>: This technique involves varying the load impedance seen by the PA to optimize performance for different signal conditions. This can be achieved using tunable matching networks or switched load networks. An active method is the <strong>Doherty amplifier</strong> architecture, which uses two amplifiers (a main and a peaking amplifier) to improve efficiency at back-off power levels.</li>
 </ul>
-<aside class="notes">
-<p>To further improve the performance of power amplifiers (but outside the scope of these lecture notes), several advanced techniques can be employed:</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

@@ -312,7 +312,7 @@
     "href": "rfic.html#sec-spurs-mechanisms",
     "title": "Radio-Frequency Integrated Circuits",
     "section": "9.1 Coupling Paths",
-    "text": "9.1 Coupling Paths\nFigure 105 shows the main on-chip coupling paths in a typical TRX architecture. The following discussion uses the crosstalk nomenclature introduced in (Sadjina et al. 2020).\n\n\n\n\n\n\n\n\nFigure 105: Block diagram of a typical transceiver (TRX) showing the main coupling paths.\n\n\n\n\n\n\nTX-to-RX coupling through the RFIC, duplexer and shared front-end elements (“TX leakage”) can cause issues such as gain desensitization, reciprocal mixing, receive-band noise from the TX, and IM2/IM3 distortion in the RX (Aparin and Larson 2006).\nRX VCO coupling (“RX LO leakage”) from the RX VCO/PLL into the LNA/mixer can cause increased IM2 products and LO radiation.\nLO-to-LO coupling through the LO distribution network can cause reciprocal mixing due to LO spurs in RX, or OOB emissions on TX. When the two oscillators run at nearby frequencies, injection pulling between the VCOs can also degrade the spectral purity of both LOs (Razavi 2004).\nTX VCO coupling (“TX LO leakage”) from the TX VCO/PLL into the PA can cause increased LO leakage and EVM degradation."
+    "text": "9.1 Coupling Paths\nFigure 105 shows the main on-chip coupling paths in a typical TRX architecture. The following discussion uses the crosstalk nomenclature introduced in (Sadjina et al. 2020).\n\n\n\n\n\n\n\n\nFigure 105: Block diagram of a typical transceiver (TRX) showing the main coupling paths.\n\n\n\n\n\n\nTX-to-RX coupling through the RFIC, duplexer and shared front-end elements (“TX leakage”) can cause issues such as gain desensitization, reciprocal mixing, receive-band noise from the TX, and IM2/IM3 distortion in the RX (Aparin et al. 2006).\nRX VCO coupling (“RX LO leakage”) from the RX VCO/PLL into the LNA/mixer can cause increased IM2 products and LO radiation.\nLO-to-LO coupling through the LO distribution network can cause reciprocal mixing due to LO spurs in RX, or OOB emissions on TX. When the two oscillators run at nearby frequencies, injection pulling between the VCOs can also degrade the spectral purity of both LOs (Razavi 2004).\nTX VCO coupling (“TX LO leakage”) from the TX VCO/PLL into the PA can cause increased LO leakage and EVM degradation."
   },
   {
     "objectID": "rfic.html#sec-spurs-pll",
@@ -445,7 +445,7 @@
     "href": "slides/trx.html#sec-trx-duplexing",
     "title": "Transceivers",
     "section": "3.5 Duplexing",
-    "text": "3.5 Duplexing"
+    "text": "3.5 Duplexing\n\nNowadays there exist good design techniques to mitigate these disadvantages. However, in some cases (for example very high linearity requirements, or very high frequencies) other architectures like low-IF or super-heterodyne may be preferable."
   },
   {
     "objectID": "slides/trx.html#specialty-architectures",
@@ -543,7 +543,7 @@
     "href": "slides/intro.html#sec-intro-standards",
     "title": "Introduction",
     "section": "1.2 Wireless Standards",
-    "text": "1.2 Wireless Standards"
+    "text": "1.2 Wireless Standards\n\nAs stated in the beginning, designing wireless systems is hard."
   },
   {
     "objectID": "slides/index.html",
@@ -711,7 +711,7 @@
     "href": "slides/fundamentals.html#sec-fundamentals-mcs",
     "title": "Fundamentals",
     "section": "2.8 Modulation and Coding Schemes",
-    "text": "2.8 Modulation and Coding Schemes"
+    "text": "2.8 Modulation and Coding Schemes\n\nAll of the above techniques can be combined to create more efficient and flexible communication systems. For example, OFDMA can be used in conjunction with SDMA to allow multiple users to share the same frequency resources while also taking advantage of spatial diversity. Also, TDMA can be combined with FDMA to create a hybrid multiple access scheme (which has been used in 2G)."
   },
   {
     "objectID": "slides/poweramp.html#sec-poweramp-efficiency",
@@ -802,6 +802,6 @@
     "href": "slides/spurs.html#sec-spurs-mitigation",
     "title": "Spurs, Crosstalk and Self-Interference",
     "section": "9.3 Spur and Crosstalk Mitigation",
-    "text": "9.3 Spur and Crosstalk Mitigation"
+    "text": "9.3 Spur and Crosstalk Mitigation\n\nOnce these spurs appear on the LO, they translate directly into the receive band through reciprocal mixing of a strong blocker, or into the transmit spectrum through the upconversion mixer. If these spurs are inside the channel bandwidth, they cause EVM degradation and may violate spectral mask requirements."
   }
 ]

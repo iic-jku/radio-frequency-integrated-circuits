@@ -54,7 +54,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-a975c94262742d03914c7a56aca0ba09.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-03e017e5ca202a610282a31b74f9273c.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -417,10 +417,23 @@ s_\mathrm{out}(t) = \frac{2}{\pi} \cos(\omega_\mathrm{in} t \pm \omega_\mathrm{L
 <p><strong>Single-Balanced vs.&nbsp;Double-Balanced</strong></p>
 </div>
 <div class="callout-content">
+<p>The 6 dB are <em>not</em> due to double balancing: a <strong>single-balanced</strong> mixer already realizes the <span class="math inline">\(\pm 1\)</span> switching function and the <span class="math inline">\(2/\pi\)</span> conversion gain. Double balancing adds <em>port-to-port isolation</em>: LO and RF feedthrough in <a href="#/fig-cmos-double-mixer" class="quarto-xref">Figure&nbsp;46</a> are common-mode at the output and thus suppressed.</p>
+</div>
+</div>
+</div>
+<aside class="notes">
 <p>Take care not to attribute these 6 dB to the <em>double</em>-balancing itself. A <strong>single-balanced</strong> mixer (a single-ended input driving a differential pair of switches with a differential output) already realizes the <span class="math inline">\(\pm 1\)</span> switching function, and therefore already achieves the <span class="math inline">\(2/\pi\)</span> conversion gain. What the second level of balancing buys is <em>port-to-port isolation</em>: in the double-balanced mixer of <a href="#/fig-cmos-double-mixer" class="quarto-xref">Figure&nbsp;46</a> both the LO feedthrough and the RF feedthrough appear as common-mode signals at the differential output and are thus suppressed. This is why the double-balanced structure is the workhorse in practice, not because of any additional conversion gain.</p>
-</div>
-</div>
-</div>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level3 unnumbered">
 <h3>Time-Variant Mixer</h3>

@@ -54,7 +54,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-a975c94262742d03914c7a56aca0ba09.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-03e017e5ca202a610282a31b74f9273c.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -209,13 +209,17 @@ Block diagram of an LNA. Typically, the LNA input is impedance matched to 50 Ω
 <section class="slide level3 unnumbered">
 <h3>Impedance Matching</h3>
 <ul>
+<li>The antenna is designed for a specific impedance (e.g., 50 Ω); a mismatch reflects signal power</li>
+<li>RF filters in front of the LNA need the correct termination</li>
+<li>Transmission lines need a match to avoid reflections and standing waves</li>
+</ul>
+<aside class="notes">
+<p>Why is impedance matching at the input of the LNA so important?</p>
+<ul>
 <li>The antenna is usually designed for a specific impedance, e.g., 50 Ω, and if the LNA input is not matched to this impedance, a significant portion of the received signal will be reflected back to the antenna, resulting in a loss of signal power.</li>
 <li>RF filters at the input of the LNA need to be terminated with the correct impedance to achieve the desired filter characteristics.</li>
 <li>Any transmission line in front of the LNA needs to be matched to avoid reflections and standing waves.</li>
 </ul>
-<aside class="notes">
-<p>Why is impedance matching at the input of the LNA so important?</p>
-<p>To quantify the “quality” of an impedance match, the <strong>reflection coefficient</strong> <span class="math inline">\(\Gamma\)</span> is often used, which is defined as <span class="citation" data-cites="Pozar_RF">(<a href="#/references" role="doc-biblioref" onclick="">Pozar 2011</a>)</span>:</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -234,6 +238,7 @@ Block diagram of an LNA. Typically, the LNA input is impedance matched to 50 Ω
 \Gamma = \frac{Z_{\mathrm{in}} - Z_0}{Z_{\mathrm{in}} + Z_0}
 \tag{31}\]</span></span></p>
 <aside class="notes">
+<p>To quantify the “quality” of an impedance match, the <strong>reflection coefficient</strong> <span class="math inline">\(\Gamma\)</span> is often used, which is defined as <span class="citation" data-cites="Pozar_RF">(<a href="#/references" role="doc-biblioref" onclick="">Pozar 2011</a>)</span>:</p>
 <p>where <span class="math inline">\(Z_0\)</span> is the characteristic impedance of the system (usually 50 Ω) and <span class="math inline">\(Z_{\mathrm{in}}\)</span> is the input impedance of the LNA. For a <em>passive</em> input impedance, i.e., <span class="math inline">\(\Re \{ Z_\mathrm{in} \} \geq 0\)</span>, the reflection coefficient <span class="math inline">\(\Gamma\)</span> is a complex number with a magnitude between 0 and 1 (as can be readily shown from <a href="#/eq-reflection-coefficient" class="quarto-xref">Equation&nbsp;31</a>), where <span class="math inline">\(|\Gamma| = 0\)</span> indicates a perfect match and <span class="math inline">\(|\Gamma| = 1\)</span> indicates a complete mismatch. If the input presents a <em>negative</em> real part, then <span class="math inline">\(|\Gamma| &gt; 1\)</span>, i.e., the port reflects more power than is incident on it. This is exactly the condition we must avoid at all costs, and which we investigate in <a href="#/sec-amp-stability" class="quarto-xref">Section&nbsp;4.2</a>. This reflection coefficient can be represented on the Smith chart shown in <a href="#/fig-smith-chart" class="quarto-xref">Figure&nbsp;32</a>. A useful interactive tool to draft a matching network and visualize it on a Smith chart is this <a href="https://onlinesmithchart.com">website</a>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -308,15 +313,15 @@ Smith chart showing constant resistance and reactance circles for impedance matc
 <p><strong>Bode-Fano Criterion</strong></p>
 </div>
 <div class="callout-content">
-<p>The Bode-Fano criterion states that for a given load impedance and a given bandwidth, there is a fundamental limit to how well an impedance can be matched over that bandwidth; this criterion is important in the design of LNAs! The Bode-Fano criterion can be expressed mathematically as <span class="citation" data-cites="Fano.1950 Pozar_RF">(<a href="#/references" role="doc-biblioref" onclick="">Fano 1950</a>; <a href="#/references" role="doc-biblioref" onclick="">Pozar 2011</a>, ch.&nbsp;5.9)</span></p>
+<p>Fundamental limit on how well a load can be matched over a bandwidth <span class="citation" data-cites="Fano.1950 Pozar_RF">(<a href="#/references" role="doc-biblioref" onclick="">Fano 1950</a>; <a href="#/references" role="doc-biblioref" onclick="">Pozar 2011</a>, ch.&nbsp;5.9)</span>:</p>
 <p><span id="eq-bode-fano-criterion"><span class="math display">\[
 \int_{0}^{\infty} \ln \left( \frac{1}{|\Gamma(\omega)|} \right) d\omega \leq \frac{\pi}{R C}
 \tag{33}\]</span></span></p>
 <div class="fragment">
-<p>where <span class="math inline">\(\Gamma(\omega)\)</span> is the frequency-dependent reflection coefficient, <span class="math inline">\(R\)</span> is the load resistance, and <span class="math inline">\(C\)</span> is the load capacitance (for an <span class="math inline">\(R \parallel C\)</span> load). This criterion implies that achieving a very good impedance match (i.e., a low reflection coefficient) over a wide bandwidth is fundamentally limited by the properties of the load. In practice, this means that there is a trade-off between the bandwidth of the match and the achievable return loss in an LNA design.</p>
+<p>for an <span class="math inline">\(R \parallel C\)</span> load: match bandwidth trades off against return loss.</p>
 </div>
 <div class="fragment">
-<p>If we assume that we strive for match with <span class="math inline">\(|\Gamma_\mathrm{m}|\)</span> over a fractional bandwidth <span class="math inline">\(\Delta \omega / \omega_0\)</span>, we can derive from the Bode-Fano criterion (and using that <span class="math inline">\(Q = \omega_0 R C\)</span> for a parallel <span class="math inline">\(RC\)</span> circuit) that</p>
+<p>Match <span class="math inline">\(|\Gamma_\mathrm{m}|\)</span> over <span class="math inline">\(\Delta \omega / \omega_0\)</span>, with <span class="math inline">\(Q = \omega_0 R C\)</span>:</p>
 </div>
 <div class="fragment">
 <p><span class="math display">\[
@@ -324,11 +329,27 @@ Smith chart showing constant resistance and reactance circles for impedance matc
 \]</span></p>
 </div>
 <div class="fragment">
+<p>Example: 20 dB return loss (<span class="math inline">\(|\Gamma_\mathrm{m}| = 0.1\)</span>) over 30% bandwidth requires <span class="math inline">\(Q \leq 4.5\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>The Bode-Fano criterion states that for a given load impedance and a given bandwidth, there is a fundamental limit to how well an impedance can be matched over that bandwidth; this criterion is important in the design of LNAs! The Bode-Fano criterion can be expressed mathematically as <span class="citation" data-cites="Fano.1950 Pozar_RF">(<a href="#/references" role="doc-biblioref" onclick="">Fano 1950</a>; <a href="#/references" role="doc-biblioref" onclick="">Pozar 2011</a>, ch.&nbsp;5.9)</span></p>
+<p>where <span class="math inline">\(\Gamma(\omega)\)</span> is the frequency-dependent reflection coefficient, <span class="math inline">\(R\)</span> is the load resistance, and <span class="math inline">\(C\)</span> is the load capacitance (for an <span class="math inline">\(R \parallel C\)</span> load). This criterion implies that achieving a very good impedance match (i.e., a low reflection coefficient) over a wide bandwidth is fundamentally limited by the properties of the load. In practice, this means that there is a trade-off between the bandwidth of the match and the achievable return loss in an LNA design.</p>
+<p>If we assume that we strive for match with <span class="math inline">\(|\Gamma_\mathrm{m}|\)</span> over a fractional bandwidth <span class="math inline">\(\Delta \omega / \omega_0\)</span>, we can derive from the Bode-Fano criterion (and using that <span class="math inline">\(Q = \omega_0 R C\)</span> for a parallel <span class="math inline">\(RC\)</span> circuit) that</p>
 <p>For example, if we want to achieve a return loss of 20 dB (i.e., <span class="math inline">\(|\Gamma_\mathrm{m}| = 0.1\)</span>) over a fractional bandwidth of 30%, we find that the quality factor of the load (i.e., the input stage of the LNA) needs to be <span class="math inline">\(Q \leq 4.5\)</span>.</p>
-</div>
-</div>
-</div>
-</div>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
 <section id="sec-amp-stability" class="title-slide slide level2 center" data-number="4.2">
@@ -829,12 +850,12 @@ Z_\mathrm{in} = \frac{Z_\mathrm{F} + Z_\mathrm{L}}{1 + g_\mathrm{m}Z_\mathrm{L}}
 <p><strong>Derivation of the Shunt-Feedback Input Impedance</strong></p>
 </div>
 <div class="callout-content">
-<p>We apply a test voltage <span class="math inline">\(V_x\)</span> at the gate and find the resulting current <span class="math inline">\(I_x\)</span> (ignoring <span class="math inline">\(g_\mathrm{ds}\)</span> and the gate capacitance for simplicity). Because the only path into the gate is through <span class="math inline">\(Z_\mathrm{F}\)</span>, we have</p>
+<p>Test voltage <span class="math inline">\(V_x\)</span> at the gate (ignoring <span class="math inline">\(g_\mathrm{ds}\)</span> and <span class="math inline">\(C_\mathrm{gs}\)</span>); the gate current flows through <span class="math inline">\(Z_\mathrm{F}\)</span>:</p>
 <p><span class="math display">\[
 I_x = \frac{V_x - V_d}{Z_\mathrm{F}}.
 \]</span></p>
 <div class="fragment">
-<p>Applying KCL at the drain node, where currents leave through <span class="math inline">\(Z_\mathrm{F}\)</span>, through <span class="math inline">\(Z_\mathrm{L}\)</span> to <span class="math inline">\(V_\mathrm{DD}\)</span> (ac ground), and via the transistor current source <span class="math inline">\(g_\mathrm{m}V_x\)</span>:</p>
+<p>KCL at the drain:</p>
 </div>
 <div class="fragment">
 <p><span class="math display">\[
@@ -842,7 +863,7 @@ I_x = \frac{V_x - V_d}{Z_\mathrm{F}}.
 \]</span></p>
 </div>
 <div class="fragment">
-<p>Rearranging for <span class="math inline">\(V_d\)</span> and substituting back</p>
+<p>Solving for <span class="math inline">\(V_d\)</span> and substituting gives <a href="#/eq-lna-shunt-fb-zin" class="quarto-xref">Equation&nbsp;47</a>:</p>
 </div>
 <div class="fragment">
 <p><span class="math display">\[
@@ -853,12 +874,25 @@ I_x &amp;= \frac{V_x - V_d}{Z_\mathrm{F}}\\
 \end{split}
 \]</span></p>
 </div>
-<div class="fragment">
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>We apply a test voltage <span class="math inline">\(V_x\)</span> at the gate and find the resulting current <span class="math inline">\(I_x\)</span> (ignoring <span class="math inline">\(g_\mathrm{ds}\)</span> and the gate capacitance for simplicity). Because the only path into the gate is through <span class="math inline">\(Z_\mathrm{F}\)</span>, we have</p>
+<p>Applying KCL at the drain node, where currents leave through <span class="math inline">\(Z_\mathrm{F}\)</span>, through <span class="math inline">\(Z_\mathrm{L}\)</span> to <span class="math inline">\(V_\mathrm{DD}\)</span> (ac ground), and via the transistor current source <span class="math inline">\(g_\mathrm{m}V_x\)</span>:</p>
+<p>Rearranging for <span class="math inline">\(V_d\)</span> and substituting back</p>
 <p>which gives <a href="#/eq-lna-shunt-fb-zin" class="quarto-xref">Equation&nbsp;47</a> directly.</p>
-</div>
-</div>
-</div>
-</div>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level3 unnumbered">
 <h3>Feedback LNA</h3>

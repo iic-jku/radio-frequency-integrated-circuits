@@ -54,7 +54,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-a975c94262742d03914c7a56aca0ba09.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-03e017e5ca202a610282a31b74f9273c.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -327,14 +327,28 @@ H_\mathrm{LP}(s) = \frac{1}{1 + s T_\mathrm{LP}}.
 <p><strong>Why Regulate Phase Instead of Frequency (PLL vs.&nbsp;FLL)?</strong></p>
 </div>
 <div class="callout-content">
-<p>Before we proceed, it is worth discussing why PLLs regulate the phase of the VCO output rather than its frequency directly. The reason lies in the relationship between phase and frequency: Frequency is the time derivative of phase. By controlling the phase, the PLL inherently controls the frequency as well. Additionally, even if the phase regulation has a steady-state phase error <span class="math inline">\(\varphi_\mathrm{err}\)</span>, the frequency error in steady state is <strong>zero</strong>, as can be appreciated when inspecting</p>
+<p>Frequency is the derivative of phase: controlling phase controls frequency, and a steady-state phase error <span class="math inline">\(\varphi_\mathrm{err}\)</span> still gives <strong>zero</strong> frequency error:</p>
 <p><span class="math display">\[
 \omega_\mathrm{out}(t) = \frac{d \varphi_\mathrm{out}(t)}{dt}  = \frac{d}{dt} \left[ N \cdot \varphi_\mathrm{ref}(t) + \varphi_\mathrm{err} \right] = N \cdot \frac{d \varphi_\mathrm{ref}(t)}{dt} = N \cdot \omega_\mathrm{ref}(t).
 \]</span></p>
+<p>A frequency-locked loop (FLL, e.g., counter-based) usually leaves a frequency error, but helps PLL acquisition for large initial offsets.</p>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Before we proceed, it is worth discussing why PLLs regulate the phase of the VCO output rather than its frequency directly. The reason lies in the relationship between phase and frequency: Frequency is the time derivative of phase. By controlling the phase, the PLL inherently controls the frequency as well. Additionally, even if the phase regulation has a steady-state phase error <span class="math inline">\(\varphi_\mathrm{err}\)</span>, the frequency error in steady state is <strong>zero</strong>, as can be appreciated when inspecting</p>
 <p>In principle, one could also design a frequency-locked loop (FLL) that compares the frequencies of the reference and VCO output signals directly (by, e.g., using counters); however, this usually results in non-zero frequency error in steady state. Nevertheless, FLLs are often used in combination with PLLs to improve acquisition time and robustness, especially in scenarios with large initial frequency offsets.</p>
-</div>
-</div>
-</div>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level3 unnumbered">
 <h3>Basic PLL Architecture</h3>
@@ -367,6 +381,10 @@ H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{K
 \tag{62}\]</span></span></p>
 <aside class="notes">
 <p>We can use all techniques known from control theory to analyze the stability and dynamic response of the PLL based on <a href="#/eq-pll-transfer-function" class="quarto-xref">Equation&nbsp;62</a>, however, we have to keep the following in mind:</p>
+<ul>
+<li><span class="math inline">\(H(s)\)</span> is a small-signal model of the PLL around its locked operating point, only valid for small perturbations. Large-signal behavior, such as acquisition and lock range, is not captured by this model.</li>
+<li>A PLL is a sampled system, working at instants of <span class="math inline">\(T_\mathrm{ref}\)</span>. <span class="math inline">\(H(s)\)</span> is a continuous-time approximation, which is valid only if the loop bandwidth is much smaller (typically <span class="math inline">\(1/10\)</span>) than the reference frequency <span class="math inline">\(f_\mathrm{ref}\)</span>. If this approximation is not valid, a discrete-time model of the PLL must be used, deriving the <span class="math inline">\(z\)</span>-domain transfer function <span class="math inline">\(H(z)\)</span>.</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -382,22 +400,9 @@ H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{K
 <section class="slide level3 unnumbered">
 <h3>Basic PLL Architecture</h3>
 <ul>
-<li><span class="math inline">\(H(s)\)</span> is a small-signal model of the PLL around its locked operating point, only valid for small perturbations. Large-signal behavior, such as acquisition and lock range, is not captured by this model.</li>
-<li>A PLL is a sampled system, working at instants of <span class="math inline">\(T_\mathrm{ref}\)</span>. <span class="math inline">\(H(s)\)</span> is a continuous-time approximation, which is valid only if the loop bandwidth is much smaller (typically <span class="math inline">\(1/10\)</span>) than the reference frequency <span class="math inline">\(f_\mathrm{ref}\)</span>. If this approximation is not valid, a discrete-time model of the PLL must be used, deriving the <span class="math inline">\(z\)</span>-domain transfer function <span class="math inline">\(H(z)\)</span>.</li>
+<li><span class="math inline">\(H(s)\)</span> is a small-signal model around lock; acquisition and lock range are not covered</li>
+<li><span class="math inline">\(H(s)\)</span> approximates a sampled system; valid for loop bandwidth <span class="math inline">\(\ll f_\mathrm{ref}\)</span> (typically <span class="math inline">\(1/10\)</span>), otherwise use <span class="math inline">\(H(z)\)</span></li>
 </ul>
-<aside class="notes">
-<p>If we compare the canonical form of a second-order system given by</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section class="slide level3 unnumbered">
 <h3>Basic PLL Architecture</h3>
@@ -408,6 +413,7 @@ H(s) = N \cdot \frac{\omega_\mathrm{n}^2}{s^2 + s \cdot 2 \zeta \omega_\mathrm{n
 \omega_\mathrm{n} = \sqrt{\frac{K_\mathrm{VCO} \cdot K_\mathrm{PD} \cdot \omega_\mathrm{LP}}{N}}
 \tag{63}\]</span></span></p>
 <aside class="notes">
+<p>If we compare the canonical form of a second-order system given by</p>
 <p>with <a href="#/eq-pll-transfer-function" class="quarto-xref">Equation&nbsp;62</a>, we can identify the natural frequency <span class="math inline">\(\omega_n\)</span> and the damping factor <span class="math inline">\(\zeta\)</span> of the PLL as</p>
 <p>and</p>
 <style type="text/css">
@@ -494,14 +500,19 @@ Figure&nbsp;77: Implementation of a phase-frequency detector.
 <section class="slide level3 unnumbered">
 <h3>Charge-Pump PLL</h3>
 <ul>
+<li>Reference leads: “UP” active, CP sources current, VCO frequency <em>increases</em></li>
+<li>Feedback leads: “DOWN” active, CP sinks current, VCO frequency <em>decreases</em></li>
+<li>Aligned: only short pulses, loop filter capacitor holds the tuning voltage</li>
+<li>The later edge resets both outputs: current pulse width is proportional to the phase difference</li>
+</ul>
+<aside class="notes">
+<p>The PFD operates as follows:</p>
+<ul>
 <li>If the reference signal leads the feedback signal (its rising edge arrives first), the “UP” output is activated, causing the CP to source current into the integration capacitor, <em>increasing</em> the VCO tuning voltage and thus the VCO frequency.</li>
 <li>If the feedback signal leads the reference signal (its rising edge arrives first), the “DOWN” output is activated, causing the CP to sink current from the integration capacitor, <em>decreasing</em> the VCO tuning voltage and thus the VCO frequency.</li>
 <li>If both signals are aligned in phase and frequency, both outputs are only activated for a short time (the gate delays of the DFF and the AND), and the CP does not source or sink current; the integration capacitor in the loop filter holds its voltage, maintaining the VCO frequency.</li>
 <li>The rising edge that arrives last resets both outputs, ensuring that the CP only sources or sinks current for a duration proportional to the phase difference between the two signals.</li>
 </ul>
-<aside class="notes">
-<p>The PFD operates as follows:</p>
-<p>In the following, we will look at four different cases of PFD operation to illustrate its behavior.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -519,6 +530,19 @@ Figure&nbsp;77: Implementation of a phase-frequency detector.
 <ol type="1">
 <li><em>Reference leads feedback</em>: The “UP” output is activated, and the CP sources current to the loop filter, increasing the VCO frequency.</li>
 </ol>
+<aside class="notes">
+<p>In the following, we will look at four different cases of PFD operation to illustrate its behavior.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level3 unnumbered">
 <h3>Charge-Pump PLL</h3>
@@ -676,6 +700,12 @@ H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{\
 <p>With <a href="#/eq-cp-pll-damping-factor" class="quarto-xref">Equation&nbsp;69</a>, we can now appreciate the need for the resistor <span class="math inline">\(R_\mathrm{int}\)</span> in series with the capacitor <span class="math inline">\(C_\mathrm{int}\)</span> in the loop filter. Without this resistor, the damping factor <span class="math inline">\(\zeta\)</span> would be zero, leading to an undamped system with oscillatory behavior and poor transient response. The resistor introduces a zero in the loop filter transfer function, providing the necessary damping to stabilize the PLL and improve its dynamic response.</p>
 <p>Looking at <a href="#/fig-pll-pfd-cp" class="quarto-xref">Figure&nbsp;83</a> and <a href="#/eq-cp-transfer-function" class="quarto-xref">Equation&nbsp;66</a>, we can also see that the PFD-CP introduces another integrator in the loop. This integrator, together with the integrator from the VCO, makes the PLL a <strong>Type-II PLL</strong>. A Type-II PLL achieves zero steady-state phase error not only for a step in the reference phase (which a Type-I PLL manages as well), but also for a <em>step in the reference frequency</em>, i.e., a ramp in the reference phase. This is the practically important case, as it means the loop settles to exactly <span class="math inline">\(\Delta \varphi = 0\)</span> after a channel change, without the static phase offset that a Type-I PLL would exhibit. Only for a frequency <em>ramp</em> (a parabolic phase input) does a Type-II PLL retain a finite static phase error.</p>
 <p>In conclusion:</p>
+<ul>
+<li>The PLL regulates the phase of a VCO to match the phase of a reference signal, using feedback control. Even with a steady-state phase error, the frequency error is zero (Type-I PLL). In a Type-II PLL, both phase and frequency errors are zero in steady state.</li>
+<li>The lowpass behavior of the loop filter determines the dynamic response and stability of the PLL.</li>
+<li>Further, the PLL transfer function from reference phase to output phase has the form of a lowpass, which passes the reference oscillator phase noise to the output inside the passband. The phase noise of the VCO is suppressed inside the loop bandwidth, as the PLL corrects for phase deviations.</li>
+<li>Outside the PLL loop bandwidth, the VCO phase noise dominates, as the PLL cannot correct for phase deviations fast enough.</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -691,24 +721,11 @@ H(s) = \frac{\varphi_\mathrm{out}(s)}{\varphi_\mathrm{ref}(s)} = N \cdot \frac{\
 <section class="slide level3 unnumbered">
 <h3>Charge-Pump PLL</h3>
 <ul>
-<li>The PLL regulates the phase of a VCO to match the phase of a reference signal, using feedback control. Even with a steady-state phase error, the frequency error is zero (Type-I PLL). In a Type-II PLL, both phase and frequency errors are zero in steady state.</li>
-<li>The lowpass behavior of the loop filter determines the dynamic response and stability of the PLL.</li>
-<li>Further, the PLL transfer function from reference phase to output phase has the form of a lowpass, which passes the reference oscillator phase noise to the output inside the passband. The phase noise of the VCO is suppressed inside the loop bandwidth, as the PLL corrects for phase deviations.</li>
-<li>Outside the PLL loop bandwidth, the VCO phase noise dominates, as the PLL cannot correct for phase deviations fast enough.</li>
+<li>The PLL locks the VCO phase to the reference; zero frequency error in steady state (Type-II: zero phase error, too)</li>
+<li>The loop filter sets dynamics and stability</li>
+<li>Inside the loop bandwidth: reference phase noise passes (lowpass), VCO phase noise is suppressed</li>
+<li>Outside the loop bandwidth: VCO phase noise dominates</li>
 </ul>
-<aside class="notes">
-<p>This phase noise shaping behavior is illustrated in <a href="#/fig-pll-phase-noise" class="quarto-xref">Figure&nbsp;84</a>, which shows how the reference and VCO phase noise contributions combine to form the total PLL output phase noise.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section class="slide level3 unnumbered">
 <h3>Charge-Pump PLL</h3>
@@ -727,6 +744,7 @@ Figure&nbsp;84: PLL phase noise contributions at the PLL output showing referenc
 </div>
 </div>
 <aside class="notes">
+<p>This phase noise shaping behavior is illustrated in <a href="#/fig-pll-phase-noise" class="quarto-xref">Figure&nbsp;84</a>, which shows how the reference and VCO phase noise contributions combine to form the total PLL output phase noise.</p>
 PLL phase noise contributions at the PLL output showing reference phase noise (increased by 20*log(N) and low-pass shaped), VCO phase noise (high-pass shaped), and total phase noise. The loop bandwidth determines the crossover frequency between reference and VCO phase noise contributions. For effective rejection of the 1/f³ VCO phase noise, a higher-order loop filter (shown is 3rd order) is beneficial.
 <style type="text/css">
         span.MJX_Assistive_MathML {

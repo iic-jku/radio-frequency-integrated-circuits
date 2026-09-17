@@ -54,7 +54,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-a975c94262742d03914c7a56aca0ba09.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-03e017e5ca202a610282a31b74f9273c.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -190,15 +190,21 @@
 <section class="slide level3 unnumbered">
 <h3>Direct-Conversion Transceiver</h3>
 <ul>
+<li>Pulse shaping of the baseband signal (mostly digital)</li>
+<li>Up-/downconversion to/from the carrier frequency</li>
+<li>Contain the TX signal in a small bandwidth; single out the wanted RX signal with adequate SNR</li>
+<li>Adapt gain (and linearity) to the RX signal and TX output power</li>
+<li>Generate the LO with low phase noise</li>
+</ul>
+<aside class="notes">
+<p>The following typical functions have to be performed by a TRX:</p>
+<ul>
 <li>Pulse-shaping filtering of the baseband signal (which can be implemented in analog or, in most cases, digital form).</li>
 <li>Modulating the baseband signal onto a carrier frequency (upconversion) in the TX or downconversion in the RX.</li>
 <li>Contain the RF signal in a small bandwidth (TX), or single out the wanted signal in the RX with adequate signal to noise ratio (SNR).</li>
 <li>Adapt gain (and linearity) to the signal strength in the RX, and to the output power in the TX.</li>
 <li>Generate the carrier frequency (local oscillator, LO) with low phase noise.</li>
 </ul>
-<aside class="notes">
-<p>The following typical functions have to be performed by a TRX:</p>
-<p>The dominant architecture for the TRX is the so-called <strong>direct-conversion</strong> or <strong>zero-IF</strong> architecture, where the up- and downconversion are performed in a single step <span class="citation" data-cites="Razavi_RFIC">(<a href="#/references" role="doc-biblioref" onclick="">Razavi 2011</a>)</span>. This is in contrast to super-heterodyne architectures, where the signal is first converted to an intermediate frequency (IF) before being converted to baseband. The direct-conversion architecture has the advantage of reduced complexity and cost, as it requires fewer components and less filtering. However, it also has some disadvantages, such as increased susceptibility to dc offsets and I/Q imbalance. A typical TRX block diagram is shown in <a href="#/fig-trx-block" class="quarto-xref">Figure&nbsp;19</a>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -217,6 +223,7 @@
 <img data-src="trx_files/figure-revealjs/fig-trx-block-output-1.svg" class="r-stretch quarto-figure-center" id="fig-trx-block"><p class="caption">
 Figure&nbsp;19: Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX.
 </p><aside class="notes">
+<p>The dominant architecture for the TRX is the so-called <strong>direct-conversion</strong> or <strong>zero-IF</strong> architecture, where the up- and downconversion are performed in a single step <span class="citation" data-cites="Razavi_RFIC">(<a href="#/references" role="doc-biblioref" onclick="">Razavi 2011</a>)</span>. This is in contrast to super-heterodyne architectures, where the signal is first converted to an intermediate frequency (IF) before being converted to baseband. The direct-conversion architecture has the advantage of reduced complexity and cost, as it requires fewer components and less filtering. However, it also has some disadvantages, such as increased susceptibility to dc offsets and I/Q imbalance. A typical TRX block diagram is shown in <a href="#/fig-trx-block" class="quarto-xref">Figure&nbsp;19</a>.</p>
 Block diagram of a typical transceiver (TRX) showing the main functional blocks of RX and TX. The modem provides the digital baseband processing and interfaces to the rest of the system. For implementation options of the RF front-end, see <a href="#/sec-trx-duplexing" class="quarto-xref">Section&nbsp;3.5</a>.
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -420,6 +427,12 @@ Q = \frac{f_\mathrm{c}}{\Delta f}
 <p>where <span class="math inline">\(f_\mathrm{c}\)</span> is the center frequency and <span class="math inline">\(\Delta f\)</span> is the <span class="math inline">\(-3\)</span> dB bandwidth of the filter. A high <span class="math inline">\(Q\)</span> indicates a narrow-band filter.</p>
 <p>The achievable <span class="math inline">\(Q\)</span> depends on the used filter technology. For example, on-chip <span class="math inline">\(LC\)</span> filters can achieve <span class="math inline">\(Q\)</span> values of around 10–20, while off-chip SAW or BAW/FBAR filters reach <span class="math inline">\(Q\)</span> values into the thousands, and a crystal filter can achieve <span class="math inline">\(Q\)</span> values of several tens of thousands.</p>
 <p>The choice of filter technology depends on the application requirements, such as frequency range, bandwidth, insertion loss, cost, and power handling. Generally speaking, the required filtering to single out the wanted signal in the RX spectrum and decrease the power of strong blockers to a tolerable level is one of the most critical design choices, and is usually distributed at different locations in the RX chain:</p>
+<ul>
+<li><strong>RF filters</strong> (between antenna and LNA) provide a first level of filtering, and are usually implemented as off-chip SAW or BAW/FBAR filters. They provide high <span class="math inline">\(Q\)</span> and good selectivity, but have a fixed center frequency and bandwidth. They are used to pass the wanted band of interest, and to attenuate strong out-of-band blockers.</li>
+<li><strong>IF filters</strong> (in case of a super-heterodyne receiver) provide additional filtering, and can be implemented as on-chip LC filters or off-chip SAW/BAW filters. They provide moderate <span class="math inline">\(Q\)</span> and selectivity, and can be tuned to some extent.</li>
+<li><strong>BB filters</strong> (after downconversion) provide the final level of filtering before entering the ADCs, and are usually implemented as on-chip active <span class="math inline">\(RC\)</span> filters. They provide channel selection, and can be easily adjusted to different bandwidths.</li>
+<li><strong>Digital filters</strong> (in the DSP block) provide the final level of filtering and signal processing, and can be implemented as FIR or IIR filters. They provide high flexibility and can be easily adapted to different standards and requirements. Digital filters show no variations, so they can be designed to be very selective.</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -435,24 +448,11 @@ Q = \frac{f_\mathrm{c}}{\Delta f}
 <section class="slide level3 unnumbered">
 <h3>Filtering</h3>
 <ul>
-<li><strong>RF filters</strong> (between antenna and LNA) provide a first level of filtering, and are usually implemented as off-chip SAW or BAW/FBAR filters. They provide high <span class="math inline">\(Q\)</span> and good selectivity, but have a fixed center frequency and bandwidth. They are used to pass the wanted band of interest, and to attenuate strong out-of-band blockers.</li>
-<li><strong>IF filters</strong> (in case of a super-heterodyne receiver) provide additional filtering, and can be implemented as on-chip LC filters or off-chip SAW/BAW filters. They provide moderate <span class="math inline">\(Q\)</span> and selectivity, and can be tuned to some extent.</li>
-<li><strong>BB filters</strong> (after downconversion) provide the final level of filtering before entering the ADCs, and are usually implemented as on-chip active <span class="math inline">\(RC\)</span> filters. They provide channel selection, and can be easily adjusted to different bandwidths.</li>
-<li><strong>Digital filters</strong> (in the DSP block) provide the final level of filtering and signal processing, and can be implemented as FIR or IIR filters. They provide high flexibility and can be easily adapted to different standards and requirements. Digital filters show no variations, so they can be designed to be very selective.</li>
+<li><strong>RF filters</strong> (antenna to LNA): off-chip SAW or BAW/FBAR, high <span class="math inline">\(Q\)</span>, fixed; pass the band, attenuate out-of-band blockers</li>
+<li><strong>IF filters</strong> (super-heterodyne): on-chip <span class="math inline">\(LC\)</span> or off-chip SAW/BAW, moderate <span class="math inline">\(Q\)</span></li>
+<li><strong>BB filters</strong>: on-chip active <span class="math inline">\(RC\)</span>, channel selection, adjustable bandwidth</li>
+<li><strong>Digital filters</strong> (FIR/IIR): flexible, no variations, very selective</li>
 </ul>
-<aside class="notes">
-<p>It is important to note (because this dictates a lot of choices in RF design) that high-<span class="math inline">\(Q\)</span> filters are usually fixed-frequency and fixed-bandwidth. Only baseband and digital filters can be easily adjusted to different bandwidths!</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section class="slide level3 unnumbered">
 <h3>Filtering</h3>
@@ -465,6 +465,67 @@ Q = \frac{f_\mathrm{c}}{\Delta f}
 <p><strong>Filter Technologies Primer</strong></p>
 </div>
 <div class="callout-content">
+<table class="caption-top">
+<colgroup>
+<col style="width: 46%">
+<col style="width: 19%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Technology</th>
+<th style="text-align: left;"><span class="math inline">\(Q\)</span></th>
+<th style="text-align: left;">Remarks</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Active <span class="math inline">\(RC\)</span>, <span class="math inline">\(g_\mathrm{m}C\)</span> (on-chip)</td>
+<td style="text-align: left;">low</td>
+<td style="text-align: left;">Tunable baseband filters <span class="citation" data-cites="Schaumann_Analog_Filters Zverev_Filter_Synthesis">(<a href="#/references" role="doc-biblioref" onclick="">Schaumann et al. 2009</a>; <a href="#/references" role="doc-biblioref" onclick="">Zverev 1967</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Digital FIR/IIR</td>
+<td style="text-align: left;">n/a</td>
+<td style="text-align: left;">Programmable, no variations; power/area vs.&nbsp;performance</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(LC\)</span> on-chip / off-chip</td>
+<td style="text-align: left;">10–20 / 50–100</td>
+<td style="text-align: left;">Tunable via <span class="math inline">\(C\)</span> (easy) or <span class="math inline">\(L\)</span> (difficult)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ceramic (off-chip)</td>
+<td style="text-align: left;">up to hundreds</td>
+<td style="text-align: left;">Smaller and cheaper than SAW/BAW</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SAW, BAW/FBAR (off-chip)</td>
+<td style="text-align: left;">thousands</td>
+<td style="text-align: left;">Fixed; 1–2 filters per band</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Waveguide</td>
+<td style="text-align: left;">thousands</td>
+<td style="text-align: left;">Above 10 GHz; bulky, base stations</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Crystal</td>
+<td style="text-align: left;">tens of thousands</td>
+<td style="text-align: left;">Bulky, expensive, up to tens of MHz</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Optical</td>
+<td style="text-align: left;">extremely high</td>
+<td style="text-align: left;">Requires electrical-optical conversion</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>It is important to note (because this dictates a lot of choices in RF design) that high-<span class="math inline">\(Q\)</span> filters are usually fixed-frequency and fixed-bandwidth. Only baseband and digital filters can be easily adjusted to different bandwidths!</p>
 <p><strong>Baseband filters (analog)</strong> are usually implemented as active <span class="math inline">\(RC\)</span> filters on-chip <span class="citation" data-cites="Schaumann_Analog_Filters Zverev_Filter_Synthesis">(<a href="#/references" role="doc-biblioref" onclick="">Schaumann et al. 2009</a>; <a href="#/references" role="doc-biblioref" onclick="">Zverev 1967</a>)</span>. They are very flexible and can have adjustable bandwidth by changing <span class="math inline">\(R\)</span> and/or <span class="math inline">\(C\)</span>. For medium/high frequencies <span class="math inline">\(g_\mathrm{m}C\)</span> filters can be used, which are also tunable by changing the transconductance <span class="math inline">\(g_\mathrm{m}\)</span> and/or <span class="math inline">\(C\)</span>. For even higher bandwidths, on-chip LC filters can be used, which have a limited <span class="math inline">\(Q\)</span> of around 10–20.</p>
 <p><strong>Baseband filters (digital)</strong> are implemented as <a href="https://en.wikipedia.org/wiki/Finite_impulse_response">FIR</a> or <a href="https://en.wikipedia.org/wiki/Infinite_impulse_response">IIR</a> filters. They can be made programmable and can be easily adapted to different requirements. Digital filters show no variations, so they can be designed to be very high performance. However, a trade-off between power consumption/area (number of bits and operations) and performance exists.</p>
 <p><strong><a href="https://en.wikipedia.org/wiki/Surface_acoustic_wave">Surface acoustic wave (SAW)</a></strong> and <strong><a href="https://en.wikipedia.org/wiki/Thin-film_bulk_acoustic_resonator">bulk acoustic wave (BAW/FBAR)</a></strong> filters are specialized off-chip components that can achieve high <span class="math inline">\(Q\)</span> into the thousands. They have a fixed center frequency and bandwidth. Usually 1–2 such filters are required per supported band of interest, which can drive up implementation cost and PCB area for RF front-ends that shall support many different frequency bands.</p>
@@ -473,9 +534,17 @@ Q = \frac{f_\mathrm{c}}{\Delta f}
 <p><strong><a href="https://en.wikipedia.org/wiki/Ceramic_resonator">Ceramic filters</a></strong> are another off-chip filter technology that can achieve moderate to high <span class="math inline">\(Q\)</span> values (up to several hundreds). They are usually smaller and less expensive than SAW or BAW/FBAR filters, but also have lower performance.</p>
 <p><strong><a href="https://en.wikipedia.org/wiki/Waveguide_filter">Waveguide filters</a></strong> are used at very high frequencies (above 10 GHz) and can achieve very high <span class="math inline">\(Q\)</span> values (up to several thousands). They are usually bulky and expensive, and are not commonly used in mobile applications, but rather in fixed installations like base stations or satellite communication.</p>
 <p><strong><a href="https://en.wikipedia.org/wiki/Optical_filter">Optical filters</a></strong> can have extremely high <span class="math inline">\(Q\)</span> values but are difficult to apply in electronic RF systems due to the need for optical components and the challenge of integrating them with electronic circuits, as well as the required electrical-optical signal conversion.</p>
-</div>
-</div>
-</div>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
 <section id="direct-conversion-architecture" class="title-slide slide level2 center" data-number="3.4">
@@ -497,15 +566,21 @@ Q = \frac{f_\mathrm{c}}{\Delta f}
 <section class="slide level3 unnumbered">
 <h3>Direct-Conversion Architecture</h3>
 <ul>
+<li>A single LO per RX/TX chain (shared in TDD)</li>
+<li>Minimum number of RF blocks: low cost and power</li>
+<li>Flexible, even wideband, with very good performance</li>
+<li>High integration level: almost everything on-chip</li>
+<li>De facto standard for cellular, Wi-Fi, Bluetooth (RX), and GNSS</li>
+</ul>
+<aside class="notes">
+<p>The transceiver architecture shown in <a href="#/fig-trx-block" class="quarto-xref">Figure&nbsp;19</a> is called the direct-conversion or zero-IF architecture, as the downconversion in the RX and upconversion in the TX are done in a single step. This architecture has several advantages:</p>
+<ul>
 <li>Per RX- and TX-chain a single LO is required (which can even be shared between RX and TX in TDD operation).</li>
 <li>There are a minimum number of RF blocks, which is good for cost and power consumption.</li>
 <li>This architecture is very flexible and can be easily adapted to different standards and requirements, even for wideband operation. It generally shows very good performance if the disadvantages can be overcome by good design.</li>
 <li>This architecture allows a high integration level, as basically all blocks can be implemented on-chip.</li>
 <li>Direct conversion is the de facto standard architecture for cellular, Wi-Fi, Bluetooth (with the exception of the TX), and GNSS.</li>
 </ul>
-<aside class="notes">
-<p>The transceiver architecture shown in <a href="#/fig-trx-block" class="quarto-xref">Figure&nbsp;19</a> is called the direct-conversion or zero-IF architecture, as the downconversion in the RX and upconversion in the TX are done in a single step. This architecture has several advantages:</p>
-<p>However, the direct-conversion architecture also has some serious disadvantages:</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -521,6 +596,16 @@ Q = \frac{f_\mathrm{c}}{\Delta f}
 <section class="slide level3 unnumbered">
 <h3>Direct-Conversion Architecture</h3>
 <ul>
+<li>LO-RF coupling: self-mixing and RX desensitization, TX LO leakage</li>
+<li>Low IIP2: desensitization by AM blockers <span class="citation" data-cites="Gebhard.2019">(<a href="#/references" role="doc-biblioref" onclick="">Gebhard et al. 2019</a>)</span></li>
+<li>TX LO pulling (LO and RF at the same frequency)</li>
+<li>I/Q errors: constellation distortion, increased EVM</li>
+<li>dc offsets from LO self-mixing and IM2</li>
+<li>Flicker noise: TX close-in noise, RX noise figure</li>
+</ul>
+<aside class="notes">
+<p>However, the direct-conversion architecture also has some serious disadvantages:</p>
+<ul>
 <li>LO-RF coupling can cause self-mixing and desensitization of the RX, as well as LO leakage in the TX. This is an issue because the LO frequency is the same as the RF carrier frequency.</li>
 <li>Even-order distortion (characterized by a low IIP2) causes sensitivity degradation due to strong amplitude-modulated blockers <span class="citation" data-cites="Gebhard.2019">(<a href="#/references" role="doc-biblioref" onclick="">Gebhard et al. 2019</a>)</span>.</li>
 <li>LO pulling can occur in the TX (as, again, LO and RF are at the same frequency).</li>
@@ -528,8 +613,6 @@ Q = \frac{f_\mathrm{c}}{\Delta f}
 <li>Significant dc offsets can occur due to self-mixing of LO leakage or the even-order distortion products (IM2).</li>
 <li>Flicker noise (1/f noise) upconversion can cause increased TX noise close to the carrier, as well as increased RX noise figure.</li>
 </ul>
-<aside class="notes">
-<p>Nowadays there exist good design techniques to mitigate these disadvantages. However, in some cases (for example very high linearity requirements, or very high frequencies) other architectures like low-IF or super-heterodyne may be preferable.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -545,7 +628,19 @@ Q = \frac{f_\mathrm{c}}{\Delta f}
 
 <section id="sec-trx-duplexing" class="title-slide slide level2 center" data-number="3.5">
 <h2><span class="header-section-number">3.5</span> Duplexing</h2>
-
+<aside class="notes">
+<p>Nowadays there exist good design techniques to mitigate these disadvantages. However, in some cases (for example very high linearity requirements, or very high frequencies) other architectures like low-IF or super-heterodyne may be preferable.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="frequency-division-duplex-fdd" class="slide level3" data-number="3.5.1">
 <h3><span class="header-section-number">3.5.1</span> Frequency-Division Duplex (FDD)</h3>
@@ -582,6 +677,12 @@ Figure&nbsp;23: Block diagram of an FDD RF front-end.
 <aside class="notes">
 <p>Advantages of FDD:</p>
 <p>Disadvantages of FDD:</p>
+<ul>
+<li>Duplexer filters are costly components with significant insertion loss depending on filtering requirements.</li>
+<li>It requires two separate frequency bands, which can be a limitation in terms of spectrum availability and MIMO channel estimation.</li>
+<li>The strong TX leakage via the duplexer filter into the RX path causes severe desensitization of the RX, which requires high linearity and good filtering (50 dB to 60 dB).</li>
+<li>The RX and TX chains (including their PLLs) are operating simultaneously, which increases power consumption and can cause interference between the RX and TX paths (e.g., LO pulling).</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -597,10 +698,10 @@ Figure&nbsp;23: Block diagram of an FDD RF front-end.
 <section class="slide level3 unnumbered">
 <h3>Frequency-Division Duplex (FDD)</h3>
 <ul>
-<li>Duplexer filters are costly components with significant insertion loss depending on filtering requirements.</li>
-<li>It requires two separate frequency bands, which can be a limitation in terms of spectrum availability and MIMO channel estimation.</li>
-<li>The strong TX leakage via the duplexer filter into the RX path causes severe desensitization of the RX, which requires high linearity and good filtering (50 dB to 60 dB).</li>
-<li>The RX and TX chains (including their PLLs) are operating simultaneously, which increases power consumption and can cause interference between the RX and TX paths (e.g., LO pulling).</li>
+<li>Duplexers are costly and add insertion loss</li>
+<li>Two separate frequency bands needed (spectrum, MIMO channel estimation)</li>
+<li>TX leakage desensitizes the RX: high linearity and 50 dB to 60 dB filtering needed</li>
+<li>RX and TX run simultaneously: higher power, RX/TX interference (LO pulling)</li>
 </ul>
 </section>
 <section id="time-division-duplex-tdd" class="slide level3" data-number="3.5.2">
@@ -1039,6 +1140,10 @@ QPSK constellation illustrating the two error contributions. Applied to all four
 \]</span></p>
 <aside class="notes">
 <p>In order to make the I/Q mismatch sufficiently small, the following techniques can be used:</p>
+<ul>
+<li>Careful layout and matching of the components in the I and Q paths to minimize gain and phase mismatches. This usually involves good layout techniques. Further, the LO I/Q generation should be done with high accuracy.</li>
+<li>Calibration techniques can be used to measure and compensate for I/Q imbalance. This can be done either in the analog domain (e.g., using variable gain amplifiers and phase shifters) or in the digital domain (e.g., using digital signal processing algorithms). Digital compensation is usually preferred, as it is more flexible and can adapt to changing conditions. A <a href="https://en.wikipedia.org/wiki/CORDIC">CORDIC</a> can be readily used for this purpose.</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1054,22 +1159,9 @@ QPSK constellation illustrating the two error contributions. Applied to all four
 <section class="slide level3 unnumbered">
 <h3>I/Q Imbalance</h3>
 <ul>
-<li>Careful layout and matching of the components in the I and Q paths to minimize gain and phase mismatches. This usually involves good layout techniques. Further, the LO I/Q generation should be done with high accuracy.</li>
-<li>Calibration techniques can be used to measure and compensate for I/Q imbalance. This can be done either in the analog domain (e.g., using variable gain amplifiers and phase shifters) or in the digital domain (e.g., using digital signal processing algorithms). Digital compensation is usually preferred, as it is more flexible and can adapt to changing conditions. A <a href="https://en.wikipedia.org/wiki/CORDIC">CORDIC</a> can be readily used for this purpose.</li>
+<li>Careful layout and matching of the I and Q paths, accurate LO I/Q generation</li>
+<li>Calibration in the analog domain (VGAs, phase shifters) or, preferably, the digital domain (e.g., <a href="https://en.wikipedia.org/wiki/CORDIC">CORDIC</a>)</li>
 </ul>
-<aside class="notes">
-<p>A final note on EVM: EVM is not only affected by I/Q imbalance, but also by other impairments like phase noise, nonlinearities, and noise in general. Therefore, EVM is a more comprehensive measure of the overall performance of a communication system, and often used to quantify the overall system performance in terms of SNR.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section id="references" class="slide level3 unnumbered smaller scrollable">
 <h3>References</h3>
@@ -1094,7 +1186,7 @@ Razavi, Behzad. 2011. <em>RF Microelectronics</em>. 2nd edition. Pearson.
 Sadjina, Silvester, Christian Motz, Thomas Paireder, Mario Huemer, and Harald Pretl. 2020. <span>“<span class="nocase">A Survey of Self-Interference in LTE-Advanced and 5G New Radio Wireless Transceivers</span>.”</span> <em>IEEE Transactions on Microwave Theory and Techniques</em> 68 (3): 1118–31. <a href="https://doi.org/10.1109/TMTT.2019.2951166">https://doi.org/10.1109/TMTT.2019.2951166</a>.
 </div>
 <div id="ref-Schaumann_Analog_Filters" class="csl-entry" role="listitem">
-Schaumann, Rolf, Haiqiao Xiao, and Mac E. Van Valkenburg. 2009. <em><span class="nocase">Design of Analog Filters</span></em>. Third. Oxford University Press.
+Schaumann, Rolf, Haiqiao Xiao, and Mac E. Van Valkenburg. 2009. <em><span class="nocase">Design of Analog Filters</span></em>. Second. Oxford University Press.
 </div>
 <div id="ref-Sklar_Digital_Communications" class="csl-entry" role="listitem">
 Sklar, Bernard, and Fredric J. Harris. 2020. <em>Digital Communications: Fundamentals and Applications</em>. 3rd edition. Pearson.
@@ -1103,6 +1195,19 @@ Sklar, Bernard, and Fredric J. Harris. 2020. <em>Digital Communications: Fundame
 Zverev, Anatol I. 1967. <em><span class="nocase">Handbook of Filter Synthesis</span></em>. John Wiley &amp; Sons.
 </div>
 </div>
+<aside class="notes">
+<p>A final note on EVM: EVM is not only affected by I/Q imbalance, but also by other impairments like phase noise, nonlinearities, and noise in general. Therefore, EVM is a more comprehensive measure of the overall performance of a communication system, and often used to quantify the overall system performance in terms of SNR.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level3 unnumbered">
 <h3>References</h3>
