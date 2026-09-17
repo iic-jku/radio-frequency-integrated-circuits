@@ -1330,6 +1330,7 @@
  "prefix": {
   "eq": "Equation",
   "fig": "Figure",
+  "imp": "Important",
   "nte": "Note",
   "sec": "Section",
   "tbl": "Table"

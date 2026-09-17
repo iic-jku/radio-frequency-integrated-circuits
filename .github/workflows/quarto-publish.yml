@@ -49,7 +49,7 @@ jobs:
 
       - name: Check generated slide decks are up to date
         run: |
-          python -m unittest slides/_tools/test_gen_decks.py
+          python -m unittest discover -s slides/_tools
           python slides/_tools/gen_decks.py --check
 
       - name: Render (pull request validation)
@@ -58,7 +58,9 @@ jobs:
 
       - name: Check book numbering in slide decks (pull request validation)
         if: github.event_name == 'pull_request'
-        run: python slides/_tools/check_numbers.py _site/rfic.html _site/slides/*.html
+        run: |
+          python slides/_tools/check_numbers.py _site/rfic.html _site/slides/*.html
+          python slides/_tools/check_links.py _site
 
       - name: Render and Publish
         if: github.event_name != 'pull_request'

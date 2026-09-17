@@ -26,11 +26,21 @@ In these notes we will focus on the RF part of the TRX, which is responsible for
 
 The following typical functions have to be performed by a TRX:
 
+::: {.content-hidden when-format="revealjs"}
 - Pulse-shaping filtering of the baseband signal (which can be implemented in analog or, in most cases, digital form).
 - Modulating the baseband signal onto a carrier frequency (upconversion) in the TX or downconversion in the RX.
 - Contain the RF signal in a small bandwidth (TX), or single out the wanted signal in the RX with adequate signal to noise ratio (SNR).
 - Adapt gain (and linearity) to the signal strength in the RX, and to the output power in the TX.
 - Generate the carrier frequency (local oscillator, LO) with low phase noise.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- Pulse shaping of the baseband signal (mostly digital)
+- Up-/downconversion to/from the carrier frequency
+- Contain the TX signal in a small bandwidth; single out the wanted RX signal with adequate SNR
+- Adapt gain (and linearity) to the RX signal and TX output power
+- Generate the LO with low phase noise
+:::
 
 The dominant architecture for the TRX is the so-called **direct-conversion** or **zero-IF** architecture, where the up- and downconversion are performed in a single step [@Razavi_RFIC]. This is in contrast to super-heterodyne architectures, where the signal is first converted to an intermediate frequency (IF) before being converted to baseband. The direct-conversion architecture has the advantage of reduced complexity and cost, as it requires fewer components and less filtering. However, it also has some disadvantages, such as increased susceptibility to dc offsets and I/Q imbalance. A typical TRX block diagram is shown in @fig-trx-block.
 
@@ -123,15 +133,25 @@ The achievable $Q$ depends on the used filter technology. For example, on-chip $
 
 The choice of filter technology depends on the application requirements, such as frequency range, bandwidth, insertion loss, cost, and power handling. Generally speaking, the required filtering to single out the wanted signal in the RX spectrum and decrease the power of strong blockers to a tolerable level is one of the most critical design choices, and is usually distributed at different locations in the RX chain:
 
+::: {.content-hidden when-format="revealjs"}
 - **RF filters** (between antenna and LNA) provide a first level of filtering, and are usually implemented as off-chip SAW or BAW/FBAR filters. They provide high $Q$ and good selectivity, but have a fixed center frequency and bandwidth. They are used to pass the wanted band of interest, and to attenuate strong out-of-band blockers.
 - **IF filters** (in case of a super-heterodyne receiver) provide additional filtering, and can be implemented as on-chip LC filters or off-chip SAW/BAW filters. They provide moderate $Q$ and selectivity, and can be tuned to some extent.
 - **BB filters** (after downconversion) provide the final level of filtering before entering the ADCs, and are usually implemented as on-chip active $RC$ filters. They provide channel selection, and can be easily adjusted to different bandwidths.
 - **Digital filters** (in the DSP block) provide the final level of filtering and signal processing, and can be implemented as FIR or IIR filters. They provide high flexibility and can be easily adapted to different standards and requirements. Digital filters show no variations, so they can be designed to be very selective.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- **RF filters** (antenna to LNA): off-chip SAW or BAW/FBAR, high $Q$, fixed; pass the band, attenuate out-of-band blockers
+- **IF filters** (super-heterodyne): on-chip $LC$ or off-chip SAW/BAW, moderate $Q$
+- **BB filters**: on-chip active $RC$, channel selection, adjustable bandwidth
+- **Digital filters** (FIR/IIR): flexible, no variations, very selective
+:::
 
 It is important to note (because this dictates a lot of choices in RF design) that high-$Q$ filters are usually fixed-frequency and fixed-bandwidth. Only baseband and digital filters can be easily adjusted to different bandwidths!
 
 ::: {.callout-note}
 ## Filter Technologies Primer
+::: {.content-hidden when-format="revealjs"}
 **Baseband filters (analog)** are usually implemented as active $RC$ filters on-chip [@Schaumann_Analog_Filters; @Zverev_Filter_Synthesis]. They are very flexible and can have adjustable bandwidth by changing $R$ and/or $C$. For medium/high frequencies $\gm C$ filters can be used, which are also tunable by changing the transconductance $\gm$ and/or $C$. For even higher bandwidths, on-chip LC filters can be used, which have a limited $Q$ of around 10--20.
 
 **Baseband filters (digital)** are implemented as [FIR](https://en.wikipedia.org/wiki/Finite_impulse_response) or [IIR](https://en.wikipedia.org/wiki/Infinite_impulse_response) filters. They can be made programmable and can be easily adapted to different requirements. Digital filters show no variations, so they can be designed to be very high performance. However, a trade-off between power consumption/area (number of bits and operations) and performance exists.
@@ -149,26 +169,61 @@ It is important to note (because this dictates a lot of choices in RF design) th
 **[Optical filters](https://en.wikipedia.org/wiki/Optical_filter)** can have extremely high $Q$ values but are difficult to apply in electronic RF systems due to the need for optical components and the challenge of integrating them with electronic circuits, as well as the required electrical-optical signal conversion.
 :::
 
+::: {.content-visible when-format="revealjs"}
+| Technology | $Q$ | Remarks |
+|:-----------|:----|:--------|
+| Active $RC$, $\gm C$ (on-chip) | low | Tunable baseband filters [@Schaumann_Analog_Filters; @Zverev_Filter_Synthesis] |
+| Digital FIR/IIR | n/a | Programmable, no variations; power/area vs. performance |
+| $LC$ on-chip / off-chip | 10--20 / 50--100 | Tunable via $C$ (easy) or $L$ (difficult) |
+| Ceramic (off-chip) | up to hundreds | Smaller and cheaper than SAW/BAW |
+| SAW, BAW/FBAR (off-chip) | thousands | Fixed; 1--2 filters per band |
+| Waveguide | thousands | Above 10 GHz; bulky, base stations |
+| Crystal | tens of thousands | Bulky, expensive, up to tens of MHz |
+| Optical | extremely high | Requires electrical-optical conversion |
+:::
+:::
+
 Fundamentally, the choice of filter technology is a trade-off between performance, size, cost, power handling, and flexibility. In most cases, a combination of different filter technologies is used to achieve the desired performance.
 
 ## Direct-Conversion Architecture
 
 The transceiver architecture shown in @fig-trx-block is called the direct-conversion or zero-IF architecture, as the downconversion in the RX and upconversion in the TX are done in a single step. This architecture has several advantages:
 
+::: {.content-hidden when-format="revealjs"}
 - Per RX- and TX-chain a single LO is required (which can even be shared between RX and TX in TDD operation).
 - There are a minimum number of RF blocks, which is good for cost and power consumption.
 - This architecture is very flexible and can be easily adapted to different standards and requirements, even for wideband operation. It generally shows very good performance if the disadvantages can be overcome by good design.
 - This architecture allows a high integration level, as basically all blocks can be implemented on-chip.
 - Direct conversion is the de facto standard architecture for cellular, Wi-Fi, Bluetooth (with the exception of the TX), and GNSS.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- A single LO per RX/TX chain (shared in TDD)
+- Minimum number of RF blocks: low cost and power
+- Flexible, even wideband, with very good performance
+- High integration level: almost everything on-chip
+- De facto standard for cellular, Wi-Fi, Bluetooth (RX), and GNSS
+:::
 
 However, the direct-conversion architecture also has some serious disadvantages:
 
+::: {.content-hidden when-format="revealjs"}
 - LO-RF coupling can cause self-mixing and desensitization of the RX, as well as LO leakage in the TX. This is an issue because the LO frequency is the same as the RF carrier frequency.
 - Even-order distortion (characterized by a low IIP2) causes sensitivity degradation due to strong amplitude-modulated blockers [@Gebhard.2019].
 - LO pulling can occur in the TX (as, again, LO and RF are at the same frequency).
 - I/Q errors (amplitude and phase mismatch) of the $I$ and $Q$ paths can cause constellation distortion leading to increased error vector magnitude (EVM).
 - Significant dc offsets can occur due to self-mixing of LO leakage or the even-order distortion products (IM2).
 - Flicker noise (1/f noise) upconversion can cause increased TX noise close to the carrier, as well as increased RX noise figure.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- LO-RF coupling: self-mixing and RX desensitization, TX LO leakage
+- Low IIP2: desensitization by AM blockers [@Gebhard.2019]
+- TX LO pulling (LO and RF at the same frequency)
+- I/Q errors: constellation distortion, increased EVM
+- dc offsets from LO self-mixing and IM2
+- Flicker noise: TX close-in noise, RX noise figure
+:::
 
 Nowadays there exist good design techniques to mitigate these disadvantages. However, in some cases (for example very high linearity requirements, or very high frequencies) other architectures like low-IF or super-heterodyne may be preferable.
 
@@ -194,10 +249,19 @@ Advantages of FDD:
 
 Disadvantages of FDD:
 
+::: {.content-hidden when-format="revealjs"}
 - Duplexer filters are costly components with significant insertion loss depending on filtering requirements.
 - It requires two separate frequency bands, which can be a limitation in terms of spectrum availability and MIMO channel estimation.
 - The strong TX leakage via the duplexer filter into the RX path causes severe desensitization of the RX, which requires high linearity and good filtering (50 dB to 60 dB).
 - The RX and TX chains (including their PLLs) are operating simultaneously, which increases power consumption and can cause interference between the RX and TX paths (e.g., LO pulling).
+:::
+
+::: {.content-visible when-format="revealjs"}
+- Duplexers are costly and add insertion loss
+- Two separate frequency bands needed (spectrum, MIMO channel estimation)
+- TX leakage desensitizes the RX: high linearity and 50 dB to 60 dB filtering needed
+- RX and TX run simultaneously: higher power, RX/TX interference (LO pulling)
+:::
 
 ### Time-Division Duplex (TDD)
 
@@ -339,7 +403,14 @@ $$
 
 In order to make the I/Q mismatch sufficiently small, the following techniques can be used:
 
+::: {.content-hidden when-format="revealjs"}
 - Careful layout and matching of the components in the I and Q paths to minimize gain and phase mismatches. This usually involves good layout techniques. Further, the LO I/Q generation should be done with high accuracy.
 - Calibration techniques can be used to measure and compensate for I/Q imbalance. This can be done either in the analog domain (e.g., using variable gain amplifiers and phase shifters) or in the digital domain (e.g., using digital signal processing algorithms). Digital compensation is usually preferred, as it is more flexible and can adapt to changing conditions. A [CORDIC](https://en.wikipedia.org/wiki/CORDIC) can be readily used for this purpose.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- Careful layout and matching of the I and Q paths, accurate LO I/Q generation
+- Calibration in the analog domain (VGAs, phase shifters) or, preferably, the digital domain (e.g., [CORDIC](https://en.wikipedia.org/wiki/CORDIC))
+:::
 
 A final note on EVM: EVM is not only affected by I/Q imbalance, but also by other impairments like phase noise, nonlinearities, and noise in general. Therefore, EVM is a more comprehensive measure of the overall performance of a communication system, and often used to quantify the overall system performance in terms of SNR.

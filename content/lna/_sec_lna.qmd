@@ -28,9 +28,17 @@ The LNA as a building block is shown in @fig-lna-block. It is usually designed f
 
 Why is impedance matching at the input of the LNA so important?
 
+::: {.content-hidden when-format="revealjs"}
 - The antenna is usually designed for a specific impedance, e.g., 50 Ω, and if the LNA input is not matched to this impedance, a significant portion of the received signal will be reflected back to the antenna, resulting in a loss of signal power.
 - RF filters at the input of the LNA need to be terminated with the correct impedance to achieve the desired filter characteristics.
 - Any transmission line in front of the LNA needs to be matched to avoid reflections and standing waves.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- The antenna is designed for a specific impedance (e.g., 50 Ω); a mismatch reflects signal power
+- RF filters in front of the LNA need the correct termination
+- Transmission lines need a match to avoid reflections and standing waves
+:::
 
 To quantify the "quality" of an impedance match, the **reflection coefficient** $\Gamma$ is often used, which is defined as [@Pozar_RF]:
 
@@ -52,21 +60,45 @@ A higher return loss indicates a better impedance match. A return loss of 10 dB 
 
 ::: {.callout-note}
 ## Bode-Fano Criterion
+::: {.content-hidden when-format="revealjs"}
 The Bode-Fano criterion states that for a given load impedance and a given bandwidth, there is a fundamental limit to how well an impedance can be matched over that bandwidth; this criterion is important in the design of LNAs! The Bode-Fano criterion can be expressed mathematically as [@Fano.1950; @Pozar_RF, ch. 5.9]
+:::
+
+::: {.content-visible when-format="revealjs"}
+Fundamental limit on how well a load can be matched over a bandwidth [@Fano.1950; @Pozar_RF, ch. 5.9]:
+:::
 
 $$
 \int_{0}^{\infty} \ln \left( \frac{1}{|\Gamma(\omega)|} \right) d\omega \leq \frac{\pi}{R C}
 $$ {#eq-bode-fano-criterion}
 
+::: {.content-hidden when-format="revealjs"}
 where $\Gamma(\omega)$ is the frequency-dependent reflection coefficient, $R$ is the load resistance, and $C$ is the load capacitance (for an $R \parallel C$ load). This criterion implies that achieving a very good impedance match (i.e., a low reflection coefficient) over a wide bandwidth is fundamentally limited by the properties of the load. In practice, this means that there is a trade-off between the bandwidth of the match and the achievable return loss in an LNA design.
+:::
 
+::: {.content-visible when-format="revealjs"}
+for an $R \parallel C$ load: match bandwidth trades off against return loss.
+:::
+
+::: {.content-hidden when-format="revealjs"}
 If we assume that we strive for match with $|\Gamma_\mathrm{m}|$ over a fractional bandwidth $\Delta \omega / \omega_0$, we can derive from the Bode-Fano criterion (and using that $Q = \omega_0 R C$ for a parallel $RC$ circuit) that
+:::
+
+::: {.content-visible when-format="revealjs"}
+Match $|\Gamma_\mathrm{m}|$ over $\Delta \omega / \omega_0$, with $Q = \omega_0 R C$:
+:::
 
 $$
 \frac{\Delta \omega}{\omega_0} \leq \frac{\pi}{Q} \cdot \frac{1}{\ln(1/|\Gamma_\mathrm{m}|)}
 $$
 
+::: {.content-hidden when-format="revealjs"}
 For example, if we want to achieve a return loss of 20 dB (i.e., $|\Gamma_\mathrm{m}| = 0.1$) over a fractional bandwidth of 30%, we find that the quality factor of the load (i.e., the input stage of the LNA) needs to be $Q \leq 4.5$.
+:::
+
+::: {.content-visible when-format="revealjs"}
+Example: 20 dB return loss ($|\Gamma_\mathrm{m}| = 0.1$) over 30% bandwidth requires $Q \leq 4.5$.
+:::
 :::
 
 ## Amplifier Stability {#sec-amp-stability}
@@ -283,19 +315,37 @@ $$ {#eq-lna-shunt-fb-zin}
 
 ::: {.callout-note}
 ## Derivation of the Shunt-Feedback Input Impedance
+::: {.content-hidden when-format="revealjs"}
 We apply a test voltage $V_x$ at the gate and find the resulting current $I_x$ (ignoring $\gds$ and the gate capacitance for simplicity). Because the only path into the gate is through $Z_\mathrm{F}$, we have
+:::
+
+::: {.content-visible when-format="revealjs"}
+Test voltage $V_x$ at the gate (ignoring $\gds$ and $C_\mathrm{gs}$); the gate current flows through $Z_\mathrm{F}$:
+:::
 
 $$
 I_x = \frac{V_x - V_d}{Z_\mathrm{F}}.
 $$
 
+::: {.content-hidden when-format="revealjs"}
 Applying KCL at the drain node, where currents leave through $Z_\mathrm{F}$, through $Z_\mathrm{L}$ to $V_\mathrm{DD}$ (ac ground), and via the transistor current source $\gm V_x$:
+:::
+
+::: {.content-visible when-format="revealjs"}
+KCL at the drain:
+:::
 
 $$
 \frac{V_d - V_x}{Z_\mathrm{F}} + \frac{V_d}{Z_\mathrm{L}} + \gm V_x = 0
 $$
 
+::: {.content-hidden when-format="revealjs"}
 Rearranging for $V_d$ and substituting back
+:::
+
+::: {.content-visible when-format="revealjs"}
+Solving for $V_d$ and substituting gives @eq-lna-shunt-fb-zin:
+:::
 
 $$
 \begin{split}
@@ -305,7 +355,9 @@ I_x &= \frac{V_x - V_d}{Z_\mathrm{F}}\\
 \end{split}
 $$
 
+::: {.content-hidden when-format="revealjs"}
 which gives @eq-lna-shunt-fb-zin directly.
+:::
 :::
 
 The noise factor of the shunt feedback LNA is given by

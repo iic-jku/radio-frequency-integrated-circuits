@@ -1,5 +1,8 @@
 project:
    type: website
+   # run code cells from the project root, so that decks in slides/ find the
+   # same files as the notes in the root
+   execute-dir: project
 
 var:
   url-repo: https://github.com/iic-jku/radio-frequency-integrated-circuits   # to call this value : {{< meta var.url-repo >}}

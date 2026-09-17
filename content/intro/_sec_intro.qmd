@@ -25,7 +25,9 @@ All course material (source code of this document, Jupyter notebooks for calcula
 
 Please feel free to submit [pull requests](https://github.com/iic-jku/radio-frequency-integrated-circuits/pulls) to fix typos or add content! If you want to discuss something that is not clear, please [open an issue](https://github.com/iic-jku/radio-frequency-integrated-circuits/issues/new).
 
+::: {.content-hidden when-format="revealjs"}
 The production of this document would be impossible without these (and many more) great open-source software products: `VS Code`, `Quarto`, `Pandoc`, `LaTeX`, `Typst`, `Jupyter Notebook`, `Python`, `Xschem`, `ngspice`, `CACE`, `pygmid`, `schemdraw`, `Numpy`, `Scipy`, `Matplotlib`, `Pandas`, `Git`, `Docker`, `Ubuntu`, `GNU/Linux`, ...
+:::
 :::
 
 ## Wireless Transmission {#sec-intro-wireless}
@@ -137,11 +139,21 @@ As dire as the situation of @fig-free-space-path-loss already looks, these are n
 
 The consequences of this are (among others):
 
+::: {.content-hidden when-format="revealjs"}
 - The transmitter needs to generate enough **transmit power** to overcome the transmission loss; this has to be done with high **efficiency**, as the transmit device is battery operated or limited by cooling.
 - The receiver has to be able to process **weak signals**, i.e., the **noise** level of the signal processing has to be very low.
 - Often, the receive signal is very weak, while there are strong signals at other frequencies (i.e., other wireless transmitters are located close to the receiver). This means the receiver has to be able to process a weak signal while simultaneously tolerating **large interfering signals** (called **blockers**).
 - Since the frequency spectrum is shared among many users and wireless applications, the transmit information has to be packed efficiently into a **small bandwidth**.
 - Very often, wireless devices are battery-operated. This means transmit and receive functions have to be implemented using **minimum power consumption**.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- TX: enough **transmit power** at high **efficiency**
+- RX: process **weak signals** with low **noise**
+- RX: tolerate **large interfering signals** (**blockers**)
+- Pack information into a **small bandwidth**
+- Battery operation: **minimum power consumption**
+:::
 
 As stated in the beginning, designing wireless systems is hard.
 

@@ -1,0 +1,6 @@
+{
+ "book": "rfic.qmd",
+ "short": "RFIC",
+ "title": "Radio-Frequency Integrated Circuits",
+ "exclude": ["exam"]
+}

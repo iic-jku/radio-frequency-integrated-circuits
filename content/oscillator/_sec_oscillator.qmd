@@ -38,9 +38,16 @@ According to @eq-definition-q, a high $Q$ can be achieved by using a resonator w
 
 When $|-R_\mathrm{amp}| = R_\mathrm{p}$, the losses of the tank circuit are fully compensated, and we have a sustained oscillation at the resonance frequency $\omega_0 = 1 / \sqrt{L C}$. In practice, the amplifier gain is usually set slightly higher than required for loss compensation to **start the oscillation from noise**. Then, as the oscillation amplitude increases, some **non-linear mechanism in the amplifier reduces the effective gain** until a stable oscillation amplitude is reached. Various implementations of such LC oscillators exist, which will be discussed in the following sections.
 
+::: {.content-hidden when-format="revealjs"}
 - An alternative implementation of setting the oscillation amplitude is to use an *automatic level control* (ALC) loop, which measures the oscillation amplitude and adjusts the amplifier gain accordingly to maintain a constant output amplitude. This approach can improve the stability of the oscillation amplitude over process, voltage, and temperature variations.
 
 - An alternative to starting the oscillation from thermal noise (which can take considerable time depending on the $Q$ of the resonator) is to provide a known initial condition to the resonator, e.g., by pre-charging the capacitor $C$ to a certain voltage before enabling the amplifier. This way, the oscillation can start immediately from this initial energy stored in the resonator.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- **Automatic level control** (ALC): measure the amplitude and adjust the gain, stable over PVT
+- **Fast start-up**: pre-charge $C$ instead of waiting for noise to build up the oscillation
+:::
 
 As a first hint on how to optimize an LC oscillator for low phase noise, we can try to maximize $Q$ according to @eq-definition-q. The energy stored in the capacitor at peak voltage is
 
@@ -130,10 +137,19 @@ $$ {#eq-leeson-equation-rp}
 
 so for a given tank capacitance $C$ the phase noise indeed *falls* with increasing $R_\mathrm{p}$, i.e., with a lower-loss tank. With this in mind, the design guidelines are:
 
+::: {.content-hidden when-format="revealjs"}
 1. Use a resonator with high quality factor $Q$ to reduce phase noise. On-chip LC tanks usually provide moderate $Q$ values (e.g., 10 to 30), while off-chip crystals can provide very high $Q$ values (e.g., 10,000 to 100,000).
 2. Maximize the oscillation amplitude $V_\mathrm{p}$ to increase the stored energy in the resonator. In CMOS implementations, this is often limited by the supply voltage and/or device breakdown voltages.
 3. Use an active circuit with low noise factor $F$ to minimize the noise contribution of the negative resistance $-R_\mathrm{amp}$. A good value to aim for is $F \approx 2$.
 4. Maximize the tank resistance $R_\mathrm{p}$ to minimize the thermal noise contribution. This can be achieved by using high-Q inductors and low-loss capacitors.
+:::
+
+::: {.content-visible when-format="revealjs"}
+1. High resonator $Q$ (on-chip LC: 10 to 30; crystal: 10,000 to 100,000)
+2. Large amplitude $V_\mathrm{p}$ (limited by supply and breakdown)
+3. Low noise factor $F$ of the active circuit (aim for $F \approx 2$)
+4. Large tank resistance $R_\mathrm{p}$ (high-Q inductors, low-loss capacitors)
+:::
 
 The phase noise $\phn[\Delta \omega]$ is expressed in the unit of dBc/Hz, i.e., in decibels of phase noise relative to the carrier power per 1 Hz of bandwidth. When expressing the phase noise of an oscillator in dBc/Hz it is important to state both the oscillation frequency $\omega_0$ and the offset frequency $\Delta \omega$ at which the phase noise is evaluated. For example, we could say that an oscillator has a phase noise of -137 dBc/Hz at 3 MHz offset from a carrier frequency of 2 GHz.
 
@@ -151,16 +167,37 @@ with $\omega_\mathrm{B}$ being the half-power bandwidth of the oscillator spectr
 
 Why is phase noise important?
 
+::: {.content-hidden when-format="revealjs"}
 1. In RX and TX, the phase noise of the LO creates jitter, which degrades signal quality and contributes to EVM degradation.
 2. In TX, phase noise of the LO creates noise sidebands around the carrier, which can lead to adjacent channel interference together with spectral regrowth due to nonlinearities and thermal noise.
 3. In RX, reciprocal mixing of the phase noise sidebands of the LO with strong adjacent channel signals creates in-band noise, which degrades the SNR and sensitivity of the RX.
 4. In systems using multiple carriers or carriers with high-order modulation schemes (like in OFDM), phase noise can lead to inter-carrier interference (ICI) and symbol misinterpretation, further degrading system performance.
+:::
+
+::: {.content-visible when-format="revealjs"}
+1. RX and TX: jitter degrades EVM
+2. TX: noise sidebands cause adjacent channel interference
+3. RX: reciprocal mixing with strong adjacent signals creates in-band noise
+4. Multi-carrier (OFDM) and high-order modulation: inter-carrier interference (ICI)
+:::
 
 ::: {#nte-phnoise_division .callout-note}
 ## Phase Noise and Frequency Division
+::: {.content-hidden when-format="revealjs"}
 When using a frequency divider to generate a lower-frequency LO signal from a higher-frequency oscillator (e.g., to generate IQ phases), the phase noise of the divided signal is affected by the division ratio $N$ [@DaDalt_PHN]. Specifically, the phase noise of the divided signal improves by $20 \log_{10}(N)$ dB compared to the original oscillator phase noise. This means that if you divide the frequency by a factor of 2, the phase noise will be lowered by 6 dB!
+:::
 
+::: {.content-visible when-format="revealjs"}
+Dividing the oscillator frequency by $N$ (e.g., for IQ generation) lowers the phase noise by $20 \log_{10}(N)$ dB, i.e., 6 dB for $N = 2$ [@DaDalt_PHN].
+:::
+
+::: {.content-hidden when-format="revealjs"}
 The statement above is related to the phase noise at the output coming from the input of the divider. Of course, the frequency divider itself also contributes some additional phase noise, which can degrade the overall phase noise performance. However, in many practical cases, the improvement due to frequency division outweighs the additional noise introduced by the divider.
+:::
+
+::: {.content-visible when-format="revealjs"}
+The divider adds its own phase noise, but the improvement usually dominates.
+:::
 :::
 
 ## Jitter {#sec-oscillator-jitter}
@@ -186,9 +223,21 @@ where $P_\mathrm{RM}$ is the power of the reciprocal mixing noise introduced int
 
 ::: {#nte-reciprocal-mixing .callout-note}
 ## Reciprocal Mixing Example
+::: {.content-hidden when-format="revealjs"}
 Let us assume the following example from a Bluetooth LE receiver: The sensitivity target for the RX is -70 dBm with an SNR of 10 dB for a 1 MHz channel. An adjacent channel interferer is present at -27 dB channel to interferer ratio at an offset of 3 MHz. How much phase noise can the LO have to meet the sensitivity target?
+:::
 
+::: {.content-visible when-format="revealjs"}
+Bluetooth LE RX: sensitivity -70 dBm, SNR 10 dB, 1 MHz channel; interferer at C/I = -27 dB, 3 MHz offset. Maximum LO phase noise?
+:::
+
+::: {.content-hidden when-format="revealjs"}
 From the sensitivity target and the SNR requirement, we can calculate the maximum allowable noise floor in the RX. We add a margin of 3 dB to account for implementation losses:
+:::
+
+::: {.content-visible when-format="revealjs"}
+Maximum noise floor (with 3 dB margin):
+:::
 
 $$
 \begin{split}
@@ -245,9 +294,21 @@ The important insight is that the negative resistance $-R_\mathrm{amp}$ is *iden
 
 ::: {.callout-note}
 ## A Note on Oscillator Naming
+::: {.content-hidden when-format="revealjs"}
 The naming in @tbl-three-point-oscillators is not used consistently across the literature. The grounded-source case is universally called the Pierce oscillator, but *both* the grounded-gate and the grounded-drain variants are referred to as "Colpitts" by different authors (they differ only in which of the two capacitors provides the feedback), and some crystal-oscillator literature treats the grounded-drain circuit as just another implementation of the Pierce oscillator [@Vittoz_Crystal_Oscillators].
+:::
 
+::: {.content-visible when-format="revealjs"}
+Naming in @tbl-three-point-oscillators varies: grounded source is always Pierce, but grounded gate and grounded drain are both called "Colpitts" [@Vittoz_Crystal_Oscillators].
+:::
+
+::: {.content-hidden when-format="revealjs"}
 What is *not* a grounding variant is the **Clapp oscillator**: it is a Colpitts with an additional capacitor placed **in series with the inductor**, introduced to keep the transistor's parasitic capacitances from pulling the frequency [@Clapp.1948]. Interestingly, a quartz crystal oscillator gets this for free: as we will see in @fig-crystal-equivalent-circuit, the motional branch of a crystal is $L_\mathrm{m}$ in series with a very small $C_\mathrm{m}$, so $C_\mathrm{m}$ plays exactly the role of Clapp's series capacitor. This is the very reason why the crystal can be pulled only by a few ppm (see @eq-crystal-pulling), and thus why quartz oscillators are so stable.
+:::
+
+::: {.content-visible when-format="revealjs"}
+The **Clapp oscillator** is a Colpitts with a capacitor **in series with the inductor** [@Clapp.1948]. A crystal has this built in: the small motional $C_\mathrm{m}$ (@fig-crystal-equivalent-circuit) limits pulling to a few ppm (@eq-crystal-pulling).
+:::
 :::
 
 When we investigate the equivalent electrical circuit of a quartz crystal, we find that it has inductive behavior between its series resonance frequency and its parallel resonance frequency, which are very close together. The quartz crystal equivalent circuit is shown in @fig-crystal-equivalent-circuit.
@@ -317,10 +378,19 @@ The need to change the oscillator frequency can arise from various requirements:
 
 In order to achieve a tunable capacitance, a so-called "varactor" (variable capacitor) is often used. A varactor is a semiconductor device that exhibits a capacitance that varies with the applied voltage. Common ways to implement a varactor in integrated circuits are:
 
+::: {.content-hidden when-format="revealjs"}
 1. Use the gate-to-channel capacitance of a MOSFET operated in reverse bias. By changing the voltage applied to the gate, the depletion region width in the channel changes, which in turn changes the capacitance.
 2. Use a PN-junction diode operated in reverse bias. The depletion region width of the diode changes with the applied voltage, leading to a change in capacitance.
 3. Use the gate-to-channel capacitance of a special MOSFET structure in accumulation mode, which can be achieved by using an NMOS situated in an n-well (in contrast to the usual operation in a p-well). Changing the gate-to-channel voltage changes the accumulation capacitance [@Andreani.2000].
 4. Use a switched capacitor bank, where multiple capacitors are connected in parallel or series using switches (usually MOSFETs) to achieve discrete capacitance values.
+:::
+
+::: {.content-visible when-format="revealjs"}
+1. MOSFET gate-to-channel capacitance in depletion
+2. Reverse-biased PN-junction diode
+3. Accumulation-mode MOSFET (NMOS in an n-well) [@Andreani.2000]
+4. Switched capacitor bank (discrete steps)
+:::
 
 In order to characterize the tuning sensitivity of an oscillator, the metric $K_\mathrm{VCO}$ (voltage-controlled oscillator gain) is often used, which is defined as
 
@@ -332,13 +402,25 @@ with $V_\mathrm{tune}$ being the control voltage applied to the varactor. The un
 
 ::: {.callout-important}
 ## Watch the Units of $K_\mathrm{VCO}$!
+::: {.content-hidden when-format="revealjs"}
 Data sheets and measurements state $K_\mathrm{VCO}$ as a *frequency* sensitivity in MHz/V or GHz/V, as defined above. All loop equations that follow (in @sec-oscillator-modeling and throughout @sec-pll) instead need the *angular* frequency sensitivity in rad/(s$\cdot$V), which is larger by a factor of $2 \pi$:
+:::
+
+::: {.content-visible when-format="revealjs"}
+Data sheets use Hz/V; loop equations (@sec-oscillator-modeling, @sec-pll) need rad/(s$\cdot$V):
+:::
 
 $$
 K_\mathrm{VCO} \big|_\mathrm{rad/(s \cdot V)} = 2 \pi \cdot K_\mathrm{VCO} \big|_\mathrm{Hz/V}
 $$
 
+::: {.content-hidden when-format="revealjs"}
 Forgetting this factor is one of the most common sources of error in PLL loop design: since the natural frequency scales as $\omega_\mathrm{n} \propto \sqrt{K_\mathrm{VCO}}$, a missing $2 \pi$ moves the loop bandwidth by a factor of $\sqrt{2 \pi} \approx 2.5$, and it moves the damping factor by the same amount (in one direction or the other, depending on the loop filter used). In the remainder of these notes, $K_\mathrm{VCO}$ inside loop equations is always understood to be in rad/(s$\cdot$V).
+:::
+
+::: {.content-visible when-format="revealjs"}
+A missing $2 \pi$ shifts loop bandwidth and damping by $\sqrt{2 \pi} \approx 2.5$, since $\omega_\mathrm{n} \propto \sqrt{K_\mathrm{VCO}}$.
+:::
 :::
 
 Note that the tuning sensitivity $K_\mathrm{VCO}$ is usually quite nonlinear over the tuning range, so it is common to specify $K_\mathrm{VCO}$ at a certain operating point or as an average value over the tuning range.

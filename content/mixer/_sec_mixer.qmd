@@ -101,7 +101,13 @@ The factor $2/\pi$ corresponds to a conversion loss of 3.9 dB, which is the best
 
 ::: {.callout-important}
 ## Single-Balanced vs. Double-Balanced
+::: {.content-hidden when-format="revealjs"}
 Take care not to attribute these 6 dB to the *double*-balancing itself. A **single-balanced** mixer (a single-ended input driving a differential pair of switches with a differential output) already realizes the $\pm 1$ switching function, and therefore already achieves the $2/\pi$ conversion gain. What the second level of balancing buys is *port-to-port isolation*: in the double-balanced mixer of @fig-cmos-double-mixer both the LO feedthrough and the RF feedthrough appear as common-mode signals at the differential output and are thus suppressed. This is why the double-balanced structure is the workhorse in practice, not because of any additional conversion gain.
+:::
+
+::: {.content-visible when-format="revealjs"}
+The 6 dB are *not* due to double balancing: a **single-balanced** mixer already realizes the $\pm 1$ switching function and the $2/\pi$ conversion gain. Double balancing adds *port-to-port isolation*: LO and RF feedthrough in @fig-cmos-double-mixer are common-mode at the output and thus suppressed.
+:::
 :::
 
 Note that no dc current needs to flow through the mixer structures shown in @fig-cmos-single-mixer and @fig-cmos-double-mixer, which is a huge advantage when thinking of flicker noise. Careful, though: this is *not* because the flicker noise of a MOSFET disappears without dc current. The gate-referred flicker noise $K_f / (\Cox W L f)$ of @sec-noise-types is independent of the bias current. What matters is that this gate-referred voltage noise is converted into a *drain current* noise, $\overline{I_\mathrm{n,1/f}^2} = \gm^2 K_f / (\Cox W L f)$, and it is this current that is translated to the mixer output. In a passive mixer the switches are driven hard on and off, and with (ideally) zero dc current through them there is no bias current for the flicker noise to modulate, so the contribution at the output is drastically reduced [@RedmanWhite.2001]. This is in stark contrast to an active (Gilbert-type) mixer, where the switching pair carries the transconductor's bias current at all times.

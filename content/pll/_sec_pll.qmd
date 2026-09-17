@@ -71,13 +71,25 @@ $$
 
 ::: {.callout-important}
 ## Why Regulate Phase Instead of Frequency (PLL vs. FLL)?
+::: {.content-hidden when-format="revealjs"}
 Before we proceed, it is worth discussing why PLLs regulate the phase of the VCO output rather than its frequency directly. The reason lies in the relationship between phase and frequency: Frequency is the time derivative of phase. By controlling the phase, the PLL inherently controls the frequency as well. Additionally, even if the phase regulation has a steady-state phase error $\varphi_\mathrm{err}$, the frequency error in steady state is **zero**, as can be appreciated when inspecting
+:::
+
+::: {.content-visible when-format="revealjs"}
+Frequency is the derivative of phase: controlling phase controls frequency, and a steady-state phase error $\varphi_\mathrm{err}$ still gives **zero** frequency error:
+:::
 
 $$
 \omega_\mathrm{out}(t) = \frac{d \varphi_\mathrm{out}(t)}{dt}  = \frac{d}{dt} \left[ N \cdot \varphi_\mathrm{ref}(t) + \varphi_\mathrm{err} \right] = N \cdot \frac{d \varphi_\mathrm{ref}(t)}{dt} = N \cdot \omega_\mathrm{ref}(t).
 $$
 
+::: {.content-hidden when-format="revealjs"}
 In principle, one could also design a frequency-locked loop (FLL) that compares the frequencies of the reference and VCO output signals directly (by, e.g., using counters); however, this usually results in non-zero frequency error in steady state. Nevertheless, FLLs are often used in combination with PLLs to improve acquisition time and robustness, especially in scenarios with large initial frequency offsets.
+:::
+
+::: {.content-visible when-format="revealjs"}
+A frequency-locked loop (FLL, e.g., counter-based) usually leaves a frequency error, but helps PLL acquisition for large initial offsets.
+:::
 :::
 
 We now derive the closed-loop transfer function of the PLL from reference phase $\varphi_\mathrm{ref}(s)$ to output phase $\varphi_\mathrm{out}(s)$. First, we note that
@@ -100,8 +112,15 @@ $$ {#eq-pll-transfer-function}
 
 We can use all techniques known from control theory to analyze the stability and dynamic response of the PLL based on @eq-pll-transfer-function, however, we have to keep the following in mind:
 
+::: {.content-hidden when-format="revealjs"}
 - $H(s)$ is a small-signal model of the PLL around its locked operating point, only valid for small perturbations. Large-signal behavior, such as acquisition and lock range, is not captured by this model.
 - A PLL is a sampled system, working at instants of $T_\mathrm{ref}$. $H(s)$ is a continuous-time approximation, which is valid only if the loop bandwidth is much smaller (typically $1/10$) than the reference frequency $f_\mathrm{ref}$. If this approximation is not valid, a discrete-time model of the PLL must be used, deriving the $z$-domain transfer function $H(z)$.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- $H(s)$ is a small-signal model around lock; acquisition and lock range are not covered
+- $H(s)$ approximates a sampled system; valid for loop bandwidth $\ll f_\mathrm{ref}$ (typically $1/10$), otherwise use $H(z)$
+:::
 
 If we compare the canonical form of a second-order system given by
 
@@ -149,10 +168,19 @@ In order to drive the CP, we envision a PFD with two digital outputs: an "up" si
 
 The PFD operates as follows:
 
+::: {.content-hidden when-format="revealjs"}
 - If the reference signal leads the feedback signal (its rising edge arrives first), the "UP" output is activated, causing the CP to source current into the integration capacitor, *increasing* the VCO tuning voltage and thus the VCO frequency.
 - If the feedback signal leads the reference signal (its rising edge arrives first), the "DOWN" output is activated, causing the CP to sink current from the integration capacitor, *decreasing* the VCO tuning voltage and thus the VCO frequency.
 - If both signals are aligned in phase and frequency, both outputs are only activated for a short time (the gate delays of the DFF and the AND), and the CP does not source or sink current; the integration capacitor in the loop filter holds its voltage, maintaining the VCO frequency.
 - The rising edge that arrives last resets both outputs, ensuring that the CP only sources or sinks current for a duration proportional to the phase difference between the two signals.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- Reference leads: "UP" active, CP sources current, VCO frequency *increases*
+- Feedback leads: "DOWN" active, CP sinks current, VCO frequency *decreases*
+- Aligned: only short pulses, loop filter capacitor holds the tuning voltage
+- The later edge resets both outputs: current pulse width is proportional to the phase difference
+:::
 
 In the following, we will look at four different cases of PFD operation to illustrate its behavior.
 
@@ -226,10 +254,19 @@ Looking at @fig-pll-pfd-cp and @eq-cp-transfer-function, we can also see that th
 
 In conclusion:
 
+::: {.content-hidden when-format="revealjs"}
 - The PLL regulates the phase of a VCO to match the phase of a reference signal, using feedback control. Even with a steady-state phase error, the frequency error is zero (Type-I PLL). In a Type-II PLL, both phase and frequency errors are zero in steady state.
 - The lowpass behavior of the loop filter determines the dynamic response and stability of the PLL.
 - Further, the PLL transfer function from reference phase to output phase has the form of a lowpass, which passes the reference oscillator phase noise to the output inside the passband. The phase noise of the VCO is suppressed inside the loop bandwidth, as the PLL corrects for phase deviations.
 - Outside the PLL loop bandwidth, the VCO phase noise dominates, as the PLL cannot correct for phase deviations fast enough.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- The PLL locks the VCO phase to the reference; zero frequency error in steady state (Type-II: zero phase error, too)
+- The loop filter sets dynamics and stability
+- Inside the loop bandwidth: reference phase noise passes (lowpass), VCO phase noise is suppressed
+- Outside the loop bandwidth: VCO phase noise dominates
+:::
 
 This phase noise shaping behavior is illustrated in @fig-pll-phase-noise, which shows how the reference and VCO phase noise contributions combine to form the total PLL output phase noise.
 

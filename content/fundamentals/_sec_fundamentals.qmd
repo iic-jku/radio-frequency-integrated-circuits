@@ -42,7 +42,13 @@ $$
 C = B \cdot \log_2(1 + \text{SNR}) = 2\,\text{MHz} \cdot \log_2(1 + 5) = 2\,\text{MHz} \cdot 2.585 \approx 5.2\,\text{Mbps}
 $$
 
+::: {.content-hidden when-format="revealjs"}
 This sounds reasonable, as the user data rate for Bluetooth LE is 1 Mbps for the given SNR, which allows for considerable overhead for coding and protocols.
+:::
+
+::: {.content-visible when-format="revealjs"}
+Reasonable: the Bluetooth LE user data rate of 1 Mbps leaves room for coding and protocol overhead.
+:::
 :::
 
 ## Linearity {#sec-linearity}
@@ -55,7 +61,13 @@ We are going to use a very simple, time-invariant model to study linearity, base
 ## Linearity and Memoryless Systems
 We use a **memoryless** (also called "instantaneous") nonlinear model to simplify the mathematics. A memoryless nonlinear system has the property that the output at time $t$ only depends on the input at time $t$.
 
+::: {.content-hidden when-format="revealjs"}
 In contrast, a system **with memory** will have an output at time $t$ which depends on the input at time $t$ and also on past inputs (e.g., at times $t - \Delta T, t - 2 \Delta T, \ldots, t - N \Delta T$). Such a system can additionally be **time-variant**, which means its behavior changes over time, which leads to quite a few very interesting and important phenomena! Examples of systems with memory are filters, which have a frequency-dependent response, or power amplifiers with thermal memory effects.
+:::
+
+::: {.content-visible when-format="revealjs"}
+A system **with memory** also depends on past inputs (e.g., filters, PAs with thermal memory), and can additionally be **time-variant**.
+:::
 :::
 
 We model a nonlinear circuit block with the input $x(t)$ and the output $y(t)$ with the following Taylor polynomial:
@@ -102,12 +114,21 @@ $$ {#eq-linearity-single-gain-fundamental}
 
 Looking at @eq-linearity-single and @eq-linearity-single-gain-fundamental, we can make a few interesting observations:
 
+::: {.content-hidden when-format="revealjs"}
 - Even-order nonlinearities (due to $\alpha_2$ and $\alpha_4$) create low-frequency components; they effectively add frequency components stemming from the envelope $A_0$. If $A_0$ is a constant then this results in a dc term; if $A_0(t)$ is time-variant, it will create a squared and quadrupled version of it at low frequencies.
 - The $\alpha_1$-term is the gain of the circuit block.
 - Odd-order nonlinearities ($\alpha_3$ and $\alpha_5$) can impact the gain of the fundamental term passing through the block. Often $\alpha_3$ and $\alpha_5$ have the same sign, which is opposite to the sign of $\alpha_1$. This implies that the gain stays linear for small input powers. For larger input signals, the terms with $\alpha_3$ and $\alpha_5$ start to dominate, leading to gain compression or saturation effects, until the circuit block reaches a level of maximum output power. In some cases, $\alpha_3$ has the same sign as $\alpha_1$ but $\alpha_5$ has the opposite one, which leads to gain expansion: The gain would first demonstrate an overshoot at some input power level, until the term with $\alpha_5$ becomes dominant and the gain is compressed again.
 - Even- and odd-order nonlinearities create additional frequency components, so-called harmonics of the fundamental frequency. These harmonics are often unwanted, as they are far outside the wanted transmission frequency range, and need to be minimized, by either
   1. using a lowpass to filter these harmonics, or
   2. increasing the linearity, i.e., making the $\alpha_2$, $\alpha_3$, etc., small enough.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- Even order ($\alpha_2$, $\alpha_4$): dc and low-frequency terms from the envelope $A_0$
+- $\alpha_1$: gain of the block
+- Odd order ($\alpha_3$, $\alpha_5$): change the gain of the fundamental, leading to **compression** (or **expansion**)
+- Both create **harmonics**: filter them (lowpass) or increase linearity
+:::
 
 The created harmonics are illustrated in @fig-harmonics. Note that measuring harmonics to quantify the nonlinearity metrics like $\alpha_2$ and $\alpha_3$ is often not very accurate, as these harmonics are often filtered in bandwidth-limited systems.
 
@@ -172,9 +193,17 @@ $$ {#eq-linearity-double-a}
 
 As shown in @eq-linearity-double-a, interesting things happen:
 
+::: {.content-hidden when-format="revealjs"}
 - We (again) have the gain compression/expansion effect as already discussed in @sec-linearity-single.
 - In addition, we have **cross-modulation**, i.e., the squared envelope of one tone (e.g., $A_2(t)$ of the tone at $\omega_2$) impacts the envelope of the other tone at $\omega_1$. This can lead to unwanted signal distortion, even if there is a large frequency separation between $\omega_1$ and $\omega_2$!
 - Further, since the sign of $\alpha_3$ is usually opposite to $\alpha_1$, this can also lead to **desensitization** ("desens"). If, for example, $A_2 \gg A_1$, then there would be no compression due to the tone $\omega_1$ itself, however, the large tone at $\omega_2$ will lead to gain compression of the tone at $\omega_1$; this effect is called desens.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- Gain compression/expansion (as in @sec-linearity-single)
+- **Cross-modulation**: the envelope of one tone modulates the other, even for a large frequency separation
+- **Desensitization** ("desens"): a large tone at $\omega_2$ compresses a weak tone at $\omega_1$
+:::
 
 We now look at the next class of generated tones:
 
@@ -249,7 +278,13 @@ A typical RF system cascade with multiple blocks and their individual IIP3 contr
 
 ::: {#nte-iip3-cascade .callout-note}
 ## Simple IIP3 Cascade Calculation
+::: {.content-hidden when-format="revealjs"}
 Let's calculate the overall IIP3 of two cascaded blocks. The first block is a low-noise amplifier with an IIP3 of -10 dBm and a gain of 20 dB. The second block is a mixer that has a gain of 10 dB and an IIP3 of 5 dBm. What is the value of the overall IIP3?
+:::
+
+::: {.content-visible when-format="revealjs"}
+LNA (IIP3 = -10 dBm, gain 20 dB) followed by a mixer (IIP3 = 5 dBm, gain 10 dB). What is the overall IIP3?
+:::
 
 Using @eq-iip3-cascade-simple we can quickly estimate:
 
@@ -257,7 +292,13 @@ $$
 \text{IIP3}_\text{total} \approx \min \{ -10\,\text{dBm}, 5\,\text{dBm} - 20\,\text{dB} = -15\,\text{dBm} \} = -15\,\text{dBm}
 $$
 
+::: {.content-hidden when-format="revealjs"}
 We see that the overall IIP3 is limited by the linearity of the second block, as the first block amplifies all signals (including blockers) by 20 dB before they reach the second block.
+:::
+
+::: {.content-visible when-format="revealjs"}
+The second block limits the IIP3, as the LNA amplifies blockers by 20 dB before they reach the mixer.
+:::
 :::
 
 ## Noise {#sec-noise}
@@ -290,21 +331,39 @@ The PSD of noise can be flat vs. frequency (which is called "white noise"), or c
 
 ::: {.callout-important}
 ## Thermal Noise
+::: {.content-hidden when-format="revealjs"}
 Note that the simple approximation given above is only valid for reasonably low frequencies and typical temperatures, and is known as the Rayleigh-Jeans approximation. The full expression of Planck's blackbody radiation, accounting for quantum effects, is given by [@Pozar_RF]
+:::
+
+::: {.content-visible when-format="revealjs"}
+$4 k T R$ is the Rayleigh-Jeans approximation; including quantum effects (Planck) gives [@Pozar_RF]
+:::
 
 $$
 \text{PSD} = \frac{4 R h f}{e^{{h f}/{k T}} - 1}
 $$
 
+::: {.content-hidden when-format="revealjs"}
 where $h$ is the Planck constant ($h = 6.626 \times 10^{-34}\,\text{J s}$) and $f$ is the frequency. The Rayleigh-Jeans approximation is valid for $f \ll k T / h$, which is approximately 6 THz at room temperature (290 K).
 
 We can integrate the above single-sided PSD over the full frequency range and show that the rms noise voltage of a resistor $R$ is bounded to
+:::
+
+::: {.content-visible when-format="revealjs"}
+Rayleigh-Jeans holds for $f \ll k T / h \approx 6\,\text{THz}$ at 290 K. Integrating over all frequencies bounds the noise:
+:::
 
 $$
 \overline{v_\mathrm{n}^2} = \int_0^\infty \frac{4 R h f}{e^{{h f}/{k T}} - 1} df = \frac{2 (\pi k T)^2}{3 h} \cdot R
 $$
 
+::: {.content-hidden when-format="revealjs"}
 which equates to approximately 13 mVrms noise voltage for a 1 k$\Omega$ resistor at room temperature (which is impossible to measure in practice, as there will be some form of bandwidth limitation in any real measurement setup).
+:::
+
+::: {.content-visible when-format="revealjs"}
+That is approx. 13 mVrms for 1 k$\Omega$ at room temperature (not measurable in any bandwidth-limited setup).
+:::
 :::
 
 **MOSFETs** generate several types of noise, the most important ones being the thermal noise of the channel and flicker noise.
@@ -330,6 +389,7 @@ In RF systems, additional noise sources can be present. One noteworthy example i
 
 ::: {.callout-note}
 ## A Note on Circuit Noise Calculations
+::: {.content-hidden when-format="revealjs"}
 When doing circuit noise calculations, it is instructive to keep the following points in mind:
 
 - For circuit calculations involving noise sources, it is convenient to replace the power spectral
@@ -339,6 +399,13 @@ density by equivalent sinusoidal generators in small bandwidths (typically 1 Hz)
 - Multiple _independent_ noise sources can be calculated individually at the output, and the
 total noise in bandwidth $\Delta f$ is calculated as a mean-square value by adding the individual
 mean-square contributions from each sinusoid.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- Replace noise PSDs by equivalent sinusoidal generators in a small bandwidth (typically 1 Hz)
+- $\overline{V_\mathrm{n}^2} = \overline{v_\mathrm{n}^2} / \Delta f$ and $\overline{I_\mathrm{n}^2} = \overline{i_\mathrm{n}^2} / \Delta f$ are their mean-square values, so ordinary sinusoidal circuit analysis applies
+- *Independent* sources: add the mean-square contributions at the output
+:::
 :::
 
 ### Noise in Impedance-Matched Systems
@@ -411,9 +478,17 @@ $$ {#eq-friis}
 
 where $F_i$ and $G_i$ are the noise factor and power gain of the $i$-th block, respectively. Note that all gains have to be in linear units (not dB) when using @eq-friis. We can interpret @eq-friis as follows:
 
+::: {.content-hidden when-format="revealjs"}
 - The overall noise factor $F_\mathrm{total}$ is always larger than or equal to the noise factor of the first block ($F_1$).
 - The noise factor of the first block is the most important one, as the noise factors of the following blocks are reduced by the gain of all preceding blocks. This is especially important in RF receivers, where the first block is usually a low-noise amplifier (LNA) with a very low noise figure (e.g., 1 dB or less) and a high gain (e.g., 10 dB or more). This ensures that the noise of the following blocks is negligible.
 - The noise factor of the last block is reduced by the gain of all preceding blocks, so it is usually not very important.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- $F_\mathrm{total} \geq F_1$
+- The first block matters most: later noise factors are divided by the preceding gain, hence an LNA with low NF and high gain
+- The last block is usually negligible
+:::
 
 Here we also see a trade-off between noise and linearity, as shown by @eq-iip3-cascade and @eq-friis. For low noise, we should try to maximize $G_1$, however, this will affect linearity (IIP3) in a negative way. As in many other situations in RF design, we have to find a good compromise between conflicting requirements.
 
@@ -563,12 +638,25 @@ To further improve the robustness against multi-path propagation, a CP is added 
 
 ::: {#nte-lte-ofdm .callout-note}
 ## OFDM in LTE
+::: {.content-hidden when-format="revealjs"}
 In LTE OFDM is used for the downlink (base station to user equipment) with the following parameters:
+:::
 
+::: {.content-visible when-format="revealjs"}
+LTE downlink parameters:
+:::
+
+::: {.content-hidden when-format="revealjs"}
 - Subcarrier spacing: 15 kHz
 - CP length: 5.2 µs (first symbol) resp. 4.7 µs (following symbols), and 16.67 µs as extended CP for scenarios with large delay spreads
 - Number of subcarriers: 1200 (for 20 MHz bandwidth)
 - Modulation: QPSK, 16-QAM, 64-QAM, 256-QAM
+:::
+
+::: {.content-visible when-format="revealjs"}
+- Subcarrier spacing 15 kHz, CP 4.7 µs (5.2 µs for the first symbol)
+- 1200 subcarriers (20 MHz), QPSK to 256-QAM
+:::
 
 From the subcarrier spacing we can calculate the symbol duration as $T_\mathrm{sym} = 1 / \Delta f = 1 / 15\,\text{kHz} \approx 66.7\,\mu\text{s}$.
 
@@ -578,13 +666,20 @@ $$
 \text{Bitrate} = N_\mathrm{sc} \cdot N_\mathrm{bps} \cdot \frac{1}{T_\mathrm{sym} + T_\mathrm{CP}} = 1200 \cdot 8 \cdot \frac{1}{66.7\,\mu\text{s} + 4.7\,\mu\text{s}} \approx 134\,\text{Mbps}
 $$
 
+::: {.content-hidden when-format="revealjs"}
 With the overhead for control channels and error correction coding a user data rate of approximately 100 Mbps can be achieved in a 20 MHz LTE channel. This data rate can be scaled up in two independent ways: **carrier aggregation** combines several such 20 MHz channels into one logical link, while **MIMO** transmits multiple spatial layers within the *same* 20 MHz channel using several antennas. The two multiply, which is how modern devices reach gigabit rates.
+:::
+
+::: {.content-visible when-format="revealjs"}
+After overhead approx. 100 Mbps; **carrier aggregation** and **MIMO** multiply this to gigabit rates.
+:::
 :::
 
 ## Multiple Access Techniques {#sec-fundamentals-multiple-access}
 
 In wireless communication systems, multiple users need to share the same frequency spectrum. This is achieved by using **multiple access techniques**, which allow multiple users to transmit and receive data simultaneously without interfering with each other. The most common multiple access techniques are:
 
+::: {.content-hidden when-format="revealjs"}
 1. **Time division multiple access (TDMA)**: Users are assigned specific time slots for transmission, allowing multiple users to share the same frequency channel by dividing continuous time into slots.
 
 2. **Frequency division multiple access (FDMA)**: Users are assigned specific frequency bands within the overall frequency spectrum, allowing multiple users to transmit simultaneously on different frequencies.
@@ -594,6 +689,15 @@ In wireless communication systems, multiple users need to share the same frequen
 4. **Orthogonal frequency division multiple access (OFDMA)**: A variant of OFDM, where multiple users are assigned different subcarriers for transmission, allowing for efficient use of the frequency spectrum. This is used in 4G LTE and 5G NR.
 
 5. **Spatial division multiple access (SDMA)**: Uses multiple antennas to create spatially separated channels, allowing multiple users to transmit simultaneously in the same frequency band.
+:::
+
+::: {.content-visible when-format="revealjs"}
+1. **TDMA**: users get time slots
+2. **FDMA**: users get frequency bands
+3. **CDMA**: users get spreading codes (DS-CDMA); the sibling **FHSS** separates users by hopping patterns (Bluetooth)
+4. **OFDMA**: users get OFDM subcarriers (LTE, 5G NR)
+5. **SDMA**: users are separated spatially by multiple antennas
+:::
 
 All of the above techniques can be combined to create more efficient and flexible communication systems. For example, OFDMA can be used in conjunction with SDMA to allow multiple users to share the same frequency resources while also taking advantage of spatial diversity. Also, TDMA can be combined with FDMA to create a hybrid multiple access scheme (which has been used in 2G).
 
@@ -613,5 +717,11 @@ Some operating systems and wireless drivers show the MCS (and other parameters o
 - Interference: -92 dBm
 - Bandwidth: 160 MHz
 
+::: {.content-hidden when-format="revealjs"}
 Looking up MCS 7 in the Wi-Fi MCS table linked above shows that this corresponds to 64-QAM with a coding rate of 5/6. With a bandwidth of 160 MHz, 2x MIMO and a guard interval (GI) of 0.8 µs, the maximum data rate is a whopping 1441 Mbps.
+:::
+
+::: {.content-visible when-format="revealjs"}
+MCS 7 is 64-QAM with coding rate 5/6; with 160 MHz, 2x MIMO and 0.8 µs GI up to 1441 Mbps.
+:::
 :::
