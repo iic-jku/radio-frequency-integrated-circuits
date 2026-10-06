@@ -914,13 +914,13 @@ Note&nbsp;3: Channel Capacity Example
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Let us calculate the channel capacity for a system with an RF bandwidth of 2 MHz and an SNR of 7 dB (the BW and minimum SNR of Bluetooth LE for 1 Mbps). First, we need to convert the SNR from dB to linear units:</p>
+<p>Let us calculate the channel capacity for a system with an RF bandwidth of 1 MHz and an SNR of 10 dB. These are typical <em>assumptions</em> for a Bluetooth LE receiver at 1 Mbps (the Bluetooth LE specification itself does not define an SNR, but specifies the receiver sensitivity via a maximum bit error rate of 0.1 %). First, we need to convert the SNR from dB to linear units:</p>
 <p><span class="math display">\[
-\text{SNR} = 10^{{7}/{10}} \approx 5
+\text{SNR} = 10^{{10}/{10}} = 10
 \]</span></p>
 <p>Now we can use <a href="#eq-shannon-hartley" class="quarto-xref">Equation&nbsp;5</a> to calculate the channel capacity:</p>
 <p><span class="math display">\[
-C = B \cdot \log_2(1 + \text{SNR}) = 2\,\text{MHz} \cdot \log_2(1 + 5) = 2\,\text{MHz} \cdot 2.585 \approx 5.2\,\text{Mbps}
+C = B \cdot \log_2(1 + \text{SNR}) = 1\,\text{MHz} \cdot \log_2(1 + 10) = 1\,\text{MHz} \cdot 3.459 \approx 3.5\,\text{Mbps}
 \]</span></p>
 <p>This sounds reasonable, as the user data rate for Bluetooth LE is 1 Mbps for the given SNR, which allows for considerable overhead for coding and protocols.</p>
 </div>
@@ -3109,7 +3109,7 @@ Note&nbsp;8: Reciprocal Mixing Example
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Let us assume the following example from a Bluetooth LE receiver: The sensitivity target for the RX is -70 dBm with an SNR of 10 dB for a 1 MHz channel. An adjacent channel interferer is present at -27 dB channel to interferer ratio at an offset of 3 MHz. How much phase noise can the LO have to meet the sensitivity target?</p>
+<p>Let us assume the following example from a Bluetooth LE receiver: The sensitivity target for the RX is -70 dBm, and we assume a required SNR of 10 dB in a 1 MHz bandwidth (the same assumptions as in <a href="#nte-channel-limit" class="quarto-xref">Note&nbsp;3</a>; the Bluetooth LE specification itself defines the sensitivity via a bit error rate of 0.1 %, not via an SNR). An adjacent channel interferer is present at -27 dB channel to interferer ratio at an offset of 3 MHz. How much phase noise can the LO have to meet the sensitivity target?</p>
 <p>From the sensitivity target and the SNR requirement, we can calculate the maximum allowable noise floor in the RX. We add a margin of 3 dB to account for implementation losses:</p>
 <p><span class="math display">\[
 \begin{split}
