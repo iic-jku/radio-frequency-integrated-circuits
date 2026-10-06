@@ -421,11 +421,11 @@ K_\mathrm{VCO} \big|_\mathrm{rad/(s \cdot V)} = 2 \pi \cdot K_\mathrm{VCO} \big|
 $$
 
 ::: {.content-hidden when-format="revealjs"}
-Forgetting this factor is one of the most common sources of error in PLL loop design: since the natural frequency scales as $\omega_\mathrm{n} \propto \sqrt{K_\mathrm{VCO}}$, a missing $2 \pi$ moves the loop bandwidth by a factor of $\sqrt{2 \pi} \approx 2.5$, and it moves the damping factor by the same amount (in one direction or the other, depending on the loop filter used). In the remainder of these notes, $K_\mathrm{VCO}$ inside loop equations is always understood to be in rad/(s$\cdot$V).
+Forgetting this factor is one of the most common sources of error in PLL loop design: since the natural frequency scales as $\omega_\mathrm{n} \propto \sqrt{K_\mathrm{VCO}}$, a missing $2 \pi$ moves $\omega_\mathrm{n}$ by a factor of $\sqrt{2 \pi} \approx 2.5$, and it moves the damping factor by the same factor (in one direction or the other, depending on the loop filter used). Since both change together, the $-3\,\text{dB}$ loop bandwidth moves by even more: for a type-II charge-pump PLL (@sec-pll-charge-pump) designed for $\zeta = 0.707$, a $K_\mathrm{VCO}$ that is $2 \pi$ larger than assumed increases the loop bandwidth by about $4.7\times$. In the remainder of these notes, $K_\mathrm{VCO}$ inside loop equations is always understood to be in rad/(s$\cdot$V).
 :::
 
 ::: {.content-visible when-format="revealjs"}
-A missing $2 \pi$ shifts loop bandwidth and damping by $\sqrt{2 \pi} \approx 2.5$, since $\omega_\mathrm{n} \propto \sqrt{K_\mathrm{VCO}}$.
+A missing $2 \pi$ shifts $\omega_\mathrm{n}$ and damping by $\sqrt{2 \pi} \approx 2.5$, since $\omega_\mathrm{n} \propto \sqrt{K_\mathrm{VCO}}$; the loop bandwidth moves even more (about $4.7\times$ for a type-II charge-pump PLL at $\zeta = 0.707$).
 :::
 :::
 
