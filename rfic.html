@@ -544,7 +544,7 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>All course material (source code of this document, Jupyter notebooks for calculations, Xschem circuits, etc.) is made publicly available on GitHub (<a href="https://github.com/iic-jku/radio-frequency-integrated-circuits">follow this link</a>) and shared under the Apache-2.0 license.</p>
+<p>All course material (source code of this document, Jupyter notebooks for calculations, etc.) is made publicly available on GitHub (<a href="https://github.com/iic-jku/radio-frequency-integrated-circuits">follow this link</a>) and shared under the Apache-2.0 license.</p>
 <p>Please feel free to submit <a href="https://github.com/iic-jku/radio-frequency-integrated-circuits/pulls">pull requests</a> to fix typos or add content! If you want to discuss something that is not clear, please <a href="https://github.com/iic-jku/radio-frequency-integrated-circuits/issues/new">open an issue</a>.</p>
 <p>The production of this document would be impossible without these (and many more) great open-source software products: <code>VS Code</code>, <code>Quarto</code>, <code>Pandoc</code>, <code>LaTeX</code>, <code>Typst</code>, <code>Jupyter Notebook</code>, <code>Python</code>, <code>Xschem</code>, <code>ngspice</code>, <code>CACE</code>, <code>pygmid</code>, <code>schemdraw</code>, <code>Numpy</code>, <code>Scipy</code>, <code>Matplotlib</code>, <code>Pandas</code>, <code>Git</code>, <code>Docker</code>, <code>Ubuntu</code>, <code>GNU/Linux</code>, …</p>
 </div>
@@ -2662,7 +2662,7 @@ Figure&nbsp;46: A fully-differential double-balanced MOSFET mixer.
 <p><span id="eq-mixer-double-output"><span class="math display">\[
 s_\mathrm{out}(t) = \frac{2}{\pi} \cos(\omega_\mathrm{in} t \pm \omega_\mathrm{LO} t) + \ldots
 \tag{52}\]</span></span></p>
-<p>The factor <span class="math inline">\(2/\pi\)</span> corresponds to a conversion loss of 3.9 dB, which is the best an ideal balanced passive mixer can do.</p>
+<p>The factor <span class="math inline">\(2/\pi\)</span> corresponds to a conversion loss of 3.9 dB, which is the best an ideal balanced passive mixer can do with a 50 % duty-cycle LO driving a resistive load. A four-phase passive mixer with 25 % duty-cycle LO signals (see <a href="#fig-logen-25" class="quarto-xref">Figure&nbsp;55</a>) driving a capacitive (sampling) baseband load can do better and reaches <span class="math inline">\(2\sqrt{2}/\pi\)</span>, i.e., a conversion loss of only 0.9 dB.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
