@@ -5,7 +5,8 @@ authors:
     given-names: Harald
     orcid: https://orcid.org/0000-0003-1519-076X
 title: "Radio-Frequency Integrated Circuits"
-date-released: 2025-11-09
+version: "1.0"
+date-released: 2026-09-17
 url: https://iic-jku.github.io/radio-frequency-integrated-circuits
 identifiers:
   - type: doi
