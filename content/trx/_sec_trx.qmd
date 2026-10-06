@@ -194,7 +194,7 @@ The transceiver architecture shown in @fig-trx-block is called the direct-conver
 - There are a minimum number of RF blocks, which is good for cost and power consumption.
 - This architecture is very flexible and can be easily adapted to different standards and requirements, even for wideband operation. It generally shows very good performance if the disadvantages can be overcome by good design.
 - This architecture allows a high integration level, as basically all blocks can be implemented on-chip.
-- Direct conversion is the de facto standard architecture for cellular, Wi-Fi, Bluetooth (with the exception of the TX), and GNSS.
+- Direct conversion is the de facto standard architecture for cellular, Wi-Fi, and GNSS (Bluetooth receivers typically use the low-IF architecture discussed below).
 :::
 
 ::: {.content-visible when-format="revealjs"}
@@ -202,7 +202,7 @@ The transceiver architecture shown in @fig-trx-block is called the direct-conver
 - Minimum number of RF blocks: low cost and power
 - Flexible, even wideband, with very good performance
 - High integration level: almost everything on-chip
-- De facto standard for cellular, Wi-Fi, Bluetooth (RX), and GNSS
+- De facto standard for cellular, Wi-Fi, and GNSS
 :::
 
 However, the direct-conversion architecture also has some serious disadvantages:
