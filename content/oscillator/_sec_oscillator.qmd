@@ -303,11 +303,11 @@ Naming in @tbl-three-point-oscillators varies: grounded source is always Pierce,
 :::
 
 ::: {.content-hidden when-format="revealjs"}
-What is *not* a grounding variant is the **Clapp oscillator**: it is a Colpitts with an additional capacitor placed **in series with the inductor**, introduced to keep the transistor's parasitic capacitances from pulling the frequency [@Clapp.1948]. Interestingly, a quartz crystal oscillator gets this for free: as we will see in @fig-crystal-equivalent-circuit, the motional branch of a crystal is $L_\mathrm{m}$ in series with a very small $C_\mathrm{m}$, so $C_\mathrm{m}$ plays exactly the role of Clapp's series capacitor. This is the very reason why the crystal can be pulled only by a few ppm (see @eq-crystal-pulling), and thus why quartz oscillators are so stable.
+What is *not* a grounding variant is the **Clapp oscillator**: it is a Colpitts with an additional capacitor placed **in series with the inductor**, introduced to keep the transistor's parasitic capacitances from pulling the frequency [@Clapp.1948]. Interestingly, a quartz crystal oscillator gets this for free: as we will see in @fig-crystal-equivalent-circuit, the motional branch of a crystal is $L_\mathrm{m}$ in series with a very small $C_\mathrm{m}$, so $C_\mathrm{m}$ plays exactly the role of Clapp's series capacitor. This is the very reason why changes of the surrounding capacitances (e.g., parasitic or transistor capacitances) move the frequency by only a few ppm (see @eq-crystal-pulling), and thus why quartz oscillators are so stable.
 :::
 
 ::: {.content-visible when-format="revealjs"}
-The **Clapp oscillator** is a Colpitts with a capacitor **in series with the inductor** [@Clapp.1948]. A crystal has this built in: the small motional $C_\mathrm{m}$ (@fig-crystal-equivalent-circuit) limits pulling to a few ppm (@eq-crystal-pulling).
+The **Clapp oscillator** is a Colpitts with a capacitor **in series with the inductor** [@Clapp.1948]. A crystal has this built in: the small motional $C_\mathrm{m}$ (@fig-crystal-equivalent-circuit) makes the frequency move by only a few ppm when surrounding capacitances change (@eq-crystal-pulling).
 :::
 :::
 
@@ -331,7 +331,13 @@ $$
 f_0 \approx f_\mathrm{s} \left[ 1 + \frac{C_\mathrm{m}}{2 (C_0 + C_\mathrm{load})} \right].
 $$ {#eq-crystal-pulling}
 
-The resulting *pulling* is only in the range of some tens to hundreds of ppm, which is exactly why crystal data sheets specify a nominal load capacitance: the designer trims $C_1$ and $C_2$ (often with an on-chip switched capacitor bank) to hit the specified frequency, and can use the same knob to compensate for aging and temperature drift.
+The resulting total *pulling* away from $f_\mathrm{s}$ is only in the range of some tens to hundreds of ppm, while a small change of the load capacitance moves the frequency according to the sensitivity
+
+$$
+\frac{1}{f_\mathrm{s}} \frac{\partial f_0}{\partial C_\mathrm{load}} \approx -\frac{C_\mathrm{m}}{2 (C_0 + C_\mathrm{load})^2}.
+$$
+
+For typical values of $C_\mathrm{m} = 5\,\text{fF}$, $C_0 = 2\,\text{pF}$, and $C_\mathrm{load} = 10\,\text{pF}$, the oscillator runs about 208 ppm above $f_\mathrm{s}$, but a change of $C_\mathrm{load}$ moves it by only about 17 ppm/pF, so 0.1 pF of parasitic capacitance shifts the frequency by less than 2 ppm. Since the total pulling is nevertheless significant, crystal data sheets specify a nominal load capacitance: the designer trims $C_1$ and $C_2$ (often with an on-chip switched capacitor bank) to hit the specified frequency, and can use the same knob to compensate for aging and temperature drift.
 
 ## Differential Oscillators {#sec-differential-oscillators}
 
