@@ -97,7 +97,7 @@ $$
 s_\mathrm{out}(t) = \frac{2}{\pi} \cos(\omega_\mathrm{in} t \pm \omega_\mathrm{LO} t) + \ldots
 $$ {#eq-mixer-double-output}
 
-The factor $2/\pi$ corresponds to a conversion loss of 3.9 dB, which is the best an ideal balanced passive mixer can do.
+The factor $2/\pi$ corresponds to a conversion loss of 3.9 dB, which is the best an ideal balanced passive mixer can do with a 50 % duty-cycle LO driving a resistive load. A four-phase passive mixer with 25 % duty-cycle LO signals (see @fig-logen-25) driving a capacitive (sampling) baseband load can do better and reaches $2\sqrt{2}/\pi$, i.e., a conversion loss of only 0.9 dB.
 
 ::: {.callout-important}
 ## Single-Balanced vs. Double-Balanced
