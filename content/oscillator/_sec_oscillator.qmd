@@ -224,11 +224,11 @@ where $P_\mathrm{RM}$ is the power of the reciprocal mixing noise introduced int
 ::: {#nte-reciprocal-mixing .callout-note}
 ## Reciprocal Mixing Example
 ::: {.content-hidden when-format="revealjs"}
-Let us assume the following example from a Bluetooth LE receiver: The sensitivity target for the RX is -70 dBm with an SNR of 10 dB for a 1 MHz channel. An adjacent channel interferer is present at -27 dB channel to interferer ratio at an offset of 3 MHz. How much phase noise can the LO have to meet the sensitivity target?
+Let us assume the following example from a Bluetooth LE receiver: The sensitivity target for the RX is -70 dBm, and we assume a required SNR of 10 dB in a 1 MHz bandwidth (the same assumptions as in @nte-channel-limit; the Bluetooth LE specification itself defines the sensitivity via a bit error rate of 0.1 %, not via an SNR). An adjacent channel interferer is present at -27 dB channel to interferer ratio at an offset of 3 MHz. How much phase noise can the LO have to meet the sensitivity target?
 :::
 
 ::: {.content-visible when-format="revealjs"}
-Bluetooth LE RX: sensitivity -70 dBm, SNR 10 dB, 1 MHz channel; interferer at C/I = -27 dB, 3 MHz offset. Maximum LO phase noise?
+Bluetooth LE RX: sensitivity -70 dBm, assumed SNR 10 dB in 1 MHz; interferer at C/I = -27 dB, 3 MHz offset. Maximum LO phase noise?
 :::
 
 ::: {.content-hidden when-format="revealjs"}
