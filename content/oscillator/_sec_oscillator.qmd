@@ -77,7 +77,7 @@ $$
 
 we want to keep the amplitude variations small, i.e., $V_\mathrm{osc,p}(t) = V_\mathrm{osc,p}$, and also the frequency variations small, i.e., $\omega_0(t) = \omega_0$. We further want to minimize any phase fluctuations, i.e., $\varphi(t) = \varphi_0$.
 
-As a side note, the definition of $Q$ in @eq-definition-q can also be understood as describing how many oscillation cycles it takes until the energy stored in the resonator is dissipated. For example, if $Q = 1000$ at $f_0 = 1\,\text{GHz}$, the energy stored in the resonator will last for approximately 1000 cycles, which is 1 µs. This time duration is sometimes called the "ring-down time" of the resonator.
+As a side note, the definition of $Q$ in @eq-definition-q can also be understood as describing how fast the energy stored in the resonator is dissipated once the excitation is removed. Per cycle, a fraction of $2 \pi / Q$ of the stored energy is lost, so the energy decays as $E(t) = E_0 \, e^{-\omega_0 t / Q}$. At this rate, the stored energy would be used up after $Q / (2 \pi)$ cycles, which is also the time after which it has fallen to $1/e$. For example, if $Q = 1000$ at $f_0 = 1\,\text{GHz}$, this takes about 159 cycles, which is 159 ns. After $Q = 1000$ cycles (1 µs), the energy is down to $e^{-2 \pi} \approx 0.19\,\%$ and the amplitude to about 4 %, so the resonator has practically rung down. Both durations are sometimes called the "ring-down time" of the resonator, so it is worth stating which one is meant.
 
 ## Oscillator Noise {#sec-oscillator-noise}
 
