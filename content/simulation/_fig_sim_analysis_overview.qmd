@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-sim-analysis-overview
 #| echo: false
-#| fig-cap: "Family tree of circuit simulation analyses. Every analysis starts from the dc operating point. The small-signal analyses linearize around a constant operating point (LTI) or around a periodic steady state (LPTV); the periodic steady state is found either in the time domain (shooting PSS) or in the frequency domain (harmonic balance, HB). The fundamental analyses are shown in blue, the advanced RF analyses in orange."
+#| fig-cap: "Family tree of circuit simulation analyses. Every analysis starts from the dc operating point. The small-signal analyses linearize around a constant operating point (LTI) or around a periodic steady state (LPTV). The periodic steady state is found either in the time domain (shooting PSS) or in the frequency domain (harmonic balance, HB). The fundamental analyses are shown in blue, the advanced RF analyses in orange."
 import schemdraw as sd
 from schemdraw import flow
 

@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-sim-tran-vs-pss
 #| echo: false
-#| fig-cap: "Transient response of a resonator with $Q = 50$ that is driven at its resonance frequency from $t = 0$. A transient analysis has to integrate about 110 periods until the amplitude is within 0.1 % of its final value; a PSS analysis solves for the single steady-state period (red) directly; for this linear tank, a single shooting iteration over one period suffices."
+#| fig-cap: "Transient response of a resonator with $Q = 50$ that is driven at its resonance frequency from $t = 0$. A transient analysis has to integrate about 110 periods until the amplitude is within 0.1 % of its final value. A PSS analysis solves for the single steady-state period (red) directly, and for this linear tank a single shooting iteration over one period suffices."
 
 import numpy as np
 import matplotlib.pyplot as plt

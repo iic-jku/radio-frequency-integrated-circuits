@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-sim-pac-sidebands
 #| echo: false
-#| fig-cap: "Frequency grid of a periodic small-signal analysis (PAC or HBAC) of a downconversion mixer. The large-signal LO and its harmonics $k f_\\mathrm{LO}$ (gray) are computed by PSS or HB. The small signal lives on the sidebands $|f + k f_\\mathrm{LO}|$ of the swept offset frequency $f$. The conversion gain is the transfer from the RF input at sideband $k = +1$ to the IF output at sideband $k = 0$; the image ($k = -1$) and the third-harmonic sidebands ($k = \\pm 3$) convert to the same IF."
+#| fig-cap: "Frequency grid of a periodic small-signal analysis (PAC or HBAC) of a downconversion mixer. The large-signal LO and its harmonics $k f_\\mathrm{LO}$ (gray) are computed by PSS or HB. The small signal lives on the sidebands $|f + k f_\\mathrm{LO}|$ of the swept offset frequency $f$. The conversion gain is the transfer from the RF input at sideband $k = +1$ to the IF output at sideband $k = 0$. The image ($k = -1$) and the third-harmonic sidebands ($k = \\pm 3$) convert to the same IF."
 
 import numpy as np
 import matplotlib.pyplot as plt

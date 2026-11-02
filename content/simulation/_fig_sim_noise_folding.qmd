@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-sim-noise-folding
 #| echo: false
-#| fig-cap: "Noise folding in an ideal double-balanced switching mixer driven by a square-wave LO with 50 % duty cycle. Left: share of the white source noise that each sideband $k$ contributes to the IF output, $|c_k|^2 = (2/(\\pi k))^2$ for odd $k$; the shares add up to one. Right: single-sideband noise figure obtained when the analysis keeps only the sidebands up to $|k| \\leq K$. Keeping only the first harmonic ($K = 1$) underestimates the noise figure by 0.9 dB."
+#| fig-cap: "Noise folding in an ideal double-balanced switching mixer driven by a square-wave LO with 50 % duty cycle. Left: share of the white source noise that each sideband $k$ contributes to the IF output, $|c_k|^2 = (2/(\\pi k))^2$ for odd $k$, and the shares add up to one. Right: single-sideband noise figure obtained when the analysis keeps only the sidebands up to $|k| \\leq K$. Keeping only the first harmonic ($K = 1$) underestimates the noise figure by 0.9 dB."
 
 import numpy as np
 import matplotlib.pyplot as plt

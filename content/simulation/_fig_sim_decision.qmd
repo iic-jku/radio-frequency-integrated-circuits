@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-sim-decision
 #| echo: false
-#| fig-cap: "Choosing an analysis. The first question is whether a large periodic signal (LO, clock, carrier, or the oscillation itself) sets the operating point; the second is how sharp the resulting waveforms are. Transient (noise) simulation remains the reference that every other analysis should be cross-checked against."
+#| fig-cap: "Choosing an analysis. The first question is whether a large periodic signal (LO, clock, carrier, or the oscillation itself) sets the operating point, the second is how sharp the resulting waveforms are. Transient (noise) simulation remains the reference that every other analysis should be cross-checked against."
 import schemdraw as sd
 from schemdraw import flow
 
