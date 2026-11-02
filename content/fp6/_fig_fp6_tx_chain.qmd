@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-fp6-tx-chain
 #| echo: false
-#| fig-cap: "Simplified transmit path of the Fairphone (Gen. 6) for band 1 or band 3. The supply of the PA comes from an average power tracker; a directional coupler at the antenna side of the duplexer feeds a sample of the TX signal back to the feedback receiver (FBRX) of the RFIC. Only the I path of the direct-conversion transmitter is drawn."
+#| fig-cap: "Simplified transmit path of the Fairphone (Gen. 6) for band 1 or band 3. The supply of the PA comes from an average power tracker; a directional coupler between the antenna switch and the antenna feeds a sample of the TX signal back to the feedback receiver (FBRX) of the RFIC. Only the I path of the direct-conversion transmitter is drawn."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -44,11 +44,11 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Line().right(d.unit * 0.6)
     flt = dsp.Filter(response='bp').label('B1/B3\nquadplexer', loc='bottom', ofst=0.15)
     dsp.Line().right(d.unit / 3)
-    cpl = dsp.Box(w=1.4, h=1).label('coupler')
-    dsp.Line().right(d.unit / 3)
     sw = dsp.Box(w=1.6, h=1).label('antenna\nswitch')
     dsp.Line().right(d.unit / 3)
-    tun = dsp.Box(w=1.6, h=1).label('tuner')
+    cpl = dsp.Box(w=1.4, h=1).label('coupler')
+    dsp.Line().right(d.unit / 3)
+    dpx = dsp.Filter(response='lp').label('diplexer\nLMH | UHB', loc='bottom', ofst=0.15)
     dsp.Line().right(d.unit / 3)
     elm.Antenna()
 
@@ -58,18 +58,21 @@ with sd.Drawing(canvas='svg') as d:
 
     # supply of the PA from the average power tracker
     pa_top = ((pa.input.x + pa.out.x) / 2, pa.input.y + 0.5)
-    dsp.Arrow().up(d.unit * 1.3).at(pa_top).reverse()
+    dsp.Arrow().up(d.unit * 1.2).at(pa_top).reverse()
     apt = dsp.Box(w=2.4, h=1).anchor('S').label('tracker\n(QET3930)')
-    dsp.Arrow().left(d.unit * 0.6).at(apt.W).reverse().label('$V_\\mathrm{BAT}$', loc='end')
+    dsp.Arrow().left(d.unit * 0.8).at(apt.W).reverse().label('$V_\\mathrm{BAT}$', loc='top')
 
-    # feedback receiver
-    dsp.Line().down(d.unit * 1.6).at(cpl.S)
+    # feedback receiver: coupler -> FBRX switch -> FBRX (mixer, ADC) -> DSP
+    fb = dsp.Box(w=2.2, h=1).at(((dsp_.E.x + mix.W.x) / 2, vco.S.y + 0.5)).anchor('center').label('FBRX\nmixer, ADC')
+    y_fb = vco.S.y - 1.5
+    dsp.Line().down().at(cpl.S).toy(y_fb)
     dsp.Line().left(d.unit * 2.2)
     fsw = dsp.Box(w=1.6, h=1).label('FBRX\nswitch')
-    dsp.Line().left(d.unit * 3.2)
-    dsp.Line().tox(dsp_.S.x + d.unit * 0.0)
-    dsp.Arrow().up().toy(dsp_.S).label('FBRX', loc='bottom')
+    dsp.Line().left().tox(fb.S.x)
+    dsp.Arrow().up().toy(fb.S)
+    dsp.Line().left().at(fb.W).tox(dsp_.S.x)
+    dsp.Arrow().up().toy(dsp_.S)
 
-    elm.EncircleBox([pa, bsw], padx=0.25, pady=0.9).linestyle('--').label('MMPA module', loc='top')
-    elm.EncircleBox([dsp_, dac, lpf, mix, drv, vco], padx=0.3, pady=0.6).linestyle('--').label('RFIC (SDR735)', loc='top')
+    elm.EncircleBox([pa, bsw], padx=0.25, pady=0.9).linestyle('--').label('MMPA module', loc='bottom')
+    elm.EncircleBox([dsp_, dac, lpf, mix, drv, vco, fb], padx=0.3, pady=0.5).linestyle('--').label('RFIC (SDR735)', loc='top')
 ```

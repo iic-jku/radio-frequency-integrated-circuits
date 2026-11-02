@@ -204,11 +204,11 @@ This chapter contains a collection of potential questions covering the topics di
 
 These questions refer to the case study of the Fairphone (Gen. 6) RF front-end (@sec-fp6) and are optional.
 
-81. Why are the cellular RFIC and the SoC of a smartphone separate chips? Which signals cross between them, and which technologies are used for the components of the RF front-end?
+81. Why are the cellular RFIC and the SoC of a smartphone separate chips? Which signals cross between them?
 
 82. Why does every FDD band need its own acoustic duplexer? Explain the role of the duplex gap (@eq-fp6-qmin), and why bands 4 and 66 are less critical than band 8.
 
-83. Why does a smartphone use LNA modules close to the antenna instead of LNAs integrated in the RFIC? Why does a GNSS receiver place its LNA between two SAW filters?
+83. Why does a smartphone use external LNA modules in front of the RFIC? Why does a GNSS receiver place its LNA between two SAW filters?
 
 84. Why does a multi-band synthesizer use several VCOs and frequency dividers? How many VCOs are needed to cover one octave with a VCO tuning range of ±10 % (@eq-fp6-nvco)?
 

@@ -438,7 +438,7 @@
   },
   "fig-fp6-apt": {
    "chapter": 10,
-   "number": "112",
+   "number": "111",
    "type": "fig"
   },
   "fig-fp6-bands": {
@@ -453,15 +453,10 @@
   },
   "fig-fp6-imd": {
    "chapter": 10,
-   "number": "113",
+   "number": "112",
    "type": "fig"
   },
   "fig-fp6-rx-chain": {
-   "chapter": 10,
-   "number": "110",
-   "type": "fig"
-  },
-  "fig-fp6-sdr735-floorplan": {
    "chapter": 10,
    "number": "109",
    "type": "fig"
@@ -473,7 +468,7 @@
   },
   "fig-fp6-tx-chain": {
    "chapter": 10,
-   "number": "111",
+   "number": "110",
    "type": "fig"
   },
   "fig-free-space-path-loss": {

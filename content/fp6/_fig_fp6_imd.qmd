@@ -17,10 +17,11 @@ limitations under the License.
 ```{python}
 #| label: fig-fp6-imd
 #| echo: false
-#| fig-cap: "Harmonics and intermodulation products $|m f_\\mathrm{B3} + n f_\\mathrm{B1}|$ of a dual uplink in bands 1 and 3 ($f_\\mathrm{B1}$ = 1920 MHz to 1980 MHz, $f_\\mathrm{B3}$ = 1710 MHz to 1785 MHz). The gray columns are the receive bands of the phone; the parts of a product that fall into a receive band are drawn in red, and the affected receive bands are listed next to each product."
+#| fig-cap: "Harmonics and intermodulation products $|m f_\\mathrm{B3} + n f_\\mathrm{B1}|$ of a dual uplink in bands 1 and 3 ($f_\\mathrm{B1}$ = 1920 MHz to 1980 MHz, $f_\\mathrm{B3}$ = 1710 MHz to 1785 MHz). The shaded columns are the receive bands of the phone; the parts of a product that fall into a receive band are drawn in red, and the affected receive bands are listed next to each product."
 import sys
 sys.path.insert(0, 'content/fp6')
 import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 import fp6_bands as fb
 
 b3 = fb.FDD[3][0:2]
@@ -41,15 +42,20 @@ def term(k, f):
     return ('-' if k < 0 else '+') + s + f
 
 rx = fb.rx_bands()
+shade = {'B': ('tab:orange', 'cellular FDD/SDL downlink'), 'n': ('tab:green', 'cellular TDD'),
+         'G': ('k', 'GNSS'), 'W': ('tab:purple', 'Wi-Fi')}
+def kind(name):
+    return 'n' if name in fb.TDD else name[0]
+
 fig, ax = plt.subplots(figsize=(9, 4.8))
-for _, lo, hi in rx:
-    ax.axvspan(lo, hi, color='gray', alpha=0.15, zorder=0)
+for vname, lo, hi in rx:
+    ax.axvspan(lo, hi, color=shade[kind(vname)][0], alpha=0.12, lw=0, zorder=0)
 
 labels = []
 for i, (m, n, name) in enumerate(products):
     lo, hi = fb.mix(m, b3, n, b1)
     tx = (m, n) in ((1, 0), (0, 1))
-    ax.barh(i, hi - lo, left=lo, height=0.6, color='tab:blue' if tx else 'tab:gray')
+    ax.barh(i, hi - lo, left=lo, height=0.6, color='tab:blue' if tx else '#9e9e9e')
     hits = []
     if not tx:
         for vname, vlo, vhi in rx:
@@ -57,22 +63,25 @@ for i, (m, n, name) in enumerate(products):
             if olo < ohi:
                 ax.barh(i, ohi - olo, left=olo, height=0.6, color='tab:red')
                 hits.append(vname.replace(' DL', ''))
-    ax.text(hi * 1.04, i, ', '.join(hits), va='center', fontsize=7.5, color='tab:red')
+    ax.text(hi + 60, i, ', '.join(hits), va='center', fontsize=7.5, color='tab:red')
     terms = sorted([term(m, '$f_\\mathrm{B3}$'), term(n, '$f_\\mathrm{B1}$')], key=lambda t: t[:1] == '-')
-    expr = ''.join(terms).lstrip('+')
-    labels.append(name if tx else f'{name}: {expr}')
+    expr = ''.join(terms).lstrip('+').replace('-', '\u2212')
+    labels.append(f'{name} (TX)' if tx else f'{name}: {expr}')
 
 ax.set_yticks(range(len(products)))
 ax.set_yticklabels(labels, fontsize=8)
 ax.invert_yaxis()
-ax.set_xscale('log')
-ax.set_xlim(100, 12000)
-ticks = [100, 200, 500, 1000, 2000, 5000]
-ax.set_xticks(ticks)
-ax.set_xticklabels([str(t) for t in ticks])
-ax.minorticks_off()
+ax.set_xlim(0, 7200)
 ax.set_xlabel('Frequency (MHz)')
 ax.grid(True, axis='x', alpha=0.3)
+ax.spines[['top', 'right']].set_visible(False)
+ax.tick_params(axis='y', length=0)
+
+handles = [Patch(color='tab:blue', label='TX signal'), Patch(color='#9e9e9e', label='product'),
+           Patch(color='tab:red', label='product in own RX band')]
+handles += [Patch(color=c, alpha=0.25, label=l) for c, l in shade.values()]
+ax.legend(handles=handles, loc='upper center', bbox_to_anchor=(0.5, -0.13), ncol=4,
+          fontsize=8, frameon=False)
 
 plt.tight_layout()
 plt.show()

@@ -28,10 +28,8 @@ with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=12, margin=0.5)
 
     elm.Antenna()
-    dsp.Line().right(d.unit / 3)
-    tun = dsp.Box(w=1.6, h=1).label('tuner')
-    dsp.Line().right(d.unit / 3)
-    dpx = dsp.Filter(response='lp').label('diplexer\nLB | MHB', loc='bottom', ofst=0.15)
+    dsp.Line().right(d.unit * 0.6)
+    dpx = dsp.Filter(response='lp').label('diplexer\nLMH | UHB', loc='bottom', ofst=0.15)
     dsp.Line().right(d.unit / 3)
     sw = dsp.Box(w=1.6, h=1).label('antenna\nswitch')
     dsp.Line().right(d.unit / 3)
@@ -56,5 +54,5 @@ with sd.Drawing(canvas='svg') as d:
 
     elm.EncircleBox([lsw, lna, mux], padx=0.2, pady=0.9).linestyle('--').label('LNA module (QLN5040)', loc='top')
     elm.EncircleBox([mix, lpf, adc, dsp_, vco], padx=0.3, pady=0.6).linestyle('--').label('RFIC (SDR735)', loc='top')
-    elm.EncircleBox([tun, dpx, sw, flt], padx=0.2, pady=0.9).linestyle(':').label('front-end components on the PCB', loc='top')
+    elm.EncircleBox([dpx, sw, flt], padx=0.35, pady=0.9).linestyle(':').label('front-end components on the PCB', loc='top')
 ```
