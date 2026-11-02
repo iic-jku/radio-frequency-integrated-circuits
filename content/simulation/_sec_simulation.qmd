@@ -105,7 +105,7 @@ For an amplifier, $S_{11}$ describes the input match (return loss, see @eq-retur
 
 ### Small-Signal Noise Analysis {#sec-simulation-noise}
 
-The **noise analysis** (`noise`) models every noise source of the circuit (thermal noise of resistors and channels, shot noise of junctions, flicker noise, see @sec-noise-types) as a stationary random source, whose power spectral density (PSD) $S_i(f)$ is evaluated at the dc operating point. For uncorrelated sources, the contributions add in power at the output:
+The **noise analysis** (`noise`) models every noise source of the circuit (thermal noise of resistors and channels, shot noise of junctions, flicker noise, see @sec-noise-types) as a stationary random source, whose power spectral density (PSD) $S_i(f)$ is evaluated at the dc operating point. For uncorrelated sources, the contributions add in power at the output
 
 $$
 S_\mathrm{out}(f) = \sum_i \left| H_i(f) \right|^2 S_i(f),
@@ -174,7 +174,7 @@ The fundamental analyses either linearize around a constant operating point (ac,
 1. **Large-signal step.** The periodic steady state is computed directly, either in the time domain (shooting PSS, @sec-simulation-pss) or in the frequency domain (HB, @sec-simulation-hb), without simulating the settling transient.
 2. **Small-signal step.** The circuit is linearized around this periodic steady state. The resulting LPTV system is analyzed for frequency-translating transfer functions (PAC, HBAC, @sec-simulation-pac) and for cyclostationary noise (PNOISE, HBNOISE, @sec-simulation-pnoise).
 
-Transient noise (@sec-simulation-trannoise) is the exception: it is a brute-force extension of the transient analysis, without any linearization.
+Transient noise (@sec-simulation-trannoise) is the exception: it is a straightforward extension of the transient analysis, without any linearization.
 
 ### Transient Noise {#sec-simulation-trannoise}
 
@@ -183,7 +183,7 @@ In a **transient noise** simulation, every noise source of the circuit is replac
 Because the circuit equations are integrated without linearization, transient noise includes in principle everything: switching, strong nonlinearity, sampling and noise folding, the conversion of noise into jitter, and even noise-induced decisions such as metastability and bit errors in comparators. In practice, it is also the numerically most fragile of all analyses, and the price is high:
 
 ::: {.content-hidden when-format="revealjs"}
-- **Statistics.** Each run produces one random realization. A PSD, a jitter value, or an error probability requires long records, averaging, or many runs with different random seeds, and the frequency resolution is $1/T_\mathrm{sim}$. Estimate the uncertainty from independent seeds rather than from segments of one record. A fixed seed reproduces a run only for an unchanged netlist, so after a circuit change, a difference within the scatter of the seeds is not a result.
+- **Statistics.** Each run produces one random realization. A PSD, a jitter value, or an error probability requires long records, averaging, or many runs with different random seeds, and the frequency resolution is $1/T_\mathrm{sim}$. A fixed seed reproduces a run only for an unchanged netlist, so after a circuit change, a difference within the scatter of the seeds is not a result.
 - **Run time.** The step size is limited by $f_\mathrm{max}$, even in parts of the waveform where the signal itself would allow large steps.
 - **Band limits.** Flicker noise down to $f_\mathrm{min}$ requires $T_\mathrm{sim} \gg 1/f_\mathrm{min}$, and a default lower band edge derived from $f_\mathrm{max}$ (in VACASK, $f_\mathrm{max}/1000$) can silently remove all flicker noise at the offsets of interest. When the noise is integrated along the actual time steps, white noise extends up to the Nyquist frequency of these steps. The waveform must then be resampled at least as finely as the simulator's own steps before a PSD is computed, or out-of-band noise aliases into the band.
 - **Numerical artifacts.** Device noise is tiny compared to the signals, and on stiff, strongly nonlinear circuits the random excitation itself can cause numerical errors that a noiseless run does not show. Run the analysis at two or more reduced noise amplitudes (a scaling factor such as `noisescale` in VACASK makes this easy), and use the part of the output noise power that scales with the square of the amplitude. Accept a higher-order part only if its size and order match a physical mechanism. A run at zero noise amplitude with otherwise identical settings, which uses the same time grid, shows the numerical floor.
@@ -198,7 +198,7 @@ Because the circuit equations are integrated without linearization, transient no
 - **Clocked circuits**: complete all needed decisions, validate independently
 :::
 
-Typical applications are comparators (input-referred noise from the decision statistics), sampled-data circuits and ADCs ($kT/C$ noise and the SNR including all effects), the jitter of oscillators, clock buffers, and dividers, and, increasingly important, an independent cross-check of PNOISE and HBNOISE results. Transient noise shares no solver code with the periodic analyses, but it uses the same device noise models. Their agreement therefore validates the implementation of the analyses rather than the noise models, and its statistics limit it to about a decibel.
+Typical applications are comparators (input-referred noise from the decision statistics: the dc input at which the output is zero in about 16 % of the decisions equals the rms input noise [@Razavi.2020]), sampled-data circuits and ADCs ($kT/C$ noise and the SNR including all effects), the jitter of oscillators, clock buffers, and dividers, and, increasingly important, an independent cross-check of PNOISE and HBNOISE results. Transient noise shares no solver code with the periodic analyses, but it uses the same device noise models. Their agreement therefore validates the implementation of the analyses rather than the noise models, and its statistics limit it to about a decibel.
 
 ### Periodic Steady State by Shooting (PSS) {#sec-simulation-pss}
 
@@ -282,7 +282,7 @@ The harmonic count $K$ is the key accuracy parameter of HB, just as the step siz
 | High-Q, long settling | efficient | efficient |
 | Oscillators | autonomous PSS | autonomous HB (simulator-dependent) |
 | Small-signal and noise analyses | PAC, PNOISE | HBAC, HBNOISE |
-: Comparison of shooting (PSS) and harmonic balance (HB). {#tbl-sim-pss-hb}
+: Comparison of shooting (PSS) and harmonic balance (HB) {#tbl-sim-pss-hb}
 
 ### Periodic Small-Signal Analysis (PAC, HBAC) {#sec-simulation-pac}
 
@@ -364,7 +364,7 @@ with all spectral densities written two-sided. For a constant operating point ($
 
 ::: {#nte-sim-noise-folding .callout-note}
 ## Noise Folding in an Ideal Switching Mixer
-An ideal double-balanced switching mixer multiplies the RF input by a square wave toggling between $+1$ and $-1$ with 50 % duty cycle (see @sec-mixer-time-variant), whose Fourier coefficients have the magnitude $|c_k| = 2/(\pi |k|)$ for odd $k$ and vanish for even $k$. The switches are noiseless, and the only noise is the white thermal noise of the source resistance, with the PSD $S_\mathrm{n}$ at every frequency. The noise from each sideband $k$ folds to the IF with the weight $|c_k|^2$. By Parseval's theorem, the sum of all weights equals the time average of the squared switching function, which is one:
+An ideal double-balanced switching mixer multiplies the RF input by a square wave toggling between $+1$ and $-1$ with 50% duty cycle (see @sec-mixer-time-variant), whose Fourier coefficients have the magnitude $|c_k| = 2/(\pi |k|)$ for odd $k$ and vanish for even $k$. The switches are noiseless, and the only noise is the white thermal noise of the source resistance, with the PSD $S_\mathrm{n}$ at every frequency. The noise from each sideband $k$ folds to the IF with the weight $|c_k|^2$. By Parseval's theorem, the sum of all weights equals the time average of the squared switching function, which is one:
 
 $$
 S_\mathrm{out} = S_\mathrm{n} \sum_{k} |c_k|^2 = S_\mathrm{n}.
@@ -414,7 +414,7 @@ For the sweep of the offset frequency, keep in mind that the upconverted flicker
 | HB | Fourier series | no | (quasi-)periodic steady state, IM products | many harmonics for sharp edges |
 | PAC, HBAC | PSS, HB | yes (LPTV) | conversion gain, sideband transfer, aliasing | small signals only |
 | PNOISE, HBNOISE | PSS, HB | yes (LPTV) | cyclostationary noise, folding, mixer NF | small noise only |
-: Comparison of the advanced RF analyses. {#tbl-sim-advanced}
+: Comparison of the advanced RF analyses {#tbl-sim-advanced}
 
 {{< include /content/simulation/_fig_sim_decision.qmd >}}
 
