@@ -96,8 +96,7 @@ arrow((X_TRX, mid('pa')), (X_MOD + W_MOD, mid('pa')))
 arrow((X_MOD + W_MOD, mid('gnss')), (X_TRX, mid('gnss')))
 
 # Wi-Fi/BT RF path below the cellular front-end
-line([X_SW + W_SW / 2, X_SW + W_SW / 2], [0.4, 0.85])
-arrow((X_SW + W_SW / 2, 0.85), (X_TRX, 0.85), both=True)
+arrow((X_SW + W_SW, 0.85), (X_TRX, 0.85), both=True)
 ax.text((X_FLT + X_MOD + W_MOD) / 2, 0.95, 'Wi-Fi/BT RF (2.4 GHz, 5 GHz, 6 GHz)', fontsize=7.5,
         ha='center', va='bottom')
 
