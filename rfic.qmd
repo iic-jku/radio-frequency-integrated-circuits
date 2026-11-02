@@ -8,6 +8,7 @@ author:
       roles: "Lead author"
       affiliation:
         - name: Johannes Kepler University
+          department: Department for Integrated Circuits (ICD)
           city: Linz
           state: Austria
           url: https://www.jku.at/en/institute-for-integrated-circuits-and-quantum-computing

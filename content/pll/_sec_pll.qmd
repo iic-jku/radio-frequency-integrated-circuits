@@ -154,7 +154,7 @@ $$
 p_{1,2} = -\frac{\omega_\mathrm{n}}{\sqrt{2}} \pm j \frac{\omega_\mathrm{n}}{\sqrt{2}}.
 $$
 
-To summarize: We can make a simple PLL using an XOR for a PD, use a first-order LPF, plus a feedback divider to get frequency multiplication of $f_\mathrm{out} = N \cdot f_\mathrm{ref}$. However, the control over the loop dynamics is very limited, and the locking procedure of the PLL is tricky, as the PD has a limited linear range of ±180°, requiring that the VCO frequency at the start of the locking procedure is already close enough to the desired output frequency. In addition, $N$ is an integer, limiting the frequency resolution of the output frequencies to integer multiples of the reference frequency.
+To summarize: We can make a simple PLL using an XOR for a PD, use a first-order LPF, plus a feedback divider to get frequency multiplication of $f_\mathrm{out} = N \cdot f_\mathrm{ref}$. However, the control over the loop dynamics is very limited, and the locking procedure of the PLL is tricky, as the PD has a limited linear range of only ±90° around its quiescent point, requiring that the VCO frequency at the start of the locking procedure is already close enough to the desired output frequency. In addition, $N$ is an integer, limiting the frequency resolution of the output frequencies to integer multiples of the reference frequency.
 
 The question is how to improve the PLL design to overcome these limitations. We will explore advanced PLL architectures and techniques in the following section.
 

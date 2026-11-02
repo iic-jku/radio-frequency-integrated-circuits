@@ -30,16 +30,16 @@ This formula provides us a theoretical upper limit on the data rate that can be 
 
 ::: {#nte-channel-limit .callout-note}
 ## Channel Capacity Example
-Let us calculate the channel capacity for a system with an RF bandwidth of 2 MHz and an SNR of 7 dB (the BW and minimum SNR of Bluetooth LE for 1 Mbps). First, we need to convert the SNR from dB to linear units:
+Let us calculate the channel capacity for a system with an RF bandwidth of 1 MHz and an SNR of 10 dB. These are typical *assumptions* for a Bluetooth LE receiver at 1 Mbps (the Bluetooth LE specification itself does not define an SNR, but specifies the receiver sensitivity via a maximum bit error rate of 0.1 %). First, we need to convert the SNR from dB to linear units:
 
 $$
-\text{SNR} = 10^{{7}/{10}} \approx 5
+\text{SNR} = 10^{{10}/{10}} = 10
 $$
 
 Now we can use @eq-shannon-hartley to calculate the channel capacity:
 
 $$
-C = B \cdot \log_2(1 + \text{SNR}) = 2\,\text{MHz} \cdot \log_2(1 + 5) = 2\,\text{MHz} \cdot 2.585 \approx 5.2\,\text{Mbps}
+C = B \cdot \log_2(1 + \text{SNR}) = 1\,\text{MHz} \cdot \log_2(1 + 10) = 1\,\text{MHz} \cdot 3.459 \approx 3.5\,\text{Mbps}
 $$
 
 ::: {.content-hidden when-format="revealjs"}
