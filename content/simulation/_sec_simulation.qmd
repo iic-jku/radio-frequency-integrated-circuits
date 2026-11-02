@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 :::
 
-# RF Circuit Simulation {#sec-simulation}
+# Appendix: RF Circuit Simulation {#sec-simulation}
 
 There is no breadboard for an integrated circuit: every design decision in an RFIC is checked by circuit simulation before tapeout. A SPICE-type simulator [@Nagel.1975] offers a small set of **fundamental analyses** (dc operating point, small-signal ac and noise, and transient), which are perfectly adequate for amplifiers, filters, and bias circuits. RF circuits, however, push these analyses to their limits, for several reasons:
 
@@ -32,7 +32,7 @@ There is no breadboard for an integrated circuit: every design decision in an RF
 - **High-Q resonators and oscillators**: long settling, no stable dc operating point
 :::
 
-These challenges led to a set of **advanced RF analyses**: transient noise, periodic steady-state analysis by shooting (PSS) and by harmonic balance (HB), and the small-signal (PAC, HBAC) and noise (PNOISE, HBNOISE) analyses built on top of a periodic steady state [@Kundert.1999]. For a long time, the complete set was only available in commercial simulators, while open-source simulators offered parts of it (e.g., harmonic balance in Xyce, and transient-noise sources and an experimental oscillator PSS in ngspice). Since September 2026, the development version of the open-source simulator VACASK [@Buermen.2025] supports all of them. They are not part of a tagged VACASK release yet, but the [IIC-OSIC-TOOLS](https://github.com/iic-jku/IIC-OSIC-TOOLS) container ships them from its release 2026.10 on, so that the complete RF verification flow of this chapter can be run with open-source tools. The analysis names used in this chapter follow VACASK, which largely uses the names of Cadence Spectre (Spectre calls the operating point `dc` and the S-parameter analysis `sp`). @sec-simulation-tools lists the corresponding ngspice commands.
+These challenges led to a set of **advanced RF analyses**: transient noise, periodic steady-state analysis by shooting (PSS) and by harmonic balance (HB), and the small-signal (PAC, HBAC) and noise (PNOISE, HBNOISE) analyses built on top of a periodic steady state [@Kundert.1999]. For a long time, the complete set was only available in commercial simulators, while open-source simulators offered parts of it (e.g., harmonic balance in Xyce, and transient-noise sources and an experimental oscillator PSS in ngspice). Since September 2026, the development version of the open-source simulator VACASK [@Buermen.2025] supports all of them. They are not part of a tagged VACASK release yet, but the [IIC-OSIC-TOOLS](https://github.com/iic-jku/IIC-OSIC-TOOLS) container ships them from its release 2026.10 on, so that the complete RF verification flow of this appendix can be run with open-source tools. The analysis names used in this appendix follow VACASK, which largely uses the names of Cadence Spectre (Spectre calls the operating point `dc` and the S-parameter analysis `sp`). @sec-simulation-tools lists the corresponding ngspice commands.
 
 @fig-sim-analysis-overview shows how the analyses build on each other. All of them start from the dc operating point. The small-signal analyses linearize the circuit either around this constant operating point, which gives a linear time-invariant (LTI) system, or around a periodic steady state, which gives a linear periodically time-varying (LPTV) system.
 
@@ -72,7 +72,7 @@ $$
 \mathbf{G}(\mathbf{x}^{(i)}) \, \Delta \mathbf{x}^{(i)} = \mathbf{u}_\mathrm{DC} - \mathbf{f}(\mathbf{x}^{(i)}), \qquad \mathbf{x}^{(i+1)} = \mathbf{x}^{(i)} + \Delta \mathbf{x}^{(i)},
 $$ {#eq-sim-newton}
 
-where $\mathbf{G} = \partial \mathbf{f} / \partial \mathbf{x}$ is the Jacobian (the conductance matrix of the linearized circuit). Each iteration requires the solution of a sparse linear system. Newton-Raphson converges very fast close to the solution but can fail from a poor starting point. Simulators therefore fall back to continuation methods such as gmin stepping (temporarily adding conductances to ground) or source stepping (ramping up the supplies). The same Newton iteration is the inner engine of every other analysis in this chapter.
+where $\mathbf{G} = \partial \mathbf{f} / \partial \mathbf{x}$ is the Jacobian (the conductance matrix of the linearized circuit). Each iteration requires the solution of a sparse linear system. Newton-Raphson converges very fast close to the solution but can fail from a poor starting point. Simulators therefore fall back to continuation methods such as gmin stepping (temporarily adding conductances to ground) or source stepping (ramping up the supplies). The same Newton iteration is the inner engine of every other analysis in this appendix.
 
 A **dc sweep** (`.dc` in ngspice, a `sweep` around `op` in VACASK) repeats the operating point analysis while stepping a source or a parameter, using each solution as the starting point of the next one. It yields static transfer characteristics, e.g., the dc output of a power detector versus a bias voltage, or the multiplier characteristic of a Gilbert cell (@sec-mixer-gilbert).
 
@@ -452,7 +452,7 @@ Whatever analysis is used, a result is only trustworthy after it has been checke
 
 ::: {#nte-sim-power-detector .callout-note}
 ## Example: A 160 GHz Power Detector
-The open-source SPARX receiver [@Dorrer.2026] contains a Schottky-diode power detector at 160 GHz, characterized with VACASK as a mixer with a 159 GHz LO. Its testbenches use most of the analyses of this chapter:
+The open-source SPARX receiver [@Dorrer.2026] contains a Schottky-diode power detector at 160 GHz, characterized with VACASK as a mixer with a 159 GHz LO. Its testbenches use most of the analyses of this appendix:
 
 - **HB** power sweep for the transfer curve (responsivity and compression), cross-checked with **PSS** at nine drive levels. The two agree within 1.2 % over an input range of 80 dB.
 - **HBAC** for the conversion gain of each sideband to the IF and the video bandwidth, cross-checked with **PAC** (within 0.03 dB).
@@ -462,7 +462,7 @@ The open-source SPARX receiver [@Dorrer.2026] contains a Schottky-diode power de
 
 ## Simulator Support {#sec-simulation-tools}
 
-@tbl-sim-tools lists the analyses of this chapter in the two open-source simulators used in this course, in the ngspice release 47 and the VACASK version of the IIC-OSIC-TOOLS container 2026.10. The ngspice development branch already contains a driven PSS with PAC, PNOISE, PXF and PSP, and quasi-periodic analyses (`qpss`, `qpac`, `qpnoise`), which are not part of a release yet (November 2026). Among the commercial RF simulators, Cadence Spectre RF offers all of them, plus further variants like quasi-periodic shooting and periodic transfer functions and S-parameters (PXF, PSP), while Keysight ADS is built around harmonic balance with its small-signal and noise variants, and adds envelope simulation for modulated signals.
+@tbl-sim-tools lists the analyses of this appendix in the two open-source simulators used in this course, in the ngspice release 47 and the VACASK version of the IIC-OSIC-TOOLS container 2026.10. The ngspice development branch already contains a driven PSS with PAC, PNOISE, PXF and PSP, and quasi-periodic analyses (`qpss`, `qpac`, `qpnoise`), which are not part of a release yet (November 2026). Among the commercial RF simulators, Cadence Spectre RF offers all of them, plus further variants like quasi-periodic shooting and periodic transfer functions and S-parameters (PXF, PSP), while Keysight ADS is built around harmonic balance with its small-signal and noise variants, and adds envelope simulation for modulated signals.
 
 | Analysis | VACASK (container 2026.10) | ngspice 47 |
 |:-----------------------|:------------------------|:------------------------|
