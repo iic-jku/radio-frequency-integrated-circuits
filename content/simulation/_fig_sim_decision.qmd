@@ -67,6 +67,6 @@ with sd.Drawing(canvas='svg') as d:
                                                fontsize=10, color='gray', valign='top')
 
     # transient noise as the general fallback and cross-check
-    flow.Box(w=16.6, h=1.3).at((9.1, -11.4)).anchor('center').fill('#eeeeee') \
+    flow.Box(w=16.6, h=1.3).at((9.1, -10.7)).anchor('center').fill('#eeeeee') \
         .label('noise that is not small (decisions, metastability, jitter), or a cross-check: transient noise')
 ```
