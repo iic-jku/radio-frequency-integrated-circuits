@@ -27,7 +27,8 @@ sd.svgconfig.svg2 = False
 with sd.Drawing(canvas='svg') as d:
     d.config(unit=2, fontsize=12, margin=0.5)
 
-    dsp.Arrow().right(d.unit * 0.8).label('QLink', loc='start')
+    qin = dsp.Arrow().right(d.unit * 0.6)
+    elm.Label().at((qin.start[0] - 0.25, qin.start[1])).label('QLink', halign='right', valign='center')
     dsp_ = dsp.Box(w=1.4, h=1).label('DSP')
     dsp.Line().right(d.unit / 3)
     dac = dsp.Dac().label('DAC', loc='bottom', ofst=0.15)
@@ -54,7 +55,7 @@ with sd.Drawing(canvas='svg') as d:
 
     # LO of the transmitter
     dsp.Arrow().down(d.unit * 0.9).at(mix.S).reverse()
-    vco = dsp.OscillatorBox().anchor('N').label('LO (PLL)', loc='bottom', ofst=0.15)
+    vco = dsp.OscillatorBox().right().anchor('N').label('LO (PLL)', loc='right', ofst=0.15)
 
     # supply of the PA from the average power tracker
     pa_top = ((pa.input.x + pa.out.x) / 2, pa.input.y + 0.5)
@@ -64,7 +65,7 @@ with sd.Drawing(canvas='svg') as d:
 
     # feedback receiver: coupler -> FBRX switch -> FBRX (mixer, ADC) -> DSP
     fb = dsp.Box(w=2.2, h=1).at(((dsp_.E.x + mix.W.x) / 2, vco.S.y + 0.5)).anchor('center').label('FBRX\nmixer, ADC')
-    y_fb = vco.S.y - 1.5
+    y_fb = vco.S.y - 1.8
     dsp.Line().down().at(cpl.S).toy(y_fb)
     dsp.Line().left(d.unit * 2.2)
     fsw = dsp.Box(w=1.6, h=1).label('FBRX\nswitch')
@@ -74,5 +75,5 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Arrow().up().toy(dsp_.S)
 
     elm.EncircleBox([pa, bsw], padx=0.25, pady=0.9).linestyle('--').label('MMPA module', loc='bottom')
-    elm.EncircleBox([dsp_, dac, lpf, mix, drv, vco, fb], padx=0.3, pady=0.5).linestyle('--').label('RFIC (SDR735)', loc='top')
+    elm.EncircleBox([dsp_, dac, lpf, mix, drv, vco, fb], padx=0.3, pady=0.8).linestyle('--').label('RFIC (SDR735)', loc='top')
 ```

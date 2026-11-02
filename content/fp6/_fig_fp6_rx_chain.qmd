@@ -48,9 +48,10 @@ with sd.Drawing(canvas='svg') as d:
     adc = dsp.Adc().label('ADC', loc='bottom', ofst=0.15)
     dsp.Line().right(d.unit / 3)
     dsp_ = dsp.Box(w=1.4, h=1).label('DSP')
-    dsp.Arrow().right(d.unit * 0.75).label('QLink', loc='end')
+    qout = dsp.Arrow().right(d.unit * 0.75)
+    elm.Label().at((qout.end[0] + 0.25, qout.end[1])).label('QLink', halign='left', valign='center')
     dsp.Arrow().down(d.unit * 0.9).at(mix.S).reverse()
-    vco = dsp.OscillatorBox().anchor('N').label('LO (PLL)', loc='bottom', ofst=0.15)
+    vco = dsp.OscillatorBox().right().anchor('N').label('LO (PLL)', loc='right', ofst=0.15)
 
     elm.EncircleBox([lsw, lna, mux], padx=0.2, pady=0.9).linestyle('--').label('LNA module (QLN5040)', loc='top')
     elm.EncircleBox([mix, lpf, adc, dsp_, vco], padx=0.6, pady=0.6).linestyle('--').label('RFIC (SDR735)', loc='top')
