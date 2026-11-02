@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-sim-hb-truncation
 #| echo: false
-#| fig-cap: "Harmonic content of a mildly nonlinear and of a hard-switching waveform, both modelled as $\\tanh(a \\sin \\omega_0 t)$ (left: $a = 0.8$ and $a = 30$). The harmonics of the mildly nonlinear waveform fall off very quickly, so a few harmonics describe it well. Those of the switching waveform decay only roughly as $1/k$ (right), and a harmonic-balance spectrum truncated at $K$ harmonics shows Gibbs ringing at the edges (center)."
+#| fig-cap: "Harmonic content of a mildly nonlinear and of a hard-switching waveform, both modeled as $\\tanh(a \\sin \\omega_0 t)$ (left: $a = 0.8$ and $a = 30$). The harmonics of the mildly nonlinear waveform fall off very quickly, so a few harmonics describe it well. Those of the switching waveform decay only roughly as $1/k$ (right, one-sided amplitudes $2|X_k|$), and a harmonic-balance spectrum truncated at $K$ harmonics shows Gibbs ringing at the edges (center)."
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -73,7 +73,7 @@ ax3.semilogy(k, A_hard[k], 'bs', markersize=4, label=r'switching ($a = 30$)')
 ax3.semilogy(k, 4 / (np.pi * k), 'k--', linewidth=1, label=r'square wave, $4 / (\pi k)$')
 ax3.set_title('Harmonic amplitudes', fontsize=10)
 ax3.set_xlabel('Harmonic number $k$')
-ax3.set_ylabel(r'$|X_k|$')
+ax3.set_ylabel(r'One-sided amplitude $2|X_k|$')
 ax3.set_xlim(0, 64)
 ax3.set_ylim(1e-8, 2)
 ax3.grid(True, alpha=0.3, which='both')

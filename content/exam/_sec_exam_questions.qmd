@@ -180,7 +180,7 @@ This chapter contains a collection of potential questions covering the topics di
 
 ## RF Circuit Simulation {#sec-exam-simulation}
 
-71. Which assumption about the circuit waveforms do the analyses op, ac, noise, tran, PSS, and HB make? Sketch how the analyses build on each other (@fig-sim-analysis-overview).
+71. Which assumptions about the circuit waveforms do the analyses op, ac, noise, tran, PSS, and HB make? Sketch how the analyses build on each other (@fig-sim-analysis-overview).
 
 72. Why does a small-signal ac analysis of a mixer show no conversion gain? Which analysis do you use instead, and why?
 
@@ -188,7 +188,7 @@ This chapter contains a collection of potential questions covering the topics di
 
 74. Explain the principle of harmonic balance (@eq-sim-hb). For which circuits is HB efficient, and for which circuits is PSS the better choice? Why can HB fail to converge for a hard-switching mixer, while a PSS-based PAC analysis of the same circuit works?
 
-75. What is a linear periodically time-varying (LPTV) system? Explain the conversion matrix (@eq-sim-conversion-matrix) and the meaning of the sidebands. How do you obtain the conversion gain and the image rejection of a mixer with PAC or HBAC?
+75. What is a linear periodically time-varying (LPTV) system? Explain the conversion matrix (@eq-sim-conversion-matrix) and the meaning of the sidebands. How do you obtain the conversion gain of a mixer and the image rejection of an I/Q receiver with PAC or HBAC?
 
 76. What is cyclostationary noise? Which two effects does a periodic noise analysis (PNOISE, HBNOISE) capture that a plain noise analysis misses? Name three circuits where this matters.
 
@@ -220,4 +220,4 @@ This chapter contains a collection of potential questions covering the topics di
 
 89. **Transient Simulation Effort**: A downconversion mixer with $f_\mathrm{LO}$ = 5.8 GHz is simulated in the time domain with 40 time points per LO period. The IF spectrum shall be computed with a frequency resolution of 50 kHz. How many time points are needed, ignoring the settling time? How does a PSS analysis followed by a PAC analysis avoid this effort?
 
-90. **Noise Folding**: An ideal double-balanced switching mixer multiplies the RF input by a square wave toggling between $+1$ and $-1$, and the only noise source is the source resistance. Calculate the SSB and the DSB noise figure. By how much is the noise figure underestimated if a periodic noise analysis keeps only the first LO harmonic?
+90. **Noise Folding**: An ideal double-balanced switching mixer multiplies the RF input by a square wave toggling between $+1$ and $-1$ with 50 % duty cycle, and the only noise source is the source resistance. Calculate the SSB and the DSB noise figure. By how much is the noise figure underestimated if a periodic noise analysis keeps only the sidebands $\pm 1$ ($K = 1$)?

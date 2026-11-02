@@ -19,7 +19,7 @@ limitations under the License.
 There is no breadboard for an integrated circuit: every design decision in an RFIC is checked by circuit simulation before tapeout. A SPICE-type simulator [@Nagel.1975] offers a small set of **fundamental analyses** (dc operating point, small-signal ac and noise, and transient), which are perfectly adequate for amplifiers, filters, and bias circuits. RF circuits, however, push these analyses to their limits, for several reasons:
 
 ::: {.content-hidden when-format="revealjs"}
-- **Widely separated time scales.** An LO at several GHz carries information at kHz to MHz offsets, and flicker noise matters down to Hz. A time-domain simulation must resolve the fastest signal for as long as the slowest one needs.
+- **Widely separated time scales.** An LO at several GHz carries information at kHz to MHz offsets, and flicker noise matters down to a few Hz. A time-domain simulation must resolve the fastest signal for as long as the slowest one needs.
 - **Large periodic signals.** The LO of a mixer, the clock of a switched-capacitor filter, or the carrier of a PA moves the operating point periodically. With respect to the small signal, such a circuit is *time-variant* (see @sec-mixer-time-variant), so an analysis linearized around a constant operating point cannot capture its behavior.
 - **Frequency translation of noise.** In such time-variant circuits, noise is modulated by the large signal and folded from many frequencies onto the wanted output frequency.
 - **High-Q resonators and oscillators.** High-Q circuits take many periods to settle, and an oscillator has no stable dc operating point at all; its frequency and phase noise are results of the large-signal operation.
@@ -32,7 +32,7 @@ There is no breadboard for an integrated circuit: every design decision in an RF
 - **High-Q resonators and oscillators**: long settling, no stable dc operating point
 :::
 
-These challenges led to a set of **advanced RF analyses**: transient noise, periodic steady-state analysis by shooting (PSS) and by harmonic balance (HB), and the small-signal (PAC, HBAC) and noise (PNOISE, HBNOISE) analyses built on top of a periodic steady state [@Kundert.1999]. For a long time, they were only available in commercial simulators. Since late September 2026, all of them are also supported by the open-source simulator VACASK [@Buermen.2025], so that the complete RF verification flow of this chapter can be run with open-source tools. The analysis names used in this chapter follow the convention of VACASK (which is the same as in Cadence Spectre); @sec-simulation-tools lists the corresponding ngspice commands.
+These challenges led to a set of **advanced RF analyses**: transient noise, periodic steady-state analysis by shooting (PSS) and by harmonic balance (HB), and the small-signal (PAC, HBAC) and noise (PNOISE, HBNOISE) analyses built on top of a periodic steady state [@Kundert.1999]. For a long time, the complete set was only available in commercial simulators, while open-source simulators offered parts of it (e.g., harmonic balance in Xyce, and transient-noise sources and an experimental oscillator PSS in ngspice). Since September 2026, the open-source simulator VACASK [@Buermen.2025] supports all of them, so that the complete RF verification flow of this chapter can be run with open-source tools. The analysis names used in this chapter follow VACASK, which largely uses the names of Cadence Spectre (Spectre calls the operating point `dc` and the S-parameter analysis `sp`); @sec-simulation-tools lists the corresponding ngspice commands.
 
 @fig-sim-analysis-overview shows how the analyses build on each other. All of them start from the dc operating point. The small-signal analyses linearize the circuit either around this constant operating point, which gives a linear time-invariant (LTI) system, or around a periodic steady state, which gives a linear periodically time-varying (LPTV) system.
 
@@ -44,7 +44,7 @@ $$
 \mathbf{f}(\mathbf{x}(t)) + \frac{\mathrm{d}}{\mathrm{d}t} \mathbf{q}(\mathbf{x}(t)) = \mathbf{u}(t),
 $$ {#eq-sim-circuit-equations}
 
-where the vector $\mathbf{x}$ contains the unknown node voltages and selected branch currents (of inductors and voltage sources), $\mathbf{f}$ the currents of the resistive elements (summed per node according to Kirchhoff's current law), $\mathbf{q}$ the charges of capacitors and fluxes of inductors, and $\mathbf{u}$ the independent sources. The analyses differ only in the assumption they make about $\mathbf{x}(t)$:
+where the vector $\mathbf{x}$ contains the unknown node voltages and selected branch currents (of inductors and voltage sources), $\mathbf{f}$ the currents of the resistive elements (summed per node according to Kirchhoff's current law) together with the branch equations of voltage sources and inductors, $\mathbf{q}$ the charges of capacitors and fluxes of inductors, and $\mathbf{u}$ the independent sources. The analyses differ only in the assumption they make about $\mathbf{x}(t)$:
 
 ::: {.content-hidden when-format="revealjs"}
 - **dc operating point**: all time derivatives vanish, $\mathbf{f}(\mathbf{x}_0) = \mathbf{u}_\mathrm{DC}$.
@@ -74,7 +74,7 @@ $$ {#eq-sim-newton}
 
 where $\mathbf{G} = \partial \mathbf{f} / \partial \mathbf{x}$ is the Jacobian (the conductance matrix of the linearized circuit). Each iteration requires the solution of a sparse linear system. Newton-Raphson converges very fast close to the solution but can fail from a poor starting point; simulators therefore fall back to continuation methods such as gmin stepping (temporarily adding conductances to ground) or source stepping (ramping up the supplies). The same Newton iteration is the inner engine of every other analysis in this chapter.
 
-A **dc sweep** (`dc` in ngspice, a `sweep` around `op` in VACASK) repeats the operating point analysis while stepping a source or a parameter, using each solution as the starting point of the next one. It yields static transfer characteristics, e.g., the dc output of a power detector versus a bias voltage, or the multiplier characteristic of a Gilbert cell (@sec-mixer-gilbert).
+A **dc sweep** (`.dc` in ngspice, a `sweep` around `op` in VACASK) repeats the operating point analysis while stepping a source or a parameter, using each solution as the starting point of the next one. It yields static transfer characteristics, e.g., the dc output of a power detector versus a bias voltage, or the multiplier characteristic of a Gilbert cell (@sec-mixer-gilbert).
 
 ::: {.callout-important}
 ## Always Check the Operating Point First
@@ -95,7 +95,7 @@ By construction, the ac analysis cannot show any distortion, compression, or fre
 
 ### S-Parameter Analysis {#sec-simulation-acsp}
 
-The **S-parameter analysis** (`acsp` in VACASK, `sp` in ngspice) is an ac analysis with *ports*. Each port is an excitation source with a reference impedance $Z_0$ (usually 50 Ω). With the voltage $V_i$ and the current $I_i$ flowing into port $i$, the incident and reflected power waves and the scattering parameters are [@Pozar_RF]
+The **S-parameter analysis** (`acsp` in VACASK, `.sp` in ngspice) is an ac analysis with *ports*. Each port is an excitation source with a reference impedance $Z_0$ (usually 50 Ω). With the voltage $V_i$ and the current $I_i$ flowing into port $i$, the incident and reflected power waves and the scattering parameters are [@Pozar_RF]
 
 $$
 a_i = \frac{V_i + Z_0 I_i}{2 \sqrt{Z_0}}, \quad b_i = \frac{V_i - Z_0 I_i}{2 \sqrt{Z_0}}, \quad S_{ij} = \frac{b_i}{a_j} \quad (a_k = 0 \text{ for } k \neq j).
@@ -105,13 +105,13 @@ For an amplifier, $S_{11}$ describes the input match (return loss, see @eq-retur
 
 ### Small-Signal Noise Analysis {#sec-simulation-noise}
 
-The **noise analysis** (`noise`) models every noise source of the circuit (thermal noise of resistors and channels, shot noise of junctions, flicker noise, see @sec-noise-types) as a stationary random source, whose power spectral density (PSD) $S_i(f)$ is evaluated at the dc operating point. Since the sources are uncorrelated, their contributions add in power at the output:
+The **noise analysis** (`noise`) models every noise source of the circuit (thermal noise of resistors and channels, shot noise of junctions, flicker noise, see @sec-noise-types) as a stationary random source, whose power spectral density (PSD) $S_i(f)$ is evaluated at the dc operating point. For uncorrelated sources, the contributions add in power at the output:
 
 $$
 S_\mathrm{out}(f) = \sum_i \left| H_i(f) \right|^2 S_i(f),
 $$ {#eq-sim-noise}
 
-where $H_i(f)$ is the small-signal transfer function from source $i$ to the output. Simulators obtain all $H_i(f)$ at once from a single adjoint (transposed) linear solve per frequency. The results are the output noise PSD, the input-referred noise (dividing by the gain), and, most valuable for design, a ranking of the **contributions** of every device and every noise mechanism. The noise factor (@eq-noise-figure) follows as the ratio of the total output noise to the part contributed by the source resistance alone.
+where $H_i(f)$ is the small-signal transfer function from source $i$ to the output. Correlated sources, such as the induced gate noise and the channel noise of a MOSFET (see @sec-noise-types), add cross terms, which the simulator takes into account. Simulators either solve the linearized circuit once per noise source, or obtain all $H_i(f)$ at once from a single adjoint (transposed) solve per frequency. The results are the output noise PSD, the input-referred noise (dividing by the gain), and, most valuable for design, a ranking of the **contributions** of every device and every noise mechanism. The noise factor (@eq-noise-figure) follows as the ratio of the total output noise to the part contributed by the source resistance alone.
 
 The noise analysis is the standard tool for LNAs, baseband amplifiers, TIAs, and bias and reference circuits. Its key assumption, however, is a *constant* operating point. In a circuit driven by a large periodic signal, the noise sources are modulated by the signal, and noise from many frequencies is translated to the output frequency. A plain noise analysis of a mixer, a sampling circuit, or an oscillator is therefore wrong, as we will see in @sec-simulation-pnoise.
 
@@ -153,7 +153,7 @@ $$
 N = \frac{T_\mathrm{sim}}{h} = 100\,\mu\text{s} \cdot 50 \cdot 2.4\,\text{GHz} = 1.2 \cdot 10^{7}
 $$
 
-time points, each requiring a Newton iteration of the full circuit, and this excludes the settling time. A PSS analysis of the same mixer integrates only a few tens of LO periods (about $10^3$ time points), and the conversion gain then follows from a PAC analysis with one linear solve per IF frequency (@sec-simulation-pac).
+time points, each requiring a Newton solve of the full circuit, and this excludes the settling time. A PSS analysis of the same mixer integrates only a few tens of LO periods ($10^3$ to $10^4$ time points, depending on the time resolution per period), and the conversion gain then follows from a PAC analysis with one linear solve per IF frequency (@sec-simulation-pac).
 :::
 
 ### Comparison of the Fundamental Analyses
@@ -169,7 +169,7 @@ time points, each requiring a Newton iteration of the full circuit, and this exc
 
 ## Advanced RF Analyses {#sec-simulation-advanced}
 
-The fundamental analyses either linearize around a constant operating point (ac, noise) or integrate the full nonlinear equations in time (tran). Many RF circuits sit in between: a **large periodic signal**, such as the LO of a mixer, the clock of a switched-capacitor (SC) filter or sampler, the carrier of a PA, or the oscillation of an oscillator, sets a periodically time-varying operating point, while the information-bearing signal and the noise are small. The advanced analyses exploit this structure in two steps:
+The fundamental analyses either linearize around a constant operating point (ac, noise) or integrate the full nonlinear equations in time (tran). Many RF circuits sit in between: a **large periodic signal**, such as the LO of a mixer, the clock of a switched-capacitor (SC) filter or sampler, the carrier of a PA, or the oscillation itself in an oscillator, sets a periodically time-varying operating point, while the information-bearing signal and the noise are small. The advanced analyses exploit this structure in two steps:
 
 1. **Large-signal step.** The periodic steady state is computed directly, either in the time domain (shooting PSS, @sec-simulation-pss) or in the frequency domain (HB, @sec-simulation-hb), without simulating the settling transient.
 2. **Small-signal step.** The circuit is linearized around this periodic steady state. The resulting LPTV system is analyzed for frequency-translating transfer functions (PAC, HBAC, @sec-simulation-pac) and for cyclostationary noise (PNOISE, HBNOISE, @sec-simulation-pnoise).
@@ -185,7 +185,7 @@ Because the circuit equations are integrated without linearization, transient no
 ::: {.content-hidden when-format="revealjs"}
 - **Statistics.** Each run produces one random realization. A PSD, a jitter value, or an error probability requires long records, averaging, or many runs with different random seeds, and the frequency resolution is $1/T_\mathrm{sim}$. Flicker noise down to $f_\mathrm{min}$ requires $T_\mathrm{sim} \gg 1/f_\mathrm{min}$.
 - **Run time.** The step size is limited by $f_\mathrm{max}$, even in parts of the waveform where the signal itself would allow large steps.
-- **Numerical floor.** Device noise is tiny compared to the signals. Integration errors and interpolation of the adaptive time points can be of similar size. A noiseless run with identical settings must be used as a reference, and the result should scale with the square of the noise amplitude (a scaling knob such as `noisescale` in VACASK makes this check easy).
+- **Numerical floor.** Device noise is tiny compared to the signals. Integration errors and interpolation of the adaptive time points can be of similar size. A noiseless run with identical settings must be used as a reference, and the output noise power should scale with the square of the noise amplitude (a scaling factor such as `noisescale` in VACASK makes this check easy).
 :::
 
 ::: {.content-visible when-format="revealjs"}
@@ -194,7 +194,7 @@ Because the circuit equations are integrated without linearization, transient no
 - **Numerical floor**: compare with a noiseless run; check the scaling with the noise amplitude
 :::
 
-Typical applications are comparators (input-referred noise from the decision statistics), sampled-data circuits and ADCs (kT/C noise and the SNR including all effects), the jitter of oscillators, clock buffers, and dividers, and, increasingly important, the independent cross-check of PNOISE and HBNOISE results, as the two methods share no code path in the simulator.
+Typical applications are comparators (input-referred noise from the decision statistics), sampled-data circuits and ADCs ($kT/C$ noise and the SNR including all effects), the jitter of oscillators, clock buffers, and dividers, and, increasingly important, the independent cross-check of PNOISE and HBNOISE results, as transient noise shares no code path with the periodic analyses.
 
 ### Periodic Steady State by Shooting (PSS) {#sec-simulation-pss}
 
@@ -210,9 +210,9 @@ $$
 \left( \mathbf{\Phi}_T - \mathbf{I} \right) \Delta \mathbf{x}_0 = \mathbf{x}_0 - \boldsymbol{\phi}_T(\mathbf{x}_0), \qquad \mathbf{\Phi}_T = \frac{\partial \boldsymbol{\phi}_T}{\partial \mathbf{x}_0},
 $$ {#eq-sim-shooting-newton}
 
-where the sensitivity matrix $\mathbf{\Phi}_T$ (the *monodromy matrix*) is computed alongside the transient integration over one period. Every Newton iteration therefore costs one period of transient simulation. For a linear circuit, the method converges in a single iteration, for mildly nonlinear circuits in a few. Usually, a short stabilization transient precedes the Newton loop to provide a good initial guess. In large circuits, the dense matrix $\mathbf{\Phi}_T$ would be prohibitive; matrix-free iterative (Krylov subspace) solvers made shooting practical for circuits with thousands of nodes [@Telichevesky.1995].
+where the sensitivity matrix $\mathbf{\Phi}_T$ (the *monodromy matrix*) is computed alongside the transient integration over one period. Every Newton iteration therefore costs one period of transient simulation. For a linear circuit, the method converges in a single iteration; a mildly nonlinear circuit needs a few. Usually, a short stabilization transient precedes the Newton loop to provide a good initial guess. In large circuits, the dense matrix $\mathbf{\Phi}_T$ would be prohibitive; matrix-free iterative (Krylov subspace) solvers made shooting practical for circuits with thousands of nodes [@Telichevesky.1995]. VACASK currently integrates the full matrix $\mathbf{\Phi}_T$, which is fine for circuit blocks but becomes expensive for large (e.g., post-layout) netlists.
 
-The main advantage is illustrated in @fig-sim-tran-vs-pss: a high-Q circuit that needs hundreds of periods to settle in a transient analysis converges in a handful of shooting iterations, because Newton's method jumps directly to the steady state.
+The main advantage is illustrated in @fig-sim-tran-vs-pss: a high-Q circuit that needs many periods to settle in a transient analysis (about 110 for $Q = 50$) is solved with one or a few shooting iterations of one period each, because Newton's method jumps directly to the steady state.
 
 {{< include /content/simulation/_fig_sim_tran_vs_pss.qmd >}}
 
@@ -225,11 +225,11 @@ For **oscillators** (autonomous circuits), the period is unknown and becomes an 
 PSS finds a periodic solution, but it does not tell whether the circuit actually reaches it after power-up. Whether an oscillator starts reliably over all corners (or whether a divider locks into the intended mode) must still be checked with a transient analysis.
 :::
 
-From the periodic waveforms, the Fourier coefficients follow directly: harmonic distortion, the dc shift of a rectifier or power detector, the duty cycle of an LO signal, the efficiency of a PA (from the averaged product of drain voltage and current), and, for oscillators, frequency and amplitude versus a tuning voltage (i.e., the tuning curve and $K_\mathrm{VCO}$, see @sec-frequency-tuning-of-oscillators).
+From the periodic waveforms, the Fourier coefficients follow directly: harmonic distortion, the dc shift of a rectifier or power detector, the duty cycle of an LO signal, the efficiency of a PA (from the output power at the fundamental and the averaged supply power), and, for oscillators, frequency and amplitude versus a tuning voltage (i.e., the tuning curve and $K_\mathrm{VCO}$, see @sec-frequency-tuning-of-oscillators).
 
 ### Harmonic Balance (HB) {#sec-simulation-hb}
 
-**Harmonic balance** describes every unknown by a truncated Fourier series with $K$ harmonics,
+**Harmonic balance** describes every unknown by a truncated Fourier series with $K$ harmonics (not to be confused with the stability factor $K$ of @sec-amp-stability),
 
 $$
 \mathbf{x}(t) = \sum_{k=-K}^{K} \mathbf{X}_k \, e^{j k \omega_0 t}, \qquad \mathbf{X}_{-k} = \mathbf{X}_k^{*},
@@ -258,7 +258,7 @@ Strengths and weaknesses of HB are complementary to those of shooting:
 ::: {.content-visible when-format="revealjs"}
 - **Linear and distributed elements**: exact, including S-parameter data
 - **High-Q circuits**: no settling problem
-- **Mildly nonlinear circuits**: few harmonics, very efficient (P1dB, IP3, blockers)
+- **Mildly nonlinear circuits**: few harmonics, very efficient ($P_\mathrm{1dB}$, IP3, blockers)
 - **Sharp edges**: many harmonics, ill-conditioning, Gibbs ringing (@fig-sim-hb-truncation); may not converge, use PSS instead
 - **Convergence**: ramp the drive level (source stepping, sweeps)
 :::
@@ -288,13 +288,13 @@ $$
 \mathbf{G}(t) \, \Delta \mathbf{x}(t) + \frac{\mathrm{d}}{\mathrm{d}t} \left[ \mathbf{C}(t) \, \Delta \mathbf{x}(t) \right] = \Delta \mathbf{u}(t).
 $$ {#eq-sim-lptv}
 
-In contrast to @eq-sim-ac, the Jacobians $\mathbf{G}(t) = \partial \mathbf{f} / \partial \mathbf{x}$ and $\mathbf{C}(t) = \partial \mathbf{q} / \partial \mathbf{x}$ are now evaluated along $\mathbf{x}_\mathrm{s}(t)$ and are periodic in time. The small-signal circuit is a **linear periodically time-varying (LPTV)** system. Exactly like the time-variant mixer of @sec-mixer-time-variant, such a system converts an input at the offset frequency $f$ into outputs at all **sidebands** $f + k f_0$. We therefore expand the Jacobians into Fourier series, $\mathbf{G}(t) = \sum_m \mathbf{G}_m e^{j m \omega_0 t}$ (same for $\mathbf{C}$), and the response into $\Delta \mathbf{x}(t) = \sum_k \mathbf{X}_k e^{j (\omega + k \omega_0) t}$. Collecting the terms at each sideband yields the **conversion matrix** equation [@Kundert.1999]
+In contrast to @eq-sim-ac, the Jacobians $\mathbf{G}(t) = \partial \mathbf{f} / \partial \mathbf{x}$ and $\mathbf{C}(t) = \partial \mathbf{q} / \partial \mathbf{x}$ are now evaluated along $\mathbf{x}_\mathrm{s}(t)$ and are periodic in time. The small-signal circuit is a **linear periodically time-varying (LPTV)** system. Exactly like the time-variant mixer of @sec-mixer-time-variant, such a system converts an input at the offset frequency $f$ into outputs at all **sidebands** $f + k f_0$. We therefore expand the Jacobians into Fourier series, $\mathbf{G}(t) = \sum_p \mathbf{G}_p e^{j p \omega_0 t}$ (same for $\mathbf{C}$), and the excitation and the response into sideband phasors, $\Delta \mathbf{u}(t) = \sum_k \Delta \mathbf{U}_k e^{j (\omega + k \omega_0) t}$ and $\Delta \mathbf{x}(t) = \sum_k \Delta \mathbf{X}_k e^{j (\omega + k \omega_0) t}$. Collecting the terms at each sideband yields the **conversion matrix** equation [@Kundert.1999]
 
 $$
-\sum_{l=-K}^{K} \left[ \mathbf{G}_{k-l} + j (\omega + k \omega_0) \, \mathbf{C}_{k-l} \right] \mathbf{X}_l = \mathbf{U}_k, \qquad k = -K, \ldots, K,
+\sum_{l=-K}^{K} \left[ \mathbf{G}_{k-l} + j (\omega + k \omega_0) \, \mathbf{C}_{k-l} \right] \Delta \mathbf{X}_l = \Delta \mathbf{U}_k, \qquad k = -K, \ldots, K,
 $$ {#eq-sim-conversion-matrix}
 
-which couples the sidebands $l$ to the sidebands $k$ through the harmonics $\mathbf{G}_{k-l}$ and $\mathbf{C}_{k-l}$ of the time-varying operating point. Without time variation, only $\mathbf{G}_0$ and $\mathbf{C}_0$ are nonzero, and @eq-sim-conversion-matrix falls apart into independent copies of the ac analysis of @eq-sim-ac. Solving @eq-sim-conversion-matrix for a source at sideband $l$ and observing sideband $k$ gives the **harmonic transfer function** $H_{k,l}(f)$. The offset frequency $f$ is swept, and each point requires one sparse linear solve, so the analysis is about as cheap as an ac sweep (with a $(2K+1)$ times larger system).
+which couples the sidebands $l$ to the sidebands $k$ through the harmonics $\mathbf{G}_{k-l}$ and $\mathbf{C}_{k-l}$ of the time-varying operating point. Without time variation, only $\mathbf{G}_0$ and $\mathbf{C}_0$ are nonzero, and @eq-sim-conversion-matrix falls apart into independent copies of the ac analysis of @eq-sim-ac. Solving @eq-sim-conversion-matrix for a source at sideband $l$ and observing sideband $k$ gives the **harmonic transfer function** $H_{k,l}(f)$. The offset frequency $f$ is swept, and each point requires one linear solve of a system with $(2K+1)$ times as many unknowns as the circuit. This is far cheaper than a transient simulation, but the cost grows quickly with $K$, as discussed below.
 
 {{< include /content/simulation/_fig_sim_pac_sidebands.qmd >}}
 
@@ -302,7 +302,7 @@ which couples the sidebands $l$ to the sidebands $k$ through the harmonics $\mat
 
 ::: {.content-hidden when-format="revealjs"}
 - The **conversion gain** is the transfer from the RF at $f_\mathrm{LO} + f$ (input sideband $+1$) to the IF at $f$ (output sideband $0$), i.e., $H_{0,+1}(f)$, swept over the IF band in a single analysis.
-- The **image response** is $H_{0,-1}(f)$ from $f_\mathrm{LO} - f$; for an I/Q mixer, the ratio of the two gives the image rejection.
+- The **image response** is $H_{0,-1}(f)$ from $f_\mathrm{LO} - f$. A single mixer converts both sidebands with equal magnitude; in an I/Q (image-reject) receiver, the ratio of the two, evaluated after the I and Q paths are combined, gives the image rejection.
 - The **harmonic responses** $H_{0,\pm 3}(f)$ show how much of an interferer around $3 f_\mathrm{LO}$ appears at the IF, which matters for switching mixers in wideband receivers (compare the Fourier series of the switching function in @sec-mixer-time-variant).
 - For an **upconversion mixer**, the input is at the baseband sideband $0$ and the output at sideband $\pm 1$.
 :::
@@ -315,7 +315,7 @@ which couples the sidebands $l$ to the sidebands $k$ through the harmonics $\mat
 :::
 
 ::: {.callout-important}
-## Why an ac Analysis of a Mixer Fails
+## Why an AC Analysis of a Mixer Fails
 An ac analysis linearizes around the dc operating point, where the LO source sits at its dc value. The mixer is "frozen" in one LO state, the circuit is LTI, and no frequency conversion takes place: the ac analysis shows at most a feedthrough at the RF frequency, but no IF output. Frequency-converting circuits need PAC or HBAC.
 :::
 
@@ -337,26 +337,28 @@ Further applications of the periodic small-signal analyses are:
 - **Chopper amplifiers**: gain after demodulation, ripple at the chopping harmonics
 :::
 
-**PAC** and **HBAC** solve the same @eq-sim-conversion-matrix. They differ only in the large-signal solution underneath: PAC builds on the shooting PSS (single fundamental, any waveform shape), HBAC on harmonic balance (also quasi-periodic, e.g., with an LO and a large blocker as two tones, but limited by the harmonic count of the HB solution). The naming follows the engine: the analyses on top of shooting carry a "P" (PAC, PNOISE, and in some simulators PXF and PSP for transfer functions and S-parameters), those on top of harmonic balance carry "HB" (HBAC, HBNOISE, HBXF, HBSP). The truncation $K$ of @eq-sim-conversion-matrix must cover the harmonic content of $\mathbf{G}(t)$ and $\mathbf{C}(t)$: a few harmonics are enough for smooth waveforms, while hard-switching circuits like SC filters with steep clock edges can require tens to hundreds of harmonics. Here, the PSS-based analyses have a decisive advantage. The large-signal solution is computed in the time domain, and the harmonics of $\mathbf{G}(t)$ and $\mathbf{C}(t)$ are taken from the recorded periodic trajectory, so their number is limited mainly by the time-step resolution, and not by the size and conditioning of an HB system. A Gilbert-cell mixer driven by a square-wave LO is a documented example: HB, and with it HBAC, fails to converge, while PSS-based PAC delivers dozens of sidebands without difficulty ([VACASK Gilbert-cell example](https://codeberg.org/arpadbuermen/VACASK/src/branch/main/demo/gilbert/gilbert.sim)). The price is the size of @eq-sim-conversion-matrix, in which every nonzero Jacobian entry becomes a dense $(2K+1) \times (2K+1)$ block, so very steep edges remain expensive. As always, increase $K$ until the results no longer change.
+**PAC** and **HBAC** solve the same @eq-sim-conversion-matrix. They differ only in the large-signal solution underneath: PAC builds on the shooting PSS (single fundamental, any waveform shape), HBAC on harmonic balance (also quasi-periodic, e.g., with an LO and a large blocker as two tones, but limited by the harmonic count of the HB solution). The naming follows the engine: the analyses on top of shooting carry a "P" (PAC, PNOISE, and in some simulators PXF and PSP for transfer functions and S-parameters), those on top of harmonic balance carry "HB" (HBAC, HBNOISE, HBXF, HBSP).
+
+The truncation $K$ of @eq-sim-conversion-matrix must cover the harmonic content of $\mathbf{G}(t)$ and $\mathbf{C}(t)$: a few harmonics are enough for smooth waveforms, while hard-switching circuits like SC filters with steep clock edges can require tens to hundreds of harmonics. Here, the PSS-based analyses have a clear advantage. The large-signal solution is computed in the time domain, and the harmonics of $\mathbf{G}(t)$ and $\mathbf{C}(t)$ are taken from the recorded periodic trajectory, so their number is limited mainly by the time-step resolution, and not by the size and conditioning of an HB system. In the [Gilbert-cell example of VACASK](https://codeberg.org/arpadbuermen/VACASK/src/branch/main/demo/gilbert/gilbert.sim), for instance, a large trapezoidal LO drives the switching quad: HB, and with it HBAC, currently does not converge, while PAC delivers the sidebands with 20 harmonics. The price is the size of @eq-sim-conversion-matrix, in which every nonzero Jacobian entry becomes a dense $(2K+1) \times (2K+1)$ block, so very steep edges remain expensive in both PAC and HBAC. As always, increase $K$ until the results no longer change.
 
 ### Periodic Noise Analysis (PNOISE, HBNOISE) {#sec-simulation-pnoise}
 
 The noise analysis of @eq-sim-noise misses two effects that a large periodic signal introduces:
 
-1. **Modulation.** The noise sources depend on the time-varying operating point: channel thermal noise follows $\gm(t)$, shot noise follows the current $I(t)$, and flicker noise depends on the bias as well. Such a source can be written as $n_i(t) = m_i(t) \, w_i(t)$, with a stationary noise process $w_i(t)$ and a periodic modulation $m_i(t)$. Its statistics vary periodically with time, the noise is **cyclostationary**.
+1. **Modulation.** The noise sources depend on the time-varying operating point: channel thermal noise follows the channel conductance (see @sec-noise-types), shot noise follows the current $I(t)$, and flicker noise depends on the bias as well. Such a source can be written as $n_i(t) = m_i(t) \, w_i(t)$, with a stationary noise process $w_i(t)$ and a periodic modulation $m_i(t)$. Its statistics vary periodically with time; the noise is **cyclostationary**.
 2. **Frequency translation.** The LPTV transfer of @eq-sim-conversion-matrix moves noise from all sidebands $f + l f_0$ to the output frequency $f$, which is called **noise folding**.
 
-Combining both effects, with $M_{i,m}$ the Fourier coefficients of $m_i(t)$ and $H_{i,k}(f)$ the transfer function from source $i$ at sideband $k$ to the output, gives the output PSD [@Okumura.1993; @Roychowdhury.1998]
+Combining both effects, with $M_{i,m}$ the Fourier coefficients of $m_i(t)$, $S_i$ the PSD of the stationary process $w_i(t)$, and $H_{i,k}(f)$ the transfer function from source $i$ at sideband $k$ to the output, gives the output PSD [@Okumura.1993; @Roychowdhury.1998]
 
 $$
 S_\mathrm{out}(f) = \sum_i \sum_{l} \left| \sum_{k} H_{i,k}(f) \, M_{i,k-l} \right|^2 S_i(f + l f_0),
 $$ {#eq-sim-pnoise}
 
-with all spectral densities written two-sided. For a constant operating point ($M_{i,0} = 1$, all other coefficients zero, and $H_{i,k} = 0$ for $k \neq 0$), @eq-sim-pnoise reduces to @eq-sim-noise. As in the noise analysis, a single adjoint solve per offset frequency delivers the transfer functions of all sources, and the results are again broken down into contributions per device and per noise mechanism. **PNOISE** builds on the shooting PSS, **HBNOISE** on harmonic balance, exactly as PAC and HBAC. HBNOISE can also start from a multitone (quasi-periodic) HB solution, e.g., to obtain the noise figure of a mixer with an LO and a large blocker applied at the same time.
+with all spectral densities written two-sided. For a constant operating point ($M_{i,0} = 1$, all other coefficients zero, and $H_{i,k} = 0$ for $k \neq 0$), @eq-sim-pnoise reduces to @eq-sim-noise. A single adjoint solve per offset frequency delivers the transfer functions of all sources, and the results are again broken down into contributions per device and per noise mechanism. **PNOISE** builds on the shooting PSS, **HBNOISE** on harmonic balance, exactly as PAC and HBAC. HBNOISE can also start from a multi-tone (quasi-periodic) HB solution, e.g., to obtain the noise figure of a mixer with an LO and a large blocker applied at the same time.
 
 ::: {#nte-sim-noise-folding .callout-note}
 ## Noise Folding in an Ideal Switching Mixer
-An ideal double-balanced switching mixer multiplies the RF input by a square wave toggling between $+1$ and $-1$ (see @sec-mixer-time-variant), whose Fourier coefficients have the magnitude $|c_k| = 2/(\pi |k|)$ for odd $k$ and vanish for even $k$. The switches are noiseless; the only noise is the white thermal noise of the source resistance, with the PSD $S_\mathrm{n}$ at every frequency. The noise from each sideband $k$ folds to the IF with the weight $|c_k|^2$. By Parseval's theorem, the sum of all weights equals the time average of the squared switching function, which is one:
+An ideal double-balanced switching mixer multiplies the RF input by a square wave toggling between $+1$ and $-1$ with 50 % duty cycle (see @sec-mixer-time-variant), whose Fourier coefficients have the magnitude $|c_k| = 2/(\pi |k|)$ for odd $k$ and vanish for even $k$. The switches are noiseless; the only noise is the white thermal noise of the source resistance, with the PSD $S_\mathrm{n}$ at every frequency. The noise from each sideband $k$ folds to the IF with the weight $|c_k|^2$. By Parseval's theorem, the sum of all weights equals the time average of the squared switching function, which is one:
 
 $$
 S_\mathrm{out} = S_\mathrm{n} \sum_{k} |c_k|^2 = S_\mathrm{n}.
@@ -377,20 +379,20 @@ The periodic noise analyses are required wherever a large periodic signal modula
 
 ::: {.content-hidden when-format="revealjs"}
 - **Mixers**: SSB and DSB noise figure, including the noise folded from the image and from the sidebands of the LO harmonics, and the flicker noise of the switches that the LO translates to the IF (compare the discussion of passive and active mixers in @sec-mixer-time-variant).
-- **Sampling and SC circuits**: wideband switch noise folds into the baseband (kT/C noise). Many harmonics are needed; alternatively, transient noise is used.
+- **Sampling and SC circuits**: wideband switch noise folds into the baseband ($kT/C$ noise). Many harmonics are needed; alternatively, transient noise is used.
 - **Power detectors**: the noise with the LO (or the input carrier) applied, which can differ substantially from the quiescent noise analysis.
 - **Amplifiers under a blocker**: the noise figure in the presence of a large interferer.
 - **Chopper amplifiers**: the flicker noise that remains at baseband after chopping, and the white noise folded back from the chopping harmonics.
-- **Oscillators**: the phase noise. An oscillator's noise is cyclostationary by nature, and its noise sources are converted into phase noise in a time-dependent way, which the impulse sensitivity function describes [@Hajimiri.1998]. A rigorous treatment shows how the noise of the LPTV system turns into phase noise and why the phase noise spectrum stays finite at the carrier [@Demir.2000]. Simulators that support a periodic noise analysis around an *autonomous* PSS compute the phase noise directly, including the upconverted flicker noise of the $1/f^3$ region, which Leeson's equation (@eq-leeson-equation) does not cover. Check whether your simulator supports this mode; the alternative is a transient noise simulation (VACASK ships an example that extracts the phase noise of an oscillator this way). A plain noise analysis of an oscillator is meaningless, as it linearizes around the unstable dc operating point.
+- **Oscillators**: the phase noise. An oscillator's noise is cyclostationary by nature, and its noise sources are converted into phase noise in a time-dependent way, which the impulse sensitivity function describes [@Hajimiri.1998]. A rigorous nonlinear analysis shows that the phase of an oscillator diffuses like a random walk, so that the output spectrum is a Lorentzian that stays finite at the carrier, whereas a linear analysis predicts phase noise that grows without bound towards the carrier [@Demir.2000]. Commercial RF simulators compute the phase noise with a periodic noise analysis around an *autonomous* steady state, including the upconverted flicker noise of the $1/f^3$ region, which Leeson's equation (@eq-leeson-equation) does not cover. In VACASK, the documented route is a transient noise simulation, and an example that extracts the phase noise of an oscillator this way ships with the simulator. A plain noise analysis of an oscillator is meaningless, as it linearizes around the unstable dc operating point.
 :::
 
 ::: {.content-visible when-format="revealjs"}
 - **Mixers**: SSB/DSB NF incl. image and harmonic folding, LO-translated flicker noise
-- **Sampling, SC circuits**: kT/C noise from folded wideband noise
+- **Sampling, SC circuits**: $kT/C$ noise from folded wideband noise
 - **Power detectors**: noise with the LO or carrier applied
 - **Amplifiers under a blocker**: blocker noise figure
 - **Chopper amplifiers**: residual flicker noise, white noise folded from the chopping harmonics
-- **Oscillators**: phase noise incl. $1/f^3$ region [@Hajimiri.1998; @Demir.2000], from PNOISE around an autonomous PSS (simulator-dependent) or from transient noise; a plain noise analysis is meaningless
+- **Oscillators**: phase noise incl. $1/f^3$ region, from periodic noise (commercial tools) or transient noise (VACASK); plain noise analysis is meaningless
 :::
 
 For the sweep of the offset frequency, keep in mind that the upconverted flicker noise forms narrow skirts around every harmonic of the large signal. A coarse logarithmic sweep easily steps over them, and a point exactly at a harmonic is undefined for $1/f$ noise; a dense grid near (but not at) the harmonics resolves them.
@@ -414,12 +416,12 @@ For typical RF building blocks, @tbl-sim-applications lists the key metrics and 
 
 | Circuit | Key metrics | Recommended analyses |
 |---------|-------------|----------------------|
-| LNA | match, gain, NF, stability, P1dB, IIP3, blocker NF | op, acsp, noise; HB (P1dB, two-tone IIP3); HBAC, HBNOISE with blocker |
+| LNA | match, gain, NF, stability, $P_\mathrm{1dB}$, IIP3, blocker NF | op, acsp, noise; HB ($P_\mathrm{1dB}$, two-tone IIP3); HBAC, HBNOISE with blocker |
 | Mixer | conversion gain, SSB/DSB NF, IIP3, image and harmonic rejection | PSS (hard-switching LO) or HB; PAC or HBAC; PNOISE or HBNOISE; two-tone HB (IIP3) |
-| Oscillator, VCO | start-up, frequency, tuning range, phase noise | tran (start-up); autonomous PSS; PNOISE (autonomous) or transient noise |
-| SC circuits, sampling, N-path | transfer incl. aliasing, settling, kT/C noise | tran; PSS with PAC, PNOISE (not HB); transient noise |
+| Oscillator, VCO | start-up, frequency, tuning range, phase noise | tran (start-up); autonomous PSS; transient noise or periodic noise around the autonomous PSS (simulator-dependent) |
+| SC circuits, sampling, N-path | transfer incl. aliasing, settling, $kT/C$ noise | tran; PSS with PAC, PNOISE (not HB); transient noise |
 | Power detector | responsivity, compression, video bandwidth, NEP, NF | HB or PSS power sweep; HBAC or PAC; noise (quiescent), HBNOISE or PNOISE (pumped); transient noise |
-| Power amplifier | output power, efficiency, AM-AM, AM-PM, harmonics | HB power sweep (EM models of the matching network); PSS for switching PAs; tran |
+| Power amplifier | output power, efficiency, AM/AM, AM/PM, harmonics | HB power sweep (EM models of the matching network); PSS for switching PAs; tran |
 | Divider, LO generation | operating range, duty cycle, I/Q phase error, jitter | tran; PSS; PNOISE or transient noise (jitter) |
 | Chopper amplifier | gain, ripple, residual flicker noise | tran; PSS with PAC, PNOISE |
 | Comparator, latch | offset, noise, metastability | tran; transient noise |
@@ -446,15 +448,15 @@ Whatever analysis is used, a result is only trustworthy after it has been checke
 ## Example: A 160 GHz Power Detector
 The open-source SPARX receiver [@Dorrer.2026] contains a Schottky-diode power detector at 160 GHz, characterized with VACASK as a mixer with a 159 GHz LO. Its testbenches use most of the analyses of this chapter:
 
-- **HB** power sweep for the transfer curve (responsivity and compression), cross-checked with **PSS** at five drive levels; the two agree within 0.6 %.
-- **HBAC** for the conversion gain of each sideband to the IF and the video bandwidth.
-- **noise** (LO off) and **HBNOISE** (LO on) for the noise figure: the LO raises the output noise, so the quiescent noise analysis turns out to be about 2 dB optimistic.
-- **Transient noise** with the LO on as the independent check of HBNOISE, which agrees within 1.4 dB.
+- **HB** power sweep for the transfer curve (responsivity and compression), cross-checked with **PSS** at nine drive levels; the two agree within 1.2 % over an input range of 80 dB.
+- **HBAC** for the conversion gain of each sideband to the IF and the video bandwidth, cross-checked with **PAC** (within 0.03 dB).
+- **noise** (LO off) and **HBNOISE** (LO on) for the noise figure: the LO raises the output noise, so the noise analysis at the dc operating point is 1.2 dB to 2.6 dB optimistic over the IF band, and far more at high LO drive. **PNOISE** reproduces HBNOISE within 0.2 dB.
+- **Transient noise** with the LO on, an independent check, agrees with HBNOISE within about 1 dB.
 :::
 
 ## Simulator Support {#sec-simulation-tools}
 
-@tbl-sim-tools lists the analyses of this chapter in the two open-source simulators used in this course. Commercial RF simulators such as Cadence Spectre RF or Keysight ADS offer all of them, plus further variants like quasi-periodic shooting, periodic transfer functions and S-parameters (PXF, PSP), and envelope simulation for modulated signals.
+@tbl-sim-tools lists the analyses of this chapter in the two open-source simulators used in this course. Among the commercial RF simulators, Cadence Spectre RF offers all of them, plus further variants like quasi-periodic shooting and periodic transfer functions and S-parameters (PXF, PSP), while Keysight ADS is built around harmonic balance with its small-signal and noise variants, and adds envelope simulation for modulated signals.
 
 | Analysis | VACASK | ngspice |
 |----------|--------|---------|
@@ -470,28 +472,29 @@ The open-source SPARX receiver [@Dorrer.2026] contains a Schottky-diode power de
 | HBAC, HBNOISE | `hbac`, `hbnoise` | not available |
 : Analyses in the open-source simulators VACASK and ngspice. {#tbl-sim-tools}
 
-The following VACASK excerpt shows the two-step flow of @sec-simulation-advanced for a downconversion mixer: the periodic steady state with the LO is computed and stored once, and the conversion gain and the noise figure are evaluated around it. The RF source carries a unit small-signal excitation at sideband $+1$, the IF output is observed at sideband $0$.
+The following VACASK excerpt shows the two-step flow of @sec-simulation-advanced for a downconversion mixer: the periodic steady state with the LO is computed and stored once, and the conversion gain and the noise figure are evaluated around it. The RF source carries a unit small-signal excitation at sideband $+1$, and the IF output (node `out`) is observed at sideband $0$. The noisy source resistance in series with the RF source provides the reference noise for the noise figure; device models and the mixer itself are omitted.
 
 ```text
 // LO: large-signal sine; RF: small-signal tone at sideband +1 (f_LO + f)
 vlo (lo 0) vsource type="sine" sinedc=0 ampl=0.5 freq=2.4G
-vrf (rf 0) vsource dc=0 spur={1} smag=[1]
+vrf (rfs 0) vsource dc=0 spur={1} smag=[1]
+rs (rfs rf) resistor r=50
 
 control
   var flo=2.4G
   analysis op1 op
   // large signal: periodic steady state with the LO, stored for reuse
-  analysis pss1 pss tper=1/flo tstab=20/flo maxharm=40 store="lo_ss"
+  analysis pss1 pss tper=1/flo tstab=20/flo store="lo_ss"
   // conversion gain from f_LO + f (sideband +1) to the IF at f (sideband 0)
   analysis pac1 pac ( ic="lo_ss" psssolve=0 truncharm=40 outharm=0
                       from=100k to=100M mode="dec" points=10 )
-  // output noise at the IF node out, gain from the RF at sideband +1 (SSB NF)
+  // output noise at the IF and gain from the RF at sideband +1 (SSB NF)
   analysis pn1 pnoise ( ic="lo_ss" psssolve=0 truncharm=40 in="vrf" inharm=1
                         out="out" outharm=0 from=100k to=100M mode="dec" points=10 )
 endc
 ```
 
-The harmonic-balance flow looks the same, with `hb`, `hbac`, and `hbnoise`, and spurs given as tone-weight vectors (e.g., `spur={[1]}`, `outspur=[0]`, `inspur=[1]`). VACASK ships worked examples for a [Gilbert-cell mixer](https://codeberg.org/arpadbuermen/VACASK/src/branch/main/demo/gilbert/gilbert.sim) in multiplier mode (where PAC is compared with HBAC and PNOISE with HBNOISE) and in switching mode (where only the PSS-based analyses converge), for the PAC analysis of an [SC filter](https://codeberg.org/arpadbuermen/VACASK/src/branch/main/demo/sc/lpfilter.sim), and for the phase noise of an [oscillator from transient noise](https://codeberg.org/arpadbuermen/VACASK/src/branch/main/demo/trannoise/osc.sim). Further examples at circuit level, including the 160 GHz power detector, are found in the [testbenches of the SPARX repository](https://github.com/iic-jku/SG13CMOS_SPARX/tree/next_release/testbenches/xschem) [@Dorrer.2026].
+The harmonic-balance flow with `hb`, `hbac`, and `hbnoise` is analogous, with three differences: the large signal is described by its fundamental frequencies and harmonic count (e.g., `freq=[2.4G] nharm=9`) instead of the period, a stored solution is reused with `nodeset="lo_ss" hbsolve=0`, and spurs are given as tone-weight vectors (e.g., `spur={[1]}`, `outspur=[0]`, `inspur=[1]`). VACASK ships worked examples for a [Gilbert-cell mixer](https://codeberg.org/arpadbuermen/VACASK/src/branch/main/demo/gilbert/gilbert.sim) in multiplier mode (where PAC is compared with HBAC and PNOISE with HBNOISE) and in switching mode (where VACASK's HB currently does not converge, but PAC and PNOISE do), for the PAC analysis of an [SC filter](https://codeberg.org/arpadbuermen/VACASK/src/branch/main/demo/sc/lpfilter.sim), and for the phase noise of an [oscillator from transient noise](https://codeberg.org/arpadbuermen/VACASK/src/branch/main/demo/trannoise/osc.sim). Further examples at circuit level, including the 160 GHz power detector, are found in the [testbenches of the SPARX repository](https://github.com/iic-jku/SG13CMOS_SPARX/tree/main/testbenches/xschem) [@Dorrer.2026].
 
 ## Summary {#sec-simulation-summary}
 
@@ -499,7 +502,7 @@ The harmonic-balance flow looks the same, with `hb`, `hbac`, and `hbnoise`, and 
 ## Key Takeaways
 - **op, ac, acsp, noise** linearize around a constant operating point: fast and insightful, but blind to distortion, frequency conversion, and noise folding.
 - **tran** is the general reference, but RF time scales make it expensive, and a maximum time step is mandatory.
-- **PSS** (time domain) and **HB** (frequency domain) find the periodic steady state directly; PSS suits switching circuits and oscillators, HB mildly nonlinear and multi-tone problems with distributed elements.
+- **PSS** (time domain) and **HB** (frequency domain) find the periodic steady state directly; PSS suits switching circuits and oscillators, HB mildly nonlinear and multi-tone problems and circuits with distributed elements.
 - **PAC, HBAC** and **PNOISE, HBNOISE** linearize around this steady state (LPTV) and give conversion gain, aliasing, and cyclostationary noise including folding.
 - **Transient noise** captures everything at a high cost, and serves as the independent cross-check.
 - Increase harmonics, tighten time steps, and compare independent methods before trusting a result.
