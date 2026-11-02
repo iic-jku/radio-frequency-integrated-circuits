@@ -260,6 +260,25 @@ $$
 \text{IIP3}|_\mathrm{dBm} \approx P_\mathrm{1dB}|_\mathrm{dBm} + 9.6\,\text{dB}.
 $$ {#eq-iip3-approx}
 
+::: {.callout-note}
+## Further Information: The AST Linearity Test
+::: {.content-hidden when-format="revealjs"}
+The two-tone test assumes a spectrally pure stimulus: any distortion or quantization noise of the test signal generator (TSG) also appears at the IM3 frequencies of the system under test (SUT) and corrupts the measured IP3. In the lab, this is solved with high-quality signal generators, but for on-chip linearity monitoring (e.g., as a built-in self-test of an automotive radar receiver), such a clean TSG is very hard to integrate.
+
+The **artificial slow time (AST) linearity test** enables accurate on-chip linearity testing with a single low-quality TSG by exploiting the TSG's repeatability. Instead of injecting a spectrally pure test signal into the SUT, the same imprecise test signal is inserted multiple times, each time scaled with a different, properly chosen analog factor. With this, all impairments affecting the test signal *before* the analog scaling (i.e., distortions of the TSG) can be separated from the SUT's nonlinear effects *after* the scaling by digital signal processing. Thus, the requirements on the integrated analog TSG are significantly reduced.
+
+- **Application 1: IP3 with a low-quality two-tone TSG.** The AST linearity test is applied to the classic two-tone test, where the IM3 products of the SUT are recovered even if the two-tone test signal itself is heavily distorted or coarsely quantized. The concept is introduced in [@Wagner.2023] and treated in detail in [@Wagner.2025, ch. 4].
+- **Application 2: IP3 with a low-quality single-tone TSG.** With a single tone, the in-band third-order distortion of the SUT falls onto the same frequency as the fundamental itself (it is what causes the gain compression of @sec-linearity-single), so an ordinary spectrum cannot tell it apart from the fundamental. The AST linearity test separates it nevertheless, so the IP3 can be measured with an even simpler single-tone test signal. A MATLAB-automated RF demonstrator (LNA and mixer) that verifies both applications in the lab with a test signal of only 2-bit resolution is presented in [@Dorrer.2023], together with a recorded presentation [@Dorrer.2023a]. In these measurements, the single-tone variant proved more sensitive to inaccurate scaling factors, so the two-tone variant is preferred for on-chip use.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- **AST linearity test**: inject the *same* imprecise test signal several times, each time with a different analog scaling factor
+- Digital signal processing separates the TSG's distortion (before the scaling) from the SUT's nonlinearity (after the scaling)
+- **Two-tone**: accurate IP3 with a low-quality two-tone TSG [@Wagner.2023; @Wagner.2025, ch. 4]
+- **Single-tone**: IP3 even from a single low-quality tone [@Dorrer.2023; @Dorrer.2023a]
+:::
+:::
+
 If we have multiple blocks which are cascaded, and we know the gain and IIP3 of each block, we can calculate the overall IIP3 of the cascade with the following approximation. An exact calculation is very involved, as the nonlinearities of the first block (and the resulting tones) will be processed by the second block, creating even more tones; this process escalates very quickly. However, for practical purposes, the following approximation is often sufficient:
 
 $$
