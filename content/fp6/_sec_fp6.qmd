@@ -38,26 +38,26 @@ Between the antennas and the RFIC sits the **RF front-end (RFFE)**: antenna tune
 
 A phone sold worldwide has to support a large number of frequency bands, as different regions use different parts of the spectrum for cellular communication. @tbl-fp6-bands lists the cellular bands of the Fairphone (Gen. 6), and @fig-fp6-bands shows their location in the spectrum.
 
-| Band | Group | Duplex | 2G | 3G | 4G | 5G | DL MIMO |
-|:-----|:------|:-------|:--:|:--:|:--:|:--:|:-------:|
-| 1    | MB  | FDD |   | x | x | x | 4×4 |
-| 2/25 | MB  | FDD | x | x | x | x | 4×4 |
-| 3    | MB  | FDD | x |   | x | x | 4×4 |
-| 4/66 | MB  | FDD |   |   | x | x | 4×4 |
-| 5/26 | LB  | FDD | x | x | x | x | 2×2 |
-| 7    | HB  | FDD |   |   | x | x | 4×4 |
-| 8    | LB  | FDD | x | x | x | x | 2×2 |
-| 12/17 | LB | FDD |   |   | x |   | 2×2 |
-| 20   | LB  | FDD |   |   | x | x | 2×2 |
-| 28   | LB  | FDD |   |   | x | x | 2×2 |
-| 32   | MB  | SDL |   |   | x |   | 2×2 |
-| 38/41 | HB | TDD |   |   | x | x | 4×4 |
-| 40   | HB  | TDD |   |   | x | x | 4×4 |
-| 42   | UHB | TDD |   |   | x |   | 4×4 |
-| 71   | LB  | FDD |   |   | x | x | 2×2 |
-| n77/n78 | UHB | TDD |   |   |   | x | 4×4 |
+| Band | Group | Duplex | 2G | 3G | 4G | 5G | DL MIMO | UL MIMO |
+|:-----|:------|:-------|:--:|:--:|:--:|:--:|:-------:|:-------:|
+| 1    | MB  | FDD |   | x | x | x | 4×4 | 2×2 |
+| 2/25 | MB  | FDD | x | x | x | x | 4×4 | 1×1 |
+| 3    | MB  | FDD | x |   | x | x | 4×4 | 2×2 |
+| 4/66 | MB  | FDD |   |   | x | x | 4×4 | 1×1 |
+| 5/26 | LB  | FDD | x | x | x | x | 2×2 | 1×1 |
+| 7    | HB  | FDD |   |   | x | x | 4×4 | 2×2 |
+| 8    | LB  | FDD | x | x | x | x | 2×2 | 1×1 |
+| 12/17 | LB | FDD |   |   | x |   | 2×2 | 1×1 |
+| 20   | LB  | FDD |   |   | x | x | 2×2 | 2×2 |
+| 28   | LB  | FDD |   |   | x | x | 2×2 | 1×1 |
+| 32   | MB  | SDL |   |   | x |   | 2×2 | — |
+| 38/41 | HB | TDD |   |   | x | x | 4×4 | 2×2 |
+| 40   | HB  | TDD |   |   | x | x | 4×4 | 2×2 |
+| 42   | UHB | TDD |   |   | x |   | 4×4 | 1×1 |
+| 71   | LB  | FDD |   |   | x | x | 2×2 | 2×2 |
+| n77/n78 | UHB | TDD |   |   |   | x | 4×4 | 1×1 |
 
-: Cellular bands of the Fairphone (Gen. 6) according to the RF block diagram in [@Fairphone.2025]. Bands sharing a row are subsets of each other or overlap, and share the same filters. Bands 41 and n78 support high-power UE (power class 2). DL MIMO lists the number of receive antennas: 4×4 for the bands listed as 4×4 MIMO bands, otherwise a primary and a diversity receiver. {#tbl-fp6-bands}
+: Cellular bands of the Fairphone (Gen. 6) according to the RF block diagram in [@Fairphone.2025]. Bands sharing a row are subsets of each other or overlap, and share the same filters. Bands 41 and n78 support high-power UE (power class 2). DL MIMO lists the number of receive antennas (4×4 for the bands listed as 4×4 MIMO bands, otherwise a primary and a diversity receiver), UL MIMO the number of transmit paths that the schematics show for a band. {#tbl-fp6-bands}
 
 {{< include /content/fp6/_fig_fp6_bands.qmd >}}
 
@@ -220,7 +220,7 @@ This is a good example of the self-interference problems discussed in @sec-spurs
 
 ## Wi-Fi and Bluetooth {#sec-fp6-wifi}
 
-Wi-Fi and Bluetooth are handled by the WCN6755, which is connected to the SoC via PCIe [@Fairphone.2025]. Wi-Fi uses TDD (see @tbl-duplexing-standards), so a switch instead of a duplexer separates TX and RX. For 2×2 MIMO, the WCN6755 has two independent RF chains per band, which are connected to separate antennas. Bluetooth shares the 2.4 GHz RF ports with Wi-Fi (the pins are labeled WLBT), so Wi-Fi and Bluetooth at 2.4 GHz use the same antenna paths.
+Wi-Fi and Bluetooth are handled by the WCN6755, which is connected to the SoC via PCIe [@Fairphone.2025]. In contrast to the cellular radio, the WCN6755 integrates the PAs on chip. Wi-Fi uses TDD (see @tbl-duplexing-standards), so a switch instead of a duplexer separates TX and RX. For 2×2 MIMO, the WCN6755 has two independent RF chains per band, which are connected to separate antennas. Bluetooth shares the 2.4 GHz RF ports with Wi-Fi (the pins are labeled WLBT), so Wi-Fi and Bluetooth at 2.4 GHz use the same antenna paths.
 
 ## Summary {#sec-fp6-summary}
 
