@@ -76,6 +76,26 @@
    "number": "30",
    "type": "eq"
   },
+  "eq-fp6-eta-apt": {
+   "chapter": 10,
+   "number": "73",
+   "type": "eq"
+  },
+  "eq-fp6-eta-classb": {
+   "chapter": 10,
+   "number": "72",
+   "type": "eq"
+  },
+  "eq-fp6-nvco": {
+   "chapter": 10,
+   "number": "71",
+   "type": "eq"
+  },
+  "eq-fp6-qmin": {
+   "chapter": 10,
+   "number": "70",
+   "type": "eq"
+  },
   "eq-friis": {
    "chapter": 2,
    "number": "22",
@@ -414,6 +434,46 @@
   "fig-filtering-rx": {
    "chapter": 3,
    "number": "22",
+   "type": "fig"
+  },
+  "fig-fp6-apt": {
+   "chapter": 10,
+   "number": "112",
+   "type": "fig"
+  },
+  "fig-fp6-bands": {
+   "chapter": 10,
+   "number": "107",
+   "type": "fig"
+  },
+  "fig-fp6-duplex-q": {
+   "chapter": 10,
+   "number": "108",
+   "type": "fig"
+  },
+  "fig-fp6-imd": {
+   "chapter": 10,
+   "number": "113",
+   "type": "fig"
+  },
+  "fig-fp6-rx-chain": {
+   "chapter": 10,
+   "number": "110",
+   "type": "fig"
+  },
+  "fig-fp6-sdr735-floorplan": {
+   "chapter": 10,
+   "number": "109",
+   "type": "fig"
+  },
+  "fig-fp6-system": {
+   "chapter": 10,
+   "number": "106",
+   "type": "fig"
+  },
+  "fig-fp6-tx-chain": {
+   "chapter": 10,
+   "number": "111",
    "type": "fig"
   },
   "fig-free-space-path-loss": {
@@ -876,6 +936,11 @@
    "number": "3",
    "type": "nte"
   },
+  "nte-fp6-nf": {
+   "chapter": 10,
+   "number": "9",
+   "type": "nte"
+  },
   "nte-iip3-cascade": {
    "chapter": 2,
    "number": "4",
@@ -927,63 +992,128 @@
    "type": "sec"
   },
   "sec-exam-calculations": {
-   "chapter": 10,
-   "number": "10.11",
+   "chapter": 11,
+   "number": "11.11",
+   "type": "sec"
+  },
+  "sec-exam-fp6": {
+   "chapter": 11,
+   "number": "11.12",
    "type": "sec"
   },
   "sec-exam-intro": {
-   "chapter": 10,
-   "number": "10.1",
+   "chapter": 11,
+   "number": "11.1",
    "type": "sec"
   },
   "sec-exam-linearity": {
-   "chapter": 10,
-   "number": "10.2",
+   "chapter": 11,
+   "number": "11.2",
    "type": "sec"
   },
   "sec-exam-lna": {
-   "chapter": 10,
-   "number": "10.6",
+   "chapter": 11,
+   "number": "11.6",
    "type": "sec"
   },
   "sec-exam-mixer": {
-   "chapter": 10,
-   "number": "10.7",
+   "chapter": 11,
+   "number": "11.7",
    "type": "sec"
   },
   "sec-exam-modulation": {
-   "chapter": 10,
-   "number": "10.4",
+   "chapter": 11,
+   "number": "11.4",
    "type": "sec"
   },
   "sec-exam-noise": {
-   "chapter": 10,
-   "number": "10.3",
+   "chapter": 11,
+   "number": "11.3",
    "type": "sec"
   },
   "sec-exam-oscillator": {
-   "chapter": 10,
-   "number": "10.8",
+   "chapter": 11,
+   "number": "11.8",
    "type": "sec"
   },
   "sec-exam-pll": {
-   "chapter": 10,
-   "number": "10.9",
+   "chapter": 11,
+   "number": "11.9",
    "type": "sec"
   },
   "sec-exam-poweramp": {
-   "chapter": 10,
-   "number": "10.10",
+   "chapter": 11,
+   "number": "11.10",
    "type": "sec"
   },
   "sec-exam-questions": {
+   "chapter": 11,
+   "number": "11",
+   "type": "sec"
+  },
+  "sec-exam-trx": {
+   "chapter": 11,
+   "number": "11.5",
+   "type": "sec"
+  },
+  "sec-fp6": {
    "chapter": 10,
    "number": "10",
    "type": "sec"
   },
-  "sec-exam-trx": {
+  "sec-fp6-antennas": {
+   "chapter": 10,
+   "number": "10.3",
+   "type": "sec"
+  },
+  "sec-fp6-apt": {
+   "chapter": 10,
+   "number": "10.6.1",
+   "type": "sec"
+  },
+  "sec-fp6-architecture": {
+   "chapter": 10,
+   "number": "10.1",
+   "type": "sec"
+  },
+  "sec-fp6-bands": {
+   "chapter": 10,
+   "number": "10.2",
+   "type": "sec"
+  },
+  "sec-fp6-dual-uplink": {
+   "chapter": 10,
+   "number": "10.6.3",
+   "type": "sec"
+  },
+  "sec-fp6-fbrx": {
+   "chapter": 10,
+   "number": "10.6.2",
+   "type": "sec"
+  },
+  "sec-fp6-rfic": {
+   "chapter": 10,
+   "number": "10.4",
+   "type": "sec"
+  },
+  "sec-fp6-rx": {
    "chapter": 10,
    "number": "10.5",
+   "type": "sec"
+  },
+  "sec-fp6-summary": {
+   "chapter": 10,
+   "number": "10.8",
+   "type": "sec"
+  },
+  "sec-fp6-tx": {
+   "chapter": 10,
+   "number": "10.6",
+   "type": "sec"
+  },
+  "sec-fp6-wifi": {
+   "chapter": 10,
+   "number": "10.7",
    "type": "sec"
   },
   "sec-frequency-tuning-of-oscillators": {
@@ -1294,6 +1424,16 @@
   "tbl-duplexing-standards": {
    "chapter": 3,
    "number": "4",
+   "type": "tbl"
+  },
+  "tbl-fp6-bands": {
+   "chapter": 10,
+   "number": "8",
+   "type": "tbl"
+  },
+  "tbl-fp6-course-map": {
+   "chapter": 10,
+   "number": "9",
    "type": "tbl"
   },
   "tbl-modulation-snr": {

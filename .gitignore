@@ -28,5 +28,7 @@ _site
 /content/trx/_*_files
 /content/pll/*_files
 /content/spurs/*_files
+/content/fp6/*_files
+/content/fp6/__pycache__
 /content/exam/*_files
 /slides/*_files

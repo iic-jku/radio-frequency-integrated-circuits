@@ -1,0 +1,60 @@
+::: {.content-hidden}
+Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-fp6-rx-chain
+#| echo: false
+#| fig-cap: "Simplified primary receive path of the Fairphone (Gen. 6) for band 1 or band 3, from the antenna to the digital I/Q interface. Only the I path of the direct-conversion receiver is drawn; the Q path uses a second mixer driven by the LO shifted by 90°."
+import schemdraw as sd
+import schemdraw.elements as elm
+import schemdraw.dsp as dsp
+
+sd.svgconfig.svg2 = False
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(unit=2, fontsize=12, margin=0.5)
+
+    elm.Antenna()
+    dsp.Line().right(d.unit / 3)
+    tun = dsp.Box(w=1.6, h=1).label('tuner')
+    dsp.Line().right(d.unit / 3)
+    dpx = dsp.Filter(response='lp').label('diplexer\nLB | MHB', loc='bottom', ofst=0.15)
+    dsp.Line().right(d.unit / 3)
+    sw = dsp.Box(w=1.6, h=1).label('antenna\nswitch')
+    dsp.Line().right(d.unit / 3)
+    flt = dsp.Filter(response='bp').label('B1/B3\nquadplexer', loc='bottom', ofst=0.15)
+    dsp.Line().right(d.unit * 0.6)
+    lsw = dsp.Box(w=1.2, h=1).label('SPnT')
+    dsp.Line().right(d.unit / 4)
+    lna = dsp.Amp().label('LNA', loc='bottom', ofst=0.15)
+    dsp.Line().right(d.unit / 4)
+    mux = dsp.Box(w=1.0, h=1).label('mux')
+    dsp.Arrow().right(d.unit * 0.8)
+    mix = dsp.Mixer().anchor('W').label('I', loc='top', ofst=0.1)
+    dsp.Line().right(d.unit / 3).at(mix.E)
+    lpf = dsp.Filter(response='lp').label('LPF', loc='bottom', ofst=0.15)
+    dsp.Line().right(d.unit / 3)
+    adc = dsp.Adc().label('ADC', loc='bottom', ofst=0.15)
+    dsp.Line().right(d.unit / 3)
+    dsp_ = dsp.Box(w=1.4, h=1).label('DSP')
+    dsp.Arrow().right(d.unit * 1.1).label('QLink', loc='end')
+    dsp.Arrow().down(d.unit * 0.9).at(mix.S).reverse()
+    vco = dsp.OscillatorBox().anchor('N').label('LO (PLL)', loc='bottom', ofst=0.15)
+
+    elm.EncircleBox([lsw, lna, mux], padx=0.2, pady=0.9).linestyle('--').label('LNA module (QLN5040)', loc='top')
+    elm.EncircleBox([mix, lpf, adc, dsp_, vco], padx=0.3, pady=0.6).linestyle('--').label('RFIC (SDR735)', loc='top')
+    elm.EncircleBox([tun, dpx, sw, flt], padx=0.2, pady=0.9).linestyle(':').label('front-end components on the PCB', loc='top')
+```

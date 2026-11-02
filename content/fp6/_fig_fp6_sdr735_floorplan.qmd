@@ -1,0 +1,90 @@
+::: {.content-hidden}
+Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-fp6-sdr735-floorplan
+#| echo: false
+#| fig-cap: "Floorplan of the SDR735 cellular transceiver (5.41 mm × 4.12 mm), redrawn from an analysis of a die photo. The block boundaries are approximate; the colors group the blocks by function."
+import re
+import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
+
+W, H = 5.41, 4.12      # die size in mm
+# blocks as (x0, y0, x1, y1) in fractions of the die, measured from the top-left
+# corner of the die photo, (label, function)
+blocks = [
+    ((0.003, 0.005, 0.167, 0.266), 'TX0\n4 RF\nchains', 'tx'),
+    ((0.170, 0.005, 0.222, 0.101), 'bias', 'bias'),
+    ((0.170, 0.101, 0.222, 0.266), 'DACs', 'conv'),
+    ((0.240, 0.005, 0.378, 0.220), 'control\nCPU', 'dig'),
+    ((0.378, 0.065, 0.583, 0.243), 'control\nlogic', 'dig'),
+    ((0.483, 0.005, 0.583, 0.065), 'HS I/O', 'io'),
+    ((0.587, 0.005, 0.767, 0.243), 'digital', 'dig'),
+    ((0.778, 0.005, 0.819, 0.101), 'bias', 'bias'),
+    ((0.778, 0.101, 0.819, 0.280), 'DACs', 'conv'),
+    ((0.819, 0.005, 0.997, 0.280), 'TX1\n4 RF\nchains', 'tx'),
+    ((0.049, 0.271, 0.222, 0.459), 'TX0 PLL\n3 VCOs', 'pll'),
+    ((0.222, 0.248, 0.278, 0.459), 'bias', 'bias'),
+    ((0.285, 0.248, 0.476, 0.459), 'digital', 'dig'),
+    ((0.476, 0.285, 0.813, 0.459), 'RX DSP', 'dig'),
+    ((0.816, 0.285, 0.993, 0.459), 'TX1 PLL\n2 VCOs', 'pll'),
+    ((0.003, 0.464, 0.167, 0.711), 'feedback\nRX', 'rx'),
+    ((0.003, 0.716, 0.167, 0.995), 'GNSS RX\ndual\nband', 'rx'),
+    ((0.181, 0.491, 0.240, 0.606), 'IQ\nADC', 'conv'),
+    ((0.240, 0.491, 0.340, 0.606), 'bias', 'bias'),
+    ((0.340, 0.491, 0.431, 0.606), '2 IQ\nADCs', 'conv'),
+    ((0.434, 0.464, 0.542, 0.606), 'LS I/O\nclock\nPLLs', 'io'),
+    ((0.542, 0.491, 0.632, 0.606), '2 IQ\nADCs', 'conv'),
+    ((0.632, 0.491, 0.719, 0.606), '2 IQ\nADCs', 'conv'),
+    ((0.719, 0.491, 0.813, 0.606), 'bias', 'bias'),
+    ((0.813, 0.491, 0.903, 0.606), '2 IQ\nADCs', 'conv'),
+    ((0.903, 0.491, 0.983, 0.606), '2 IQ\nADCs', 'conv'),
+    ((0.240, 0.881, 0.983, 0.995), '20 RF inputs', 'rx'),
+]
+# ten receivers RX0 ... RX9 and three RX PLLs in the row above the RF inputs
+row = (0.625, 0.872)
+rx_x = [(0.181, 0.222), (0.222, 0.257), (0.389, 0.424), (0.424, 0.458), (0.458, 0.493),
+        (0.493, 0.528), (0.703, 0.738), (0.738, 0.774), (0.774, 0.810), (0.944, 0.983)]
+for i, (x0, x1) in enumerate(rx_x):
+    blocks.append(((x0, row[0], x1, row[1]), f'RX{i}', 'rx'))
+for (x0, x1), n, k in (((0.260, 0.386), 2, 0), ((0.531, 0.700), 3, 1), ((0.813, 0.941), 2, 2)):
+    blocks.append(((x0, row[0], x1, row[1]), f'RX{k} PLL\n{n} VCOs', 'pll'))
+
+colors = {'rx': '#9fc5e8', 'tx': '#f4b183', 'pll': '#b6d7a8', 'conv': '#ffe599',
+          'dig': '#d9d2e9', 'bias': '#eeeeee', 'io': '#cccccc'}
+names = {'rx': 'receivers', 'tx': 'transmitters', 'pll': 'PLLs and VCOs',
+         'conv': 'data converters', 'dig': 'digital', 'bias': 'bias', 'io': 'I/O, clocks'}
+
+fig, ax = plt.subplots(figsize=(9, 7.4))
+ax.add_patch(Rectangle((0, 0), W, H, fc='white', ec='k', lw=2))
+for (x0, y0, x1, y1), label, kind in blocks:
+    xa, ya, w, h = x0 * W, (1 - y1) * H, (x1 - x0) * W, (y1 - y0) * H
+    ax.add_patch(Rectangle((xa, ya), w, h, fc=colors[kind], ec='k', lw=0.8))
+    rot = 90 if re.fullmatch(r'RX\d', label) else 0
+    ax.text(xa + w / 2, ya + h / 2, label, ha='center', va='center', fontsize=7.5, rotation=rot)
+
+handles = [Rectangle((0, 0), 1, 1, fc=colors[k], ec='k', lw=0.8) for k in colors]
+ax.legend(handles, [names[k] for k in colors], loc='upper center', bbox_to_anchor=(0.5, -0.09),
+          ncol=4, fontsize=8, frameon=False)
+ax.set_xlim(-0.05, W + 0.05)
+ax.set_ylim(-0.05, H + 0.05)
+ax.set_aspect('equal')
+ax.set_xlabel('mm')
+ax.set_ylabel('mm')
+
+plt.tight_layout()
+plt.show()
+```

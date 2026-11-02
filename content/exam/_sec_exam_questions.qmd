@@ -199,3 +199,23 @@ This chapter contains a collection of potential questions covering the topics di
 79. **PLL Loop Parameters**: A charge-pump PLL has $I_\mathrm{CP}$ = 100 µA, $K_\mathrm{VCO}$ = 100 MHz/V, $C_\mathrm{int}$ = 10 nF, and $N$ = 100. Calculate the natural frequency $\omega_n$ and the required $R_\mathrm{int}$ for a damping factor $\zeta$ = 0.707. Watch the units of $K_\mathrm{VCO}$!
 
 80. **PA Efficiency**: A power amplifier delivers 27 dBm output power and draws 400 mA from a 3.3 V supply. Calculate the drain efficiency and the PAE if the input power is 0 dBm.
+
+## Case Study Fairphone (Gen. 6) (Optional) {#sec-exam-fp6}
+
+These questions refer to the case study of the Fairphone (Gen. 6) RF front-end (@sec-fp6) and are optional.
+
+81. Why are the cellular RFIC and the SoC of a smartphone separate chips? Which signals cross between them, and which technologies are used for the components of the RF front-end?
+
+82. Why does every FDD band need its own acoustic duplexer? Explain the role of the duplex gap (@eq-fp6-qmin), and why bands 4 and 66 are less critical than band 8.
+
+83. Why does a smartphone use LNA modules close to the antenna instead of LNAs integrated in the RFIC? Why does a GNSS receiver place its LNA between two SAW filters?
+
+84. Why does a multi-band synthesizer use several VCOs and frequency dividers? How many VCOs are needed to cover one octave with a VCO tuning range of ±10 % (@eq-fp6-nvco)?
+
+85. Explain average power tracking. Why does it improve the efficiency at reduced output power, and why is envelope tracking more efficient but more difficult to implement?
+
+86. What is the purpose of the feedback receiver in a cellular transmitter? Where is its coupler placed, and why?
+
+87. **Dual Uplink**: A phone transmits concurrently in band 3 at 1747.5 MHz and in band 1 at 1950 MHz. Calculate the frequencies of the IM3 products and of the second harmonics. Which receive bands of the phone are hit?
+
+88. **APT Efficiency**: An ideal class-B PA amplifies an OFDM signal with a PAPR of 10 dB, and its supply is set to the envelope peak. Calculate the average drain efficiency with @eq-fp6-eta-apt. How large is the efficiency with a fixed supply at 10 dB below the maximum output power?

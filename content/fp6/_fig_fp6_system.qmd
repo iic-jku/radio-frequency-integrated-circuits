@@ -1,0 +1,87 @@
+::: {.content-hidden}
+Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-fp6-system
+#| echo: false
+#| fig-cap: "Radio architecture of the Fairphone (Gen. 6), simplified from the published schematics. RF signals are drawn in black, digital data interfaces in blue, control buses in green, and PA supplies in red."
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch
+
+fig, ax = plt.subplots(figsize=(9.5, 5.6))
+ax.set_xlim(0, 19)
+ax.set_ylim(0, 11)
+ax.axis('off')
+
+def box(x, y, w, h, text, fc='white', fs=8.5, weight='normal'):
+    ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle='round,pad=0.05,rounding_size=0.15',
+                                fc=fc, ec='k', lw=1.2))
+    ax.text(x + w / 2, y + h / 2, text, ha='center', va='center', fontsize=fs, weight=weight)
+    return (x, y, w, h)
+
+def arrow(p0, p1, color='k', both=False, lw=1.3):
+    ax.annotate('', xy=p1, xytext=p0,
+                arrowprops=dict(arrowstyle='<|-|>' if both else '-|>', color=color, lw=lw,
+                                shrinkA=0, shrinkB=0, mutation_scale=10))
+
+fe, mod, rfic, soc = '#f2f2f2', '#fde9c8', '#cfe2f3', '#d9ead3'
+
+# antennas and passive front-end
+box(0.2, 1.0, 1.6, 9.0, '11\nantenna\nfeeds\n\n2 with\ntuners\n(QAT5618)', fc=fe)
+box(2.4, 1.0, 2.2, 9.0, 'diplexers,\ntriplexers,\n\nantenna\nswitches\n(SPnT, DPnT)', fc=fe)
+box(5.2, 1.0, 2.2, 9.0, 'SAW/BAW\nfilters,\n\nduplexers,\nB1/B3\nquadplexer,\n\ncouplers', fc=fe)
+
+# active front-end modules
+m_lna = box(8.0, 7.6, 2.9, 2.4, 'LNA modules\nLB PRX (QLN5020)\nMHB DRX (QLN5030)\nMHB PRX (QLN5040)', fc=mod)
+m_uhb = box(8.0, 5.3, 2.9, 1.9, 'n77/n78 modules\nPA + LNA (QPM2980)\nDRX/MIMO (QDM3980)', fc=mod)
+m_pa = box(8.0, 3.0, 2.9, 1.9, '2 multimode PAs\nLB/MB/HB (MMPA)\nGSM PA (QPA2625)', fc=mod)
+m_gnss = box(8.0, 1.0, 2.9, 1.6, 'GNSS L1/L5\nSAW + LNA', fc=mod)
+apt = box(11.15, 3.1, 1.0, 0.8, '2 APT\nQET3930', fc='#f4cccc', fs=7)
+
+# transceivers and SoC
+sdr = box(12.6, 3.0, 2.6, 7.0, 'SDR735\n\ncellular\nRFIC\n\n+ GNSS RX\n+ FBRX', fc=rfic, fs=9.5, weight='bold')
+wcn = box(12.6, 0.4, 2.6, 1.8, 'WCN6755\nWi-Fi 6E 2x2\nBT 5.4', fc=rfic, fs=8.5)
+box(16.6, 0.4, 2.2, 9.6, 'SM7635\n\nSoC\n\nmodem\n+\napplication\nprocessor', fc=soc, fs=9.5, weight='bold')
+
+# RF connections
+for y in (2.0, 5.5, 8.5):
+    arrow((1.8, y), (2.4, y), both=True)
+    arrow((4.6, y), (5.2, y), both=True)
+for (x, y, w, h) in (m_lna, m_uhb):
+    arrow((7.4, y + h / 2), (x, y + h / 2), both=(m_uhb[1] == y))
+    arrow((x + w, y + h / 2), (12.6, y + h / 2))
+x, y, w, h = m_gnss
+arrow((7.4, y + h / 2), (x, y + h / 2))
+ax.plot([x + w, 12.35, 12.35], [y + h / 2, y + h / 2, 3.3], color='k', lw=1.3)
+arrow((12.35, 3.3), (12.6, 3.3))
+arrow((12.6, 4.5), (m_pa[0] + m_pa[2], 4.5))
+arrow((m_pa[0], 4.5), (7.4, 4.5))
+arrow((apt[0], 3.5), (m_pa[0] + m_pa[2], 3.5), color='tab:red')
+arrow((7.4, 0.7), (12.6, 0.7), both=True)
+ax.text(11.9, 0.75, 'Wi-Fi/BT RF', fontsize=7, ha='right', va='bottom')
+
+# digital interfaces and control
+arrow((15.2, 7.5), (16.6, 7.5), color='tab:blue', both=True)
+ax.text(15.9, 7.6, 'QLink', fontsize=7, ha='center', va='bottom', color='tab:blue')
+arrow((15.2, 1.3), (16.6, 1.3), color='tab:blue', both=True)
+ax.text(15.9, 1.4, 'PCIe', fontsize=7, ha='center', va='bottom', color='tab:blue')
+ax.plot([13.9, 13.9, 9.45, 9.45], [10.0, 10.6, 10.6, 10.0], color='tab:green', lw=1.3)
+ax.text(11.7, 10.65, 'MIPI RFFE buses + GPIO (band select, gain, bias)', fontsize=7,
+        ha='center', va='bottom', color='tab:green')
+
+plt.tight_layout()
+plt.show()
+```

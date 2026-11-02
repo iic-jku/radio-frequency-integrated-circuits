@@ -1,0 +1,65 @@
+::: {.content-hidden}
+Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-fp6-duplex-q
+#| echo: false
+#| fig-cap: "Duplex gap $f_\\mathrm{gap}$ between uplink and downlink (left) and the resulting lower bound $Q_\\mathrm{min} = f_\\mathrm{c} / f_\\mathrm{gap}$ of the filter quality factor (right) for the FDD bands of the Fairphone (Gen. 6). The shaded area marks the $Q$ of on-chip $LC$ filters (10 to 20)."
+import sys
+sys.path.insert(0, 'content/fp6')
+import numpy as np
+import matplotlib.pyplot as plt
+import fp6_bands as fb
+
+bands = sorted(fb.FDD, key=fb.center)
+fc = np.array([fb.center(b) for b in bands])
+gap = np.array([fb.duplex_gap(b) for b in bands])
+q_min = fc / gap
+labels = [f'B{b}' for b in bands]
+group_colors = {'LB': 'tab:blue', 'MB': 'tab:orange', 'HB': 'tab:green'}
+colors = [group_colors[fb.group(f)] for f in fc]
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 3.8), sharey=True)
+y = np.arange(len(bands))
+
+ax1.barh(y, gap, color=colors)
+for yi, g in zip(y, gap):
+    ax1.text(g * 1.08, yi, f'{g:.0f}', va='center', fontsize=8)
+ax1.set_xscale('log')
+ax1.set_xlim(5, 1000)
+ax1.set_xlabel('Duplex gap $f_\\mathrm{gap}$ (MHz)')
+ax1.set_yticks(y)
+ax1.set_yticklabels(labels, fontsize=8)
+ax1.invert_yaxis()
+ax1.grid(True, axis='x', alpha=0.3)
+
+ax2.barh(y, q_min, color=colors)
+for yi, q in zip(y, q_min):
+    ax2.text(q * 1.08, yi, f'{q:.0f}', va='center', fontsize=8)
+ax2.axvspan(10, 20, color='tab:red', alpha=0.15)
+ax2.text(14, -0.7, 'on-chip $LC$', ha='center', va='center', fontsize=8, color='tab:red')
+ax2.set_ylim(len(bands) - 0.5, -1.2)
+ax2.set_xscale('log')
+ax2.set_xlim(3, 1000)
+ax2.set_xlabel('$Q_\\mathrm{min} = f_\\mathrm{c} / f_\\mathrm{gap}$')
+ax2.grid(True, axis='x', alpha=0.3)
+
+handles = [plt.Rectangle((0, 0), 1, 1, color=c) for c in group_colors.values()]
+ax2.legend(handles, list(group_colors), loc='lower right', fontsize=8)
+
+plt.tight_layout()
+plt.show()
+```
