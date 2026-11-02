@@ -7,13 +7,13 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.19">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.11.9">
 
   <title>Radio-Frequency Integrated Circuits – Fundamentals</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
@@ -54,7 +54,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-108d7594e3aa95dbecf5138aa9cd9f30.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-3bb3caf0b958c5be0bbd85ee16d9678b.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -207,7 +207,6 @@ C = B \cdot \log_2(1 + \text{SNR})
 </section>
 <section class="slide level3 unnumbered">
 <h3>Channel Capacity</h3>
-<div id="nte-channel-limit">
 <div id="nte-channel-limit" class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -228,7 +227,6 @@ C = B \cdot \log_2(1 + \text{SNR})
 <p><span class="math display">\[
 C = B \cdot \log_2(1 + \text{SNR}) = 1\,\text{MHz} \cdot \log_2(1 + 10) = 1\,\text{MHz} \cdot 3.459 \approx 3.5\,\text{Mbps}
 \]</span></p>
-</div>
 </div>
 </div>
 </div>
@@ -762,12 +760,34 @@ A_\mathrm{IIP3}^2 = \frac{4}{3} \left| \frac{\alpha_1}{\alpha_3} \right|.
 <p><span id="eq-iip3-approx"><span class="math display">\[
 \text{IIP3}|_\mathrm{dBm} \approx P_\mathrm{1dB}|_\mathrm{dBm} + 9.6\,\text{dB}.
 \tag{16}\]</span></span></p>
-<p><span id="eq-iip3-cascade"><span class="math display">\[
-\frac{1}{\text{IIP3}_\text{total}} \approx \frac{1}{\text{IIP3}_1} + \frac{G_1}{\text{IIP3}_2} + \frac{G_1 G_2}{\text{IIP3}_3}
-\tag{17}\]</span></span></p>
+</section>
+<section class="slide level3 unnumbered">
+<h3>Multi-Tone Linearity</h3>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Further Information: The AST Linearity Test</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><strong>AST linearity test</strong>: inject the <em>same</em> imprecise test signal several times, each time with a different analog scaling factor</li>
+<li>Digital signal processing separates the TSG’s distortion (before the scaling) from the SUT’s nonlinearity (after the scaling)</li>
+<li><strong>Two-tone</strong>: accurate IP3 with a low-quality two-tone TSG <span class="citation" data-cites="Wagner.2023 Wagner.2025">(<a href="#/references" role="doc-biblioref" onclick="">Wagner et al. 2023</a>; <a href="#/references" role="doc-biblioref" onclick="">Wagner 2025</a>, ch.&nbsp;4)</span></li>
+<li><strong>Single-tone</strong>: IP3 even from a single low-quality tone <span class="citation" data-cites="Dorrer.2023 Dorrer.2023a">(<a href="#/references" role="doc-biblioref" onclick="">Dorrer 2023b</a>, <a href="#/references" role="doc-biblioref" onclick="">2023a</a>)</span></li>
+</ul>
+</div>
+</div>
+</div>
 <aside class="notes">
-<p>If we have multiple blocks which are cascaded, and we know the gain and IIP3 of each block, we can calculate the overall IIP3 of the cascade with the following approximation. An exact calculation is very involved, as the nonlinearities of the first block (and the resulting tones) will be processed by the second block, creating even more tones; this process escalates very quickly. However, for practical purposes, the following approximation is often sufficient:</p>
-<p>Here <span class="math inline">\(G_1\)</span> is the linear gain of the first block, and <span class="math inline">\(\text{IIP3}_1\)</span>, <span class="math inline">\(\text{IIP3}_2\)</span> are the input-referred IP3 of the first and second block, respectively. Note that all powers have to be in <em>linear units</em> when using <a href="#/eq-iip3-cascade" class="quarto-xref">Equation&nbsp;17</a>. An even more simplified version of <a href="#/eq-iip3-cascade" class="quarto-xref">Equation&nbsp;17</a> can be used with all quantities given in dBm and dB, respectively:</p>
+<p>The two-tone test assumes a spectrally pure stimulus: any distortion or quantization noise of the test signal generator (TSG) also appears at the IM3 frequencies of the system under test (SUT) and corrupts the measured IP3. In the lab, this is solved with high-quality signal generators, but for on-chip linearity monitoring (e.g., as a built-in self-test of an automotive radar receiver), such a clean TSG is very hard to integrate.</p>
+<p>The <strong>artificial slow time (AST) linearity test</strong> enables accurate on-chip linearity testing with a single low-quality TSG by exploiting the TSG’s repeatability. Instead of injecting a spectrally pure test signal into the SUT, the same imprecise test signal is inserted multiple times, each time scaled with a different, properly chosen analog factor. With this, all impairments affecting the test signal <em>before</em> the analog scaling (i.e., distortions of the TSG) can be separated from the SUT’s nonlinear effects <em>after</em> the scaling by digital signal processing. Thus, the requirements on the integrated analog TSG are significantly reduced.</p>
+<ul>
+<li><strong>Application 1: IP3 with a low-quality two-tone TSG.</strong> The AST linearity test is applied to the classic two-tone test, where the IM3 products of the SUT are recovered even if the two-tone test signal itself is heavily distorted or coarsely quantized. The concept is introduced in <span class="citation" data-cites="Wagner.2023">(<a href="#/references" role="doc-biblioref" onclick="">Wagner et al. 2023</a>)</span> and treated in detail in <span class="citation" data-cites="Wagner.2025">(<a href="#/references" role="doc-biblioref" onclick="">Wagner 2025</a>, ch.&nbsp;4)</span>.</li>
+<li><strong>Application 2: IP3 with a low-quality single-tone TSG.</strong> With a single tone, the in-band third-order distortion of the SUT falls onto the same frequency as the fundamental itself (it is what causes the gain compression of <a href="#/sec-linearity-single" class="quarto-xref">Section&nbsp;2.2.1</a>), so an ordinary spectrum cannot tell it apart from the fundamental. The AST linearity test separates it nevertheless, so the IP3 can be measured with an even simpler single-tone test signal. A MATLAB-automated RF demonstrator (LNA and mixer) that verifies both applications in the lab with a test signal of only 2-bit resolution is presented in <span class="citation" data-cites="Dorrer.2023">(<a href="#/references" role="doc-biblioref" onclick="">Dorrer 2023b</a>)</span>, together with a recorded presentation <span class="citation" data-cites="Dorrer.2023a">(<a href="#/references" role="doc-biblioref" onclick="">Dorrer 2023a</a>)</span>. In these measurements, the single-tone variant proved more sensitive to inaccurate scaling factors, so the two-tone variant is preferred for on-chip use.</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -782,10 +802,15 @@ A_\mathrm{IIP3}^2 = \frac{4}{3} \left| \frac{\alpha_1}{\alpha_3} \right|.
 </section>
 <section class="slide level3 unnumbered">
 <h3>Multi-Tone Linearity</h3>
+<p><span id="eq-iip3-cascade"><span class="math display">\[
+\frac{1}{\text{IIP3}_\text{total}} \approx \frac{1}{\text{IIP3}_1} + \frac{G_1}{\text{IIP3}_2} + \frac{G_1 G_2}{\text{IIP3}_3}
+\tag{17}\]</span></span></p>
 <p><span id="eq-iip3-cascade-simple"><span class="math display">\[
 \text{IIP3}_\text{total} \approx \min \{  \text{IIP3}_1, \text{IIP3}_2 - G_1, \text{IIP3}_3 - G_1 - G_2 \}
 \tag{18}\]</span></span></p>
 <aside class="notes">
+<p>If we have multiple blocks which are cascaded, and we know the gain and IIP3 of each block, we can calculate the overall IIP3 of the cascade with the following approximation. An exact calculation is very involved, as the nonlinearities of the first block (and the resulting tones) will be processed by the second block, creating even more tones; this process escalates very quickly. However, for practical purposes, the following approximation is often sufficient:</p>
+<p>Here <span class="math inline">\(G_1\)</span> is the linear gain of the first block, and <span class="math inline">\(\text{IIP3}_1\)</span>, <span class="math inline">\(\text{IIP3}_2\)</span> are the input-referred IP3 of the first and second block, respectively. Note that all powers have to be in <em>linear units</em> when using <a href="#/eq-iip3-cascade" class="quarto-xref">Equation&nbsp;17</a>. An even more simplified version of <a href="#/eq-iip3-cascade" class="quarto-xref">Equation&nbsp;17</a> can be used with all quantities given in dBm and dB, respectively:</p>
 <p>A typical RF system cascade with multiple blocks and their individual IIP3 contributions is shown in <a href="#/fig-iip3-cascade" class="quarto-xref">Figure&nbsp;10</a>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -807,7 +832,6 @@ Figure&nbsp;10: Block cascade for IIP3 calculation showing multiple stages with 
 </p></section>
 <section class="slide level3 unnumbered">
 <h3>Multi-Tone Linearity</h3>
-<div id="nte-iip3-cascade">
 <div id="nte-iip3-cascade" class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -824,7 +848,6 @@ Figure&nbsp;10: Block cascade for IIP3 calculation showing multiple stages with 
 \]</span></p>
 <div class="fragment">
 <p>The second block limits the IIP3, as the LNA amplifies blockers by 20 dB before they reach the mixer.</p>
-</div>
 </div>
 </div>
 </div>
@@ -1256,7 +1279,6 @@ P_\mathrm{in, min}|_\mathrm{dBm} = -174\,\text{dBm/Hz} + \text{NF} + 10 \log_{10
 </section>
 <section class="slide level3 unnumbered">
 <h3>Sensitivity</h3>
-<div id="nte-wifi-sensitivity">
 <div id="nte-wifi-sensitivity" class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1272,7 +1294,6 @@ P_\mathrm{in, min} = -174\,\text{dBm/Hz} + 7\,\text{dB} + 10 \log_{10} (80 \time
 \]</span></p>
 <div class="fragment">
 <p>This means that the minimum input signal power that can be detected by the Wi-Fi receiver is approximately -63 dBm.</p>
-</div>
 </div>
 </div>
 </div>
@@ -1625,7 +1646,6 @@ Figure&nbsp;18: OFDM transmission system block diagram showing transmitter (top)
 </section>
 <section class="slide level3 unnumbered">
 <h3>Orthogonal Frequency-Division Multiplexing (OFDM)</h3>
-<div id="nte-lte-ofdm">
 <div id="nte-lte-ofdm" class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1647,7 +1667,6 @@ Figure&nbsp;18: OFDM transmission system block diagram showing transmitter (top)
 \]</span></p>
 <div class="fragment">
 <p>After overhead approx. 100 Mbps; <strong>carrier aggregation</strong> and <strong>MIMO</strong> multiply this to gigabit rates.</p>
-</div>
 </div>
 </div>
 </div>
@@ -1771,6 +1790,12 @@ Figure&nbsp;18: OFDM transmission system block diagram showing transmitter (top)
 <h3>References</h3>
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Dorrer.2023a" class="csl-entry" role="listitem">
+Dorrer, Simon. 2023a. <em><span class="nocase">Bachelor’s Thesis Presentation - 28th September 2023 - Simon Dorrer - Johannes Kepler University</span></em>. YouTube video. <a href="https://www.youtube.com/watch?v=JrpeXkfDjDY">https://www.youtube.com/watch?v=JrpeXkfDjDY</a>.
+</div>
+<div id="ref-Dorrer.2023" class="csl-entry" role="listitem">
+Dorrer, Simon. 2023b. <span>“<span class="nocase">MATLAB automated RF-Demonstrator for the AST Linearity Test</span>.”</span> Bachelor’s thesis, Johannes Kepler University Linz, Institute of Signal Processing. <a href="https://doi.org/10.5281/zenodo.23883986">https://doi.org/10.5281/zenodo.23883986</a>.
+</div>
 <div id="ref-Gray_Meyer_5th_ed" class="csl-entry" role="listitem">
 Gray, Paul R., Paul J. Hurst, Stephen H. Lewis, and Robert G. Meyer. 2009. <em><span class="nocase">Analysis and Design of Analog Integrated Circuits</span></em>. Fifth. Wiley.
 </div>
@@ -1797,6 +1822,12 @@ Sarpeshkar, R., T. Delbruck, and C. A. Mead. 1993. <span>“<span class="nocase"
 </div>
 <div id="ref-Sklar_Digital_Communications" class="csl-entry" role="listitem">
 Sklar, Bernard, and Fredric J. Harris. 2020. <em>Digital Communications: Fundamentals and Applications</em>. 3rd edition. Pearson.
+</div>
+<div id="ref-Wagner.2025" class="csl-entry" role="listitem">
+Wagner, Matthias. 2025. <span>“<span class="nocase">DSP-Based Calibration and Linearity Testing in Automotive FMCW Radar Receivers with Low-Quality Test Signals</span>.”</span> Doctoral thesis, Johannes Kepler University Linz, Institute of Signal Processing. <a href="https://epub.jku.at/obvulihs/content/titleinfo/13164017">https://epub.jku.at/obvulihs/content/titleinfo/13164017</a>.
+</div>
+<div id="ref-Wagner.2023" class="csl-entry" role="listitem">
+Wagner, Matthias, Oliver Lang, Simon Dorrer, Esmaeil Kavousi Ghafi, Andreas Schwarz, and Mario Huemer. 2023. <span>“<span>Accurate On-Chip Linearity Monitoring With Low-Quality Test Signal Generation</span>.”</span> <em>2023 IEEE International Symposium on Circuits and Systems (ISCAS)</em>, May, 1–5. <a href="https://doi.org/10.1109/ISCAS46773.2023.10181404">https://doi.org/10.1109/ISCAS46773.2023.10181404</a>.
 </div>
 </div>
 </section>
@@ -1841,7 +1872,7 @@ Sklar, Bernard, and Fredric J. Harris. 2020. <em>Digital Communications: Fundame
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"numbers":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"\u003ci class=\"fas fa-gear\">\u003c/i>","content":"\u003cul class=\"slide-menu-items\">\n\u003cli class=\"slide-tool-item active\" data-item=\"0\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\">\u003ckbd>f\u003c/kbd> Fullscreen\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"1\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\">\u003ckbd>s\u003c/kbd> Speaker View\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"2\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\">\u003ckbd>o\u003c/kbd> Slide Overview\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"3\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\">\u003ckbd>e\u003c/kbd> PDF Export Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"4\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\">\u003ckbd>r\u003c/kbd> Scroll View Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"5\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\">\u003ckbd>b\u003c/kbd> Toggle Chalkboard\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"6\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\">\u003ckbd>c\u003c/kbd> Toggle Notes Canvas\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"7\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\">\u003ckbd>d\u003c/kbd> Download Drawings\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"8\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\">\u003ckbd>?\u003c/kbd> Keyboard Help\u003c/a>\u003c/li>\n\u003c/ul>"}],"openButton":true,"openButtonLabel":"Slide menu","numbers":true},
 'chalkboard': {"buttons":true},
 'smaller': false,
  
@@ -2097,7 +2128,8 @@ Sklar, Bernard, and Fredric J. Harris. 2020. <em>Digital Communications: Fundame
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }
           // Inspect non-navigation links and adorn them if external
-         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          window.quartoDecorateExternalLinks = function (root) {
+         var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
           for (var i=0; i<links.length; i++) {
             const link = links[i];
             if (!isInternal(link.href)) {
@@ -2106,8 +2138,69 @@ Sklar, Bernard, and Fredric J. Harris. 2020. <em>Digital Communications: Fundame
               if (link.dataset.originalHref !== undefined) {
                 link.href = link.dataset.originalHref;
               }
+              if (!link.classList.contains('no-external-icon')) {
+              }
             }
           }
+          };
+          window.quartoDecorateExternalLinks(window.document);
+        // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+        // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+        const hideOnEscAndFocusOut = {
+          name: 'hideOnEscAndFocusOut',
+          defaultValue: true,
+          fn(instance) {
+            const dismiss = () => {
+              // A show scheduled by the trigger delay would otherwise reopen it
+              instance.clearDelayTimeouts();
+              instance.hide();
+            };
+            const onKeyDown = (event) => {
+              if (event.key !== 'Escape') {
+                return;
+              }
+              // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+              // except an open reveal.js slide menu, which Esc should close too.
+              // The menu handles keys only when its keyboard option is on.
+              const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+                window.Reveal.getConfig().menu?.keyboard !== false;
+              if (!menuHandlesEsc) {
+                event.stopPropagation();
+              }
+              if (instance.popper.contains(window.document.activeElement)) {
+                // Disabled while refocusing so the focus trigger does not reopen it
+                instance.disable();
+                instance.reference.focus();
+                instance.enable();
+              }
+              dismiss();
+            };
+            const onFocusOut = (event) => {
+              const target = event.relatedTarget;
+              if (target && !instance.reference.contains(target) &&
+                  !instance.popper.contains(target)) {
+                dismiss();
+              }
+            };
+            // On the trigger too: a click trigger (code-annotations: select) has no
+            // blur handling. Attached for the instance's lifetime so leaving the
+            // trigger also cancels a show still pending on the trigger delay.
+            instance.reference.addEventListener('focusout', onFocusOut);
+            return {
+              onShow() {
+                window.document.addEventListener('keydown', onKeyDown, true);
+                instance.popper.addEventListener('focusout', onFocusOut);
+              },
+              onHide() {
+                window.document.removeEventListener('keydown', onKeyDown, true);
+                instance.popper.removeEventListener('focusout', onFocusOut);
+              },
+              onDestroy() {
+                instance.reference.removeEventListener('focusout', onFocusOut);
+              },
+            };
+          },
+        };
         function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
           const config = {
             allowHTML: true,
@@ -2121,6 +2214,7 @@ Sklar, Bernard, and Fredric J. Harris. 2020. <em>Digital Communications: Fundame
             interactiveBorder: 10,
             theme: 'light-border',
             placement: 'bottom-start',
+            plugins: [hideOnEscAndFocusOut],
           };
           if (contentFn) {
             config.content = contentFn;
