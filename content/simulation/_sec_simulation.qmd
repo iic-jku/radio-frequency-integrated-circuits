@@ -376,7 +376,7 @@ $$
 F_\mathrm{SSB} = \frac{S_\mathrm{out}}{|c_1|^2 S_\mathrm{n}} = \frac{\pi^2}{4} \approx 3.9\,\text{dB}.
 $$
 
-If the signal occupies both sidebands $\pm 1$ (as in a direct-conversion receiver), the source noise of both counts as input noise, and the double-sideband (DSB) noise factor is $F_\mathrm{DSB} = \pi^2/8 \approx 0.9\,\text{dB}$, i.e., 3 dB lower. An analysis that keeps only the sidebands $\pm 1$ ($K = 1$) would miss the 19 % of the noise folded from around $3 f_\mathrm{LO}$, $5 f_\mathrm{LO}$, and so on, and underestimate the noise figure by 0.9 dB (@fig-sim-noise-folding).
+If the signal occupies both sidebands $\pm 1$ (as in a direct-conversion receiver), the source noise of both counts as input noise, and the double-sideband (DSB) noise factor is $F_\mathrm{DSB} = \pi^2/8 \approx 0.9\,\text{dB}$, i.e., 3 dB lower. An analysis that keeps only the sidebands $\pm 1$ ($K = 1$) would miss the 19 % of the noise folded from around $3 f_\mathrm{LO}$, $5 f_\mathrm{LO}$, and so on, and underestimate the SSB noise figure by 0.9 dB (3.0 dB instead of 3.9 dB, see @fig-sim-noise-folding).
 :::
 
 {{< include /content/simulation/_fig_sim_noise_folding.qmd >}}
