@@ -996,9 +996,14 @@
    "number": "10",
    "type": "nte"
   },
-  "nte-sim-power-detector": {
+  "nte-sim-osc-phase-noise": {
    "chapter": 10,
    "number": "11",
+   "type": "nte"
+  },
+  "nte-sim-power-detector": {
+   "chapter": 10,
+   "number": "12",
    "type": "nte"
   },
   "nte-sim-tran-effort": {
