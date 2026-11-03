@@ -1,0 +1,77 @@
+::: {.content-hidden}
+Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-sim-tran-vs-pss
+#| echo: false
+#| fig-cap: "Transient response of a resonator with $Q = 50$ that is driven at its resonance frequency from $t = 0$. A transient analysis has to integrate about 110 periods until the amplitude is within 0.1 % of its final value. A PSS analysis solves for the single steady-state period (red) directly, and for this linear tank a single shooting iteration over one period suffices."
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# ---------- model ----------
+# Parallel RLC tank driven by a sinusoidal current at its resonance frequency,
+# switched on at t = 0. For high Q the response is a sinusoid at f0 whose
+# envelope rises with the time constant tau = 2Q/omega0, i.e., tau/T0 = Q/pi.
+Q = 50
+tau = Q / np.pi                # time constant in periods of the drive
+eps = 1e-3                     # settling accuracy (0.1 %)
+n_settle = tau * np.log(1 / eps)
+
+n_per = 130                    # number of simulated periods
+t = np.linspace(0, n_per, n_per * 200 + 1)   # time in periods
+env = 1 - np.exp(-t / tau)
+v = env * np.sin(2 * np.pi * t)
+
+# the periodic steady state: one period, x(T) = x(0)
+t_pss = np.linspace(0, 1, 201)
+v_pss = np.sin(2 * np.pi * t_pss)
+
+# ---------- plot ----------
+fig, (ax, ax2) = plt.subplots(1, 2, figsize=(8, 3.6), sharey=True,
+                              gridspec_kw={'width_ratios': [3, 1]})
+
+ax.plot(t, v, color='tab:blue', linewidth=0.5, alpha=0.8, label='transient (tran)')
+ax.plot(t, env, 'k--', linewidth=1.2, label=r'envelope $1 - e^{-t/\tau}$')
+
+ax.axvline(n_settle, color='gray', linestyle=':', linewidth=1)
+ax.annotate('', xy=(n_settle, -1.25), xytext=(0, -1.25),
+            arrowprops=dict(arrowstyle='<->', color='gray', lw=1.2))
+ax.text(n_settle / 2, -1.2, f'settling to 0.1 %: {n_settle:.0f} periods',
+        ha='center', va='bottom', color='gray')
+
+ax.set_title('tran: integrate until settled', fontsize=10)
+ax.set_xlabel(r'Time $t / T_0$')
+ax.set_ylabel('Tank voltage (normalized)')
+ax.set_xlim(0, n_per)
+ax.set_ylim(-1.4, 1.4)
+ax.grid(True, alpha=0.3)
+leg = ax.legend(loc='upper center', ncol=2, fontsize=9, framealpha=0.9)
+for line in leg.get_lines():
+    line.set_linewidth(1.5)
+    line.set_alpha(1)
+
+ax2.plot(t_pss, v_pss, color='red', linewidth=2.5)
+ax2.plot([0, 1], [v_pss[0], v_pss[-1]], 'ko', markersize=5)
+ax2.text(0.5, -1.2, r'$x(T_0) = x(0)$', ha='center', va='bottom')
+ax2.set_title('PSS: one period', fontsize=10)
+ax2.set_xlabel(r'Time $t / T_0$')
+ax2.set_xlim(0, 1)
+ax2.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+```

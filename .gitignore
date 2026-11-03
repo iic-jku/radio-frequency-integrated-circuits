@@ -28,5 +28,6 @@ _site
 /content/trx/_*_files
 /content/pll/*_files
 /content/spurs/*_files
+/content/simulation/*_files
 /content/exam/*_files
 /slides/*_files
