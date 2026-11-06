@@ -1,0 +1,144 @@
+::: {.content-hidden}
+Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-fp6-system
+#| echo: false
+#| fig-cap: "Radio architecture of the Fairphone (Gen. 6), simplified from the published schematics. RF signals are drawn in black, digital data interfaces in blue, control buses in green, and PA supplies in red."
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch
+
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.set_xlim(0, 20)
+ax.set_ylim(0, 12.7)
+ax.axis('off')
+
+def box(x, y, w, h, title, sub='', fc='white', fs=9):
+    """Rounded box with a bold title and an optional subtitle (e.g., part numbers)."""
+    ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle='round,pad=0.02,rounding_size=0.18',
+                                fc=fc, ec='#444444', lw=1.1))
+    if sub:
+        ax.text(x + w / 2, y + h / 2 + 0.1, title, ha='center', va='bottom', fontsize=fs, weight='bold')
+        ax.text(x + w / 2, y + h / 2 - 0.05, sub, ha='center', va='top', fontsize=fs - 1.5,
+                color='#444444', linespacing=1.3)
+    else:
+        ax.text(x + w / 2, y + h / 2, title, ha='center', va='center', fontsize=fs, weight='bold')
+    return x, y, w, h
+
+def arrow(p0, p1, color='k', both=False):
+    ax.annotate('', xy=p1, xytext=p0,
+                arrowprops=dict(arrowstyle='<|-|>' if both else '-|>', color=color, lw=1.2,
+                                shrinkA=0, shrinkB=0, mutation_scale=9))
+
+def line(xs, ys, color='k'):
+    ax.plot(xs, ys, color=color, lw=1.2, solid_capstyle='butt')
+
+c_fe, c_mod, c_rfic, c_soc, c_pwr = '#eeeeee', '#fde9c8', '#cfe2f3', '#d9ead3', '#f4cccc'
+
+# column x positions and widths
+X_ANT, W_ANT = 0.1, 2.2
+X_SW, W_SW = 2.8, 2.1
+X_FLT, W_FLT = 5.6, 2.1
+X_MOD, W_MOD = 8.3, 3.7
+X_TRX, W_TRX = 12.8, 2.7
+X_SOC, W_SOC = 16.7, 3.1
+
+# passive front-end (antennas, switches, filters) spans the full height
+box(X_ANT, 0.4, W_ANT, 11.0, '11 antenna\nfeeds', '2 with tuners\n(QAT5618)', fc=c_fe)
+box(X_SW, 0.4, W_SW, 11.0, 'diplexers\ntriplexers\nswitches', '', fc=c_fe)
+box(X_FLT, 1.9, W_FLT, 9.5, 'SAW/BAW\nfilters,\nduplexers,\nquadplexer,\ncouplers', '', fc=c_fe)
+for y in (2.6, 6.0, 9.6):
+    arrow((X_ANT + W_ANT, y), (X_SW, y), both=True)
+for y in (3.2, 6.0, 9.6):
+    arrow((X_SW + W_SW, y), (X_FLT, y), both=True)
+
+# active front-end modules, one row each
+rows = {   # name: (y, h, title, subtitle)
+    'lna':  (9.0, 2.4, 'LNA modules', 'LB PRX (QLN5020)\nLB + MHB DRX (QLN5030)\nMHB PRX (QLN5040)'),
+    'uhb':  (6.5, 1.9, 'n77/n78 modules', 'PA + LNA (QPM2980)\nDRX/MIMO (QDM3980)'),
+    'pa':   (4.45, 1.7, 'PA modules', '2 multimode PAs (MMPA)\nGSM PA (QPA2625)'),
+    'gnss': (1.9, 1.15, 'GNSS L1/L5', 'SAW + LNA + SAW'),
+}
+mods = {k: box(X_MOD, y, W_MOD, h, t, sub, fc=c_mod) for k, (y, h, t, sub) in rows.items()}
+apt = box(X_MOD + 0.4, 3.45, W_MOD - 0.8, 0.6, '2 APT (QET3930)', '', fc=c_pwr, fs=8)
+
+def mid(k):
+    x, y, w, h = mods[k]
+    return y + h / 2
+
+arrow((X_FLT + W_FLT, mid('lna')), (X_MOD, mid('lna')))
+arrow((X_FLT + W_FLT, mid('uhb')), (X_MOD, mid('uhb')), both=True)
+arrow((X_MOD, mid('pa')), (X_FLT + W_FLT, mid('pa')))
+arrow((X_FLT + W_FLT, mid('gnss')), (X_MOD, mid('gnss')))
+arrow((apt[0] + apt[2] / 2, apt[1] + apt[3]), (apt[0] + apt[2] / 2, mods['pa'][1]), color='tab:red')
+
+# transceivers and SoC
+box(X_TRX, 1.9, W_TRX, 9.5, 'SDR735', 'cellular RFIC\n\n4 RX paths\n2 TX chains\nfeedback RX\nGNSS RX', fc=c_rfic, fs=10)
+box(X_TRX, 0.2, W_TRX, 1.3, 'WCN6755', 'Wi-Fi 6E, BT 5.4', fc=c_rfic)
+box(X_SOC, 0.2, W_SOC, 11.2, 'SM7635', 'SoC\n\nmodem\n+\napplication\nprocessor', fc=c_soc, fs=10)
+
+arrow((X_MOD + W_MOD, mid('lna')), (X_TRX, mid('lna')))
+arrow((X_MOD + W_MOD, mid('uhb')), (X_TRX, mid('uhb')), both=True)
+arrow((X_TRX, mid('pa')), (X_MOD + W_MOD, mid('pa')))
+arrow((X_MOD + W_MOD, mid('gnss')), (X_TRX, mid('gnss')))
+
+# Wi-Fi/BT RF path below the cellular front-end
+arrow((X_SW + W_SW, 0.85), (X_TRX, 0.85), both=True)
+ax.text((X_FLT + X_MOD + W_MOD) / 2, 0.95, 'Wi-Fi/BT RF (2.4 GHz, 5 GHz, 6 GHz)', fontsize=7.5,
+        ha='center', va='bottom')
+
+# digital interfaces and control buses
+arrow((X_TRX + W_TRX, 7.0), (X_SOC, 7.0), color='tab:blue', both=True)
+ax.text((X_TRX + W_TRX + X_SOC) / 2, 7.1, 'QLink', fontsize=8, ha='center', va='bottom', color='tab:blue')
+arrow((X_TRX + W_TRX, 0.85), (X_SOC, 0.85), color='tab:blue', both=True)
+ax.text((X_TRX + W_TRX + X_SOC) / 2, 0.95, 'PCIe', fontsize=8, ha='center', va='bottom', color='tab:blue')
+c_ctl = 'tab:green'
+x_bus = X_TRX + W_TRX / 2
+x_tap = (X_MOD + W_MOD + X_TRX) / 2
+y_bus = 11.7
+
+# RFIC control of the switches and all active front-end modules
+line([x_bus, x_bus, X_SW + W_SW / 2], [11.4, y_bus, y_bus], color=c_ctl)
+arrow((X_SW + W_SW / 2, y_bus), (X_SW + W_SW / 2, 11.4), color=c_ctl)
+arrow((X_MOD + W_MOD / 2, y_bus), (X_MOD + W_MOD / 2, 11.4), color=c_ctl)
+line([x_tap, x_tap], [y_bus, apt[1] + apt[3] / 2], color=c_ctl)
+for k in ('uhb', 'pa'):
+    arrow((x_tap, mid(k) + 0.5), (X_MOD + W_MOD, mid(k) + 0.5), color=c_ctl)
+arrow((x_tap, apt[1] + apt[3] / 2), (apt[0] + apt[2], apt[1] + apt[3] / 2), color=c_ctl)
+ax.plot([x_tap, x_tap, x_tap, X_MOD + W_MOD / 2], [y_bus, mid('uhb') + 0.5, mid('pa') + 0.5, y_bus],
+        'o', color=c_ctl, ms=3)
+ax.text((x_bus + X_MOD + W_MOD / 2) / 2, y_bus + 0.05, 'MIPI RFFE + GPIO control', fontsize=7.5,
+        ha='center', va='bottom', color=c_ctl)
+
+# SoC control of the antenna tuners, the RFIC, and the GNSS LNAs
+x_tun = X_ANT + W_ANT / 2
+line([X_SOC + W_SOC / 2, X_SOC + W_SOC / 2, x_tun], [11.4, 12.2, 12.2], color=c_ctl)
+arrow((x_tun, 12.2), (x_tun, 11.4), color=c_ctl)
+ax.text((x_tun + X_SOC + W_SOC / 2) / 2, 12.25, 'MIPI RFFE to antenna tuners', fontsize=7.5,
+        ha='center', va='bottom', color=c_ctl)
+arrow((X_SOC, 9.0), (X_TRX + W_TRX, 9.0), color=c_ctl)
+ax.text((X_TRX + W_TRX + X_SOC) / 2, 9.1, 'RFFE', fontsize=8, ha='center', va='bottom', color=c_ctl)
+line([X_SOC, x_tap, x_tap], [1.7, 1.7, 2.2], color=c_ctl)
+arrow((x_tap, 2.2), (X_MOD + W_MOD, 2.2), color=c_ctl)
+ax.text((X_TRX + W_TRX + X_SOC) / 2, 1.75, 'GPIO', fontsize=8, ha='center', va='bottom', color=c_ctl)
+
+# Wi-Fi switch control
+arrow((X_TRX, 0.5), (X_SW + W_SW, 0.5), color=c_ctl)
+ax.text((X_FLT + X_MOD + W_MOD) / 2, 0.45, 'GPIO', fontsize=7.5, ha='center', va='top', color=c_ctl)
+
+plt.tight_layout()
+plt.show()
+```

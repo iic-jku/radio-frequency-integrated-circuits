@@ -223,3 +223,23 @@ These questions refer to the appendix on RF circuit simulation (@sec-simulation)
 89. **Transient Simulation Effort**: A downconversion mixer with $f_\mathrm{LO}$ = 5.8 GHz is simulated in the time domain with 40 time points per LO period. The IF spectrum shall be computed with a frequency resolution of 50 kHz. How many time points are needed, ignoring the settling time? How does a PSS analysis followed by a PAC analysis avoid this effort?
 
 90. **Noise Folding**: An ideal double-balanced switching mixer multiplies the RF input by a square wave toggling between $+1$ and $-1$ with 50 % duty cycle, and the only noise source is the source resistance. Calculate the SSB and the DSB noise figure. By how much is the noise figure underestimated if a periodic noise analysis keeps only the sidebands $\pm 1$ ($K = 1$)?
+
+## Case Study Fairphone (Gen. 6) (Optional) {#sec-exam-fp6}
+
+These questions refer to the case study of the Fairphone (Gen. 6) RF front-end (@sec-fp6) and are optional.
+
+91. Why are the cellular RFIC and the SoC of a smartphone separate chips? Which signals cross between them?
+
+92. Why does every FDD band need its own acoustic duplexer? Explain the role of the duplex gap (@eq-fp6-qmin), and why bands 4 and 66 are less critical than band 8.
+
+93. Why does a smartphone use external LNA modules in front of the RFIC? Why does a GNSS receiver place its LNA between two SAW filters?
+
+94. Why does a multi-band synthesizer use several VCOs and frequency dividers? How many VCOs are needed to cover one octave with a VCO tuning range of ±10 % (@eq-fp6-nvco)?
+
+95. Explain average power tracking. Why does it improve the efficiency at reduced output power, and why is envelope tracking more efficient but more difficult to implement?
+
+96. What is the purpose of the feedback receiver in a cellular transmitter? Where is its coupler placed, and why?
+
+97. **Dual Uplink**: A phone transmits concurrently in band 3 at 1747.5 MHz and in band 1 at 1950 MHz. Calculate the frequencies of the IM3 products and of the second harmonics. Which receive bands of the phone are hit?
+
+98. **APT Efficiency**: An ideal class-B PA amplifies an OFDM signal with a PAPR of 10 dB, and its supply is set to the envelope peak. Calculate the average drain efficiency with @eq-fp6-eta-apt. How large is the efficiency with a fixed supply at 10 dB below the maximum output power?

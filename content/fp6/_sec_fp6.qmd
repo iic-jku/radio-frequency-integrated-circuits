@@ -1,0 +1,241 @@
+::: {.content-hidden}
+Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+# Appendix: Case Study Fairphone (Gen. 6) RF Front-End {#sec-fp6}
+
+The previous chapters discussed the building blocks of a radio (LNAs, mixers, oscillators, PLLs, PAs, and filters) mostly in isolation. In this appendix, we look at how these blocks come together in a real product: the radio of a modern smartphone. Detailed hardware information about smartphones is usually confidential, but Fairphone publishes the complete schematics of the Fairphone (Gen. 6), including the part numbers of all components, to support repair and recycling [@Fairphone.2025]. These schematics allow us to follow the signal path from the antenna to the digital baseband.
+
+::: {.callout-important}
+All statements about the hardware of the phone in this appendix are taken from the published schematics and specifications [@Fairphone.2025]. The functions of the components are derived from their labels in the schematics, as datasheets of most components are not public. Where numbers are needed for an example calculation, they are marked as assumptions.
+:::
+
+## Radio Architecture {#sec-fp6-architecture}
+
+The Fairphone (Gen. 6) supports 2G (GSM), 3G (UMTS), 4G (LTE), and 5G NR (in frequency range 1, below 7.125 GHz), Wi-Fi 6E with 2×2 MIMO in the 2.4 GHz, 5 GHz, and 6 GHz bands, Bluetooth 5.4, satellite navigation (GPS, GLONASS, Galileo, and BeiDou) in the L1 and L5 bands, and NFC [@Fairphone.2025]. @fig-fp6-system shows how the radio is partitioned.
+
+{{< include /content/fp6/_fig_fp6_system.qmd >}}
+
+The digital heart of the phone is the system-on-chip (SoC) SM7635 (Snapdragon 7s Gen 3), which contains the application processor and the digital modem (baseband) for all cellular standards. The analog and RF signal processing for cellular and satellite navigation is done in a separate RF transceiver IC (RFIC), the **SDR735**. The RFIC and the SoC exchange digitized I/Q samples over a high-speed serial interface (QLink, with five differential data lanes and a clock lane), so that only digital signals cross between the two chips. Wi-Fi and Bluetooth have their own transceiver, the **WCN6755**, which is connected to the SoC via PCIe.
+
+Splitting the radio into a digital SoC and an RFIC is common practice: a separate RFIC keeps the noisy digital circuits away from the sensitive receivers (see @sec-spurs), and the RFIC can be fabricated in a technology that suits analog and RF circuits.
+
+Between the antennas and the RFIC sits the **RF front-end (RFFE)**: antenna tuners, diplexers, antenna switches, filters, duplexers, LNA modules, and PA modules. The RFFE components are controlled by the RFIC through several serial MIPI RFFE buses and GPIO lines, the antenna tuners and the RFIC itself through RFFE buses from the SoC, the GNSS LNAs through GPIOs from the SoC, and the 5 GHz Wi-Fi switches through GPIOs from the WCN6755.
+
+## Frequency Bands {#sec-fp6-bands}
+
+A phone sold worldwide has to support a large number of frequency bands, as different regions use different parts of the spectrum for cellular communication. @tbl-fp6-bands lists the cellular bands of the Fairphone (Gen. 6), and @fig-fp6-bands shows their location in the spectrum.
+
+| Band    | Group | Duplex | 2G | 3G | 4G | 5G | DL MIMO | UL MIMO |
+|:--------|:------|:-------|:--:|:--:|:--:|:--:|:-------:|:-------:|
+| 1       | MB    | FDD    |    | x  | x  | x  |   4×4   |   2×2   |
+| 2/25    | MB    | FDD    | x  | x  | x  | x  |   4×4   |   1×1   |
+| 3       | MB    | FDD    | x  |    | x  | x  |   4×4   |   2×2   |
+| 4/66    | MB    | FDD    |    |    | x  | x  |   4×4   |   1×1   |
+| 5/26    | LB    | FDD    | x  | x  | x  | x  |   2×2   |   1×1   |
+| 7       | HB    | FDD    |    |    | x  | x  |   4×4   |   2×2   |
+| 8       | LB    | FDD    | x  | x  | x  | x  |   2×2   |   1×1   |
+| 12/17   | LB    | FDD    |    |    | x  |    |   2×2   |   1×1   |
+| 20      | LB    | FDD    |    |    | x  | x  |   2×2   |   2×2   |
+| 28      | LB    | FDD    |    |    | x  | x  |   2×2   |   1×1   |
+| 32      | MB    | SDL    |    |    | x  |    |   2×2   |    —    |
+| 38/41   | HB    | TDD    |    |    | x  | x  |   4×4   |   2×2   |
+| 40      | HB    | TDD    |    |    | x  | x  |   4×4   |   2×2   |
+| 42      | UHB   | TDD    |    |    | x  |    |   4×4   |   1×1   |
+| 71      | LB    | FDD    |    |    | x  | x  |   2×2   |   2×2   |
+| n77/n78 | UHB   | TDD    |    |    |    | x  |   4×4   |   1×1   |
+
+: Cellular bands of the Fairphone (Gen. 6) according to the RF block diagram in [@Fairphone.2025]. Bands sharing a row are subsets of each other or overlap, and share the same filters. Bands 41 and n78 support high-power UE (power class 2). DL MIMO lists the number of receive antennas (4×4 for the bands listed as 4×4 MIMO bands, otherwise a primary and a diversity receiver), UL MIMO the number of transmit paths that the schematics show for a band. {#tbl-fp6-bands}
+
+{{< include /content/fp6/_fig_fp6_bands.qmd >}}
+
+In the RF front-end, the bands are sorted into **band groups**; in this appendix we use low band (LB, 617 MHz to 960 MHz), mid band (MB, 1452 MHz to 2200 MHz), high band (HB, 2300 MHz to 2690 MHz), and ultra-high band (UHB, 3300 MHz to 5000 MHz). Within a band group, LNAs, PAs, and antennas can be shared, as their relative bandwidth is moderate (e.g., 44 % for LB and 41 % for MB). A single amplifier covering all bands from 617 MHz to 5 GHz would be much harder to match (see the Bode-Fano limit in @sec-impedance-matching) and would let all out-of-band signals pass.
+
+Below 2.7 GHz, most bands are FDD, while the TDD bands (B38 to B42, n77, n78) are located at higher frequencies, as already noted in @tbl-duplexing-standards. In FDD, the receiver has to be protected from the strong TX signal of the same phone by a duplexer (see @sec-trx-duplexing). The difficulty of building this duplexer is set by the **duplex gap** $f_\mathrm{gap}$ between the upper edge of the uplink and the lower edge of the downlink (or vice versa). Within the gap, the filter has to transition from its passband to a high attenuation. Using the definition of the filter quality factor $Q = f_\mathrm{c} / \Delta f$ from @sec-trx, the resonators of the duplexer need a quality factor of at least
+
+$$
+Q_\mathrm{min} = \frac{f_\mathrm{c}}{f_\mathrm{gap}},
+$$ {#eq-fp6-qmin}
+
+which is evaluated for all FDD bands of the phone in @fig-fp6-duplex-q. Many bands have a duplex gap of only 10 MHz to 20 MHz, so that $Q_\mathrm{min}$ is close to 100, while a realistic filter needs resonators with a $Q$ that is an order of magnitude higher to achieve a steep transition with low insertion loss. On-chip $LC$ filters with a $Q$ of 10 to 20 are hopeless here, which is why every FDD band needs its own acoustic (SAW or BAW) duplexer. Only bands 4 and 66, whose uplink and downlink are separated by more than 300 MHz, would be uncritical.
+
+{{< include /content/fp6/_fig_fp6_duplex_q.qmd >}}
+
+::: {.callout-note}
+## Number of Filters in a Phone
+Every FDD band needs a duplexer, every band used for receive diversity and MIMO needs additional receive filters, and the GNSS and Wi-Fi paths need their own filters as well. This is why a phone contains a large number of acoustic filters, and why a new band cannot simply be added in software.
+:::
+
+## Antennas {#sec-fp6-antennas}
+
+The phone uses 11 antenna feeds. A large number of antennas is needed for three reasons:
+
+::: {.content-hidden when-format="revealjs"}
+- **MIMO**: For 4×4 downlink MIMO in the mid, high, and ultra-high bands, four independent receive paths per band have to be connected to four different antennas (named primary RX (PRX), diversity RX (DRX), PRX MIMO, and DRX MIMO). The low bands use 2×2 MIMO, as the antennas for long wavelengths (about 40 cm at 750 MHz) are large and difficult to fit into a phone.
+- **Concurrent operation**: Cellular, Wi-Fi, Bluetooth, and GNSS work at the same time.
+- **Sounding reference signals (SRS)**: In the TDD bands 41 and n77/n78, the phone transmits a pilot signal on each of its receive antennas in turn, so that the base station can measure the full channel matrix for beamforming. This requires switches that connect the transmitter to every receive antenna.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- **MIMO**: 4×4 DL in MB, HB, UHB needs four RX paths (PRX, DRX, PRX MIMO, DRX MIMO) on four antennas; 2×2 in LB (40 cm wavelength at 750 MHz)
+- **Concurrent operation** of cellular, Wi-Fi, BT, and GNSS
+- **SRS** in B41 and n77/n78: TX connected to every RX antenna in turn
+:::
+
+Most antennas serve several band groups, which are separated by diplexers (two bands) or triplexers (three bands). For example, one antenna is shared by the B32 downlink, GNSS L1, and Wi-Fi 2.4 GHz: a diplexer splits it into 704 MHz to 1610 MHz and 2400 MHz to 5950 MHz, and a triplexer separates the B32 and GNSS L1 signals afterwards.
+
+The two antennas that carry the LB transmitters are equipped with **antenna tuners**. The impedance of a small phone antenna depends strongly on frequency and on the environment (e.g., the hand of the user), and an antenna tuner (a network of switched capacitors and inductors, see @sec-impedance-matching) adapts the matching network to the band in use and to changing conditions. This is especially important in the low bands, where the antenna is electrically small compared to the wavelength.
+
+## Cellular Transceiver SDR735 {#sec-fp6-rfic}
+
+The SDR735 is a highly integrated multi-band transceiver. No datasheet is public, but its pinout in the schematics [@Fairphone.2025] already tells a lot about its architecture:
+
+::: {.content-hidden when-format="revealjs"}
+- **Receivers**: four groups of RF inputs for the primary (P), diversity (D), primary MIMO (PM), and diversity MIMO (DM) receive paths, each with several inputs for the different band groups. These are the four receive paths needed for 4×4 downlink MIMO.
+- **Transmitters**: two transmit chains (TX0 and TX1), each with six RF outputs for the different band groups.
+- **Feedback receiver**: one input (FBRX) that measures the transmitted signal (see @sec-fp6-fbrx).
+- **GNSS receiver**: two inputs, for the L1 and L5 bands.
+- **Digital interfaces**: the QLink interface to the SoC and the RFFE buses and GPIOs that control the front-end.
+- **Unused features**: outputs for envelope-tracking DACs (ETDAC0, ETDAC1), which are not connected in the Fairphone (see @sec-fp6-apt).
+:::
+
+::: {.content-visible when-format="revealjs"}
+- 4 groups of RX inputs (P, D, PM, DM): 4×4 DL MIMO
+- 2 TX chains with 6 RF outputs each
+- Feedback RX input, GNSS L1 and L5 inputs
+- QLink to the SoC, RFFE buses and GPIOs to the front-end
+- Envelope-tracking DAC outputs not connected
+:::
+
+There are no IF filters between the front-end and the RFIC in the schematics; the RF inputs and outputs of the RFIC connect directly to the front-end modules. This is consistent with the **direct-conversion architecture** of @sec-trx-direct-conversion, where the channel selection is done by analog low-pass filters and digital filters on the RFIC. A simplified receive path from antenna to digital I/Q interface is shown in @fig-fp6-rx-chain.
+
+{{< include /content/fp6/_fig_fp6_rx_chain.qmd >}}
+
+The synthesizers of such a transceiver have to generate LO frequencies for all supported bands, from 617 MHz (B71) up to 3.8 GHz (n78), a ratio of more than 6:1. As discussed in @sec-frequency-tuning-of-oscillators, an LC VCO only achieves a limited tuning range, so the LO is usually derived from a VCO followed by frequency dividers. A divide-by-2 stage is needed anyway to generate quadrature LO signals (see @sec-lo-ff), and further divide-by-2 stages extend the range downwards by octaves. Then the VCOs of a synthesizer have to cover one octave together. If a single VCO tunes from $f_\mathrm{c} (1 - \mathrm{TR})$ to $f_\mathrm{c} (1 + \mathrm{TR})$, the number of VCOs needed to cover one octave is
+
+$$
+N_\mathrm{VCO} \geq \frac{\ln 2}{\ln \left( \frac{1 + \mathrm{TR}}{1 - \mathrm{TR}} \right)}.
+$$ {#eq-fp6-nvco}
+
+For a tuning range of ±15 % (TR = 0.15), which is ambitious for a low-phase-noise LC VCO, we get $N_\mathrm{VCO} \geq 2.3$, i.e., three VCOs per synthesizer. As an FDD transceiver with MIMO and two transmitters needs several synthesizers running at the same time, a multi-band RFIC contains many VCOs.
+
+The RFIC uses several supply voltages (0.8 V, 0.875 V, 1.2 V, and 1.8 V), provided by the power management ICs [@Fairphone.2025].
+
+## Receive Path {#sec-fp6-rx}
+
+In the Fairphone, the LNAs are not placed in the RFIC but in separate **LNA modules**: one for the LB primary receivers (QLN5020), one for the MB and HB primary receivers (QLN5040), and one for the LB, MB, and HB diversity receivers (QLN5030). The n77/n78 receivers use separate modules that combine LNAs with the PA (QPM2980) or with the diversity receivers (QDM3980). Each LNA module contains several LNAs, each with an input switch (SPnT) that selects one of several band filters, and an output multiplexer that routes the amplified signals to the RFIC inputs (see @fig-fp6-rx-chain); this reduces the routing complexity on the PCB.
+
+External LNAs improve the noise figure of the receiver. All losses between the antenna and the first amplifier add directly to the noise figure of the receiver (a passive component with loss $L$ has a noise factor $F = L$, see @sec-noise-figure), and in the Fairphone the signal passes through a diplexer, an antenna switch, and a filter before it reaches the LNA module. An LNA directly after the filter fixes the noise figure early in the chain, so that the noise of the RFIC matters less, as the example in @nte-fp6-nf shows.
+
+::: {#nte-fp6-nf .callout-note}
+## Noise Figure of the Receive Path
+We assume (as typical values, not taken from datasheets) a total loss of $L$ = 2.6 dB in front of the LNA (diplexer 0.4 dB, antenna switch 0.7 dB, and filter 1.5 dB), an external LNA with NF = 1 dB and a gain of $G$ = 18 dB, and an RFIC with NF = 6 dB. With the Friis formula (@eq-friis) and $F = L$ for the passive components, the receiver has a noise factor of
+
+$$
+F = L \left( F_\mathrm{LNA} + \frac{F_\mathrm{RFIC} - 1}{G} \right) = 1.82 \cdot \left( 1.26 + \frac{3.98 - 1}{63.1} \right) = 2.38,
+$$
+
+i.e., a noise figure of 3.8 dB. Without the external LNA, the noise figure would be $2.6\,\text{dB} + 6\,\text{dB} = 8.6\,\text{dB}$, which would reduce the sensitivity (@eq-sensitivity-dbm) by almost 5 dB.
+:::
+
+For the GNSS receivers, the situation is even more critical, as the satellite signals arrive far below the thermal noise floor. Here, each band (L1 and L5) uses an external LNA between two SAW filters. The first filter protects the LNA from the strong cellular and Wi-Fi signals of the phone itself, and the second filter provides additional out-of-band filtering before further amplification.
+
+## Transmit Path {#sec-fp6-tx}
+
+The transmit path is shown in @fig-fp6-tx-chain. The RFIC generates the modulated RF signal with a direct-conversion transmitter. This signal is amplified to the required output power by one of two **multimode PA modules (MMPA)** for the LB, MB, and HB bands, which contain PAs for the three band groups together with band switches. A dedicated PA module (QPA2625) is used for GSM, and the n77/n78 band has its own PA in the QPM2980 module. The PA output passes through the duplexer of the active band, an antenna switch, and a directional coupler to the antenna.
+
+{{< include /content/fp6/_fig_fp6_tx_chain.qmd >}}
+
+The maximum output power at the antenna connector is 23 dBm (power class 3) for most bands and 26 dBm (power class 2, high-power UE) for bands 41 and n78 [@3GPP.36101; @3GPP.38101].
+
+### Average Power Tracking {#sec-fp6-apt}
+
+A phone transmits at full power only at the cell edge; closer to the base station, the output power is reduced by the power control. With a fixed supply voltage, the efficiency of a linear PA drops quickly at reduced output power (see @sec-poweramp-efficiency). The Fairphone therefore supplies each of the two MMPAs from its own dc-dc converter (QET3930), whose outputs are labeled as APT supplies (VPA0_APT and VPA1_APT) in the schematics [@Fairphone.2025]. With APT, the PA supply voltage is adjusted to the average output power of the current transmission slot. This **average power tracking (APT)** is a simple form of the supply modulation discussed with Class G and Class H in @sec-poweramp-classes.
+
+To quantify the benefit, we model an ideal class-B PA. For an RF amplitude $a$ at the drain and a load resistance $R$, the output power is $P_\mathrm{out} = a^2 / (2R)$ and the dc power drawn from the supply $V_\mathrm{DD}$ is $P_\mathrm{dc} = 2 V_\mathrm{DD} a / (\pi R)$. For a modulated signal with a varying envelope $a(t)$, the average drain efficiency becomes
+
+$$
+\eta = \frac{\pi}{4} \frac{\mathrm{E}\{a^2\}}{\mathrm{E}\{V_\mathrm{DD} \, a\}},
+$$ {#eq-fp6-eta-classb}
+
+which reaches the class-B limit $\pi / 4$ only if $V_\mathrm{DD}$ follows the envelope $a(t)$ at every instant. For an OFDM signal, the I and Q components are approximately Gaussian, so the envelope is [Rayleigh distributed](https://en.wikipedia.org/wiki/Rayleigh_distribution), with $\mathrm{E}\{a^2\} = 2 \sigma^2$ and $\mathrm{E}\{a\} = \sigma \sqrt{\pi / 2}$. If the supply is set to the envelope peak $a_\mathrm{pk} = \sigma \sqrt{2\,\text{PAPR}}$, @eq-fp6-eta-classb yields
+
+$$
+\eta_\mathrm{APT} = \frac{\sqrt{\pi}}{2 \sqrt{\text{PAPR}}},
+$$ {#eq-fp6-eta-apt}
+
+independent of the output power. For a PAPR of 8 dB, this gives 35 %. With a fixed supply, the supply is set by the peak at maximum output power, and the efficiency falls by 10 dB for every 10 dB of output power back-off, while APT keeps the efficiency constant as long as the dc-dc converter can lower its output voltage. @fig-fp6-apt compares fixed supply, APT, and envelope tracking (ET), where the supply follows the envelope instantaneously.
+
+{{< include /content/fp6/_fig_fp6_apt.qmd >}}
+
+At 13 dBm output power, i.e., 10 dB below maximum, APT improves the drain efficiency from 11 % to 35 %. ET more than doubles the efficiency at high output power, but requires a tracking supply with a bandwidth of several times the signal bandwidth, which is difficult and power hungry for the wide channels of LTE and 5G NR. The SDR735 has outputs to control an envelope tracker (ETDAC0 and ETDAC1), but in the Fairphone, they are not connected; the phone relies on APT.
+
+### Feedback Receiver {#sec-fp6-fbrx}
+
+The transmit power has to be controlled accurately (the maximum output power, for example, has a tolerance of about ±2 dB [@3GPP.36101]), and the transmitter has to meet the requirements for the error vector magnitude (EVM, see @eq-evm-definition) and the adjacent channel leakage. As the gain of the PA depends on temperature, supply voltage, frequency, and antenna impedance, the phone measures its own output: a directional coupler between the antenna switch and the antenna couples a small part of the transmitted signal to the **feedback receiver (FBRX)** input of the RFIC, via a switch that selects the coupler of the active transmitter. A feedback receiver allows the digital baseband to compare the transmitted with the intended signal, which can be used for closed-loop power control, for the calibration of I/Q imbalance and LO leakage of the transmitter (see @sec-trx-direct-conversion), and for digital predistortion of the PA (see @sec-poweramp-advanced).
+
+### Dual Uplink and Self-Interference {#sec-fp6-dual-uplink}
+
+For bands 1 and 3, the Fairphone uses a **quadplexer** instead of two separate duplexers [@Fairphone.2025]: a filter with one antenna port and four ports for B1 TX, B1 RX, B3 TX, and B3 RX. A quadplexer allows both bands to be connected to the same antenna at the same time, as needed for carrier aggregation of B1 and B3, possibly with an uplink in both bands (dual uplink). When two transmit signals pass through a nonlinear component (the PA output stages, the antenna switch, or the quadplexer itself), they generate harmonics and intermodulation products (see @sec-linearity). In the classification of self-interference mechanisms of [@Sadjina.2020], this is TX-to-RX crosstalk: the interferer is generated from the phone's own transmit signals and reaches its receivers through the shared front-end, where the TX-to-RX isolation of the quadplexer and of the antenna switch is finite (see also @sec-spurs-mechanisms). @fig-fp6-imd shows where these products of B1 and B3 fall.
+
+{{< include /content/fp6/_fig_fp6_imd.qmd >}}
+
+Several products land in receive bands of the same phone:
+
+::: {.content-hidden when-format="revealjs"}
+- The third-order product $2 f_\mathrm{B1} - f_\mathrm{B3}$ (2055 MHz to 2250 MHz) covers the entire B1 downlink. This is the most critical case, as the phone has to receive in B1 while it transmits the two signals that create the interferer.
+- The third-order product $2 f_\mathrm{B3} - f_\mathrm{B1}$ (1440 MHz to 1650 MHz) falls into B32 and into the GNSS L1 band.
+- The second harmonics and the second-order sum product fall into the n77/n78 bands, and higher-order products into the Wi-Fi 5 GHz and 6 GHz bands.
+:::
+
+::: {.content-visible when-format="revealjs"}
+- $2 f_\mathrm{B1} - f_\mathrm{B3}$: entire B1 downlink (most critical)
+- $2 f_\mathrm{B3} - f_\mathrm{B1}$: B32 and GNSS L1
+- HD2 and IM2 sum: n77/n78; higher orders: Wi-Fi 5 GHz and 6 GHz
+:::
+
+How linear do the components have to be? In dual uplink, the maximum output power of 23 dBm is shared by the two carriers, so each carrier has about 20 dBm. If the IM3 product shall stay below -110 dBm, i.e., about 7 dB below the noise floor of -103 dBm of a receiver with a 5 MHz channel and NF = 4 dB (see @eq-sensitivity-dbm), solving @eq-iip3 for the IIP3 of the components after the PAs gives
+
+$$
+\text{IIP3} = P_\mathrm{in} + \frac{P_\mathrm{in} - P_\mathrm{IM3}}{2} = 20\,\text{dBm} + \frac{20 - (-110)}{2}\,\text{dB} = 85\,\text{dBm},
+$$
+
+a value that is extremely hard to met by real switches and filters. 3GPP therefore allows a maximum sensitivity degradation (MSD) for band combinations whose intermodulation products fall into an own receive band [@3GPP.36101], and the front-end designer minimizes the degradation with highly linear switches and filters and by keeping the two TX signals isolated from each other for as long as possible (e.g., using different antennas).
+
+A complementary approach is **self-interference cancellation** in the receiver [@Sadjina.2020]. Unlike an external blocker, the interferer here is created from signals the phone knows exactly: its own TX baseband samples. An adaptive model of the nonlinear coupling path, driven by the two TX signals, can therefore reproduce the IM3 product in the digital baseband and subtract it from the received signal. As the coupling path changes with antenna impedance, temperature, and output power, the model parameters are estimated continuously (e.g., with LMS-type adaptive algorithms). Cancellation relaxes the linearity requirements of the front-end, at the cost of additional digital signal processing. Whether such a technique is used in the Fairphone is unknown.
+
+This is a good example of the self-interference problems discussed in @sec-spurs: in a multi-band radio, the strongest interferer is often the own transmitter.
+
+## Wi-Fi and Bluetooth {#sec-fp6-wifi}
+
+Wi-Fi and Bluetooth are handled by the WCN6755, which is connected to the SoC via PCIe [@Fairphone.2025]. In contrast to the cellular radio, the WCN6755 integrates the PAs on chip. Wi-Fi uses TDD (see @tbl-duplexing-standards), so a switch instead of a duplexer separates TX and RX. For 2×2 MIMO, the WCN6755 has two independent RF chains per band, which are connected to separate antennas. Bluetooth shares the 2.4 GHz RF ports with Wi-Fi (the pins are labeled WLBT), so Wi-Fi and Bluetooth at 2.4 GHz use the same antenna paths.
+
+## Summary {#sec-fp6-summary}
+
+@tbl-fp6-course-map maps the components of the Fairphone (Gen. 6) radio to the chapters of this course.
+
+| Component in the Fairphone (Gen. 6) | Topic | Course section |
+|:------------------------------------|:------|:---------------|
+| Band plan, duplexers, quadplexer | FDD/TDD, filter $Q$ | @sec-trx-duplexing |
+| SDR735 receivers and transmitters | Direct-conversion transceiver | @sec-trx-direct-conversion |
+| LNA modules, RX noise figure | Noise figure, Friis formula, LNAs | @sec-noise-figure, @sec-lna |
+| Antenna tuners, LNA input matching | Impedance matching | @sec-impedance-matching |
+| I/Q downconversion and upconversion | Mixers, quadrature LO generation | @sec-mixer, @sec-mixer-lo |
+| LO generation from 617 MHz to 3.8 GHz | Oscillator tuning, PLLs | @sec-frequency-tuning-of-oscillators, @sec-pll |
+| MMPAs, APT supply | PA efficiency, supply modulation | @sec-poweramp-efficiency, @sec-poweramp-classes |
+| Feedback receiver | Power control, EVM, predistortion | @sec-poweramp-advanced |
+| Dual uplink B1/B3 | Intermodulation, self-interference | @sec-linearity, @sec-spurs |
+
+: Mapping of the components of the Fairphone (Gen. 6) radio to the topics of this course. {#tbl-fp6-course-map}

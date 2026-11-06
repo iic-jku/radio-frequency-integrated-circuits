@@ -1,0 +1,83 @@
+::: {.content-hidden}
+Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-fp6-apt
+#| echo: false
+#| fig-cap: "Average drain efficiency of an ideal class-B PA amplifying an OFDM signal (Rayleigh-distributed envelope, supply sized for a PAPR of 8 dB) versus average output power, for a fixed supply, average power tracking (APT), and envelope tracking (ET). The fixed supply is sized for the maximum output power of 23 dBm (power class 3); the tracking supply cannot go below 0.5 V for a 3.8 V battery. The losses of the dc-dc converter are not included."
+import numpy as np
+import matplotlib.pyplot as plt
+
+# ---------- model ----------
+# Class B, instantaneous envelope amplitude a at the drain: P_out = a^2 / (2 R),
+# P_dc = 2 V_DD a / (pi R)  ->  eta = (pi/4) E[a^2] / E[V_DD a].
+# Gaussian I/Q -> Rayleigh envelope with E[a^2] = 2 sigma^2 and E[a] = sigma sqrt(pi/2).
+P_max_dBm = 23.0                    # power class 3
+papr = 10**(8 / 10)                 # supply sized for the envelope peak sigma sqrt(2 PAPR)
+V_max, V_min = 3.8, 0.5             # battery and minimum output of the tracker (V)
+
+P_dBm = np.linspace(-10, P_max_dBm, 200)
+sigma = V_max / np.sqrt(2 * papr) * 10**((P_dBm - P_max_dBm) / 20)
+
+eta_fixed = np.pi / 4 * 2 * sigma**2 / (V_max * sigma * np.sqrt(np.pi / 2))
+
+V_apt = np.maximum(V_min, sigma * np.sqrt(2 * papr))
+eta_apt = np.pi / 4 * 2 * sigma**2 / (V_apt * sigma * np.sqrt(np.pi / 2))
+
+# ET: V_DD(t) = max(V_min, a(t)); E[max(V_min, a) a] by integration over the Rayleigh pdf
+x = np.linspace(0, 8, 4001)         # a / sigma
+pdf = x * np.exp(-x**2 / 2)
+eta_et = np.array([np.pi / 4 * 2 * s**2 /
+                   np.trapezoid(np.maximum(V_min, x * s) * x * s * pdf, x) for s in sigma])
+
+# APT reaches the fixed-supply efficiency at full power, and ET the class-B limit
+assert np.isclose(eta_apt[-1], eta_fixed[-1])
+assert eta_et[-1] < np.pi / 4 and eta_et[-1] > 0.95 * np.pi / 4
+
+# ---------- plot ----------
+fig, ax = plt.subplots(figsize=(7.5, 4))
+ax.plot(P_dBm, 100 * eta_et, color='tab:red', linestyle='--', linewidth=1.8,
+        label='envelope tracking (ET)')
+ax.plot(P_dBm, 100 * eta_apt, color='tab:blue', linewidth=2.2, label='average power tracking (APT)')
+ax.plot(P_dBm, 100 * eta_fixed, color='tab:gray', linewidth=2.2, label=f'fixed supply ({V_max} V)')
+ax.axhline(100 * np.pi / 4, color='k', linestyle=':', linewidth=1)
+ax.text(P_dBm[-1] - 0.3, 100 * np.pi / 4 + 1.5, 'class-B limit $\\pi/4$', fontsize=8, ha='right')
+
+# below P_knee, the tracker sits at V_min and APT and ET coincide
+P_knee = P_max_dBm + 20 * np.log10(V_min / V_max)
+ax.axvline(P_knee, color='tab:blue', linestyle=':', linewidth=1)
+ax.text(P_knee - 0.4, 45, f'below {P_knee:.1f} dBm:\ntracker at $V_\\mathrm{{min}}$,\nAPT and ET coincide',
+        fontsize=8, color='tab:blue', ha='right')
+
+# compare fixed supply and APT 10 dB below the maximum output power
+P_bo = P_max_dBm - 10
+i_bo = np.argmin(abs(P_dBm - P_bo))
+for eta, c, dy in ((eta_fixed, 'tab:gray', -13), (eta_apt, 'tab:blue', 5)):
+    ax.plot(P_dBm[i_bo], 100 * eta[i_bo], 'o', color=c, markersize=5)
+    ax.annotate(f'{100 * eta[i_bo]:.0f} %', (P_dBm[i_bo], 100 * eta[i_bo]),
+                xytext=(4, dy), textcoords='offset points', fontsize=8.5, color=c)
+
+ax.set_xlabel('Average output power (dBm)')
+ax.set_ylabel('Average drain efficiency (%)')
+ax.set_xlim(P_dBm[0], P_dBm[-1])
+ax.set_ylim(0, 90)
+ax.grid(True, alpha=0.3)
+ax.spines[['top', 'right']].set_visible(False)
+ax.legend(loc='upper left', bbox_to_anchor=(0, 0.84), fontsize=8, frameon=False)
+
+plt.tight_layout()
+plt.show()
+```
