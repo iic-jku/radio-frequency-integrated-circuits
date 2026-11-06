@@ -30,5 +30,6 @@ _site
 /content/spurs/*_files
 /content/fp6/*_files
 /content/fp6/__pycache__
+/content/simulation/*_files
 /content/exam/*_files
 /slides/*_files

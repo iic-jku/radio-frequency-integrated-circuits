@@ -1,0 +1,72 @@
+::: {.content-hidden}
+Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-sim-noise-folding
+#| echo: false
+#| fig-cap: "Noise folding in an ideal double-balanced switching mixer driven by a square-wave LO with 50 % duty cycle. Left: share of the white source noise that each sideband $k$ contributes to the IF output, $|c_k|^2 = (2/(\\pi k))^2$ for odd $k$, and the shares add up to one. Right: single-sideband noise figure obtained when the analysis keeps only the sidebands up to $|k| \\leq K$. Keeping only the first harmonic ($K = 1$) underestimates the noise figure by 0.9 dB."
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# ---------- model ----------
+# Multiplication by a +/-1 square wave: c_k = 2/(pi k) for odd k, 0 otherwise.
+# White input noise from every sideband f + k f_LO folds to the IF with |c_k|^2;
+# the wanted signal (RF at k = +1) is converted with |c_1|^2 = 4/pi^2.
+k_odd = np.arange(1, 20, 2)
+share = (2 / (np.pi * k_odd))**2          # per sideband, for +k and for -k each
+
+K_max = np.arange(1, 40, 2)
+F_ssb = np.array([2 * np.sum(1 / np.arange(1, K + 1, 2)**2) for K in K_max])
+NF_ssb = 10 * np.log10(F_ssb)
+NF_inf = 10 * np.log10(np.pi**2 / 4)
+
+# ---------- plot ----------
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 3.6))
+
+kk = np.concatenate((-k_odd[::-1], k_odd))
+ss = np.concatenate((share[::-1], share))
+colors = ['tab:blue' if abs(k) == 1 else 'tab:purple' for k in kk]
+ax1.bar(kk, 100 * ss, width=1.2, color=colors)
+ax1.text(0, 100 * (2 / np.pi)**2 + 1, f'{100 * (2 / np.pi)**2:.1f} % each',
+         ha='center', va='bottom', fontsize=8)
+for k in (-3, 3):
+    ax1.text(k, 100 * (2 / (np.pi * abs(k)))**2 + 1, f'{100 * (2 / (np.pi * k))**2:.1f} %',
+             ha='center', va='bottom', fontsize=8)
+ax1.set_xlabel('Sideband $k$ (noise from $|f_\\mathrm{IF} + k f_\\mathrm{LO}|$)')
+ax1.set_ylabel('Share of IF output noise (%)')
+ax1.set_xlim(-12, 12)
+ax1.set_ylim(0, 50)
+ax1.set_xticks(np.arange(-11, 12, 2))
+ax1.grid(True, alpha=0.3, axis='y')
+ax1.text(6.8, 30, '$k = \\pm 1$: 81 %\nhigher harmonics: 19 %', ha='center', fontsize=8.5,
+         bbox=dict(boxstyle='round,pad=0.3', fc='white', ec='gray', alpha=0.9))
+
+ax2.plot(K_max, NF_ssb, 'bo-', markersize=4, linewidth=1.5, label='sidebands $|k| \\leq K$')
+ax2.axhline(NF_inf, color='red', linestyle='--', linewidth=1.2,
+            label=f'all sidebands: {NF_inf:.2f} dB')
+ax2.annotate(f'{NF_ssb[0]:.2f} dB', xy=(1, NF_ssb[0]), xytext=(6, 3.15),
+             arrowprops=dict(arrowstyle='->', color='blue'), color='blue', fontsize=9)
+ax2.set_xlabel('Highest harmonic kept, $K$')
+ax2.set_ylabel('SSB noise figure (dB)')
+ax2.set_xlim(0, 40)
+ax2.set_ylim(2.8, 4.1)
+ax2.grid(True, alpha=0.3)
+ax2.legend(loc='lower right', fontsize=9)
+
+plt.tight_layout()
+plt.show()
+```

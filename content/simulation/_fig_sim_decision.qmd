@@ -1,0 +1,72 @@
+::: {.content-hidden}
+Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+:::
+
+```{python}
+#| label: fig-sim-decision
+#| echo: false
+#| fig-cap: "Choosing an analysis. The first question is whether a large periodic signal (LO, clock, carrier, or the oscillation itself) sets the operating point, the second is how sharp the resulting waveforms are. Transient (noise) simulation remains the reference that every other analysis should be cross-checked against."
+import schemdraw as sd
+from schemdraw import flow
+
+sd.svgconfig.svg2 = False
+
+blue = '#dbe8f6'
+orange = '#fde3c8'
+
+with sd.Drawing(canvas='svg') as d:
+    d.config(fontsize=12, unit=1, margin=0.3)
+
+    q1 = flow.Decision(w=6.4, h=2.4).at((9, 0)).anchor('center') \
+        .label('large periodic signal?\n(LO, clock, carrier,\noscillation)')
+
+    q2 = flow.Decision(w=4.6, h=2.0).at((3.5, -3.6)).anchor('center') \
+        .label('small signal\naround dc?')
+    q3 = flow.Decision(w=5.4, h=2.4).at((14.5, -3.6)).anchor('center') \
+        .label('sharp edges or\nstrongly nonlinear?')
+
+    a1 = flow.Box(w=3.8, h=1.6).at((1.2, -7.2)).anchor('center').fill(blue) \
+        .label('op, then\nac, acsp, noise')
+    a2 = flow.Box(w=3.2, h=1.6).at((5.8, -7.2)).anchor('center').fill(blue) \
+        .label('tran')
+    a3 = flow.Box(w=3.8, h=1.6).at((11.8, -7.2)).anchor('center').fill(orange) \
+        .label('PSS, then\nPAC, PNOISE')
+    a4 = flow.Box(w=3.8, h=1.6).at((17.2, -7.2)).anchor('center').fill(orange) \
+        .label('HB, then\nHBAC, HBNOISE')
+
+    # q1 branches
+    flow.Wire('-|', arrow='->').at(q1.W).to(q2.N).label('no', loc='start', ofst=(-0.2, 0.25))
+    flow.Wire('-|', arrow='->').at(q1.E).to(q3.N).label('yes', loc='start', ofst=(0.2, 0.25))
+    # q2 branches
+    flow.Wire('-|', arrow='->').at(q2.W).to(a1.N).label('yes', loc='start', ofst=(-0.2, 0.25))
+    flow.Wire('-|', arrow='->').at(q2.E).to(a2.N).label('no', loc='start', ofst=(0.2, 0.25))
+    # q3 branches
+    flow.Wire('-|', arrow='->').at(q3.W).to(a3.N).label('yes', loc='start', ofst=(-0.2, 0.25))
+    flow.Wire('-|', arrow='->').at(q3.E).to(a4.N).label('no', loc='start', ofst=(0.2, 0.25))
+
+    # hints below the result boxes
+    sd.elements.Label().at((11.8, -8.4)).label('single fundamental,\nswitching circuits,\noscillators',
+                                                fontsize=10, color='gray', valign='top')
+    sd.elements.Label().at((17.2, -8.4)).label('mildly nonlinear,\nseveral tones,\nS-parameter models',
+                                                fontsize=10, color='gray', valign='top')
+    sd.elements.Label().at((1.2, -8.4)).label('amplifiers, filters,\nmatching, LNA noise',
+                                               fontsize=10, color='gray', valign='top')
+    sd.elements.Label().at((5.8, -8.4)).label('large signal, start-up,\nsettling, non-periodic',
+                                               fontsize=10, color='gray', valign='top')
+
+    # transient noise as the general fallback and cross-check
+    flow.Box(w=16.6, h=1.3).at((9.1, -10.7)).anchor('center').fill('#eeeeee') \
+        .label('noise that is not small (decisions, metastability, jitter), or a cross-check: transient noise')
+```

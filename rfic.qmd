@@ -47,5 +47,6 @@ format:
 {{< include /content/pll/_sec_pll.qmd >}}
 {{< include /content/poweramp/_sec_poweramp.qmd >}}
 {{< include /content/spurs/_sec_spurs.qmd >}}
+{{< include /content/simulation/_sec_simulation.qmd >}}
 {{< include /content/fp6/_sec_fp6.qmd >}}
 {{< include /content/exam/_sec_exam_questions.qmd >}}

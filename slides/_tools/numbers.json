@@ -361,6 +361,71 @@
    "number": "5",
    "type": "eq"
   },
+  "eq-sim-ac": {
+   "chapter": 10,
+   "number": "72",
+   "type": "eq"
+  },
+  "eq-sim-backward-euler": {
+   "chapter": 10,
+   "number": "75",
+   "type": "eq"
+  },
+  "eq-sim-circuit-equations": {
+   "chapter": 10,
+   "number": "70",
+   "type": "eq"
+  },
+  "eq-sim-conversion-matrix": {
+   "chapter": 10,
+   "number": "81",
+   "type": "eq"
+  },
+  "eq-sim-hb": {
+   "chapter": 10,
+   "number": "79",
+   "type": "eq"
+  },
+  "eq-sim-hb-fourier": {
+   "chapter": 10,
+   "number": "78",
+   "type": "eq"
+  },
+  "eq-sim-lptv": {
+   "chapter": 10,
+   "number": "80",
+   "type": "eq"
+  },
+  "eq-sim-newton": {
+   "chapter": 10,
+   "number": "71",
+   "type": "eq"
+  },
+  "eq-sim-noise": {
+   "chapter": 10,
+   "number": "74",
+   "type": "eq"
+  },
+  "eq-sim-pnoise": {
+   "chapter": 10,
+   "number": "82",
+   "type": "eq"
+  },
+  "eq-sim-shooting": {
+   "chapter": 10,
+   "number": "76",
+   "type": "eq"
+  },
+  "eq-sim-shooting-newton": {
+   "chapter": 10,
+   "number": "77",
+   "type": "eq"
+  },
+  "eq-sim-sparam": {
+   "chapter": 10,
+   "number": "73",
+   "type": "eq"
+  },
   "eq-thermal-noise-impedance": {
    "chapter": 2,
    "number": "20",
@@ -846,6 +911,36 @@
    "number": "47",
    "type": "fig"
   },
+  "fig-sim-analysis-overview": {
+   "chapter": 10,
+   "number": "106",
+   "type": "fig"
+  },
+  "fig-sim-decision": {
+   "chapter": 10,
+   "number": "111",
+   "type": "fig"
+  },
+  "fig-sim-hb-truncation": {
+   "chapter": 10,
+   "number": "108",
+   "type": "fig"
+  },
+  "fig-sim-noise-folding": {
+   "chapter": 10,
+   "number": "110",
+   "type": "fig"
+  },
+  "fig-sim-pac-sidebands": {
+   "chapter": 10,
+   "number": "109",
+   "type": "fig"
+  },
+  "fig-sim-tran-vs-pss": {
+   "chapter": 10,
+   "number": "107",
+   "type": "fig"
+  },
   "fig-simple-wireless-system": {
    "chapter": 1,
    "number": "1",
@@ -956,6 +1051,26 @@
    "number": "8",
    "type": "nte"
   },
+  "nte-sim-noise-folding": {
+   "chapter": 10,
+   "number": "10",
+   "type": "nte"
+  },
+  "nte-sim-osc-phase-noise": {
+   "chapter": 10,
+   "number": "11",
+   "type": "nte"
+  },
+  "nte-sim-power-detector": {
+   "chapter": 10,
+   "number": "12",
+   "type": "nte"
+  },
+  "nte-sim-tran-effort": {
+   "chapter": 10,
+   "number": "9",
+   "type": "nte"
+  },
   "nte-wavelength-calculation": {
    "chapter": 1,
    "number": "1",
@@ -993,7 +1108,7 @@
   },
   "sec-exam-fp6": {
    "chapter": 11,
-   "number": "11.12",
+   "number": "11.13",
    "type": "sec"
   },
   "sec-exam-intro": {
@@ -1044,6 +1159,11 @@
   "sec-exam-questions": {
    "chapter": 11,
    "number": "11",
+   "type": "sec"
+  },
+  "sec-exam-simulation": {
+   "chapter": 11,
+   "number": "11.12",
    "type": "sec"
   },
   "sec-exam-trx": {
@@ -1371,6 +1491,86 @@
    "number": "2.3.4",
    "type": "sec"
   },
+  "sec-simulation": {
+   "chapter": 10,
+   "number": "10",
+   "type": "sec"
+  },
+  "sec-simulation-ac": {
+   "chapter": 10,
+   "number": "10.1.2",
+   "type": "sec"
+  },
+  "sec-simulation-acsp": {
+   "chapter": 10,
+   "number": "10.1.3",
+   "type": "sec"
+  },
+  "sec-simulation-advanced": {
+   "chapter": 10,
+   "number": "10.2",
+   "type": "sec"
+  },
+  "sec-simulation-fundamental": {
+   "chapter": 10,
+   "number": "10.1",
+   "type": "sec"
+  },
+  "sec-simulation-hb": {
+   "chapter": 10,
+   "number": "10.2.3",
+   "type": "sec"
+  },
+  "sec-simulation-noise": {
+   "chapter": 10,
+   "number": "10.1.4",
+   "type": "sec"
+  },
+  "sec-simulation-op": {
+   "chapter": 10,
+   "number": "10.1.1",
+   "type": "sec"
+  },
+  "sec-simulation-pac": {
+   "chapter": 10,
+   "number": "10.2.4",
+   "type": "sec"
+  },
+  "sec-simulation-pnoise": {
+   "chapter": 10,
+   "number": "10.2.5",
+   "type": "sec"
+  },
+  "sec-simulation-pss": {
+   "chapter": 10,
+   "number": "10.2.2",
+   "type": "sec"
+  },
+  "sec-simulation-selection": {
+   "chapter": 10,
+   "number": "10.3",
+   "type": "sec"
+  },
+  "sec-simulation-summary": {
+   "chapter": 10,
+   "number": "10.5",
+   "type": "sec"
+  },
+  "sec-simulation-tools": {
+   "chapter": 10,
+   "number": "10.4",
+   "type": "sec"
+  },
+  "sec-simulation-tran": {
+   "chapter": 10,
+   "number": "10.1.5",
+   "type": "sec"
+  },
+  "sec-simulation-trannoise": {
+   "chapter": 10,
+   "number": "10.2.1",
+   "type": "sec"
+  },
   "sec-single-ended-oscillators": {
    "chapter": 6,
    "number": "6.4",
@@ -1449,6 +1649,31 @@
   "tbl-rf-applications": {
    "chapter": 1,
    "number": "1",
+   "type": "tbl"
+  },
+  "tbl-sim-advanced": {
+   "chapter": 10,
+   "number": "10",
+   "type": "tbl"
+  },
+  "tbl-sim-applications": {
+   "chapter": 10,
+   "number": "11",
+   "type": "tbl"
+  },
+  "tbl-sim-fundamental": {
+   "chapter": 10,
+   "number": "8",
+   "type": "tbl"
+  },
+  "tbl-sim-pss-hb": {
+   "chapter": 10,
+   "number": "9",
+   "type": "tbl"
+  },
+  "tbl-sim-tools": {
+   "chapter": 10,
+   "number": "12",
    "type": "tbl"
   },
   "tbl-three-point-oscillators": {
