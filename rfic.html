@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Harald Pretl">
-<meta name="dcterms.date" content="2026-11-03">
+<meta name="dcterms.date" content="2026-11-06">
 
 <title>Radio-Frequency Integrated Circuits</title>
 <style>
@@ -70,9 +70,9 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-443ec083c9578aa13a8ff787872b1cad.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-aabbeeb8ce3a989689481ed8ac76c05a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-443ec083c9578aa13a8ff787872b1cad.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-67c19ae4ccf12187c21e9a49606d88c4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-7161d6debfbbeb18c199e9e749415f29.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-67c19ae4ccf12187c21e9a49606d88c4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -498,20 +498,37 @@ window.Quarto = {
   <li><a href="#sec-simulation-tools" id="toc-sec-simulation-tools" class="nav-link" data-scroll-target="#sec-simulation-tools"><span class="header-section-number">10.4</span> Simulator Support</a></li>
   <li><a href="#sec-simulation-summary" id="toc-sec-simulation-summary" class="nav-link" data-scroll-target="#sec-simulation-summary"><span class="header-section-number">10.5</span> Summary</a></li>
   </ul></li>
-  <li><a href="#sec-exam-questions" id="toc-sec-exam-questions" class="nav-link" data-scroll-target="#sec-exam-questions"><span class="header-section-number">11</span> Appendix: Examination Questions</a>
+  <li><a href="#sec-fp6" id="toc-sec-fp6" class="nav-link" data-scroll-target="#sec-fp6"><span class="header-section-number">11</span> Appendix: Case Study Fairphone (Gen.&nbsp;6) RF Front-End</a>
   <ul class="collapse">
-  <li><a href="#sec-exam-intro" id="toc-sec-exam-intro" class="nav-link" data-scroll-target="#sec-exam-intro"><span class="header-section-number">11.1</span> Introduction and Wireless Basics</a></li>
-  <li><a href="#sec-exam-linearity" id="toc-sec-exam-linearity" class="nav-link" data-scroll-target="#sec-exam-linearity"><span class="header-section-number">11.2</span> Linearity</a></li>
-  <li><a href="#sec-exam-noise" id="toc-sec-exam-noise" class="nav-link" data-scroll-target="#sec-exam-noise"><span class="header-section-number">11.3</span> Noise</a></li>
-  <li><a href="#sec-exam-modulation" id="toc-sec-exam-modulation" class="nav-link" data-scroll-target="#sec-exam-modulation"><span class="header-section-number">11.4</span> Modulation and Communication Concepts</a></li>
-  <li><a href="#sec-exam-trx" id="toc-sec-exam-trx" class="nav-link" data-scroll-target="#sec-exam-trx"><span class="header-section-number">11.5</span> Transceiver Architectures</a></li>
-  <li><a href="#sec-exam-lna" id="toc-sec-exam-lna" class="nav-link" data-scroll-target="#sec-exam-lna"><span class="header-section-number">11.6</span> Low Noise Amplifiers</a></li>
-  <li><a href="#sec-exam-mixer" id="toc-sec-exam-mixer" class="nav-link" data-scroll-target="#sec-exam-mixer"><span class="header-section-number">11.7</span> Mixers</a></li>
-  <li><a href="#sec-exam-oscillator" id="toc-sec-exam-oscillator" class="nav-link" data-scroll-target="#sec-exam-oscillator"><span class="header-section-number">11.8</span> Oscillators</a></li>
-  <li><a href="#sec-exam-pll" id="toc-sec-exam-pll" class="nav-link" data-scroll-target="#sec-exam-pll"><span class="header-section-number">11.9</span> Phase-Locked Loops</a></li>
-  <li><a href="#sec-exam-poweramp" id="toc-sec-exam-poweramp" class="nav-link" data-scroll-target="#sec-exam-poweramp"><span class="header-section-number">11.10</span> Power Amplifiers</a></li>
-  <li><a href="#sec-exam-calculations" id="toc-sec-exam-calculations" class="nav-link" data-scroll-target="#sec-exam-calculations"><span class="header-section-number">11.11</span> Calculation Problems</a></li>
-  <li><a href="#sec-exam-simulation" id="toc-sec-exam-simulation" class="nav-link" data-scroll-target="#sec-exam-simulation"><span class="header-section-number">11.12</span> RF Circuit Simulation (Optional)</a></li>
+  <li><a href="#sec-fp6-architecture" id="toc-sec-fp6-architecture" class="nav-link" data-scroll-target="#sec-fp6-architecture"><span class="header-section-number">11.1</span> Radio Architecture</a></li>
+  <li><a href="#sec-fp6-bands" id="toc-sec-fp6-bands" class="nav-link" data-scroll-target="#sec-fp6-bands"><span class="header-section-number">11.2</span> Frequency Bands</a></li>
+  <li><a href="#sec-fp6-antennas" id="toc-sec-fp6-antennas" class="nav-link" data-scroll-target="#sec-fp6-antennas"><span class="header-section-number">11.3</span> Antennas</a></li>
+  <li><a href="#sec-fp6-rfic" id="toc-sec-fp6-rfic" class="nav-link" data-scroll-target="#sec-fp6-rfic"><span class="header-section-number">11.4</span> Cellular Transceiver SDR735</a></li>
+  <li><a href="#sec-fp6-rx" id="toc-sec-fp6-rx" class="nav-link" data-scroll-target="#sec-fp6-rx"><span class="header-section-number">11.5</span> Receive Path</a></li>
+  <li><a href="#sec-fp6-tx" id="toc-sec-fp6-tx" class="nav-link" data-scroll-target="#sec-fp6-tx"><span class="header-section-number">11.6</span> Transmit Path</a>
+  <ul class="collapse">
+  <li><a href="#sec-fp6-apt" id="toc-sec-fp6-apt" class="nav-link" data-scroll-target="#sec-fp6-apt"><span class="header-section-number">11.6.1</span> Average Power Tracking</a></li>
+  <li><a href="#sec-fp6-fbrx" id="toc-sec-fp6-fbrx" class="nav-link" data-scroll-target="#sec-fp6-fbrx"><span class="header-section-number">11.6.2</span> Feedback Receiver</a></li>
+  <li><a href="#sec-fp6-dual-uplink" id="toc-sec-fp6-dual-uplink" class="nav-link" data-scroll-target="#sec-fp6-dual-uplink"><span class="header-section-number">11.6.3</span> Dual Uplink and Self-Interference</a></li>
+  </ul></li>
+  <li><a href="#sec-fp6-wifi" id="toc-sec-fp6-wifi" class="nav-link" data-scroll-target="#sec-fp6-wifi"><span class="header-section-number">11.7</span> Wi-Fi and Bluetooth</a></li>
+  <li><a href="#sec-fp6-summary" id="toc-sec-fp6-summary" class="nav-link" data-scroll-target="#sec-fp6-summary"><span class="header-section-number">11.8</span> Summary</a></li>
+  </ul></li>
+  <li><a href="#sec-exam-questions" id="toc-sec-exam-questions" class="nav-link" data-scroll-target="#sec-exam-questions"><span class="header-section-number">12</span> Appendix: Examination Questions</a>
+  <ul class="collapse">
+  <li><a href="#sec-exam-intro" id="toc-sec-exam-intro" class="nav-link" data-scroll-target="#sec-exam-intro"><span class="header-section-number">12.1</span> Introduction and Wireless Basics</a></li>
+  <li><a href="#sec-exam-linearity" id="toc-sec-exam-linearity" class="nav-link" data-scroll-target="#sec-exam-linearity"><span class="header-section-number">12.2</span> Linearity</a></li>
+  <li><a href="#sec-exam-noise" id="toc-sec-exam-noise" class="nav-link" data-scroll-target="#sec-exam-noise"><span class="header-section-number">12.3</span> Noise</a></li>
+  <li><a href="#sec-exam-modulation" id="toc-sec-exam-modulation" class="nav-link" data-scroll-target="#sec-exam-modulation"><span class="header-section-number">12.4</span> Modulation and Communication Concepts</a></li>
+  <li><a href="#sec-exam-trx" id="toc-sec-exam-trx" class="nav-link" data-scroll-target="#sec-exam-trx"><span class="header-section-number">12.5</span> Transceiver Architectures</a></li>
+  <li><a href="#sec-exam-lna" id="toc-sec-exam-lna" class="nav-link" data-scroll-target="#sec-exam-lna"><span class="header-section-number">12.6</span> Low Noise Amplifiers</a></li>
+  <li><a href="#sec-exam-mixer" id="toc-sec-exam-mixer" class="nav-link" data-scroll-target="#sec-exam-mixer"><span class="header-section-number">12.7</span> Mixers</a></li>
+  <li><a href="#sec-exam-oscillator" id="toc-sec-exam-oscillator" class="nav-link" data-scroll-target="#sec-exam-oscillator"><span class="header-section-number">12.8</span> Oscillators</a></li>
+  <li><a href="#sec-exam-pll" id="toc-sec-exam-pll" class="nav-link" data-scroll-target="#sec-exam-pll"><span class="header-section-number">12.9</span> Phase-Locked Loops</a></li>
+  <li><a href="#sec-exam-poweramp" id="toc-sec-exam-poweramp" class="nav-link" data-scroll-target="#sec-exam-poweramp"><span class="header-section-number">12.10</span> Power Amplifiers</a></li>
+  <li><a href="#sec-exam-calculations" id="toc-sec-exam-calculations" class="nav-link" data-scroll-target="#sec-exam-calculations"><span class="header-section-number">12.11</span> Calculation Problems</a></li>
+  <li><a href="#sec-exam-simulation" id="toc-sec-exam-simulation" class="nav-link" data-scroll-target="#sec-exam-simulation"><span class="header-section-number">12.12</span> RF Circuit Simulation (Optional)</a></li>
+  <li><a href="#sec-exam-fp6" id="toc-sec-exam-fp6" class="nav-link" data-scroll-target="#sec-exam-fp6"><span class="header-section-number">12.13</span> Case Study Fairphone (Gen.&nbsp;6) (Optional)</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="rfic.pdf"><i class="bi bi-file-pdf"></i>Typst</a></li></ul></div><div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="content/pll/delta_sigma_modulator-preview.html"><i class="bi bi-journal-code"></i>MASH Modulator (3rd Order)</a></li></ul></div></nav>
@@ -548,7 +565,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 3, 2026</p>
+      <p class="date">November 6, 2026</p>
     </div>
   </div>
   
@@ -5226,11 +5243,529 @@ endc</code></pre>
 </div>
 </section>
 </section>
-<section id="sec-exam-questions" class="level1" data-number="11">
-<h1 data-number="11"><span class="header-section-number">11</span> Appendix: Examination Questions</h1>
+<section id="sec-fp6" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Appendix: Case Study Fairphone (Gen.&nbsp;6) RF Front-End</h1>
+<p>The previous chapters discussed the building blocks of a radio (LNAs, mixers, oscillators, PLLs, PAs, and filters) mostly in isolation. In this appendix, we look at how these blocks come together in a real product: the radio of a modern smartphone. Detailed hardware information about smartphones is usually confidential, but Fairphone publishes the complete schematics of the Fairphone (Gen.&nbsp;6), including the part numbers of all components, to support repair and recycling <span class="citation" data-cites="Fairphone.2025">(<a href="#ref-Fairphone.2025" role="doc-biblioref">Fairphone B.V. 2025</a>)</span>. These schematics allow us to follow the signal path from the antenna to the digital baseband.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All statements about the hardware of the phone in this appendix are taken from the published schematics and specifications <span class="citation" data-cites="Fairphone.2025">(<a href="#ref-Fairphone.2025" role="doc-biblioref">Fairphone B.V. 2025</a>)</span>. The functions of the components are derived from their labels in the schematics, as datasheets of most components are not public. Where numbers are needed for an example calculation, they are marked as assumptions.</p>
+</div>
+</div>
+<section id="sec-fp6-architecture" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="sec-fp6-architecture"><span class="header-section-number">11.1</span> Radio Architecture</h2>
+<p>The Fairphone (Gen.&nbsp;6) supports 2G (GSM), 3G (UMTS), 4G (LTE), and 5G NR (in frequency range 1, below 7.125 GHz), Wi-Fi 6E with 2×2 MIMO in the 2.4 GHz, 5 GHz, and 6 GHz bands, Bluetooth 5.4, satellite navigation (GPS, GLONASS, Galileo, and BeiDou) in the L1 and L5 bands, and NFC <span class="citation" data-cites="Fairphone.2025">(<a href="#ref-Fairphone.2025" role="doc-biblioref">Fairphone B.V. 2025</a>)</span>. <a href="#fig-fp6-system" class="quarto-xref">Figure&nbsp;112</a> shows how the radio is partitioned.</p>
+<div id="cell-fig-fp6-system" class="cell" data-execution_count="110">
+<div class="cell-output cell-output-display">
+<div id="fig-fp6-system" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fp6-system-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-fp6-system-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-112" title="Figure&nbsp;112: Radio architecture of the Fairphone (Gen.&nbsp;6), simplified from the published schematics. RF signals are drawn in black, digital data interfaces in blue, control buses in green, and PA supplies in red."><img src="rfic_files/figure-html/fig-fp6-system-output-1.png" width="750" height="465" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fp6-system-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;112: Radio architecture of the Fairphone (Gen.&nbsp;6), simplified from the published schematics. RF signals are drawn in black, digital data interfaces in blue, control buses in green, and PA supplies in red.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The digital heart of the phone is the system-on-chip (SoC) SM7635 (Snapdragon 7s Gen 3), which contains the application processor and the digital modem (baseband) for all cellular standards. The analog and RF signal processing for cellular and satellite navigation is done in a separate RF transceiver IC (RFIC), the <strong>SDR735</strong>. The RFIC and the SoC exchange digitized I/Q samples over a high-speed serial interface (QLink, with five differential data lanes and a clock lane), so that only digital signals cross between the two chips. Wi-Fi and Bluetooth have their own transceiver, the <strong>WCN6755</strong>, which is connected to the SoC via PCIe.</p>
+<p>Splitting the radio into a digital SoC and an RFIC is common practice: a separate RFIC keeps the noisy digital circuits away from the sensitive receivers (see <a href="#sec-spurs" class="quarto-xref">Section&nbsp;9</a>), and the RFIC can be fabricated in a technology that suits analog and RF circuits.</p>
+<p>Between the antennas and the RFIC sits the <strong>RF front-end (RFFE)</strong>: antenna tuners, diplexers, antenna switches, filters, duplexers, LNA modules, and PA modules. The RFFE components are controlled by the RFIC through several serial MIPI RFFE buses and GPIO lines, the antenna tuners and the RFIC itself through RFFE buses from the SoC, the GNSS LNAs through GPIOs from the SoC, and the 5 GHz Wi-Fi switches through GPIOs from the WCN6755.</p>
+</section>
+<section id="sec-fp6-bands" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="sec-fp6-bands"><span class="header-section-number">11.2</span> Frequency Bands</h2>
+<p>A phone sold worldwide has to support a large number of frequency bands, as different regions use different parts of the spectrum for cellular communication. <a href="#tbl-fp6-bands" class="quarto-xref">Table&nbsp;13</a> lists the cellular bands of the Fairphone (Gen.&nbsp;6), and <a href="#fig-fp6-bands" class="quarto-xref">Figure&nbsp;113</a> shows their location in the spectrum.</p>
+<div id="tbl-fp6-bands" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-fp6-bands-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;13: Cellular bands of the Fairphone (Gen.&nbsp;6) according to the RF block diagram in <span class="citation" data-cites="Fairphone.2025">(<a href="#ref-Fairphone.2025" role="doc-biblioref">Fairphone B.V. 2025</a>)</span>. Bands sharing a row are subsets of each other or overlap, and share the same filters. Bands 41 and n78 support high-power UE (power class 2). DL MIMO lists the number of receive antennas (4×4 for the bands listed as 4×4 MIMO bands, otherwise a primary and a diversity receiver), UL MIMO the number of transmit paths that the schematics show for a band.
+</figcaption>
+<div aria-describedby="tbl-fp6-bands-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Band</th>
+<th style="text-align: left;">Group</th>
+<th style="text-align: left;">Duplex</th>
+<th style="text-align: center;">2G</th>
+<th style="text-align: center;">3G</th>
+<th style="text-align: center;">4G</th>
+<th style="text-align: center;">5G</th>
+<th style="text-align: center;">DL MIMO</th>
+<th style="text-align: center;">UL MIMO</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">MB</td>
+<td style="text-align: left;">FDD</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">4×4</td>
+<td style="text-align: center;">2×2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2/25</td>
+<td style="text-align: left;">MB</td>
+<td style="text-align: left;">FDD</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">4×4</td>
+<td style="text-align: center;">1×1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">MB</td>
+<td style="text-align: left;">FDD</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">4×4</td>
+<td style="text-align: center;">2×2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4/66</td>
+<td style="text-align: left;">MB</td>
+<td style="text-align: left;">FDD</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">4×4</td>
+<td style="text-align: center;">1×1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5/26</td>
+<td style="text-align: left;">LB</td>
+<td style="text-align: left;">FDD</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">2×2</td>
+<td style="text-align: center;">1×1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">HB</td>
+<td style="text-align: left;">FDD</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">4×4</td>
+<td style="text-align: center;">2×2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">LB</td>
+<td style="text-align: left;">FDD</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">2×2</td>
+<td style="text-align: center;">1×1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">12/17</td>
+<td style="text-align: left;">LB</td>
+<td style="text-align: left;">FDD</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">2×2</td>
+<td style="text-align: center;">1×1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">LB</td>
+<td style="text-align: left;">FDD</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">2×2</td>
+<td style="text-align: center;">2×2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">28</td>
+<td style="text-align: left;">LB</td>
+<td style="text-align: left;">FDD</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">2×2</td>
+<td style="text-align: center;">1×1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">32</td>
+<td style="text-align: left;">MB</td>
+<td style="text-align: left;">SDL</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">2×2</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">38/41</td>
+<td style="text-align: left;">HB</td>
+<td style="text-align: left;">TDD</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">4×4</td>
+<td style="text-align: center;">2×2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">40</td>
+<td style="text-align: left;">HB</td>
+<td style="text-align: left;">TDD</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">4×4</td>
+<td style="text-align: center;">2×2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">42</td>
+<td style="text-align: left;">UHB</td>
+<td style="text-align: left;">TDD</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">4×4</td>
+<td style="text-align: center;">1×1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">71</td>
+<td style="text-align: left;">LB</td>
+<td style="text-align: left;">FDD</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">2×2</td>
+<td style="text-align: center;">2×2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">n77/n78</td>
+<td style="text-align: left;">UHB</td>
+<td style="text-align: left;">TDD</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">4×4</td>
+<td style="text-align: center;">1×1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div id="cell-fig-fp6-bands" class="cell" data-execution_count="111">
+<div class="cell-output cell-output-display">
+<div id="fig-fp6-bands" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fp6-bands-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-fp6-bands-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-113" title="Figure&nbsp;113: Frequency bands received and transmitted by the Fairphone (Gen.&nbsp;6), with band edges according to 3GPP. FDD bands show uplink (UL, phone transmits) and downlink (DL, phone receives) separately; TDD bands use the same frequencies for both. The shaded areas are the band groups LB, MB, HB, and UHB used in this appendix. Note the logarithmic frequency axis."><img src="rfic_files/figure-html/fig-fp6-bands-output-1.png" width="748" height="560" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fp6-bands-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;113: Frequency bands received and transmitted by the Fairphone (Gen.&nbsp;6), with band edges according to 3GPP. FDD bands show uplink (UL, phone transmits) and downlink (DL, phone receives) separately; TDD bands use the same frequencies for both. The shaded areas are the band groups LB, MB, HB, and UHB used in this appendix. Note the logarithmic frequency axis.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In the RF front-end, the bands are sorted into <strong>band groups</strong>; in this appendix we use low band (LB, 617 MHz to 960 MHz), mid band (MB, 1452 MHz to 2200 MHz), high band (HB, 2300 MHz to 2690 MHz), and ultra-high band (UHB, 3300 MHz to 5000 MHz). Within a band group, LNAs, PAs, and antennas can be shared, as their relative bandwidth is moderate (e.g., 44 % for LB and 41 % for MB). A single amplifier covering all bands from 617 MHz to 5 GHz would be much harder to match (see the Bode-Fano limit in <a href="#sec-impedance-matching" class="quarto-xref">Section&nbsp;4.1</a>) and would let all out-of-band signals pass.</p>
+<p>Below 2.7 GHz, most bands are FDD, while the TDD bands (B38 to B42, n77, n78) are located at higher frequencies, as already noted in <a href="#tbl-duplexing-standards" class="quarto-xref">Table&nbsp;4</a>. In FDD, the receiver has to be protected from the strong TX signal of the same phone by a duplexer (see <a href="#sec-trx-duplexing" class="quarto-xref">Section&nbsp;3.5</a>). The difficulty of building this duplexer is set by the <strong>duplex gap</strong> <span class="math inline">\(f_\mathrm{gap}\)</span> between the upper edge of the uplink and the lower edge of the downlink (or vice versa). Within the gap, the filter has to transition from its passband to a high attenuation. Using the definition of the filter quality factor <span class="math inline">\(Q = f_\mathrm{c} / \Delta f\)</span> from <a href="#sec-trx" class="quarto-xref">Section&nbsp;3</a>, the resonators of the duplexer need a quality factor of at least</p>
+<p><span id="eq-fp6-qmin"><span class="math display">\[
+Q_\mathrm{min} = \frac{f_\mathrm{c}}{f_\mathrm{gap}},
+\tag{83}\]</span></span></p>
+<p>which is evaluated for all FDD bands of the phone in <a href="#fig-fp6-duplex-q" class="quarto-xref">Figure&nbsp;114</a>. Many bands have a duplex gap of only 10 MHz to 20 MHz, so that <span class="math inline">\(Q_\mathrm{min}\)</span> is close to 100, while a realistic filter needs resonators with a <span class="math inline">\(Q\)</span> that is an order of magnitude higher to achieve a steep transition with low insertion loss. On-chip <span class="math inline">\(LC\)</span> filters with a <span class="math inline">\(Q\)</span> of 10 to 20 are hopeless here, which is why every FDD band needs its own acoustic (SAW or BAW) duplexer. Only bands 4 and 66, whose uplink and downlink are separated by more than 300 MHz, would be uncritical.</p>
+<div id="cell-fig-fp6-duplex-q" class="cell" data-execution_count="112">
+<div class="cell-output cell-output-display">
+<div id="fig-fp6-duplex-q" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fp6-duplex-q-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-fp6-duplex-q-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-114" title="Figure&nbsp;114: Duplex gap f_\mathrm{gap} between uplink and downlink (left) and the resulting lower bound Q_\mathrm{min} = f_\mathrm{c} / f_\mathrm{gap} of the filter quality factor (right) for the FDD bands of the Fairphone (Gen.&nbsp;6). The shaded areas mark the Q of on-chip LC filters (10 to 20) and of acoustic SAW/BAW resonators (thousands, see Section&nbsp;3)."><img src="rfic_files/figure-html/fig-fp6-duplex-q-output-1.png" width="745" height="406" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fp6-duplex-q-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;114: Duplex gap <span class="math inline">\(f_\mathrm{gap}\)</span> between uplink and downlink (left) and the resulting lower bound <span class="math inline">\(Q_\mathrm{min} = f_\mathrm{c} / f_\mathrm{gap}\)</span> of the filter quality factor (right) for the FDD bands of the Fairphone (Gen.&nbsp;6). The shaded areas mark the <span class="math inline">\(Q\)</span> of on-chip <span class="math inline">\(LC\)</span> filters (10 to 20) and of acoustic SAW/BAW resonators (thousands, see <a href="#sec-trx" class="quarto-xref">Section&nbsp;3</a>).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Number of Filters in a Phone
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Every FDD band needs a duplexer, every band used for receive diversity and MIMO needs additional receive filters, and the GNSS and Wi-Fi paths need their own filters as well. This is why a phone contains a large number of acoustic filters, and why a new band cannot simply be added in software.</p>
+</div>
+</div>
+</section>
+<section id="sec-fp6-antennas" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="sec-fp6-antennas"><span class="header-section-number">11.3</span> Antennas</h2>
+<p>The phone uses 11 antenna feeds. A large number of antennas is needed for three reasons:</p>
+<ul>
+<li><strong>MIMO</strong>: For 4×4 downlink MIMO in the mid, high, and ultra-high bands, four independent receive paths per band have to be connected to four different antennas (named primary RX (PRX), diversity RX (DRX), PRX MIMO, and DRX MIMO). The low bands use 2×2 MIMO, as the antennas for long wavelengths (about 40 cm at 750 MHz) are large and difficult to fit into a phone.</li>
+<li><strong>Concurrent operation</strong>: Cellular, Wi-Fi, Bluetooth, and GNSS work at the same time.</li>
+<li><strong>Sounding reference signals (SRS)</strong>: In the TDD bands 41 and n77/n78, the phone transmits a pilot signal on each of its receive antennas in turn, so that the base station can measure the full channel matrix for beamforming. This requires switches that connect the transmitter to every receive antenna.</li>
+</ul>
+<p>Most antennas serve several band groups, which are separated by diplexers (two bands) or triplexers (three bands). For example, one antenna is shared by the B32 downlink, GNSS L1, and Wi-Fi 2.4 GHz: a diplexer splits it into 704 MHz to 1610 MHz and 2400 MHz to 5950 MHz, and a triplexer separates the B32 and GNSS L1 signals afterwards.</p>
+<p>The two antennas that carry the LB transmitters are equipped with <strong>antenna tuners</strong>. The impedance of a small phone antenna depends strongly on frequency and on the environment (e.g., the hand of the user), and an antenna tuner (a network of switched capacitors and inductors, see <a href="#sec-impedance-matching" class="quarto-xref">Section&nbsp;4.1</a>) adapts the matching network to the band in use and to changing conditions. This is especially important in the low bands, where the antenna is electrically small compared to the wavelength.</p>
+</section>
+<section id="sec-fp6-rfic" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="sec-fp6-rfic"><span class="header-section-number">11.4</span> Cellular Transceiver SDR735</h2>
+<p>The SDR735 is a highly integrated multi-band transceiver. No datasheet is public, but its pinout in the schematics <span class="citation" data-cites="Fairphone.2025">(<a href="#ref-Fairphone.2025" role="doc-biblioref">Fairphone B.V. 2025</a>)</span> already tells a lot about its architecture:</p>
+<ul>
+<li><strong>Receivers</strong>: four groups of RF inputs for the primary (P), diversity (D), primary MIMO (PM), and diversity MIMO (DM) receive paths, each with several inputs for the different band groups. These are the four receive paths needed for 4×4 downlink MIMO.</li>
+<li><strong>Transmitters</strong>: two transmit chains (TX0 and TX1), each with six RF outputs for the different band groups.</li>
+<li><strong>Feedback receiver</strong>: one input (FBRX) that measures the transmitted signal (see <a href="#sec-fp6-fbrx" class="quarto-xref">Section&nbsp;11.6.2</a>).</li>
+<li><strong>GNSS receiver</strong>: two inputs, for the L1 and L5 bands.</li>
+<li><strong>Digital interfaces</strong>: the QLink interface to the SoC and the RFFE buses and GPIOs that control the front-end.</li>
+<li><strong>Unused features</strong>: outputs for envelope-tracking DACs (ETDAC0, ETDAC1), which are not connected in the Fairphone (see <a href="#sec-fp6-apt" class="quarto-xref">Section&nbsp;11.6.1</a>).</li>
+</ul>
+<p>There are no IF filters between the front-end and the RFIC in the schematics; the RF inputs and outputs of the RFIC connect directly to the front-end modules. This is consistent with the <strong>direct-conversion architecture</strong> of <a href="#sec-trx-direct-conversion" class="quarto-xref">Section&nbsp;3.1</a>, where the channel selection is done by analog low-pass filters and digital filters on the RFIC. A simplified receive path from antenna to digital I/Q interface is shown in <a href="#fig-fp6-rx-chain" class="quarto-xref">Figure&nbsp;115</a>.</p>
+<div id="cell-fig-fp6-rx-chain" class="cell" data-execution_count="113">
+<div class="cell-output cell-output-display">
+<div id="fig-fp6-rx-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fp6-rx-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-fp6-rx-chain-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-115" title="Figure&nbsp;115: Simplified primary receive path of the Fairphone (Gen.&nbsp;6) for band 1 or band 3, from the antenna to the digital I/Q interface. The I and Q paths of the direct-conversion receiver are drawn as one; the Q path uses a second mixer driven by the LO shifted by 90°."><img src="rfic_files/figure-html/fig-fp6-rx-chain-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fp6-rx-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;115: Simplified primary receive path of the Fairphone (Gen.&nbsp;6) for band 1 or band 3, from the antenna to the digital I/Q interface. The I and Q paths of the direct-conversion receiver are drawn as one; the Q path uses a second mixer driven by the LO shifted by 90°.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The synthesizers of such a transceiver have to generate LO frequencies for all supported bands, from 617 MHz (B71) up to 3.8 GHz (n78), a ratio of more than 6:1. As discussed in <a href="#sec-frequency-tuning-of-oscillators" class="quarto-xref">Section&nbsp;6.6</a>, an LC VCO only achieves a limited tuning range, so the LO is usually derived from a VCO followed by frequency dividers. A divide-by-2 stage is needed anyway to generate quadrature LO signals (see <a href="#sec-lo-ff" class="quarto-xref">Section&nbsp;5.5.3</a>), and further divide-by-2 stages extend the range downwards by octaves. Then the VCOs of a synthesizer have to cover one octave together. If a single VCO tunes from <span class="math inline">\(f_\mathrm{c} (1 - \mathrm{TR})\)</span> to <span class="math inline">\(f_\mathrm{c} (1 + \mathrm{TR})\)</span>, the number of VCOs needed to cover one octave is</p>
+<p><span id="eq-fp6-nvco"><span class="math display">\[
+N_\mathrm{VCO} \geq \frac{\ln 2}{\ln \left( \frac{1 + \mathrm{TR}}{1 - \mathrm{TR}} \right)}.
+\tag{84}\]</span></span></p>
+<p>For a tuning range of ±15 % (TR = 0.15), which is ambitious for a low-phase-noise LC VCO, we get <span class="math inline">\(N_\mathrm{VCO} \geq 2.3\)</span>, i.e., three VCOs per synthesizer. As an FDD transceiver with MIMO and two transmitters needs several synthesizers running at the same time, a multi-band RFIC contains many VCOs.</p>
+<p>The RFIC uses several supply voltages (0.8 V, 0.875 V, 1.2 V, and 1.8 V), provided by the power management ICs <span class="citation" data-cites="Fairphone.2025">(<a href="#ref-Fairphone.2025" role="doc-biblioref">Fairphone B.V. 2025</a>)</span>.</p>
+</section>
+<section id="sec-fp6-rx" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="sec-fp6-rx"><span class="header-section-number">11.5</span> Receive Path</h2>
+<p>In the Fairphone, the LNAs are not placed in the RFIC but in separate <strong>LNA modules</strong>: one for the LB primary receivers (QLN5020), one for the MB and HB primary receivers (QLN5040), and one for the LB, MB, and HB diversity receivers (QLN5030). The n77/n78 receivers use separate modules that combine LNAs with the PA (QPM2980) or with the diversity receivers (QDM3980). Each LNA module contains several LNAs, each with an input switch (SPnT) that selects one of several band filters, and an output multiplexer that routes the amplified signals to the RFIC inputs (see <a href="#fig-fp6-rx-chain" class="quarto-xref">Figure&nbsp;115</a>); this reduces the routing complexity on the PCB.</p>
+<p>External LNAs improve the noise figure of the receiver. All losses between the antenna and the first amplifier add directly to the noise figure of the receiver (a passive component with loss <span class="math inline">\(L\)</span> has a noise factor <span class="math inline">\(F = L\)</span>, see <a href="#sec-noise-figure" class="quarto-xref">Section&nbsp;2.3.3</a>), and in the Fairphone the signal passes through a diplexer, an antenna switch, and a filter before it reaches the LNA module. An LNA directly after the filter fixes the noise figure early in the chain, so that the noise of the RFIC matters less, as the example in <a href="#nte-fp6-nf" class="quarto-xref">Note&nbsp;13</a> shows.</p>
+<div id="nte-fp6-nf" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note&nbsp;13: Noise Figure of the Receive Path
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We assume (as typical values, not taken from datasheets) a total loss of <span class="math inline">\(L\)</span> = 2.6 dB in front of the LNA (diplexer 0.4 dB, antenna switch 0.7 dB, and filter 1.5 dB), an external LNA with NF = 1 dB and a gain of <span class="math inline">\(G\)</span> = 18 dB, and an RFIC with NF = 6 dB. With the Friis formula (<a href="#eq-friis" class="quarto-xref">Equation&nbsp;22</a>) and <span class="math inline">\(F = L\)</span> for the passive components, the receiver has a noise factor of</p>
+<p><span class="math display">\[
+F = L \left( F_\mathrm{LNA} + \frac{F_\mathrm{RFIC} - 1}{G} \right) = 1.82 \cdot \left( 1.26 + \frac{3.98 - 1}{63.1} \right) = 2.38,
+\]</span></p>
+<p>i.e., a noise figure of 3.8 dB. Without the external LNA, the noise figure would be <span class="math inline">\(2.6\,\text{dB} + 6\,\text{dB} = 8.6\,\text{dB}\)</span>, which would reduce the sensitivity (<a href="#eq-sensitivity-dbm" class="quarto-xref">Equation&nbsp;24</a>) by almost 5 dB.</p>
+</div>
+</div>
+<p>For the GNSS receivers, the situation is even more critical, as the satellite signals arrive far below the thermal noise floor. Here, each band (L1 and L5) uses an external LNA between two SAW filters. The first filter protects the LNA from the strong cellular and Wi-Fi signals of the phone itself, and the second filter provides additional out-of-band filtering before further amplification.</p>
+</section>
+<section id="sec-fp6-tx" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="sec-fp6-tx"><span class="header-section-number">11.6</span> Transmit Path</h2>
+<p>The transmit path is shown in <a href="#fig-fp6-tx-chain" class="quarto-xref">Figure&nbsp;116</a>. The RFIC generates the modulated RF signal with a direct-conversion transmitter. This signal is amplified to the required output power by one of two <strong>multimode PA modules (MMPA)</strong> for the LB, MB, and HB bands, which contain PAs for the three band groups together with band switches. A dedicated PA module (QPA2625) is used for GSM, and the n77/n78 band has its own PA in the QPM2980 module. The PA output passes through the duplexer of the active band, an antenna switch, and a directional coupler to the antenna.</p>
+<div id="cell-fig-fp6-tx-chain" class="cell" data-execution_count="114">
+<div class="cell-output cell-output-display">
+<div id="fig-fp6-tx-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fp6-tx-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-fp6-tx-chain-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-116" title="Figure&nbsp;116: Simplified transmit path of the Fairphone (Gen.&nbsp;6) for band 1 or band 3. The supply of the PA comes from an average power tracker; a directional coupler between the antenna switch and the antenna feeds a sample of the TX signal back to the feedback receiver (FBRX) of the RFIC. The I and Q paths of the direct-conversion transmitter are drawn as one."><img src="rfic_files/figure-html/fig-fp6-tx-chain-output-1.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fp6-tx-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;116: Simplified transmit path of the Fairphone (Gen.&nbsp;6) for band 1 or band 3. The supply of the PA comes from an average power tracker; a directional coupler between the antenna switch and the antenna feeds a sample of the TX signal back to the feedback receiver (FBRX) of the RFIC. The I and Q paths of the direct-conversion transmitter are drawn as one.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The maximum output power at the antenna connector is 23 dBm (power class 3) for most bands and 26 dBm (power class 2, high-power UE) for bands 41 and n78 <span class="citation" data-cites="3GPP.36101 3GPP.38101">(<a href="#ref-3GPP.36101" role="doc-biblioref">3GPP 2026a</a>, <a href="#ref-3GPP.38101" role="doc-biblioref">2026b</a>)</span>.</p>
+<section id="sec-fp6-apt" class="level3" data-number="11.6.1">
+<h3 data-number="11.6.1" class="anchored" data-anchor-id="sec-fp6-apt"><span class="header-section-number">11.6.1</span> Average Power Tracking</h3>
+<p>A phone transmits at full power only at the cell edge; closer to the base station, the output power is reduced by the power control. With a fixed supply voltage, the efficiency of a linear PA drops quickly at reduced output power (see <a href="#sec-poweramp-efficiency" class="quarto-xref">Section&nbsp;8.1</a>). The Fairphone therefore supplies each of the two MMPAs from its own dc-dc converter (QET3930), whose outputs are labeled as APT supplies (VPA0_APT and VPA1_APT) in the schematics <span class="citation" data-cites="Fairphone.2025">(<a href="#ref-Fairphone.2025" role="doc-biblioref">Fairphone B.V. 2025</a>)</span>. With APT, the PA supply voltage is adjusted to the average output power of the current transmission slot. This <strong>average power tracking (APT)</strong> is a simple form of the supply modulation discussed with Class G and Class H in <a href="#sec-poweramp-classes" class="quarto-xref">Section&nbsp;8.3</a>.</p>
+<p>To quantify the benefit, we model an ideal class-B PA. For an RF amplitude <span class="math inline">\(a\)</span> at the drain and a load resistance <span class="math inline">\(R\)</span>, the output power is <span class="math inline">\(P_\mathrm{out} = a^2 / (2R)\)</span> and the dc power drawn from the supply <span class="math inline">\(V_\mathrm{DD}\)</span> is <span class="math inline">\(P_\mathrm{dc} = 2 V_\mathrm{DD} a / (\pi R)\)</span>. For a modulated signal with a varying envelope <span class="math inline">\(a(t)\)</span>, the average drain efficiency becomes</p>
+<p><span id="eq-fp6-eta-classb"><span class="math display">\[
+\eta = \frac{\pi}{4} \frac{\mathrm{E}\{a^2\}}{\mathrm{E}\{V_\mathrm{DD} \, a\}},
+\tag{85}\]</span></span></p>
+<p>which reaches the class-B limit <span class="math inline">\(\pi / 4\)</span> only if <span class="math inline">\(V_\mathrm{DD}\)</span> follows the envelope <span class="math inline">\(a(t)\)</span> at every instant. For an OFDM signal, the I and Q components are approximately Gaussian, so the envelope is <a href="https://en.wikipedia.org/wiki/Rayleigh_distribution">Rayleigh distributed</a>, with <span class="math inline">\(\mathrm{E}\{a^2\} = 2 \sigma^2\)</span> and <span class="math inline">\(\mathrm{E}\{a\} = \sigma \sqrt{\pi / 2}\)</span>. If the supply is set to the envelope peak <span class="math inline">\(a_\mathrm{pk} = \sigma \sqrt{2\,\text{PAPR}}\)</span>, <a href="#eq-fp6-eta-classb" class="quarto-xref">Equation&nbsp;85</a> yields</p>
+<p><span id="eq-fp6-eta-apt"><span class="math display">\[
+\eta_\mathrm{APT} = \frac{\sqrt{\pi}}{2 \sqrt{\text{PAPR}}},
+\tag{86}\]</span></span></p>
+<p>independent of the output power. For a PAPR of 8 dB, this gives 35 %. With a fixed supply, the supply is set by the peak at maximum output power, and the efficiency falls by 10 dB for every 10 dB of output power back-off, while APT keeps the efficiency constant as long as the dc-dc converter can lower its output voltage. <a href="#fig-fp6-apt" class="quarto-xref">Figure&nbsp;117</a> compares fixed supply, APT, and envelope tracking (ET), where the supply follows the envelope instantaneously.</p>
+<div id="cell-fig-fp6-apt" class="cell" data-execution_count="115">
+<div class="cell-output cell-output-display">
+<div id="fig-fp6-apt" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fp6-apt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-fp6-apt-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-117" title="Figure&nbsp;117: Average drain efficiency of an ideal class-B PA amplifying an OFDM signal (Rayleigh-distributed envelope, supply sized for a PAPR of 8 dB) versus average output power, for a fixed supply, average power tracking (APT), and envelope tracking (ET). The fixed supply is sized for the maximum output power of 23 dBm (power class 3); the tracking supply cannot go below 0.5 V for a 3.8 V battery. The losses of the dc-dc converter are not included."><img src="rfic_files/figure-html/fig-fp6-apt-output-1.png" width="706" height="369" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fp6-apt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;117: Average drain efficiency of an ideal class-B PA amplifying an OFDM signal (Rayleigh-distributed envelope, supply sized for a PAPR of 8 dB) versus average output power, for a fixed supply, average power tracking (APT), and envelope tracking (ET). The fixed supply is sized for the maximum output power of 23 dBm (power class 3); the tracking supply cannot go below 0.5 V for a 3.8 V battery. The losses of the dc-dc converter are not included.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>At 13 dBm output power, i.e., 10 dB below maximum, APT improves the drain efficiency from 11 % to 35 %. ET more than doubles the efficiency at high output power, but requires a tracking supply with a bandwidth of several times the signal bandwidth, which is difficult and power hungry for the wide channels of LTE and 5G NR. The SDR735 has outputs to control an envelope tracker (ETDAC0 and ETDAC1), but in the Fairphone, they are not connected; the phone relies on APT.</p>
+</section>
+<section id="sec-fp6-fbrx" class="level3" data-number="11.6.2">
+<h3 data-number="11.6.2" class="anchored" data-anchor-id="sec-fp6-fbrx"><span class="header-section-number">11.6.2</span> Feedback Receiver</h3>
+<p>The transmit power has to be controlled accurately (the maximum output power, for example, has a tolerance of about ±2 dB <span class="citation" data-cites="3GPP.36101">(<a href="#ref-3GPP.36101" role="doc-biblioref">3GPP 2026a</a>)</span>), and the transmitter has to meet the requirements for the error vector magnitude (EVM, see <a href="#eq-evm-definition" class="quarto-xref">Equation&nbsp;30</a>) and the adjacent channel leakage. As the gain of the PA depends on temperature, supply voltage, frequency, and antenna impedance, the phone measures its own output: a directional coupler between the antenna switch and the antenna couples a small part of the transmitted signal to the <strong>feedback receiver (FBRX)</strong> input of the RFIC, via a switch that selects the coupler of the active transmitter. A feedback receiver allows the digital baseband to compare the transmitted with the intended signal, which can be used for closed-loop power control, for the calibration of I/Q imbalance and LO leakage of the transmitter (see <a href="#sec-trx-direct-conversion" class="quarto-xref">Section&nbsp;3.1</a>), and for digital predistortion of the PA (see <a href="#sec-poweramp-advanced" class="quarto-xref">Section&nbsp;8.5</a>).</p>
+</section>
+<section id="sec-fp6-dual-uplink" class="level3" data-number="11.6.3">
+<h3 data-number="11.6.3" class="anchored" data-anchor-id="sec-fp6-dual-uplink"><span class="header-section-number">11.6.3</span> Dual Uplink and Self-Interference</h3>
+<p>For bands 1 and 3, the Fairphone uses a <strong>quadplexer</strong> instead of two separate duplexers <span class="citation" data-cites="Fairphone.2025">(<a href="#ref-Fairphone.2025" role="doc-biblioref">Fairphone B.V. 2025</a>)</span>: a filter with one antenna port and four ports for B1 TX, B1 RX, B3 TX, and B3 RX. A quadplexer allows both bands to be connected to the same antenna at the same time, as needed for carrier aggregation of B1 and B3, possibly with an uplink in both bands (dual uplink). When two transmit signals pass through a nonlinear component (the PA output stages, the antenna switch, or the quadplexer itself), they generate harmonics and intermodulation products (see <a href="#sec-linearity" class="quarto-xref">Section&nbsp;2.2</a>). In the classification of self-interference mechanisms of <span class="citation" data-cites="Sadjina.2020">(<a href="#ref-Sadjina.2020" role="doc-biblioref">Sadjina et al. 2020</a>)</span>, this is TX-to-RX crosstalk: the interferer is generated from the phone’s own transmit signals and reaches its receivers through the shared front-end, where the TX-to-RX isolation of the quadplexer and of the antenna switch is finite (see also <a href="#sec-spurs-mechanisms" class="quarto-xref">Section&nbsp;9.1</a>). <a href="#fig-fp6-imd" class="quarto-xref">Figure&nbsp;118</a> shows where these products of B1 and B3 fall.</p>
+<div id="cell-fig-fp6-imd" class="cell" data-execution_count="116">
+<div class="cell-output cell-output-display">
+<div id="fig-fp6-imd" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fp6-imd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="rfic_files/figure-html/fig-fp6-imd-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-118" title="Figure&nbsp;118: Harmonics and intermodulation products |m f_\mathrm{B3} + n f_\mathrm{B1}| of a dual uplink in bands 1 and 3 (f_\mathrm{B1} = 1920 MHz to 1980 MHz, f_\mathrm{B3} = 1710 MHz to 1785 MHz). The shaded columns are the receive bands of the phone; the parts of a product that fall into a receive band are drawn in red, and the affected receive bands are listed next to each product."><img src="rfic_files/figure-html/fig-fp6-imd-output-1.png" width="746" height="422" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fp6-imd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;118: Harmonics and intermodulation products <span class="math inline">\(|m f_\mathrm{B3} + n f_\mathrm{B1}|\)</span> of a dual uplink in bands 1 and 3 (<span class="math inline">\(f_\mathrm{B1}\)</span> = 1920 MHz to 1980 MHz, <span class="math inline">\(f_\mathrm{B3}\)</span> = 1710 MHz to 1785 MHz). The shaded columns are the receive bands of the phone; the parts of a product that fall into a receive band are drawn in red, and the affected receive bands are listed next to each product.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Several products land in receive bands of the same phone:</p>
+<ul>
+<li>The third-order product <span class="math inline">\(2 f_\mathrm{B1} - f_\mathrm{B3}\)</span> (2055 MHz to 2250 MHz) covers the entire B1 downlink. This is the most critical case, as the phone has to receive in B1 while it transmits the two signals that create the interferer.</li>
+<li>The third-order product <span class="math inline">\(2 f_\mathrm{B3} - f_\mathrm{B1}\)</span> (1440 MHz to 1650 MHz) falls into B32 and into the GNSS L1 band.</li>
+<li>The second harmonics and the second-order sum product fall into the n77/n78 bands, and higher-order products into the Wi-Fi 5 GHz and 6 GHz bands.</li>
+</ul>
+<p>How linear do the components have to be? In dual uplink, the maximum output power of 23 dBm is shared by the two carriers, so each carrier has about 20 dBm. If the IM3 product shall stay below -110 dBm, i.e., about 7 dB below the noise floor of -103 dBm of a receiver with a 5 MHz channel and NF = 4 dB (see <a href="#eq-sensitivity-dbm" class="quarto-xref">Equation&nbsp;24</a>), solving <a href="#eq-iip3" class="quarto-xref">Equation&nbsp;15</a> for the IIP3 of the components after the PAs gives</p>
+<p><span class="math display">\[
+\text{IIP3} = P_\mathrm{in} + \frac{P_\mathrm{in} - P_\mathrm{IM3}}{2} = 20\,\text{dBm} + \frac{20 - (-110)}{2}\,\text{dB} = 85\,\text{dBm},
+\]</span></p>
+<p>a value that is extremely hard to met by real switches and filters. 3GPP therefore allows a maximum sensitivity degradation (MSD) for band combinations whose intermodulation products fall into an own receive band <span class="citation" data-cites="3GPP.36101">(<a href="#ref-3GPP.36101" role="doc-biblioref">3GPP 2026a</a>)</span>, and the front-end designer minimizes the degradation with highly linear switches and filters and by keeping the two TX signals isolated from each other for as long as possible (e.g., using different antennas).</p>
+<p>A complementary approach is <strong>self-interference cancellation</strong> in the receiver <span class="citation" data-cites="Sadjina.2020">(<a href="#ref-Sadjina.2020" role="doc-biblioref">Sadjina et al. 2020</a>)</span>. Unlike an external blocker, the interferer here is created from signals the phone knows exactly: its own TX baseband samples. An adaptive model of the nonlinear coupling path, driven by the two TX signals, can therefore reproduce the IM3 product in the digital baseband and subtract it from the received signal. As the coupling path changes with antenna impedance, temperature, and output power, the model parameters are estimated continuously (e.g., with LMS-type adaptive algorithms). Cancellation relaxes the linearity requirements of the front-end, at the cost of additional digital signal processing. Whether such a technique is used in the Fairphone is unknown.</p>
+<p>This is a good example of the self-interference problems discussed in <a href="#sec-spurs" class="quarto-xref">Section&nbsp;9</a>: in a multi-band radio, the strongest interferer is often the own transmitter.</p>
+</section>
+</section>
+<section id="sec-fp6-wifi" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="sec-fp6-wifi"><span class="header-section-number">11.7</span> Wi-Fi and Bluetooth</h2>
+<p>Wi-Fi and Bluetooth are handled by the WCN6755, which is connected to the SoC via PCIe <span class="citation" data-cites="Fairphone.2025">(<a href="#ref-Fairphone.2025" role="doc-biblioref">Fairphone B.V. 2025</a>)</span>. In contrast to the cellular radio, the WCN6755 integrates the PAs on chip. Wi-Fi uses TDD (see <a href="#tbl-duplexing-standards" class="quarto-xref">Table&nbsp;4</a>), so a switch instead of a duplexer separates TX and RX. For 2×2 MIMO, the WCN6755 has two independent RF chains per band, which are connected to separate antennas. Bluetooth shares the 2.4 GHz RF ports with Wi-Fi (the pins are labeled WLBT), so Wi-Fi and Bluetooth at 2.4 GHz use the same antenna paths.</p>
+</section>
+<section id="sec-fp6-summary" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="sec-fp6-summary"><span class="header-section-number">11.8</span> Summary</h2>
+<p><a href="#tbl-fp6-course-map" class="quarto-xref">Table&nbsp;14</a> maps the components of the Fairphone (Gen.&nbsp;6) radio to the chapters of this course.</p>
+<div id="tbl-fp6-course-map" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-fp6-course-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;14: Mapping of the components of the Fairphone (Gen.&nbsp;6) radio to the topics of this course.
+</figcaption>
+<div aria-describedby="tbl-fp6-course-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 61%">
+<col style="width: 11%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Component in the Fairphone (Gen.&nbsp;6)</th>
+<th style="text-align: left;">Topic</th>
+<th style="text-align: left;">Course section</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Band plan, duplexers, quadplexer</td>
+<td style="text-align: left;">FDD/TDD, filter <span class="math inline">\(Q\)</span></td>
+<td style="text-align: left;"><a href="#sec-trx-duplexing" class="quarto-xref">Section&nbsp;3.5</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SDR735 receivers and transmitters</td>
+<td style="text-align: left;">Direct-conversion transceiver</td>
+<td style="text-align: left;"><a href="#sec-trx-direct-conversion" class="quarto-xref">Section&nbsp;3.1</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LNA modules, RX noise figure</td>
+<td style="text-align: left;">Noise figure, Friis formula, LNAs</td>
+<td style="text-align: left;"><a href="#sec-noise-figure" class="quarto-xref">Section&nbsp;2.3.3</a>, <a href="#sec-lna" class="quarto-xref">Section&nbsp;4</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Antenna tuners, LNA input matching</td>
+<td style="text-align: left;">Impedance matching</td>
+<td style="text-align: left;"><a href="#sec-impedance-matching" class="quarto-xref">Section&nbsp;4.1</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">I/Q downconversion and upconversion</td>
+<td style="text-align: left;">Mixers, quadrature LO generation</td>
+<td style="text-align: left;"><a href="#sec-mixer" class="quarto-xref">Section&nbsp;5</a>, <a href="#sec-mixer-lo" class="quarto-xref">Section&nbsp;5.5</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LO generation from 617 MHz to 3.8 GHz</td>
+<td style="text-align: left;">Oscillator tuning, PLLs</td>
+<td style="text-align: left;"><a href="#sec-frequency-tuning-of-oscillators" class="quarto-xref">Section&nbsp;6.6</a>, <a href="#sec-pll" class="quarto-xref">Section&nbsp;7</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MMPAs, APT supply</td>
+<td style="text-align: left;">PA efficiency, supply modulation</td>
+<td style="text-align: left;"><a href="#sec-poweramp-efficiency" class="quarto-xref">Section&nbsp;8.1</a>, <a href="#sec-poweramp-classes" class="quarto-xref">Section&nbsp;8.3</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Feedback receiver</td>
+<td style="text-align: left;">Power control, EVM, predistortion</td>
+<td style="text-align: left;"><a href="#sec-poweramp-advanced" class="quarto-xref">Section&nbsp;8.5</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dual uplink B1/B3</td>
+<td style="text-align: left;">Intermodulation, self-interference</td>
+<td style="text-align: left;"><a href="#sec-linearity" class="quarto-xref">Section&nbsp;2.2</a>, <a href="#sec-spurs" class="quarto-xref">Section&nbsp;9</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+</section>
+<section id="sec-exam-questions" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> Appendix: Examination Questions</h1>
 <p>This chapter contains a collection of potential questions covering the topics discussed in this course. The questions are organized by topic and are intended to help students prepare for examinations.</p>
-<section id="sec-exam-intro" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="sec-exam-intro"><span class="header-section-number">11.1</span> Introduction and Wireless Basics</h2>
+<section id="sec-exam-intro" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="sec-exam-intro"><span class="header-section-number">12.1</span> Introduction and Wireless Basics</h2>
 <ol type="1">
 <li><p>What is the basic function of a radio-frequency transceiver? Describe the main components and their roles.</p></li>
 <li><p>Explain Friis’ transmission formula (<a href="#eq-friis-transmission" class="quarto-xref">Equation&nbsp;1</a>). What factors determine the received power in a wireless link? How does the free-space path loss (FSPL) change with distance and frequency?</p></li>
@@ -5240,8 +5775,8 @@ endc</code></pre>
 <li><p>Name at least five different wireless standards. For each, state the approximate frequency range and typical application.</p></li>
 </ol>
 </section>
-<section id="sec-exam-linearity" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="sec-exam-linearity"><span class="header-section-number">11.2</span> Linearity</h2>
+<section id="sec-exam-linearity" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="sec-exam-linearity"><span class="header-section-number">12.2</span> Linearity</h2>
 <ol start="7" type="1">
 <li><p>Describe the nonlinear model used in RF systems (<a href="#eq-nonlinear-model" class="quarto-xref">Equation&nbsp;6</a>). What happens when a single sinusoidal signal passes through a weakly nonlinear system? What frequency components are generated?</p></li>
 <li><p>What is gain compression? Draw a simple transfer characteristic and show the 1 dB compression point (<span class="math inline">\(P_\mathrm{1dB}\)</span>). Explain the difference between compressive and expansive behavior.</p></li>
@@ -5251,8 +5786,8 @@ endc</code></pre>
 <li><p>What is the approximate relationship between <span class="math inline">\(P_\mathrm{1dB}\)</span> and IIP3 for mildly nonlinear systems?</p></li>
 </ol>
 </section>
-<section id="sec-exam-noise" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="sec-exam-noise"><span class="header-section-number">11.3</span> Noise</h2>
+<section id="sec-exam-noise" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="sec-exam-noise"><span class="header-section-number">12.3</span> Noise</h2>
 <ol start="13" type="1">
 <li><p>What are the main types of noise relevant for electronic circuits? Describe thermal noise, shot noise, and flicker noise with their governing equations.</p></li>
 <li><p>What is the thermal noise voltage of a resistor with value <span class="math inline">\(R\)</span>? Calculate the noise voltage spectral density of a 1 kΩ resistor at room temperature.</p></li>
@@ -5263,8 +5798,8 @@ endc</code></pre>
 <li><p>What is the sensitivity of a wireless receiver? A receiver requires an SNR of 12 dB, has a channel bandwidth of 200 kHz, and a total noise figure of 5 dB. Calculate the sensitivity.</p></li>
 </ol>
 </section>
-<section id="sec-exam-modulation" class="level2" data-number="11.4">
-<h2 data-number="11.4" class="anchored" data-anchor-id="sec-exam-modulation"><span class="header-section-number">11.4</span> Modulation and Communication Concepts</h2>
+<section id="sec-exam-modulation" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="sec-exam-modulation"><span class="header-section-number">12.4</span> Modulation and Communication Concepts</h2>
 <ol start="20" type="1">
 <li><p>What is modulation? Describe the basic types: amplitude modulation (AM/ASK), frequency modulation (FM/FSK), and phase modulation (PM/PSK). What is QAM?</p></li>
 <li><p>Draw the constellation diagram of a QPSK or 16-QAM modulated signal. What impairments can affect the constellation, and how would they manifest in the diagram? What is Error Vector Magnitude (EVM)?</p></li>
@@ -5274,8 +5809,8 @@ endc</code></pre>
 <li><p>How can multiple users access a radio channel simultaneously? Describe FDMA, TDMA, and CDMA.</p></li>
 </ol>
 </section>
-<section id="sec-exam-trx" class="level2" data-number="11.5">
-<h2 data-number="11.5" class="anchored" data-anchor-id="sec-exam-trx"><span class="header-section-number">11.5</span> Transceiver Architectures</h2>
+<section id="sec-exam-trx" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="sec-exam-trx"><span class="header-section-number">12.5</span> Transceiver Architectures</h2>
 <ol start="26" type="1">
 <li><p>Draw a block diagram of a direct-conversion (zero-IF) receiver. Explain the function of each block. What are the advantages and disadvantages of this architecture?</p></li>
 <li><p>What is the “image frequency” problem in a heterodyne receiver? How can it be addressed?</p></li>
@@ -5284,8 +5819,8 @@ endc</code></pre>
 <li><p>What is a duplexer? When is it needed? Compare the requirements for duplexers vs.&nbsp;TX/RX switches.</p></li>
 </ol>
 </section>
-<section id="sec-exam-lna" class="level2" data-number="11.6">
-<h2 data-number="11.6" class="anchored" data-anchor-id="sec-exam-lna"><span class="header-section-number">11.6</span> Low Noise Amplifiers</h2>
+<section id="sec-exam-lna" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="sec-exam-lna"><span class="header-section-number">12.6</span> Low Noise Amplifiers</h2>
 <ol start="31" type="1">
 <li><p>What are the key performance parameters of an LNA? List at least five important specifications and describe their typical values.</p></li>
 <li><p>What is impedance matching? What is the return loss, and how is it related to the reflection coefficient <span class="math inline">\(\Gamma\)</span>? What return loss is typically considered acceptable?</p></li>
@@ -5297,8 +5832,8 @@ endc</code></pre>
 <li><p>Describe the shunt-feedback LNA topology. What are its advantages, and how does the input impedance depend on the feedback and load impedances?</p></li>
 </ol>
 </section>
-<section id="sec-exam-mixer" class="level2" data-number="11.7">
-<h2 data-number="11.7" class="anchored" data-anchor-id="sec-exam-mixer"><span class="header-section-number">11.7</span> Mixers</h2>
+<section id="sec-exam-mixer" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="sec-exam-mixer"><span class="header-section-number">12.7</span> Mixers</h2>
 <ol start="39" type="1">
 <li><p>What are the two fundamental approaches to implementing frequency conversion in a mixer? Explain the difference between nonlinear and time-variant mixers.</p></li>
 <li><p>Draw the block diagram of an unbalanced passive mixer using a single MOSFET switch. Derive the output signal expression and identify the conversion loss.</p></li>
@@ -5309,8 +5844,8 @@ endc</code></pre>
 <li><p>Explain the flip-flop based I/Q generation method. How can 25% duty cycle LO signals be generated?</p></li>
 </ol>
 </section>
-<section id="sec-exam-oscillator" class="level2" data-number="11.8">
-<h2 data-number="11.8" class="anchored" data-anchor-id="sec-exam-oscillator"><span class="header-section-number">11.8</span> Oscillators</h2>
+<section id="sec-exam-oscillator" class="level2" data-number="12.8">
+<h2 data-number="12.8" class="anchored" data-anchor-id="sec-exam-oscillator"><span class="header-section-number">12.8</span> Oscillators</h2>
 <ol start="46" type="1">
 <li><p>What is the Barkhausen criterion for oscillation? Describe the conditions for sustained oscillation in a feedback system.</p></li>
 <li><p>Draw an LC tank circuit with loss. What is the resonance frequency? How is the quality factor <span class="math inline">\(Q\)</span> defined? What is the relationship between <span class="math inline">\(Q\)</span> and the energy stored vs.&nbsp;energy dissipated per cycle?</p></li>
@@ -5321,8 +5856,8 @@ endc</code></pre>
 <li><p>How can frequency tuning of an LC oscillator be achieved? Describe different varactor implementations (MOS varactor, switched capacitor, PN junction).</p></li>
 </ol>
 </section>
-<section id="sec-exam-pll" class="level2" data-number="11.9">
-<h2 data-number="11.9" class="anchored" data-anchor-id="sec-exam-pll"><span class="header-section-number">11.9</span> Phase-Locked Loops</h2>
+<section id="sec-exam-pll" class="level2" data-number="12.9">
+<h2 data-number="12.9" class="anchored" data-anchor-id="sec-exam-pll"><span class="header-section-number">12.9</span> Phase-Locked Loops</h2>
 <ol start="53" type="1">
 <li><p>Draw a simple block diagram of a Type-I phase-locked loop and explain the function of each component (PD, LPF, VCO, divider). What are the steady-state phase and frequency errors?</p></li>
 <li><p>What is a phase-frequency detector (PFD)? How does it differ from a simple XOR phase detector? Draw its implementation and timing diagrams for different input conditions.</p></li>
@@ -5336,8 +5871,8 @@ endc</code></pre>
 <li><p>What is the noise transfer function (NTF) of a first-order delta-sigma modulator? How does it shape quantization noise?</p></li>
 </ol>
 </section>
-<section id="sec-exam-poweramp" class="level2" data-number="11.10">
-<h2 data-number="11.10" class="anchored" data-anchor-id="sec-exam-poweramp"><span class="header-section-number">11.10</span> Power Amplifiers</h2>
+<section id="sec-exam-poweramp" class="level2" data-number="12.10">
+<h2 data-number="12.10" class="anchored" data-anchor-id="sec-exam-poweramp"><span class="header-section-number">12.10</span> Power Amplifiers</h2>
 <ol start="63" type="1">
 <li><p>Draw a simple single-ended power amplifier. What is the trade-off between supply voltage, load impedance, and output power? Calculate the maximum output power for <span class="math inline">\(V_\mathrm{DD}\)</span> = 3 V and <span class="math inline">\(R_\mathrm{L}\)</span> = 50 Ω.</p></li>
 <li><p>What is the definition of drain efficiency and power-added efficiency (PAE) of a PA?</p></li>
@@ -5349,8 +5884,8 @@ endc</code></pre>
 <li><p>What is neutralization in power amplifier design? Why is it needed, and how is it implemented in a differential PA?</p></li>
 </ol>
 </section>
-<section id="sec-exam-calculations" class="level2" data-number="11.11">
-<h2 data-number="11.11" class="anchored" data-anchor-id="sec-exam-calculations"><span class="header-section-number">11.11</span> Calculation Problems</h2>
+<section id="sec-exam-calculations" class="level2" data-number="12.11">
+<h2 data-number="12.11" class="anchored" data-anchor-id="sec-exam-calculations"><span class="header-section-number">12.11</span> Calculation Problems</h2>
 <ol start="71" type="1">
 <li><p><strong>FSPL Calculation</strong>: Calculate the free-space path loss for a 5.8 GHz Wi-Fi link over a distance of 100 m. Express your answer in dB.</p></li>
 <li><p><strong>Channel Capacity</strong>: A mobile communication system operates with a 20 MHz channel bandwidth. The SNR at the receiver is 15 dB. Calculate the theoretical maximum data rate according to the Shannon-Hartley theorem. If the actual data rate is 75 Mbps, what is the spectral efficiency in bits/s/Hz?</p></li>
@@ -5364,8 +5899,8 @@ endc</code></pre>
 <li><p><strong>PA Efficiency</strong>: A power amplifier delivers 27 dBm output power and draws 400 mA from a 3.3 V supply. Calculate the drain efficiency and the PAE if the input power is 0 dBm.</p></li>
 </ol>
 </section>
-<section id="sec-exam-simulation" class="level2" data-number="11.12">
-<h2 data-number="11.12" class="anchored" data-anchor-id="sec-exam-simulation"><span class="header-section-number">11.12</span> RF Circuit Simulation (Optional)</h2>
+<section id="sec-exam-simulation" class="level2" data-number="12.12">
+<h2 data-number="12.12" class="anchored" data-anchor-id="sec-exam-simulation"><span class="header-section-number">12.12</span> RF Circuit Simulation (Optional)</h2>
 <p>These questions refer to the appendix on RF circuit simulation (<a href="#sec-simulation" class="quarto-xref">Section&nbsp;10</a>) and are optional.</p>
 <ol start="81" type="1">
 <li><p>Which assumptions about the circuit waveforms do the analyses op, ac, noise, tran, PSS, and HB make? Sketch how the analyses build on each other (<a href="#fig-sim-analysis-overview" class="quarto-xref">Figure&nbsp;106</a>).</p></li>
@@ -5379,6 +5914,20 @@ endc</code></pre>
 <li><p><strong>Transient Simulation Effort</strong>: A downconversion mixer with <span class="math inline">\(f_\mathrm{LO}\)</span> = 5.8 GHz is simulated in the time domain with 40 time points per LO period. The IF spectrum shall be computed with a frequency resolution of 50 kHz. How many time points are needed, ignoring the settling time? How does a PSS analysis followed by a PAC analysis avoid this effort?</p></li>
 <li><p><strong>Noise Folding</strong>: An ideal double-balanced switching mixer multiplies the RF input by a square wave toggling between <span class="math inline">\(+1\)</span> and <span class="math inline">\(-1\)</span> with 50 % duty cycle, and the only noise source is the source resistance. Calculate the SSB and the DSB noise figure. By how much is the noise figure underestimated if a periodic noise analysis keeps only the sidebands <span class="math inline">\(\pm 1\)</span> (<span class="math inline">\(K = 1\)</span>)?</p></li>
 </ol>
+</section>
+<section id="sec-exam-fp6" class="level2" data-number="12.13">
+<h2 data-number="12.13" class="anchored" data-anchor-id="sec-exam-fp6"><span class="header-section-number">12.13</span> Case Study Fairphone (Gen.&nbsp;6) (Optional)</h2>
+<p>These questions refer to the case study of the Fairphone (Gen.&nbsp;6) RF front-end (<a href="#sec-fp6" class="quarto-xref">Section&nbsp;11</a>) and are optional.</p>
+<ol start="91" type="1">
+<li><p>Why are the cellular RFIC and the SoC of a smartphone separate chips? Which signals cross between them?</p></li>
+<li><p>Why does every FDD band need its own acoustic duplexer? Explain the role of the duplex gap (<a href="#eq-fp6-qmin" class="quarto-xref">Equation&nbsp;83</a>), and why bands 4 and 66 are less critical than band 8.</p></li>
+<li><p>Why does a smartphone use external LNA modules in front of the RFIC? Why does a GNSS receiver place its LNA between two SAW filters?</p></li>
+<li><p>Why does a multi-band synthesizer use several VCOs and frequency dividers? How many VCOs are needed to cover one octave with a VCO tuning range of ±10 % (<a href="#eq-fp6-nvco" class="quarto-xref">Equation&nbsp;84</a>)?</p></li>
+<li><p>Explain average power tracking. Why does it improve the efficiency at reduced output power, and why is envelope tracking more efficient but more difficult to implement?</p></li>
+<li><p>What is the purpose of the feedback receiver in a cellular transmitter? Where is its coupler placed, and why?</p></li>
+<li><p><strong>Dual Uplink</strong>: A phone transmits concurrently in band 3 at 1747.5 MHz and in band 1 at 1950 MHz. Calculate the frequencies of the IM3 products and of the second harmonics. Which receive bands of the phone are hit?</p></li>
+<li><p><strong>APT Efficiency</strong>: An ideal class-B PA amplifies an OFDM signal with a PAPR of 10 dB, and its supply is set to the envelope peak. Calculate the average drain efficiency with <a href="#eq-fp6-eta-apt" class="quarto-xref">Equation&nbsp;86</a>. How large is the efficiency with a fixed supply at 10 dB below the maximum output power?</p></li>
+</ol>
 
 
 
@@ -5387,6 +5936,12 @@ endc</code></pre>
 
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-3GPP.36101" class="csl-entry" role="listitem">
+3GPP. 2026a. <em><span class="nocase">Evolved Universal Terrestrial Radio Access (E-UTRA); User Equipment (UE) radio transmission and reception</span></em>. Technical Specification TS 36.101, V20.1.0 (Release 20). 3rd Generation Partnership Project. <a href="https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=2411">https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=2411</a>.
+</div>
+<div id="ref-3GPP.38101" class="csl-entry" role="listitem">
+3GPP. 2026b. <em><span class="nocase">NR; User Equipment (UE) radio transmission and reception; Part 1: Range 1 Standalone</span></em>. Technical Specification TS 38.101-1, V20.1.0 (Release 20). 3rd Generation Partnership Project. <a href="https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=3201">https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=3201</a>.
+</div>
 <div id="ref-Andreani.2000" class="csl-entry" role="listitem">
 Andreani, P., and S. Mattisson. 2000. <span>“<span class="nocase">On the use of MOS varactors in RF VCOs</span>.”</span> <em>IEEE Journal of Solid-State Circuits</em> 35 (6): 905–10. <a href="https://doi.org/10.1109/4.845194">https://doi.org/10.1109/4.845194</a>.
 </div>
@@ -5437,6 +5992,9 @@ Edwards, M. L., and J. H. Sinsky. 1992. <span>“<span class="nocase">A new crit
 </div>
 <div id="ref-ElNozahi.2010" class="csl-entry" role="listitem">
 El-Nozahi, Mohamed, Ahmed Amer, Joselyn Torres, Kamran Entesari, and Edgar Sanchez-Sinencio. 2010. <span>“High <span>PSR</span> Low Drop-Out Regulator with Feed-Forward Ripple Cancellation Technique.”</span> <em><span>IEEE</span> Journal of Solid-State Circuits</em> 45 (3): 565–77. <a href="https://doi.org/10.1109/JSSC.2009.2039685">https://doi.org/10.1109/JSSC.2009.2039685</a>.
+</div>
+<div id="ref-Fairphone.2025" class="csl-entry" role="listitem">
+Fairphone B.V. 2025. <em><span class="nocase">Fairphone (Gen. 6): Information on how to repair, dispose of and recycle</span></em>. PDF with schematics and board diagrams. <a href="https://www.fairphone.com/wp-content/uploads/2025/07/Fairphone-Gen.-6-Information-on-how-to-repair-dispose-of-and-recycle.pdf">https://www.fairphone.com/wp-content/uploads/2025/07/Fairphone-Gen.-6-Information-on-how-to-repair-dispose-of-and-recycle.pdf</a>.
 </div>
 <div id="ref-Fano.1950" class="csl-entry" role="listitem">
 Fano, R. M. 1950. <span>“Theoretical Limitations on the Broadband Matching of Arbitrary Impedances.”</span> <em>Journal of the Franklin Institute</em> 249 (1): 57–83. <a href="https://doi.org/10.1016/0016-0032(50)90006-8">https://doi.org/10.1016/0016-0032(50)90006-8</a>.
@@ -5584,14 +6142,14 @@ Zverev, Anatol I. 1967. <em><span class="nocase">Handbook of Filter Synthesis</s
 </section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div>Apache-2.0 license</div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><div class="code-copy-outer-scaffold"><pre class="sourceCode quarto-appendix-bibtex code-with-copy"><code class="sourceCode bibtex">@online{pretl2026,
   author = {Pretl, Harald},
   title = {Radio-Frequency {Integrated} {Circuits}},
-  date = {2026-11-03},
+  date = {2026-11-06},
   url = {https://iic-jku.github.io/radio-frequency-integrated-circuits},
   doi = {10.5281/zenodo.17563943},
   langid = {en-US}
 }
 </code></pre><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-pretl2026" class="csl-entry quarto-appendix-citeas" role="listitem">
 Pretl, Harald. 2026. <span>“Radio-Frequency Integrated Circuits.”</span>
-November 3. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
+November 6. <a href="https://doi.org/10.5281/zenodo.17563943">https://doi.org/10.5281/zenodo.17563943</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

@@ -1,5 +1,208 @@
 [
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Radio-Frequency Integrated Circuits",
+    "section": "",
+    "text": "Radio-Frequency Integrated Circuits\n\n\n\nQuarto Publish\n\n\n(c) 2025-2026 Harald Pretl and co-authors, Department for Integrated Circuits (ICD), Johannes Kepler University, Linz (JKU)\nThis is the material for a graduate-level radio-frequency integrated circuit course, held at JKU under course number 336.023 (“VO Integrierte Hochfrequenz-Schaltungstechnik”). Follow this link to access the material.\nAll course material is made publicly available and shared under the Apache-2.0 license.\nWe happily accept pull requests to fix typos or add content! If you want to discuss something that is not clear, please open an issue!"
+  },
+  {
+    "objectID": "slides/mixer.html#sec-mixer-nonlinear",
+    "href": "slides/mixer.html#sec-mixer-nonlinear",
+    "title": "Mixers",
+    "section": "5.1 Non-Linear Mixer",
+    "text": "5.1 Non-Linear Mixer"
+  },
+  {
+    "objectID": "slides/mixer.html#sec-mixer-time-variant",
+    "href": "slides/mixer.html#sec-mixer-time-variant",
+    "title": "Mixers",
+    "section": "5.2 Time-Variant Mixer",
+    "text": "5.2 Time-Variant Mixer\n\nThis structure is conceptually simple; it just requires a (fast) diode, filters to couple the desired frequency components in and out, and an RF choke to provide a dc bias voltage for the diode. However, the performance of such a simple mixer is usually not very good, as the diode is a highly non-linear device, which generates many spurious frequency components. More advanced mixer circuits use more complex non-linear devices (for example, a ring of diodes) to improve the performance. The advantage of these mixers is that they can operate up to very high frequencies (in the mm-wave range and beyond). If you can make a nonlinear device, you can make a mixer (think also of nonlinear optics, for example)."
+  },
+  {
+    "objectID": "slides/mixer.html#sec-mixer-gilbert",
+    "href": "slides/mixer.html#sec-mixer-gilbert",
+    "title": "Mixers",
+    "section": "5.3 Gilbert Cell Mixer",
+    "text": "5.3 Gilbert Cell Mixer\n\nThe capacitors connected directly to ground at the mixer outputs are good practice, as they shunt high-frequency switching noise to ground, and in this way help the performance of the TIA, which otherwise would have to sink these currents. Note that all blocker currents originating at the LNA output and passing through the mixer are shunted by the feedback capacitors to the output of the TIA, and need to be actively driven by the TIA’s output stage!"
+  },
+  {
+    "objectID": "slides/mixer.html#sec-mixer-npath",
+    "href": "slides/mixer.html#sec-mixer-npath",
+    "title": "Mixers",
+    "section": "5.4 N-Path Filter",
+    "text": "5.4 N-Path Filter\n\nThe idea is that an input transconductor creates currents, which are switched in the double differential pair and converted back to voltage in the load impedances. There are many known variations of this circuit, like skipping the current source at the bottom to increase linearity and headroom, or swapping the input transconductor for another structure. It might also be useful to “bleed” some bias current from the LO switching stage to improve the noise performance."
+  },
+  {
+    "objectID": "slides/mixer.html#sec-mixer-lo",
+    "href": "slides/mixer.html#sec-mixer-lo",
+    "title": "Mixers",
+    "section": "5.5 LO Generation",
+    "text": "5.5 LO Generation"
+  },
+  {
+    "objectID": "slides/intro.html#sec-intro-wireless",
+    "href": "slides/intro.html#sec-intro-wireless",
+    "title": "Introduction",
+    "section": "1.1 Wireless Transmission",
+    "text": "1.1 Wireless Transmission"
+  },
+  {
+    "objectID": "slides/intro.html#sec-intro-standards",
+    "href": "slides/intro.html#sec-intro-standards",
+    "title": "Introduction",
+    "section": "1.2 Wireless Standards",
+    "text": "1.2 Wireless Standards\n\nAs stated in the beginning, designing wireless systems is hard."
+  },
+  {
+    "objectID": "slides/fp6.html#sec-fp6-architecture",
+    "href": "slides/fp6.html#sec-fp6-architecture",
+    "title": "Appendix: Case Study Fairphone (Gen. 6) RF Front-End",
+    "section": "11.1 Radio Architecture",
+    "text": "11.1 Radio Architecture"
+  },
+  {
+    "objectID": "slides/fp6.html#sec-fp6-bands",
+    "href": "slides/fp6.html#sec-fp6-bands",
+    "title": "Appendix: Case Study Fairphone (Gen. 6) RF Front-End",
+    "section": "11.2 Frequency Bands",
+    "text": "11.2 Frequency Bands\n\nThe digital heart of the phone is the system-on-chip (SoC) SM7635 (Snapdragon 7s Gen 3), which contains the application processor and the digital modem (baseband) for all cellular standards. The analog and RF signal processing for cellular and satellite navigation is done in a separate RF transceiver IC (RFIC), the SDR735. The RFIC and the SoC exchange digitized I/Q samples over a high-speed serial interface (QLink, with five differential data lanes and a clock lane), so that only digital signals cross between the two chips. Wi-Fi and Bluetooth have their own transceiver, the WCN6755, which is connected to the SoC via PCIe.\nSplitting the radio into a digital SoC and an RFIC is common practice: a separate RFIC keeps the noisy digital circuits away from the sensitive receivers (see Section 9), and the RFIC can be fabricated in a technology that suits analog and RF circuits.\nBetween the antennas and the RFIC sits the RF front-end (RFFE): antenna tuners, diplexers, antenna switches, filters, duplexers, LNA modules, and PA modules. The RFFE components are controlled by the RFIC through several serial MIPI RFFE buses and GPIO lines, the antenna tuners and the RFIC itself through RFFE buses from the SoC, the GNSS LNAs through GPIOs from the SoC, and the 5 GHz Wi-Fi switches through GPIOs from the WCN6755."
+  },
+  {
+    "objectID": "slides/fp6.html#sec-fp6-antennas",
+    "href": "slides/fp6.html#sec-fp6-antennas",
+    "title": "Appendix: Case Study Fairphone (Gen. 6) RF Front-End",
+    "section": "11.3 Antennas",
+    "text": "11.3 Antennas"
+  },
+  {
+    "objectID": "slides/fp6.html#sec-fp6-rfic",
+    "href": "slides/fp6.html#sec-fp6-rfic",
+    "title": "Appendix: Case Study Fairphone (Gen. 6) RF Front-End",
+    "section": "11.4 Cellular Transceiver SDR735",
+    "text": "11.4 Cellular Transceiver SDR735\n\nMost antennas serve several band groups, which are separated by diplexers (two bands) or triplexers (three bands). For example, one antenna is shared by the B32 downlink, GNSS L1, and Wi-Fi 2.4 GHz: a diplexer splits it into 704 MHz to 1610 MHz and 2400 MHz to 5950 MHz, and a triplexer separates the B32 and GNSS L1 signals afterwards.\nThe two antennas that carry the LB transmitters are equipped with antenna tuners. The impedance of a small phone antenna depends strongly on frequency and on the environment (e.g., the hand of the user), and an antenna tuner (a network of switched capacitors and inductors, see Section 4.1) adapts the matching network to the band in use and to changing conditions. This is especially important in the low bands, where the antenna is electrically small compared to the wavelength."
+  },
+  {
+    "objectID": "slides/fp6.html#sec-fp6-rx",
+    "href": "slides/fp6.html#sec-fp6-rx",
+    "title": "Appendix: Case Study Fairphone (Gen. 6) RF Front-End",
+    "section": "11.5 Receive Path",
+    "text": "11.5 Receive Path"
+  },
+  {
+    "objectID": "slides/fp6.html#sec-fp6-tx",
+    "href": "slides/fp6.html#sec-fp6-tx",
+    "title": "Appendix: Case Study Fairphone (Gen. 6) RF Front-End",
+    "section": "11.6 Transmit Path",
+    "text": "11.6 Transmit Path\n\nFor the GNSS receivers, the situation is even more critical, as the satellite signals arrive far below the thermal noise floor. Here, each band (L1 and L5) uses an external LNA between two SAW filters. The first filter protects the LNA from the strong cellular and Wi-Fi signals of the phone itself, and the second filter provides additional out-of-band filtering before further amplification."
+  },
+  {
+    "objectID": "slides/fp6.html#sec-fp6-wifi",
+    "href": "slides/fp6.html#sec-fp6-wifi",
+    "title": "Appendix: Case Study Fairphone (Gen. 6) RF Front-End",
+    "section": "11.7 Wi-Fi and Bluetooth",
+    "text": "11.7 Wi-Fi and Bluetooth"
+  },
+  {
+    "objectID": "slides/fp6.html#sec-fp6-summary",
+    "href": "slides/fp6.html#sec-fp6-summary",
+    "title": "Appendix: Case Study Fairphone (Gen. 6) RF Front-End",
+    "section": "11.8 Summary",
+    "text": "11.8 Summary\n\nWi-Fi and Bluetooth are handled by the WCN6755, which is connected to the SoC via PCIe (Fairphone B.V. 2025). In contrast to the cellular radio, the WCN6755 integrates the PAs on chip. Wi-Fi uses TDD (see Table 4), so a switch instead of a duplexer separates TX and RX. For 2×2 MIMO, the WCN6755 has two independent RF chains per band, which are connected to separate antennas. Bluetooth shares the 2.4 GHz RF ports with Wi-Fi (the pins are labeled WLBT), so Wi-Fi and Bluetooth at 2.4 GHz use the same antenna paths."
+  },
+  {
+    "objectID": "slides/poweramp.html#sec-poweramp-efficiency",
+    "href": "slides/poweramp.html#sec-poweramp-efficiency",
+    "title": "Power Amplifiers",
+    "section": "8.1 PA Efficiency",
+    "text": "8.1 PA Efficiency"
+  },
+  {
+    "objectID": "slides/poweramp.html#sec-poweramp-nonlinearity",
+    "href": "slides/poweramp.html#sec-poweramp-nonlinearity",
+    "title": "Power Amplifiers",
+    "section": "8.2 PA Nonlinearity",
+    "text": "8.2 PA Nonlinearity"
+  },
+  {
+    "objectID": "slides/poweramp.html#sec-poweramp-classes",
+    "href": "slides/poweramp.html#sec-poweramp-classes",
+    "title": "Power Amplifiers",
+    "section": "8.3 Amplifier Classes",
+    "text": "8.3 Amplifier Classes\n\nThe cascode transistors \\(M_2\\) and \\(M_4\\) allow higher output voltage swings by stacking the transistors, thus reducing the voltage stress on each individual transistor. They can be implemented as thick-oxide transistors to further increase the breakdown voltage.\nWhile the power amplifier circuits look simple in principle, their design and optimization require large-signal models and extensive electromagnetic (EM) simulations to accurately capture the behavior of the matching networks and parasitic effects. Additionally, thermal management is crucial in PA design, as high power dissipation can lead to device degradation and failure.\nIn order to accurately capture and model large-signal effects, load-pull measurements are often performed during PA design. In a load-pull measurement setup, the PA is driven with a known input signal while the output load impedance is varied systematically using impedance tuners. By measuring the output power, efficiency, and linearity metrics at different load impedances, the optimal load conditions for the PA can be determined. This information is then used to design the output matching network to achieve the desired performance."
+  },
+  {
+    "objectID": "slides/poweramp.html#sec-poweramp-stability",
+    "href": "slides/poweramp.html#sec-poweramp-stability",
+    "title": "Power Amplifiers",
+    "section": "8.4 PA Stability and Neutralization",
+    "text": "8.4 PA Stability and Neutralization"
+  },
+  {
+    "objectID": "slides/poweramp.html#sec-poweramp-advanced",
+    "href": "slides/poweramp.html#sec-poweramp-advanced",
+    "title": "Power Amplifiers",
+    "section": "8.5 PA Advanced Techniques",
+    "text": "8.5 PA Advanced Techniques"
+  },
+  {
+    "objectID": "slides/fundamentals.html#sec-channel-capacity",
+    "href": "slides/fundamentals.html#sec-channel-capacity",
+    "title": "Fundamentals",
+    "section": "2.1 Channel Capacity",
+    "text": "2.1 Channel Capacity\n\nIn this section, we will discuss a few important concepts which will be instrumental in the further study of RF circuits and systems. As the dynamic range of signals in RF circuits and systems is often limited on the top end by linearity, and on the bottom end by noise, we will discuss these two topics in some detail."
+  },
+  {
+    "objectID": "slides/fundamentals.html#sec-linearity",
+    "href": "slides/fundamentals.html#sec-linearity",
+    "title": "Fundamentals",
+    "section": "2.2 Linearity",
+    "text": "2.2 Linearity"
+  },
+  {
+    "objectID": "slides/fundamentals.html#sec-noise",
+    "href": "slides/fundamentals.html#sec-noise",
+    "title": "Fundamentals",
+    "section": "2.3 Noise",
+    "text": "2.3 Noise"
+  },
+  {
+    "objectID": "slides/fundamentals.html#sec-fundamentals-modulation",
+    "href": "slides/fundamentals.html#sec-fundamentals-modulation",
+    "title": "Fundamentals",
+    "section": "2.4 Modulation",
+    "text": "2.4 Modulation"
+  },
+  {
+    "objectID": "slides/fundamentals.html#sec-fundamentals-pulse-shaping",
+    "href": "slides/fundamentals.html#sec-fundamentals-pulse-shaping",
+    "title": "Fundamentals",
+    "section": "2.5 Pulse Shaping and Spectral Efficiency",
+    "text": "2.5 Pulse Shaping and Spectral Efficiency"
+  },
+  {
+    "objectID": "slides/fundamentals.html#sec-fundamentals-ofdm",
+    "href": "slides/fundamentals.html#sec-fundamentals-ofdm",
+    "title": "Fundamentals",
+    "section": "2.6 Orthogonal Frequency-Division Multiplexing (OFDM)",
+    "text": "2.6 Orthogonal Frequency-Division Multiplexing (OFDM)\n\nFor all the shown pulse shapes (rectangular, raised-cosine, and Gaussian), the trade-off between time- and frequency-domain containment is clearly visible. This is also captured in “Küpfmüller’s uncertainty principle” (Küpfmüller 1949), which states that the product of the time duration and the bandwidth of a pulse is lower-bounded by a constant. In other words, if we want to have a pulse that is very short in time, it will have a wide bandwidth, and vice versa."
+  },
+  {
+    "objectID": "slides/fundamentals.html#sec-fundamentals-multiple-access",
+    "href": "slides/fundamentals.html#sec-fundamentals-multiple-access",
+    "title": "Fundamentals",
+    "section": "2.7 Multiple Access Techniques",
+    "text": "2.7 Multiple Access Techniques"
+  },
+  {
+    "objectID": "slides/fundamentals.html#sec-fundamentals-mcs",
+    "href": "slides/fundamentals.html#sec-fundamentals-mcs",
+    "title": "Fundamentals",
+    "section": "2.8 Modulation and Coding Schemes",
+    "text": "2.8 Modulation and Coding Schemes\n\nAll of the above techniques can be combined to create more efficient and flexible communication systems. For example, OFDMA can be used in conjunction with SDMA to allow multiple users to share the same frequency resources while also taking advantage of spatial diversity. Also, TDMA can be combined with FDMA to create a hybrid multiple access scheme (which has been used in 2G)."
+  },
+  {
     "objectID": "slides/oscillator.html#sec-oscillator-noise",
     "href": "slides/oscillator.html#sec-oscillator-noise",
     "title": "Oscillators",
@@ -47,146 +250,6 @@
     "title": "Oscillators",
     "section": "6.7 Oscillator Modelling",
     "text": "6.7 Oscillator Modelling\n\nHere, when the control signal \\(S\\) is high, the effective capacitance is \\(C/2\\), with a parasitic series resistance \\(R_\\mathrm{on}\\) due to the switch. When \\(S\\) is low, the effective capacitance is \\(C_\\mathrm{off}\\), which is the parasitic drain-source capacitance of the MOSFET switch.\nNote that there exists a trade-off when designing the switched capacitor: A larger switch (with increased \\(W\\)) reduces \\(R_\\mathrm{on}\\), but increases \\(C_\\mathrm{off}\\). A large \\(R_\\mathrm{on}\\) leads to increased losses in the tank circuit, which degrades the quality factor \\(Q\\) and increases phase noise according to Equation 56. On the other hand, a large \\(C_\\mathrm{off}\\) reduces the effective tuning range of the switched capacitor, which can be detrimental if a wide tuning range is required.\nIn digitally-controlled oscillators (DCOs), the tuning voltage \\(V_\\mathrm{tune}\\) is replaced by a digital control word that selects different capacitance values from a capacitor bank. This approach allows for precise and repeatable frequency tuning, which is beneficial in applications requiring frequency synthesis or channel selection. These fine tuning steps can also be implemented according to Figure 72; however, the value of \\(C\\) must be sufficiently small."
-  },
-  {
-    "objectID": "slides/intro.html#sec-intro-wireless",
-    "href": "slides/intro.html#sec-intro-wireless",
-    "title": "Introduction",
-    "section": "1.1 Wireless Transmission",
-    "text": "1.1 Wireless Transmission"
-  },
-  {
-    "objectID": "slides/intro.html#sec-intro-standards",
-    "href": "slides/intro.html#sec-intro-standards",
-    "title": "Introduction",
-    "section": "1.2 Wireless Standards",
-    "text": "1.2 Wireless Standards\n\nAs stated in the beginning, designing wireless systems is hard."
-  },
-  {
-    "objectID": "slides/poweramp.html#sec-poweramp-efficiency",
-    "href": "slides/poweramp.html#sec-poweramp-efficiency",
-    "title": "Power Amplifiers",
-    "section": "8.1 PA Efficiency",
-    "text": "8.1 PA Efficiency"
-  },
-  {
-    "objectID": "slides/poweramp.html#sec-poweramp-nonlinearity",
-    "href": "slides/poweramp.html#sec-poweramp-nonlinearity",
-    "title": "Power Amplifiers",
-    "section": "8.2 PA Nonlinearity",
-    "text": "8.2 PA Nonlinearity"
-  },
-  {
-    "objectID": "slides/poweramp.html#sec-poweramp-classes",
-    "href": "slides/poweramp.html#sec-poweramp-classes",
-    "title": "Power Amplifiers",
-    "section": "8.3 Amplifier Classes",
-    "text": "8.3 Amplifier Classes\n\nThe cascode transistors \\(M_2\\) and \\(M_4\\) allow higher output voltage swings by stacking the transistors, thus reducing the voltage stress on each individual transistor. They can be implemented as thick-oxide transistors to further increase the breakdown voltage.\nWhile the power amplifier circuits look simple in principle, their design and optimization require large-signal models and extensive electromagnetic (EM) simulations to accurately capture the behavior of the matching networks and parasitic effects. Additionally, thermal management is crucial in PA design, as high power dissipation can lead to device degradation and failure.\nIn order to accurately capture and model large-signal effects, load-pull measurements are often performed during PA design. In a load-pull measurement setup, the PA is driven with a known input signal while the output load impedance is varied systematically using impedance tuners. By measuring the output power, efficiency, and linearity metrics at different load impedances, the optimal load conditions for the PA can be determined. This information is then used to design the output matching network to achieve the desired performance."
-  },
-  {
-    "objectID": "slides/poweramp.html#sec-poweramp-stability",
-    "href": "slides/poweramp.html#sec-poweramp-stability",
-    "title": "Power Amplifiers",
-    "section": "8.4 PA Stability and Neutralization",
-    "text": "8.4 PA Stability and Neutralization"
-  },
-  {
-    "objectID": "slides/poweramp.html#sec-poweramp-advanced",
-    "href": "slides/poweramp.html#sec-poweramp-advanced",
-    "title": "Power Amplifiers",
-    "section": "8.5 PA Advanced Techniques",
-    "text": "8.5 PA Advanced Techniques"
-  },
-  {
-    "objectID": "slides/index.html",
-    "href": "slides/index.html",
-    "title": "Lecture Slides",
-    "section": "",
-    "text": "Slide decks generated from the lecture notes, one per chapter. Press S for speaker notes, C for the chalkboard, and ? for all shortcuts.\n\nIntroduction\nFundamentals\nTransceivers\nLow Noise Amplifiers\nMixers\nOscillators\nPhase-Locked Loops\nPower Amplifiers\nSpurs, Crosstalk and Self-Interference\nAppendix: RF Circuit Simulation"
-  },
-  {
-    "objectID": "slides/trx.html#sec-trx-direct-conversion",
-    "href": "slides/trx.html#sec-trx-direct-conversion",
-    "title": "Transceivers",
-    "section": "3.1 Direct-Conversion Transceiver",
-    "text": "3.1 Direct-Conversion Transceiver\n\nNowadays, the various small-signal RF functions for receive and transmit are integrated into so-called transceivers (TRX). A TRX is a device that can both transmit and receive signals, and is usually called an “RFIC”. While high monolithic integration is certainly the norm for radio-frequency devices intended for standards like Bluetooth, Wi-Fi, cellular, etc., it is increasingly used also for mm-wave frequencies for applications like automotive radar and 5G cellular.\nTypically, TRX include components like amplifiers, mixers, filters, oscillators, and phase-locked loops. When digital interfaces are used for the baseband I/Q data, also functions like analog-to-digital conversion (ADC) and digital-to-analog conversion (DAC) are integrated together with digital signal processing (DSP) blocks and potentially high-speed interfaces (because for wide bandwidths the I/Q sample rate can get quite high).\nIn these notes we will focus on the RF part of the TRX, which is responsible for the upconversion of baseband or intermediate frequency (IF) signals to the desired transmit frequency during transmission, and the downconversion of received signals from the carrier frequency to baseband or IF during reception. For filters, low-frequency amplifiers, ADCs, DACs, and DSP blocks we refer to related courses and literature, for example our analog circuit design course."
-  },
-  {
-    "objectID": "slides/trx.html#sec-trx-mod-demod",
-    "href": "slides/trx.html#sec-trx-mod-demod",
-    "title": "Transceivers",
-    "section": "3.2 Modulation and Demodulation",
-    "text": "3.2 Modulation and Demodulation\n\nAs can be seen in Figure 19, this generic architecture can be adapted in various ways. Generally, the amplifier gains are adjustable to adapt to different signal levels. If adaptive channel bandwidths are to be supported, the corner frequencies of the low-pass filters (LPF) can be adjusted, as well as (optionally) the sampling rate of the ADCs and DACs. The local oscillator (LO) frequency is generated by a phase-locked loop (PLL) synthesizer, which can be tuned to the desired carrier frequency. In case of frequency-division duplex (FDD) operation, two PLLs are used to generate the TX and RX LO frequencies, which are separated by the duplex distance \\(f_\\mathrm{dpx}\\). In time-division duplex (TDD) operation, a single PLL is sufficient, supplying the LO signal to both RX and TX.\nThe modem (short for modulator-demodulator) that is shown in Figure 19 is responsible for the digital baseband processing, including functions like channel coding/decoding, modulation/demodulation, equalization, error correction, encryption/decryption, and framing/timing. The modem is usually implemented as a digital System-on-Chip (SoC) consisting of (multiple) CPUs, DSPs, and fixed-function blocks for time-critical processing. For an in-depth discussion we recommend (Sklar and Harris 2020) or (Molisch 2022)."
-  },
-  {
-    "objectID": "slides/trx.html#filtering",
-    "href": "slides/trx.html#filtering",
-    "title": "Transceivers",
-    "section": "3.3 Filtering",
-    "text": "3.3 Filtering"
-  },
-  {
-    "objectID": "slides/trx.html#direct-conversion-architecture",
-    "href": "slides/trx.html#direct-conversion-architecture",
-    "title": "Transceivers",
-    "section": "3.4 Direct-Conversion Architecture",
-    "text": "3.4 Direct-Conversion Architecture\n\nFundamentally, the choice of filter technology is a trade-off between performance, size, cost, power handling, and flexibility. In most cases, a combination of different filter technologies is used to achieve the desired performance."
-  },
-  {
-    "objectID": "slides/trx.html#sec-trx-duplexing",
-    "href": "slides/trx.html#sec-trx-duplexing",
-    "title": "Transceivers",
-    "section": "3.5 Duplexing",
-    "text": "3.5 Duplexing\n\nNowadays there exist good design techniques to mitigate these disadvantages. However, in some cases (for example very high linearity requirements, or very high frequencies) other architectures like low-IF or super-heterodyne may be preferable."
-  },
-  {
-    "objectID": "slides/trx.html#specialty-architectures",
-    "href": "slides/trx.html#specialty-architectures",
-    "title": "Transceivers",
-    "section": "3.6 Specialty Architectures",
-    "text": "3.6 Specialty Architectures\n\nRegardless of whether two antennas or a circulator are used, the isolation between the TX and RX paths is always finite (typically only in the range of 15 dB to 20 dB for a circulator). As a consequence, a large fraction of the own (and strong) TX signal leaks directly into the sensitive RX port. Practical FD systems therefore require additional self-interference cancellation (also called leakage cancellation), performed in the RF/analog and/or digital domain, to suppress this residual TX leakage below the RX noise floor (Sadjina et al. 2020)."
-  },
-  {
-    "objectID": "slides/trx.html#iq-imbalance",
-    "href": "slides/trx.html#iq-imbalance",
-    "title": "Transceivers",
-    "section": "3.7 I/Q Imbalance",
-    "text": "3.7 I/Q Imbalance\n\nDespite the reduced architecture, digital amplitude-shift-keying (ASK) or on-off-keying (OOK) can be used. If the receiver is able to discriminate between frequencies (e.g., by using two RF filters with a power detector each), also frequency-shift-keying (FSK) can be used."
-  },
-  {
-    "objectID": "slides/mixer.html#sec-mixer-nonlinear",
-    "href": "slides/mixer.html#sec-mixer-nonlinear",
-    "title": "Mixers",
-    "section": "5.1 Non-Linear Mixer",
-    "text": "5.1 Non-Linear Mixer"
-  },
-  {
-    "objectID": "slides/mixer.html#sec-mixer-time-variant",
-    "href": "slides/mixer.html#sec-mixer-time-variant",
-    "title": "Mixers",
-    "section": "5.2 Time-Variant Mixer",
-    "text": "5.2 Time-Variant Mixer\n\nThis structure is conceptually simple; it just requires a (fast) diode, filters to couple the desired frequency components in and out, and an RF choke to provide a dc bias voltage for the diode. However, the performance of such a simple mixer is usually not very good, as the diode is a highly non-linear device, which generates many spurious frequency components. More advanced mixer circuits use more complex non-linear devices (for example, a ring of diodes) to improve the performance. The advantage of these mixers is that they can operate up to very high frequencies (in the mm-wave range and beyond). If you can make a nonlinear device, you can make a mixer (think also of nonlinear optics, for example)."
-  },
-  {
-    "objectID": "slides/mixer.html#sec-mixer-gilbert",
-    "href": "slides/mixer.html#sec-mixer-gilbert",
-    "title": "Mixers",
-    "section": "5.3 Gilbert Cell Mixer",
-    "text": "5.3 Gilbert Cell Mixer\n\nThe capacitors connected directly to ground at the mixer outputs are good practice, as they shunt high-frequency switching noise to ground, and in this way help the performance of the TIA, which otherwise would have to sink these currents. Note that all blocker currents originating at the LNA output and passing through the mixer are shunted by the feedback capacitors to the output of the TIA, and need to be actively driven by the TIA’s output stage!"
-  },
-  {
-    "objectID": "slides/mixer.html#sec-mixer-npath",
-    "href": "slides/mixer.html#sec-mixer-npath",
-    "title": "Mixers",
-    "section": "5.4 N-Path Filter",
-    "text": "5.4 N-Path Filter\n\nThe idea is that an input transconductor creates currents, which are switched in the double differential pair and converted back to voltage in the load impedances. There are many known variations of this circuit, like skipping the current source at the bottom to increase linearity and headroom, or swapping the input transconductor for another structure. It might also be useful to “bleed” some bias current from the LO switching stage to improve the noise performance."
-  },
-  {
-    "objectID": "slides/mixer.html#sec-mixer-lo",
-    "href": "slides/mixer.html#sec-mixer-lo",
-    "title": "Mixers",
-    "section": "5.5 LO Generation",
-    "text": "5.5 LO Generation"
   },
   {
     "objectID": "rfic.html#sec-intro-wireless",
@@ -553,88 +616,151 @@
     "text": "10.5 Summary\n\n\n\n\n\n\nImportantKey Takeaways\n\n\n\n\nop, ac, acsp, noise linearize around a constant operating point: fast and insightful, but blind to distortion, frequency conversion, and noise folding.\ntran is the general reference, but RF time scales make it expensive, and a maximum time step is mandatory.\nPSS (time domain) and HB (frequency domain) find the periodic steady state directly. PSS suits switching circuits and oscillators, HB mildly nonlinear and multi-tone problems and circuits with distributed elements.\nPAC, HBAC and PNOISE, HBNOISE linearize around this steady state (LPTV) and give conversion gain, aliasing, and cyclostationary noise including folding.\nTransient noise captures everything in principle, at a high cost and with numerical pitfalls. Run at reduced noise amplitude, it is an independent cross-check.\nIncrease harmonics, tighten time steps, and compare independent methods before trusting a result."
   },
   {
+    "objectID": "rfic.html#sec-fp6-architecture",
+    "href": "rfic.html#sec-fp6-architecture",
+    "title": "Radio-Frequency Integrated Circuits",
+    "section": "11.1 Radio Architecture",
+    "text": "11.1 Radio Architecture\nThe Fairphone (Gen. 6) supports 2G (GSM), 3G (UMTS), 4G (LTE), and 5G NR (in frequency range 1, below 7.125 GHz), Wi-Fi 6E with 2×2 MIMO in the 2.4 GHz, 5 GHz, and 6 GHz bands, Bluetooth 5.4, satellite navigation (GPS, GLONASS, Galileo, and BeiDou) in the L1 and L5 bands, and NFC (Fairphone B.V. 2025). Figure 112 shows how the radio is partitioned.\n\n\n\n\n\n\n\n\nFigure 112: Radio architecture of the Fairphone (Gen. 6), simplified from the published schematics. RF signals are drawn in black, digital data interfaces in blue, control buses in green, and PA supplies in red.\n\n\n\n\n\nThe digital heart of the phone is the system-on-chip (SoC) SM7635 (Snapdragon 7s Gen 3), which contains the application processor and the digital modem (baseband) for all cellular standards. The analog and RF signal processing for cellular and satellite navigation is done in a separate RF transceiver IC (RFIC), the SDR735. The RFIC and the SoC exchange digitized I/Q samples over a high-speed serial interface (QLink, with five differential data lanes and a clock lane), so that only digital signals cross between the two chips. Wi-Fi and Bluetooth have their own transceiver, the WCN6755, which is connected to the SoC via PCIe.\nSplitting the radio into a digital SoC and an RFIC is common practice: a separate RFIC keeps the noisy digital circuits away from the sensitive receivers (see Section 9), and the RFIC can be fabricated in a technology that suits analog and RF circuits.\nBetween the antennas and the RFIC sits the RF front-end (RFFE): antenna tuners, diplexers, antenna switches, filters, duplexers, LNA modules, and PA modules. The RFFE components are controlled by the RFIC through several serial MIPI RFFE buses and GPIO lines, the antenna tuners and the RFIC itself through RFFE buses from the SoC, the GNSS LNAs through GPIOs from the SoC, and the 5 GHz Wi-Fi switches through GPIOs from the WCN6755."
+  },
+  {
+    "objectID": "rfic.html#sec-fp6-bands",
+    "href": "rfic.html#sec-fp6-bands",
+    "title": "Radio-Frequency Integrated Circuits",
+    "section": "11.2 Frequency Bands",
+    "text": "11.2 Frequency Bands\nA phone sold worldwide has to support a large number of frequency bands, as different regions use different parts of the spectrum for cellular communication. Table 13 lists the cellular bands of the Fairphone (Gen. 6), and Figure 113 shows their location in the spectrum.\n\n\n\nTable 13: Cellular bands of the Fairphone (Gen. 6) according to the RF block diagram in (Fairphone B.V. 2025). Bands sharing a row are subsets of each other or overlap, and share the same filters. Bands 41 and n78 support high-power UE (power class 2). DL MIMO lists the number of receive antennas (4×4 for the bands listed as 4×4 MIMO bands, otherwise a primary and a diversity receiver), UL MIMO the number of transmit paths that the schematics show for a band.\n\n\n\n\n\nBand\nGroup\nDuplex\n2G\n3G\n4G\n5G\nDL MIMO\nUL MIMO\n\n\n\n\n1\nMB\nFDD\n\nx\nx\nx\n4×4\n2×2\n\n\n2/25\nMB\nFDD\nx\nx\nx\nx\n4×4\n1×1\n\n\n3\nMB\nFDD\nx\n\nx\nx\n4×4\n2×2\n\n\n4/66\nMB\nFDD\n\n\nx\nx\n4×4\n1×1\n\n\n5/26\nLB\nFDD\nx\nx\nx\nx\n2×2\n1×1\n\n\n7\nHB\nFDD\n\n\nx\nx\n4×4\n2×2\n\n\n8\nLB\nFDD\nx\nx\nx\nx\n2×2\n1×1\n\n\n12/17\nLB\nFDD\n\n\nx\n\n2×2\n1×1\n\n\n20\nLB\nFDD\n\n\nx\nx\n2×2\n2×2\n\n\n28\nLB\nFDD\n\n\nx\nx\n2×2\n1×1\n\n\n32\nMB\nSDL\n\n\nx\n\n2×2\n—\n\n\n38/41\nHB\nTDD\n\n\nx\nx\n4×4\n2×2\n\n\n40\nHB\nTDD\n\n\nx\nx\n4×4\n2×2\n\n\n42\nUHB\nTDD\n\n\nx\n\n4×4\n1×1\n\n\n71\nLB\nFDD\n\n\nx\nx\n2×2\n2×2\n\n\nn77/n78\nUHB\nTDD\n\n\n\nx\n4×4\n1×1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 113: Frequency bands received and transmitted by the Fairphone (Gen. 6), with band edges according to 3GPP. FDD bands show uplink (UL, phone transmits) and downlink (DL, phone receives) separately; TDD bands use the same frequencies for both. The shaded areas are the band groups LB, MB, HB, and UHB used in this appendix. Note the logarithmic frequency axis.\n\n\n\n\n\nIn the RF front-end, the bands are sorted into band groups; in this appendix we use low band (LB, 617 MHz to 960 MHz), mid band (MB, 1452 MHz to 2200 MHz), high band (HB, 2300 MHz to 2690 MHz), and ultra-high band (UHB, 3300 MHz to 5000 MHz). Within a band group, LNAs, PAs, and antennas can be shared, as their relative bandwidth is moderate (e.g., 44 % for LB and 41 % for MB). A single amplifier covering all bands from 617 MHz to 5 GHz would be much harder to match (see the Bode-Fano limit in Section 4.1) and would let all out-of-band signals pass.\nBelow 2.7 GHz, most bands are FDD, while the TDD bands (B38 to B42, n77, n78) are located at higher frequencies, as already noted in Table 4. In FDD, the receiver has to be protected from the strong TX signal of the same phone by a duplexer (see Section 3.5). The difficulty of building this duplexer is set by the duplex gap \\(f_\\mathrm{gap}\\) between the upper edge of the uplink and the lower edge of the downlink (or vice versa). Within the gap, the filter has to transition from its passband to a high attenuation. Using the definition of the filter quality factor \\(Q = f_\\mathrm{c} / \\Delta f\\) from Section 3, the resonators of the duplexer need a quality factor of at least\n\\[\nQ_\\mathrm{min} = \\frac{f_\\mathrm{c}}{f_\\mathrm{gap}},\n\\tag{83}\\]\nwhich is evaluated for all FDD bands of the phone in Figure 114. Many bands have a duplex gap of only 10 MHz to 20 MHz, so that \\(Q_\\mathrm{min}\\) is close to 100, while a realistic filter needs resonators with a \\(Q\\) that is an order of magnitude higher to achieve a steep transition with low insertion loss. On-chip \\(LC\\) filters with a \\(Q\\) of 10 to 20 are hopeless here, which is why every FDD band needs its own acoustic (SAW or BAW) duplexer. Only bands 4 and 66, whose uplink and downlink are separated by more than 300 MHz, would be uncritical.\n\n\n\n\n\n\n\n\nFigure 114: Duplex gap \\(f_\\mathrm{gap}\\) between uplink and downlink (left) and the resulting lower bound \\(Q_\\mathrm{min} = f_\\mathrm{c} / f_\\mathrm{gap}\\) of the filter quality factor (right) for the FDD bands of the Fairphone (Gen. 6). The shaded areas mark the \\(Q\\) of on-chip \\(LC\\) filters (10 to 20) and of acoustic SAW/BAW resonators (thousands, see Section 3).\n\n\n\n\n\n\n\n\n\n\n\nNoteNumber of Filters in a Phone\n\n\n\nEvery FDD band needs a duplexer, every band used for receive diversity and MIMO needs additional receive filters, and the GNSS and Wi-Fi paths need their own filters as well. This is why a phone contains a large number of acoustic filters, and why a new band cannot simply be added in software."
+  },
+  {
+    "objectID": "rfic.html#sec-fp6-antennas",
+    "href": "rfic.html#sec-fp6-antennas",
+    "title": "Radio-Frequency Integrated Circuits",
+    "section": "11.3 Antennas",
+    "text": "11.3 Antennas\nThe phone uses 11 antenna feeds. A large number of antennas is needed for three reasons:\n\nMIMO: For 4×4 downlink MIMO in the mid, high, and ultra-high bands, four independent receive paths per band have to be connected to four different antennas (named primary RX (PRX), diversity RX (DRX), PRX MIMO, and DRX MIMO). The low bands use 2×2 MIMO, as the antennas for long wavelengths (about 40 cm at 750 MHz) are large and difficult to fit into a phone.\nConcurrent operation: Cellular, Wi-Fi, Bluetooth, and GNSS work at the same time.\nSounding reference signals (SRS): In the TDD bands 41 and n77/n78, the phone transmits a pilot signal on each of its receive antennas in turn, so that the base station can measure the full channel matrix for beamforming. This requires switches that connect the transmitter to every receive antenna.\n\nMost antennas serve several band groups, which are separated by diplexers (two bands) or triplexers (three bands). For example, one antenna is shared by the B32 downlink, GNSS L1, and Wi-Fi 2.4 GHz: a diplexer splits it into 704 MHz to 1610 MHz and 2400 MHz to 5950 MHz, and a triplexer separates the B32 and GNSS L1 signals afterwards.\nThe two antennas that carry the LB transmitters are equipped with antenna tuners. The impedance of a small phone antenna depends strongly on frequency and on the environment (e.g., the hand of the user), and an antenna tuner (a network of switched capacitors and inductors, see Section 4.1) adapts the matching network to the band in use and to changing conditions. This is especially important in the low bands, where the antenna is electrically small compared to the wavelength."
+  },
+  {
+    "objectID": "rfic.html#sec-fp6-rfic",
+    "href": "rfic.html#sec-fp6-rfic",
+    "title": "Radio-Frequency Integrated Circuits",
+    "section": "11.4 Cellular Transceiver SDR735",
+    "text": "11.4 Cellular Transceiver SDR735\nThe SDR735 is a highly integrated multi-band transceiver. No datasheet is public, but its pinout in the schematics (Fairphone B.V. 2025) already tells a lot about its architecture:\n\nReceivers: four groups of RF inputs for the primary (P), diversity (D), primary MIMO (PM), and diversity MIMO (DM) receive paths, each with several inputs for the different band groups. These are the four receive paths needed for 4×4 downlink MIMO.\nTransmitters: two transmit chains (TX0 and TX1), each with six RF outputs for the different band groups.\nFeedback receiver: one input (FBRX) that measures the transmitted signal (see Section 11.6.2).\nGNSS receiver: two inputs, for the L1 and L5 bands.\nDigital interfaces: the QLink interface to the SoC and the RFFE buses and GPIOs that control the front-end.\nUnused features: outputs for envelope-tracking DACs (ETDAC0, ETDAC1), which are not connected in the Fairphone (see Section 11.6.1).\n\nThere are no IF filters between the front-end and the RFIC in the schematics; the RF inputs and outputs of the RFIC connect directly to the front-end modules. This is consistent with the direct-conversion architecture of Section 3.1, where the channel selection is done by analog low-pass filters and digital filters on the RFIC. A simplified receive path from antenna to digital I/Q interface is shown in Figure 115.\n\n\n\n\n\n\n\n\nFigure 115: Simplified primary receive path of the Fairphone (Gen. 6) for band 1 or band 3, from the antenna to the digital I/Q interface. The I and Q paths of the direct-conversion receiver are drawn as one; the Q path uses a second mixer driven by the LO shifted by 90°.\n\n\n\n\n\nThe synthesizers of such a transceiver have to generate LO frequencies for all supported bands, from 617 MHz (B71) up to 3.8 GHz (n78), a ratio of more than 6:1. As discussed in Section 6.6, an LC VCO only achieves a limited tuning range, so the LO is usually derived from a VCO followed by frequency dividers. A divide-by-2 stage is needed anyway to generate quadrature LO signals (see Section 5.5.3), and further divide-by-2 stages extend the range downwards by octaves. Then the VCOs of a synthesizer have to cover one octave together. If a single VCO tunes from \\(f_\\mathrm{c} (1 - \\mathrm{TR})\\) to \\(f_\\mathrm{c} (1 + \\mathrm{TR})\\), the number of VCOs needed to cover one octave is\n\\[\nN_\\mathrm{VCO} \\geq \\frac{\\ln 2}{\\ln \\left( \\frac{1 + \\mathrm{TR}}{1 - \\mathrm{TR}} \\right)}.\n\\tag{84}\\]\nFor a tuning range of ±15 % (TR = 0.15), which is ambitious for a low-phase-noise LC VCO, we get \\(N_\\mathrm{VCO} \\geq 2.3\\), i.e., three VCOs per synthesizer. As an FDD transceiver with MIMO and two transmitters needs several synthesizers running at the same time, a multi-band RFIC contains many VCOs.\nThe RFIC uses several supply voltages (0.8 V, 0.875 V, 1.2 V, and 1.8 V), provided by the power management ICs (Fairphone B.V. 2025)."
+  },
+  {
+    "objectID": "rfic.html#sec-fp6-rx",
+    "href": "rfic.html#sec-fp6-rx",
+    "title": "Radio-Frequency Integrated Circuits",
+    "section": "11.5 Receive Path",
+    "text": "11.5 Receive Path\nIn the Fairphone, the LNAs are not placed in the RFIC but in separate LNA modules: one for the LB primary receivers (QLN5020), one for the MB and HB primary receivers (QLN5040), and one for the LB, MB, and HB diversity receivers (QLN5030). The n77/n78 receivers use separate modules that combine LNAs with the PA (QPM2980) or with the diversity receivers (QDM3980). Each LNA module contains several LNAs, each with an input switch (SPnT) that selects one of several band filters, and an output multiplexer that routes the amplified signals to the RFIC inputs (see Figure 115); this reduces the routing complexity on the PCB.\nExternal LNAs improve the noise figure of the receiver. All losses between the antenna and the first amplifier add directly to the noise figure of the receiver (a passive component with loss \\(L\\) has a noise factor \\(F = L\\), see Section 2.3.3), and in the Fairphone the signal passes through a diplexer, an antenna switch, and a filter before it reaches the LNA module. An LNA directly after the filter fixes the noise figure early in the chain, so that the noise of the RFIC matters less, as the example in Note 13 shows.\n\n\n\n\n\n\nNote 13: Noise Figure of the Receive Path\n\n\n\nWe assume (as typical values, not taken from datasheets) a total loss of \\(L\\) = 2.6 dB in front of the LNA (diplexer 0.4 dB, antenna switch 0.7 dB, and filter 1.5 dB), an external LNA with NF = 1 dB and a gain of \\(G\\) = 18 dB, and an RFIC with NF = 6 dB. With the Friis formula (Equation 22) and \\(F = L\\) for the passive components, the receiver has a noise factor of\n\\[\nF = L \\left( F_\\mathrm{LNA} + \\frac{F_\\mathrm{RFIC} - 1}{G} \\right) = 1.82 \\cdot \\left( 1.26 + \\frac{3.98 - 1}{63.1} \\right) = 2.38,\n\\]\ni.e., a noise figure of 3.8 dB. Without the external LNA, the noise figure would be \\(2.6\\,\\text{dB} + 6\\,\\text{dB} = 8.6\\,\\text{dB}\\), which would reduce the sensitivity (Equation 24) by almost 5 dB.\n\n\nFor the GNSS receivers, the situation is even more critical, as the satellite signals arrive far below the thermal noise floor. Here, each band (L1 and L5) uses an external LNA between two SAW filters. The first filter protects the LNA from the strong cellular and Wi-Fi signals of the phone itself, and the second filter provides additional out-of-band filtering before further amplification."
+  },
+  {
+    "objectID": "rfic.html#sec-fp6-tx",
+    "href": "rfic.html#sec-fp6-tx",
+    "title": "Radio-Frequency Integrated Circuits",
+    "section": "11.6 Transmit Path",
+    "text": "11.6 Transmit Path\nThe transmit path is shown in Figure 116. The RFIC generates the modulated RF signal with a direct-conversion transmitter. This signal is amplified to the required output power by one of two multimode PA modules (MMPA) for the LB, MB, and HB bands, which contain PAs for the three band groups together with band switches. A dedicated PA module (QPA2625) is used for GSM, and the n77/n78 band has its own PA in the QPM2980 module. The PA output passes through the duplexer of the active band, an antenna switch, and a directional coupler to the antenna.\n\n\n\n\n\n\n\n\nFigure 116: Simplified transmit path of the Fairphone (Gen. 6) for band 1 or band 3. The supply of the PA comes from an average power tracker; a directional coupler between the antenna switch and the antenna feeds a sample of the TX signal back to the feedback receiver (FBRX) of the RFIC. The I and Q paths of the direct-conversion transmitter are drawn as one.\n\n\n\n\n\nThe maximum output power at the antenna connector is 23 dBm (power class 3) for most bands and 26 dBm (power class 2, high-power UE) for bands 41 and n78 (3GPP 2026a, 2026b).\n\n11.6.1 Average Power Tracking\nA phone transmits at full power only at the cell edge; closer to the base station, the output power is reduced by the power control. With a fixed supply voltage, the efficiency of a linear PA drops quickly at reduced output power (see Section 8.1). The Fairphone therefore supplies each of the two MMPAs from its own dc-dc converter (QET3930), whose outputs are labeled as APT supplies (VPA0_APT and VPA1_APT) in the schematics (Fairphone B.V. 2025). With APT, the PA supply voltage is adjusted to the average output power of the current transmission slot. This average power tracking (APT) is a simple form of the supply modulation discussed with Class G and Class H in Section 8.3.\nTo quantify the benefit, we model an ideal class-B PA. For an RF amplitude \\(a\\) at the drain and a load resistance \\(R\\), the output power is \\(P_\\mathrm{out} = a^2 / (2R)\\) and the dc power drawn from the supply \\(V_\\mathrm{DD}\\) is \\(P_\\mathrm{dc} = 2 V_\\mathrm{DD} a / (\\pi R)\\). For a modulated signal with a varying envelope \\(a(t)\\), the average drain efficiency becomes\n\\[\n\\eta = \\frac{\\pi}{4} \\frac{\\mathrm{E}\\{a^2\\}}{\\mathrm{E}\\{V_\\mathrm{DD} \\, a\\}},\n\\tag{85}\\]\nwhich reaches the class-B limit \\(\\pi / 4\\) only if \\(V_\\mathrm{DD}\\) follows the envelope \\(a(t)\\) at every instant. For an OFDM signal, the I and Q components are approximately Gaussian, so the envelope is Rayleigh distributed, with \\(\\mathrm{E}\\{a^2\\} = 2 \\sigma^2\\) and \\(\\mathrm{E}\\{a\\} = \\sigma \\sqrt{\\pi / 2}\\). If the supply is set to the envelope peak \\(a_\\mathrm{pk} = \\sigma \\sqrt{2\\,\\text{PAPR}}\\), Equation 85 yields\n\\[\n\\eta_\\mathrm{APT} = \\frac{\\sqrt{\\pi}}{2 \\sqrt{\\text{PAPR}}},\n\\tag{86}\\]\nindependent of the output power. For a PAPR of 8 dB, this gives 35 %. With a fixed supply, the supply is set by the peak at maximum output power, and the efficiency falls by 10 dB for every 10 dB of output power back-off, while APT keeps the efficiency constant as long as the dc-dc converter can lower its output voltage. Figure 117 compares fixed supply, APT, and envelope tracking (ET), where the supply follows the envelope instantaneously.\n\n\n\n\n\n\n\n\nFigure 117: Average drain efficiency of an ideal class-B PA amplifying an OFDM signal (Rayleigh-distributed envelope, supply sized for a PAPR of 8 dB) versus average output power, for a fixed supply, average power tracking (APT), and envelope tracking (ET). The fixed supply is sized for the maximum output power of 23 dBm (power class 3); the tracking supply cannot go below 0.5 V for a 3.8 V battery. The losses of the dc-dc converter are not included.\n\n\n\n\n\nAt 13 dBm output power, i.e., 10 dB below maximum, APT improves the drain efficiency from 11 % to 35 %. ET more than doubles the efficiency at high output power, but requires a tracking supply with a bandwidth of several times the signal bandwidth, which is difficult and power hungry for the wide channels of LTE and 5G NR. The SDR735 has outputs to control an envelope tracker (ETDAC0 and ETDAC1), but in the Fairphone, they are not connected; the phone relies on APT.\n\n\n11.6.2 Feedback Receiver\nThe transmit power has to be controlled accurately (the maximum output power, for example, has a tolerance of about ±2 dB (3GPP 2026a)), and the transmitter has to meet the requirements for the error vector magnitude (EVM, see Equation 30) and the adjacent channel leakage. As the gain of the PA depends on temperature, supply voltage, frequency, and antenna impedance, the phone measures its own output: a directional coupler between the antenna switch and the antenna couples a small part of the transmitted signal to the feedback receiver (FBRX) input of the RFIC, via a switch that selects the coupler of the active transmitter. A feedback receiver allows the digital baseband to compare the transmitted with the intended signal, which can be used for closed-loop power control, for the calibration of I/Q imbalance and LO leakage of the transmitter (see Section 3.1), and for digital predistortion of the PA (see Section 8.5).\n\n\n11.6.3 Dual Uplink and Self-Interference\nFor bands 1 and 3, the Fairphone uses a quadplexer instead of two separate duplexers (Fairphone B.V. 2025): a filter with one antenna port and four ports for B1 TX, B1 RX, B3 TX, and B3 RX. A quadplexer allows both bands to be connected to the same antenna at the same time, as needed for carrier aggregation of B1 and B3, possibly with an uplink in both bands (dual uplink). When two transmit signals pass through a nonlinear component (the PA output stages, the antenna switch, or the quadplexer itself), they generate harmonics and intermodulation products (see Section 2.2). In the classification of self-interference mechanisms of (Sadjina et al. 2020), this is TX-to-RX crosstalk: the interferer is generated from the phone’s own transmit signals and reaches its receivers through the shared front-end, where the TX-to-RX isolation of the quadplexer and of the antenna switch is finite (see also Section 9.1). Figure 118 shows where these products of B1 and B3 fall.\n\n\n\n\n\n\n\n\nFigure 118: Harmonics and intermodulation products \\(|m f_\\mathrm{B3} + n f_\\mathrm{B1}|\\) of a dual uplink in bands 1 and 3 (\\(f_\\mathrm{B1}\\) = 1920 MHz to 1980 MHz, \\(f_\\mathrm{B3}\\) = 1710 MHz to 1785 MHz). The shaded columns are the receive bands of the phone; the parts of a product that fall into a receive band are drawn in red, and the affected receive bands are listed next to each product.\n\n\n\n\n\nSeveral products land in receive bands of the same phone:\n\nThe third-order product \\(2 f_\\mathrm{B1} - f_\\mathrm{B3}\\) (2055 MHz to 2250 MHz) covers the entire B1 downlink. This is the most critical case, as the phone has to receive in B1 while it transmits the two signals that create the interferer.\nThe third-order product \\(2 f_\\mathrm{B3} - f_\\mathrm{B1}\\) (1440 MHz to 1650 MHz) falls into B32 and into the GNSS L1 band.\nThe second harmonics and the second-order sum product fall into the n77/n78 bands, and higher-order products into the Wi-Fi 5 GHz and 6 GHz bands.\n\nHow linear do the components have to be? In dual uplink, the maximum output power of 23 dBm is shared by the two carriers, so each carrier has about 20 dBm. If the IM3 product shall stay below -110 dBm, i.e., about 7 dB below the noise floor of -103 dBm of a receiver with a 5 MHz channel and NF = 4 dB (see Equation 24), solving Equation 15 for the IIP3 of the components after the PAs gives\n\\[\n\\text{IIP3} = P_\\mathrm{in} + \\frac{P_\\mathrm{in} - P_\\mathrm{IM3}}{2} = 20\\,\\text{dBm} + \\frac{20 - (-110)}{2}\\,\\text{dB} = 85\\,\\text{dBm},\n\\]\na value that is extremely hard to met by real switches and filters. 3GPP therefore allows a maximum sensitivity degradation (MSD) for band combinations whose intermodulation products fall into an own receive band (3GPP 2026a), and the front-end designer minimizes the degradation with highly linear switches and filters and by keeping the two TX signals isolated from each other for as long as possible (e.g., using different antennas).\nA complementary approach is self-interference cancellation in the receiver (Sadjina et al. 2020). Unlike an external blocker, the interferer here is created from signals the phone knows exactly: its own TX baseband samples. An adaptive model of the nonlinear coupling path, driven by the two TX signals, can therefore reproduce the IM3 product in the digital baseband and subtract it from the received signal. As the coupling path changes with antenna impedance, temperature, and output power, the model parameters are estimated continuously (e.g., with LMS-type adaptive algorithms). Cancellation relaxes the linearity requirements of the front-end, at the cost of additional digital signal processing. Whether such a technique is used in the Fairphone is unknown.\nThis is a good example of the self-interference problems discussed in Section 9: in a multi-band radio, the strongest interferer is often the own transmitter."
+  },
+  {
+    "objectID": "rfic.html#sec-fp6-wifi",
+    "href": "rfic.html#sec-fp6-wifi",
+    "title": "Radio-Frequency Integrated Circuits",
+    "section": "11.7 Wi-Fi and Bluetooth",
+    "text": "11.7 Wi-Fi and Bluetooth\nWi-Fi and Bluetooth are handled by the WCN6755, which is connected to the SoC via PCIe (Fairphone B.V. 2025). In contrast to the cellular radio, the WCN6755 integrates the PAs on chip. Wi-Fi uses TDD (see Table 4), so a switch instead of a duplexer separates TX and RX. For 2×2 MIMO, the WCN6755 has two independent RF chains per band, which are connected to separate antennas. Bluetooth shares the 2.4 GHz RF ports with Wi-Fi (the pins are labeled WLBT), so Wi-Fi and Bluetooth at 2.4 GHz use the same antenna paths."
+  },
+  {
+    "objectID": "rfic.html#sec-fp6-summary",
+    "href": "rfic.html#sec-fp6-summary",
+    "title": "Radio-Frequency Integrated Circuits",
+    "section": "11.8 Summary",
+    "text": "11.8 Summary\nTable 14 maps the components of the Fairphone (Gen. 6) radio to the chapters of this course.\n\n\n\nTable 14: Mapping of the components of the Fairphone (Gen. 6) radio to the topics of this course.\n\n\n\n\n\n\n\n\n\n\nComponent in the Fairphone (Gen. 6)\nTopic\nCourse section\n\n\n\n\nBand plan, duplexers, quadplexer\nFDD/TDD, filter \\(Q\\)\nSection 3.5\n\n\nSDR735 receivers and transmitters\nDirect-conversion transceiver\nSection 3.1\n\n\nLNA modules, RX noise figure\nNoise figure, Friis formula, LNAs\nSection 2.3.3, Section 4\n\n\nAntenna tuners, LNA input matching\nImpedance matching\nSection 4.1\n\n\nI/Q downconversion and upconversion\nMixers, quadrature LO generation\nSection 5, Section 5.5\n\n\nLO generation from 617 MHz to 3.8 GHz\nOscillator tuning, PLLs\nSection 6.6, Section 7\n\n\nMMPAs, APT supply\nPA efficiency, supply modulation\nSection 8.1, Section 8.3\n\n\nFeedback receiver\nPower control, EVM, predistortion\nSection 8.5\n\n\nDual uplink B1/B3\nIntermodulation, self-interference\nSection 2.2, Section 9"
+  },
+  {
     "objectID": "rfic.html#sec-exam-intro",
     "href": "rfic.html#sec-exam-intro",
     "title": "Radio-Frequency Integrated Circuits",
-    "section": "11.1 Introduction and Wireless Basics",
-    "text": "11.1 Introduction and Wireless Basics\n\nWhat is the basic function of a radio-frequency transceiver? Describe the main components and their roles.\nExplain Friis’ transmission formula (Equation 1). What factors determine the received power in a wireless link? How does the free-space path loss (FSPL) change with distance and frequency?\nWhat are the main challenges of wireless communication? Name at least four properties of a wireless channel that make RF design difficult.\nWhat is the definition of “dBm”? Why are logarithmic metrics commonly used in RF systems?\nWhat is the Shannon-Hartley theorem (Equation 5)? Calculate the channel capacity for a system with 10 MHz bandwidth and an SNR of 20 dB. What factors can be changed to increase the channel capacity?\nName at least five different wireless standards. For each, state the approximate frequency range and typical application."
+    "section": "12.1 Introduction and Wireless Basics",
+    "text": "12.1 Introduction and Wireless Basics\n\nWhat is the basic function of a radio-frequency transceiver? Describe the main components and their roles.\nExplain Friis’ transmission formula (Equation 1). What factors determine the received power in a wireless link? How does the free-space path loss (FSPL) change with distance and frequency?\nWhat are the main challenges of wireless communication? Name at least four properties of a wireless channel that make RF design difficult.\nWhat is the definition of “dBm”? Why are logarithmic metrics commonly used in RF systems?\nWhat is the Shannon-Hartley theorem (Equation 5)? Calculate the channel capacity for a system with 10 MHz bandwidth and an SNR of 20 dB. What factors can be changed to increase the channel capacity?\nName at least five different wireless standards. For each, state the approximate frequency range and typical application."
   },
   {
     "objectID": "rfic.html#sec-exam-linearity",
     "href": "rfic.html#sec-exam-linearity",
     "title": "Radio-Frequency Integrated Circuits",
-    "section": "11.2 Linearity",
-    "text": "11.2 Linearity\n\nDescribe the nonlinear model used in RF systems (Equation 6). What happens when a single sinusoidal signal passes through a weakly nonlinear system? What frequency components are generated?\nWhat is gain compression? Draw a simple transfer characteristic and show the 1 dB compression point (\\(P_\\mathrm{1dB}\\)). Explain the difference between compressive and expansive behavior.\nExplain the concept of intermodulation. Using a two-tone test and assuming third-order nonlinearity, which intermodulation products are created? Why are the IM3 products at \\(2\\omega_1 - \\omega_2\\) and \\(2\\omega_2 - \\omega_1\\) particularly problematic?\nWhat is the third-order intercept point (IP3)? Draw a diagram showing the relationship between input power, fundamental output power, and IM3 products. How can IIP3 be calculated from measurement data using Equation 15?\nHow can nonlinearities be cascaded in a calculation? Given an LNA with IIP3 = –10 dBm and gain = 20 dB followed by a mixer with IIP3 = 5 dBm, what is the overall approximate IIP3 of the cascade? Which block dominates?\nWhat is the approximate relationship between \\(P_\\mathrm{1dB}\\) and IIP3 for mildly nonlinear systems?"
+    "section": "12.2 Linearity",
+    "text": "12.2 Linearity\n\nDescribe the nonlinear model used in RF systems (Equation 6). What happens when a single sinusoidal signal passes through a weakly nonlinear system? What frequency components are generated?\nWhat is gain compression? Draw a simple transfer characteristic and show the 1 dB compression point (\\(P_\\mathrm{1dB}\\)). Explain the difference between compressive and expansive behavior.\nExplain the concept of intermodulation. Using a two-tone test and assuming third-order nonlinearity, which intermodulation products are created? Why are the IM3 products at \\(2\\omega_1 - \\omega_2\\) and \\(2\\omega_2 - \\omega_1\\) particularly problematic?\nWhat is the third-order intercept point (IP3)? Draw a diagram showing the relationship between input power, fundamental output power, and IM3 products. How can IIP3 be calculated from measurement data using Equation 15?\nHow can nonlinearities be cascaded in a calculation? Given an LNA with IIP3 = –10 dBm and gain = 20 dB followed by a mixer with IIP3 = 5 dBm, what is the overall approximate IIP3 of the cascade? Which block dominates?\nWhat is the approximate relationship between \\(P_\\mathrm{1dB}\\) and IIP3 for mildly nonlinear systems?"
   },
   {
     "objectID": "rfic.html#sec-exam-noise",
     "href": "rfic.html#sec-exam-noise",
     "title": "Radio-Frequency Integrated Circuits",
-    "section": "11.3 Noise",
-    "text": "11.3 Noise\n\nWhat are the main types of noise relevant for electronic circuits? Describe thermal noise, shot noise, and flicker noise with their governing equations.\nWhat is the thermal noise voltage of a resistor with value \\(R\\)? Calculate the noise voltage spectral density of a 1 kΩ resistor at room temperature.\nWhat is the maximum noise power that can be extracted from a resistor? Derive the result using the maximum power transfer theorem and explain why it equals \\(kT\\) per Hz.\nWhat are the main noise sources in a MOSFET? How can the input-referred noise voltage be minimized? How does flicker noise depend on transistor dimensions?\nWhat is the noise figure (NF)? State the definition using SNR at input and output (Equation 21). What is the noise figure of an ideal noiseless amplifier? What is the noise figure of a passive lossy element with loss \\(L\\)?\nWhat is the Friis equation (Equation 22)? For a system with two cascaded blocks (Block 1: NF\\(_1\\) = 2 dB, G\\(_1\\) = 15 dB; Block 2: NF\\(_2\\) = 10 dB), calculate the total noise figure. Why is the noise figure of the first block so important?\nWhat is the sensitivity of a wireless receiver? A receiver requires an SNR of 12 dB, has a channel bandwidth of 200 kHz, and a total noise figure of 5 dB. Calculate the sensitivity."
+    "section": "12.3 Noise",
+    "text": "12.3 Noise\n\nWhat are the main types of noise relevant for electronic circuits? Describe thermal noise, shot noise, and flicker noise with their governing equations.\nWhat is the thermal noise voltage of a resistor with value \\(R\\)? Calculate the noise voltage spectral density of a 1 kΩ resistor at room temperature.\nWhat is the maximum noise power that can be extracted from a resistor? Derive the result using the maximum power transfer theorem and explain why it equals \\(kT\\) per Hz.\nWhat are the main noise sources in a MOSFET? How can the input-referred noise voltage be minimized? How does flicker noise depend on transistor dimensions?\nWhat is the noise figure (NF)? State the definition using SNR at input and output (Equation 21). What is the noise figure of an ideal noiseless amplifier? What is the noise figure of a passive lossy element with loss \\(L\\)?\nWhat is the Friis equation (Equation 22)? For a system with two cascaded blocks (Block 1: NF\\(_1\\) = 2 dB, G\\(_1\\) = 15 dB; Block 2: NF\\(_2\\) = 10 dB), calculate the total noise figure. Why is the noise figure of the first block so important?\nWhat is the sensitivity of a wireless receiver? A receiver requires an SNR of 12 dB, has a channel bandwidth of 200 kHz, and a total noise figure of 5 dB. Calculate the sensitivity."
   },
   {
     "objectID": "rfic.html#sec-exam-modulation",
     "href": "rfic.html#sec-exam-modulation",
     "title": "Radio-Frequency Integrated Circuits",
-    "section": "11.4 Modulation and Communication Concepts",
-    "text": "11.4 Modulation and Communication Concepts\n\nWhat is modulation? Describe the basic types: amplitude modulation (AM/ASK), frequency modulation (FM/FSK), and phase modulation (PM/PSK). What is QAM?\nDraw the constellation diagram of a QPSK or 16-QAM modulated signal. What impairments can affect the constellation, and how would they manifest in the diagram? What is Error Vector Magnitude (EVM)?\nExplain the concept of pulse shaping. Why is the sinc pulse important, and what is its relationship to the rect function in the frequency domain?\nWhat is Orthogonal Frequency Division Multiplexing (OFDM)? How are symbol period and sub-carrier spacing related? What are the advantages of OFDM?\nWhat is the difference between Frequency Division Duplex (FDD) and Time Division Duplex (TDD)? What are the advantages and disadvantages of each? How does this affect transceiver design?\nHow can multiple users access a radio channel simultaneously? Describe FDMA, TDMA, and CDMA."
+    "section": "12.4 Modulation and Communication Concepts",
+    "text": "12.4 Modulation and Communication Concepts\n\nWhat is modulation? Describe the basic types: amplitude modulation (AM/ASK), frequency modulation (FM/FSK), and phase modulation (PM/PSK). What is QAM?\nDraw the constellation diagram of a QPSK or 16-QAM modulated signal. What impairments can affect the constellation, and how would they manifest in the diagram? What is Error Vector Magnitude (EVM)?\nExplain the concept of pulse shaping. Why is the sinc pulse important, and what is its relationship to the rect function in the frequency domain?\nWhat is Orthogonal Frequency Division Multiplexing (OFDM)? How are symbol period and sub-carrier spacing related? What are the advantages of OFDM?\nWhat is the difference between Frequency Division Duplex (FDD) and Time Division Duplex (TDD)? What are the advantages and disadvantages of each? How does this affect transceiver design?\nHow can multiple users access a radio channel simultaneously? Describe FDMA, TDMA, and CDMA."
   },
   {
     "objectID": "rfic.html#sec-exam-trx",
     "href": "rfic.html#sec-exam-trx",
     "title": "Radio-Frequency Integrated Circuits",
-    "section": "11.5 Transceiver Architectures",
-    "text": "11.5 Transceiver Architectures\n\nDraw a block diagram of a direct-conversion (zero-IF) receiver. Explain the function of each block. What are the advantages and disadvantages of this architecture?\nWhat is the “image frequency” problem in a heterodyne receiver? How can it be addressed?\nDescribe the differences between direct-conversion and heterodyne receiver architectures. What are LO leakage, dc offsets, and flicker noise problems in direct-conversion receivers?\nDraw a block diagram of a direct-conversion transmitter. What is oscillator pulling, and how can it be minimized?\nWhat is a duplexer? When is it needed? Compare the requirements for duplexers vs. TX/RX switches."
+    "section": "12.5 Transceiver Architectures",
+    "text": "12.5 Transceiver Architectures\n\nDraw a block diagram of a direct-conversion (zero-IF) receiver. Explain the function of each block. What are the advantages and disadvantages of this architecture?\nWhat is the “image frequency” problem in a heterodyne receiver? How can it be addressed?\nDescribe the differences between direct-conversion and heterodyne receiver architectures. What are LO leakage, dc offsets, and flicker noise problems in direct-conversion receivers?\nDraw a block diagram of a direct-conversion transmitter. What is oscillator pulling, and how can it be minimized?\nWhat is a duplexer? When is it needed? Compare the requirements for duplexers vs. TX/RX switches."
   },
   {
     "objectID": "rfic.html#sec-exam-lna",
     "href": "rfic.html#sec-exam-lna",
     "title": "Radio-Frequency Integrated Circuits",
-    "section": "11.6 Low Noise Amplifiers",
-    "text": "11.6 Low Noise Amplifiers\n\nWhat are the key performance parameters of an LNA? List at least five important specifications and describe their typical values.\nWhat is impedance matching? What is the return loss, and how is it related to the reflection coefficient \\(\\Gamma\\)? What return loss is typically considered acceptable?\nWhat is amplifier stability? Explain the \\(\\mu\\) stability factor. What conditions must be satisfied for unconditional stability?\nDraw the schematic of a resistively matched common-source LNA. Derive its noise figure and explain why this topology is limited to a minimum NF of 3 dB.\nDraw the schematic of a common-gate LNA. What is its input impedance? Explain why the noise factor is limited by \\(F = 1 + \\gamma\\).\nDraw the schematic of an inductively-degenerated common-source LNA. Derive the input impedance (Equation 44). How can a purely resistive input impedance be achieved?\nWhat is the advantage of the inductively-degenerated LNA over the common-gate LNA in terms of noise figure? How can the noise figure be minimized?\nDescribe the shunt-feedback LNA topology. What are its advantages, and how does the input impedance depend on the feedback and load impedances?"
+    "section": "12.6 Low Noise Amplifiers",
+    "text": "12.6 Low Noise Amplifiers\n\nWhat are the key performance parameters of an LNA? List at least five important specifications and describe their typical values.\nWhat is impedance matching? What is the return loss, and how is it related to the reflection coefficient \\(\\Gamma\\)? What return loss is typically considered acceptable?\nWhat is amplifier stability? Explain the \\(\\mu\\) stability factor. What conditions must be satisfied for unconditional stability?\nDraw the schematic of a resistively matched common-source LNA. Derive its noise figure and explain why this topology is limited to a minimum NF of 3 dB.\nDraw the schematic of a common-gate LNA. What is its input impedance? Explain why the noise factor is limited by \\(F = 1 + \\gamma\\).\nDraw the schematic of an inductively-degenerated common-source LNA. Derive the input impedance (Equation 44). How can a purely resistive input impedance be achieved?\nWhat is the advantage of the inductively-degenerated LNA over the common-gate LNA in terms of noise figure? How can the noise figure be minimized?\nDescribe the shunt-feedback LNA topology. What are its advantages, and how does the input impedance depend on the feedback and load impedances?"
   },
   {
     "objectID": "rfic.html#sec-exam-mixer",
     "href": "rfic.html#sec-exam-mixer",
     "title": "Radio-Frequency Integrated Circuits",
-    "section": "11.7 Mixers",
-    "text": "11.7 Mixers\n\nWhat are the two fundamental approaches to implementing frequency conversion in a mixer? Explain the difference between nonlinear and time-variant mixers.\nDraw the block diagram of an unbalanced passive mixer using a single MOSFET switch. Derive the output signal expression and identify the conversion loss.\nWhat is a double-balanced mixer? Draw its circuit diagram. What are the advantages over an unbalanced and over a single-balanced mixer, respectively? What is the conversion gain/loss of an ideal double-balanced mixer, and where do the 6 dB compared to the unbalanced mixer come from?\nDraw and explain the Gilbert cell mixer. How does it work? What is the advantage of using a bipolar or CMOS Gilbert cell?\nWhat is an N-path filter? Explain how it can create a high-Q bandpass filter centered at the LO frequency. Why is this useful for RF receivers?\nDescribe three different methods to generate quadrature (I/Q) LO signals. What are the advantages and disadvantages of each method?\nExplain the flip-flop based I/Q generation method. How can 25% duty cycle LO signals be generated?"
+    "section": "12.7 Mixers",
+    "text": "12.7 Mixers\n\nWhat are the two fundamental approaches to implementing frequency conversion in a mixer? Explain the difference between nonlinear and time-variant mixers.\nDraw the block diagram of an unbalanced passive mixer using a single MOSFET switch. Derive the output signal expression and identify the conversion loss.\nWhat is a double-balanced mixer? Draw its circuit diagram. What are the advantages over an unbalanced and over a single-balanced mixer, respectively? What is the conversion gain/loss of an ideal double-balanced mixer, and where do the 6 dB compared to the unbalanced mixer come from?\nDraw and explain the Gilbert cell mixer. How does it work? What is the advantage of using a bipolar or CMOS Gilbert cell?\nWhat is an N-path filter? Explain how it can create a high-Q bandpass filter centered at the LO frequency. Why is this useful for RF receivers?\nDescribe three different methods to generate quadrature (I/Q) LO signals. What are the advantages and disadvantages of each method?\nExplain the flip-flop based I/Q generation method. How can 25% duty cycle LO signals be generated?"
   },
   {
     "objectID": "rfic.html#sec-exam-oscillator",
     "href": "rfic.html#sec-exam-oscillator",
     "title": "Radio-Frequency Integrated Circuits",
-    "section": "11.8 Oscillators",
-    "text": "11.8 Oscillators\n\nWhat is the Barkhausen criterion for oscillation? Describe the conditions for sustained oscillation in a feedback system.\nDraw an LC tank circuit with loss. What is the resonance frequency? How is the quality factor \\(Q\\) defined? What is the relationship between \\(Q\\) and the energy stored vs. energy dissipated per cycle?\nDescribe the concept of phase noise. What is its physical meaning? In what unit is it typically specified? Calculate the phase noise for an oscillator with 10 dBm output power and –80 dBm noise at 1 MHz offset measured with 1 kHz bandwidth.\nWhat is Leeson’s equation (Equation 56)? Which factors influence the phase noise of an oscillator? How can phase noise be minimized?\nWhat is reciprocal mixing? Why is it problematic in wireless receivers? Derive the maximum allowable phase noise given a blocker power and sensitivity requirement.\nDraw a cross-coupled LC oscillator (NMOS, PMOS, or CMOS topology). What is the negative resistance provided by the cross-coupled pair? How does oscillation start and stabilize?\nHow can frequency tuning of an LC oscillator be achieved? Describe different varactor implementations (MOS varactor, switched capacitor, PN junction)."
+    "section": "12.8 Oscillators",
+    "text": "12.8 Oscillators\n\nWhat is the Barkhausen criterion for oscillation? Describe the conditions for sustained oscillation in a feedback system.\nDraw an LC tank circuit with loss. What is the resonance frequency? How is the quality factor \\(Q\\) defined? What is the relationship between \\(Q\\) and the energy stored vs. energy dissipated per cycle?\nDescribe the concept of phase noise. What is its physical meaning? In what unit is it typically specified? Calculate the phase noise for an oscillator with 10 dBm output power and –80 dBm noise at 1 MHz offset measured with 1 kHz bandwidth.\nWhat is Leeson’s equation (Equation 56)? Which factors influence the phase noise of an oscillator? How can phase noise be minimized?\nWhat is reciprocal mixing? Why is it problematic in wireless receivers? Derive the maximum allowable phase noise given a blocker power and sensitivity requirement.\nDraw a cross-coupled LC oscillator (NMOS, PMOS, or CMOS topology). What is the negative resistance provided by the cross-coupled pair? How does oscillation start and stabilize?\nHow can frequency tuning of an LC oscillator be achieved? Describe different varactor implementations (MOS varactor, switched capacitor, PN junction)."
   },
   {
     "objectID": "rfic.html#sec-exam-pll",
     "href": "rfic.html#sec-exam-pll",
     "title": "Radio-Frequency Integrated Circuits",
-    "section": "11.9 Phase-Locked Loops",
-    "text": "11.9 Phase-Locked Loops\n\nDraw a simple block diagram of a Type-I phase-locked loop and explain the function of each component (PD, LPF, VCO, divider). What are the steady-state phase and frequency errors?\nWhat is a phase-frequency detector (PFD)? How does it differ from a simple XOR phase detector? Draw its implementation and timing diagrams for different input conditions.\nDraw a simple charge-pump circuit. How does it work? Why is the resistor in the loop filter necessary?\nWhat is the difference between a Type-I and a Type-II PLL? What are the steady-state errors for phase and frequency in each case?\nWrite the closed-loop transfer function of a charge-pump PLL with a simple RC loop filter. Identify the natural frequency \\(\\omega_n\\) and damping factor \\(\\zeta\\). What is a reasonable value for \\(\\zeta\\)?\nDescribe the phase noise profile of a PLL output. How do the reference oscillator phase noise and VCO phase noise contribute at different offset frequencies? What determines the crossover frequency?\nWhat is an all-digital PLL (ADPLL)? Draw its block diagram. What are the advantages and challenges compared to analog PLLs?\nDescribe the operation of a time-to-digital converter (TDC). How does quantization noise affect the PLL phase noise?\nWhat is a fractional-N PLL? Why is it useful? How does delta-sigma modulation help reduce spurious tones?\nWhat is the noise transfer function (NTF) of a first-order delta-sigma modulator? How does it shape quantization noise?"
+    "section": "12.9 Phase-Locked Loops",
+    "text": "12.9 Phase-Locked Loops\n\nDraw a simple block diagram of a Type-I phase-locked loop and explain the function of each component (PD, LPF, VCO, divider). What are the steady-state phase and frequency errors?\nWhat is a phase-frequency detector (PFD)? How does it differ from a simple XOR phase detector? Draw its implementation and timing diagrams for different input conditions.\nDraw a simple charge-pump circuit. How does it work? Why is the resistor in the loop filter necessary?\nWhat is the difference between a Type-I and a Type-II PLL? What are the steady-state errors for phase and frequency in each case?\nWrite the closed-loop transfer function of a charge-pump PLL with a simple RC loop filter. Identify the natural frequency \\(\\omega_n\\) and damping factor \\(\\zeta\\). What is a reasonable value for \\(\\zeta\\)?\nDescribe the phase noise profile of a PLL output. How do the reference oscillator phase noise and VCO phase noise contribute at different offset frequencies? What determines the crossover frequency?\nWhat is an all-digital PLL (ADPLL)? Draw its block diagram. What are the advantages and challenges compared to analog PLLs?\nDescribe the operation of a time-to-digital converter (TDC). How does quantization noise affect the PLL phase noise?\nWhat is a fractional-N PLL? Why is it useful? How does delta-sigma modulation help reduce spurious tones?\nWhat is the noise transfer function (NTF) of a first-order delta-sigma modulator? How does it shape quantization noise?"
   },
   {
     "objectID": "rfic.html#sec-exam-poweramp",
     "href": "rfic.html#sec-exam-poweramp",
     "title": "Radio-Frequency Integrated Circuits",
-    "section": "11.10 Power Amplifiers",
-    "text": "11.10 Power Amplifiers\n\nDraw a simple single-ended power amplifier. What is the trade-off between supply voltage, load impedance, and output power? Calculate the maximum output power for \\(V_\\mathrm{DD}\\) = 3 V and \\(R_\\mathrm{L}\\) = 50 Ω.\nWhat is the definition of drain efficiency and power-added efficiency (PAE) of a PA?\nWhat is the AM/AM and AM/PM distortion in a power amplifier? How can the Saleh model be used to characterize PA nonlinearity?\nDescribe load-pull measurements. Why are they important for PA design?\nWhat are the different classes of operation for power amplifiers (Class A, B, AB, C)? Describe the conduction angle and theoretical maximum efficiency for each class.\nWhat are Class D, E, and F amplifiers? How do they achieve high efficiency?\nWhat is envelope tracking (Class G/H operation)? Why is it beneficial for power amplifiers used with non-constant envelope modulation schemes?\nWhat is neutralization in power amplifier design? Why is it needed, and how is it implemented in a differential PA?"
+    "section": "12.10 Power Amplifiers",
+    "text": "12.10 Power Amplifiers\n\nDraw a simple single-ended power amplifier. What is the trade-off between supply voltage, load impedance, and output power? Calculate the maximum output power for \\(V_\\mathrm{DD}\\) = 3 V and \\(R_\\mathrm{L}\\) = 50 Ω.\nWhat is the definition of drain efficiency and power-added efficiency (PAE) of a PA?\nWhat is the AM/AM and AM/PM distortion in a power amplifier? How can the Saleh model be used to characterize PA nonlinearity?\nDescribe load-pull measurements. Why are they important for PA design?\nWhat are the different classes of operation for power amplifiers (Class A, B, AB, C)? Describe the conduction angle and theoretical maximum efficiency for each class.\nWhat are Class D, E, and F amplifiers? How do they achieve high efficiency?\nWhat is envelope tracking (Class G/H operation)? Why is it beneficial for power amplifiers used with non-constant envelope modulation schemes?\nWhat is neutralization in power amplifier design? Why is it needed, and how is it implemented in a differential PA?"
   },
   {
     "objectID": "rfic.html#sec-exam-calculations",
     "href": "rfic.html#sec-exam-calculations",
     "title": "Radio-Frequency Integrated Circuits",
-    "section": "11.11 Calculation Problems",
-    "text": "11.11 Calculation Problems\n\nFSPL Calculation: Calculate the free-space path loss for a 5.8 GHz Wi-Fi link over a distance of 100 m. Express your answer in dB.\nChannel Capacity: A mobile communication system operates with a 20 MHz channel bandwidth. The SNR at the receiver is 15 dB. Calculate the theoretical maximum data rate according to the Shannon-Hartley theorem. If the actual data rate is 75 Mbps, what is the spectral efficiency in bits/s/Hz?\nIIP3 Cascade: Calculate the overall approximate IIP3 for the following cascade: LNA (IIP3 = –5 dBm, gain = 15 dB), Mixer (IIP3 = 8 dBm, gain = 10 dB), IF amplifier (IIP3 = 15 dBm, gain = 40 dB).\nCascade Noise Figure: An RF front-end consists of: RF filter (loss 2 dB), LNA (NF = 1.5 dB, gain = 18 dB), mixer (NF = 8 dB, gain = 6 dB). Calculate the total noise figure.\nSensitivity Calculation: A Bluetooth LE receiver has a noise figure of 8 dB, channel bandwidth of 2 MHz, and requires an SNR of 15 dB. Calculate the receiver sensitivity.\nLNA Input Impedance: An inductively-degenerated common-source LNA has \\(C_\\mathrm{gs}\\) = 200 fF, \\(g_m\\) = 40 mS, and \\(L_\\mathrm{deg}\\) = 1 nH. Calculate the real part of the input impedance. What additional inductance is needed to resonate with \\(C_\\mathrm{gs}\\) at 2.4 GHz?\nReciprocal Mixing: A receiver has a desired sensitivity of –90 dBm with an adjacent channel blocker at –30 dBm located 3 MHz from the carrier. The channel bandwidth is 100 kHz, and the demodulator requires an SNR of 10 dB. What is the maximum allowable LO phase noise at 3 MHz offset, assuming the reciprocal mixing noise may consume the entire noise budget?\nPhase Noise: An oscillator operates at 2.4 GHz with a tank \\(Q\\) of 15, tank resistance \\(R_p\\) = 500 Ω, oscillation amplitude of 0.8 V peak, and noise factor \\(F\\) = 2. Calculate the phase noise at 1 MHz offset using Leeson’s equation.\nPLL Loop Parameters: A charge-pump PLL has \\(I_\\mathrm{CP}\\) = 100 µA, \\(K_\\mathrm{VCO}\\) = 100 MHz/V, \\(C_\\mathrm{int}\\) = 10 nF, and \\(N\\) = 100. Calculate the natural frequency \\(\\omega_n\\) and the required \\(R_\\mathrm{int}\\) for a damping factor \\(\\zeta\\) = 0.707. Watch the units of \\(K_\\mathrm{VCO}\\)!\nPA Efficiency: A power amplifier delivers 27 dBm output power and draws 400 mA from a 3.3 V supply. Calculate the drain efficiency and the PAE if the input power is 0 dBm."
+    "section": "12.11 Calculation Problems",
+    "text": "12.11 Calculation Problems\n\nFSPL Calculation: Calculate the free-space path loss for a 5.8 GHz Wi-Fi link over a distance of 100 m. Express your answer in dB.\nChannel Capacity: A mobile communication system operates with a 20 MHz channel bandwidth. The SNR at the receiver is 15 dB. Calculate the theoretical maximum data rate according to the Shannon-Hartley theorem. If the actual data rate is 75 Mbps, what is the spectral efficiency in bits/s/Hz?\nIIP3 Cascade: Calculate the overall approximate IIP3 for the following cascade: LNA (IIP3 = –5 dBm, gain = 15 dB), Mixer (IIP3 = 8 dBm, gain = 10 dB), IF amplifier (IIP3 = 15 dBm, gain = 40 dB).\nCascade Noise Figure: An RF front-end consists of: RF filter (loss 2 dB), LNA (NF = 1.5 dB, gain = 18 dB), mixer (NF = 8 dB, gain = 6 dB). Calculate the total noise figure.\nSensitivity Calculation: A Bluetooth LE receiver has a noise figure of 8 dB, channel bandwidth of 2 MHz, and requires an SNR of 15 dB. Calculate the receiver sensitivity.\nLNA Input Impedance: An inductively-degenerated common-source LNA has \\(C_\\mathrm{gs}\\) = 200 fF, \\(g_m\\) = 40 mS, and \\(L_\\mathrm{deg}\\) = 1 nH. Calculate the real part of the input impedance. What additional inductance is needed to resonate with \\(C_\\mathrm{gs}\\) at 2.4 GHz?\nReciprocal Mixing: A receiver has a desired sensitivity of –90 dBm with an adjacent channel blocker at –30 dBm located 3 MHz from the carrier. The channel bandwidth is 100 kHz, and the demodulator requires an SNR of 10 dB. What is the maximum allowable LO phase noise at 3 MHz offset, assuming the reciprocal mixing noise may consume the entire noise budget?\nPhase Noise: An oscillator operates at 2.4 GHz with a tank \\(Q\\) of 15, tank resistance \\(R_p\\) = 500 Ω, oscillation amplitude of 0.8 V peak, and noise factor \\(F\\) = 2. Calculate the phase noise at 1 MHz offset using Leeson’s equation.\nPLL Loop Parameters: A charge-pump PLL has \\(I_\\mathrm{CP}\\) = 100 µA, \\(K_\\mathrm{VCO}\\) = 100 MHz/V, \\(C_\\mathrm{int}\\) = 10 nF, and \\(N\\) = 100. Calculate the natural frequency \\(\\omega_n\\) and the required \\(R_\\mathrm{int}\\) for a damping factor \\(\\zeta\\) = 0.707. Watch the units of \\(K_\\mathrm{VCO}\\)!\nPA Efficiency: A power amplifier delivers 27 dBm output power and draws 400 mA from a 3.3 V supply. Calculate the drain efficiency and the PAE if the input power is 0 dBm."
   },
   {
     "objectID": "rfic.html#sec-exam-simulation",
     "href": "rfic.html#sec-exam-simulation",
     "title": "Radio-Frequency Integrated Circuits",
-    "section": "11.12 RF Circuit Simulation (Optional)",
-    "text": "11.12 RF Circuit Simulation (Optional)\nThese questions refer to the appendix on RF circuit simulation (Section 10) and are optional.\n\nWhich assumptions about the circuit waveforms do the analyses op, ac, noise, tran, PSS, and HB make? Sketch how the analyses build on each other (Figure 106).\nWhy does a small-signal ac analysis of a mixer show no conversion gain? Which analysis do you use instead, and why?\nExplain the shooting method (Equation 76). Why does a PSS analysis of a high-Q circuit converge much faster than a transient analysis? What are the limitations of PSS, and why does a converged PSS not prove that an oscillator starts up?\nExplain the principle of harmonic balance (Equation 79). For which circuits is HB efficient, and for which circuits is PSS the better choice? Why can HB fail to converge for a hard-switching mixer, while a PSS-based PAC analysis of the same circuit works?\nWhat is a linear periodically time-varying (LPTV) system? Explain the conversion matrix (Equation 81) and the meaning of the sidebands. How do you obtain the conversion gain of a mixer and the image rejection of an I/Q receiver with PAC or HBAC?\nWhat is cyclostationary noise? Which two effects does a periodic noise analysis (PNOISE, HBNOISE) capture that a plain noise analysis misses? Name three circuits where this matters.\nHow does a transient noise simulation work? List its advantages and disadvantages compared to PNOISE and HBNOISE. How can you check that a transient noise result is not dominated by numerical errors?\nWhich analyses would you use to characterize (a) an LNA, (b) a switched-capacitor filter, (c) an LC VCO, (d) a passive mixer, and (e) a power detector? Justify your choice.\nTransient Simulation Effort: A downconversion mixer with \\(f_\\mathrm{LO}\\) = 5.8 GHz is simulated in the time domain with 40 time points per LO period. The IF spectrum shall be computed with a frequency resolution of 50 kHz. How many time points are needed, ignoring the settling time? How does a PSS analysis followed by a PAC analysis avoid this effort?\nNoise Folding: An ideal double-balanced switching mixer multiplies the RF input by a square wave toggling between \\(+1\\) and \\(-1\\) with 50 % duty cycle, and the only noise source is the source resistance. Calculate the SSB and the DSB noise figure. By how much is the noise figure underestimated if a periodic noise analysis keeps only the sidebands \\(\\pm 1\\) (\\(K = 1\\))?"
+    "section": "12.12 RF Circuit Simulation (Optional)",
+    "text": "12.12 RF Circuit Simulation (Optional)\nThese questions refer to the appendix on RF circuit simulation (Section 10) and are optional.\n\nWhich assumptions about the circuit waveforms do the analyses op, ac, noise, tran, PSS, and HB make? Sketch how the analyses build on each other (Figure 106).\nWhy does a small-signal ac analysis of a mixer show no conversion gain? Which analysis do you use instead, and why?\nExplain the shooting method (Equation 76). Why does a PSS analysis of a high-Q circuit converge much faster than a transient analysis? What are the limitations of PSS, and why does a converged PSS not prove that an oscillator starts up?\nExplain the principle of harmonic balance (Equation 79). For which circuits is HB efficient, and for which circuits is PSS the better choice? Why can HB fail to converge for a hard-switching mixer, while a PSS-based PAC analysis of the same circuit works?\nWhat is a linear periodically time-varying (LPTV) system? Explain the conversion matrix (Equation 81) and the meaning of the sidebands. How do you obtain the conversion gain of a mixer and the image rejection of an I/Q receiver with PAC or HBAC?\nWhat is cyclostationary noise? Which two effects does a periodic noise analysis (PNOISE, HBNOISE) capture that a plain noise analysis misses? Name three circuits where this matters.\nHow does a transient noise simulation work? List its advantages and disadvantages compared to PNOISE and HBNOISE. How can you check that a transient noise result is not dominated by numerical errors?\nWhich analyses would you use to characterize (a) an LNA, (b) a switched-capacitor filter, (c) an LC VCO, (d) a passive mixer, and (e) a power detector? Justify your choice.\nTransient Simulation Effort: A downconversion mixer with \\(f_\\mathrm{LO}\\) = 5.8 GHz is simulated in the time domain with 40 time points per LO period. The IF spectrum shall be computed with a frequency resolution of 50 kHz. How many time points are needed, ignoring the settling time? How does a PSS analysis followed by a PAC analysis avoid this effort?\nNoise Folding: An ideal double-balanced switching mixer multiplies the RF input by a square wave toggling between \\(+1\\) and \\(-1\\) with 50 % duty cycle, and the only noise source is the source resistance. Calculate the SSB and the DSB noise figure. By how much is the noise figure underestimated if a periodic noise analysis keeps only the sidebands \\(\\pm 1\\) (\\(K = 1\\))?"
+  },
+  {
+    "objectID": "rfic.html#sec-exam-fp6",
+    "href": "rfic.html#sec-exam-fp6",
+    "title": "Radio-Frequency Integrated Circuits",
+    "section": "12.13 Case Study Fairphone (Gen. 6) (Optional)",
+    "text": "12.13 Case Study Fairphone (Gen. 6) (Optional)\nThese questions refer to the case study of the Fairphone (Gen. 6) RF front-end (Section 11) and are optional.\n\nWhy are the cellular RFIC and the SoC of a smartphone separate chips? Which signals cross between them?\nWhy does every FDD band need its own acoustic duplexer? Explain the role of the duplex gap (Equation 83), and why bands 4 and 66 are less critical than band 8.\nWhy does a smartphone use external LNA modules in front of the RFIC? Why does a GNSS receiver place its LNA between two SAW filters?\nWhy does a multi-band synthesizer use several VCOs and frequency dividers? How many VCOs are needed to cover one octave with a VCO tuning range of ±10 % (Equation 84)?\nExplain average power tracking. Why does it improve the efficiency at reduced output power, and why is envelope tracking more efficient but more difficult to implement?\nWhat is the purpose of the feedback receiver in a cellular transmitter? Where is its coupler placed, and why?\nDual Uplink: A phone transmits concurrently in band 3 at 1747.5 MHz and in band 1 at 1950 MHz. Calculate the frequencies of the IM3 products and of the second harmonics. Which receive bands of the phone are hit?\nAPT Efficiency: An ideal class-B PA amplifies an OFDM signal with a PAPR of 10 dB, and its supply is set to the envelope peak. Calculate the average drain efficiency with Equation 86. How large is the efficiency with a fixed supply at 10 dB below the maximum output power?"
   },
   {
     "objectID": "rfic.html#footnotes",
@@ -644,60 +770,95 @@
     "text": "Footnotes\n\n\nFor the OFDM-based standards (LTE/5G NR, WiFi), the listed values correspond to the subcarrier spacing (numerology \\(\\Delta f\\)), which equals the per-subcarrier symbol rate; they are not the aggregate symbol rate of the full signal.↩︎"
   },
   {
-    "objectID": "content/pll/delta_sigma_modulator.html",
-    "href": "content/pll/delta_sigma_modulator.html",
-    "title": "MASH Modulator (3rd Order)",
-    "section": "",
-    "text": "Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)\nLicensed under the Apache License, Version 2.0\nThis notebook implements a 3rd order MASH (1-1-1) modulator that converts a constant input value (0-1) into a multi-bit sequence. The output shows the time-domain sequence, individual stage outputs, and its spectrum via FFT."
+    "objectID": "slides/trx.html#sec-trx-direct-conversion",
+    "href": "slides/trx.html#sec-trx-direct-conversion",
+    "title": "Transceivers",
+    "section": "3.1 Direct-Conversion Transceiver",
+    "text": "3.1 Direct-Conversion Transceiver\n\nNowadays, the various small-signal RF functions for receive and transmit are integrated into so-called transceivers (TRX). A TRX is a device that can both transmit and receive signals, and is usually called an “RFIC”. While high monolithic integration is certainly the norm for radio-frequency devices intended for standards like Bluetooth, Wi-Fi, cellular, etc., it is increasingly used also for mm-wave frequencies for applications like automotive radar and 5G cellular.\nTypically, TRX include components like amplifiers, mixers, filters, oscillators, and phase-locked loops. When digital interfaces are used for the baseband I/Q data, also functions like analog-to-digital conversion (ADC) and digital-to-analog conversion (DAC) are integrated together with digital signal processing (DSP) blocks and potentially high-speed interfaces (because for wide bandwidths the I/Q sample rate can get quite high).\nIn these notes we will focus on the RF part of the TRX, which is responsible for the upconversion of baseband or intermediate frequency (IF) signals to the desired transmit frequency during transmission, and the downconversion of received signals from the carrier frequency to baseband or IF during reception. For filters, low-frequency amplifiers, ADCs, DACs, and DSP blocks we refer to related courses and literature, for example our analog circuit design course."
   },
   {
-    "objectID": "content/pll/delta_sigma_modulator.html#import-libraries",
-    "href": "content/pll/delta_sigma_modulator.html#import-libraries",
-    "title": "MASH Modulator (3rd Order)",
-    "section": "Import Libraries",
-    "text": "Import Libraries\n\nimport numpy as np\nimport matplotlib.pyplot as plt"
+    "objectID": "slides/trx.html#sec-trx-mod-demod",
+    "href": "slides/trx.html#sec-trx-mod-demod",
+    "title": "Transceivers",
+    "section": "3.2 Modulation and Demodulation",
+    "text": "3.2 Modulation and Demodulation\n\nAs can be seen in Figure 19, this generic architecture can be adapted in various ways. Generally, the amplifier gains are adjustable to adapt to different signal levels. If adaptive channel bandwidths are to be supported, the corner frequencies of the low-pass filters (LPF) can be adjusted, as well as (optionally) the sampling rate of the ADCs and DACs. The local oscillator (LO) frequency is generated by a phase-locked loop (PLL) synthesizer, which can be tuned to the desired carrier frequency. In case of frequency-division duplex (FDD) operation, two PLLs are used to generate the TX and RX LO frequencies, which are separated by the duplex distance \\(f_\\mathrm{dpx}\\). In time-division duplex (TDD) operation, a single PLL is sufficient, supplying the LO signal to both RX and TX.\nThe modem (short for modulator-demodulator) that is shown in Figure 19 is responsible for the digital baseband processing, including functions like channel coding/decoding, modulation/demodulation, equalization, error correction, encryption/decryption, and framing/timing. The modem is usually implemented as a digital System-on-Chip (SoC) consisting of (multiple) CPUs, DSPs, and fixed-function blocks for time-critical processing. For an in-depth discussion we recommend (Sklar and Harris 2020) or (Molisch 2022)."
   },
   {
-    "objectID": "content/pll/delta_sigma_modulator.html#mash-modulator-class",
-    "href": "content/pll/delta_sigma_modulator.html#mash-modulator-class",
-    "title": "MASH Modulator (3rd Order)",
-    "section": "MASH Modulator Class",
-    "text": "MASH Modulator Class\nThe MASH (Multi-stAge noise SHaping) modulator consists of three cascaded 1st-order stages with digital noise cancellation logic.\n\nclass MASHModulator:\n    \"\"\"3rd order MASH (Multi-stAge noise SHaping) modulator\"\"\"\n    \n    def __init__(self):\n        \"\"\"Initialize the 3-stage MASH modulator.\"\"\"\n        # Three 1st order stages\n        self.integrator1 = 0.0\n        self.integrator2 = 0.0\n        self.integrator3 = 0.0\n        \n        # Storage for digital cancellation logic (need 2 delays)\n        self.y1_prev = 0\n        self.y1_prev2 = 0\n        self.y2_prev = 0\n        self.y2_prev2 = 0\n        self.y3_prev = 0\n        self.y3_prev2 = 0\n    \n    def reset(self):\n        \"\"\"Reset all states to zero\"\"\"\n        self.integrator1 = 0.0\n        self.integrator2 = 0.0\n        self.integrator3 = 0.0\n        self.y1_prev = 0\n        self.y1_prev2 = 0\n        self.y2_prev = 0\n        self.y2_prev2 = 0\n        self.y3_prev = 0\n        self.y3_prev2 = 0\n    \n    def step(self, input_value):\n        \"\"\"\n        Perform one step of MASH modulation.\n        \n        Parameters:\n        -----------\n        input_value : float\n            Input signal value (0-1)\n        \n        Returns:\n        --------\n        tuple\n            (combined_output, y1, y2, y3) - combined output and individual stage outputs\n        \"\"\"\n        # Stage 1: 1st order modulator with input signal\n        self.integrator1 += input_value\n        y1 = 1 if self.integrator1 &gt;= 1.0 else 0\n        e1 = self.integrator1 - y1  # Quantization error\n        self.integrator1 = e1  # Store error for next iteration\n        \n        # Stage 2: 1st order modulator fed with quantization error from stage 1\n        self.integrator2 += e1\n        y2 = 1 if self.integrator2 &gt;= 1.0 else 0\n        e2 = self.integrator2 - y2\n        self.integrator2 = e2\n        \n        # Stage 3: 1st order modulator fed with quantization error from stage 2\n        self.integrator3 += e2\n        y3 = 1 if self.integrator3 &gt;= 1.0 else 0\n        e3 = self.integrator3 - y3\n        self.integrator3 = e3\n        \n        # Digital noise cancellation logic for MASH 1-1-1\n        # Output = Y1 + (1-z^-1)*Y2 + (1-z^-1)^2*Y3\n        # Expanding (1-z^-1)^2 = 1 - 2*z^-1 + z^-2:\n        # Output = Y1 + Y2 - Y2[z^-1] + Y3 - 2*Y3[z^-1] + Y3[z^-2]\n        \n        combined = y1 + (y2 - self.y2_prev) + (y3 - 2*self.y3_prev + self.y3_prev2)\n        \n        # Update delay elements\n        self.y1_prev2 = self.y1_prev\n        self.y1_prev = y1\n        \n        self.y2_prev2 = self.y2_prev\n        self.y2_prev = y2\n        \n        self.y3_prev2 = self.y3_prev\n        self.y3_prev = y3\n        \n        return combined, y1, y2, y3\n    \n    def modulate(self, input_value, length, dither_amplitude=0.0, seed=None):\n        \"\"\"\n        Generate MASH modulated sequence.\n        \n        Parameters:\n        -----------\n        input_value : float\n            Constant input value (0-1)\n        length : int\n            Length of output sequence\n        dither_amplitude : float\n            Peak dither amplitude added to input (uniform in [-A, +A])\n        seed : int or None\n            RNG seed for reproducible dithering\n        \n        Returns:\n        --------\n        tuple\n            (combined_output, y1, y2, y3) - arrays of combined and individual outputs\n            Combined output range: -3 to +4 (multi-bit output)\n        \"\"\"\n        self.reset()\n        rng = np.random.default_rng(seed)\n        combined_output = np.zeros(length)\n        y1_output = np.zeros(length)\n        y2_output = np.zeros(length)\n        y3_output = np.zeros(length)\n        \n        for i in range(length):\n            dither = rng.uniform(-dither_amplitude, dither_amplitude) if dither_amplitude &gt; 0 else 0.0\n            combined, y1, y2, y3 = self.step(input_value + dither)\n            combined_output[i] = combined\n            y1_output[i] = y1\n            y2_output[i] = y2\n            y3_output[i] = y3\n        \n        return combined_output, y1_output, y2_output, y3_output"
+    "objectID": "slides/trx.html#filtering",
+    "href": "slides/trx.html#filtering",
+    "title": "Transceivers",
+    "section": "3.3 Filtering",
+    "text": "3.3 Filtering"
   },
   {
-    "objectID": "content/pll/delta_sigma_modulator.html#configuration-parameters",
-    "href": "content/pll/delta_sigma_modulator.html#configuration-parameters",
-    "title": "MASH Modulator (3rd Order)",
-    "section": "Configuration Parameters",
-    "text": "Configuration Parameters\nSet the input parameters for the MASH modulator simulation.\n\n# Parameters\ninput_value = 0.125  # Constant input (0-1)\nsequence_length = 2**15  # Length of sequence\ndisplay_samples = 100  # Number of samples to display in time plot\ndither_seed = 0  # RNG seed for reproducible dithering (None for random)\n\n# Dithering configurations to compare\ndither_amplitude_no_dither = 0.0  # No dithering\ndither_amplitude_with_dither = 0.000001  # With dithering\n\nprint(\"=\" * 60)\nprint(\"MASH 3rd Order Modulator - Dithering Comparison\")\nprint(\"=\" * 60)\nprint(f\"Input Value:           {input_value}\")\nprint(f\"Sequence Length:       {sequence_length}\")\nprint(f\"Dither (no):           {dither_amplitude_no_dither}\")\nprint(f\"Dither (with):         {dither_amplitude_with_dither}\")\nprint(\"=\" * 60)\n\n============================================================\nMASH 3rd Order Modulator - Dithering Comparison\n============================================================\nInput Value:           0.125\nSequence Length:       32768\nDither (no):           0.0\nDither (with):         1e-06\n============================================================"
+    "objectID": "slides/trx.html#direct-conversion-architecture",
+    "href": "slides/trx.html#direct-conversion-architecture",
+    "title": "Transceivers",
+    "section": "3.4 Direct-Conversion Architecture",
+    "text": "3.4 Direct-Conversion Architecture\n\nFundamentally, the choice of filter technology is a trade-off between performance, size, cost, power handling, and flexibility. In most cases, a combination of different filter technologies is used to achieve the desired performance."
   },
   {
-    "objectID": "content/pll/delta_sigma_modulator.html#generate-mash-sequence",
-    "href": "content/pll/delta_sigma_modulator.html#generate-mash-sequence",
-    "title": "MASH Modulator (3rd Order)",
-    "section": "Generate MASH Sequence",
-    "text": "Generate MASH Sequence\nCreate the modulator instance and generate the output sequence.\n\n# Create modulator\nmash = MASHModulator()\n\n# Generate sequence WITHOUT dithering\nprint(\"\\nGenerating MASH sequence WITHOUT dithering...\")\nmash_combined_no_dither, mash_y1_no_dither, mash_y2_no_dither, mash_y3_no_dither = mash.modulate(\n    input_value,\n    sequence_length,\n    dither_amplitude=dither_amplitude_no_dither,\n    seed=dither_seed,\n)\n\n# Generate sequence WITH dithering\nprint(\"Generating MASH sequence WITH dithering...\")\nmash_combined_with_dither, mash_y1_with_dither, mash_y2_with_dither, mash_y3_with_dither = mash.modulate(\n    input_value,\n    sequence_length,\n    dither_amplitude=dither_amplitude_with_dither,\n    seed=dither_seed,\n)\n\n\nGenerating MASH sequence WITHOUT dithering...\nGenerating MASH sequence WITH dithering..."
+    "objectID": "slides/trx.html#sec-trx-duplexing",
+    "href": "slides/trx.html#sec-trx-duplexing",
+    "title": "Transceivers",
+    "section": "3.5 Duplexing",
+    "text": "3.5 Duplexing\n\nNowadays there exist good design techniques to mitigate these disadvantages. However, in some cases (for example very high linearity requirements, or very high frequencies) other architectures like low-IF or super-heterodyne may be preferable."
   },
   {
-    "objectID": "content/pll/delta_sigma_modulator.html#statistics",
-    "href": "content/pll/delta_sigma_modulator.html#statistics",
-    "title": "MASH Modulator (3rd Order)",
-    "section": "Statistics",
-    "text": "Statistics\nAnalyze the output statistics of the MASH modulator.\n\nprint(\"\\nMASH Modulator Statistics:\")\nprint(\"\\n--- WITHOUT Dithering ---\")\nmash_mean_no = np.mean(mash_combined_no_dither)\nmash_min_no = np.min(mash_combined_no_dither)\nmash_max_no = np.max(mash_combined_no_dither)\nmash_unique_no = np.unique(mash_combined_no_dither)\nprint(f\"  Mean output:       {mash_mean_no:.6f}\")\nprint(f\"  Deviation:         {abs(mash_mean_no - input_value):.6f}\")\nprint(f\"  Output range:      {mash_min_no:.0f} to {mash_max_no:.0f}\")\nprint(f\"  Unique values:     {len(mash_unique_no)}\")\n\nprint(\"\\n--- WITH Dithering ---\")\nmash_mean_with = np.mean(mash_combined_with_dither)\nmash_min_with = np.min(mash_combined_with_dither)\nmash_max_with = np.max(mash_combined_with_dither)\nmash_unique_with = np.unique(mash_combined_with_dither)\nprint(f\"  Mean output:       {mash_mean_with:.6f}\")\nprint(f\"  Deviation:         {abs(mash_mean_with - input_value):.6f}\")\nprint(f\"  Output range:      {mash_min_with:.0f} to {mash_max_with:.0f}\")\nprint(f\"  Unique values:     {len(mash_unique_with)}\")\n\n\nMASH Modulator Statistics:\n\n--- WITHOUT Dithering ---\n  Mean output:       0.125000\n  Deviation:         0.000000\n  Output range:      -2 to 2\n  Unique values:     5\n\n--- WITH Dithering ---\n  Mean output:       0.125000\n  Deviation:         0.000000\n  Output range:      -3 to 3\n  Unique values:     7"
+    "objectID": "slides/trx.html#specialty-architectures",
+    "href": "slides/trx.html#specialty-architectures",
+    "title": "Transceivers",
+    "section": "3.6 Specialty Architectures",
+    "text": "3.6 Specialty Architectures\n\nRegardless of whether two antennas or a circulator are used, the isolation between the TX and RX paths is always finite (typically only in the range of 15 dB to 20 dB for a circulator). As a consequence, a large fraction of the own (and strong) TX signal leaks directly into the sensitive RX port. Practical FD systems therefore require additional self-interference cancellation (also called leakage cancellation), performed in the RF/analog and/or digital domain, to suppress this residual TX leakage below the RX noise floor (Sadjina et al. 2020)."
   },
   {
-    "objectID": "content/pll/delta_sigma_modulator.html#visualization---comparison",
-    "href": "content/pll/delta_sigma_modulator.html#visualization---comparison",
-    "title": "MASH Modulator (3rd Order)",
-    "section": "Visualization - Comparison",
-    "text": "Visualization - Comparison\nCompare MASH modulator outputs with and without dithering.\n\nfig = plt.figure()\n\ntime = np.arange(min(display_samples, len(mash_combined_no_dither)))\n\n# Plot 1: Time domain (no dither)\nax1 = plt.subplot(1, 2, 1)\nax1.step(time, mash_combined_no_dither[:display_samples], where='post', linewidth=1.5, color='C0')\nax1.axhline(y=input_value, color='r', linestyle='--', linewidth=2, \n            label=f'Expected = {input_value:.4f}')\nax1.set_xlabel('Sample Number')\nax1.set_ylabel('Output (multi-bit)')\nax1.grid(True, alpha=0.3)\nax1.legend()\nax1.set_ylim(-3.5, 4.5)\n\n# Plot 2: Frequency spectrum (no dither)\nax2 = plt.subplot(1, 2, 2)\nN = len(mash_combined_no_dither)\nfft_freq = np.fft.fftfreq(N)\npos_freq = fft_freq &gt;= 0\nfft_no = np.fft.fft(mash_combined_no_dither)\npsd_no = 20 * np.log10(np.abs(fft_no) / N + 1e-12)\nax2.plot(fft_freq[pos_freq], psd_no[pos_freq], linewidth=0.5, color='C0')\nax2.set_xlabel('Normalized Frequency (f/fs)')\nax2.set_ylabel('PSD (dB)')\nax2.grid(True, alpha=0.3)\nax2.set_xlim(0, 0.5)\nax2.set_ylim(-120, 0)\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\nFigure 1: Time series and the spectrum of a MASH 3rd-order modulator.\n\n\n\n\n\n\nfig = plt.figure()\n\ntime = np.arange(min(display_samples, len(mash_combined_with_dither)))\n\n# Plot 1: Time domain (with dither)\nax1 = plt.subplot(1, 2, 1)\nax1.step(time, mash_combined_with_dither[:display_samples], where='post', linewidth=1.5, color='C0')\nax1.axhline(y=input_value, color='r', linestyle='--', linewidth=2, \n            label=f'Expected = {input_value:.4f}')\nax1.set_xlabel('Sample Number')\nax1.set_ylabel('Output (multi-bit)')\nax1.grid(True, alpha=0.3)\nax1.legend()\nax1.set_ylim(-3.5, 4.5)\n\n# Plot 2: Frequency spectrum (with dither)\nax2 = plt.subplot(1, 2, 2)\nN = len(mash_combined_with_dither)\nfft_freq = np.fft.fftfreq(N)\npos_freq = fft_freq &gt;= 0\nfft_no = np.fft.fft(mash_combined_with_dither)\npsd_no = 20 * np.log10(np.abs(fft_no) / N + 1e-12)\nax2.plot(fft_freq[pos_freq], psd_no[pos_freq], linewidth=0.5, color='C0')\nax2.set_xlabel('Normalized Frequency (f/fs)')\nax2.set_ylabel('PSD (dB)')\nax2.grid(True, alpha=0.3)\nax2.set_xlim(0, 0.5)\nax2.set_ylim(-120, 0)\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\nFigure 2: Time series and the spectrum of a MASH 3rd-order modulator with added dither."
+    "objectID": "slides/trx.html#iq-imbalance",
+    "href": "slides/trx.html#iq-imbalance",
+    "title": "Transceivers",
+    "section": "3.7 I/Q Imbalance",
+    "text": "3.7 I/Q Imbalance\n\nDespite the reduced architecture, digital amplitude-shift-keying (ASK) or on-off-keying (OOK) can be used. If the receiver is able to discriminate between frequencies (e.g., by using two RF filters with a power detector each), also frequency-shift-keying (FSK) can be used."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Radio-Frequency Integrated Circuits",
-    "section": "",
-    "text": "Radio-Frequency Integrated Circuits\n\n\n\nQuarto Publish\n\n\n(c) 2025-2026 Harald Pretl and co-authors, Department for Integrated Circuits (ICD), Johannes Kepler University, Linz (JKU)\nThis is the material for a graduate-level radio-frequency integrated circuit course, held at JKU under course number 336.023 (“VO Integrierte Hochfrequenz-Schaltungstechnik”). Follow this link to access the material.\nAll course material is made publicly available and shared under the Apache-2.0 license.\nWe happily accept pull requests to fix typos or add content! If you want to discuss something that is not clear, please open an issue!"
+    "objectID": "slides/lna.html#sec-impedance-matching",
+    "href": "slides/lna.html#sec-impedance-matching",
+    "title": "Low Noise Amplifiers",
+    "section": "4.1 Impedance Matching",
+    "text": "4.1 Impedance Matching\n\nThe LNA as a building block is shown in Figure 31. It is usually designed for a specific frequency band, e.g., the 2.4 GHz ISM band or the 5 GHz WLAN band, and is typically designed for a specific impedance, e.g., 50 Ω, which is the standard impedance for RF systems. Impedance matching is usually mandated at the input; the output impedance matching is only required if the output of the LNA goes off-chip; if it is kept on-chip, impedance matching is often not needed. The LNA is also designed to be sufficiently linear, i.e., to not introduce significant distortion to the amplified signal; however, compared to the noise requirements, linearity is often less critical."
+  },
+  {
+    "objectID": "slides/lna.html#sec-amp-stability",
+    "href": "slides/lna.html#sec-amp-stability",
+    "title": "Low Noise Amplifiers",
+    "section": "4.2 Amplifier Stability",
+    "text": "4.2 Amplifier Stability"
+  },
+  {
+    "objectID": "slides/lna.html#sec-lna-resistive-matching",
+    "href": "slides/lna.html#sec-lna-resistive-matching",
+    "title": "Low Noise Amplifiers",
+    "section": "4.3 Resistively Matched Common-Source LNA",
+    "text": "4.3 Resistively Matched Common-Source LNA"
+  },
+  {
+    "objectID": "slides/lna.html#sec-lna-common-gate",
+    "href": "slides/lna.html#sec-lna-common-gate",
+    "title": "Low Noise Amplifiers",
+    "section": "4.4 Common-Gate LNA",
+    "text": "4.4 Common-Gate LNA"
+  },
+  {
+    "objectID": "slides/lna.html#sec-lna-inductive-degeneration",
+    "href": "slides/lna.html#sec-lna-inductive-degeneration",
+    "title": "Low Noise Amplifiers",
+    "section": "4.5 Inductively-Degenerated Common-Source LNA",
+    "text": "4.5 Inductively-Degenerated Common-Source LNA"
+  },
+  {
+    "objectID": "slides/lna.html#sec-lna-feedback",
+    "href": "slides/lna.html#sec-lna-feedback",
+    "title": "Low Noise Amplifiers",
+    "section": "4.6 Feedback LNA",
+    "text": "4.6 Feedback LNA\n\nWhat is missing in Figure 39 is a form of frequency tuning of the load tank to the frequency of interest, and support for different gain modes. Apart from these details, this LNA circuit is a good starting point for a practical LNA design."
   },
   {
     "objectID": "slides/spurs.html#sec-spurs-mechanisms",
@@ -749,60 +910,11 @@
     "text": "7.4 Fractional-N PLL\n\nIt has to be noted that while an ADPLL seems conceptually simpler than an analog PLL, the design of high-performance TDCs and DCOs can be quite complex and requires careful consideration of quantization noise, linearity, and power consumption. Coupling effects between different circuit blocks can also introduce unwanted spurs and phase noise folding in the ADPLL output. Therefore, while ADPLLs offer many advantages, they also present unique design challenges that must be addressed to achieve adequate performance."
   },
   {
-    "objectID": "slides/fundamentals.html#sec-channel-capacity",
-    "href": "slides/fundamentals.html#sec-channel-capacity",
-    "title": "Fundamentals",
-    "section": "2.1 Channel Capacity",
-    "text": "2.1 Channel Capacity\n\nIn this section, we will discuss a few important concepts which will be instrumental in the further study of RF circuits and systems. As the dynamic range of signals in RF circuits and systems is often limited on the top end by linearity, and on the bottom end by noise, we will discuss these two topics in some detail."
-  },
-  {
-    "objectID": "slides/fundamentals.html#sec-linearity",
-    "href": "slides/fundamentals.html#sec-linearity",
-    "title": "Fundamentals",
-    "section": "2.2 Linearity",
-    "text": "2.2 Linearity"
-  },
-  {
-    "objectID": "slides/fundamentals.html#sec-noise",
-    "href": "slides/fundamentals.html#sec-noise",
-    "title": "Fundamentals",
-    "section": "2.3 Noise",
-    "text": "2.3 Noise"
-  },
-  {
-    "objectID": "slides/fundamentals.html#sec-fundamentals-modulation",
-    "href": "slides/fundamentals.html#sec-fundamentals-modulation",
-    "title": "Fundamentals",
-    "section": "2.4 Modulation",
-    "text": "2.4 Modulation"
-  },
-  {
-    "objectID": "slides/fundamentals.html#sec-fundamentals-pulse-shaping",
-    "href": "slides/fundamentals.html#sec-fundamentals-pulse-shaping",
-    "title": "Fundamentals",
-    "section": "2.5 Pulse Shaping and Spectral Efficiency",
-    "text": "2.5 Pulse Shaping and Spectral Efficiency"
-  },
-  {
-    "objectID": "slides/fundamentals.html#sec-fundamentals-ofdm",
-    "href": "slides/fundamentals.html#sec-fundamentals-ofdm",
-    "title": "Fundamentals",
-    "section": "2.6 Orthogonal Frequency-Division Multiplexing (OFDM)",
-    "text": "2.6 Orthogonal Frequency-Division Multiplexing (OFDM)\n\nFor all the shown pulse shapes (rectangular, raised-cosine, and Gaussian), the trade-off between time- and frequency-domain containment is clearly visible. This is also captured in “Küpfmüller’s uncertainty principle” (Küpfmüller 1949), which states that the product of the time duration and the bandwidth of a pulse is lower-bounded by a constant. In other words, if we want to have a pulse that is very short in time, it will have a wide bandwidth, and vice versa."
-  },
-  {
-    "objectID": "slides/fundamentals.html#sec-fundamentals-multiple-access",
-    "href": "slides/fundamentals.html#sec-fundamentals-multiple-access",
-    "title": "Fundamentals",
-    "section": "2.7 Multiple Access Techniques",
-    "text": "2.7 Multiple Access Techniques"
-  },
-  {
-    "objectID": "slides/fundamentals.html#sec-fundamentals-mcs",
-    "href": "slides/fundamentals.html#sec-fundamentals-mcs",
-    "title": "Fundamentals",
-    "section": "2.8 Modulation and Coding Schemes",
-    "text": "2.8 Modulation and Coding Schemes\n\nAll of the above techniques can be combined to create more efficient and flexible communication systems. For example, OFDMA can be used in conjunction with SDMA to allow multiple users to share the same frequency resources while also taking advantage of spatial diversity. Also, TDMA can be combined with FDMA to create a hybrid multiple access scheme (which has been used in 2G)."
+    "objectID": "slides/index.html",
+    "href": "slides/index.html",
+    "title": "Lecture Slides",
+    "section": "",
+    "text": "Slide decks generated from the lecture notes, one per chapter. Press S for speaker notes, C for the chalkboard, and ? for all shortcuts.\n\nIntroduction\nFundamentals\nTransceivers\nLow Noise Amplifiers\nMixers\nOscillators\nPhase-Locked Loops\nPower Amplifiers\nSpurs, Crosstalk and Self-Interference\nAppendix: RF Circuit Simulation\nAppendix: Case Study Fairphone (Gen. 6) RF Front-End"
   },
   {
     "objectID": "slides/simulation.html#sec-simulation-fundamental",
@@ -840,45 +952,52 @@
     "text": "10.5 Summary"
   },
   {
-    "objectID": "slides/lna.html#sec-impedance-matching",
-    "href": "slides/lna.html#sec-impedance-matching",
-    "title": "Low Noise Amplifiers",
-    "section": "4.1 Impedance Matching",
-    "text": "4.1 Impedance Matching\n\nThe LNA as a building block is shown in Figure 31. It is usually designed for a specific frequency band, e.g., the 2.4 GHz ISM band or the 5 GHz WLAN band, and is typically designed for a specific impedance, e.g., 50 Ω, which is the standard impedance for RF systems. Impedance matching is usually mandated at the input; the output impedance matching is only required if the output of the LNA goes off-chip; if it is kept on-chip, impedance matching is often not needed. The LNA is also designed to be sufficiently linear, i.e., to not introduce significant distortion to the amplified signal; however, compared to the noise requirements, linearity is often less critical."
+    "objectID": "content/pll/delta_sigma_modulator.html",
+    "href": "content/pll/delta_sigma_modulator.html",
+    "title": "MASH Modulator (3rd Order)",
+    "section": "",
+    "text": "Copyright (C) 2026 Harald Pretl and co-authors (harald.pretl@jku.at)\nLicensed under the Apache License, Version 2.0\nThis notebook implements a 3rd order MASH (1-1-1) modulator that converts a constant input value (0-1) into a multi-bit sequence. The output shows the time-domain sequence, individual stage outputs, and its spectrum via FFT."
   },
   {
-    "objectID": "slides/lna.html#sec-amp-stability",
-    "href": "slides/lna.html#sec-amp-stability",
-    "title": "Low Noise Amplifiers",
-    "section": "4.2 Amplifier Stability",
-    "text": "4.2 Amplifier Stability"
+    "objectID": "content/pll/delta_sigma_modulator.html#import-libraries",
+    "href": "content/pll/delta_sigma_modulator.html#import-libraries",
+    "title": "MASH Modulator (3rd Order)",
+    "section": "Import Libraries",
+    "text": "Import Libraries\n\nimport numpy as np\nimport matplotlib.pyplot as plt"
   },
   {
-    "objectID": "slides/lna.html#sec-lna-resistive-matching",
-    "href": "slides/lna.html#sec-lna-resistive-matching",
-    "title": "Low Noise Amplifiers",
-    "section": "4.3 Resistively Matched Common-Source LNA",
-    "text": "4.3 Resistively Matched Common-Source LNA"
+    "objectID": "content/pll/delta_sigma_modulator.html#mash-modulator-class",
+    "href": "content/pll/delta_sigma_modulator.html#mash-modulator-class",
+    "title": "MASH Modulator (3rd Order)",
+    "section": "MASH Modulator Class",
+    "text": "MASH Modulator Class\nThe MASH (Multi-stAge noise SHaping) modulator consists of three cascaded 1st-order stages with digital noise cancellation logic.\n\nclass MASHModulator:\n    \"\"\"3rd order MASH (Multi-stAge noise SHaping) modulator\"\"\"\n    \n    def __init__(self):\n        \"\"\"Initialize the 3-stage MASH modulator.\"\"\"\n        # Three 1st order stages\n        self.integrator1 = 0.0\n        self.integrator2 = 0.0\n        self.integrator3 = 0.0\n        \n        # Storage for digital cancellation logic (need 2 delays)\n        self.y1_prev = 0\n        self.y1_prev2 = 0\n        self.y2_prev = 0\n        self.y2_prev2 = 0\n        self.y3_prev = 0\n        self.y3_prev2 = 0\n    \n    def reset(self):\n        \"\"\"Reset all states to zero\"\"\"\n        self.integrator1 = 0.0\n        self.integrator2 = 0.0\n        self.integrator3 = 0.0\n        self.y1_prev = 0\n        self.y1_prev2 = 0\n        self.y2_prev = 0\n        self.y2_prev2 = 0\n        self.y3_prev = 0\n        self.y3_prev2 = 0\n    \n    def step(self, input_value):\n        \"\"\"\n        Perform one step of MASH modulation.\n        \n        Parameters:\n        -----------\n        input_value : float\n            Input signal value (0-1)\n        \n        Returns:\n        --------\n        tuple\n            (combined_output, y1, y2, y3) - combined output and individual stage outputs\n        \"\"\"\n        # Stage 1: 1st order modulator with input signal\n        self.integrator1 += input_value\n        y1 = 1 if self.integrator1 &gt;= 1.0 else 0\n        e1 = self.integrator1 - y1  # Quantization error\n        self.integrator1 = e1  # Store error for next iteration\n        \n        # Stage 2: 1st order modulator fed with quantization error from stage 1\n        self.integrator2 += e1\n        y2 = 1 if self.integrator2 &gt;= 1.0 else 0\n        e2 = self.integrator2 - y2\n        self.integrator2 = e2\n        \n        # Stage 3: 1st order modulator fed with quantization error from stage 2\n        self.integrator3 += e2\n        y3 = 1 if self.integrator3 &gt;= 1.0 else 0\n        e3 = self.integrator3 - y3\n        self.integrator3 = e3\n        \n        # Digital noise cancellation logic for MASH 1-1-1\n        # Output = Y1 + (1-z^-1)*Y2 + (1-z^-1)^2*Y3\n        # Expanding (1-z^-1)^2 = 1 - 2*z^-1 + z^-2:\n        # Output = Y1 + Y2 - Y2[z^-1] + Y3 - 2*Y3[z^-1] + Y3[z^-2]\n        \n        combined = y1 + (y2 - self.y2_prev) + (y3 - 2*self.y3_prev + self.y3_prev2)\n        \n        # Update delay elements\n        self.y1_prev2 = self.y1_prev\n        self.y1_prev = y1\n        \n        self.y2_prev2 = self.y2_prev\n        self.y2_prev = y2\n        \n        self.y3_prev2 = self.y3_prev\n        self.y3_prev = y3\n        \n        return combined, y1, y2, y3\n    \n    def modulate(self, input_value, length, dither_amplitude=0.0, seed=None):\n        \"\"\"\n        Generate MASH modulated sequence.\n        \n        Parameters:\n        -----------\n        input_value : float\n            Constant input value (0-1)\n        length : int\n            Length of output sequence\n        dither_amplitude : float\n            Peak dither amplitude added to input (uniform in [-A, +A])\n        seed : int or None\n            RNG seed for reproducible dithering\n        \n        Returns:\n        --------\n        tuple\n            (combined_output, y1, y2, y3) - arrays of combined and individual outputs\n            Combined output range: -3 to +4 (multi-bit output)\n        \"\"\"\n        self.reset()\n        rng = np.random.default_rng(seed)\n        combined_output = np.zeros(length)\n        y1_output = np.zeros(length)\n        y2_output = np.zeros(length)\n        y3_output = np.zeros(length)\n        \n        for i in range(length):\n            dither = rng.uniform(-dither_amplitude, dither_amplitude) if dither_amplitude &gt; 0 else 0.0\n            combined, y1, y2, y3 = self.step(input_value + dither)\n            combined_output[i] = combined\n            y1_output[i] = y1\n            y2_output[i] = y2\n            y3_output[i] = y3\n        \n        return combined_output, y1_output, y2_output, y3_output"
   },
   {
-    "objectID": "slides/lna.html#sec-lna-common-gate",
-    "href": "slides/lna.html#sec-lna-common-gate",
-    "title": "Low Noise Amplifiers",
-    "section": "4.4 Common-Gate LNA",
-    "text": "4.4 Common-Gate LNA"
+    "objectID": "content/pll/delta_sigma_modulator.html#configuration-parameters",
+    "href": "content/pll/delta_sigma_modulator.html#configuration-parameters",
+    "title": "MASH Modulator (3rd Order)",
+    "section": "Configuration Parameters",
+    "text": "Configuration Parameters\nSet the input parameters for the MASH modulator simulation.\n\n# Parameters\ninput_value = 0.125  # Constant input (0-1)\nsequence_length = 2**15  # Length of sequence\ndisplay_samples = 100  # Number of samples to display in time plot\ndither_seed = 0  # RNG seed for reproducible dithering (None for random)\n\n# Dithering configurations to compare\ndither_amplitude_no_dither = 0.0  # No dithering\ndither_amplitude_with_dither = 0.000001  # With dithering\n\nprint(\"=\" * 60)\nprint(\"MASH 3rd Order Modulator - Dithering Comparison\")\nprint(\"=\" * 60)\nprint(f\"Input Value:           {input_value}\")\nprint(f\"Sequence Length:       {sequence_length}\")\nprint(f\"Dither (no):           {dither_amplitude_no_dither}\")\nprint(f\"Dither (with):         {dither_amplitude_with_dither}\")\nprint(\"=\" * 60)\n\n============================================================\nMASH 3rd Order Modulator - Dithering Comparison\n============================================================\nInput Value:           0.125\nSequence Length:       32768\nDither (no):           0.0\nDither (with):         1e-06\n============================================================"
   },
   {
-    "objectID": "slides/lna.html#sec-lna-inductive-degeneration",
-    "href": "slides/lna.html#sec-lna-inductive-degeneration",
-    "title": "Low Noise Amplifiers",
-    "section": "4.5 Inductively-Degenerated Common-Source LNA",
-    "text": "4.5 Inductively-Degenerated Common-Source LNA"
+    "objectID": "content/pll/delta_sigma_modulator.html#generate-mash-sequence",
+    "href": "content/pll/delta_sigma_modulator.html#generate-mash-sequence",
+    "title": "MASH Modulator (3rd Order)",
+    "section": "Generate MASH Sequence",
+    "text": "Generate MASH Sequence\nCreate the modulator instance and generate the output sequence.\n\n# Create modulator\nmash = MASHModulator()\n\n# Generate sequence WITHOUT dithering\nprint(\"\\nGenerating MASH sequence WITHOUT dithering...\")\nmash_combined_no_dither, mash_y1_no_dither, mash_y2_no_dither, mash_y3_no_dither = mash.modulate(\n    input_value,\n    sequence_length,\n    dither_amplitude=dither_amplitude_no_dither,\n    seed=dither_seed,\n)\n\n# Generate sequence WITH dithering\nprint(\"Generating MASH sequence WITH dithering...\")\nmash_combined_with_dither, mash_y1_with_dither, mash_y2_with_dither, mash_y3_with_dither = mash.modulate(\n    input_value,\n    sequence_length,\n    dither_amplitude=dither_amplitude_with_dither,\n    seed=dither_seed,\n)\n\n\nGenerating MASH sequence WITHOUT dithering...\nGenerating MASH sequence WITH dithering..."
   },
   {
-    "objectID": "slides/lna.html#sec-lna-feedback",
-    "href": "slides/lna.html#sec-lna-feedback",
-    "title": "Low Noise Amplifiers",
-    "section": "4.6 Feedback LNA",
-    "text": "4.6 Feedback LNA\n\nWhat is missing in Figure 39 is a form of frequency tuning of the load tank to the frequency of interest, and support for different gain modes. Apart from these details, this LNA circuit is a good starting point for a practical LNA design."
+    "objectID": "content/pll/delta_sigma_modulator.html#statistics",
+    "href": "content/pll/delta_sigma_modulator.html#statistics",
+    "title": "MASH Modulator (3rd Order)",
+    "section": "Statistics",
+    "text": "Statistics\nAnalyze the output statistics of the MASH modulator.\n\nprint(\"\\nMASH Modulator Statistics:\")\nprint(\"\\n--- WITHOUT Dithering ---\")\nmash_mean_no = np.mean(mash_combined_no_dither)\nmash_min_no = np.min(mash_combined_no_dither)\nmash_max_no = np.max(mash_combined_no_dither)\nmash_unique_no = np.unique(mash_combined_no_dither)\nprint(f\"  Mean output:       {mash_mean_no:.6f}\")\nprint(f\"  Deviation:         {abs(mash_mean_no - input_value):.6f}\")\nprint(f\"  Output range:      {mash_min_no:.0f} to {mash_max_no:.0f}\")\nprint(f\"  Unique values:     {len(mash_unique_no)}\")\n\nprint(\"\\n--- WITH Dithering ---\")\nmash_mean_with = np.mean(mash_combined_with_dither)\nmash_min_with = np.min(mash_combined_with_dither)\nmash_max_with = np.max(mash_combined_with_dither)\nmash_unique_with = np.unique(mash_combined_with_dither)\nprint(f\"  Mean output:       {mash_mean_with:.6f}\")\nprint(f\"  Deviation:         {abs(mash_mean_with - input_value):.6f}\")\nprint(f\"  Output range:      {mash_min_with:.0f} to {mash_max_with:.0f}\")\nprint(f\"  Unique values:     {len(mash_unique_with)}\")\n\n\nMASH Modulator Statistics:\n\n--- WITHOUT Dithering ---\n  Mean output:       0.125000\n  Deviation:         0.000000\n  Output range:      -2 to 2\n  Unique values:     5\n\n--- WITH Dithering ---\n  Mean output:       0.125000\n  Deviation:         0.000000\n  Output range:      -3 to 3\n  Unique values:     7"
+  },
+  {
+    "objectID": "content/pll/delta_sigma_modulator.html#visualization---comparison",
+    "href": "content/pll/delta_sigma_modulator.html#visualization---comparison",
+    "title": "MASH Modulator (3rd Order)",
+    "section": "Visualization - Comparison",
+    "text": "Visualization - Comparison\nCompare MASH modulator outputs with and without dithering.\n\nfig = plt.figure()\n\ntime = np.arange(min(display_samples, len(mash_combined_no_dither)))\n\n# Plot 1: Time domain (no dither)\nax1 = plt.subplot(1, 2, 1)\nax1.step(time, mash_combined_no_dither[:display_samples], where='post', linewidth=1.5, color='C0')\nax1.axhline(y=input_value, color='r', linestyle='--', linewidth=2, \n            label=f'Expected = {input_value:.4f}')\nax1.set_xlabel('Sample Number')\nax1.set_ylabel('Output (multi-bit)')\nax1.grid(True, alpha=0.3)\nax1.legend()\nax1.set_ylim(-3.5, 4.5)\n\n# Plot 2: Frequency spectrum (no dither)\nax2 = plt.subplot(1, 2, 2)\nN = len(mash_combined_no_dither)\nfft_freq = np.fft.fftfreq(N)\npos_freq = fft_freq &gt;= 0\nfft_no = np.fft.fft(mash_combined_no_dither)\npsd_no = 20 * np.log10(np.abs(fft_no) / N + 1e-12)\nax2.plot(fft_freq[pos_freq], psd_no[pos_freq], linewidth=0.5, color='C0')\nax2.set_xlabel('Normalized Frequency (f/fs)')\nax2.set_ylabel('PSD (dB)')\nax2.grid(True, alpha=0.3)\nax2.set_xlim(0, 0.5)\nax2.set_ylim(-120, 0)\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\nFigure 1: Time series and the spectrum of a MASH 3rd-order modulator.\n\n\n\n\n\n\nfig = plt.figure()\n\ntime = np.arange(min(display_samples, len(mash_combined_with_dither)))\n\n# Plot 1: Time domain (with dither)\nax1 = plt.subplot(1, 2, 1)\nax1.step(time, mash_combined_with_dither[:display_samples], where='post', linewidth=1.5, color='C0')\nax1.axhline(y=input_value, color='r', linestyle='--', linewidth=2, \n            label=f'Expected = {input_value:.4f}')\nax1.set_xlabel('Sample Number')\nax1.set_ylabel('Output (multi-bit)')\nax1.grid(True, alpha=0.3)\nax1.legend()\nax1.set_ylim(-3.5, 4.5)\n\n# Plot 2: Frequency spectrum (with dither)\nax2 = plt.subplot(1, 2, 2)\nN = len(mash_combined_with_dither)\nfft_freq = np.fft.fftfreq(N)\npos_freq = fft_freq &gt;= 0\nfft_no = np.fft.fft(mash_combined_with_dither)\npsd_no = 20 * np.log10(np.abs(fft_no) / N + 1e-12)\nax2.plot(fft_freq[pos_freq], psd_no[pos_freq], linewidth=0.5, color='C0')\nax2.set_xlabel('Normalized Frequency (f/fs)')\nax2.set_ylabel('PSD (dB)')\nax2.grid(True, alpha=0.3)\nax2.set_xlim(0, 0.5)\nax2.set_ylim(-120, 0)\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\nFigure 2: Time series and the spectrum of a MASH 3rd-order modulator with added dither."
   }
 ]
