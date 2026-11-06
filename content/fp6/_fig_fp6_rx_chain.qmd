@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-fp6-rx-chain
 #| echo: false
-#| fig-cap: "Simplified primary receive path of the Fairphone (Gen. 6) for band 1 or band 3, from the antenna to the digital I/Q interface. Only the I path of the direct-conversion receiver is drawn; the Q path uses a second mixer driven by the LO shifted by 90°."
+#| fig-cap: "Simplified primary receive path of the Fairphone (Gen. 6) for band 1 or band 3, from the antenna to the digital I/Q interface. The I and Q paths of the direct-conversion receiver are drawn as one; the Q path uses a second mixer driven by the LO shifted by 90°."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -40,8 +40,8 @@ with sd.Drawing(canvas='svg') as d:
     lna = dsp.Amp().label('LNA', loc='bottom', ofst=0.15)
     dsp.Line().right(d.unit / 4)
     mux = dsp.Box(w=1.0, h=1).label('mux')
-    dsp.Arrow().right(d.unit * 1.5)
-    mix = dsp.Mixer().anchor('W').label('I', loc='top', ofst=0.1)
+    dsp.Arrow().right(d.unit * 0.9)
+    mix = dsp.Mixer().anchor('W').label('I/Q', loc='top', ofst=0.1)
     dsp.Line().right(d.unit / 3).at(mix.E)
     lpf = dsp.Filter(response='lp').label('LPF', loc='bottom', ofst=0.15)
     dsp.Line().right(d.unit / 3)

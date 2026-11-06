@@ -23,7 +23,7 @@ sys.path.insert(0, 'content/fp6')
 import matplotlib.pyplot as plt
 import fp6_bands as fb
 
-fig, ax = plt.subplots(figsize=(9, 6.2))
+fig, ax = plt.subplots(figsize=(8, 6))
 
 rows = []   # (label, list of (lo, hi, kind))
 for b, (ul_lo, ul_hi, dl_lo, dl_hi) in sorted(fb.FDD.items(), key=lambda x: fb.center(x[0])):

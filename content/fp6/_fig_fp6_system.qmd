@@ -21,9 +21,9 @@ limitations under the License.
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch
 
-fig, ax = plt.subplots(figsize=(9.5, 5.8))
+fig, ax = plt.subplots(figsize=(8, 5))
 ax.set_xlim(0, 20)
-ax.set_ylim(0, 12)
+ax.set_ylim(0, 12.7)
 ax.axis('off')
 
 def box(x, y, w, h, title, sub='', fc='white', fs=9):
@@ -49,10 +49,10 @@ def line(xs, ys, color='k'):
 c_fe, c_mod, c_rfic, c_soc, c_pwr = '#eeeeee', '#fde9c8', '#cfe2f3', '#d9ead3', '#f4cccc'
 
 # column x positions and widths
-X_ANT, W_ANT = 0.2, 1.9
+X_ANT, W_ANT = 0.1, 2.2
 X_SW, W_SW = 2.8, 2.1
 X_FLT, W_FLT = 5.6, 2.1
-X_MOD, W_MOD = 8.5, 3.3
+X_MOD, W_MOD = 8.3, 3.7
 X_TRX, W_TRX = 12.8, 2.7
 X_SOC, W_SOC = 16.7, 3.1
 
@@ -67,13 +67,13 @@ for y in (3.2, 6.0, 9.6):
 
 # active front-end modules, one row each
 rows = {   # name: (y, h, title, subtitle)
-    'lna':  (9.0, 2.4, 'LNA modules', 'LB PRX (QLN5020)\nMHB DRX (QLN5030)\nMHB PRX (QLN5040)'),
+    'lna':  (9.0, 2.4, 'LNA modules', 'LB PRX (QLN5020)\nLB + MHB DRX (QLN5030)\nMHB PRX (QLN5040)'),
     'uhb':  (6.5, 1.9, 'n77/n78 modules', 'PA + LNA (QPM2980)\nDRX/MIMO (QDM3980)'),
     'pa':   (4.45, 1.7, 'PA modules', '2 multimode PAs (MMPA)\nGSM PA (QPA2625)'),
     'gnss': (1.9, 1.15, 'GNSS L1/L5', 'SAW + LNA + SAW'),
 }
 mods = {k: box(X_MOD, y, W_MOD, h, t, sub, fc=c_mod) for k, (y, h, t, sub) in rows.items()}
-apt = box(X_MOD + 0.5, 3.45, W_MOD - 1.0, 0.6, '2 APT (QET3930)', '', fc=c_pwr, fs=8)
+apt = box(X_MOD + 0.4, 3.45, W_MOD - 0.8, 0.6, '2 APT (QET3930)', '', fc=c_pwr, fs=8)
 
 def mid(k):
     x, y, w, h = mods[k]
@@ -105,11 +105,39 @@ arrow((X_TRX + W_TRX, 7.0), (X_SOC, 7.0), color='tab:blue', both=True)
 ax.text((X_TRX + W_TRX + X_SOC) / 2, 7.1, 'QLink', fontsize=8, ha='center', va='bottom', color='tab:blue')
 arrow((X_TRX + W_TRX, 0.85), (X_SOC, 0.85), color='tab:blue', both=True)
 ax.text((X_TRX + W_TRX + X_SOC) / 2, 0.95, 'PCIe', fontsize=8, ha='center', va='bottom', color='tab:blue')
+c_ctl = 'tab:green'
 x_bus = X_TRX + W_TRX / 2
-line([x_bus, x_bus, X_MOD + W_MOD / 2], [11.4, 11.75, 11.75], color='tab:green')
-arrow((X_MOD + W_MOD / 2, 11.75), (X_MOD + W_MOD / 2, 11.4), color='tab:green')
-ax.text((x_bus + X_MOD + W_MOD / 2) / 2, 11.8, 'MIPI RFFE + GPIO control', fontsize=7.5,
-        ha='center', va='bottom', color='tab:green')
+x_tap = (X_MOD + W_MOD + X_TRX) / 2
+y_bus = 11.7
+
+# RFIC control of the switches and all active front-end modules
+line([x_bus, x_bus, X_SW + W_SW / 2], [11.4, y_bus, y_bus], color=c_ctl)
+arrow((X_SW + W_SW / 2, y_bus), (X_SW + W_SW / 2, 11.4), color=c_ctl)
+arrow((X_MOD + W_MOD / 2, y_bus), (X_MOD + W_MOD / 2, 11.4), color=c_ctl)
+line([x_tap, x_tap], [y_bus, apt[1] + apt[3] / 2], color=c_ctl)
+for k in ('uhb', 'pa'):
+    arrow((x_tap, mid(k) + 0.5), (X_MOD + W_MOD, mid(k) + 0.5), color=c_ctl)
+arrow((x_tap, apt[1] + apt[3] / 2), (apt[0] + apt[2], apt[1] + apt[3] / 2), color=c_ctl)
+ax.plot([x_tap, x_tap, x_tap, X_MOD + W_MOD / 2], [y_bus, mid('uhb') + 0.5, mid('pa') + 0.5, y_bus],
+        'o', color=c_ctl, ms=3)
+ax.text((x_bus + X_MOD + W_MOD / 2) / 2, y_bus + 0.05, 'MIPI RFFE + GPIO control', fontsize=7.5,
+        ha='center', va='bottom', color=c_ctl)
+
+# SoC control of the antenna tuners, the RFIC, and the GNSS LNAs
+x_tun = X_ANT + W_ANT / 2
+line([X_SOC + W_SOC / 2, X_SOC + W_SOC / 2, x_tun], [11.4, 12.2, 12.2], color=c_ctl)
+arrow((x_tun, 12.2), (x_tun, 11.4), color=c_ctl)
+ax.text((x_tun + X_SOC + W_SOC / 2) / 2, 12.25, 'MIPI RFFE to antenna tuners', fontsize=7.5,
+        ha='center', va='bottom', color=c_ctl)
+arrow((X_SOC, 9.0), (X_TRX + W_TRX, 9.0), color=c_ctl)
+ax.text((X_TRX + W_TRX + X_SOC) / 2, 9.1, 'RFFE', fontsize=8, ha='center', va='bottom', color=c_ctl)
+line([X_SOC, x_tap, x_tap], [1.7, 1.7, 2.2], color=c_ctl)
+arrow((x_tap, 2.2), (X_MOD + W_MOD, 2.2), color=c_ctl)
+ax.text((X_TRX + W_TRX + X_SOC) / 2, 1.75, 'GPIO', fontsize=8, ha='center', va='bottom', color=c_ctl)
+
+# Wi-Fi switch control
+arrow((X_TRX, 0.5), (X_SW + W_SW, 0.5), color=c_ctl)
+ax.text((X_FLT + X_MOD + W_MOD) / 2, 0.45, 'GPIO', fontsize=7.5, ha='center', va='top', color=c_ctl)
 
 plt.tight_layout()
 plt.show()

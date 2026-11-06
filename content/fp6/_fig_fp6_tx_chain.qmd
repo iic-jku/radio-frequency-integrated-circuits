@@ -17,7 +17,7 @@ limitations under the License.
 ```{python}
 #| label: fig-fp6-tx-chain
 #| echo: false
-#| fig-cap: "Simplified transmit path of the Fairphone (Gen. 6) for band 1 or band 3. The supply of the PA comes from an average power tracker; a directional coupler between the antenna switch and the antenna feeds a sample of the TX signal back to the feedback receiver (FBRX) of the RFIC. Only the I path of the direct-conversion transmitter is drawn."
+#| fig-cap: "Simplified transmit path of the Fairphone (Gen. 6) for band 1 or band 3. The supply of the PA comes from an average power tracker; a directional coupler between the antenna switch and the antenna feeds a sample of the TX signal back to the feedback receiver (FBRX) of the RFIC. The I and Q paths of the direct-conversion transmitter are drawn as one."
 import schemdraw as sd
 import schemdraw.elements as elm
 import schemdraw.dsp as dsp
@@ -35,7 +35,7 @@ with sd.Drawing(canvas='svg') as d:
     dsp.Line().right(d.unit / 3)
     lpf = dsp.Filter(response='lp').label('LPF', loc='bottom', ofst=0.15)
     dsp.Line().right(d.unit / 3)
-    mix = dsp.Mixer().anchor('W').label('I', loc='top', ofst=0.1)
+    mix = dsp.Mixer().anchor('W').label('I/Q', loc='top', ofst=0.1)
     dsp.Line().right(d.unit / 3).at(mix.E)
     drv = dsp.Amp().label('driver', loc='bottom', ofst=0.15)
     dsp.Arrow().right(d.unit * 0.8)
@@ -65,6 +65,7 @@ with sd.Drawing(canvas='svg') as d:
 
     # feedback receiver: coupler -> FBRX switch -> FBRX (mixer, ADC) -> DSP
     fb = dsp.Box(w=2.2, h=1).at(((dsp_.E.x + mix.W.x) / 2, vco.S.y + 0.5)).anchor('center').label('FBRX\nmixer, ADC')
+    dsp.Arrow().left().at(vco.W).tox(fb.E)
     y_fb = vco.S.y - 1.8
     dsp.Line().down().at(cpl.S).toy(y_fb)
     dsp.Line().left(d.unit * 2.2)

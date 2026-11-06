@@ -32,7 +32,7 @@ labels = [f'B{b}  ({f / 1000:.2f} GHz)' for b, f in zip(bands, fc)]
 group_colors = {'LB': '#4c72b0', 'MB': '#dd8452', 'HB': '#55a868'}
 colors = [group_colors[fb.group(f)] for f in fc]
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 4.4), sharey=True,
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 4.4), sharey=True,
                                gridspec_kw={'width_ratios': [1, 1.25]})
 y = np.arange(len(bands))
 

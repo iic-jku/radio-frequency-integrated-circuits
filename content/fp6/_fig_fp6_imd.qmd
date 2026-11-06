@@ -47,7 +47,7 @@ shade = {'B': ('tab:orange', 'cellular FDD/SDL downlink'), 'n': ('tab:green', 'c
 def kind(name):
     return 'n' if name in fb.TDD else name[0]
 
-fig, ax = plt.subplots(figsize=(9, 4.8))
+fig, ax = plt.subplots(figsize=(8, 4.6))
 for vname, lo, hi in rx:
     ax.axvspan(lo, hi, color=shade[kind(vname)][0], alpha=0.12, lw=0, zorder=0)
 
